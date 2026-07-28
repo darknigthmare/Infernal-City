@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valkyrie Sweeper: Dark Siege</title>
+  <meta name="description" content="Jeu de défense de citadelle roguelite auto-battler avec 20 tourelles, Drones Compagnons, Tour 100 Étages, Mercenaires, Studio Photo et Radio Cyberpunk.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div id="app-container">
+    <!-- CRT Overlay -->
+    <div class="crt-overlay"></div>
+
+    <!-- HUD Top Header (Clean Combat Mode) -->
+    <header id="hud-header">
+      <div class="hud-group">
+        <div class="hud-stat">
+          <span class="label">Vague</span>
+          <span class="value" id="hud-wave-txt">1</span>
+        </div>
+
+        <!-- Citadel HP Bar -->
+        <div class="hud-stat citadel-hp-box">
+          <span class="label">Santé Citadelle</span>
+          <div class="meter-bar">
+            <div class="citadel-hp-fill" id="citadel-hp-fill"></div>
+          </div>
+          <span class="label" style="font-size: 0.65rem; margin-top: 2px; text-align: right;" id="citadel-hp-txt">500 / 500</span>
+        </div>
+
+        <!-- Overdrive Frenzy Bar -->
+        <div class="hud-stat citadel-hp-box" style="width: 110px;">
+          <span class="label">Frénésie</span>
+          <div class="meter-bar" style="border-color: rgba(245, 158, 11, 0.5);">
+            <div class="frenzy-meter-fill" id="frenzy-meter-fill"></div>
+          </div>
+        </div>
+
+        <!-- Valkyrie Affinity Bar -->
+        <div class="hud-stat citadel-hp-box" style="width: 120px;">
+          <span class="label">Affinité Valkyrie</span>
+          <div class="meter-bar" style="border-color: rgba(236, 72, 153, 0.5);">
+            <div class="affinity-meter-fill" id="affinity-meter-fill"></div>
+          </div>
+          <span class="label" style="font-size: 0.65rem; color: #ec4899; text-align: right;" id="affinity-lvl-txt">Rang 1</span>
+        </div>
+      </div>
+
+      <div class="hud-group">
+        <div class="hud-stat">
+          <span class="label">Bio-Coins</span>
+          <span class="value" style="color: #f59e0b;" id="hud-coins-txt">400 🪙</span>
+        </div>
+        <div class="hud-stat">
+          <span class="label">Score</span>
+          <span class="value" id="hud-score-txt">0</span>
+        </div>
+      </div>
+
+      <div class="hud-group">
+        <!-- Radio Selector -->
+        <select id="radio-station-select" style="background: rgba(0,0,0,0.5); color: #f59e0b; border: 1px solid var(--border-cyan); border-radius: 8px; padding: 4px; font-family: var(--font-tech);">
+          <option value="synthwave">📻 Synthwave</option>
+          <option value="gothic">📻 Gothic Metal</option>
+          <option value="industrial">📻 Cyber Industrial</option>
+          <option value="chillwave">📻 Chillwave</option>
+          <option value="heavy">📻 Heavy Electro</option>
+        </select>
+
+        <!-- Essential Quick Buttons -->
+        <button class="btn-primary-hq" id="btn-open-hq" title="Ouvrir le Quartier Général / Pause">🏰 QUARTIER GÉNÉRAL (PAUSE)</button>
+        <button class="btn-icon" id="btn-music-toggle" title="Musique On/Off">🎵</button>
+        <button class="btn-icon" id="btn-crt-toggle" title="Effet CRT">📺</button>
+      </div>
+    </header>
+
+    <!-- Main Game Canvas -->
+    <canvas id="game-canvas"></canvas>
+
+    <!-- 20 Deployable Defense Tower & Trap Deck Bar -->
+    <div id="hud-build-bar">
+      <!-- Injected dynamically -->
+    </div>
+
+    <!-- HUD Bottom Control Deck -->
+    <footer id="hud-deck">
+      <div class="hero-portrait-box">
+        <img src="assets/cg_aria.jpg" alt="Valkyrie" class="hero-avatar" id="hero-avatar-img" title="Valkyrie Active">
+        <div class="hero-info">
+          <span class="hero-name" id="hero-name-txt">Commander Aria</span>
+          <div style="display: flex; gap: 8px;">
+            <button class="hero-skill-btn" id="btn-hero-skill">
+              ⚡ Deploy Aegis Decoy
+            </button>
+            <button class="btn-overdrive" id="btn-overdrive" title="Touche raccourci : F">
+              🔥 OVERDRIVE (F)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="weapons-display" id="hud-weapons-container">
+        <!-- Injected dynamically -->
+      </div>
+    </footer>
+
+    <!-- CENTRAL QUARTIER GÉNÉRAL (HQ HUB MODAL) -->
+    <div class="modal-overlay" id="hq-menu-modal">
+      <div class="modal-box" style="max-width: 900px;">
+        <button class="btn-close">&times;</button>
+        <h2 class="modal-title" style="color: #00f0ff;">🏰 QUARTIER GÉNÉRAL DE LA CITADELLE</h2>
+        <p class="modal-subtitle">Menu de gestion, personnalisation, laboratoire et archives hors-combat.</p>
+
+        <div class="hq-nav-grid">
+          <div class="hq-card" id="btn-harem-toggle">
+            <div class="hq-card-icon">💖</div>
+            <h4>Salon Harem (+18)</h4>
+            <p>Rendez visite aux Valkyries, offrez des cadeaux & découvrez leurs confidences.</p>
+          </div>
+
+          <div class="hq-card" id="btn-wardrobe-toggle">
+            <div class="hq-card-icon">👙</div>
+            <h4>Garde-Robe & Skins</h4>
+            <p>Changez les tenues de combat pour vos héroïnes (Maillots, Lingerie, Soie).</p>
+          </div>
+
+          <div class="hq-card" id="btn-biolab-toggle">
+            <div class="hq-card-icon">🧪</div>
+            <h4>Bio-Laboratoire</h4>
+            <p>Adoptez et améliorez des Drones Compagnons (Mini-Succubes).</p>
+          </div>
+
+          <div class="hq-card" id="btn-mercs-toggle">
+            <div class="hq-card-icon">💥</div>
+            <h4>Guilde des Mercenaires</h4>
+            <p>Engagez des mercenaires IA pour patrouiller autour de la Citadelle.</p>
+          </div>
+
+          <div class="hq-card" id="btn-tower-toggle">
+            <div class="hq-card-icon">🌀</div>
+            <h4>Tour Infinitum</h4>
+            <p>Défiez la tour de 100 étages avec mutateurs environnementaux.</p>
+          </div>
+
+          <div class="hq-card" id="btn-studio-toggle">
+            <div class="hq-card-icon">📸</div>
+            <h4>Studio Photo</h4>
+            <p>Visualisez vos héroïnes sous différents éclairages néons.</p>
+          </div>
+
+          <div class="hq-card" id="btn-slot-toggle">
+            <div class="hq-card-icon">🎰</div>
+            <h4>Machine à Sous</h4>
+            <p>Tentez de décrocher le Jackpot de Bio-Coins et reliques.</p>
+          </div>
+
+          <div class="hq-card" id="btn-shop-toggle">
+            <div class="hq-card-icon">🛒</div>
+            <h4>Armurerie & Boutique</h4>
+            <p>Améliorez la santé max de la Citadelle et la vitesse des tourelles.</p>
+          </div>
+
+          <div class="hq-card" id="btn-gallery-toggle">
+            <div class="hq-card-icon">🔞</div>
+            <h4>Archives Secrètes</h4>
+            <p>Consultez la galerie CG et fiches de statistiques complètes.</p>
+          </div>
+
+          <div class="hq-card" id="btn-achieve-toggle">
+            <div class="hq-card-icon">🏆</div>
+            <h4>Hauts Faits & Succès</h4>
+            <p>Suivez vos accomplissements et récoltez des Bio-Coins.</p>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 15px;">
+          <button class="btn-primary" onclick="document.getElementById('hq-menu-modal').classList.remove('active'); game.isPaused = false;">
+            ⚔️ REPRENDRE LE COMBAT
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sub-Modals (Accessible via HQ Hub Modal) -->
+
+    <!-- Bio-Lab Pet Drones Modal -->
+    <div class="modal-overlay" id="biolab-modal">
+      <div class="modal-box">
+        <button class="btn-close">&times;</button>
+        <h2 class="modal-title" style="color: #ec4899;">🧪 BIO-LABORATOIRE & DRONES COMPAGNONS</h2>
+        <p class="modal-subtitle">Vos Bio-Coins : <span id="biolab-coins-txt" style="color:#f59e0b; font-weight:bold;">400 🪙</span></p>
+
+        <div class="upgrade-options-grid">
+          <div class="upgrade-card">
+            <div class="upgrade-info">
+              <div class="upgrade-icon">🦇</div>
+              <div class="upgrade-text">
+                <h4>Drone Compagnon Mini-Succube</h4>
+                <p>Gravite autour de la citadelle, tire des lasers plasma automatiques et ramasse les pièces.</p>
+              </div>
+            </div>
+            <button class="btn-primary" id="btn-buy-pet-1">150 🪙</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tower Infinitum Modal -->
+    <div class="modal-overlay" id="tower-infinitum-modal">
+      <div class="modal-box" style="text-align: center; max-width: 550px;">
+        <button class="btn-close">&times;</button>
+        <h2 class="modal-title" style="color: #a855f7;">🌀 TOUR INFINITUM (100 ÉTAGES)</h2>
+        <p class="modal-subtitle" id="tower-floor-txt">Étage 1 / 100</p>
+        <p style="color: #cbd5e1; margin: 15px 0;">Affrontez des vagues avec mutateurs aléatoires à chaque étage et récoltez des reliques mythiques !</p>
+
+        <button class="btn-primary" id="btn-start-floor" style="background: linear-gradient(135deg, #a855f7, #7e22ce);">Gravir l'Étage 🌀</button>
+      </div>
+    </div>
+
+    <!-- Mercenary Guild Modal -->
+    <div class="modal-overlay" id="mercenary-guild-modal">
+      <div class="modal-box">
+        <button class="btn-close">&times;</button>
+        <h2 class="modal-title" style="color: #f59e0b;">💥 GUILDE DES MERCENAIRES CYBERPUNK</h2>
+        <p class="modal-subtitle">Vos Bio-Coins : <span id="mercs-coins-txt" style="color:#f59e0b; font-weight:bold;">400 🪙</span></p>
+
+        <div class="upgrade-options-grid">
+          <div class="upgrade-card">
+            <div class="upgrade-info">
+              <div class="upgrade-icon">🤠</div>
+              <div class="upgrade-text">
+                <h4>Chasseur de Primes Ray</h4>
+                <p>Mercenaire IA patrouillant le périmètre avec des blasters doubles.</p>
+              </div>
+            </div>
+            <button class="btn-primary" id="btn-hire-ray">120 🪙</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Photo Studio Modal -->
+    <div class="modal-overlay" id="photo-studio-modal">
+      <div class="modal-box" style="text-align: center; max-width: 750px;">
+        <button class="btn-close">&times;</button>
+        <h2 class="modal-title" style="color: #00f0ff;">📸 STUDIO PHOTO & PERSONNALISATION (+18)</h2>
+        <p class="modal-subtitle" id="studio-hero-title">Valkyrie Active</p>
+
+        <div style="margin: 15px 0;">
+          <img id="studio-preview-img" src="assets/cg_aria.jpg" alt="Photo Preview" style="max-width: 450px; max-height: 380px; border-radius: 14px; border: 2px solid #00f0ff; object-fit: cover;">
+        </div>
+
+        <div class="studio-filters">
+          <button class="studio-btn" onclick="document.getElementById('studio-preview-img').style.filter = 'drop-shadow(0 0 15px #ff2a5f)';">Rouge Néon</button>
+          <button class="studio-btn" onclick="document.getElementById('studio-preview-img').style.filter = 'drop-shadow(0 0 15px #00f0ff)';">Cyber Cyan</button>
+          <button class="studio-btn" onclick="document.getElementById('studio-preview-img').style.filter = 'drop-shadow(0 0 15px #10b981)';">Vert Matrix</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Harem Lounge Modal -->
+    <div class="modal-overlay" id="harem-lounge-modal">
+      <div class="modal-box">
+        <button class="btn-close">&times;</button>
+        <h2 class="modal-title" style="color: #ec4899;">💖 LE SALON INTERACTIF HAREM (+18)</h2>
+        <p class="modal-subtitle">Rendez visite à vos Valkyries et bosses débloquées, offrez des cadeaux et découvrez leurs secrets intimes !</p>
+
+        <div class="harem-grid" id="harem-grid-container">
+          <!-- Injected dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Slot Machine Minigame Modal -->
+    <div class="modal-overlay" id="slot-machine-modal">
+      <div class="modal-box" style="text-align: center; max-width: 550px;">
+        <button class="btn-close">&times;</button>
+        <h2 class="modal-title" style="color: #f59e0b;">🎰 MACHINE À SOUS CYBERPUNK</h2>
+        <p class="modal-subtitle">Vos Bio-Coins : <span id="slot-coins-txt" style="color:#f59e0b; font-weight:bold;">400 🪙</span></p>
+
+        <div class="slot-wheels">
+          <div class="slot-wheel" id="wheel-1">🎰</div>
+          <div class="slot-wheel" id="wheel-2">🎰</div>
+          <div class="slot-wheel" id="wheel-3">🎰</div>
+        </div>
+
+        <p id="slot-res-txt" style="font-size: 1.1rem; color: #00f0ff; margin-bottom: 15px;">Misez 25 🪙 pour tenter de décrocher le Jackpot !</p>
+
+        <button class="btn-primary" id="btn-spin-slot" style="background: linear-gradient(135deg, #f59e0b, #d97706);">Tirer le Levier (25 🪙) 🎰</button>
+      </div>
+    </div>
+
+    <!-- Achievements Modal -->
+    <div class="modal-overlay" id="achievements-modal">
+      <div class="modal-box">
+        <button class="btn-close">&times;</button>
+        <h2 class="modal-title" style="color: #f59e0b;">🏆 HAUTS FAITS & SUCCÈS (25+)</h2>
+        <p class="modal-subtitle">Accomplissez des défis extrêmes pour gagner des récompenses en Bio-Coins et badges d'honneur !</p>
+
+        <div class="achieve-list" id="achievements-list-container">
+          <!-- Injected dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Garde-Robe Modal -->
+    <div class="modal-overlay" id="wardrobe-modal">
+      <div class="modal-box">
+        <button class="btn-close">&times;</button>
+        <h2 class="modal-title" style="color: #ec4899;">👙 GARDE-ROBE & SKINS ALTERNATIFS (+18)</h2>
+        <p class="modal-subtitle">Changez la tenue active de vos Valkyries pour personnaliser votre avatar HUD et votre Codex !</p>
+
+        <div class="skin-select-grid" id="skin-options-container">
+          <!-- Injected dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Boss Recruit / Purify Modal -->
+    <div class="modal-overlay" id="boss-recruit-modal">
+      <div class="modal-box" style="text-align: center; max-width: 600px;">
+        <button class="btn-close">&times;</button>
+        <h2 class="modal-title" style="color: #ec4899;">PURIFICATION DE BOSS !</h2>
+        <p class="modal-subtitle" style="margin-bottom: 15px;">Vous avez terrassé le Boss ! Voulez-vous la purifier et la recruter dans votre armée ?</p>
+        
+        <img id="recruit-boss-img" src="" alt="Boss" style="width: 140px; height: 140px; border-radius: 50%; border: 3px solid #ec4899; object-fit: cover; margin-bottom: 15px;">
+        <h3 id="recruit-boss-name" style="color: #fff; margin-bottom: 20px; font-size: 1.4rem;"></h3>
+
+        <div style="display: flex; justify-content: center; gap: 20px;">
+          <button class="btn-primary" id="btn-recruit-yes" style="background: linear-gradient(135deg, #ec4899, #be185d);">💖 Purifier & Recruter</button>
+          <button class="btn-primary" onclick="document.getElementById('boss-recruit-modal').classList.remove('active'); game.isPaused = false;">Exécuter</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Level-Up Modal -->
+    <div class="modal-overlay" id="level-up-modal">
+      <div class="modal-box">
+        <h2 class="modal-title">NIVEAU SUPÉRIEUR / ARSENAL</h2>
+        <p class="modal-subtitle">Choisissez une amélioration d'arme ou un bonus de Citadelle :</p>
+        <div class="upgrade-options-grid" id="upgrade-options-container">
+          <!-- Injected dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Meta Shop Modal -->
+    <div class="modal-overlay" id="shop-modal">
+      <div class="modal-box">
+        <button class="btn-close">&times;</button>
+        <h2 class="modal-title">ARMURERIE & MÉTA-BOUTIQUE</h2>
+        <p class="modal-subtitle">Vos Bio-Coins : <span id="shop-coins-txt" style="color:#f59e0b; font-weight:bold;">0 🪙</span></p>
+
+        <div class="upgrade-options-grid">
+          <div class="upgrade-card">
+            <div class="upgrade-info">
+              <div class="upgrade-icon">❤️</div>
+              <div class="upgrade-text">
+                <h4>Renforcement de Citadelle</h4>
+                <p>Augmente la santé maximale de la Citadelle de +50 HP.</p>
+              </div>
+            </div>
+            <button class="btn-primary" id="buy-hp-btn">50 🪙</button>
+          </div>
+
+          <div class="upgrade-card">
+            <div class="upgrade-info">
+              <div class="upgrade-icon">⚡</div>
+              <div class="upgrade-text">
+                <h4>Cadence de Tir Accélérée</h4>
+                <p>Augmente la vitesse de tir de toutes les tourelles de +5%.</p>
+              </div>
+            </div>
+            <button class="btn-primary" id="buy-rate-btn">50 🪙</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Secret Archives Modal -->
+    <div class="modal-overlay" id="gallery-modal">
+      <div class="modal-box" style="max-width: 1050px;">
+        <button class="btn-close">&times;</button>
+        <h2 class="modal-title">🔞 ARCHIVES SECRÈTES (GALERIE CG MATURE)</h2>
+        <p class="modal-subtitle">Accomplissez des hauts faits et terrassez les bosses pour débloquer les illustrations CG et histoires de chaque personnage !</p>
+
+        <div class="gallery-grid" id="gallery-grid-container">
+          <!-- Injected dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Story Codex CG Viewer Modal -->
+    <div class="modal-overlay" id="cg-viewer-modal">
+      <div class="cg-viewer-layout">
+        <button class="btn-close">&times;</button>
+        <div>
+          <img id="cg-viewer-img" src="" alt="CG Illustration">
+        </div>
+        <div class="cg-story-box">
+          <h3 class="cg-story-title" id="cg-story-title-txt"></h3>
+          <p class="cg-story-sub" id="cg-story-sub-txt"></p>
+          <div class="cg-story-quote" id="cg-story-quote-txt"></div>
+          <p style="font-size: 0.9rem; color: #cbd5e1; line-height: 1.6;" id="cg-story-desc-txt"></p>
+          <div class="cg-stats-grid" id="cg-stats-grid-container"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Over Modal -->
+    <div class="modal-overlay" id="game-over-modal">
+      <div class="modal-box" style="text-align: center;">
+        <h2 class="modal-title" style="color: #ef4444;">LA CITADELLE EST TOMBÉE !</h2>
+        <p class="modal-subtitle">Les hordes démoniaques ont submergé vos défenses.</p>
+        
+        <div style="margin: 20px 0; font-size: 1.2rem; display: flex; justify-content: center; gap: 30px;">
+          <div>Vague atteinte : <strong id="go-wave-txt" style="color:#00f0ff;">1</strong></div>
+          <div>Démons éliminés : <strong id="go-kills-txt" style="color:#ff2a5f;">0</strong></div>
+          <div>Bio-Coins : <strong id="go-coins-txt" style="color:#f59e0b;">0</strong></div>
+        </div>
+
+        <button class="btn-primary" id="btn-restart">Réessayer la Défense 🔥</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="audio.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
