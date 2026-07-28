@@ -1,18 +1,29 @@
 'use strict';
 
 const CACHE_PREFIX = 'infernal-city-';
-const CACHE_NAME = `${CACHE_PREFIX}v4`;
+const CACHE_NAME = `${CACHE_PREFIX}v5`;
 
 const PRECACHE_URLS = [
   './',
   './index.html',
   './styles.v8.css',
   './audio.v8.js',
-  './game.v8.js',
+  './game.v9.js',
   './pwa.v4.js',
   './manifest.webmanifest',
   './assets/cover.jpg',
   './assets/cg_aria.jpg',
+  './assets/environment/infernal-city-floor.png',
+  './assets/animations/towers/tower-atlas-01.png',
+  './assets/animations/towers/tower-atlas-02.png',
+  './assets/animations/towers/tower-atlas-03.png',
+  './assets/animations/towers/tower-atlas-04.png',
+  './assets/animations/towers/tower-atlas-05.png',
+  './assets/animations/enemies/enemy-atlas-01.png',
+  './assets/animations/enemies/enemy-atlas-02.png',
+  './assets/animations/heroes/hero-atlas-01.png',
+  './assets/animations/heroes/hero-atlas-02.png',
+  './assets/animations/atlas-manifest.json',
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png'
 ];

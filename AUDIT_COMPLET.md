@@ -77,8 +77,8 @@ claire.
 ## P2 non bloquants
 
 - Ajouter d’autres arènes/biomes, événements et archétypes ennemis à distance.
-- Remplacer les représentations canvas simples des tours, familiers et
-  mercenaires par des assets OpenAI au niveau visuel du bestiaire.
+- Remplacer les représentations canvas simples des familiers et mercenaires par
+  des assets OpenAI au niveau du sol, des tours, des ennemis et des héros animés.
 - Ajouter RNG seedé, historique détaillé des runs et simulations d’équilibrage.
 - Ajouter une vraie suite E2E navigateur/CI et des tests de lecteur d’écran.
 - Enrichir les dialogues et épilogues adultes sans rendre les scènes graphiques.
@@ -86,7 +86,7 @@ claire.
 ## Vérifications
 
 - `npm.cmd run check`
-- 32 tests automatisés réussis
+- 37 tests automatisés réussis
 - `node --check` sur les quatre scripts runtime et PWA
 - unicité des IDs HTML
 - références JS/HTML et assets locaux

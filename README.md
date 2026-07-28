@@ -14,6 +14,8 @@ Roguelite de défense cyber-gothique en HTML, CSS et JavaScript natifs.
   métaprogression.
 - Vingt défenses améliorables jusqu’au niveau 3 et revendables à 60 % de la
   valeur investie.
+- Sol cyber-infernal, vingt défenses, sept ennemis et six héros de combat
+  animés à partir d’assets OpenAI.
 - Quartier Général : commandantes, escadrille de familiers améliorable,
   mercenaires en patrouille, boutique, archives, Salon Nocturne et mini-jeu.
 
@@ -43,22 +45,26 @@ Le projet ne requiert aucune dépendance ni étape de compilation.
 ## Installation et mode hors ligne
 
 Le jeu enregistre un service worker sur `localhost` ou depuis une origine HTTPS.
-Après une première visite en ligne, les fichiers essentiels sont précachés.
-Les portraits et sprites consultés rejoignent ensuite le cache à la demande
-pour permettre les visites suivantes hors connexion sans téléchargement initial
-inutile. Le manifeste et les icônes PNG 192/512 permettent de proposer
-l’installation en application autonome.
+Après une première visite en ligne, les fichiers essentiels, le sol et les neuf
+planches d’animation de combat sont précachés. Les portraits de galerie
+rejoignent ensuite le cache à la demande. Le manifeste et les icônes PNG 192/512
+permettent de proposer l’installation en application autonome.
 
 Les actifs cœur portent un nom de version et le code utilise le réseau en
 priorité lorsqu’il est disponible, puis le cache hors ligne en secours. Le
 cache actif reste versionné dans `sw.js`.
 
-## Bestiaire visuel
+## Direction visuelle OpenAI
 
-Les sept archétypes d’ennemis utilisent des sprites PNG générés avec l’outil
-ImageGen intégré d’OpenAI, stockés dans `assets/enemies/`. Les collisions,
-auras, états et barres de vie restent pilotés par le canvas. Le prompt set
-reproductible est documenté dans `assets/enemies/PROMPTS.md`.
+La texture raccordable de l’arène et les neuf planches 4×4 ont été générées
+avec l’outil ImageGen intégré d’OpenAI. Elles couvrent les vingt défenses, les
+sept archétypes ennemis et les six héros jouables. Le canvas choisit les frames
+selon les états réels : charge/tir/recul, locomotion/attaque/impact et
+attaque/compétence héroïque. Le héros choisi est rendu physiquement sur la
+Citadelle et ses leurres utilisent aussi sa planche.
+
+Les chemins, lignes, colonnes et résumés des prompts sont documentés dans
+`assets/animations/atlas-manifest.json`.
 
 ## Contrôles
 

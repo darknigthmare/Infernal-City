@@ -1,11 +1,11 @@
 {
   "name": "infernal-city",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
   "description": "Jeu de defense adulte Infernal City, sans dependance de build.",
   "scripts": {
     "test": "node --test tests/*.test.js",
     "audit:static": "node scripts/audit_static.cjs",
-    "check": "node --check game.v8.js && node --check audio.v8.js && node --check pwa.v4.js && node --check sw.js && node scripts/audit_static.cjs && node --test tests/*.test.js"
+    "check": "node --check game.v9.js && node --check audio.v8.js && node --check pwa.v4.js && node --check sw.js && node scripts/audit_static.cjs && node --test tests/*.test.js"
   }
 }

@@ -7,7 +7,7 @@ const test = require('node:test');
 const vm = require('node:vm');
 
 const ROOT = path.resolve(__dirname, '..');
-const GAME_SOURCE = fs.readFileSync(path.join(ROOT, 'game.v8.js'), 'utf8');
+const GAME_SOURCE = fs.readFileSync(path.join(ROOT, 'game.v9.js'), 'utf8');
 
 function createClassList() {
   const values = new Set();
@@ -111,14 +111,17 @@ function loadGameModule(seed = {}) {
       DEFENSE_MAX_LEVEL,
       DEFENSE_SELL_RATIO,
       LOOT_CONFIG,
+      TOWER_SPRITE_DATA,
       ENEMY_SPRITE_DATA,
+      HERO_SPRITE_DATA,
+      FLOOR_TEXTURE_SRC,
       WEAPONS_DATA,
       HERO_CLASSES,
       ACHIEVEMENTS,
       GALLERY_ITEMS
     };
   `;
-  vm.runInContext(`${GAME_SOURCE}\n${exportHook}`, context, { filename: 'game.v8.js' });
+  vm.runInContext(`${GAME_SOURCE}\n${exportHook}`, context, { filename: 'game.v9.js' });
 
   return {
     ...context.__INFERNAL_CITY_TEST__,
@@ -181,7 +184,8 @@ test('les sept archetypes ennemis possedent un sprite OpenAI local', () => {
 
   assert.deepEqual(Object.keys(ENEMY_SPRITE_DATA).sort(), expectedTypes.sort());
   Object.values(ENEMY_SPRITE_DATA).forEach(sprite => {
-    assert.match(sprite.src, /^assets\/enemies\/.+\.png$/);
+    assert.match(sprite.src, /^assets\/animations\/enemies\/enemy-atlas-\d+\.png$/);
+    assert.ok(Number.isInteger(sprite.row) && sprite.row >= 0 && sprite.row < 4);
     assert.ok(sprite.size >= 34);
     const assetPath = path.join(ROOT, sprite.src);
     assert.ok(fs.existsSync(assetPath), `${sprite.src} doit exister`);
@@ -795,4 +799,55 @@ test('le HUD mobile suit la hauteur reelle et le bouton musique reste synchronis
   assert.match(GAME_SOURCE, /new ResizeObserver\(\(\) => this\.syncMissionStatusPosition\(\)\)/);
   assert.match(GAME_SOURCE, /header\.getBoundingClientRect\(\)\.bottom/);
   assert.match(GAME_SOURCE, /if \(this\.preferredMusicEnabled && !audio\.isPlayingMusic\) audio\.startMusic\(\);\s*this\.syncMusicButtonState\(\)/);
+});
+
+test('les atlas suivent les etats de tir, impact et competence', () => {
+  const {
+    GameEngine, TOWER_SPRITE_DATA, ENEMY_SPRITE_DATA, HERO_SPRITE_DATA
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+
+  assert.equal(Object.keys(TOWER_SPRITE_DATA).length, 20);
+  assert.equal(Object.keys(ENEMY_SPRITE_DATA).length, 7);
+  assert.equal(Object.keys(HERO_SPRITE_DATA).length, 6);
+
+  const tower = { animationTimer: 0.2, animationPhase: 0 };
+  assert.equal(engine.getTowerAnimationFrame(tower, {}), 2);
+  tower.animationTimer = 0;
+  assert.equal(engine.getTowerAnimationFrame(tower, {}), 0);
+
+  const enemy = { hitAnimationTimer: 0.1, attackAnimationTimer: 0, animationPhase: 0 };
+  assert.equal(engine.getEnemyAnimationFrame(enemy, { fps: 6 }), 3);
+  enemy.hitAnimationTimer = 0;
+  enemy.attackAnimationTimer = 0.2;
+  assert.equal(engine.getEnemyAnimationFrame(enemy, { fps: 6 }), 2);
+
+  engine.heroAnimationState = 'ability';
+  assert.equal(engine.getHeroAnimationFrame(), 3);
+  engine.heroAnimationState = 'attack';
+  assert.equal(engine.getHeroAnimationFrame(), 2);
+  assert.match(GAME_SOURCE, /towerAnimationGhosts\.push\(\{ \.\.\.t, animationTimer: 0\.34/);
+});
+
+test('le rendu decoupe exactement la cellule 4x4 demandee', () => {
+  const { GameEngine } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const drawCalls = [];
+  engine.ctx = {
+    save() {},
+    restore() {},
+    translate() {},
+    rotate() {},
+    scale() {},
+    drawImage(...args) { drawCalls.push(args); }
+  };
+  const image = {
+    complete: true,
+    naturalWidth: 1024,
+    naturalHeight: 1024
+  };
+
+  assert.equal(engine.drawAtlasFrame(image, { row: 2 }, 3, 100, 80, 64, { flipX: true }), true);
+  assert.deepEqual(drawCalls[0].slice(1, 5), [768, 512, 256, 256]);
+  assert.deepEqual(drawCalls[0].slice(5), [-32, -32, 64, 64]);
 });

@@ -1,5 +1,6 @@
 .vercel/
 audit-evidence/
+tmp/
 __pycache__/
 *.py[cod]
 .env.local

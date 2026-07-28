@@ -5,7 +5,7 @@ const path = require('node:path');
 
 const root = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-const game = fs.readFileSync(path.join(root, 'game.v8.js'), 'utf8');
+const game = fs.readFileSync(path.join(root, 'game.v9.js'), 'utf8');
 
 const ids = [...html.matchAll(/id="([^"]+)"/g)].map(match => match[1]);
 const duplicateIds = [...new Set(ids.filter((id, index) => ids.indexOf(id) !== index))];

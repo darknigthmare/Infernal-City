@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "generator": "OpenAI ImageGen integrated tool",
+  "layout": {
+    "columns": 4,
+    "rows": 4,
+    "background": "transparent",
+    "view": "orthographic 3/4 top-down 65 degrees",
+    "style": "techno-gothic anime cel shading"
+  },
+  "columns": {
+    "towers": ["idle", "charge", "fire", "cooldown"],
+    "enemies": ["locomotion-contact", "locomotion-pass", "attack", "hit-recovery"],
+    "heroes": ["idle", "command", "attack", "ability"]
+  },
+  "floor": {
+    "src": "assets/environment/infernal-city-floor.png",
+    "opaque": true,
+    "tileable": true
+  },
+  "atlases": [
+    {
+      "src": "assets/animations/towers/tower-atlas-01.png",
+      "category": "towers",
+      "rows": ["vulcan_turret", "plasma_mortar", "railgun_pylon", "flame_trap"]
+    },
+    {
+      "src": "assets/animations/towers/tower-atlas-02.png",
+      "category": "towers",
+      "rows": ["tesla_spire", "cryo_cannon", "acid_trap", "laser_drone"]
+    },
+    {
+      "src": "assets/animations/towers/tower-atlas-03.png",
+      "category": "towers",
+      "rows": ["landmine", "aegis_barrier", "gravity_well", "missile_pod"]
+    },
+    {
+      "src": "assets/animations/towers/tower-atlas-04.png",
+      "category": "towers",
+      "rows": ["bio_siphon", "magnet_drone", "sawblade_turret", "emp_tower"]
+    },
+    {
+      "src": "assets/animations/towers/tower-atlas-05.png",
+      "category": "towers",
+      "rows": ["orbital_beam", "napalm_mine", "blood_shrine", "sonic_cannon"]
+    },
+    {
+      "src": "assets/animations/enemies/enemy-atlas-01.png",
+      "category": "enemies",
+      "rows": ["swarmer", "runner", "brute", "hellwarden"]
+    },
+    {
+      "src": "assets/animations/enemies/enemy-atlas-02.png",
+      "category": "enemies",
+      "rows": ["vespera", "carmilla", "leviathan", null]
+    },
+    {
+      "src": "assets/animations/heroes/hero-atlas-01.png",
+      "category": "heroes",
+      "rows": ["aria", "kira", "rin", "selene"]
+    },
+    {
+      "src": "assets/animations/heroes/hero-atlas-02.png",
+      "category": "heroes",
+      "rows": ["vespera", "carmilla", null, null]
+    }
+  ],
+  "promptDirection": {
+    "towers": "Stable machine identity per row; idle, aiming or charge, firing peak, recoil or cooldown; no text, floor, shadows, borders or grid.",
+    "enemies": "Preserve supplied identity references; stable facing and anchor; two locomotion poses, attack and hit recovery.",
+    "heroes": "Preserve supplied adult character identity and combat costume; idle, command, primary attack and signature ability; nonsexual combat poses.",
+    "floor": "Seamless top-down infernal cyber-gothic street in dark stone and black steel with restrained magenta ember cracks and cyan conduits."
+  }
+}

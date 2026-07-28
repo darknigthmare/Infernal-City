@@ -53,9 +53,9 @@ test('les actifs coeur sont fingerprints et servis network first', () => {
 
   assert.match(index, /styles\.v8\.css/);
   assert.match(index, /audio\.v8\.js/);
-  assert.match(index, /game\.v8\.js/);
+  assert.match(index, /game\.v9\.js/);
   assert.match(index, /pwa\.v4\.js/);
-  assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}v4`/);
+  assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}v5`/);
   assert.match(worker, /isMutableCoreAsset/);
   assert.match(worker, /if \(isMutableCoreAsset\) \{\s*event\.respondWith\(\s*fetch\(request\)/);
 });
