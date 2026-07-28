@@ -1,0 +1,6 @@
+.git/
+.agents/
+.codex/
+audit-evidence/
+tests/
+scripts/

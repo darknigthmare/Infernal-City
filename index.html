@@ -3,22 +3,103 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Valkyrie Sweeper: Dark Siege</title>
-  <meta name="description" content="Jeu de défense de citadelle roguelite auto-battler avec 20 tourelles, Drones Compagnons, Tour 100 Étages, Mercenaires, Studio Photo et Radio Cyberpunk.">
-  <link rel="stylesheet" href="styles.css">
+  <title>Infernal City: Valkyrie Sweeper</title>
+  <meta name="description" content="Défendez Haven dans un roguelite cyber-gothique réservé aux adultes, avec 20 défenses, des alliances libres et des relations sensuelles consensuelles.">
+  <meta name="theme-color" content="#07090e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Infernal City">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <link rel="icon" href="assets/icons/icon-192.png" type="image/png">
+  <link rel="stylesheet" href="styles.v8.css">
 </head>
 <body>
 
   <div id="app-container">
+    <div class="modal-overlay active adult-gate" id="adult-gate-modal" role="dialog" aria-modal="true" aria-labelledby="adult-gate-title" aria-describedby="adult-gate-description">
+      <div class="adult-gate-box">
+        <div class="adult-gate-art" role="img" aria-label="La citadelle cyber-gothique Haven assiégée par des hordes démoniaques"></div>
+        <div class="adult-gate-content">
+          <span class="mature-badge">18+ · ADULTES UNIQUEMENT</span>
+          <p class="adult-gate-kicker">INFERNAL CITY</p>
+          <h1 id="adult-gate-title">Valkyrie Sweeper</h1>
+          <p id="adult-gate-description">Cette expérience contient violence stylisée, tenues suggestives, tension sensuelle et romances entre adultes consentants.</p>
+          <ul class="content-notice-list">
+            <li>Tous les personnages relationnels ont 27 ans ou plus.</li>
+            <li>Chaque rapprochement repose sur un accord libre et révocable.</li>
+            <li>Les moments intimes restent suggestifs et se terminent par un fondu au noir.</li>
+          </ul>
+          <button class="btn-primary adult-enter-btn" id="btn-enter-adult" type="button">J’AI 18 ANS OU PLUS — ENTRER</button>
+          <button class="btn-text" id="btn-decline-adult" type="button">Je ne souhaite pas accéder au jeu</button>
+          <p class="adult-gate-legal">En entrant, vous confirmez être majeur selon la législation de votre pays.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- First-run onboarding, difficulty selection and checkpoint resume -->
+    <div class="modal-overlay" id="mission-briefing-modal" role="dialog" aria-modal="true" aria-labelledby="mission-briefing-title" aria-describedby="mission-briefing-description">
+      <div class="modal-box mission-briefing-box">
+        <p class="section-eyebrow">OPÉRATION HAVEN</p>
+        <h2 class="modal-title" id="mission-briefing-title">BRIEFING DE CAMPAGNE</h2>
+        <p class="modal-subtitle" id="mission-briefing-description">Tenez quinze vagues, neutralisez le Léviathan et sauvez la Citadelle. La Tour Infinitum et le mode infini prolongent ensuite la progression.</p>
+
+        <div class="briefing-objective" role="note">
+          <strong>OBJECTIF FINAL</strong>
+          <span>Vague 15 · Titan Léviathan</span>
+        </div>
+
+        <label class="difficulty-field" for="difficulty-select">
+          <span>Difficulté</span>
+          <select id="difficulty-select">
+            <option value="story">Histoire sensuelle — pression modérée</option>
+            <option value="standard" selected>Siège standard — équilibré</option>
+            <option value="nightmare">Cauchemar néon — exigeant</option>
+          </select>
+          <small id="difficulty-description">L’expérience équilibrée prévue pour une première campagne complète.</small>
+        </label>
+
+        <ol class="briefing-steps">
+          <li><strong>Construire</strong><span>Choisissez une défense, puis touchez le champ de bataille. Touchez une tour placée pour l’améliorer ou la vendre.</span></li>
+          <li><strong>Évoluer</strong><span>Les éliminations donnent de l’XP. Chaque niveau améliore votre arsenal automatique.</span></li>
+          <li><strong>Survivre</strong><span>Bio-Coins = achats du run. Crédits Haven = améliorations permanentes au QG.</span></li>
+          <li><strong>Déchaîner</strong><span>Remplissez la Frénésie et activez l’Overdrive avec le bouton ou la touche F.</span></li>
+        </ol>
+
+        <div class="save-warning" id="save-warning" role="alert" hidden>
+          <span>La sauvegarde locale est illisible ou indisponible. Vous pouvez jouer sans sauvegarde ou réinitialiser uniquement les données d’Infernal City.</span>
+          <button class="btn-secondary" id="btn-reset-save" type="button">RÉINITIALISER LA SAUVEGARDE</button>
+        </div>
+
+        <div class="checkpoint-card" id="checkpoint-card" hidden>
+          <strong>POINT DE CONTRÔLE DISPONIBLE</strong>
+          <span id="checkpoint-summary">Vague 1 · Citadelle intacte</span>
+        </div>
+
+        <div class="briefing-actions">
+          <button class="btn-secondary" id="btn-continue-run" type="button" hidden>CONTINUER LA CAMPAGNE</button>
+          <button class="btn-primary" id="btn-start-campaign" type="button">NOUVELLE CAMPAGNE</button>
+        </div>
+      </div>
+    </div>
+
     <!-- CRT Overlay -->
     <div class="crt-overlay"></div>
+
+    <div class="sr-only" id="game-announcer" aria-live="polite" aria-atomic="true"></div>
+    <div class="sr-only" id="battlefield-status" role="status" aria-live="polite" aria-atomic="true">Aucune menace immédiate.</div>
 
     <!-- HUD Top Header (Clean Combat Mode) -->
     <header id="hud-header">
       <div class="hud-group">
+        <div class="hud-brand" aria-label="Infernal City">
+          <span>INFERNAL</span>
+          <strong>CITY</strong>
+        </div>
         <div class="hud-stat">
           <span class="label">Vague</span>
           <span class="value" id="hud-wave-txt">1</span>
+          <span class="label wave-progress" id="hud-wave-progress-txt">0 / 10</span>
         </div>
 
         <!-- Citadel HP Bar -->
@@ -31,7 +112,7 @@
         </div>
 
         <!-- Overdrive Frenzy Bar -->
-        <div class="hud-stat citadel-hp-box" style="width: 110px;">
+        <div class="hud-stat citadel-hp-box" id="frenzy-hud-stat" style="width: 110px;">
           <span class="label">Frénésie</span>
           <div class="meter-bar" style="border-color: rgba(245, 158, 11, 0.5);">
             <div class="frenzy-meter-fill" id="frenzy-meter-fill"></div>
@@ -39,7 +120,7 @@
         </div>
 
         <!-- Valkyrie Affinity Bar -->
-        <div class="hud-stat citadel-hp-box" style="width: 120px;">
+        <div class="hud-stat citadel-hp-box" id="affinity-hud-stat" style="width: 120px;">
           <span class="label">Affinité Valkyrie</span>
           <div class="meter-bar" style="border-color: rgba(236, 72, 153, 0.5);">
             <div class="affinity-meter-fill" id="affinity-meter-fill"></div>
@@ -54,6 +135,10 @@
           <span class="value" style="color: #f59e0b;" id="hud-coins-txt">400 🪙</span>
         </div>
         <div class="hud-stat">
+          <span class="label">Crédits Haven</span>
+          <span class="value meta-currency" id="hud-meta-coins-txt">0 ◆</span>
+        </div>
+        <div class="hud-stat" id="hud-score-stat">
           <span class="label">Score</span>
           <span class="value" id="hud-score-txt">0</span>
         </div>
@@ -61,7 +146,7 @@
 
       <div class="hud-group">
         <!-- Radio Selector -->
-        <select id="radio-station-select" style="background: rgba(0,0,0,0.5); color: #f59e0b; border: 1px solid var(--border-cyan); border-radius: 8px; padding: 4px; font-family: var(--font-tech);">
+        <select id="radio-station-select" aria-label="Station radio" style="background: rgba(0,0,0,0.5); color: #f59e0b; border: 1px solid var(--border-cyan); border-radius: 8px; padding: 4px; font-family: var(--font-tech);">
           <option value="synthwave">📻 Synthwave</option>
           <option value="gothic">📻 Gothic Metal</option>
           <option value="industrial">📻 Cyber Industrial</option>
@@ -70,14 +155,21 @@
         </select>
 
         <!-- Essential Quick Buttons -->
-        <button class="btn-primary-hq" id="btn-open-hq" title="Ouvrir le Quartier Général / Pause">🏰 QUARTIER GÉNÉRAL (PAUSE)</button>
-        <button class="btn-icon" id="btn-music-toggle" title="Musique On/Off">🎵</button>
-        <button class="btn-icon" id="btn-crt-toggle" title="Effet CRT">📺</button>
+        <button class="btn-primary-hq" id="btn-open-hq" type="button" title="Ouvrir le Quartier Général / Pause">🏰 QUARTIER GÉNÉRAL (PAUSE)</button>
+        <button class="btn-icon" id="btn-music-toggle" type="button" title="Musique On/Off" aria-label="Activer la musique" aria-pressed="false">🎵</button>
+        <button class="btn-icon" id="btn-sfx-toggle" type="button" title="Effets sonores On/Off" aria-label="Couper les effets sonores" aria-pressed="true">🔊</button>
+        <button class="btn-icon" id="btn-crt-toggle" type="button" title="Effet CRT" aria-label="Désactiver l’effet CRT" aria-pressed="true">📺</button>
       </div>
     </header>
 
     <!-- Main Game Canvas -->
     <canvas id="game-canvas"></canvas>
+
+    <aside id="mission-status-panel" aria-label="État de la mission">
+      <span id="mission-objective-txt">Objectif · atteindre la vague 15</span>
+      <span id="mission-level-txt">Niveau 1 · XP 0 / 100</span>
+      <span id="mission-difficulty-txt">Siège standard</span>
+    </aside>
 
     <!-- 20 Deployable Defense Tower & Trap Deck Bar -->
     <div id="hud-build-bar">
@@ -89,12 +181,12 @@
       <div class="hero-portrait-box">
         <img src="assets/cg_aria.jpg" alt="Valkyrie" class="hero-avatar" id="hero-avatar-img" title="Valkyrie Active">
         <div class="hero-info">
-          <span class="hero-name" id="hero-name-txt">Commander Aria</span>
+          <span class="hero-name" id="hero-name-txt">Commandante Aria</span>
           <div style="display: flex; gap: 8px;">
-            <button class="hero-skill-btn" id="btn-hero-skill">
-              ⚡ Deploy Aegis Decoy
+            <button class="hero-skill-btn" id="btn-hero-skill" type="button">
+              ⚡ Leurre Bouclier Aegis
             </button>
-            <button class="btn-overdrive" id="btn-overdrive" title="Touche raccourci : F">
+            <button class="btn-overdrive" id="btn-overdrive" type="button" title="Touche raccourci : F">
               🔥 OVERDRIVE (F)
             </button>
           </div>
@@ -114,69 +206,75 @@
         <p class="modal-subtitle">Menu de gestion, personnalisation, laboratoire et archives hors-combat.</p>
 
         <div class="hq-nav-grid">
-          <div class="hq-card" id="btn-harem-toggle">
+          <button class="hq-card" id="btn-harem-toggle" type="button">
             <div class="hq-card-icon">💖</div>
-            <h4>Salon Harem (+18)</h4>
-            <p>Rendez visite aux Valkyries, offrez des cadeaux & découvrez leurs confidences.</p>
-          </div>
+            <h4>Salon Nocturne (18+)</h4>
+            <p>Relations adultes, libres et consensuelles. Parlez, invitez, ou dites « pas maintenant ».</p>
+          </button>
 
-          <div class="hq-card" id="btn-wardrobe-toggle">
+          <button class="hq-card" id="btn-roster-toggle" type="button">
+            <div class="hq-card-icon">⚔️</div>
+            <h4>Salle de Commandement</h4>
+            <p>Choisissez la Valkyrie adulte qui mènera la prochaine sortie.</p>
+          </button>
+
+          <button class="hq-card" id="btn-wardrobe-toggle" type="button">
             <div class="hq-card-icon">👙</div>
             <h4>Garde-Robe & Skins</h4>
-            <p>Changez les tenues de combat pour vos héroïnes (Maillots, Lingerie, Soie).</p>
-          </div>
+            <p>Choisissez librement armures, maillots, lingerie tactique et soie néon.</p>
+          </button>
 
-          <div class="hq-card" id="btn-biolab-toggle">
+          <button class="hq-card" id="btn-biolab-toggle" type="button">
             <div class="hq-card-icon">🧪</div>
             <h4>Bio-Laboratoire</h4>
-            <p>Adoptez et améliorez des Drones Compagnons (Mini-Succubes).</p>
-          </div>
+            <p>Activez et améliorez des familiers IA non humanoïdes.</p>
+          </button>
 
-          <div class="hq-card" id="btn-mercs-toggle">
+          <button class="hq-card" id="btn-mercs-toggle" type="button">
             <div class="hq-card-icon">💥</div>
             <h4>Guilde des Mercenaires</h4>
             <p>Engagez des mercenaires IA pour patrouiller autour de la Citadelle.</p>
-          </div>
+          </button>
 
-          <div class="hq-card" id="btn-tower-toggle">
+          <button class="hq-card" id="btn-tower-toggle" type="button">
             <div class="hq-card-icon">🌀</div>
             <h4>Tour Infinitum</h4>
-            <p>Défiez la tour de 100 étages avec mutateurs environnementaux.</p>
-          </div>
+            <p>Défiez 100 étages à mutateurs et gagnez des Crédits Haven permanents.</p>
+          </button>
 
-          <div class="hq-card" id="btn-studio-toggle">
+          <button class="hq-card" id="btn-studio-toggle" type="button">
             <div class="hq-card-icon">📸</div>
-            <h4>Studio Photo</h4>
-            <p>Visualisez vos héroïnes sous différents éclairages néons.</p>
-          </div>
+            <h4>Studio Boudoir Néon</h4>
+            <p>Portraits sensuels non nus et trois éclairages cyber-gothiques au choix.</p>
+          </button>
 
-          <div class="hq-card" id="btn-slot-toggle">
+          <button class="hq-card" id="btn-slot-toggle" type="button">
             <div class="hq-card-icon">🎰</div>
             <h4>Machine à Sous</h4>
-            <p>Tentez de décrocher le Jackpot de Bio-Coins et reliques.</p>
-          </div>
+            <p>Tentez de décrocher un jackpot de Bio-Coins fictifs, sans argent réel.</p>
+          </button>
 
-          <div class="hq-card" id="btn-shop-toggle">
+          <button class="hq-card" id="btn-shop-toggle" type="button">
             <div class="hq-card-icon">🛒</div>
             <h4>Armurerie & Boutique</h4>
-            <p>Améliorez la santé max de la Citadelle et la vitesse des tourelles.</p>
-          </div>
+            <p>Dépensez vos Crédits Haven en améliorations permanentes.</p>
+          </button>
 
-          <div class="hq-card" id="btn-gallery-toggle">
+          <button class="hq-card" id="btn-gallery-toggle" type="button">
             <div class="hq-card-icon">🔞</div>
             <h4>Archives Secrètes</h4>
-            <p>Consultez la galerie CG et fiches de statistiques complètes.</p>
-          </div>
+            <p>Codex adulte, portraits suggestifs consentis et récits personnels.</p>
+          </button>
 
-          <div class="hq-card" id="btn-achieve-toggle">
+          <button class="hq-card" id="btn-achieve-toggle" type="button">
             <div class="hq-card-icon">🏆</div>
             <h4>Hauts Faits & Succès</h4>
-            <p>Suivez vos accomplissements et récoltez des Bio-Coins.</p>
-          </div>
+            <p>Suivez vos accomplissements et récoltez des Crédits Haven.</p>
+          </button>
         </div>
 
         <div style="text-align: center; margin-top: 15px;">
-          <button class="btn-primary" onclick="document.getElementById('hq-menu-modal').classList.remove('active'); game.isPaused = false;">
+          <button class="btn-primary" id="btn-resume-combat" type="button">
             ⚔️ REPRENDRE LE COMBAT
           </button>
         </div>
@@ -191,17 +289,21 @@
         <button class="btn-close">&times;</button>
         <h2 class="modal-title" style="color: #ec4899;">🧪 BIO-LABORATOIRE & DRONES COMPAGNONS</h2>
         <p class="modal-subtitle">Vos Bio-Coins : <span id="biolab-coins-txt" style="color:#f59e0b; font-weight:bold;">400 🪙</span></p>
+        <p class="system-status" id="biolab-status-txt" role="status" aria-live="polite">Escadrille : 0 / 3 · Niveau 1</p>
 
         <div class="upgrade-options-grid">
           <div class="upgrade-card">
             <div class="upgrade-info">
               <div class="upgrade-icon">🦇</div>
               <div class="upgrade-text">
-                <h4>Drone Compagnon Mini-Succube</h4>
-                <p>Gravite autour de la citadelle, tire des lasers plasma automatiques et ramasse les pièces.</p>
+                <h4>Familier IA Chiroptère</h4>
+                <p>Drone autonome non humanoïde : gravite autour de la citadelle et tire des lasers plasma.</p>
               </div>
             </div>
-            <button class="btn-primary" id="btn-buy-pet-1">150 🪙</button>
+            <div class="card-action-stack">
+              <button class="btn-primary" id="btn-buy-pet-1" type="button">ACTIVER · 150 🪙</button>
+              <button class="btn-secondary" id="btn-upgrade-pets" type="button">AMÉLIORER L’ESCADRILLE</button>
+            </div>
           </div>
         </div>
       </div>
@@ -213,9 +315,11 @@
         <button class="btn-close">&times;</button>
         <h2 class="modal-title" style="color: #a855f7;">🌀 TOUR INFINITUM (100 ÉTAGES)</h2>
         <p class="modal-subtitle" id="tower-floor-txt">Étage 1 / 100</p>
-        <p style="color: #cbd5e1; margin: 15px 0;">Affrontez des vagues avec mutateurs aléatoires à chaque étage et récoltez des reliques mythiques !</p>
+        <p class="mutator-preview" id="tower-mutator-txt">Mutateur à révéler au lancement.</p>
+        <p class="mode-rule">La campagne est suspendue pendant le défi. Structures, arsenal, dégâts et Bio-Coins restent partagés : entrer dans la Tour est un choix tactique risqué.</p>
+        <p style="color: #cbd5e1; margin: 15px 0;">Affrontez un mutateur verrouillé à chaque étage et gagnez des Crédits Haven permanents.</p>
 
-        <button class="btn-primary" id="btn-start-floor" style="background: linear-gradient(135deg, #a855f7, #7e22ce);">Gravir l'Étage 🌀</button>
+        <button class="btn-primary" id="btn-start-floor">Gravir l'Étage 🌀</button>
       </div>
     </div>
 
@@ -225,6 +329,7 @@
         <button class="btn-close">&times;</button>
         <h2 class="modal-title" style="color: #f59e0b;">💥 GUILDE DES MERCENAIRES CYBERPUNK</h2>
         <p class="modal-subtitle">Vos Bio-Coins : <span id="mercs-coins-txt" style="color:#f59e0b; font-weight:bold;">400 🪙</span></p>
+        <p class="system-status" id="mercs-status-txt" role="status" aria-live="polite">Escouade : 0 / 3</p>
 
         <div class="upgrade-options-grid">
           <div class="upgrade-card">
@@ -235,7 +340,7 @@
                 <p>Mercenaire IA patrouillant le périmètre avec des blasters doubles.</p>
               </div>
             </div>
-            <button class="btn-primary" id="btn-hire-ray">120 🪙</button>
+            <button class="btn-primary" id="btn-hire-ray" type="button">ENGAGER · 120 🪙</button>
           </div>
         </div>
       </div>
@@ -245,27 +350,29 @@
     <div class="modal-overlay" id="photo-studio-modal">
       <div class="modal-box" style="text-align: center; max-width: 750px;">
         <button class="btn-close">&times;</button>
-        <h2 class="modal-title" style="color: #00f0ff;">📸 STUDIO PHOTO & PERSONNALISATION (+18)</h2>
+        <h2 class="modal-title" style="color: #00f0ff;">📸 STUDIO BOUDOIR NÉON (18+)</h2>
         <p class="modal-subtitle" id="studio-hero-title">Valkyrie Active</p>
+        <p class="consent-note">Portraits suggestifs non nus, réalisés et exposés avec l’accord de chaque modèle adulte.</p>
 
         <div style="margin: 15px 0;">
-          <img id="studio-preview-img" src="assets/cg_aria.jpg" alt="Photo Preview" style="max-width: 450px; max-height: 380px; border-radius: 14px; border: 2px solid #00f0ff; object-fit: cover;">
+          <img id="studio-preview-img" src="assets/cg_aria.jpg" alt="Portrait boudoir non nu de Commandante Aria, 34 ans" style="width: 100%; max-width: 450px; max-height: 380px; border-radius: 14px; border: 2px solid #00f0ff; object-fit: cover;">
         </div>
 
         <div class="studio-filters">
-          <button class="studio-btn" onclick="document.getElementById('studio-preview-img').style.filter = 'drop-shadow(0 0 15px #ff2a5f)';">Rouge Néon</button>
-          <button class="studio-btn" onclick="document.getElementById('studio-preview-img').style.filter = 'drop-shadow(0 0 15px #00f0ff)';">Cyber Cyan</button>
-          <button class="studio-btn" onclick="document.getElementById('studio-preview-img').style.filter = 'drop-shadow(0 0 15px #10b981)';">Vert Matrix</button>
+          <button class="studio-btn" type="button" data-studio-color="#ff2a5f">Rouge Néon</button>
+          <button class="studio-btn" type="button" data-studio-color="#00f0ff">Cyber Cyan</button>
+          <button class="studio-btn" type="button" data-studio-color="#10b981">Vert Matrix</button>
         </div>
       </div>
     </div>
 
-    <!-- Harem Lounge Modal -->
+    <!-- Adult, consensual relationship lounge -->
     <div class="modal-overlay" id="harem-lounge-modal">
       <div class="modal-box">
         <button class="btn-close">&times;</button>
-        <h2 class="modal-title" style="color: #ec4899;">💖 LE SALON INTERACTIF HAREM (+18)</h2>
-        <p class="modal-subtitle">Rendez visite à vos Valkyries et bosses débloquées, offrez des cadeaux et découvrez leurs secrets intimes !</p>
+        <h2 class="modal-title" style="color: #ec4899;">💖 SALON NOCTURNE — RELATIONS ADULTES</h2>
+        <p class="modal-subtitle">Tous les personnages ont 27 ans ou plus. Un présent n’achète jamais l’affection ; toute invitation peut être refusée sans pénalité.</p>
+        <p class="lounge-currency">Crédits Haven disponibles : <strong id="lounge-meta-coins-txt">0 ◆</strong></p>
 
         <div class="harem-grid" id="harem-grid-container">
           <!-- Injected dynamically -->
@@ -287,8 +394,9 @@
         </div>
 
         <p id="slot-res-txt" style="font-size: 1.1rem; color: #00f0ff; margin-bottom: 15px;">Misez 25 🪙 pour tenter de décrocher le Jackpot !</p>
+        <p class="slot-rules">Monnaie fictive uniquement · trois symboles identiques : 350 🪙 · une paire : 15 🪙 · chance de triple : 4 %.</p>
 
-        <button class="btn-primary" id="btn-spin-slot" style="background: linear-gradient(135deg, #f59e0b, #d97706);">Tirer le Levier (25 🪙) 🎰</button>
+        <button class="btn-primary" id="btn-spin-slot" type="button">TIRER LE LEVIER · 25 🪙</button>
       </div>
     </div>
 
@@ -296,8 +404,8 @@
     <div class="modal-overlay" id="achievements-modal">
       <div class="modal-box">
         <button class="btn-close">&times;</button>
-        <h2 class="modal-title" style="color: #f59e0b;">🏆 HAUTS FAITS & SUCCÈS (25+)</h2>
-        <p class="modal-subtitle">Accomplissez des défis extrêmes pour gagner des récompenses en Bio-Coins et badges d'honneur !</p>
+        <h2 class="modal-title" style="color: #f59e0b;">🏆 HAUTS FAITS & SUCCÈS</h2>
+        <p class="modal-subtitle">Accomplissez des défis pour gagner des Crédits Haven et des badges d’honneur.</p>
 
         <div class="achieve-list" id="achievements-list-container">
           <!-- Injected dynamically -->
@@ -318,20 +426,45 @@
       </div>
     </div>
 
-    <!-- Boss Recruit / Purify Modal -->
+    <!-- Free alliance proposal after a boss duel -->
     <div class="modal-overlay" id="boss-recruit-modal">
       <div class="modal-box" style="text-align: center; max-width: 600px;">
-        <button class="btn-close">&times;</button>
-        <h2 class="modal-title" style="color: #ec4899;">PURIFICATION DE BOSS !</h2>
-        <p class="modal-subtitle" style="margin-bottom: 15px;">Vous avez terrassé le Boss ! Voulez-vous la purifier et la recruter dans votre armée ?</p>
+        <h2 class="modal-title" style="color: #ec4899;">TRÊVE APRÈS LE DUEL</h2>
+        <p class="modal-subtitle" style="margin-bottom: 15px;">Elle est vaincue, pas soumise. Vous pouvez proposer une alliance entre égales ou la laisser repartir librement.</p>
         
         <img id="recruit-boss-img" src="" alt="Boss" style="width: 140px; height: 140px; border-radius: 50%; border: 3px solid #ec4899; object-fit: cover; margin-bottom: 15px;">
         <h3 id="recruit-boss-name" style="color: #fff; margin-bottom: 20px; font-size: 1.4rem;"></h3>
+        <p id="recruit-boss-response" class="alliance-response"></p>
 
-        <div style="display: flex; justify-content: center; gap: 20px;">
-          <button class="btn-primary" id="btn-recruit-yes" style="background: linear-gradient(135deg, #ec4899, #be185d);">💖 Purifier & Recruter</button>
-          <button class="btn-primary" onclick="document.getElementById('boss-recruit-modal').classList.remove('active'); game.isPaused = false;">Exécuter</button>
+        <div class="boss-alliance-actions">
+          <button class="btn-primary" id="btn-recruit-yes" type="button">🤝 PROPOSER UNE ALLIANCE LIBRE</button>
+          <button class="btn-secondary" id="btn-boss-release" type="button">LA LAISSER PARTIR</button>
         </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="tower-complete-modal" role="dialog" aria-modal="true" aria-labelledby="tower-complete-title">
+      <div class="modal-box run-summary-box">
+        <p class="section-eyebrow">TOUR INFINITUM · ÉTAGE 100</p>
+        <h2 class="modal-title victory-title" id="tower-complete-title">LES CENT ÉTAGES SONT SÉCURISÉS</h2>
+        <p class="modal-subtitle" id="tower-complete-description">La Tour reconnaît votre première maîtrise. Le mutateur final s’effondre et la récompense permanente rejoint l’Armurerie.</p>
+        <div class="run-summary-grid">
+          <div><span>Étages</span><strong>100 / 100</strong></div>
+          <div><span>Récompense</span><strong id="tower-complete-reward-txt">750 ◆</strong></div>
+          <div><span>Durée du run</span><strong id="tower-complete-time-txt">00:00</strong></div>
+          <div><span>Score actuel</span><strong id="tower-complete-score-txt">0</strong></div>
+        </div>
+        <button class="btn-primary" id="btn-close-tower-complete" type="button">RETOUR À LA CAMPAGNE</button>
+      </div>
+    </div>
+
+    <!-- Hero Roster Modal -->
+    <div class="modal-overlay" id="roster-modal">
+      <div class="modal-box">
+        <button class="btn-close">&times;</button>
+        <h2 class="modal-title" id="roster-modal-title">⚔️ SALLE DE COMMANDEMENT</h2>
+        <p class="modal-subtitle">Chaque Valkyrie est une adulte autonome. Changer de commandante conserve l’arsenal actif et la progression permanente.</p>
+        <div class="hero-select-grid" id="hero-select-grid"></div>
       </div>
     </div>
 
@@ -351,7 +484,7 @@
       <div class="modal-box">
         <button class="btn-close">&times;</button>
         <h2 class="modal-title">ARMURERIE & MÉTA-BOUTIQUE</h2>
-        <p class="modal-subtitle">Vos Bio-Coins : <span id="shop-coins-txt" style="color:#f59e0b; font-weight:bold;">0 🪙</span></p>
+        <p class="modal-subtitle">Vos Crédits Haven : <span id="shop-coins-txt" class="meta-currency">0 ◆</span></p>
 
         <div class="upgrade-options-grid">
           <div class="upgrade-card">
@@ -375,6 +508,17 @@
             </div>
             <button class="btn-primary" id="buy-rate-btn">50 🪙</button>
           </div>
+
+          <div class="upgrade-card">
+            <div class="upgrade-info">
+              <div class="upgrade-icon">🧲</div>
+              <div class="upgrade-text">
+                <h4>Collecteur Magnétique</h4>
+                <p>Augmente de 20 px la portée de collecte des caisses et power-ups.</p>
+              </div>
+            </div>
+            <button class="btn-primary" id="buy-magnet-btn" type="button">75 ◆</button>
+          </div>
         </div>
       </div>
     </div>
@@ -383,8 +527,8 @@
     <div class="modal-overlay" id="gallery-modal">
       <div class="modal-box" style="max-width: 1050px;">
         <button class="btn-close">&times;</button>
-        <h2 class="modal-title">🔞 ARCHIVES SECRÈTES (GALERIE CG MATURE)</h2>
-        <p class="modal-subtitle">Accomplissez des hauts faits et terrassez les bosses pour débloquer les illustrations CG et histoires de chaque personnage !</p>
+        <h2 class="modal-title">🔞 ARCHIVES NOCTURNES (CODEX ADULTE)</h2>
+        <p class="modal-subtitle">Portraits suggestifs non nus et récits personnels de personnages adultes. Les archives relationnelles exigent confiance et accord mutuel.</p>
 
         <div class="gallery-grid" id="gallery-grid-container">
           <!-- Injected dynamically -->
@@ -397,7 +541,7 @@
       <div class="cg-viewer-layout">
         <button class="btn-close">&times;</button>
         <div>
-          <img id="cg-viewer-img" src="" alt="CG Illustration">
+          <img id="cg-viewer-img" src="" alt="Archive illustrée adulte">
         </div>
         <div class="cg-story-box">
           <h3 class="cg-story-title" id="cg-story-title-txt"></h3>
@@ -409,25 +553,86 @@
       </div>
     </div>
 
+    <!-- Placed defense management -->
+    <div class="modal-overlay" id="defense-management-modal" role="dialog" aria-modal="true" aria-labelledby="defense-management-title">
+      <div class="modal-box defense-management-box">
+        <button class="btn-close" type="button">&times;</button>
+        <p class="defense-management-kicker">DÉFENSE DÉPLOYÉE</p>
+        <h2 class="modal-title" id="defense-management-title">Défense</h2>
+        <p class="modal-subtitle" id="defense-management-level">Niveau 1 / 3</p>
+        <dl class="defense-management-stats" id="defense-management-stats"></dl>
+        <p class="defense-management-investment" id="defense-management-investment"></p>
+        <div class="defense-management-actions">
+          <button class="btn-primary" id="btn-defense-upgrade" type="button">AMÉLIORER</button>
+          <button class="btn-secondary defense-sell-btn" id="btn-defense-sell" type="button">VENDRE</button>
+        </div>
+        <p class="defense-management-status" id="defense-management-status" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+
+    <!-- Complete campaign conclusion -->
+    <div class="modal-overlay" id="victory-modal" role="dialog" aria-modal="true" aria-labelledby="victory-title" aria-describedby="victory-description">
+      <div class="modal-box run-summary-box">
+        <p class="section-eyebrow">CITADELLE HAVEN · SÉCURISÉE</p>
+        <h2 class="modal-title victory-title" id="victory-title">LE LÉVIATHAN EST NEUTRALISÉ</h2>
+        <p class="modal-subtitle" id="victory-description">Les brèches se referment sur Infernal City. Vos alliées adultes restent libres de leurs pactes, et Haven voit enfin l’aube.</p>
+
+        <div class="run-summary-grid">
+          <div><span>Vagues</span><strong id="victory-wave-txt">15 / 15</strong></div>
+          <div><span>Éliminations</span><strong id="victory-kills-txt">0</strong></div>
+          <div><span>Score</span><strong id="victory-score-txt">0</strong></div>
+          <div><span>Durée</span><strong id="victory-time-txt">00:00</strong></div>
+          <div><span>Crédits gagnés</span><strong id="victory-meta-txt">0 ◆</strong></div>
+          <div><span>Difficulté</span><strong id="victory-difficulty-txt">Siège standard</strong></div>
+        </div>
+
+        <p class="ending-copy" id="victory-ending-copy">Votre commandante vous retrouve au sommet de la Citadelle. Le devoir s’efface un instant devant une proximité choisie et une promesse réciproque : la suite n’appartient qu’à vous deux.</p>
+
+        <div class="summary-actions">
+          <button class="btn-secondary" id="btn-continue-endless" type="button">CONTINUER EN MODE INFINI</button>
+          <button class="btn-primary" id="btn-new-campaign" type="button">NOUVELLE CAMPAGNE</button>
+        </div>
+      </div>
+    </div>
+
     <!-- Game Over Modal -->
     <div class="modal-overlay" id="game-over-modal">
       <div class="modal-box" style="text-align: center;">
         <h2 class="modal-title" style="color: #ef4444;">LA CITADELLE EST TOMBÉE !</h2>
         <p class="modal-subtitle">Les hordes démoniaques ont submergé vos défenses.</p>
         
-        <div style="margin: 20px 0; font-size: 1.2rem; display: flex; justify-content: center; gap: 30px;">
+        <div class="game-over-stats">
           <div>Vague atteinte : <strong id="go-wave-txt" style="color:#00f0ff;">1</strong></div>
           <div>Démons éliminés : <strong id="go-kills-txt" style="color:#ff2a5f;">0</strong></div>
           <div>Bio-Coins : <strong id="go-coins-txt" style="color:#f59e0b;">0</strong></div>
+          <div>Score : <strong id="go-score-txt">0</strong></div>
+          <div>Durée : <strong id="go-time-txt">00:00</strong></div>
+          <div>Crédits gagnés : <strong id="go-meta-txt">0 ◆</strong></div>
         </div>
 
-        <button class="btn-primary" id="btn-restart">Réessayer la Défense 🔥</button>
+        <p class="record-summary" id="go-record-txt">Meilleur score : 0</p>
+        <div class="summary-actions">
+          <button class="btn-secondary" id="btn-gameover-hq" type="button">REVOIR LE BRIEFING</button>
+          <button class="btn-primary" id="btn-restart" type="button">RÉESSAYER LA DÉFENSE</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="runtime-error-modal" role="alertdialog" aria-modal="true" aria-labelledby="runtime-error-title">
+      <div class="modal-box runtime-error-box">
+        <h2 class="modal-title" id="runtime-error-title">LE SYSTÈME DE COMBAT A RENCONTRÉ UNE ERREUR</h2>
+        <p id="runtime-error-message">La partie a été mise en pause pour protéger votre progression.</p>
+        <div class="summary-actions">
+          <button class="btn-secondary" id="btn-dismiss-error" type="button">REVENIR AU BRIEFING</button>
+          <button class="btn-primary" id="btn-reload-game" type="button">RECHARGER LE JEU</button>
+        </div>
       </div>
     </div>
 
   </div>
 
-  <script src="audio.js"></script>
-  <script src="game.js"></script>
+  <script src="audio.v8.js"></script>
+  <script src="game.v8.js"></script>
+  <script src="pwa.v4.js"></script>
 </body>
 </html>

@@ -9,41 +9,116 @@ class SoundEngine {
     this.isPlayingMusic = false;
     this.musicTimer = null;
     this.currentStation = 'synthwave'; // 'synthwave', 'gothic', 'industrial', 'chillwave', 'heavy'
+
+    // Cached procedural buffers avoid rebuilding thousands of random samples for
+    // every flame or explosion fired by the automatic defenses.
+    this.noiseBuffers = new Map();
+
+    // Hot combat sounds share a small voice budget. Gameplay effects are never
+    // throttled: only redundant audio cues are skipped during dense barrages.
+    this.hotSfxLastPlayedAt = new Map();
+    this.activeHotSfxVoices = 0;
+    this.maxHotSfxVoices = 24;
   }
 
   init() {
-    if (this.ctx) return;
+    if (this.ctx) return true;
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
-    this.ctx = new AudioCtx();
-    
-    this.musicGain = this.ctx.createGain();
-    this.musicGain.gain.value = 0.25;
-    this.musicGain.connect(this.ctx.destination);
+    if (!AudioCtx) return false;
 
-    this.sfxGain = this.ctx.createGain();
-    this.sfxGain.gain.value = 0.35;
-    this.sfxGain.connect(this.ctx.destination);
+    try {
+      this.ctx = new AudioCtx();
+      this.musicGain = this.ctx.createGain();
+      this.musicGain.gain.value = 0.25;
+      this.musicGain.connect(this.ctx.destination);
+
+      this.sfxGain = this.ctx.createGain();
+      this.sfxGain.gain.value = 0.35;
+      this.sfxGain.connect(this.ctx.destination);
+      return true;
+    } catch (error) {
+      console.warn('Audio indisponible dans ce navigateur.', error);
+      this.ctx = null;
+      this.musicGain = null;
+      this.sfxGain = null;
+      return false;
+    }
   }
 
   ensureAudio() {
-    if (!this.ctx) this.init();
+    if (!this.ctx && !this.init()) return false;
     if (this.ctx && this.ctx.state === 'suspended') {
-      this.ctx.resume();
+      this.ctx.resume().catch(() => {});
     }
+    return Boolean(this.ctx);
+  }
+
+  getNoiseBuffer(durationSeconds) {
+    if (!this.ctx || !Number.isFinite(durationSeconds) || durationSeconds <= 0) return null;
+
+    const durationMs = Math.max(1, Math.round(durationSeconds * 1000));
+    const cacheKey = `${this.ctx.sampleRate}:${durationMs}`;
+    if (this.noiseBuffers.has(cacheKey)) return this.noiseBuffers.get(cacheKey);
+
+    const bufferSize = Math.max(1, Math.round(this.ctx.sampleRate * (durationMs / 1000)));
+    const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+    const output = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      output[i] = Math.random() * 2 - 1;
+    }
+
+    this.noiseBuffers.set(cacheKey, buffer);
+    return buffer;
+  }
+
+  canPlayHotSfx(key, minimumIntervalSeconds) {
+    if (!this.ctx || this.activeHotSfxVoices >= this.maxHotSfxVoices) return false;
+
+    const now = this.ctx.currentTime;
+    const previousTime = this.hotSfxLastPlayedAt.get(key);
+    if (Number.isFinite(previousTime) && now - previousTime < minimumIntervalSeconds) return false;
+
+    this.hotSfxLastPlayedAt.set(key, now);
+    return true;
+  }
+
+  trackHotSfxSource(source) {
+    if (!source) return source;
+
+    this.activeHotSfxVoices++;
+    let released = false;
+    const releaseVoice = () => {
+      if (released) return;
+      released = true;
+      this.activeHotSfxVoices = Math.max(0, this.activeHotSfxVoices - 1);
+    };
+
+    if (typeof source.addEventListener === 'function') {
+      source.addEventListener('ended', releaseVoice, { once: true });
+    } else {
+      source.onended = releaseVoice;
+    }
+    return source;
   }
 
   setStation(station) {
     this.currentStation = station;
   }
 
+  toggleSfx() {
+    this.isMuted = !this.isMuted;
+    return !this.isMuted;
+  }
+
   // --- Sound Effects Synthesizer --- //
 
   playShoot() {
     if (this.isMuted) return;
-    this.ensureAudio();
+    if (!this.ensureAudio()) return;
+    if (!this.canPlayHotSfx('shoot', 0.025)) return;
     
     const now = this.ctx.currentTime;
-    const osc = this.ctx.createOscillator();
+    const osc = this.trackHotSfxSource(this.ctx.createOscillator());
     const gain = this.ctx.createGain();
     
     osc.type = 'sawtooth';
@@ -62,10 +137,11 @@ class SoundEngine {
 
   playPlasma() {
     if (this.isMuted) return;
-    this.ensureAudio();
+    if (!this.ensureAudio()) return;
+    if (!this.canPlayHotSfx('plasma', 0.04)) return;
 
     const now = this.ctx.currentTime;
-    const osc = this.ctx.createOscillator();
+    const osc = this.trackHotSfxSource(this.ctx.createOscillator());
     const gain = this.ctx.createGain();
 
     osc.type = 'sine';
@@ -84,10 +160,11 @@ class SoundEngine {
 
   playRailgun() {
     if (this.isMuted) return;
-    this.ensureAudio();
+    if (!this.ensureAudio()) return;
+    if (!this.canPlayHotSfx('railgun', 0.06)) return;
 
     const now = this.ctx.currentTime;
-    const osc = this.ctx.createOscillator();
+    const osc = this.trackHotSfxSource(this.ctx.createOscillator());
     const gain = this.ctx.createGain();
 
     osc.type = 'triangle';
@@ -106,17 +183,14 @@ class SoundEngine {
 
   playFlame() {
     if (this.isMuted) return;
-    this.ensureAudio();
+    if (!this.ensureAudio()) return;
+    if (!this.canPlayHotSfx('flame', 0.055)) return;
 
     const now = this.ctx.currentTime;
-    const bufferSize = this.ctx.sampleRate * 0.1;
-    const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
-    const output = buffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) {
-      output[i] = Math.random() * 2 - 1;
-    }
+    const buffer = this.getNoiseBuffer(0.1);
+    if (!buffer) return;
 
-    const whiteNoise = this.ctx.createBufferSource();
+    const whiteNoise = this.trackHotSfxSource(this.ctx.createBufferSource());
     whiteNoise.buffer = buffer;
 
     const filter = this.ctx.createBiquadFilter();
@@ -136,17 +210,14 @@ class SoundEngine {
 
   playExplosion() {
     if (this.isMuted) return;
-    this.ensureAudio();
+    if (!this.ensureAudio()) return;
+    if (!this.canPlayHotSfx('explosion', 0.05)) return;
 
     const now = this.ctx.currentTime;
-    const bufferSize = this.ctx.sampleRate * 0.4;
-    const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
-    const data = buffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) {
-      data[i] = Math.random() * 2 - 1;
-    }
+    const buffer = this.getNoiseBuffer(0.4);
+    if (!buffer) return;
 
-    const noise = this.ctx.createBufferSource();
+    const noise = this.trackHotSfxSource(this.ctx.createBufferSource());
     noise.buffer = buffer;
 
     const filter = this.ctx.createBiquadFilter();
@@ -167,7 +238,7 @@ class SoundEngine {
 
   playPickup() {
     if (this.isMuted) return;
-    this.ensureAudio();
+    if (!this.ensureAudio()) return;
 
     const now = this.ctx.currentTime;
     const notes = [523.25, 659.25, 783.99, 1046.50];
@@ -191,7 +262,7 @@ class SoundEngine {
 
   playAbility() {
     if (this.isMuted) return;
-    this.ensureAudio();
+    if (!this.ensureAudio()) return;
 
     const now = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
@@ -213,7 +284,7 @@ class SoundEngine {
 
   playOverdrive() {
     if (this.isMuted) return;
-    this.ensureAudio();
+    if (!this.ensureAudio()) return;
 
     const now = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
@@ -235,7 +306,7 @@ class SoundEngine {
 
   playNuke() {
     if (this.isMuted) return;
-    this.ensureAudio();
+    if (!this.ensureAudio()) return;
 
     const now = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
@@ -257,7 +328,7 @@ class SoundEngine {
 
   playFreeze() {
     if (this.isMuted) return;
-    this.ensureAudio();
+    if (!this.ensureAudio()) return;
 
     const now = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
@@ -279,7 +350,7 @@ class SoundEngine {
 
   playSlotSpin() {
     if (this.isMuted) return;
-    this.ensureAudio();
+    if (!this.ensureAudio()) return;
 
     const now = this.ctx.currentTime;
     for (let i = 0; i < 6; i++) {
@@ -301,7 +372,7 @@ class SoundEngine {
 
   playDragonRoar() {
     if (this.isMuted) return;
-    this.ensureAudio();
+    if (!this.ensureAudio()) return;
 
     const now = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
@@ -324,7 +395,7 @@ class SoundEngine {
 
   playHurtVoice() {
     if (this.isMuted) return;
-    this.ensureAudio();
+    if (!this.ensureAudio()) return;
 
     const now = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
@@ -344,20 +415,20 @@ class SoundEngine {
     osc.stop(now + 0.25);
   }
 
-  playSensualMoan() {
+  playRelationshipCue() {
     if (this.isMuted) return;
-    this.ensureAudio();
+    if (!this.ensureAudio()) return;
 
     const now = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
 
     osc.type = 'sine';
-    osc.frequency.setValueAtTime(350, now);
-    osc.frequency.linearRampToValueAtTime(520, now + 0.2);
-    osc.frequency.exponentialRampToValueAtTime(280, now + 0.55);
+    osc.frequency.setValueAtTime(440, now);
+    osc.frequency.linearRampToValueAtTime(659, now + 0.2);
+    osc.frequency.exponentialRampToValueAtTime(523, now + 0.55);
 
-    gain.gain.setValueAtTime(0.45, now);
+    gain.gain.setValueAtTime(0.22, now);
     gain.gain.exponentialRampToValueAtTime(0.01, now + 0.55);
 
     osc.connect(gain);
@@ -370,7 +441,7 @@ class SoundEngine {
   // --- 5-Station Procedural Synthesizer Radio --- //
 
   toggleMusic() {
-    this.ensureAudio();
+    if (!this.ensureAudio()) return;
     if (this.isPlayingMusic) {
       this.stopMusic();
     } else {

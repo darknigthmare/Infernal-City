@@ -1,0 +1,5 @@
+.vercel/
+audit-evidence/
+__pycache__/
+*.py[cod]
+.env.local

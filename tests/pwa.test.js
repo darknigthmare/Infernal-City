@@ -1,0 +1,61 @@
+'use strict';
+
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const test = require('node:test');
+
+const ROOT = path.resolve(__dirname, '..');
+
+function readPngSize(filePath) {
+  const data = fs.readFileSync(filePath);
+  assert.equal(data.toString('hex', 0, 8), '89504e470d0a1a0a', `${filePath}: signature PNG absente`);
+  return {
+    width: data.readUInt32BE(16),
+    height: data.readUInt32BE(20)
+  };
+}
+
+test('le manifeste PWA reference deux icones PNG carrees valides', () => {
+  const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'manifest.webmanifest'), 'utf8'));
+  assert.equal(manifest.display, 'standalone');
+  assert.equal(manifest.start_url, './');
+  assert.deepEqual(manifest.icons.map(icon => icon.sizes), ['192x192', '512x512']);
+  manifest.icons.forEach(icon => {
+    const iconPath = path.join(ROOT, icon.src);
+    assert.ok(fs.existsSync(iconPath), `${icon.src}: fichier absent`);
+    const expectedSize = Number(icon.sizes.split('x')[0]);
+    assert.deepEqual(readPngSize(iconPath), { width: expectedSize, height: expectedSize });
+  });
+});
+
+test('le service worker precache uniquement des fichiers locaux existants', () => {
+  const source = fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8');
+  const urls = [...source.matchAll(/^\s*'\.\/([^']*)'/gm)].map(match => match[1]);
+  assert.ok(urls.includes('index.html'));
+  assert.ok(urls.includes('assets/icons/icon-512.png'));
+  urls.filter(Boolean).forEach(relativePath => {
+    assert.ok(fs.existsSync(path.join(ROOT, relativePath)), `${relativePath}: précache introuvable`);
+  });
+  assert.doesNotMatch(source, /assets\/cg_carmilla\.jpg/, 'les CG lourdes doivent rester chargées à la demande');
+});
+
+test('le script PWA limite son enregistrement aux contextes surs', () => {
+  const source = fs.readFileSync(path.join(ROOT, 'pwa.v4.js'), 'utf8');
+  assert.match(source, /window\.isSecureContext/);
+  assert.match(source, /serviceWorker\.register\('\.\/sw\.js'/);
+  assert.match(source, /updateViaCache:\s*'none'/);
+});
+
+test('les actifs coeur sont fingerprints et servis network first', () => {
+  const index = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  const worker = fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8');
+
+  assert.match(index, /styles\.v8\.css/);
+  assert.match(index, /audio\.v8\.js/);
+  assert.match(index, /game\.v8\.js/);
+  assert.match(index, /pwa\.v4\.js/);
+  assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}v4`/);
+  assert.match(worker, /isMutableCoreAsset/);
+  assert.match(worker, /if \(isMutableCoreAsset\) \{\s*event\.respondWith\(\s*fetch\(request\)/);
+});
