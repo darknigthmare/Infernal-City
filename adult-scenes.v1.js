@@ -126,10 +126,104 @@
     };
   });
 
-  const bonusScenes = [...bikiniScenes, ...pairedScenes, ...gameOverTeases];
+  const heroineBodyVariantScenes = heroineSpecs.flatMap(spec => {
+    const [heroId, name, age] = spec;
+    const variants = [
+      {
+        stage: 'chubby',
+        title: `${name} · Silhouette chubby`,
+        subtitle: 'Chronologie plus-size · adulte 27+',
+        alt: `${name} apparaît dans une variante chubby adulte, digne, autonome et entièrement vêtue.`,
+        quote: '« Mon corps n’est jamais une statistique de combat. »',
+        story: `Cette chronologie alternative respecte l’identité de ${name} et représente sa silhouette plus-size sans fétichisation.`
+      },
+      {
+        stage: 'maternity',
+        title: `${name} · Maternité protégée`,
+        subtitle: 'Grossesse calme hors-combat · adulte 27+',
+        alt: `${name}, adulte et entièrement vêtue, vit une grossesse sereine dans un espace protégé hors-combat.`,
+        quote: '« Ici, le futur grandit loin des lignes de siège. »',
+        story: `La maternité alternative de ${name} est montrée dans un moment calme, choisi et protégé, sans faiblesse imposée ni mise en danger.`
+      },
+      {
+        stage: 'early-career',
+        title: `${name} · Débuts de carrière`,
+        subtitle: 'Premières missions · adulte de 27 ans ou plus',
+        alt: `${name} au début de sa carrière, clairement adulte de 27 ans ou plus, vêtue et non sexualisée.`,
+        quote: '« Mes premiers choix étaient déjà les miens. »',
+        story: `Cette archive remonte aux premières missions de ${name} tout en conservant un visage et des proportions matures, clairement adultes.`
+      }
+    ];
+    return variants.map(variant => ({
+      id: `${heroId}_body_${variant.stage.replace('-', '_')}`,
+      kind: 'body_variants',
+      bodyVariantStage: variant.stage,
+      title: variant.title,
+      subtitle: variant.subtitle,
+      ageLabel: `27 ans et plus · identité actuelle ${age} ans`,
+      participants: [heroId],
+      src: `assets/vn/cg/body-variants/heroines/${heroId}-${variant.stage}-v1.webp`,
+      alt: variant.alt,
+      quote: variant.quote,
+      story: variant.story,
+      unlockRule: { type: 'heroes_unlocked', heroIds: [heroId] }
+    }));
+  });
+
+  const villainBodyVariantScenes = villainSpecs.flatMap(spec => {
+    const [villainId, name] = spec;
+    const variants = [
+      {
+        stage: 'chubby',
+        title: `${name} · Silhouette chubby`,
+        subtitle: 'Chronologie plus-size · adulte 27+',
+        alt: `${name} apparaît dans une variante chubby adulte, digne, souveraine et entièrement vêtue.`,
+        quote: '« Un Trône ne se mesure pas à une silhouette. »',
+        story: `Cette chronologie préserve les traits et l’autorité de ${name} sans fétichiser sa silhouette plus-size.`
+      },
+      {
+        stage: 'maternity',
+        title: `${name} · Maternité protégée`,
+        subtitle: 'Grossesse calme hors-combat · adulte 27+',
+        alt: `${name}, adulte et entièrement vêtue, vit une grossesse sereine dans un sanctuaire protégé hors-combat.`,
+        quote: '« Même les Enfers savent garder un sanctuaire. »',
+        story: `La maternité alternative de ${name} demeure paisible et autonome, sans transformer la grossesse en vulnérabilité ou en mécanique de guerre.`
+      },
+      {
+        stage: 'first-reign',
+        title: `${name} · Premier règne`,
+        subtitle: 'Première couronne · adulte de 27 ans ou plus',
+        alt: `${name} lors de son premier règne, clairement adulte de 27 ans ou plus, vêtue et non sexualisée.`,
+        quote: '« Ma première couronne était déjà un choix. »',
+        story: `Cette archive montre le premier règne de ${name} avec un visage et des proportions matures, clairement adultes et non sexuels.`
+      }
+    ];
+    return variants.map(variant => ({
+      id: `${villainId}_body_${variant.stage.replace('-', '_')}`,
+      kind: 'body_variants',
+      bodyVariantStage: variant.stage,
+      title: variant.title,
+      subtitle: variant.subtitle,
+      ageLabel: '27 ans et plus',
+      participants: [villainId],
+      src: `assets/vn/cg/body-variants/villains/${villainId}-${variant.stage}-v1.webp`,
+      alt: variant.alt,
+      quote: variant.quote,
+      story: variant.story,
+      unlockRule: { type: 'boss_defeated', bossId: villainId }
+    }));
+  });
+
+  const bodyVariantScenes = [...heroineBodyVariantScenes, ...villainBodyVariantScenes];
+  const bonusScenes = [
+    ...bikiniScenes,
+    ...pairedScenes,
+    ...gameOverTeases,
+    ...bodyVariantScenes
+  ];
   const contract = {
     schemaVersion: '1.0.0',
-    contentVersion: '2.5.0',
+    contentVersion: '2.6.0',
     maturity: {
       minimumAge: 27,
       adultsOnly: true,
@@ -146,7 +240,8 @@
       bikini: 'Maillots',
       romance_ff: 'Romances F/F',
       afterglow: 'Après les néons',
-      game_over: 'Game Over'
+      game_over: 'Game Over',
+      body_variants: 'Variantes corporelles'
     })
   };
 

@@ -122,3 +122,23 @@ pirate, chambre quantique, cité des cendres et théâtre de cauchemar.
 > Antagoniste adulte dans une pose triomphante et taquine face à une héroïne
 > adulte entièrement vêtue, indemne et autonome. Revanche visuelle joueuse,
 > sans contact sexuel, contrainte, bondage, humiliation forcée, blessure ou gore.
+
+## Mise à jour 2.6 — Variantes corporelles 27+
+
+Générateur : outil ImageGen intégré d’OpenAI. Pour chaque femme, le portrait
+local sert d’ancre de visage et de coiffure, tandis que l’atlas verrouille
+silhouette, espèce, palette et costume. Une génération distincte produit chaque
+CG finale. Les trois chronologies sont générées par trois appels séparés et
+livrées dans trois images indépendantes plein cadre, jamais dans un montage.
+
+> CG panoramique techno-gothique plein cadre montrant une seule interprétation
+> de la même femme clairement adulte : soit une variante chubby ou plus-size
+> représentée avec dignité, soit une grossesse visible dans une scène de
+> maternité calme, protégée et hors-combat, soit des débuts de carrière ou un
+> premier règne à 27 ans minimum avec visage et proportions matures. Une seule
+> figure principale, sans duplicate, reflet, panneau, bordure ou triptyque.
+> Préserver strictement l’identité, la coiffure, les traits fantasy, la palette
+> et le langage vestimentaire des références. Tenue opaque complète, pose
+> naturelle et autonome, cadrage trois-quarts avec marges sûres. Aucun texte,
+> logo, watermark, maillot, lingerie, nudité, acte sexuel, apparence
+> adolescente, fétichisation ou mise en danger de la grossesse.

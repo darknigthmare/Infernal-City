@@ -39,9 +39,9 @@ function assertRealWebp(relativePath) {
   assert.deepEqual({ width, height }, { width: 960, height: 540 }, `${relativePath}: dimensions`);
 }
 
-test('le contrat 2.5 est gele et limite toutes les scenes aux adultes non explicites', () => {
+test('le contrat 2.6 est gele et limite toutes les scenes aux adultes non explicites', () => {
   const contract = loadContract();
-  assert.equal(contract.contentVersion, '2.5.0');
+  assert.equal(contract.contentVersion, '2.6.0');
   assert.equal(contract.maturity.adultsOnly, true);
   assert.equal(contract.maturity.minimumAge >= 27, true);
   assert.equal(contract.maturity.explicitSexualActs, false);
@@ -69,7 +69,7 @@ test('les dix Trones ont une vraie introduction et une vraie defaite cinematogra
   paths.forEach(assertRealWebp);
 });
 
-test('les bonus couvrent dix maillots cinq romances cinq afterglows et quatre Game Over', () => {
+test('les bonus couvrent les archives sensuelles et soixante CG corporelles independantes', () => {
   const contract = loadContract();
   const counts = contract.bonusScenes.reduce((result, scene) => {
     result[scene.kind] = (result[scene.kind] || 0) + 1;
@@ -77,15 +77,56 @@ test('les bonus couvrent dix maillots cinq romances cinq afterglows et quatre Ga
   }, {});
   assert.deepEqual(
     { ...counts },
-    { bikini: 10, romance_ff: 5, afterglow: 5, game_over: 4 }
+    {
+      bikini: 10,
+      romance_ff: 5,
+      afterglow: 5,
+      game_over: 4,
+      body_variants: 60
+    }
   );
-  assert.equal(contract.bonusScenes.length, 24);
-  assert.equal(new Set(contract.bonusScenes.map(scene => scene.src)).size, 24);
+  assert.equal(contract.bonusScenes.length, 84);
+  assert.equal(new Set(contract.bonusScenes.map(scene => scene.src)).size, 84);
   contract.bonusScenes.forEach(scene => {
     assert.ok(scene.ageLabel);
     assert.ok(scene.alt.length > 30);
     assert.ok(scene.story.length > 40);
     assertRealWebp(scene.src);
+  });
+});
+
+test('les variantes corporelles separent trois CG par femme sans sexualiser la jeunesse', () => {
+  const contract = loadContract();
+  const variants = contract.bonusScenes.filter(scene => scene.kind === 'body_variants');
+  const heroineVariants = variants.filter(scene => scene.unlockRule.type === 'heroes_unlocked');
+  const villainVariants = variants.filter(scene => scene.unlockRule.type === 'boss_defeated');
+  const stageCounts = variants.reduce((counts, scene) => {
+    counts[scene.bodyVariantStage] = (counts[scene.bodyVariantStage] || 0) + 1;
+    return counts;
+  }, {});
+  const participantCounts = variants.reduce((counts, scene) => {
+    const [participantId] = scene.participants;
+    counts[participantId] = (counts[participantId] || 0) + 1;
+    return counts;
+  }, {});
+
+  assert.equal(heroineVariants.length, 30);
+  assert.equal(villainVariants.length, 30);
+  assert.deepEqual(
+    { ...stageCounts },
+    { chubby: 20, maternity: 20, 'early-career': 10, 'first-reign': 10 }
+  );
+  assert.equal(Object.keys(participantCounts).length, 20);
+  Object.values(participantCounts).forEach(count => assert.equal(count, 3));
+  variants.forEach(scene => {
+    assert.equal(scene.participants.length, 1);
+    assert.match(scene.subtitle, /27/u);
+    assert.match(scene.ageLabel, /27 ans et plus/u);
+    assert.match(scene.alt, /adulte/u);
+    assert.match(scene.src, new RegExp(`-${scene.bodyVariantStage}-v1\\.webp$`, 'u'));
+    assert.doesNotMatch(scene.src, /body-variants-v1/u);
+    assert.equal(Object.hasOwn(scene, 'reward'), false);
+    assert.equal(Object.hasOwn(scene, 'gameplayEffect'), false);
   });
 });
 

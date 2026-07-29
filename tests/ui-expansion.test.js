@@ -15,7 +15,7 @@ function hasId(id) {
   return new RegExp(`id="${id}"`).test(html);
 }
 
-test('the 2.5 content scripts load before the game runtime', () => {
+test('the 2.6 content scripts load before the game runtime', () => {
   const expansionIndex = html.indexOf('<script src="expansion.v1.js"></script>');
   const characterIndex = html.indexOf('<script src="characters.v1.js"></script>');
   const vnExpansionIndex = html.indexOf('<script src="vn-expansion.v1.js"></script>');
@@ -139,9 +139,9 @@ test('card headings do not skip directly from modal h2 titles to h4', () => {
   assert.match(css, /\.upgrade-text h3/);
 });
 
-test('PWA 2.5 keeps heavy terrains, atlases and CG in a separate runtime cache', () => {
-  assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}v10`/);
-  assert.match(worker, /MEDIA_CACHE_NAME = `\$\{CACHE_PREFIX\}media-v2\.5`/);
+test('PWA 2.6 keeps heavy terrains, atlases and CG in a separate runtime cache', () => {
+  assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}v11`/);
+  assert.match(worker, /MEDIA_CACHE_NAME = `\$\{CACHE_PREFIX\}media-v2\.6`/);
   assert.match(worker, /'\.\/expansion\.v1\.js'/);
   assert.match(worker, /'\.\/characters\.v1\.js'/);
   assert.match(worker, /'\.\/vn-expansion\.v1\.js'/);
@@ -157,12 +157,12 @@ test('PWA 2.5 keeps heavy terrains, atlases and CG in a separate runtime cache',
   assert.match(worker, /serveRuntimeMedia/);
 });
 
-test('package and web manifest expose release 2.5.0', () => {
+test('package and web manifest expose release 2.6.0', () => {
   const packageJson = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
   const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'manifest.webmanifest'), 'utf8'));
 
-  assert.equal(packageJson.version, '2.5.0');
-  assert.equal(manifest.version, '2.5.0');
+  assert.equal(packageJson.version, '2.6.0');
+  assert.equal(manifest.version, '2.6.0');
   assert.match(packageJson.scripts.check, /node --check expansion\.v1\.js/);
   assert.match(packageJson.scripts.check, /node --check characters\.v1\.js/);
   assert.match(packageJson.scripts.check, /node --check vn-expansion\.v1\.js/);

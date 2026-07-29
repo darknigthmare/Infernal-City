@@ -2719,11 +2719,18 @@ test('les bonus adultes suivent les deblocages militaires sans modifier le gamep
     scene => scene.id === 'nyx-aurelia_romance'
   );
   const gameOver = ADULT_SCENES.bonusScenes.find(scene => scene.id === 'game_over_tease_01');
+  const nyxVariants = ADULT_SCENES.bonusScenes.find(scene => scene.id === 'nyx_body_chubby');
+  const xyraVariants = ADULT_SCENES.bonusScenes.find(scene => scene.id === 'xyra_body_maternity');
 
   assert.equal(engine.isAdultBonusSceneUnlocked(nyxBikini), true);
+  assert.equal(engine.isAdultBonusSceneUnlocked(nyxVariants), true);
   assert.equal(engine.isAdultBonusSceneUnlocked(pairedRomance), false);
+  assert.equal(engine.isAdultBonusSceneUnlocked(xyraVariants), false);
   HERO_CLASSES.aurelia.unlocked = true;
   assert.equal(engine.isAdultBonusSceneUnlocked(pairedRomance), true);
+  engine.defeatedBossIds.push('xyra');
+  assert.equal(engine.isAdultBonusSceneUnlocked(xyraVariants), true);
+  assert.match(engine.getAdultBonusUnlockLabel(xyraVariants), /Xyra/u);
   assert.equal(engine.isAdultBonusSceneUnlocked(gameOver), false);
   engine.bestWave = 8;
   engine.runHistory = [{ victory: true }];

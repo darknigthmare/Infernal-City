@@ -8623,12 +8623,19 @@ class GameEngine {
         return Boolean(hero && hero.unlocked !== false);
       });
     }
+    if (rule.type === 'boss_defeated') {
+      return Boolean(rule.bossId && this.defeatedBossIds.includes(rule.bossId));
+    }
     return false;
   }
 
   getAdultBonusUnlockLabel(scene) {
     if (scene?.unlockRule?.type === 'first_game_over') {
       return 'Subir un premier Game Over.';
+    }
+    if (scene?.unlockRule?.type === 'boss_defeated') {
+      const bossName = this.getBossDefinition(scene.unlockRule.bossId)?.name;
+      return `Neutraliser ${bossName || 'ce Trône'}.`;
     }
     const heroNames = (scene?.unlockRule?.heroIds || [])
       .map(heroId => HERO_CLASSES[heroId]?.name)

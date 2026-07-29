@@ -2,6 +2,23 @@
 
 Roguelite de défense cyber-gothique en HTML, CSS et JavaScript natifs.
 
+## Mise à jour 2.6 — Trois vies adultes
+
+- Les dix héroïnes et les dix antagonistes disposent chacune de trois nouvelles
+  CG indépendantes et plein cadre : variante chubby respectueuse, maternité
+  enceinte dans une scène calme hors-combat, puis débuts de carrière ou premier
+  règne. Aucun montage ou triptyque ne mélange les trois chronologies.
+- Le troisième volet conserve des traits et proportions clairement adultes avec
+  un âge minimum de 27 ans. Il ne s’agit jamais d’une version adolescente ou
+  « tout juste majeure » sexualisée.
+- Les soixante archives préservent visage, coiffure, espèce, palette et costume à
+  partir des portraits et atlas OpenAI existants. Elles restent entièrement
+  vêtues, non explicites et sans fétichisation de la morphologie ou de la
+  grossesse.
+- Les CG d’héroïne suivent leur déblocage normal ; celles d’antagoniste exigent
+  d’avoir neutralisé le Trône correspondant. Aucune archive n’accorde de
+  monnaie, récompense ou avantage de combat.
+
 ## Mise à jour 2.5 — Archives Sensuelles
 
 - Les dix Trônes possèdent désormais deux CG cinématiques chacune :
@@ -131,7 +148,7 @@ narratives, grands terrains asymétriques et compositions du Studio 2.0
 rejoignent un cache média séparé à leur première consultation. Le service
 worker les sert ensuite en priorité depuis ce cache. Cela conserve une
 installation initiale sous le budget de 20 Mio sans sacrifier leur disponibilité
-hors ligne après découverte. Le manifeste 2.5 et les icônes PNG 192/512
+hors ligne après découverte. Le manifeste 2.6 et les icônes PNG 192/512
 permettent de proposer l’installation en application autonome.
 
 Les actifs cœur portent un nom de version et le code utilise le réseau en
@@ -146,7 +163,9 @@ d’OpenAI. Vingt nouvelles planches 4×4 donnent à chacune des dix héroïnes 
 dix antagonistes ses états de veille, déplacement, attaque et compétence ou
 phase ultime. Les portraits, expressions et trente CG de chapitre conservent
 les mêmes silhouettes, palettes et costumes originaux. La passe 2.5 ajoute
-vingt cinématiques de Trône et vingt-quatre archives adultes non graphiques.
+vingt cinématiques de Trône et vingt-quatre archives adultes non graphiques ;
+la passe 2.6 ajoute soixante CG indépendantes de diversité corporelle et
+chronologique.
 
 Les neuf planches de combat historiques couvrent les vingt défenses, les sept
 archétypes ennemis et les six héros de départ. Le canvas choisit les frames
