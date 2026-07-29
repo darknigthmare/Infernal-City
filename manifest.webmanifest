@@ -1,7 +1,8 @@
 {
   "name": "Infernal City: Valkyrie Sweeper",
   "short_name": "Infernal City",
-  "description": "Roguelite de défense cyber-gothique réservé aux adultes.",
+  "version": "2.3.0",
+  "description": "Roguelite tactique cyber-gothique adulte : terrains asymétriques, hordes spécialisées et visual novel relationnel.",
   "lang": "fr-FR",
   "start_url": "./",
   "scope": "./",

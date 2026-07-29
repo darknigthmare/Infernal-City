@@ -5,6 +5,8 @@ class SoundEngine {
     this.ctx = null;
     this.musicGain = null;
     this.sfxGain = null;
+    this.musicVolume = 0.7;
+    this.sfxVolume = 0.8;
     this.isMuted = false;
     this.isPlayingMusic = false;
     this.musicTimer = null;
@@ -29,11 +31,11 @@ class SoundEngine {
     try {
       this.ctx = new AudioCtx();
       this.musicGain = this.ctx.createGain();
-      this.musicGain.gain.value = 0.25;
+      this.musicGain.gain.value = this.getMusicGainValue();
       this.musicGain.connect(this.ctx.destination);
 
       this.sfxGain = this.ctx.createGain();
-      this.sfxGain.gain.value = 0.35;
+      this.sfxGain.gain.value = this.getSfxGainValue();
       this.sfxGain.connect(this.ctx.destination);
       return true;
     } catch (error) {
@@ -103,6 +105,35 @@ class SoundEngine {
 
   setStation(station) {
     this.currentStation = station;
+  }
+
+  clampVolume(value, fallback = 1) {
+    const numeric = Number(value);
+    return Number.isFinite(numeric)
+      ? Math.max(0, Math.min(1, numeric))
+      : fallback;
+  }
+
+  getMusicGainValue() {
+    // Keep the original mix at the UI default while still exposing a useful
+    // 0-100 range. This avoids suddenly overpowering dialogue after migration.
+    return 0.25 * (this.musicVolume / 0.7);
+  }
+
+  getSfxGainValue() {
+    return 0.35 * (this.sfxVolume / 0.8);
+  }
+
+  setMusicVolume(value) {
+    this.musicVolume = this.clampVolume(value, this.musicVolume);
+    if (this.musicGain) this.musicGain.gain.value = this.getMusicGainValue();
+    return this.musicVolume;
+  }
+
+  setSfxVolume(value) {
+    this.sfxVolume = this.clampVolume(value, this.sfxVolume);
+    if (this.sfxGain) this.sfxGain.gain.value = this.getSfxGainValue();
+    return this.sfxVolume;
   }
 
   toggleSfx() {

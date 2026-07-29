@@ -1,7 +1,7 @@
 /* Valkyrie Sweeper: Dark Siege - Comprehensive Game Engine */
 
 const CAMPAIGN_FINAL_WAVE = 15;
-const SAVE_VERSION = 5;
+const SAVE_VERSION = 6;
 const RUN_CHECKPOINT_VERSION = 1;
 // The player explicitly needs a long read on incoming hordes. Keep the compact
 // construction arena intact, but make its traversable approach belt five times
@@ -19,6 +19,60 @@ const MIN_BOSS_SCREEN_SIZE = 46;
 const MIN_HERO_SCREEN_SIZE = 46;
 const SPAWN_GATE_WORLD_SIZE = 132;
 const SPAWN_GATE_SECTORS = ['north', 'east', 'south', 'west'];
+const GAMEPAD_DEADZONE = 0.18;
+const GAMEPAD_CAMERA_SPEED = 520;
+const GAMEPAD_CURSOR_SPEED = 280;
+const SPECIALIST_ENEMY_TYPES = ['flying', 'bulwark', 'artillery', 'splitter'];
+const BOSS_PHASE_THRESHOLDS = [0.66, 0.33];
+const LAYOUT_TERRAIN_SOURCES = {
+  convergence: 'assets/environment/infernal-city-approach-terrain.png',
+  western_wall: 'assets/environment/map-western-wall.png',
+  southern_watch: 'assets/environment/map-southern-watch.png',
+  twin_rift: 'assets/environment/map-twin-rift.png'
+};
+
+// The expansion normally arrives from expansion.v1.js. This deliberately small
+// contract keeps the engine bootable when that optional data pack is blocked,
+// loaded late or omitted by an older cached HTML shell.
+const EXPANSION_FALLBACK = Object.freeze({
+  version: 'fallback',
+  world: { width: BATTLEFIELD_WORLD_WIDTH, height: BATTLEFIELD_WORLD_HEIGHT },
+  worldLayouts: {
+    convergence: {
+      id: 'convergence',
+      world: { width: BATTLEFIELD_WORLD_WIDTH, height: BATTLEFIELD_WORLD_HEIGHT },
+      citadel: { x: 600, y: 400, radius: 45 },
+      approachBounds: { minX: -320, minY: -320, maxX: 1520, maxY: 1120 },
+      buildBounds: { minX: 24, minY: 24, maxX: 1176, maxY: 776 },
+      spawnRoutes: SPAWN_GATE_SECTORS.map((side, index) => {
+        const spawns = [
+          { x: 600, y: -300 },
+          { x: 1500, y: 400 },
+          { x: 600, y: 1100 },
+          { x: -300, y: 400 }
+        ];
+        return {
+          id: `fallback_${side}`,
+          side,
+          spawn: spawns[index],
+          polyline: [spawns[index], { x: 600, y: 400 }],
+          cadenceOffsetMs: index * 180
+        };
+      })
+    }
+  },
+  enemyDefinitions: {},
+  waveScripts: {},
+  heroKits: {},
+  defenseSpecializations: {},
+  infinitumMutators: [],
+  utils: {}
+});
+const EXPANSION = (
+  (typeof window !== 'undefined' && window.INFERNAL_CITY_EXPANSION)
+  || (typeof globalThis !== 'undefined' && globalThis.INFERNAL_CITY_EXPANSION)
+  || EXPANSION_FALLBACK
+);
 
 const DIFFICULTY_DATA = {
   story: {
@@ -143,6 +197,10 @@ const ENEMY_SPRITE_DATA = {
   runner: { src: 'assets/animations/enemies/enemy-atlas-01.png', row: 1, size: 34, rotate: true, rotationOffset: 0, fps: 10 },
   brute: { src: 'assets/animations/enemies/enemy-atlas-01.png', row: 2, size: 64, rotate: false, fps: 5 },
   hellwarden: { src: 'assets/animations/enemies/enemy-atlas-01.png', row: 3, size: 114, rotate: false, fps: 5 },
+  flying: { src: 'assets/animations/enemies/enemy-specialist-atlas.png', row: 0, size: 54, rotate: false, fps: 9 },
+  bulwark: { src: 'assets/animations/enemies/enemy-specialist-atlas.png', row: 1, size: 76, rotate: false, fps: 5 },
+  artillery: { src: 'assets/animations/enemies/enemy-specialist-atlas.png', row: 2, size: 68, rotate: false, fps: 5 },
+  splitter: { src: 'assets/animations/enemies/enemy-specialist-atlas.png', row: 3, size: 62, rotate: false, fps: 7 },
   vespera: { src: 'assets/animations/enemies/enemy-atlas-02.png', row: 0, size: 110, rotate: false, fps: 6 },
   carmilla: { src: 'assets/animations/enemies/enemy-atlas-02.png', row: 1, size: 124, rotate: false, fps: 6 },
   leviathan: { src: 'assets/animations/enemies/enemy-atlas-02.png', row: 2, size: 188, rotate: true, rotationOffset: 0, fps: 4 }
@@ -295,6 +353,12 @@ class GameEngine {
     this.modalFocusStack = [];
 
     this.citadel = { x: 600, y: 400, radius: 45, hp: 500, maxHp: 500 };
+    this.selectedLayoutId = 'convergence';
+    this.worldLayout = null;
+    this.spawnRoutes = [];
+    this.mapRotation = [];
+    this.mapRotationIndex = 0;
+    this.rotationEnabled = false;
 
     this.wave = 1;
     this.towerFloor = 1;
@@ -312,6 +376,12 @@ class GameEngine {
     this.towerCompletionEarnedReward = 0;
     this.pendingTowerMutator = null;
     this.pendingTowerMutatorFloor = null;
+    this.towerMutators = [];
+    this.activeRunMutators = [];
+    this.infinitumCanReturn = false;
+    this.waveSpawnQueue = [];
+    this.waveSpawnElapsedMs = 0;
+    this.activeWaveDefinition = null;
     this.lastWaveStatusSecond = null;
     this.difficulty = 'standard';
     this.endlessMode = false;
@@ -333,6 +403,10 @@ class GameEngine {
     this.saveLoadError = null;
     this.preferredMusicEnabled = false;
     this.preferredCrtEnabled = true;
+    this.musicVolume = 0.7;
+    this.sfxVolume = 0.8;
+    this.contrastMode = 'default';
+    this.textSize = 'default';
     this.score = 0;
     this.coins = 400;
     this.metaCoins = 0;
@@ -342,6 +416,14 @@ class GameEngine {
     this.evolvedWeaponsCount = 0;
     this.mutantsKilled = 0;
     this.overdriveCount = 0;
+    this.dailyChallenge = null;
+    this.dailyRng = null;
+    this.runHistory = [];
+    this.connectedGamepadIndex = null;
+    this.lastGamepadStatusPoll = 0;
+    this.gamepadButtonState = [];
+    this.kiraMarkedRoutes = new Set();
+    this.carmillaStoredCharge = 0;
 
     this.freezeTimer = 0;
     this.quadDamageTimer = 0;
@@ -397,6 +479,9 @@ class GameEngine {
     this.hazards = [];
 
     this.abilityCooldownTimer = 0;
+    this.activeHeroTargeting = null;
+    this.hostileProjectileFreezeTimer = 0;
+    this.heroUltimateDefenseDamageTimer = 0;
     this.shopUpgrades = { hpBonus: 0, fireRateBonus: 0, magnetRange: 0 };
     this.buildCursor = { x: 720, y: 400, visible: false };
 
@@ -418,7 +503,11 @@ class GameEngine {
       active: null
     };
     this.activeVnSession = null;
+    this.vnExpansionState = this.loadVnExpansionState();
+    this.lastVnCallbackMessage = '';
+    this.vnPreviousRadioStation = null;
 
+    this.applyWorldLayout(this.selectedLayoutId, { force: true, repositionUnits: false });
     this.loadProgress();
   }
 
@@ -464,6 +553,214 @@ class GameEngine {
     requestAnimationFrame((t) => this.gameLoop(t));
   }
 
+  getWorldLayout(layoutId = this.selectedLayoutId) {
+    const layouts = EXPANSION?.worldLayouts || EXPANSION_FALLBACK.worldLayouts;
+    return layouts[layoutId] || layouts.convergence || EXPANSION_FALLBACK.worldLayouts.convergence;
+  }
+
+  normalizeSpawnRoute(route, index = 0) {
+    const citadel = this.worldLayout?.citadel || this.citadel || { x: 600, y: 400 };
+    const spawn = route?.spawn || route?.polyline?.[0] || { x: 1500, y: 400 };
+    const polyline = Array.isArray(route?.polyline) && route.polyline.length > 1
+      ? route.polyline
+      : [spawn, { x: citadel.x, y: citadel.y }];
+    return {
+      id: String(route?.id || `route_${index}`),
+      side: SPAWN_GATE_SECTORS.includes(route?.side) ? route.side : 'east',
+      spawn: { x: Number(spawn.x) || 0, y: Number(spawn.y) || 0 },
+      polyline: polyline.map(point => ({
+        x: Number(point?.x) || 0,
+        y: Number(point?.y) || 0
+      })),
+      cadenceOffsetMs: Math.max(0, Number(route?.cadenceOffsetMs) || 0)
+    };
+  }
+
+  applyWorldLayout(layoutId = this.selectedLayoutId, options = {}) {
+    const layout = this.getWorldLayout(layoutId);
+    const requestedAsRotation = options.rotation === true;
+    if (
+      requestedAsRotation
+      && !options.force
+      && (this.waveActive || (this.enemies?.length || 0) > 0)
+    ) {
+      return { ok: false, reason: 'wave-active', layout: this.worldLayout };
+    }
+
+    const previousCitadel = this.worldLayout?.citadel || this.citadel || { x: 600, y: 400 };
+    const nextCitadel = layout.citadel || { x: 600, y: 400, radius: 45 };
+    const world = layout.world || EXPANSION.world || EXPANSION_FALLBACK.world;
+    const dx = (Number(nextCitadel.x) || 0) - (Number(previousCitadel.x) || 0);
+    const dy = (Number(nextCitadel.y) || 0) - (Number(previousCitadel.y) || 0);
+
+    this.selectedLayoutId = layout.id || layoutId || 'convergence';
+    this.worldLayout = layout;
+    this.worldWidth = Math.max(1, Number(world.width) || BATTLEFIELD_WORLD_WIDTH);
+    this.worldHeight = Math.max(1, Number(world.height) || BATTLEFIELD_WORLD_HEIGHT);
+    this.citadel.x = Number(nextCitadel.x) || (this.worldWidth / 2);
+    this.citadel.y = Number(nextCitadel.y) || (this.worldHeight / 2);
+    this.citadel.radius = Math.max(30, Number(nextCitadel.radius) || 45);
+    this.spawnRoutes = (layout.spawnRoutes || []).map((route, index) => this.normalizeSpawnRoute(route, index));
+    if (this.spawnRoutes.length === 0) {
+      this.spawnRoutes = EXPANSION_FALLBACK.worldLayouts.convergence.spawnRoutes
+        .map((route, index) => this.normalizeSpawnRoute(route, index));
+    }
+
+    if (options.repositionUnits !== false && (dx !== 0 || dy !== 0)) {
+      const buildBounds = layout.buildBounds || {
+        minX: 24,
+        minY: 24,
+        maxX: this.worldWidth - 24,
+        maxY: this.worldHeight - 24
+      };
+      const translateAndClamp = entity => {
+        if (!entity) return;
+        entity.x = Math.max(
+          Number(buildBounds.minX) || 24,
+          Math.min(Number(buildBounds.maxX) || (this.worldWidth - 24), (Number(entity.x) || 0) + dx)
+        );
+        entity.y = Math.max(
+          Number(buildBounds.minY) || 24,
+          Math.min(Number(buildBounds.maxY) || (this.worldHeight - 24), (Number(entity.y) || 0) + dy)
+        );
+      };
+      [
+        ...(this.placedTowers || []),
+        ...(this.mercenaries || []),
+        ...(this.petDrones || []),
+        ...(this.decoys || [])
+      ].forEach(translateAndClamp);
+      translateAndClamp(this.buildCursor);
+    }
+
+    if (this.camera) {
+      this.camera.x = this.citadel.x;
+      this.camera.y = this.citadel.y;
+      this.constrainBattlefieldCamera();
+    }
+    const terrainSrc = LAYOUT_TERRAIN_SOURCES[this.selectedLayoutId] || layout.terrainSrc;
+    if (terrainSrc && this.spriteAtlasImages) {
+      this.approachTerrainImage = this.preloadSpriteAsset(terrainSrc, 'Terrain tactique');
+    }
+    return { ok: true, layout };
+  }
+
+  setMapRotation(rotation = []) {
+    const validIds = Array.isArray(rotation)
+      ? rotation.filter(id => EXPANSION?.worldLayouts?.[id])
+      : [];
+    this.mapRotation = [...new Set(validIds)];
+    this.rotationEnabled = this.mapRotation.length > 1;
+    this.mapRotationIndex = Math.max(0, this.mapRotation.indexOf(this.selectedLayoutId));
+    return this.mapRotation.slice();
+  }
+
+  rotateWorldLayoutBetweenWaves() {
+    if (this.mapRotation.length < 2 || this.waveActive || this.enemies.length > 0) return false;
+    this.mapRotationIndex = (this.mapRotationIndex + 1) % this.mapRotation.length;
+    const nextLayoutId = this.mapRotation[this.mapRotationIndex];
+    return this.applyWorldLayout(nextLayoutId, { rotation: true }).ok;
+  }
+
+  createFallbackSeededRng(seed) {
+    let state = (Number(seed) >>> 0) || 0x6d2b79f5;
+    return function seededRandom() {
+      state = (state + 0x6d2b79f5) >>> 0;
+      let value = state;
+      value = Math.imul(value ^ (value >>> 15), value | 1);
+      value ^= value + Math.imul(value ^ (value >>> 7), value | 61);
+      return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  getRunRandom() {
+    if (!this.dailyRng) return Math.random();
+    const rng = this.dailyRng;
+    return rng();
+  }
+
+  getActiveRunMutators() {
+    return this.isTowerMode ? this.towerMutators : this.activeRunMutators;
+  }
+
+  getRunModifierProduct(key, fallback = 1) {
+    return this.getActiveRunMutators().reduce((product, mutator) => {
+      const value = Number(mutator?.modifiers?.[key]);
+      return product * (Number.isFinite(value) && value > 0 ? value : 1);
+    }, fallback);
+  }
+
+  getRunModifierMaximum(key, fallback = 0) {
+    return this.getActiveRunMutators().reduce((maximum, mutator) => {
+      const value = Number(mutator?.modifiers?.[key]);
+      return Number.isFinite(value) ? Math.max(maximum, value) : maximum;
+    }, fallback);
+  }
+
+  startDailyChallenge(value = new Date(), playerSalt = '') {
+    const createChallenge = EXPANSION?.utils?.createDailyChallenge;
+    let challenge;
+    if (typeof createChallenge === 'function') {
+      challenge = createChallenge(value, playerSalt);
+    } else {
+      const day = new Date(value).toISOString().slice(0, 10);
+      let seed = 2166136261;
+      for (const character of `${day}:${playerSalt}`) {
+        seed ^= character.charCodeAt(0);
+        seed = Math.imul(seed, 16777619);
+      }
+      challenge = {
+        id: `daily-${day}-${(seed >>> 0).toString(16)}`,
+        date: day,
+        seed: seed >>> 0,
+        layoutId: 'convergence',
+        heroId: 'aria',
+        mutatorIds: [],
+        rules: { startingCoins: 145, scoreMultiplier: 1 }
+      };
+    }
+    this.dailyChallenge = challenge;
+    const createRng = EXPANSION?.utils?.createSeededRng;
+    this.dailyRng = typeof createRng === 'function'
+      ? createRng(challenge.seed)
+      : this.createFallbackSeededRng(challenge.seed);
+    this.selectedLayoutId = EXPANSION?.worldLayouts?.[challenge.layoutId]
+      ? challenge.layoutId
+      : 'convergence';
+    const dailyHero = HERO_CLASSES[challenge.heroId];
+    if (dailyHero && dailyHero.unlocked !== false) this.selectedHero = dailyHero;
+    this.activeRunMutators = (challenge.mutatorIds || [])
+      .map(id => (EXPANSION.infinitumMutators || []).find(mutator => mutator.id === id))
+      .filter(Boolean);
+    this.startNewGame({
+      layoutId: this.selectedLayoutId,
+      dailyChallenge: challenge,
+      preserveCheckpoint: true
+    });
+    this.coins = Math.max(0, Number(challenge.rules?.startingCoins) || this.coins);
+    this.updateHUD();
+    return challenge;
+  }
+
+  recordRunHistory(result = {}) {
+    const entry = {
+      id: String(result.id || `${Date.now()}-${this.runHistory.length}`),
+      mode: result.mode || (this.dailyChallenge ? 'daily' : (this.isTowerMode ? 'infinitum' : (this.endlessMode ? 'endless' : 'campaign'))),
+      dailyId: this.dailyChallenge?.id || null,
+      date: result.date || new Date().toISOString(),
+      layoutId: this.selectedLayoutId,
+      heroId: this.selectedHero?.id || 'aria',
+      wave: Math.max(1, Math.floor(Number(result.wave) || this.wave || 1)),
+      score: Math.max(0, Math.floor(Number(result.score) || this.score || 0)),
+      victory: result.victory === true,
+      durationSeconds: Math.max(0, Math.floor(Number(result.durationSeconds) || this.runElapsedSeconds || 0))
+    };
+    this.runHistory.unshift(entry);
+    this.runHistory = this.runHistory.slice(0, 10);
+    this.saveProgress();
+    return entry;
+  }
+
   resizeCanvas() {
     if (!this.canvas) return;
     const newWidth = window.innerWidth || 1200;
@@ -483,10 +780,11 @@ class GameEngine {
     // horde toward the Citadel or distort projectile trajectories.
     this.canvas.width = newWidth;
     this.canvas.height = newHeight;
-    this.worldWidth = BATTLEFIELD_WORLD_WIDTH;
-    this.worldHeight = BATTLEFIELD_WORLD_HEIGHT;
-    this.citadel.x = this.worldWidth / 2;
-    this.citadel.y = this.worldHeight / 2;
+    const layout = this.getWorldLayout();
+    this.worldWidth = Number(layout.world?.width) || BATTLEFIELD_WORLD_WIDTH;
+    this.worldHeight = Number(layout.world?.height) || BATTLEFIELD_WORLD_HEIGHT;
+    this.citadel.x = Number(layout.citadel?.x) || (this.worldWidth / 2);
+    this.citadel.y = Number(layout.citadel?.y) || (this.worldHeight / 2);
     if (!this.buildCursor.visible) {
       this.buildCursor.x = this.citadel.x + 120;
       this.buildCursor.y = this.citadel.y;
@@ -530,8 +828,13 @@ class GameEngine {
     const safeHeight = Math.max(1, safeBottom - safeTop);
     const worldWidth = this.worldWidth || BATTLEFIELD_WORLD_WIDTH;
     const worldHeight = this.worldHeight || BATTLEFIELD_WORLD_HEIGHT;
-    const approachWidth = worldWidth + (BATTLEFIELD_APPROACH_MARGIN * 2);
-    const approachHeight = worldHeight + (BATTLEFIELD_APPROACH_MARGIN * 2);
+    const layoutBounds = this.worldLayout?.approachBounds;
+    const approachLeft = Number.isFinite(layoutBounds?.minX) ? layoutBounds.minX : -BATTLEFIELD_APPROACH_MARGIN;
+    const approachTop = Number.isFinite(layoutBounds?.minY) ? layoutBounds.minY : -BATTLEFIELD_APPROACH_MARGIN;
+    const approachRight = Number.isFinite(layoutBounds?.maxX) ? layoutBounds.maxX : worldWidth + BATTLEFIELD_APPROACH_MARGIN;
+    const approachBottom = Number.isFinite(layoutBounds?.maxY) ? layoutBounds.maxY : worldHeight + BATTLEFIELD_APPROACH_MARGIN;
+    const approachWidth = approachRight - approachLeft;
+    const approachHeight = approachBottom - approachTop;
     const fitScale = Math.min(
       width / approachWidth,
       safeHeight / approachHeight
@@ -555,10 +858,10 @@ class GameEngine {
       screenCenterY: safeTop + (safeHeight / 2),
       worldWidth,
       worldHeight,
-      approachLeft: -BATTLEFIELD_APPROACH_MARGIN,
-      approachTop: -BATTLEFIELD_APPROACH_MARGIN,
-      approachRight: worldWidth + BATTLEFIELD_APPROACH_MARGIN,
-      approachBottom: worldHeight + BATTLEFIELD_APPROACH_MARGIN,
+      approachLeft,
+      approachTop,
+      approachRight,
+      approachBottom,
       approachWidth,
       approachHeight,
       fitScale,
@@ -678,8 +981,8 @@ class GameEngine {
 
   resetBattlefieldCamera(width = this.canvas?.width || 1200, height = this.canvas?.height || 800) {
     const metrics = this.getBattlefieldCameraMetrics(width, height);
-    this.camera.x = metrics.worldWidth / 2;
-    this.camera.y = metrics.worldHeight / 2;
+    this.camera.x = this.citadel?.x ?? (metrics.worldWidth / 2);
+    this.camera.y = this.citadel?.y ?? (metrics.worldHeight / 2);
     this.camera.zoom = 1;
     this.constrainBattlefieldCamera(width, height, metrics);
     this.updateBattlefieldCameraControls(width, height);
@@ -688,8 +991,8 @@ class GameEngine {
 
   fitBattlefieldCamera(width = this.canvas?.width || 1200, height = this.canvas?.height || 800) {
     const metrics = this.getBattlefieldCameraMetrics(width, height);
-    this.camera.x = metrics.worldWidth / 2;
-    this.camera.y = metrics.worldHeight / 2;
+    this.camera.x = (metrics.approachLeft + metrics.approachRight) / 2;
+    this.camera.y = (metrics.approachTop + metrics.approachBottom) / 2;
     this.camera.zoom = metrics.minZoom;
     this.constrainBattlefieldCamera(width, height, metrics);
     this.updateBattlefieldCameraControls(width, height);
@@ -745,14 +1048,13 @@ class GameEngine {
   }
 
   getApproachCullBounds(padding = 0) {
-    const extra = BATTLEFIELD_APPROACH_MARGIN + Math.max(0, Number(padding) || 0);
-    const width = this.worldWidth || BATTLEFIELD_WORLD_WIDTH;
-    const height = this.worldHeight || BATTLEFIELD_WORLD_HEIGHT;
+    const extra = Math.max(0, Number(padding) || 0);
+    const metrics = this.getBattlefieldCameraMetrics();
     return {
-      left: -extra,
-      top: -extra,
-      right: width + extra,
-      bottom: height + extra
+      left: metrics.approachLeft - extra,
+      top: metrics.approachTop - extra,
+      right: metrics.approachRight + extra,
+      bottom: metrics.approachBottom + extra
     };
   }
 
@@ -835,7 +1137,8 @@ class GameEngine {
 
     this.floorImage = this.preloadSpriteAsset(FLOOR_TEXTURE_SRC, 'Texture de sol');
     this.coastlineImage = this.preloadSpriteAsset(COASTLINE_IMAGE_SRC, 'Côte infernale');
-    this.approachTerrainImage = this.preloadSpriteAsset(APPROACH_TERRAIN_IMAGE_SRC, 'Terrain d’approche');
+    const terrainSrc = LAYOUT_TERRAIN_SOURCES[this.selectedLayoutId] || APPROACH_TERRAIN_IMAGE_SRC;
+    this.approachTerrainImage = this.preloadSpriteAsset(terrainSrc, 'Terrain d’approche');
     this.spawnGateAtlasImage = this.preloadSpriteAsset(SPAWN_GATE_ATLAS_SRC, 'Portails d’approche');
     this.floorImage?.addEventListener('load', () => {
       // Recreate the pattern after late decoding or a context restoration.
@@ -856,12 +1159,19 @@ class GameEngine {
   }
 
   createRunCheckpoint() {
-    if (this.isTowerMode || this.endlessMode || this.campaignVictory || this.wave >= CAMPAIGN_FINAL_WAVE) return null;
+    if (
+      this.isTowerMode
+      || this.endlessMode
+      || this.dailyChallenge
+      || this.campaignVictory
+      || this.wave >= CAMPAIGN_FINAL_WAVE
+    ) return null;
     return {
       version: RUN_CHECKPOINT_VERSION,
       nextWave: this.wave + 1,
       difficulty: this.difficulty,
       selectedHeroId: this.selectedHero.id,
+      selectedLayoutId: this.selectedLayoutId,
       worldWidth: this.worldWidth || this.canvas?.width || 1200,
       worldHeight: this.worldHeight || this.canvas?.height || 800,
       citadelHp: Math.max(1, this.citadel.hp),
@@ -872,6 +1182,7 @@ class GameEngine {
       level: this.level,
       nextLevelXp: this.nextLevelXp,
       frenzyMeter: this.frenzyMeter,
+      carmillaStoredCharge: this.carmillaStoredCharge,
       runElapsedSeconds: this.runElapsedSeconds,
       runMetaCoinsEarned: this.runMetaCoinsEarned,
       weapons: JSON.parse(JSON.stringify(this.weapons)),
@@ -905,8 +1216,12 @@ class GameEngine {
     if (!this.isValidRunCheckpoint(checkpoint)) return false;
     const hero = HERO_CLASSES[checkpoint.selectedHeroId];
     if (hero && hero.unlocked !== false) this.selectedHero = hero;
+    if (EXPANSION?.worldLayouts?.[checkpoint.selectedLayoutId]) {
+      this.selectedLayoutId = checkpoint.selectedLayoutId;
+    }
     this.startNewGame({
       difficulty: checkpoint.difficulty,
+      layoutId: this.selectedLayoutId,
       preserveCheckpoint: true,
       silent: true
     });
@@ -927,6 +1242,7 @@ class GameEngine {
     this.level = Math.max(1, Math.floor(Number(checkpoint.level) || 1));
     this.nextLevelXp = Math.max(1, Math.floor(Number(checkpoint.nextLevelXp) || 100));
     this.frenzyMeter = Math.max(0, Math.min(this.maxFrenzyMeter, Number(checkpoint.frenzyMeter) || 0));
+    this.carmillaStoredCharge = Math.max(0, Math.min(35, Number(checkpoint.carmillaStoredCharge) || 0));
     this.runElapsedSeconds = Math.max(0, Number(checkpoint.runElapsedSeconds) || 0);
     this.runMetaCoinsEarned = Math.max(0, Math.floor(Number(checkpoint.runMetaCoinsEarned) || 0));
     this.weapons = JSON.parse(JSON.stringify(checkpoint.weapons));
@@ -972,11 +1288,36 @@ class GameEngine {
         this.totalCoinsEarned = saveVersion >= 3 ? savedTotalCoins : Math.max(0, savedTotalCoins - 400);
         this.towerFloor = Number.isFinite(data.towerFloor) ? Math.max(1, Math.min(100, Math.floor(data.towerFloor))) : 1;
         this.towerCompleted = data.towerCompleted === true;
+        if (EXPANSION?.worldLayouts?.[data.selectedLayoutId]) {
+          this.selectedLayoutId = data.selectedLayoutId;
+          this.applyWorldLayout(this.selectedLayoutId, { force: true, repositionUnits: false });
+        }
+        if (Array.isArray(data.mapRotation)) this.setMapRotation(data.mapRotation);
+        this.runHistory = Array.isArray(data.runHistory)
+          ? data.runHistory.filter(entry => entry && typeof entry === 'object').slice(0, 10)
+          : [];
+        this.towerMutators = Array.isArray(data.towerMutatorIds)
+          ? data.towerMutatorIds
+            .map(id => (EXPANSION.infinitumMutators || []).find(mutator => mutator.id === id))
+            .filter(Boolean)
+          : [];
         this.bestScore = Math.max(0, Math.floor(Number(data.bestScore) || 0));
         this.bestWave = Math.max(0, Math.floor(Number(data.bestWave) || 0));
         this.campaignCompletions = Math.max(0, Math.floor(Number(data.campaignCompletions) || 0));
         this.preferredMusicEnabled = data.musicEnabled === true;
         this.preferredCrtEnabled = data.crtEnabled !== false;
+        this.musicVolume = Number.isFinite(Number(data.musicVolume))
+          ? Math.max(0, Math.min(1, Number(data.musicVolume)))
+          : this.musicVolume;
+        this.sfxVolume = Number.isFinite(Number(data.sfxVolume))
+          ? Math.max(0, Math.min(1, Number(data.sfxVolume)))
+          : this.sfxVolume;
+        this.contrastMode = ['default', 'high', 'mono'].includes(data.contrastMode)
+          ? data.contrastMode
+          : this.contrastMode;
+        this.textSize = ['default', 'large', 'extra-large'].includes(data.textSize)
+          ? data.textSize
+          : this.textSize;
         if (this.isValidRunCheckpoint(data.activeRun)) {
           this.activeRunCheckpoint = data.activeRun;
           this.savedRunCheckpoint = data.activeRun;
@@ -1031,6 +1372,9 @@ class GameEngine {
         }
         audio.isMuted = data.sfxMuted === true;
       }
+      audio.setMusicVolume?.(this.musicVolume);
+      audio.setSfxVolume?.(this.sfxVolume);
+      this.applyVisualPreferences();
     } catch (e) {
       this.saveLoadError = e;
       console.warn('Failed to load save data:', e);
@@ -1059,6 +1403,10 @@ class GameEngine {
         shopUpgrades: this.shopUpgrades,
         towerFloor: this.towerFloor,
         towerCompleted: this.towerCompleted,
+        towerMutatorIds: this.towerMutators.map(mutator => mutator.id),
+        selectedLayoutId: this.selectedLayoutId,
+        mapRotation: this.mapRotation.slice(),
+        runHistory: this.runHistory.slice(0, 10),
         bestScore: this.bestScore,
         bestWave: this.bestWave,
         campaignCompletions: this.campaignCompletions,
@@ -1067,6 +1415,10 @@ class GameEngine {
         radioStation: audio.currentStation,
         musicEnabled: audio.isPlayingMusic === true,
         sfxMuted: audio.isMuted,
+        musicVolume: this.musicVolume,
+        sfxVolume: this.sfxVolume,
+        contrastMode: this.contrastMode,
+        textSize: this.textSize,
         crtEnabled: !document.querySelector?.('.crt-overlay')?.classList.contains('disabled'),
         unlockedGallery: unlockedIds,
         recruitedBosses,
@@ -1085,6 +1437,357 @@ class GameEngine {
       this.saveLoadError = e;
       console.warn('Failed to save data:', e);
     }
+  }
+
+  applyVisualPreferences() {
+    const body = document.body;
+    if (!body) return;
+    body.dataset.contrast = this.contrastMode;
+    body.dataset.textSize = this.textSize;
+    ['contrast-high', 'contrast-mono'].forEach(className => body.classList.remove(className));
+    ['text-large', 'text-extra-large'].forEach(className => body.classList.remove(className));
+    if (this.contrastMode !== 'default') body.classList.add(`contrast-${this.contrastMode}`);
+    if (this.textSize !== 'default') body.classList.add(`text-${this.textSize}`);
+  }
+
+  syncSettingsControls() {
+    const music = document.getElementById('music-volume');
+    const sfx = document.getElementById('sfx-volume');
+    const contrast = document.getElementById('contrast-mode');
+    const textSize = document.getElementById('text-size');
+    const musicOutput = document.getElementById('music-volume-output');
+    const sfxOutput = document.getElementById('sfx-volume-output');
+    if (music) music.value = String(Math.round(this.musicVolume * 100));
+    if (sfx) sfx.value = String(Math.round(this.sfxVolume * 100));
+    if (contrast) contrast.value = this.contrastMode;
+    if (textSize) textSize.value = this.textSize;
+    if (musicOutput) musicOutput.textContent = `${Math.round(this.musicVolume * 100)} %`;
+    if (sfxOutput) sfxOutput.textContent = `${Math.round(this.sfxVolume * 100)} %`;
+  }
+
+  initializeSettingsControls() {
+    this.syncSettingsControls();
+    const bindRange = (id, outputId, setter) => {
+      const input = document.getElementById(id);
+      const output = document.getElementById(outputId);
+      input?.addEventListener('input', event => {
+        const value = Math.max(0, Math.min(100, Number(event.target.value) || 0));
+        if (output) output.textContent = `${Math.round(value)} %`;
+        setter(value / 100);
+      });
+      input?.addEventListener('change', () => this.saveProgress());
+    };
+    bindRange('music-volume', 'music-volume-output', value => {
+      this.musicVolume = audio.setMusicVolume?.(value) ?? value;
+    });
+    bindRange('sfx-volume', 'sfx-volume-output', value => {
+      this.sfxVolume = audio.setSfxVolume?.(value) ?? value;
+    });
+
+    document.getElementById('contrast-mode')?.addEventListener('change', event => {
+      this.contrastMode = ['default', 'high', 'mono'].includes(event.target.value)
+        ? event.target.value
+        : 'default';
+      this.applyVisualPreferences();
+      this.saveProgress();
+    });
+    document.getElementById('text-size')?.addEventListener('change', event => {
+      this.textSize = ['default', 'large', 'extra-large'].includes(event.target.value)
+        ? event.target.value
+        : 'default';
+      this.applyVisualPreferences();
+      this.saveProgress();
+    });
+    document.getElementById('btn-export-save')?.addEventListener('click', () => this.exportPortableSave());
+    document.getElementById('import-save-input')?.addEventListener('change', event => {
+      const file = event.target.files?.[0];
+      if (file) this.importPortableSaveFile(file);
+      event.target.value = '';
+    });
+
+    window.addEventListener?.('gamepadconnected', event => {
+      this.connectedGamepadIndex = event.gamepad?.index ?? null;
+      this.refreshGamepadStatus(true);
+    });
+    window.addEventListener?.('gamepaddisconnected', event => {
+      if (this.connectedGamepadIndex === event.gamepad?.index) this.connectedGamepadIndex = null;
+      this.refreshGamepadStatus(true);
+    });
+    this.refreshGamepadStatus(true);
+  }
+
+  setSettingsStatus(message, isError = false) {
+    const status = document.getElementById('settings-status');
+    if (!status) return;
+    status.textContent = message;
+    status.dataset.state = isError ? 'error' : 'success';
+  }
+
+  createPortableSavePayload() {
+    this.saveProgress();
+    let campaignSave = {};
+    try {
+      campaignSave = JSON.parse(localStorage.getItem('valkyrie_sweeper_save') || '{}');
+    } catch (_error) {
+      campaignSave = {};
+    }
+    const expansion = this.getVnExpansion();
+    const narrativeState = expansion?.persistence?.sanitizeState
+      ? expansion.persistence.sanitizeState(this.vnExpansionState)
+      : this.vnExpansionState;
+    return {
+      schema: 'infernal-city.portable-save/1',
+      exportedAt: new Date().toISOString(),
+      campaign: campaignSave,
+      narrative: narrativeState || null
+    };
+  }
+
+  exportPortableSave() {
+    try {
+      const payload = this.createPortableSavePayload();
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const objectUrl = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = objectUrl;
+      anchor.download = `infernal-city-save-${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove?.();
+      URL.revokeObjectURL(objectUrl);
+      this.setSettingsStatus('Sauvegarde exportée. Conservez ce fichier dans un emplacement privé.');
+    } catch (error) {
+      console.warn('Export de sauvegarde impossible :', error);
+      this.setSettingsStatus('Échec de l’export. Vérifiez les autorisations de téléchargement.', true);
+    }
+  }
+
+  importPortableSaveFile(file) {
+    if (!file || Number(file.size) > 2 * 1024 * 1024 || typeof file.text !== 'function') {
+      this.setSettingsStatus('Import refusé : fichier absent, illisible ou supérieur à 2 Mo.', true);
+      return Promise.resolve(false);
+    }
+    return file.text().then(serialized => {
+      const parsed = JSON.parse(serialized);
+      const campaign = parsed?.schema === 'infernal-city.portable-save/1'
+        ? parsed.campaign
+        : parsed;
+      if (!campaign || typeof campaign !== 'object' || Array.isArray(campaign)) {
+        throw new Error('Sauvegarde de campagne absente.');
+      }
+      const version = Math.floor(Number(campaign.version));
+      if (!Number.isFinite(version) || version < 1 || version > SAVE_VERSION) {
+        throw new Error('Version de sauvegarde incompatible.');
+      }
+
+      const expansion = this.getVnExpansion();
+      const narrative = parsed?.schema === 'infernal-city.portable-save/1'
+        ? parsed.narrative
+        : null;
+      const cleanNarrative = narrative && expansion?.persistence?.sanitizeState
+        ? expansion.persistence.sanitizeState(narrative)
+        : null;
+
+      // Validation is complete before either key is replaced, so a malformed
+      // file can never leave the two progression stores half-imported.
+      localStorage.setItem('valkyrie_sweeper_save', JSON.stringify(campaign));
+      if (cleanNarrative && expansion?.persistence?.saveState) {
+        this.vnExpansionState = expansion.persistence.saveState(cleanNarrative, localStorage);
+      }
+      this.setSettingsStatus('Progression importée et validée. Rechargement du jeu…');
+      setTimeout(() => window.location?.reload?.(), 450);
+      return true;
+    }).catch(error => {
+      console.warn('Import de sauvegarde refusé :', error);
+      this.setSettingsStatus(`Import refusé : ${error.message || 'fichier invalide'}.`, true);
+      return false;
+    });
+  }
+
+  refreshGamepadStatus(force = false, timestamp = Date.now()) {
+    if (!force && timestamp - this.lastGamepadStatusPoll < 1000) return;
+    this.lastGamepadStatusPoll = timestamp;
+    const getGamepads = typeof navigator !== 'undefined' && typeof navigator.getGamepads === 'function'
+      ? navigator.getGamepads.bind(navigator)
+      : null;
+    const pads = getGamepads ? Array.from(getGamepads() || []).filter(Boolean) : [];
+    const gamepad = pads.find(pad => pad.connected !== false) || null;
+    this.connectedGamepadIndex = gamepad?.index ?? null;
+    const status = document.getElementById('gamepad-status');
+    if (status) {
+      status.textContent = gamepad
+        ? `Manette détectée : ${gamepad.id || `port ${gamepad.index + 1}`}.`
+        : 'Aucune manette détectée. Connectez-en une puis appuyez sur un bouton.';
+      status.dataset.connected = String(Boolean(gamepad));
+    }
+    return gamepad;
+  }
+
+  getConnectedGamepad() {
+    if (typeof navigator === 'undefined' || typeof navigator.getGamepads !== 'function') return null;
+    const pads = Array.from(navigator.getGamepads() || []).filter(Boolean);
+    if (this.connectedGamepadIndex !== null) {
+      const preferred = pads.find(pad => pad.index === this.connectedGamepadIndex && pad.connected !== false);
+      if (preferred) return preferred;
+    }
+    return pads.find(pad => pad.connected !== false) || null;
+  }
+
+  cycleSelectedBuildTower(direction) {
+    const towers = Object.values(TOWER_TYPES);
+    if (!towers.length) return null;
+    const currentIndex = Math.max(0, towers.findIndex(tower => tower.id === this.selectedTowerToBuild?.id));
+    const nextIndex = (currentIndex + Math.sign(direction || 1) + towers.length) % towers.length;
+    this.selectedTowerToBuild = towers[nextIndex];
+    this.renderBuildBar();
+    this.announce(`${this.selectedTowerToBuild.name} sélectionnée par la manette.`);
+    return this.selectedTowerToBuild;
+  }
+
+  updateGamepadControls(dt) {
+    const gamepad = this.getConnectedGamepad();
+    if (!gamepad) {
+      this.gamepadButtonState = [];
+      return false;
+    }
+
+    const pressed = index => {
+      const button = gamepad.buttons?.[index];
+      return Boolean(button && (button.pressed || Number(button.value) > 0.5));
+    };
+    const edge = index => pressed(index) && !this.gamepadButtonState[index];
+    const rememberButtons = () => {
+      this.gamepadButtonState = Array.from(
+        { length: gamepad.buttons?.length || 0 },
+        (_, index) => pressed(index)
+      );
+    };
+
+    const adultGate = document.getElementById('adult-gate-modal');
+    const topModal = this.getTopOpenModal();
+    if (adultGate?.classList.contains('active')) {
+      rememberButtons();
+      return false;
+    }
+    if (topModal) {
+      if (edge(1) && topModal.querySelector?.('.btn-close')) this.closeModal(topModal);
+      rememberButtons();
+      return true;
+    }
+
+    const axis = index => {
+      const value = Number(gamepad.axes?.[index]) || 0;
+      if (Math.abs(value) <= GAMEPAD_DEADZONE) return 0;
+      return Math.sign(value) * ((Math.abs(value) - GAMEPAD_DEADZONE) / (1 - GAMEPAD_DEADZONE));
+    };
+    const dpadX = (pressed(15) ? 1 : 0) - (pressed(14) ? 1 : 0);
+    const dpadY = (pressed(13) ? 1 : 0) - (pressed(12) ? 1 : 0);
+    const cameraX = Math.max(-1, Math.min(1, axis(0) + dpadX));
+    const cameraY = Math.max(-1, Math.min(1, axis(1) + dpadY));
+    if (cameraX || cameraY) {
+      this.panBattlefieldCameraBy(
+        -cameraX * GAMEPAD_CAMERA_SPEED * dt,
+        -cameraY * GAMEPAD_CAMERA_SPEED * dt
+      );
+    }
+
+    const cursorX = axis(2);
+    const cursorY = axis(3);
+    if (cursorX || cursorY) {
+      const view = this.getBattlefieldView();
+      const buildBounds = this.worldLayout?.buildBounds || {
+        minX: 25,
+        minY: 25,
+        maxX: this.worldWidth - 25,
+        maxY: this.worldHeight - 25
+      };
+      this.buildCursor.x = Math.max(
+        buildBounds.minX,
+        Math.min(buildBounds.maxX, this.buildCursor.x + ((cursorX * GAMEPAD_CURSOR_SPEED * dt) / view.scale))
+      );
+      this.buildCursor.y = Math.max(
+        buildBounds.minY,
+        Math.min(buildBounds.maxY, this.buildCursor.y + ((cursorY * GAMEPAD_CURSOR_SPEED * dt) / view.scale))
+      );
+      this.buildCursor.visible = true;
+    }
+
+    const leftTrigger = Number(gamepad.buttons?.[6]?.value) || 0;
+    const rightTrigger = Number(gamepad.buttons?.[7]?.value) || 0;
+    const zoomAxis = rightTrigger - leftTrigger;
+    if (Math.abs(zoomAxis) > 0.05) {
+      const view = this.getBattlefieldView();
+      this.zoomBattlefieldCameraBy(
+        Math.exp(zoomAxis * 1.5 * dt),
+        view.screenCenterX,
+        view.screenCenterY
+      );
+    }
+
+    if (edge(4)) this.cycleSelectedBuildTower(-1);
+    if (edge(5)) this.cycleSelectedBuildTower(1);
+    if (edge(2)) this.triggerHeroAbility();
+    if (edge(3)) this.triggerOverdrive();
+    if (edge(1)) {
+      if (!this.cancelHeroAbilityTargeting()) this.fitBattlefieldCamera();
+    }
+    if (edge(0)) {
+      if (this.activeHeroTargeting) {
+        this.executeHeroAbilityAt(this.buildCursor.x, this.buildCursor.y);
+      } else {
+        const defense = this.findPlacedDefenseAt(this.buildCursor.x, this.buildCursor.y);
+        if (defense) this.openDefenseManagementModal(defense);
+        else this.buildSelectedTowerAt(this.buildCursor.x, this.buildCursor.y);
+      }
+    }
+    if (edge(9)) document.getElementById('btn-open-hq')?.click();
+
+    rememberButtons();
+    return true;
+  }
+
+  openSettingsModal() {
+    this.syncSettingsControls();
+    this.refreshGamepadStatus(true);
+    this.setSettingsStatus('Paramètres chargés. Les changements sont sauvegardés localement.');
+    this.openModal('settings-modal');
+  }
+
+  renderRunHistory() {
+    const list = document.getElementById('run-history-list');
+    if (!list) return;
+    list.innerHTML = '';
+    if (this.runHistory.length === 0) {
+      const empty = document.createElement('li');
+      empty.className = 'empty-state';
+      empty.textContent = 'Aucune sortie archivée. Votre prochaine campagne apparaîtra ici.';
+      list.appendChild(empty);
+      return;
+    }
+    this.runHistory.slice(0, 10).forEach(entry => {
+      const item = document.createElement('li');
+      const date = new Date(entry.date);
+      const dateText = Number.isNaN(date.getTime())
+        ? 'Date inconnue'
+        : date.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      const layout = EXPANSION?.worldLayouts?.[entry.layoutId];
+      const result = entry.victory
+        ? 'Victoire'
+        : `${entry.mode === 'infinitum' ? 'Palier' : 'Vague'} ${entry.wave}`;
+      [dateText, layout?.name || entry.layoutId || 'Convergence', result, String(entry.score || 0)]
+        .forEach(value => {
+          const cell = document.createElement('span');
+          cell.textContent = value;
+          item.appendChild(cell);
+        });
+      item.dataset.result = entry.victory ? 'victory' : 'defeat';
+      list.appendChild(item);
+    });
+  }
+
+  openRunHistoryModal() {
+    this.renderRunHistory();
+    this.openModal('run-history-modal');
   }
 
   setupModalAccessibility() {
@@ -1214,6 +1917,7 @@ class GameEngine {
     const focusEntryIndex = this.modalFocusStack.map(entry => entry.modal).lastIndexOf(modal);
     const focusEntry = focusEntryIndex >= 0 ? this.modalFocusStack[focusEntryIndex] : null;
     if (focusEntryIndex >= 0) this.modalFocusStack.splice(focusEntryIndex, 1);
+    if (modal.id === 'visual-novel-modal') this.restoreVnMusicMood();
     modal.classList.remove('active');
     this.syncModalAccessibility();
     this.isPaused = Boolean(this.getTopOpenModal());
@@ -1225,6 +1929,7 @@ class GameEngine {
 
   closeAllGameplayModals(excludedIds = []) {
     const excluded = new Set(['adult-gate-modal', ...excludedIds]);
+    if (!excluded.has('visual-novel-modal')) this.restoreVnMusicMood();
     document.querySelectorAll('.modal-overlay.active').forEach(modal => {
       if (!excluded.has(modal.id)) modal.classList.remove('active');
     });
@@ -1264,11 +1969,16 @@ class GameEngine {
     const checkpointCard = document.getElementById('checkpoint-card');
     const continueButton = document.getElementById('btn-continue-run');
     const difficultySelect = document.getElementById('difficulty-select');
+    const layoutSelect = document.getElementById('layout-select');
     const saveWarning = document.getElementById('save-warning');
     const selectedDifficulty = checkpoint?.difficulty || this.difficulty || 'standard';
     if (difficultySelect) difficultySelect.value = selectedDifficulty;
+    if (layoutSelect) layoutSelect.value = this.rotationEnabled
+      ? 'rotation'
+      : (checkpoint?.selectedLayoutId || this.selectedLayoutId);
     if (saveWarning) saveWarning.hidden = !this.saveLoadError;
     this.updateDifficultyDescription(selectedDifficulty);
+    this.updateLayoutDescription(layoutSelect?.value || this.selectedLayoutId);
 
     if (checkpointCard) checkpointCard.hidden = !checkpoint;
     if (continueButton) continueButton.hidden = !checkpoint;
@@ -1288,10 +1998,25 @@ class GameEngine {
     if (description) description.textContent = difficulty.desc;
   }
 
+  updateLayoutDescription(layoutId) {
+    const layout = this.getWorldLayout(layoutId);
+    const description = document.getElementById('layout-description');
+    if (description) description.textContent = layout.description || layout.tacticalNote || '';
+    const missionMap = document.getElementById('mission-map-txt');
+    if (missionMap) missionMap.textContent = layout.name || layout.id || 'La Convergence';
+  }
+
   beginNewCampaign() {
     const difficultyId = document.getElementById('difficulty-select')?.value || 'standard';
+    const layoutId = document.getElementById('layout-select')?.value || this.selectedLayoutId;
+    const rotation = layoutId === 'rotation' ? Object.keys(EXPANSION?.worldLayouts || {}) : [];
+    this.selectedLayoutId = EXPANSION?.worldLayouts?.[layoutId] ? layoutId : 'convergence';
     this.closeModal('mission-briefing-modal', false);
-    this.startNewGame({ difficulty: difficultyId });
+    this.startNewGame({
+      difficulty: difficultyId,
+      layoutId: this.selectedLayoutId,
+      rotation
+    });
     this.focusBattlefield();
     this.announce(`Nouvelle campagne en difficulté ${DIFFICULTY_DATA[this.difficulty].name}. Objectif : tenir quinze vagues.`);
   }
@@ -1345,7 +2070,12 @@ class GameEngine {
     if (!gate) return;
     gate.classList.remove('active');
     this.hasEnteredAdultExperience = true;
-    if (!Object.keys(this.spriteAtlasImages).length) this.preloadBattleSprites();
+    const battleAtlasesMissing = (
+      !Object.keys(this.enemySpriteImages).length
+      || !Object.keys(this.towerSpriteImages).length
+      || !Object.keys(this.heroSpriteImages).length
+    );
+    if (battleAtlasesMissing) this.preloadBattleSprites();
     if (this.preferredMusicEnabled && !audio.isPlayingMusic) audio.startMusic();
     this.syncMusicButtonState();
     this.syncModalAccessibility();
@@ -1533,6 +2263,11 @@ class GameEngine {
         const { x, y } = this.screenToBattlefieldPoint(screenX, screenY);
         this.buildCursor.x = x;
         this.buildCursor.y = y;
+        if (this.activeHeroTargeting) {
+          this.executeHeroAbilityAt(x, y);
+          this.canvas.focus({ preventScroll: true });
+          return;
+        }
         const existingDefense = this.findPlacedDefenseAt(x, y);
         if (existingDefense) {
           this.canvas.focus({ preventScroll: true });
@@ -1568,7 +2303,32 @@ class GameEngine {
     document.getElementById('difficulty-select')?.addEventListener('change', event => {
       this.updateDifficultyDescription(event.target.value);
     });
+    document.getElementById('layout-select')?.addEventListener('change', event => {
+      if (event.target.value === 'rotation') {
+        this.setMapRotation(Object.keys(EXPANSION?.worldLayouts || {}));
+        this.updateLayoutDescription(this.selectedLayoutId);
+        return;
+      }
+      if (!EXPANSION?.worldLayouts?.[event.target.value]) return;
+      this.setMapRotation([]);
+      this.selectedLayoutId = event.target.value;
+      this.updateLayoutDescription(this.selectedLayoutId);
+    });
     document.getElementById('btn-start-campaign')?.addEventListener('click', () => this.beginNewCampaign());
+    document.getElementById('btn-daily-challenge')?.addEventListener('click', () => {
+      const challenge = this.startDailyChallenge(new Date());
+      const dateText = document.getElementById('daily-challenge-date');
+      const layoutText = document.getElementById('daily-challenge-layout');
+      const mutatorText = document.getElementById('daily-challenge-mutators');
+      if (dateText) dateText.textContent = challenge.date;
+      if (layoutText) layoutText.textContent = this.getWorldLayout(challenge.layoutId).name || challenge.layoutId;
+      if (mutatorText) {
+        mutatorText.textContent = this.activeRunMutators.map(mutator => mutator.name).join(' · ') || 'Aucun mutateur';
+      }
+      this.closeModal('mission-briefing-modal', false);
+      this.closeModal('hq-menu-modal', false);
+      this.focusBattlefield();
+    });
     document.getElementById('btn-continue-run')?.addEventListener('click', () => this.continueSavedCampaign());
     document.getElementById('btn-reset-save')?.addEventListener('click', () => {
       localStorage.removeItem('valkyrie_sweeper_save');
@@ -1597,6 +2357,7 @@ class GameEngine {
     document.getElementById('btn-vn-continue')?.addEventListener('click', () => this.advanceVnDialogue());
     document.getElementById('btn-vn-chapters')?.addEventListener('click', () => this.pauseVnToChapterBrowser());
     document.getElementById('btn-vn-revoke')?.addEventListener('click', () => this.revokeActiveVnConsent());
+    this.initializeSettingsControls();
 
     const btnOverdrive = document.getElementById('btn-overdrive');
     if (btnOverdrive) btnOverdrive.addEventListener('click', () => this.triggerOverdrive());
@@ -1604,6 +2365,11 @@ class GameEngine {
     window.addEventListener('keydown', (e) => {
       const activeModal = this.getTopOpenModal();
       if (activeModal && this.trapModalFocus(e, activeModal)) return;
+      if (e.key === 'Escape' && this.activeHeroTargeting && !activeModal) {
+        e.preventDefault();
+        this.cancelHeroAbilityTargeting();
+        return;
+      }
       if (e.key === 'Escape' && activeModal?.id !== 'adult-gate-modal' && activeModal?.querySelector('.btn-close')) {
         e.preventDefault();
         this.closeModal(activeModal);
@@ -1713,6 +2479,8 @@ class GameEngine {
         else if (targetId === 'btn-shop-toggle') this.openShopModal();
         else if (targetId === 'btn-gallery-toggle') this.openGalleryModal();
         else if (targetId === 'btn-achieve-toggle') this.openAchievementsModal();
+        else if (targetId === 'btn-run-history-toggle') this.openRunHistoryModal();
+        else if (targetId === 'btn-settings-toggle') this.openSettingsModal();
       });
     });
 
@@ -1725,6 +2493,11 @@ class GameEngine {
         document.getElementById('studio-preview-img').style.filter = `drop-shadow(0 0 18px ${color})`;
         document.querySelectorAll('[data-studio-color]').forEach(filterButton => filterButton.setAttribute('aria-pressed', String(filterButton === button)));
       });
+    });
+    document.getElementById('studio-pose-select')?.addEventListener('change', () => this.updatePhotoStudioPreview());
+    document.getElementById('studio-ambience-select')?.addEventListener('change', () => this.updatePhotoStudioPreview());
+    document.getElementById('studio-maturity-select')?.addEventListener('change', event => {
+      this.setStudioMaturity(event.target.value);
     });
 
     const btnCrt = document.getElementById('btn-crt-toggle');
@@ -1878,7 +2651,17 @@ class GameEngine {
   }
 
   createPlacedDefense(towerType, x, y, options = {}) {
-    const baseHp = towerType.hp || 180;
+    const ariaPassive = this.selectedHero?.id === 'aria'
+      ? EXPANSION?.heroKits?.aria?.passive
+      : null;
+    const ariaModifiers = ariaPassive?.modifiers || {};
+    const isInsideAriaAegis = ariaPassive
+      && Math.hypot(x - this.citadel.x, y - this.citadel.y)
+        <= (Number(ariaModifiers.radius) || 250);
+    const baseHp = Math.round(
+      (towerType.hp || 180)
+        * (isInsideAriaAegis ? (Number(ariaModifiers.defenseHpMultiplier) || 1.16) : 1)
+    );
     const defense = {
       id: towerType.id,
       x, y,
@@ -1892,6 +2675,7 @@ class GameEngine {
       baseFireRate: towerType.fireRate,
       baseRange: towerType.range,
       baseMaxHp: baseHp,
+      baseRadius: 18,
       damage: towerType.damage,
       fireRate: towerType.fireRate,
       range: towerType.range,
@@ -1902,6 +2686,13 @@ class GameEngine {
       animationPhase: Math.random() * 4,
       hp: baseHp,
       maxHp: baseHp,
+      stunIgnoresPerWave: isInsideAriaAegis
+        ? Math.max(0, Math.floor(Number(ariaModifiers.stunIgnoresPerWave) || 0))
+        : 0,
+      stunIgnoresRemaining: isInsideAriaAegis
+        ? Math.max(0, Math.floor(Number(ariaModifiers.stunIgnoresPerWave) || 0))
+        : 0,
+      disabledTimer: 0,
       effectPower: 1,
       isStarter: options.starter === true
     };
@@ -1916,15 +2707,61 @@ class GameEngine {
     const baseFireRate = Number.isFinite(defense?.baseFireRate) ? defense.baseFireRate : (Number(typeData.fireRate) || 0);
     const baseRange = Number.isFinite(defense?.baseRange) ? defense.baseRange : (Number(typeData.range) || 0);
     const baseMaxHp = Number.isFinite(defense?.baseMaxHp) ? defense.baseMaxHp : (Number(typeData.hp) || 180);
+    const baseRadius = Number.isFinite(defense?.baseRadius) ? defense.baseRadius : 18;
 
+    const specialization = this.getDefenseSpecializationOptions(defense)
+      .find(option => option.id === defense?.specializationId);
+    const modifiers = specialization?.modifiers || {};
     return {
       level,
-      damage: Math.round(baseDamage * levelStats.damage * 100) / 100,
-      fireRate: baseFireRate > 0 ? Math.max(70, Math.round(baseFireRate * levelStats.fireRate)) : 0,
-      range: Math.round(baseRange * levelStats.range),
-      maxHp: Math.round(baseMaxHp * levelStats.hp),
-      effectPower: levelStats.effect
+      damage: Math.round(baseDamage * levelStats.damage * (Number(modifiers.damageMultiplier) || 1) * 100) / 100,
+      fireRate: baseFireRate > 0
+        ? Math.max(70, Math.round(baseFireRate * levelStats.fireRate * (Number(modifiers.fireRateMultiplier) || 1)))
+        : 0,
+      range: Math.round(baseRange * levelStats.range * (Number(modifiers.rangeMultiplier) || 1)),
+      maxHp: Math.round(baseMaxHp * levelStats.hp * (Number(modifiers.hpMultiplier) || 1)),
+      radius: Math.max(12, Math.round(baseRadius * (Number(modifiers.widthMultiplier) || 1))),
+      effectPower: levelStats.effect * (Number(modifiers.effectMultiplier) || 1)
     };
+  }
+
+  getDefenseSpecializationOptions(defense) {
+    if (!defense?.id) return [];
+    const options = EXPANSION?.defenseSpecializations?.[defense.id];
+    return Array.isArray(options) ? options.slice(0, 2) : [];
+  }
+
+  getSpecializationTargetPriorities(specialization) {
+    const traits = specialization?.traits || [];
+    const priorities = [];
+    traits.forEach(trait => {
+      if (trait.includes('flying') || trait.includes('anti_air')) priorities.push('flying');
+      if (trait.includes('artillery')) priorities.push('artillery');
+      if (trait.includes('bulwark') || trait.includes('shield')) priorities.push('bulwark');
+      if (trait.includes('splitter')) priorities.push('splitter');
+      if (trait.includes('elite') || trait.includes('boss')) priorities.push('boss');
+      if (trait.includes('heavy')) priorities.push('heavy');
+      if (trait.includes('cluster') || trait.includes('swarm')) priorities.push('swarmer');
+    });
+    return [...new Set(priorities)];
+  }
+
+  chooseDefenseSpecialization(defense, specializationId) {
+    if (!defense || defense.level < 2) return { ok: false, reason: 'level' };
+    if (defense.specializationId) return { ok: false, reason: 'chosen' };
+    const specialization = this.getDefenseSpecializationOptions(defense)
+      .find(option => option.id === specializationId);
+    if (!specialization) return { ok: false, reason: 'invalid' };
+    defense.specializationId = specialization.id;
+    defense.specializationName = specialization.name;
+    defense.specializationTraits = (specialization.traits || []).slice();
+    defense.targetPriorities = this.getSpecializationTargetPriorities(specialization);
+    defense.pendingSpecialization = false;
+    if (Number(specialization.modifiers?.mineCount) > 1) {
+      defense.remainingCharges = Math.floor(Number(specialization.modifiers.mineCount));
+    }
+    this.applyDefenseLevelStats(defense, defense.level);
+    return { ok: true, specialization, defense };
   }
 
   applyDefenseLevelStats(defense, requestedLevel) {
@@ -1940,11 +2777,13 @@ class GameEngine {
     defense.baseFireRate = Number.isFinite(defense.baseFireRate) ? defense.baseFireRate : (Number(typeData.fireRate) || 0);
     defense.baseRange = Number.isFinite(defense.baseRange) ? defense.baseRange : (Number(typeData.range) || 0);
     defense.baseMaxHp = Number.isFinite(defense.baseMaxHp) ? defense.baseMaxHp : (Number(typeData.hp) || 180);
+    defense.baseRadius = Number.isFinite(defense.baseRadius) ? defense.baseRadius : 18;
     defense.level = stats.level;
     defense.damage = stats.damage;
     defense.fireRate = stats.fireRate;
     defense.range = stats.range;
     defense.maxHp = stats.maxHp;
+    defense.radius = stats.radius;
     defense.hp = Math.max(1, Math.round(stats.maxHp * previousHpRatio));
     defense.effectPower = stats.effectPower;
     return defense;
@@ -1974,7 +2813,17 @@ class GameEngine {
     this.coins -= cost;
     defense.investedCost = (Number.isFinite(defense.investedCost) ? defense.investedCost : defense.baseCost) + cost;
     this.applyDefenseLevelStats(defense, defense.level + 1);
-    return { ok: true, cost, level: defense.level };
+    const specializationOptions = defense.level >= 2 && !defense.specializationId
+      ? this.getDefenseSpecializationOptions(defense)
+      : [];
+    defense.pendingSpecialization = specializationOptions.length === 2;
+    return {
+      ok: true,
+      cost,
+      level: defense.level,
+      requiresSpecialization: defense.pendingSpecialization,
+      specializationOptions
+    };
   }
 
   sellDefense(defense) {
@@ -2035,6 +2884,34 @@ class GameEngine {
       row.append(term, description);
       statsContainer.appendChild(row);
     });
+    const specializationSection = document.getElementById('defense-specialization-section');
+    const specializationOptions = document.getElementById('defense-specialization-options');
+    if (specializationSection && specializationOptions) {
+      const options = this.getDefenseSpecializationOptions(defense);
+      specializationSection.hidden = !(defense.level >= 2 && options.length === 2);
+      specializationOptions.replaceChildren();
+      if (defense.specializationId) {
+        const selected = options.find(option => option.id === defense.specializationId);
+        const label = document.createElement('p');
+        label.textContent = `${selected?.name || defense.specializationName} — ${selected?.description || ''}`;
+        specializationOptions.appendChild(label);
+      } else if (defense.level >= 2) {
+        options.forEach(option => {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'btn-secondary';
+          button.textContent = option.name;
+          button.setAttribute('aria-label', `Spécialiser ${defense.name} : ${option.name}`);
+          button.addEventListener('click', () => {
+            if (!this.chooseDefenseSpecialization(defense, option.id).ok) return;
+            this.showFeedback(`${defense.name} · ${option.name}`, '#a855f7');
+            this.renderDefenseManagementModal(defense);
+            this.updateHUD();
+          });
+          specializationOptions.appendChild(button);
+        });
+      }
+    }
     investmentText.textContent = `Valeur investie : ${defense.investedCost} 🪙 · Revente : ${this.getDefenseSellValue(defense)} 🪙`;
     status.textContent = '';
 
@@ -2083,6 +2960,11 @@ class GameEngine {
     audio.playPickup();
     this.showFeedback(`${defense.name} améliorée au niveau ${result.level}`, '#10b981');
     this.updateHUD();
+    if (result.requiresSpecialization) {
+      this.renderDefenseManagementModal(defense);
+      this.announce(`Choisissez une spécialisation pour ${defense.name}.`);
+      return;
+    }
     this.closeModal('defense-management-modal', false);
     this.selectedPlacedDefense = null;
     this.focusCanvasAfterDefenseAction();
@@ -2156,6 +3038,17 @@ class GameEngine {
     const requestedDifficulty = options.difficulty || this.difficulty || 'standard';
     this.difficulty = DIFFICULTY_DATA[requestedDifficulty] ? requestedDifficulty : 'standard';
     if (!options.preserveCheckpoint) this.clearRunCheckpoint();
+    const requestedLayoutId = options.layoutId || this.selectedLayoutId || 'convergence';
+    this.selectedLayoutId = EXPANSION?.worldLayouts?.[requestedLayoutId]
+      ? requestedLayoutId
+      : 'convergence';
+    this.applyWorldLayout(this.selectedLayoutId, { force: true, repositionUnits: false });
+    if (Array.isArray(options.rotation)) this.setMapRotation(options.rotation);
+    if (!options.dailyChallenge && options.keepDaily !== true) {
+      this.dailyChallenge = null;
+      this.dailyRng = null;
+      this.activeRunMutators = [];
+    }
     this.resizeCanvas();
     this.citadel.maxHp = Math.round((500 + (this.shopUpgrades.hpBonus * 50)) * DIFFICULTY_DATA[this.difficulty].citadelHp);
     this.citadel.hp = this.citadel.maxHp;
@@ -2183,6 +3076,9 @@ class GameEngine {
     this.quadDamageTimer = 0;
     this.invincibleTimer = 0;
     this.abilityCooldownTimer = 0;
+    this.activeHeroTargeting = null;
+    this.hostileProjectileFreezeTimer = 0;
+    this.heroUltimateDefenseDamageTimer = 0;
     this.spawnTimer = 0;
     this.weaponTimers = {};
     this.decoysDeployedCount = 0;
@@ -2190,6 +3086,8 @@ class GameEngine {
     this.evolvedWeaponsCount = 0;
     this.mutantsKilled = 0;
     this.overdriveCount = 0;
+    this.kiraMarkedRoutes = new Set();
+    this.carmillaStoredCharge = 0;
     this.lastTime = 0;
     this.animationClock = 0;
     this.heroAnimationState = 'idle';
@@ -2226,9 +3124,10 @@ class GameEngine {
     // the core loop after the adult-content notice is accepted.
     const cx = this.citadel.x || (window.innerWidth / 2);
     const cy = this.citadel.y || (window.innerHeight / 2);
+    const placeX = Math.max(35, Math.min(this.worldWidth - 35, cx + (cx < this.worldWidth / 2 ? 125 : -90)));
 
-    this.placedTowers.push(this.createPlacedDefense(TOWER_TYPES.vulcan_turret, cx - 90, cy - 90, { starter: true }));
-    this.placedTowers.push(this.createPlacedDefense(TOWER_TYPES.flame_trap, cx + 90, cy + 90, { starter: true }));
+    this.placedTowers.push(this.createPlacedDefense(TOWER_TYPES.vulcan_turret, placeX, Math.max(35, cy - 90), { starter: true }));
+    this.placedTowers.push(this.createPlacedDefense(TOWER_TYPES.flame_trap, placeX, Math.min(this.worldHeight - 35, cy + 90), { starter: true }));
 
     for (let i = 0; i < 4; i++) {
       this.spawnMutant();
@@ -2247,6 +3146,20 @@ class GameEngine {
     if (!options.preserveCheckpoint) this.saveProgress();
   }
 
+  getAdjustedWaveGroupCount(group) {
+    let count = Math.max(
+      1,
+      Math.round((Number(group?.count) || 1) * this.getRunModifierProduct('groupCountMultiplier'))
+    );
+    if (group?.type === 'artillery') {
+      count = Math.max(
+        1,
+        Math.round(count * this.getRunModifierProduct('artilleryCountMultiplier'))
+      );
+    }
+    return count;
+  }
+
   configureWave(number, options = {}) {
     this.wave = Math.max(1, Math.floor(number));
     this.waveActive = true;
@@ -2255,12 +3168,80 @@ class GameEngine {
     this.bossSpawnedThisWave = false;
     this.waveRewardClaimed = false;
     this.spawnTimer = 0;
+    this.waveSpawnElapsedMs = 0;
     this.lastWaveStatusSecond = null;
+    this.placedTowers.forEach(defense => {
+      defense.stunIgnoresRemaining = Math.max(
+        0,
+        Math.floor(Number(defense.stunIgnoresPerWave) || 0)
+      );
+    });
     this.isTowerMode = options.towerMode === true;
     this.towerMutator = options.mutator || null;
+    if (this.isTowerMode) {
+      this.towerMutators = Array.isArray(options.mutators)
+        ? options.mutators.filter(Boolean)
+        : (this.towerMutator ? [this.towerMutator] : this.towerMutators);
+    }
     const baseTarget = 8 + (this.wave * 2);
-    this.waveSpawnTarget = Math.min(48, Math.round(baseTarget * (this.towerMutator?.id === 'swarm' ? 1.5 : 1)));
+    const hasSwarmMutator = this.getActiveRunMutators().some(mutator => ['swarm', 'long_march'].includes(mutator.id));
+    this.waveSpawnTarget = Math.min(96, Math.round(baseTarget * (hasSwarmMutator ? 1.5 : 1)));
+    this.waveSpawnQueue = this.buildWaveSpawnQueue(this.wave);
+    if (this.waveSpawnQueue.length > 0) this.waveSpawnTarget = this.waveSpawnQueue.length;
+    const nextWaveText = document.getElementById('mission-next-wave-txt');
+    if (nextWaveText) {
+      const groups = this.activeWaveDefinition?.groups || [];
+      const previewHidden = this.getActiveRunMutators()
+        .some(mutator => mutator.modifiers?.hiddenWavePreview === true);
+      nextWaveText.textContent = previewHidden
+        ? `Vague ${this.wave} · composition brouillée par le mutateur`
+        : groups.length > 0
+        ? `${this.activeWaveDefinition.name} · ${groups.map(group => `${this.getAdjustedWaveGroupCount(group)} ${EXPANSION.enemyDefinitions?.[group.type]?.name || group.type}`).join(' · ')}`
+        : `Vague ${this.wave} · composition adaptative`;
+    }
+    this.updateLayoutDescription(this.selectedLayoutId);
     this.updateHUD();
+  }
+
+  buildWaveSpawnQueue(waveNumber = this.wave) {
+    if (this.isTowerMode || this.endlessMode || waveNumber > CAMPAIGN_FINAL_WAVE) {
+      this.activeWaveDefinition = null;
+      return [];
+    }
+    const waveScript = EXPANSION?.waveScripts?.siege_15;
+    const waveDefinition = waveScript?.waves?.find(candidate => candidate.number === waveNumber);
+    this.activeWaveDefinition = waveDefinition || null;
+    if (!waveDefinition?.groups) return [];
+    const routeCount = Math.max(1, this.spawnRoutes.length);
+    const queue = [];
+    waveDefinition.groups.forEach((group, groupIndex) => {
+      const pattern = Array.isArray(group.routePattern) && group.routePattern.length > 0
+        ? group.routePattern
+        : [groupIndex];
+      const adjustedCount = this.getAdjustedWaveGroupCount(group);
+      for (let index = 0; index < adjustedCount; index++) {
+        const routeIndex = Math.abs(Number(pattern[index % pattern.length]) || 0) % routeCount;
+        queue.push({
+          type: group.type,
+          routeIndex,
+          atMs: Math.max(0, Number(group.delayMs) || 0)
+            + (index * Math.max(1, Number(group.intervalMs) || 1))
+            + (this.spawnRoutes[routeIndex]?.cadenceOffsetMs || 0)
+        });
+      }
+    });
+    const bossTypes = { 5: 'vespera', 10: 'carmilla', 15: 'leviathan' };
+    const bossType = bossTypes[waveNumber];
+    if (bossType) {
+      const lastAtMs = queue.reduce((maximum, entry) => Math.max(maximum, entry.atMs), 0);
+      queue.push({
+        type: bossType,
+        routeIndex: waveNumber === 10 ? Math.min(1, routeCount - 1) : 0,
+        atMs: lastAtMs + 1600,
+        boss: true
+      });
+    }
+    return queue.sort((left, right) => left.atMs - right.atMs);
   }
 
   completeWave() {
@@ -2301,7 +3282,7 @@ class GameEngine {
       this.triggerCampaignVictory();
       return;
     }
-    if (!this.isTowerMode && !this.endlessMode) this.saveRunCheckpoint();
+    if (!this.isTowerMode && !this.endlessMode && !this.dailyChallenge) this.saveRunCheckpoint();
     this.saveProgress();
     this.updateHUD();
   }
@@ -2309,8 +3290,22 @@ class GameEngine {
   advanceWave() {
     if (this.isTowerMode) {
       const completedFloor = this.wave;
+      const reachedCheckpoint = completedFloor % 10 === 0 || completedFloor >= 100;
+      if (!reachedCheckpoint) {
+        const nextFloor = completedFloor + 1;
+        this.infinitumCanReturn = false;
+        this.configureWave(nextFloor, {
+          towerMode: true,
+          mutators: this.towerMutators
+        });
+        this.showFeedback(`Ascension continue · étage ${nextFloor}`, '#a855f7');
+        this.updateInfinitumProgress();
+        return;
+      }
+
       const state = this.campaignStateBeforeTower;
       const returnWave = Math.max(1, state?.wave || 1);
+      this.infinitumCanReturn = true;
       if (state) {
         this.wave = state.wave;
         this.waveActive = state.waveActive;
@@ -2320,6 +3315,9 @@ class GameEngine {
         this.bossSpawnedThisWave = state.bossSpawnedThisWave;
         this.waveRewardClaimed = state.waveRewardClaimed;
         this.spawnTimer = state.spawnTimer;
+        this.waveSpawnQueue = state.waveSpawnQueue || [];
+        this.waveSpawnElapsedMs = state.waveSpawnElapsedMs || 0;
+        this.activeWaveDefinition = state.activeWaveDefinition || null;
         this.enemies = state.enemies;
         this.enemyBullets = state.enemyBullets;
         this.projectiles = state.projectiles;
@@ -2337,7 +3335,8 @@ class GameEngine {
         this.configureWave(returnWave);
       }
       this.campaignStateBeforeTower = null;
-      this.showFeedback(`Étage ${completedFloor} terminé. Retour à la campagne, vague ${returnWave}.`, '#a855f7');
+      this.showFeedback(`Palier ${completedFloor} sécurisé. Retour au QG autorisé.`, '#a855f7');
+      this.updateInfinitumProgress();
       if (this.towerCompletionPending) {
         this.towerCompletionPending = false;
         this.triggerTowerCompletion();
@@ -2345,6 +3344,7 @@ class GameEngine {
       return;
     }
     const nextWave = this.wave + 1;
+    this.rotateWorldLayoutBetweenWaves();
     this.configureWave(nextWave);
     this.showFeedback(`Vague ${nextWave} engagée`, '#00f0ff');
   }
@@ -2355,6 +3355,9 @@ class GameEngine {
     this.campaignVictory = true;
     this.waveIntermissionTimer = 0;
     this.clearRunCheckpoint();
+    const finalScoreMultiplier = (Number(this.dailyChallenge?.rules?.scoreMultiplier) || 1)
+      * this.getRunModifierProduct('completionScoreMultiplier');
+    this.score = Math.max(0, Math.round(this.score * finalScoreMultiplier));
     this.bestScore = Math.max(this.bestScore, this.score);
     this.bestWave = Math.max(this.bestWave, CAMPAIGN_FINAL_WAVE);
     this.campaignCompletions++;
@@ -2377,6 +3380,7 @@ class GameEngine {
         ? `${this.selectedHero.name} vous retrouve au sommet de Haven. Vos limites et votre signal d’arrêt sont confirmés une dernière fois ; la porte se referme sur un baiser choisi, puis l’épilogue se fond au noir.`
         : `${this.selectedHero.name} vous rejoint au sommet de Haven. Votre victoire scelle une confiance entre égales, sans transformer le pacte militaire en promesse romantique.`;
     }
+    this.recordRunHistory({ victory: true });
     this.saveProgress();
     this.openModal('victory-modal');
     this.announce('Campagne terminée. Haven est sauvée et le Léviathan neutralisé.');
@@ -2453,6 +3457,8 @@ class GameEngine {
       if (!this.lastTime) this.lastTime = timestamp;
       const dt = Math.min((timestamp - this.lastTime) / 1000, 0.1);
       this.lastTime = timestamp;
+      this.refreshGamepadStatus(false);
+      this.updateGamepadControls(dt);
 
       const timeScale = this.isOverdriveActive ? 0.7 : 1.0;
 
@@ -2475,6 +3481,10 @@ class GameEngine {
   update(dt) {
     this.runElapsedSeconds += dt;
     this.animationClock += dt;
+    const citadelDrain = this.getRunModifierMaximum('citadelHpDrainPerSecond');
+    if (citadelDrain > 0 && this.invincibleTimer <= 0 && !this.isOverdriveActive) {
+      this.citadel.hp -= citadelDrain * dt;
+    }
     if (this.heroAnimationTimer > 0) {
       this.heroAnimationTimer -= dt;
       if (this.heroAnimationTimer <= 0) {
@@ -2485,6 +3495,8 @@ class GameEngine {
     if (this.freezeTimer > 0) this.freezeTimer -= dt;
     if (this.quadDamageTimer > 0) this.quadDamageTimer -= dt;
     if (this.invincibleTimer > 0) this.invincibleTimer -= dt;
+    if (this.hostileProjectileFreezeTimer > 0) this.hostileProjectileFreezeTimer -= dt;
+    if (this.heroUltimateDefenseDamageTimer > 0) this.heroUltimateDefenseDamageTimer -= dt;
 
     if (this.abilityCooldownTimer > 0) {
       this.abilityCooldownTimer -= dt;
@@ -2562,7 +3574,8 @@ class GameEngine {
     const sectors = ['est', 'sud-est', 'sud', 'sud-ouest', 'ouest', 'nord-ouest', 'nord', 'nord-est'];
     const sectorIndex = Math.round(((angle + (Math.PI * 2)) % (Math.PI * 2)) / (Math.PI / 4)) % 8;
     const bossWarning = nearest.enemy.isBoss ? ` Boss ${nearest.enemy.name}.` : '';
-    const effectiveSpeed = nearest.enemy.speed * (nearest.enemy.slowTimer > 0 ? 0.45 : 1);
+    const effectiveSpeed = nearest.enemy.speed
+      * (nearest.enemy.slowTimer > 0 ? (nearest.enemy.slowSpeedMultiplier || 0.45) : 1);
     const remainingDistance = Math.max(0, nearest.distance - this.citadel.radius - nearest.enemy.radius);
     const eta = Math.ceil(remainingDistance / Math.max(1, effectiveSpeed));
     status.textContent = `Vague ${this.wave}. ${this.enemies.length} menaces.${bossWarning} Contact estimé dans ${eta} secondes, secteur ${sectors[sectorIndex]}. Citadelle ${Math.max(0, Math.round(this.citadel.hp))} points de vie.`;
@@ -2582,7 +3595,8 @@ class GameEngine {
       return !closest || distance < closest.distance ? { enemy, distance } : closest;
     }, null);
     const sectorLabels = { north: 'nord', east: 'est', south: 'sud', west: 'ouest' };
-    const effectiveSpeed = nearest.enemy.speed * (nearest.enemy.slowTimer > 0 ? 0.45 : 1);
+    const effectiveSpeed = nearest.enemy.speed
+      * (nearest.enemy.slowTimer > 0 ? (nearest.enemy.slowSpeedMultiplier || 0.45) : 1);
     const remainingDistance = Math.max(
       0,
       nearest.distance - this.citadel.radius - nearest.enemy.radius
@@ -2666,19 +3680,122 @@ class GameEngine {
   updatePlacedTowers(dt) {
     for (let i = this.placedTowers.length - 1; i >= 0; i--) {
       const t = this.placedTowers[i];
+      if (t.ultimateInvulnerableTimer > 0) {
+        t.ultimateInvulnerableTimer = Math.max(0, t.ultimateInvulnerableTimer - dt);
+      }
+      const specialization = this.getDefenseSpecializationOptions(t)
+        .find(option => option.id === t.specializationId);
+      const durabilityDrain = this.getRunModifierMaximum('defenseHpDrainPerSecond')
+        + (Number(specialization?.modifiers?.selfDamagePerSecond) || 0);
+      if (durabilityDrain > 0 && !(t.ultimateInvulnerableTimer > 0)) {
+        t.hp -= durabilityDrain * dt;
+        if (t.hp <= 0) {
+          this.placedTowers.splice(i, 1);
+          this.showFeedback(`${t.name} s’est désintégrée sous la surcharge.`, '#ef4444');
+          continue;
+        }
+      }
+      const regeneration = Number(specialization?.modifiers?.regenerationPerSecond) || 0;
+      if (regeneration > 0 && t.hp < t.maxHp) {
+        t.hp = Math.min(t.maxHp, t.hp + (regeneration * dt));
+      }
+      const auraSlowMultiplier = Number(specialization?.modifiers?.auraSlowMultiplier) || 0;
+      if (auraSlowMultiplier > 0) {
+        const auraRadius = t.range * (Number(specialization?.modifiers?.auraRadiusMultiplier) || 1);
+        this.getEnemiesInRange(t.x, t.y, auraRadius, t).forEach(enemy => {
+          enemy.slowTimer = Math.max(enemy.slowTimer || 0, 0.25);
+          enemy.slowSpeedMultiplier = Math.min(
+            Number(enemy.slowSpeedMultiplier) || 1,
+            auraSlowMultiplier
+          );
+        });
+      }
+      const pulseCooldownMs = Number(specialization?.modifiers?.pulseCooldownMs) || 0;
+      if (pulseCooldownMs > 0) {
+        t.controlPulseTimer = Math.max(0, (Number(t.controlPulseTimer) || 0) - (dt * 1000));
+        if (t.controlPulseTimer <= 0) {
+          t.controlPulseTimer = pulseCooldownMs;
+          const pushDistance = Number(specialization?.modifiers?.enemyPushDistance) || 0;
+          this.getEnemiesInRange(t.x, t.y, t.range, t).forEach(enemy => {
+            const pushAngle = Math.atan2(enemy.y - t.y, enemy.x - t.x);
+            enemy.x += Math.cos(pushAngle) * pushDistance;
+            enemy.y += Math.sin(pushAngle) * pushDistance;
+          });
+          const deflectChance = Number(specialization?.modifiers?.projectileDeflectChance) || 0;
+          for (let bulletIndex = this.enemyBullets.length - 1; bulletIndex >= 0; bulletIndex--) {
+            const bullet = this.enemyBullets[bulletIndex];
+            if (
+              Math.hypot(bullet.x - t.x, bullet.y - t.y) <= t.range
+              && this.getRunRandom() < deflectChance
+            ) {
+              this.enemyBullets.splice(bulletIndex, 1);
+            }
+          }
+          this.particles.push({
+            type: 'gravity_ring',
+            x: t.x,
+            y: t.y,
+            radius: t.range,
+            life: 0.3,
+            color: '#67e8f9'
+          });
+        }
+      }
+      if (t.abilityBuffTimer > 0) {
+        t.abilityBuffTimer -= dt;
+        if (t.abilityBuffTimer <= 0) {
+          t.abilityBuffTimer = 0;
+          this.applyDefenseLevelStats(t, t.level);
+        }
+      }
+      if (t.imperialBuffTimer > 0) {
+        t.imperialBuffTimer = Math.max(0, t.imperialBuffTimer - dt);
+        if (t.imperialBuffTimer <= 0) t.imperialDamageMultiplier = 1;
+      }
+      if (t.disabledTimer > 0) {
+        t.disabledTimer = Math.max(0, t.disabledTimer - dt);
+        t.animationTimer = Math.max(t.animationTimer || 0, 0.12);
+        continue;
+      }
       if (t.animationTimer > 0) t.animationTimer = Math.max(0, t.animationTimer - dt);
       if (t.type === 'mine' || t.type === 'napalm') {
-        const trigger = this.findTarget(t.x, t.y, t.range);
+        if (t.rearmTimer > 0) {
+          t.rearmTimer = Math.max(0, t.rearmTimer - dt);
+          continue;
+        }
+        if (!Number.isFinite(t.remainingCharges)) {
+          t.remainingCharges = Math.max(1, Math.floor(Number(specialization?.modifiers?.mineCount) || 1));
+        }
+        const triggerRadius = t.range
+          * (Number(specialization?.modifiers?.triggerRadiusMultiplier) || 1);
+        const trigger = this.findTarget(t.x, t.y, triggerRadius, t);
         if (trigger) {
           audio.playExplosion();
+          const explosionRadius = t.type === 'napalm'
+            ? 90 * (Number(specialization?.modifiers?.fireRadiusMultiplier) || 1)
+            : 65 * (Number(specialization?.modifiers?.splashRadiusMultiplier) || 1);
           if (t.type === 'napalm') {
-            this.hazards.push({ x: t.x, y: t.y, radius: 90, damage: 18 * (t.effectPower || 1), life: 5, tickTimer: 0, color: '#f97316' });
+            this.hazards.push({
+              x: t.x,
+              y: t.y,
+              radius: explosionRadius,
+              damage: 18 * (t.effectPower || 1),
+              life: 5 * (Number(specialization?.modifiers?.burnDurationMultiplier) || 1),
+              tickTimer: 0,
+              color: '#f97316',
+              sourceDefense: t
+            });
           }
           // Gameplay resolves immediately; this short visual clone lets the
           // authored trigger and cooldown frames complete without double damage.
           this.towerAnimationGhosts.push({ ...t, animationTimer: 0.34, visualLife: 0.34 });
-          this.createExplosion(t.x, t.y, t.type === 'napalm' ? 90 : 65, t.damage);
-          this.placedTowers.splice(i, 1);
+          this.createExplosion(t.x, t.y, explosionRadius, t.damage, {
+            groundOnly: true,
+            sourceDefense: t
+          });
+          t.remainingCharges--;
+          if (t.remainingCharges <= 0) this.placedTowers.splice(i, 1);
+          else t.rearmTimer = 0.9;
         }
         continue;
       }
@@ -2686,9 +3803,15 @@ class GameEngine {
 
       t.timer += dt * 1000 * (this.quadDamageTimer > 0 ? 1.5 : 1);
       const rateBonus = Math.min(0.65, this.shopUpgrades.fireRateBonus * 0.05);
-      const effectiveRate = Math.max(70, t.fireRate * (1 - rateBonus));
+      const effectiveRate = Math.max(
+        70,
+        t.fireRate
+          * (1 - rateBonus)
+          * this.getRunModifierProduct('defenseFireRateMultiplier')
+          * this.getDefenseAuraModifiers(t).fireRateMultiplier
+      );
       if (t.timer >= effectiveRate) {
-        const target = this.findTarget(t.x, t.y, t.range);
+        const target = this.findTarget(t.x, t.y, t.range, t);
         if (target) {
           this.fireTower(t, target);
           t.timer = 0;
@@ -2719,97 +3842,299 @@ class GameEngine {
 
   fireTower(t, target) {
     const angle = Math.atan2(target.y - t.y, target.x - t.x);
-    const mult = this.quadDamageTimer > 0 ? 4 : 1;
+    const specialization = this.getDefenseSpecializationOptions(t)
+      .find(option => option.id === t.specializationId);
+    const modifiers = specialization?.modifiers || {};
+    const mult = (this.quadDamageTimer > 0 ? 4 : 1)
+      * this.getRunModifierProduct('defenseDamageMultiplier')
+      * this.getDefenseAuraModifiers(t).damageMultiplier
+      * (this.heroUltimateDefenseDamageTimer > 0 ? 1.25 : 1)
+      * (t.imperialBuffTimer > 0 ? (Number(t.imperialDamageMultiplier) || 1) : 1);
+    const lifesteal = t.abilityBuffTimer > 0 ? (Number(t.abilityLifesteal) || 0) : 0;
+    const projectileHeal = t.damage * mult * lifesteal;
+    const applyDirectLifesteal = damage => {
+      if (lifesteal <= 0) return;
+      this.healCitadel(damage * lifesteal);
+    };
     t.facingAngle = angle;
     t.animationTimer = 0.34;
 
     if (t.type === 'bullet' || t.type === 'saw') {
       audio.playShoot();
-      this.projectiles.push({ x: t.x, y: t.y, vx: Math.cos(angle) * 700, vy: Math.sin(angle) * 700, damage: t.damage * mult, color: '#00f0ff', radius: t.type === 'saw' ? 7 : 4, type: 'bullet', pierce: t.type === 'saw' ? 1 : 0 });
+      const pierce = Math.max(
+        t.type === 'saw' ? 1 : 0,
+        Math.floor(Number(modifiers.ricochetCount) || 0)
+      );
+      this.projectiles.push({
+        x: t.x,
+        y: t.y,
+        vx: Math.cos(angle) * 700,
+        vy: Math.sin(angle) * 700,
+        damage: t.damage * mult,
+        color: '#00f0ff',
+        radius: t.type === 'saw' ? 7 : 4,
+        type: 'bullet',
+        pierce,
+        slow: Number(modifiers.slowMultiplier) > 0 ? 1.5 : 0,
+        slowSpeedMultiplier: Number(modifiers.slowMultiplier) || undefined,
+        heal: projectileHeal,
+        sourceDefense: t
+      });
     } else if (t.type === 'plasma' || t.type === 'missile') {
       audio.playPlasma();
-      this.projectiles.push({ x: t.x, y: t.y, vx: Math.cos(angle) * 450, vy: Math.sin(angle) * 450, damage: t.damage * mult, color: '#a855f7', radius: 9, type: 'plasma_mortar', aoe: 70 });
+      const projectileCount = Math.max(1, Math.floor(Number(modifiers.projectileCount) || 1));
+      const targets = [target, ...this.getEnemiesInRange(t.x, t.y, t.range, t)
+        .filter(enemy => enemy !== target)]
+        .slice(0, projectileCount);
+      for (let projectileIndex = 0; projectileIndex < projectileCount; projectileIndex++) {
+        const projectileTarget = targets[projectileIndex % targets.length] || target;
+        const spread = targets.length === 1
+          ? (projectileIndex - ((projectileCount - 1) / 2)) * 0.055
+          : 0;
+        const projectileAngle = Math.atan2(projectileTarget.y - t.y, projectileTarget.x - t.x) + spread;
+        const speed = specialization?.id === 'missile_bunker_buster' ? 330 : 450;
+        this.projectiles.push({
+          x: t.x,
+          y: t.y,
+          vx: Math.cos(projectileAngle) * speed,
+          vy: Math.sin(projectileAngle) * speed,
+          damage: t.damage * mult,
+          color: '#a855f7',
+          radius: 9,
+          type: 'plasma_mortar',
+          aoe: 70 * (Number(modifiers.splashRadiusMultiplier) || 1),
+          heal: projectileHeal,
+          sourceDefense: t
+        });
+      }
     } else if (t.type === 'rail' || t.type === 'orbital') {
       audio.playRailgun();
-      const endX = t.x + Math.cos(angle) * t.range;
-      const endY = t.y + Math.sin(angle) * t.range;
-      this.particles.push({ type: 'rail_beam', x1: t.x, y1: t.y, x2: endX, y2: endY, life: 0.2, color: '#f59e0b' });
-      [...this.enemies].forEach(e => {
-        if (this.distToSegment({ x: e.x, y: e.y }, { x: t.x, y: t.y }, { x: endX, y: endY }) < e.radius + 12) {
-          this.damageEnemy(e, t.damage * mult);
-        }
+      const beamCount = Math.max(1, Math.floor(Number(modifiers.beamCount) || 1));
+      const beamTargets = [target, ...this.getEnemiesInRange(t.x, t.y, t.range, t)
+        .filter(enemy => enemy !== target)]
+        .slice(0, beamCount);
+      beamTargets.forEach(beamTarget => {
+        const beamAngle = Math.atan2(beamTarget.y - t.y, beamTarget.x - t.x);
+        const endX = t.x + Math.cos(beamAngle) * t.range;
+        const endY = t.y + Math.sin(beamAngle) * t.range;
+        this.particles.push({ type: 'rail_beam', x1: t.x, y1: t.y, x2: endX, y2: endY, life: 0.2, color: '#f59e0b' });
+        [...this.enemies].forEach(e => {
+          if (!this.canDefenseTargetEnemy(t, e)) return;
+          if (this.distToSegment({ x: e.x, y: e.y }, { x: t.x, y: t.y }, { x: endX, y: endY }) < e.radius + 12) {
+            this.damageEnemyFromDefense(t, e, t.damage * mult);
+            applyDirectLifesteal(t.damage * mult);
+          }
+        });
       });
     } else if (t.type === 'fire') {
       audio.playFlame();
-      this.projectiles.push({ x: t.x, y: t.y, vx: Math.cos(angle) * 330, vy: Math.sin(angle) * 330, damage: t.damage * mult, color: '#ff2a5f', radius: 7, life: 0.65, type: 'flame' });
+      this.projectiles.push({
+        x: t.x,
+        y: t.y,
+        vx: Math.cos(angle) * 330,
+        vy: Math.sin(angle) * 330,
+        damage: t.damage * mult,
+        color: '#ff2a5f',
+        radius: 7,
+        life: 0.65 * (Number(modifiers.burnDurationMultiplier) || 1),
+        type: 'flame',
+        slow: Number(modifiers.slowMultiplier) > 0 ? 2 : 0,
+        slowSpeedMultiplier: Number(modifiers.slowMultiplier) || undefined,
+        heal: projectileHeal,
+        sourceDefense: t
+      });
     } else if (t.type === 'tesla') {
       audio.playRailgun();
-      const chainTargets = this.getEnemiesInRange(t.x, t.y, t.range)
+      const chainTargets = this.getEnemiesInRange(t.x, t.y, t.range, t)
         .sort((a, b) => Math.hypot(a.x - t.x, a.y - t.y) - Math.hypot(b.x - t.x, b.y - t.y))
-        .slice(0, 4);
+        .slice(0, 4 + Math.floor(Number(modifiers.chainCountBonus) || 0));
       let previous = { x: t.x, y: t.y };
       chainTargets.forEach((enemy, index) => {
         this.particles.push({ type: 'rail_beam', x1: previous.x, y1: previous.y, x2: enemy.x, y2: enemy.y, life: 0.14, color: '#38bdf8' });
-        this.damageEnemy(enemy, t.damage * mult * (1 - index * 0.14));
+        const chainDamage = t.damage * mult * (1 - index * 0.14);
+        this.damageEnemyFromDefense(t, enemy, chainDamage);
+        applyDirectLifesteal(chainDamage);
+        if (index === chainTargets.length - 1 && Number(modifiers.stunDurationMs) > 0) {
+          enemy.stunTimer = Math.max(enemy.stunTimer || 0, Number(modifiers.stunDurationMs) / 1000);
+        }
         previous = enemy;
       });
     } else if (t.type === 'cryo') {
       audio.playFreeze();
-      this.projectiles.push({ x: t.x, y: t.y, vx: Math.cos(angle) * 470, vy: Math.sin(angle) * 470, damage: t.damage * mult, color: '#67e8f9', radius: 7, type: 'bullet', slow: 2.8 });
+      this.projectiles.push({ x: t.x, y: t.y, vx: Math.cos(angle) * 470, vy: Math.sin(angle) * 470, damage: t.damage * mult, color: '#67e8f9', radius: 7, type: 'bullet', slow: 2.8, slowSpeedMultiplier: 0.45, heal: projectileHeal, sourceDefense: t });
     } else if (t.type === 'acid') {
       audio.playPlasma();
-      this.projectiles.push({ x: t.x, y: t.y, vx: Math.cos(angle) * 390, vy: Math.sin(angle) * 390, damage: t.damage * mult, color: '#84cc16', radius: 7, type: 'acid', aoe: 62 });
+      this.projectiles.push({
+        x: t.x,
+        y: t.y,
+        vx: Math.cos(angle) * 390,
+        vy: Math.sin(angle) * 390,
+        damage: t.damage * mult,
+        color: '#84cc16',
+        radius: 7,
+        type: 'acid',
+        aoe: 62,
+        hazardDuration: 3.2 * (Number(modifiers.durationMultiplier) || 1),
+        heal: projectileHeal,
+        sourceDefense: t
+      });
     } else if (t.type === 'drone') {
       audio.playShoot();
-      this.projectiles.push({ x: t.x, y: t.y, vx: Math.cos(angle) * 820, vy: Math.sin(angle) * 820, damage: t.damage * mult, color: '#f0abfc', radius: 4, type: 'bullet', pierce: 1 });
+      this.projectiles.push({ x: t.x, y: t.y, vx: Math.cos(angle) * 820, vy: Math.sin(angle) * 820, damage: t.damage * mult, color: '#f0abfc', radius: 4, type: 'bullet', pierce: 1, heal: projectileHeal, sourceDefense: t });
     } else if (t.type === 'gravity') {
       audio.playAbility();
-      this.getEnemiesInRange(t.x, t.y, t.range).forEach(enemy => {
+      this.getEnemiesInRange(t.x, t.y, t.range, t).forEach(enemy => {
         const pullAngle = Math.atan2(t.y - enemy.y, t.x - enemy.x);
-        enemy.x += Math.cos(pullAngle) * 32;
-        enemy.y += Math.sin(pullAngle) * 32;
-        this.damageEnemy(enemy, t.damage * mult);
+        const pullDistance = 32 * (Number(modifiers.pullStrengthMultiplier) || 1);
+        enemy.x += Math.cos(pullAngle) * pullDistance;
+        enemy.y += Math.sin(pullAngle) * pullDistance;
+        this.damageEnemyFromDefense(t, enemy, t.damage * mult);
+        applyDirectLifesteal(t.damage * mult);
       });
       this.particles.push({ type: 'gravity_ring', x: t.x, y: t.y, radius: t.range, life: 0.35, color: '#a855f7' });
     } else if (t.type === 'siphon') {
       audio.playPlasma();
-      this.projectiles.push({ x: t.x, y: t.y, vx: Math.cos(angle) * 500, vy: Math.sin(angle) * 500, damage: t.damage * mult, color: '#10b981', radius: 6, type: 'bullet', heal: 6 * (t.effectPower || 1) });
+      const citadelHeal = Number(modifiers.citadelLifesteal) > 0
+        ? t.damage * mult * Number(modifiers.citadelLifesteal)
+        : 6 * (t.effectPower || 1);
+      this.projectiles.push({
+        x: t.x,
+        y: t.y,
+        vx: Math.cos(angle) * 500,
+        vy: Math.sin(angle) * 500,
+        damage: t.damage * mult,
+        color: '#10b981',
+        radius: 6,
+        type: 'bullet',
+        heal: citadelHeal + projectileHeal,
+        allyHealRatio: Number(modifiers.allyHealRatio) || 0,
+        allyHealRadius: t.range * (Number(modifiers.auraRadiusMultiplier) || 1),
+        sourceDefense: t
+      });
     } else if (t.type === 'emp') {
       audio.playAbility();
-      this.getEnemiesInRange(t.x, t.y, t.range).forEach(enemy => {
-        enemy.stunTimer = Math.max(enemy.stunTimer || 0, 2);
-        this.damageEnemy(enemy, t.damage * mult);
+      this.getEnemiesInRange(t.x, t.y, t.range, t).forEach(enemy => {
+        enemy.stunTimer = Math.max(
+          enemy.stunTimer || 0,
+          2 * (Number(modifiers.disableDurationMultiplier) || 1)
+        );
+        this.damageEnemyFromDefense(t, enemy, t.damage * mult);
+        applyDirectLifesteal(t.damage * mult);
       });
       this.particles.push({ type: 'gravity_ring', x: t.x, y: t.y, radius: t.range, life: 0.28, color: '#00f0ff' });
     } else if (t.type === 'sonic') {
       audio.playAbility();
-      this.getEnemiesInRange(t.x, t.y, t.range).forEach(enemy => {
+      this.getEnemiesInRange(t.x, t.y, t.range, t).forEach(enemy => {
         const pushAngle = Math.atan2(enemy.y - t.y, enemy.x - t.x);
-        enemy.x += Math.cos(pushAngle) * 38;
-        enemy.y += Math.sin(pushAngle) * 38;
-        this.damageEnemy(enemy, t.damage * mult);
+        const pushDistance = Number(modifiers.knockbackDistance)
+          || 38 * (Number(modifiers.knockbackMultiplier) || 1);
+        enemy.x += Math.cos(pushAngle) * pushDistance;
+        enemy.y += Math.sin(pushAngle) * pushDistance;
+        this.damageEnemyFromDefense(t, enemy, t.damage * mult);
+        applyDirectLifesteal(t.damage * mult);
       });
       this.particles.push({ type: 'gravity_ring', x: t.x, y: t.y, radius: t.range, life: 0.25, color: '#f59e0b' });
     }
   }
 
-  getEnemiesInRange(x, y, range) {
-    return this.enemies.filter(enemy => !enemy.dead && Math.hypot(enemy.x - x, enemy.y - y) <= range + enemy.radius);
+  canDefenseTargetEnemy(defense, enemy) {
+    if (!enemy || enemy.dead) return false;
+    if (
+      enemy.type === 'flying'
+      && ['mine', 'napalm', 'acid', 'fire', 'barrier'].includes(defense?.type)
+    ) return false;
+    return true;
+  }
+
+  getEnemyPriorityScore(defense, enemy) {
+    const priorities = defense?.targetPriorities || [];
+    let score = 0;
+    priorities.forEach((priority, index) => {
+      const weight = (priorities.length - index) * 1000;
+      if (priority === enemy.type) score += weight;
+      else if (priority === 'boss' && enemy.isBoss) score += weight;
+      else if (priority === 'heavy' && ['brute', 'bulwark'].includes(enemy.type)) score += weight;
+    });
+    return score;
+  }
+
+  getEnemiesInRange(x, y, range, defense = null) {
+    return this.enemies.filter(enemy => (
+      this.canDefenseTargetEnemy(defense, enemy)
+      && Math.hypot(enemy.x - x, enemy.y - y) <= range + enemy.radius
+    ));
+  }
+
+  getDefenseAuraModifiers(defense) {
+    let damageMultiplier = 1;
+    let fireRateMultiplier = 1;
+    this.placedTowers
+      .filter(tower => tower !== defense && ['shrine', 'siphon'].includes(tower.type))
+      .forEach(support => {
+        const specialization = this.getDefenseSpecializationOptions(support)
+          .find(option => option.id === support.specializationId);
+        const radius = support.range * (Number(specialization?.modifiers?.auraRadiusMultiplier) || 1);
+        if (Math.hypot(support.x - defense.x, support.y - defense.y) > radius) return;
+        damageMultiplier = Math.max(
+          damageMultiplier,
+          Number(specialization?.modifiers?.auraDamageMultiplier) || 1
+        );
+        fireRateMultiplier = Math.min(
+          fireRateMultiplier,
+          Number(specialization?.modifiers?.auraFireRateMultiplier)
+            || Number(specialization?.modifiers?.alliedFireRateMultiplier)
+            || 1
+        );
+      });
+    return { damageMultiplier, fireRateMultiplier };
   }
 
   getShrineDamageMultiplier() {
-    const shrinePower = this.placedTowers
+    return this.placedTowers
       .filter(tower => tower.type === 'shrine')
-      .reduce((total, tower) => total + (tower.effectPower || 1), 0);
-    return 1 + Math.min(0.8, shrinePower * 0.12);
+      .reduce((multiplier, shrine) => {
+        const specialization = this.getDefenseSpecializationOptions(shrine)
+          .find(option => option.id === shrine.specializationId);
+        if (specialization?.id === 'shrine_war_chorus') return multiplier;
+        const heroMultiplier = Number(specialization?.modifiers?.heroDamageMultiplier);
+        return multiplier * (
+          Number.isFinite(heroMultiplier)
+            ? heroMultiplier
+            : 1 + Math.min(0.8, (shrine.effectPower || 1) * 0.12)
+        );
+      }, 1);
   }
 
-  findTarget(x, y, range) {
+  getHeroCooldownMultiplier() {
+    return this.placedTowers
+      .filter(tower => tower.type === 'shrine')
+      .reduce((multiplier, shrine) => {
+        const specialization = this.getDefenseSpecializationOptions(shrine)
+          .find(option => option.id === shrine.specializationId);
+        return multiplier * (Number(specialization?.modifiers?.heroCooldownMultiplier) || 1);
+      }, 1);
+  }
+
+  findTarget(x, y, range, defense = null) {
     let nearest = null;
-    let minDist = range;
+    const seleneRangeMultiplier = (
+      defense
+      && this.selectedHero?.id === 'selene'
+    )
+      ? (Number(EXPANSION?.heroKits?.selene?.passive?.modifiers?.rangeVsSlowedMultiplier) || 1.14)
+      : 1;
+    let minDist = range * seleneRangeMultiplier;
+    let bestPriority = -1;
     this.enemies.forEach(e => {
+      if (!this.canDefenseTargetEnemy(defense, e)) return;
       const dist = Math.hypot(e.x - x, e.y - y);
-      if (dist < minDist) { minDist = dist; nearest = e; }
+      const priority = this.getEnemyPriorityScore(defense, e);
+      const effectiveRange = range * (e.slowTimer > 0 ? seleneRangeMultiplier : 1);
+      if (dist < effectiveRange && (priority > bestPriority || (priority === bestPriority && dist < minDist))) {
+        bestPriority = priority;
+        minDist = dist;
+        nearest = e;
+      }
     });
     return nearest;
   }
@@ -2840,7 +4165,7 @@ class GameEngine {
     } else if (wp.id === 'flamethrower') {
       audio.playFlame();
       for (let i = 0; i < (wp.isEvolved ? 5 : 3); i++) {
-        const spread = (Math.random() - 0.5) * 0.4;
+        const spread = (this.getRunRandom() - 0.5) * 0.4;
         this.projectiles.push({ x: this.citadel.x, y: this.citadel.y, vx: Math.cos(angle + spread) * 320, vy: Math.sin(angle + spread) * 320, damage: wp.damage * wp.level * damageMult, color: wp.isEvolved ? '#38bdf8' : '#ff2a5f', radius: 6, life: 0.5, type: 'flame' });
       }
     }
@@ -2867,8 +4192,19 @@ class GameEngine {
       return;
     }
 
+    if (this.waveSpawnQueue.length > 0) {
+      this.waveSpawnElapsedMs += dt * 1000;
+      while (
+        this.waveSpawnQueue.length > 0
+        && this.waveSpawnQueue[0].atMs <= this.waveSpawnElapsedMs
+      ) {
+        this.spawnMutant(this.waveSpawnQueue.shift());
+      }
+      return;
+    }
+
     this.spawnTimer += dt;
-    const mutatorRate = this.towerMutator?.id === 'swarm' ? 0.68 : 1;
+    const mutatorRate = this.getActiveRunMutators().some(mutator => ['swarm', 'long_march'].includes(mutator.id)) ? 0.68 : 1;
     const spawnInterval = Math.max(0.32, (2.0 - (this.wave * 0.09)) * mutatorRate);
 
     if (this.spawnTimer >= spawnInterval) {
@@ -2877,73 +4213,170 @@ class GameEngine {
     }
   }
 
-  spawnMutant() {
-    const bossDue = this.wave % 5 === 0
+  chooseFallbackEnemyType() {
+    const roll = this.getRunRandom();
+    if (this.wave >= 12 && roll < 0.12) return 'artillery';
+    if (this.wave >= 9 && roll < 0.24) return 'bulwark';
+    if (this.wave >= 7 && roll < 0.38) return 'splitter';
+    if (this.wave >= 4 && roll < 0.53) return 'flying';
+    if (roll < 0.68) return 'runner';
+    if (roll < 0.82) return 'brute';
+    return 'swarmer';
+  }
+
+  spawnMutant(spawnSpec = null) {
+    let spec = spawnSpec;
+    if (!spec && this.waveSpawnQueue.length > 0) spec = this.waveSpawnQueue.shift();
+    const bossDue = !spec
+      && this.wave % 5 === 0
       && !this.bossSpawnedThisWave
       && this.enemiesSpawnedThisWave >= this.waveSpawnTarget - 1;
-    let recruitableBossId = null;
-    let type;
-    if (bossDue && this.isTowerMode) {
-      type = 'hellwarden';
-    } else if (bossDue && this.wave % 15 === 0) {
-      type = 'leviathan';
-    } else if (bossDue) {
-      const bossId = this.wave % 10 === 0 ? 'carmilla' : 'vespera';
-      if (HERO_CLASSES[bossId].allied) {
-        type = 'hellwarden';
-      } else {
-        type = bossId;
-        recruitableBossId = bossId;
+    if (!spec) {
+      let type = this.chooseFallbackEnemyType();
+      if (bossDue) {
+        type = this.isTowerMode
+          ? 'hellwarden'
+          : (this.wave % 15 === 0 ? 'leviathan' : (this.wave % 10 === 0 ? 'carmilla' : 'vespera'));
       }
-    } else {
-      type = Math.random() < 0.3 ? 'runner' : (Math.random() < 0.2 ? 'brute' : 'swarmer');
+      spec = {
+        type,
+        routeIndex: this.nextSpawnGateIndex % Math.max(1, this.spawnRoutes.length),
+        boss: bossDue
+      };
     }
-    const isLeviathan = type === 'leviathan';
-    const isBoss = bossDue;
-    if (bossDue) this.bossSpawnedThisWave = true;
-    const w = this.worldWidth || BATTLEFIELD_WORLD_WIDTH;
-    const h = this.worldHeight || BATTLEFIELD_WORLD_HEIGHT;
-    const spawnSide = SPAWN_GATE_SECTORS[this.nextSpawnGateIndex % SPAWN_GATE_SECTORS.length];
-    this.nextSpawnGateIndex = (this.nextSpawnGateIndex + 1) % SPAWN_GATE_SECTORS.length;
-    const { x, y } = this.getSpawnPosition(spawnSide, type, w, h);
-    this.spawnGatePulses[spawnSide] = 0.82;
+    if (['vespera', 'carmilla'].includes(spec.type) && HERO_CLASSES[spec.type]?.allied) {
+      spec = { ...spec, type: 'hellwarden', boss: true };
+    }
+    return this.spawnEnemy(spec.type, spec.routeIndex, {
+      isBoss: spec.boss,
+      countForWave: true
+    });
+  }
 
-    let hp = 30 + (this.wave * 15);
-    let speed = 90 + Math.random() * 30;
-    let radius = 14;
+  spawnEnemy(type = 'swarmer', routeIndex = 0, options = {}) {
+    const routes = this.spawnRoutes.length > 0
+      ? this.spawnRoutes
+      : EXPANSION_FALLBACK.worldLayouts.convergence.spawnRoutes
+        .map((route, index) => this.normalizeSpawnRoute(route, index));
+    const normalizedRouteIndex = Math.abs(Math.floor(Number(routeIndex) || 0)) % routes.length;
+    const route = routes[normalizedRouteIndex];
+    const start = {
+      x: Number.isFinite(options.x) ? options.x : route.polyline[0].x,
+      y: Number.isFinite(options.y) ? options.y : route.polyline[0].y
+    };
+    const definition = EXPANSION?.enemyDefinitions?.[type];
+    const stats = definition?.stats || {};
+    const scale = 1 + (Math.max(0, this.wave - 1) * 0.1);
+    let hp = (Number(stats.hp) || 45) * scale;
+    let speed = Number(stats.speed) || (90 + this.getRunRandom() * 30);
+    let radius = Number(stats.radius) || 14;
+    let damage = Number(stats.damage) || 8;
     let color = '#ff2a5f';
-    let name = 'Démon Swarmer';
+    let name = definition?.name || 'Démon Swarmer';
+    const bossTypes = ['vespera', 'carmilla', 'leviathan', 'hellwarden'];
+    const isBoss = options.isBoss === true || bossTypes.includes(type);
+    let recruitableBossId = null;
 
     if (type === 'leviathan') {
       audio.playDragonRoar();
-      hp = 4500 + (this.wave * 800); speed = 35; radius = 75; color = '#ec4899'; name = 'MEGA-BOSS TITAN LÉVIATHAN';
-    } else if (type === 'runner') {
-      hp = 20 + (this.wave * 10); speed = 160; radius = 11; color = '#00f0ff'; name = 'Acid Runner';
-    } else if (type === 'brute') {
-      hp = 130 + (this.wave * 45); speed = 55; radius = 22; color = '#a855f7'; name = 'Cyber Behemoth';
+      hp = 4500 + (this.wave * 800); speed = 35; radius = 75; damage = 80;
+      color = '#ec4899'; name = 'MEGA-BOSS TITAN LÉVIATHAN';
     } else if (type === 'vespera') {
-      hp = 900 + (this.wave * 350); speed = 45; radius = 42; color = '#f59e0b'; name = 'Boss Vespera';
+      hp = 900 + (this.wave * 350); speed = 45; radius = 42; damage = 40;
+      color = '#f59e0b'; name = 'Boss Vespera'; recruitableBossId = 'vespera';
     } else if (type === 'carmilla') {
-      hp = 1600 + (this.wave * 500); speed = 50; radius = 48; color = '#ff2a5f'; name = 'Reine Carmilla';
+      hp = 1600 + (this.wave * 500); speed = 50; radius = 48; damage = 45;
+      color = '#ff2a5f'; name = 'Reine Carmilla'; recruitableBossId = 'carmilla';
     } else if (type === 'hellwarden') {
-      hp = 1100 + (this.wave * 420); speed = 52; radius = 44; color = '#f97316'; name = 'Gardienne Infernale';
-    }
+      hp = 1100 + (this.wave * 420); speed = 52; radius = 44; damage = 45;
+      color = '#f97316'; name = 'Gardienne Infernale';
+    } else if (type === 'runner') color = '#00f0ff';
+    else if (type === 'brute') color = '#a855f7';
+    else if (type === 'flying') color = '#38bdf8';
+    else if (type === 'bulwark') color = '#67e8f9';
+    else if (type === 'artillery') color = '#f97316';
+    else if (type === 'splitter') color = '#84cc16';
 
     const difficulty = DIFFICULTY_DATA[this.difficulty] || DIFFICULTY_DATA.standard;
     hp *= difficulty.enemyHp;
     speed *= difficulty.enemySpeed;
-    if (this.towerMutator?.id === 'armored') hp *= 1.65;
-    if (this.towerMutator?.id === 'haste') speed *= 1.35;
-    this.enemiesSpawnedThisWave++;
-    this.enemies.push({
-      x, y, hp, maxHp: hp, speed, baseSpeed: speed, radius, color, name,
-      isBoss: isBoss || isLeviathan, isLeviathan, type, recruitableBossId,
-      spawnSide,
-      facingAngle: Math.atan2(this.citadel.y - y, this.citadel.x - x),
-      animationPhase: Math.random() * 8, attackAnimationTimer: 0, hitAnimationTimer: 0,
-      bulletTimer: 0, contactTimer: 0, stunTimer: 0, slowTimer: 0, dead: false
+    this.getActiveRunMutators().forEach(mutator => {
+      const modifiers = mutator.modifiers || {};
+      if (mutator.id === 'armored') hp *= 1.65;
+      if (mutator.id === 'haste') speed *= 1.35;
+      hp *= Number(modifiers.enemyHpMultiplier) || 1;
+      if (type === 'flying') {
+        hp *= Number(modifiers.flyingHpMultiplier) || 1;
+        speed *= Number(modifiers.flyingSpeedMultiplier) || 1;
+      }
+      if (['brute', 'bulwark'].includes(type)) {
+        hp *= Number(modifiers.heavyHpMultiplier) || 1;
+        speed *= Number(modifiers.heavySpeedMultiplier) || 1;
+      }
     });
+    // A longer route is represented as slower progress along the authored
+    // polyline so enemies remain aligned with the visible portals and roads.
+    speed /= this.getRunModifierProduct('routeLengthMultiplier');
+    if (type === 'artillery') {
+      damage *= this.getRunModifierProduct('artilleryDamageMultiplier');
+    }
+    if (Number.isFinite(options.hpMultiplier)) hp *= options.hpMultiplier;
+    const enemy = {
+      x: start.x,
+      y: start.y,
+      hp,
+      maxHp: hp,
+      speed,
+      baseSpeed: speed,
+      damage,
+      radius,
+      color,
+      name,
+      isBoss,
+      isLeviathan: type === 'leviathan',
+      type,
+      recruitableBossId,
+      spawnSide: route.side,
+      routeId: route.id,
+      routeIndex: normalizedRouteIndex,
+      routePolyline: route.polyline.map(point => ({ ...point })),
+      waypointIndex: Number.isFinite(options.waypointIndex) ? options.waypointIndex : 1,
+      facingAngle: Math.atan2(this.citadel.y - start.y, this.citadel.x - start.x),
+      animationPhase: this.getRunRandom() * 8,
+      attackAnimationTimer: 0,
+      hitAnimationTimer: 0,
+      bulletTimer: 0,
+      contactTimer: 0,
+      stunTimer: 0,
+      slowTimer: 0,
+      slowSpeedMultiplier: 1,
+      markedTimer: 0,
+      markedDamageTakenMultiplier: 1,
+      armorBreakTimer: 0,
+      armorBreakMultiplier: 1,
+      resonanceStacks: 0,
+      dead: false,
+      bossPhase: isBoss ? 1 : 0,
+      telegraphTimer: isBoss ? 0.8 : 0,
+      patternIndex: 0,
+      shield: type === 'bulwark' ? (Number(definition?.shield?.capacity) || 420) : 0,
+      maxShield: type === 'bulwark' ? (Number(definition?.shield?.capacity) || 420) : 0,
+      auraRadius: type === 'bulwark' ? (Number(definition?.aura?.radius) || 105) : 0,
+      auraDamageReduction: type === 'bulwark'
+        ? (Number(definition?.aura?.alliedDamageReduction) || 0.18)
+        : 0,
+      siegeTimer: 0,
+      siegeDeployTimer: type === 'artillery'
+        ? (Number(definition?.siege?.deploymentTimeMs) || 900) / 1000
+        : 0
+    };
+    if (options.countForWave !== false) this.enemiesSpawnedThisWave++;
+    if (isBoss) this.bossSpawnedThisWave = true;
+    this.nextSpawnGateIndex = (normalizedRouteIndex + 1) % routes.length;
+    this.spawnGatePulses[route.side] = 0.82;
+    this.enemies.push(enemy);
     this.updateHUD();
+    return enemy;
   }
 
   updateProjectiles(dt) {
@@ -2970,21 +4403,48 @@ class GameEngine {
         if (p.type === 'flame' && p.hitEnemies.has(e)) continue;
         if (Math.hypot(e.x - p.x, e.y - p.y) < e.radius + p.radius) {
           if (p.type === 'flame') p.hitEnemies.add(e);
-          this.damageEnemy(e, p.damage);
-          if (p.slow) e.slowTimer = Math.max(e.slowTimer || 0, p.slow);
+          this.damageEnemyFromDefense(p.sourceDefense, e, p.damage);
+          if (p.type === 'flame') this.applyRinArmorBreak(e);
+          if (p.slow) {
+            e.slowTimer = Math.max(
+              e.slowTimer || 0,
+              p.slow * this.getRunModifierProduct('slowDurationMultiplier')
+            );
+            e.slowSpeedMultiplier = Math.min(
+              Number(e.slowSpeedMultiplier) || 1,
+              Number(p.slowSpeedMultiplier) || 0.45
+            );
+          }
           if (p.heal) {
-            this.citadel.hp = Math.min(this.citadel.maxHp, this.citadel.hp + p.heal);
+            this.healCitadel(p.heal);
             this.updateHUD();
+          }
+          if (p.allyHealRatio > 0 && p.sourceDefense) {
+            this.placedTowers.forEach(defense => {
+              if (
+                defense === p.sourceDefense
+                || Math.hypot(defense.x - p.sourceDefense.x, defense.y - p.sourceDefense.y)
+                  > (Number(p.allyHealRadius) || p.sourceDefense.range)
+              ) return;
+              defense.hp = Math.min(
+                defense.maxHp,
+                defense.hp + (p.damage * p.allyHealRatio)
+              );
+            });
           }
 
           if (p.type === 'plasma_mortar') {
             audio.playExplosion();
-            this.createExplosion(p.x, p.y, p.aoe, p.damage * 0.7);
+            this.createExplosion(p.x, p.y, p.aoe, p.damage * 0.7, {
+              sourceDefense: p.sourceDefense
+            });
             this.projectiles.splice(i, 1);
             break;
           } else if (p.type === 'acid') {
-            this.hazards.push({ x: p.x, y: p.y, radius: p.aoe, damage: Math.max(2, p.damage * 0.22), life: 3.2, tickTimer: 0, color: '#84cc16' });
-            this.createExplosion(p.x, p.y, p.aoe, p.damage * 0.35);
+            this.hazards.push({ x: p.x, y: p.y, radius: p.aoe, initialRadius: p.aoe, damage: Math.max(2, p.damage * 0.22), life: Number(p.hazardDuration) || 3.2, tickTimer: 0, color: '#84cc16', sourceDefense: p.sourceDefense });
+            this.createExplosion(p.x, p.y, p.aoe, p.damage * 0.35, {
+              sourceDefense: p.sourceDefense
+            });
             this.projectiles.splice(i, 1);
             break;
           } else if (p.type === 'bullet') {
@@ -2997,22 +4457,89 @@ class GameEngine {
   }
 
   updateEnemyBullets(dt) {
+    if (this.hostileProjectileFreezeTimer > 0) return;
     const cullBounds = this.getApproachCullBounds(BATTLEFIELD_PROJECTILE_PADDING);
     for (let i = this.enemyBullets.length - 1; i >= 0; i--) {
       const b = this.enemyBullets[i];
       b.x += b.vx * dt;
       b.y += b.vy * dt;
 
+      const interceptionField = this.decoys.find(decoy => (
+        decoy.shieldHp > 0
+        && Math.hypot(decoy.x - b.x, decoy.y - b.y) <= decoy.radius + b.radius
+      ));
+      if (interceptionField) {
+        interceptionField.shieldHp -= b.damage;
+        this.enemyBullets.splice(i, 1);
+        continue;
+      }
+
       const impactedDefense = this.placedTowers.find(defense => (
         Math.hypot(defense.x - b.x, defense.y - b.y) < defense.radius + b.radius
       ));
       if (impactedDefense) {
-        impactedDefense.hp -= b.damage;
-        this.addFloatingText(`-${b.damage}`, impactedDefense.x, impactedDefense.y - 24, '#fca5a5');
-        if (impactedDefense.hp <= 0) {
-          const defenseIndex = this.placedTowers.indexOf(impactedDefense);
-          if (defenseIndex >= 0) this.placedTowers.splice(defenseIndex, 1);
-          this.showFeedback(`${impactedDefense.name} détruite par le tir du boss.`, '#ef4444');
+        if (impactedDefense.ultimateInvulnerableTimer > 0) {
+          this.enemyBullets.splice(i, 1);
+          continue;
+        }
+        const impactSpecialization = this.getDefenseSpecializationOptions(impactedDefense)
+          .find(option => option.id === impactedDefense.specializationId);
+        const reflectChance = Number(impactSpecialization?.modifiers?.projectileReflectChance) || 0;
+        if (
+          b.sourceType === 'artillery'
+          && b.sourceEnemy
+          && !b.sourceEnemy.dead
+          && this.getRunRandom() < reflectChance
+        ) {
+          const reflectedDamage = b.damage
+            * (Number(impactSpecialization?.modifiers?.reflectedDamageMultiplier) || 1);
+          this.damageEnemy(b.sourceEnemy, reflectedDamage);
+          this.showFeedback('Miroir Aegis · obus renvoyé', '#67e8f9');
+          this.enemyBullets.splice(i, 1);
+          continue;
+        }
+
+        const splashRadius = Math.max(0, Number(b.splashRadius) || 0);
+        const affectedDefenses = splashRadius > 0
+          ? this.placedTowers.filter(defense => (
+            Math.hypot(defense.x - impactedDefense.x, defense.y - impactedDefense.y) <= splashRadius
+          ))
+          : [impactedDefense];
+        affectedDefenses.forEach(defense => {
+          const defenseSpecialization = this.getDefenseSpecializationOptions(defense)
+            .find(option => option.id === defense.specializationId);
+          const damageTakenMultiplier = Number(defenseSpecialization?.modifiers?.damageTakenMultiplier) || 1;
+          const impactDamage = Math.max(1, Math.round(b.damage * damageTakenMultiplier));
+          defense.hp -= impactDamage;
+          const stunDuration = Math.max(0, Number(b.stunDuration) || 0);
+          if (stunDuration > 0) {
+            if ((Number(defense.stunIgnoresRemaining) || 0) > 0) {
+              defense.stunIgnoresRemaining--;
+              this.addFloatingText('AEGIS', defense.x, defense.y - 38, '#67e8f9');
+            } else {
+              defense.disabledTimer = Math.max(
+                Number(defense.disabledTimer) || 0,
+                stunDuration
+              );
+            }
+          }
+          this.addFloatingText(`-${impactDamage}`, defense.x, defense.y - 24, '#fca5a5');
+        });
+        for (let defenseIndex = this.placedTowers.length - 1; defenseIndex >= 0; defenseIndex--) {
+          const defense = this.placedTowers[defenseIndex];
+          if (defense.hp > 0) continue;
+          this.placedTowers.splice(defenseIndex, 1);
+          this.showFeedback(`${defense.name} détruite par un bombardement.`, '#ef4444');
+        }
+        if (
+          splashRadius > 0
+          && Math.hypot(this.citadel.x - impactedDefense.x, this.citadel.y - impactedDefense.y)
+            <= splashRadius + this.citadel.radius
+          && !this.isOverdriveActive
+          && this.invincibleTimer <= 0
+        ) {
+          this.citadel.hp -= Math.round(b.damage * 0.65);
+          this.updateHUD();
         }
         this.enemyBullets.splice(i, 1);
         continue;
@@ -3035,6 +4562,108 @@ class GameEngine {
     }
   }
 
+  getEnemyRouteTarget(enemy) {
+    const points = enemy?.routePolyline;
+    if (!Array.isArray(points) || points.length === 0) {
+      return { x: this.citadel.x, y: this.citadel.y };
+    }
+    const waypointIndex = Math.max(0, Math.min(points.length - 1, enemy.waypointIndex || 0));
+    return points[waypointIndex] || { x: this.citadel.x, y: this.citadel.y };
+  }
+
+  advanceEnemyWaypoint(enemy, threshold = 12) {
+    const points = enemy?.routePolyline;
+    if (!Array.isArray(points) || points.length === 0) return false;
+    let target = this.getEnemyRouteTarget(enemy);
+    let advanced = false;
+    while (
+      enemy.waypointIndex < points.length - 1
+      && Math.hypot(target.x - enemy.x, target.y - enemy.y) <= threshold + enemy.radius
+    ) {
+      enemy.waypointIndex++;
+      target = this.getEnemyRouteTarget(enemy);
+      advanced = true;
+    }
+    return advanced;
+  }
+
+  updateBossPhase(boss) {
+    if (!boss?.isBoss || boss.dead) return 0;
+    const hpRatio = Math.max(0, boss.hp / Math.max(1, boss.maxHp));
+    const nextPhase = hpRatio <= BOSS_PHASE_THRESHOLDS[1]
+      ? 3
+      : (hpRatio <= BOSS_PHASE_THRESHOLDS[0] ? 2 : 1);
+    if (nextPhase > (boss.bossPhase || 1)) {
+      boss.bossPhase = nextPhase;
+      boss.telegraphTimer = boss.type === 'leviathan' ? 1.35 : 0.9;
+      boss.patternIndex = 0;
+      const patternNames = {
+        vespera: ['Couronne abyssale', 'Portes du vide', 'Éclipse impériale'],
+        carmilla: ['Saigne-lune', 'Danse des lances', 'Banquet écarlate'],
+        leviathan: ['Souffle du titan', 'Marée cataclysmique', 'Extinction']
+      };
+      const patternName = patternNames[boss.type]?.[nextPhase - 1] || `Phase ${nextPhase}`;
+      this.showFeedback(`${boss.name} · ${patternName}`, boss.color);
+      this.particles.push({
+        type: 'gravity_ring',
+        x: boss.x,
+        y: boss.y,
+        radius: boss.radius * (2 + nextPhase),
+        life: boss.telegraphTimer,
+        color: boss.color
+      });
+    }
+    return boss.bossPhase;
+  }
+
+  updateArtillerySiege(enemy, dt) {
+    if (enemy.type !== 'artillery') return false;
+    const definition = EXPANSION?.enemyDefinitions?.artillery;
+    const maximumRange = Number(definition?.stats?.attackRange) || 330;
+    const minimumRange = Number(definition?.siege?.minimumRange) || 115;
+    const candidates = this.placedTowers
+      .map(defense => ({
+        defense,
+        distance: Math.hypot(defense.x - enemy.x, defense.y - enemy.y)
+      }))
+      .filter(candidate => candidate.distance <= maximumRange && candidate.distance >= minimumRange)
+      .sort((left, right) => {
+        if (this.getActiveRunMutators().some(mutator => mutator.modifiers?.artilleryTargeting === 'highest_investment')) {
+          return (right.defense.investedCost || 0) - (left.defense.investedCost || 0);
+        }
+        return left.distance - right.distance;
+      });
+    const target = candidates[0]?.defense;
+    if (!target) {
+      enemy.siegeTimer = 0;
+      return false;
+    }
+    enemy.facingAngle = Math.atan2(target.y - enemy.y, target.x - enemy.x);
+    enemy.siegeDeployTimer = Math.max(0, (enemy.siegeDeployTimer || 0) - dt);
+    if (enemy.siegeDeployTimer > 0) return true;
+    enemy.siegeTimer += dt;
+    const cooldown = (Number(definition?.stats?.attackCooldownMs) || 2400) / 1000;
+    if (enemy.siegeTimer >= cooldown) {
+      enemy.siegeTimer = 0;
+      const velocity = 230;
+      this.enemyBullets.push({
+        x: enemy.x,
+        y: enemy.y,
+        vx: Math.cos(enemy.facingAngle) * velocity,
+        vy: Math.sin(enemy.facingAngle) * velocity,
+        damage: Math.round(enemy.damage),
+        radius: 9,
+        splashRadius: Number(definition?.siege?.splashRadius) || 62,
+        stunDuration: (Number(definition?.siege?.stunDurationMs) || 0) / 1000,
+        color: enemy.color,
+        sourceType: 'artillery',
+        sourceEnemy: enemy
+      });
+      enemy.attackAnimationTimer = 0.45;
+    }
+    return true;
+  }
+
   updateEnemies(dt) {
     if (this.freezeTimer > 0) return;
 
@@ -3043,43 +4672,87 @@ class GameEngine {
       if (e.dead) continue;
       if (e.attackAnimationTimer > 0) e.attackAnimationTimer = Math.max(0, e.attackAnimationTimer - dt);
       if (e.hitAnimationTimer > 0) e.hitAnimationTimer = Math.max(0, e.hitAnimationTimer - dt);
+      if (e.markedTimer > 0) {
+        e.markedTimer -= dt;
+        if (e.markedTimer <= 0) e.markedDamageTakenMultiplier = 1;
+      }
+      if (e.armorBreakTimer > 0) {
+        e.armorBreakTimer -= dt;
+        if (e.armorBreakTimer <= 0) {
+          e.armorBreakMultiplier = 1;
+          e.rinEmberStacks = 0;
+        }
+      }
       if (e.stunTimer > 0) {
         e.stunTimer -= dt;
         continue;
       }
-      if (e.slowTimer > 0) e.slowTimer -= dt;
+      if (e.slowTimer > 0) {
+        e.slowTimer -= dt;
+        if (e.slowTimer <= 0) e.slowSpeedMultiplier = 1;
+      }
+      if (e.isBoss) {
+        this.updateBossPhase(e);
+        e.telegraphTimer = Math.max(0, (e.telegraphTimer || 0) - dt);
+      }
+      if (e.convertedTimer > 0) {
+        e.convertedTimer -= dt;
+        e.convertedAttackTimer = Math.max(0, (e.convertedAttackTimer || 0) - dt);
+        const hostile = this.enemies
+          .filter(candidate => candidate !== e && !candidate.dead && candidate.convertedTimer <= 0)
+          .sort((left, right) => (
+            Math.hypot(left.x - e.x, left.y - e.y) - Math.hypot(right.x - e.x, right.y - e.y)
+          ))[0];
+        if (hostile) {
+          e.facingAngle = Math.atan2(hostile.y - e.y, hostile.x - e.x);
+          if (e.convertedAttackTimer <= 0) {
+            this.damageEnemy(hostile, Math.max(18, e.damage * (e.convertedDamageMultiplier || 1.4)));
+            e.convertedAttackTimer = 0.65;
+          }
+        }
+        continue;
+      }
+      if (this.updateArtillerySiege(e, dt)) continue;
 
-      let targetPos = { x: this.citadel.x, y: this.citadel.y };
-      let closestDecoyDist = Math.hypot(this.citadel.x - e.x, this.citadel.y - e.y);
+      let targetPos = this.getEnemyRouteTarget(e);
+      let followsRoute = true;
+      let closestDecoyDist = Math.hypot(targetPos.x - e.x, targetPos.y - e.y);
       let targetBarrier = null;
 
       this.decoys.forEach(d => {
         const dist = Math.hypot(d.x - e.x, d.y - e.y);
-        if (dist < closestDecoyDist) { closestDecoyDist = dist; targetPos = { x: d.x, y: d.y }; }
+        if (dist < closestDecoyDist) {
+          closestDecoyDist = dist;
+          targetPos = { x: d.x, y: d.y };
+          followsRoute = false;
+        }
       });
       this.placedTowers.forEach(tower => {
-        if (tower.type !== 'barrier') return;
+        if (tower.type !== 'barrier' || e.type === 'flying') return;
         const dist = Math.hypot(tower.x - e.x, tower.y - e.y);
         if (dist < closestDecoyDist) {
           closestDecoyDist = dist;
           targetBarrier = tower;
           targetPos = { x: tower.x, y: tower.y };
+          followsRoute = false;
         }
       });
 
       const angle = Math.atan2(targetPos.y - e.y, targetPos.x - e.x);
       e.facingAngle = angle;
-      const movementSpeed = e.speed * (e.slowTimer > 0 ? 0.45 : 1);
+      const movementSpeed = e.speed * (e.slowTimer > 0 ? (e.slowSpeedMultiplier || 0.45) : 1);
       e.x += Math.cos(angle) * movementSpeed * dt;
       e.y += Math.sin(angle) * movementSpeed * dt;
+      if (followsRoute) this.advanceEnemyWaypoint(e, movementSpeed * dt);
 
       const bossInsideCombatArena = e.x >= 0 && e.x <= this.worldWidth
         && e.y >= 0 && e.y <= this.worldHeight;
-      if (e.isBoss && bossInsideCombatArena) {
+      if (e.isBoss && bossInsideCombatArena && e.telegraphTimer <= 0) {
         e.bulletTimer += dt;
-        if (e.bulletTimer >= (e.isLeviathan ? 0.8 : 1.2)) {
+        const phaseRate = 1 - ((Math.max(1, e.bossPhase) - 1) * 0.18);
+        if (e.bulletTimer >= (e.isLeviathan ? 0.8 : 1.2) * phaseRate) {
           e.bulletTimer = 0;
-          this.fireBossBulletRing(e);
+          this.fireBossPattern(e);
         }
       }
 
@@ -3091,9 +4764,16 @@ class GameEngine {
           e.y -= Math.sin(angle) * 18;
           continue;
         }
-        const barrierDamage = e.isBoss ? 90 : (e.type === 'brute' ? 45 : 24);
+        const barrierDamage = targetBarrier.ultimateInvulnerableTimer > 0
+          ? 0
+          : (e.isBoss ? 90 : Math.max(8, Math.round(e.damage || (e.type === 'brute' ? 45 : 24))));
         targetBarrier.hp -= barrierDamage;
-        this.addFloatingText(`-${barrierDamage}`, targetBarrier.x, targetBarrier.y - 24, '#67e8f9');
+        this.addFloatingText(
+          barrierDamage > 0 ? `-${barrierDamage}` : 'AEGIS',
+          targetBarrier.x,
+          targetBarrier.y - 24,
+          '#67e8f9'
+        );
         this.createExplosion(e.x, e.y, 22, 0);
         if (e.isBoss) {
           e.contactTimer = 0.8;
@@ -3117,7 +4797,7 @@ class GameEngine {
           e.contactTimer = Math.max(0, (e.contactTimer || 0) - dt);
           if (e.contactTimer <= 0) {
             if (!this.isOverdriveActive && this.invincibleTimer <= 0) {
-              const dmg = e.isLeviathan ? 80 : 40;
+              const dmg = Math.round(e.damage || (e.isLeviathan ? 80 : 40));
               this.citadel.hp -= dmg;
               audio.playHurtVoice();
               this.addFloatingText(`-${dmg}`, this.citadel.x, this.citadel.y - 30, '#ff2a5f');
@@ -3130,7 +4810,7 @@ class GameEngine {
           continue;
         }
         if (!this.isOverdriveActive && this.invincibleTimer <= 0) {
-          const dmg = e.type === 'brute' ? 20 : 8;
+          const dmg = Math.round(e.damage || (e.type === 'brute' ? 20 : 8));
           this.citadel.hp -= dmg;
           audio.playHurtVoice();
           this.addFloatingText(`-${dmg}`, this.citadel.x, this.citadel.y - 30, '#ff2a5f');
@@ -3143,16 +4823,77 @@ class GameEngine {
     }
   }
 
-  fireBossBulletRing(boss) {
+  fireBossBulletRing(boss, options = {}) {
     boss.attackAnimationTimer = 0.34;
-    const bulletsCount = boss.isLeviathan ? 16 : (boss.type === 'carmilla' ? 12 : 8);
+    const bulletsCount = options.count || (boss.isLeviathan ? 16 : (boss.type === 'carmilla' ? 12 : 8));
+    const speed = options.speed || 200;
+    const offset = Number(options.offset) || 0;
     for (let i = 0; i < bulletsCount; i++) {
-      const angle = (Math.PI * 2 / bulletsCount) * i;
+      const angle = ((Math.PI * 2 / bulletsCount) * i) + offset;
       this.enemyBullets.push({
         x: boss.x, y: boss.y,
-        vx: Math.cos(angle) * 200, vy: Math.sin(angle) * 200,
-        damage: 15, radius: 7, color: boss.color
+        vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed,
+        damage: options.damage || 15, radius: options.radius || 7, color: boss.color,
+        sourceType: boss.type,
+        bossPhase: boss.bossPhase
       });
+    }
+  }
+
+  fireAimedBossVolley(boss, count = 3, spread = 0.18, speed = 245, damage = 18) {
+    const centerAngle = Math.atan2(this.citadel.y - boss.y, this.citadel.x - boss.x);
+    for (let index = 0; index < count; index++) {
+      const offset = (index - ((count - 1) / 2)) * spread;
+      const angle = centerAngle + offset;
+      this.enemyBullets.push({
+        x: boss.x,
+        y: boss.y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        damage,
+        radius: 8,
+        color: boss.color,
+        sourceType: boss.type,
+        bossPhase: boss.bossPhase,
+        aimed: true
+      });
+    }
+  }
+
+  fireBossPattern(boss) {
+    const phase = Math.max(1, boss.bossPhase || 1);
+    boss.patternIndex = (boss.patternIndex || 0) + 1;
+    if (boss.type === 'vespera') {
+      if (phase === 1) this.fireBossBulletRing(boss, { count: 8, speed: 190 });
+      else if (phase === 2) {
+        this.fireBossBulletRing(boss, { count: 10, speed: 220, offset: boss.patternIndex * 0.17 });
+        this.fireAimedBossVolley(boss, 2, 0.22, 270, 20);
+      } else {
+        this.fireBossBulletRing(boss, { count: 14, speed: 250, offset: boss.patternIndex * 0.23, damage: 22 });
+        this.fireAimedBossVolley(boss, 5, 0.13, 300, 24);
+      }
+    } else if (boss.type === 'carmilla') {
+      if (phase === 1) this.fireAimedBossVolley(boss, 5, 0.16, 230, 16);
+      else if (phase === 2) {
+        this.fireBossBulletRing(boss, { count: 12, speed: 210, offset: (boss.patternIndex % 2) * 0.26 });
+        this.fireAimedBossVolley(boss, 3, 0.1, 285, 22);
+      } else {
+        this.fireBossBulletRing(boss, { count: 18, speed: 265, offset: boss.patternIndex * 0.12, damage: 25 });
+        this.fireAimedBossVolley(boss, 7, 0.11, 315, 26);
+        this.citadel.hp = Math.max(1, this.citadel.hp - 4);
+      }
+    } else if (boss.type === 'leviathan') {
+      const count = phase === 1 ? 16 : (phase === 2 ? 20 : 28);
+      this.fireBossBulletRing(boss, {
+        count,
+        speed: 185 + (phase * 40),
+        offset: boss.patternIndex * (phase === 3 ? 0.19 : 0.08),
+        damage: 18 + (phase * 5),
+        radius: 8 + phase
+      });
+      if (phase >= 2) this.fireAimedBossVolley(boss, phase === 2 ? 3 : 7, 0.09, 290 + phase * 25, 25);
+    } else {
+      this.fireBossBulletRing(boss);
     }
   }
 
@@ -3167,10 +4908,10 @@ class GameEngine {
       if (d.pulseTimer >= 0.5) {
         d.pulseTimer = 0;
         [...this.enemies].forEach(e => {
-          if (Math.hypot(e.x - d.x, e.y - d.y) < d.radius + (d.pulseRadius || 70)) {
-            this.damageEnemy(e, d.pulseDamage || 30);
+          if (Math.hypot(e.x - d.x, e.y - d.y) < d.radius + (d.pulseRadius ?? 70)) {
+            this.damageEnemy(e, d.pulseDamage ?? 30);
             if (d.healOnPulse) {
-              this.citadel.hp = Math.min(this.citadel.maxHp, this.citadel.hp + d.healOnPulse);
+              this.healCitadel(d.healOnPulse);
             }
           }
         });
@@ -3191,8 +4932,15 @@ class GameEngine {
       if (hazard.tickTimer >= 0.45) {
         hazard.tickTimer = 0;
         [...this.enemies].forEach(enemy => {
+          if (enemy.type === 'flying' && hazard.ground !== false) return;
           if (Math.hypot(enemy.x - hazard.x, enemy.y - hazard.y) <= hazard.radius + enemy.radius) {
-            this.damageEnemy(enemy, hazard.damage);
+            this.damageEnemyFromDefense(hazard.sourceDefense, enemy, hazard.damage);
+            if (
+              hazard.heroId === 'rin'
+              || ['flame', 'napalm'].includes(hazard.sourceDefense?.type)
+            ) {
+              this.applyRinArmorBreak(enemy);
+            }
           }
         });
       }
@@ -3219,11 +4967,161 @@ class GameEngine {
     }
   }
 
-  damageEnemy(enemy, amount) {
+  healCitadel(amount) {
+    if (!this.citadel || !Number.isFinite(amount) || amount <= 0) {
+      return { healed: 0, overheal: 0, storedCharge: Number(this.carmillaStoredCharge) || 0 };
+    }
+    const before = Math.max(0, Number(this.citadel.hp) || 0);
+    const maximum = Math.max(1, Number(this.citadel.maxHp) || 1);
+    const healed = Math.min(amount, Math.max(0, maximum - before));
+    const overheal = Math.max(0, amount - healed);
+    this.citadel.hp = Math.min(maximum, before + healed);
+
+    if (this.selectedHero?.id === 'carmilla' && overheal > 0) {
+      const modifiers = EXPANSION?.heroKits?.carmilla?.passive?.modifiers || {};
+      const maximumStoredCharge = Number(modifiers.maximumStoredCharge) || 35;
+      this.carmillaStoredCharge = Math.min(
+        maximumStoredCharge,
+        (Number(this.carmillaStoredCharge) || 0)
+          + (overheal * (Number(modifiers.overhealToChargeRatio) || 0.45))
+      );
+    }
+    return {
+      healed,
+      overheal,
+      storedCharge: Number(this.carmillaStoredCharge) || 0
+    };
+  }
+
+  applyRinArmorBreak(enemy) {
+    if (!enemy || enemy.dead || this.selectedHero?.id !== 'rin') return;
+    const modifiers = EXPANSION?.heroKits?.rin?.passive?.modifiers || {};
+    const reduction = Number(modifiers.armorReductionPerStack) || 0.035;
+    const maximumStacks = Math.max(1, Math.floor(Number(modifiers.maxStacks) || 5));
+    enemy.rinEmberStacks = Math.min(
+      maximumStacks,
+      Math.max(0, Math.floor(Number(enemy.rinEmberStacks) || 0)) + 1
+    );
+    enemy.armorBreakMultiplier = Math.max(
+      Number(enemy.armorBreakMultiplier) || 1,
+      1 + (enemy.rinEmberStacks * reduction)
+    );
+    enemy.armorBreakTimer = Math.max(
+      Number(enemy.armorBreakTimer) || 0,
+      (Number(modifiers.stackDurationMs) || 4500) / 1000
+    );
+  }
+
+  damageEnemyFromDefense(defense, enemy, amount) {
+    if (!defense) {
+      this.damageEnemy(enemy, amount);
+      return;
+    }
+    const specialization = this.getDefenseSpecializationOptions(defense)
+      .find(option => option.id === defense.specializationId);
+    const modifiers = specialization?.modifiers || {};
+    let adjustedDamage = amount;
+    if (enemy.type === 'flying') adjustedDamage *= Number(modifiers.flyingDamageMultiplier) || 1;
+    if (enemy.isBoss) adjustedDamage *= Number(modifiers.eliteDamageMultiplier) || 1;
+    if (['brute', 'bulwark'].includes(enemy.type)) {
+      adjustedDamage *= Number(modifiers.heavyDamageMultiplier) || 1;
+    }
+    let ignoreShield = false;
+    if (enemy.shield > 0 && enemy.type === 'bulwark') {
+      const shieldArc = Number(EXPANSION?.enemyDefinitions?.bulwark?.shield?.frontalArcDegrees) || 150;
+      const incomingAngle = Math.atan2(defense.y - enemy.y, defense.x - enemy.x);
+      const facingAngle = Number(enemy.facingAngle) || 0;
+      const delta = Math.atan2(
+        Math.sin(incomingAngle - facingAngle),
+        Math.cos(incomingAngle - facingAngle)
+      );
+      ignoreShield = Math.abs(delta) > (shieldArc * Math.PI / 360);
+    }
+    if (enemy.shield > 0 && !ignoreShield) {
+      adjustedDamage *= Number(modifiers.shieldDamageMultiplier) || 1;
+    }
+    if (
+      Number(modifiers.executeHealthThreshold) > 0
+      && enemy.hp / Math.max(1, enemy.maxHp) <= Number(modifiers.executeHealthThreshold)
+    ) {
+      adjustedDamage = Math.max(adjustedDamage, enemy.hp + enemy.shield);
+    }
+
+    const markMultiplier = Number(modifiers.markedDamageTakenMultiplier) || 0;
+    if (markMultiplier > 1) {
+      enemy.markedDamageTakenMultiplier = Math.max(
+        Number(enemy.markedDamageTakenMultiplier) || 1,
+        markMultiplier
+      );
+      enemy.markedTimer = Math.max(
+        Number(enemy.markedTimer) || 0,
+        (Number(modifiers.markDurationMs) || 5000) / 1000
+      );
+    }
+    const corrosionPower = Number(modifiers.armorReductionMultiplier) || 0;
+    if (corrosionPower > 0) {
+      enemy.armorBreakMultiplier = Math.min(
+        1.8,
+        (Number(enemy.armorBreakMultiplier) || 1) + (0.05 * corrosionPower)
+      );
+      enemy.armorBreakTimer = 4;
+    }
+
+    this.damageEnemy(enemy, adjustedDamage, { ignoreShield });
+
+    const resonanceThreshold = Math.floor(Number(modifiers.resonanceThreshold) || 0);
+    if (resonanceThreshold > 0 && !enemy.dead) {
+      enemy.resonanceStacks = (Number(enemy.resonanceStacks) || 0) + 1;
+      if (enemy.resonanceStacks >= resonanceThreshold) {
+        enemy.resonanceStacks = 0;
+        this.damageEnemy(enemy, Number(modifiers.resonanceBurstDamage) || 0);
+      }
+    }
+  }
+
+  damageEnemy(enemy, amount, options = {}) {
     if (!enemy || enemy.dead || !Number.isFinite(amount) || amount <= 0) return;
-    enemy.hp -= amount;
+    if (this.selectedHero?.id === 'kira' && enemy.routeId) {
+      if (!(this.kiraMarkedRoutes instanceof Set)) this.kiraMarkedRoutes = new Set();
+      if (!this.kiraMarkedRoutes.has(enemy.routeId)) {
+        const modifiers = EXPANSION?.heroKits?.kira?.passive?.modifiers || {};
+        enemy.markedDamageTakenMultiplier = Math.max(
+          Number(enemy.markedDamageTakenMultiplier) || 1,
+          Number(modifiers.markedDamageTakenMultiplier) || 1.22
+        );
+        enemy.markedTimer = Math.max(
+          Number(enemy.markedTimer) || 0,
+          (Number(modifiers.markDurationMs) || 8000) / 1000
+        );
+        this.kiraMarkedRoutes.add(enemy.routeId);
+      }
+    }
+    let effectiveAmount = amount;
+    effectiveAmount *= Number(enemy.markedDamageTakenMultiplier) || 1;
+    effectiveAmount *= Number(enemy.armorBreakMultiplier) || 1;
+    if (enemy.slowTimer > 0) {
+      effectiveAmount /= this.getRunModifierProduct('frozenArmorMultiplier');
+    }
+    const protectingBulwark = this.enemies.find(candidate => (
+      candidate !== enemy
+      && !candidate.dead
+      && candidate.type === 'bulwark'
+      && Math.hypot(candidate.x - enemy.x, candidate.y - enemy.y) <= candidate.auraRadius
+    ));
+    if (protectingBulwark) {
+      effectiveAmount *= 1 - Math.max(0, Math.min(0.8, protectingBulwark.auraDamageReduction || 0.18));
+    }
+    if (enemy.shield > 0 && options.ignoreShield !== true) {
+      const absorbed = Math.min(enemy.shield, effectiveAmount);
+      enemy.shield -= absorbed;
+      effectiveAmount -= absorbed;
+      this.addFloatingText(`Bouclier -${Math.round(absorbed)}`, enemy.x, enemy.y - 24, '#67e8f9');
+    }
+    enemy.hp -= effectiveAmount;
     enemy.hitAnimationTimer = 0.16;
-    this.addFloatingText(`${Math.round(amount)}`, enemy.x, enemy.y - 15, enemy.color);
+    if (effectiveAmount > 0) {
+      this.addFloatingText(`${Math.round(effectiveAmount)}`, enemy.x, enemy.y - 15, enemy.color);
+    }
 
     if (enemy.hp <= 0) {
       this.killEnemy(enemy);
@@ -3249,6 +5147,53 @@ class GameEngine {
     if (idx !== -1) {
       this.enemies.splice(idx, 1);
     }
+    this.hazards.forEach(hazard => {
+      if (
+        !hazard.sourceDefense
+        || Math.hypot(enemy.x - hazard.x, enemy.y - hazard.y) > hazard.radius + enemy.radius
+      ) return;
+      const specialization = this.getDefenseSpecializationOptions(hazard.sourceDefense)
+        .find(option => option.id === hazard.sourceDefense.specializationId);
+      const growth = Number(specialization?.modifiers?.growthPerKill) || 0;
+      const maximumMultiplier = Number(specialization?.modifiers?.maximumRadiusMultiplier) || 1;
+      if (growth <= 0) return;
+      hazard.radius = Math.min(
+        (Number(hazard.initialRadius) || hazard.radius) * maximumMultiplier,
+        hazard.radius + growth
+      );
+    });
+    if (enemy.type === 'splitter') {
+      const split = EXPANSION?.enemyDefinitions?.splitter?.split || {
+        childType: 'swarmer',
+        childCount: 3,
+        childHpMultiplier: 0.8,
+        spreadRadius: 34
+      };
+      for (let childIndex = 0; childIndex < (Number(split.childCount) || 3); childIndex++) {
+        const angle = (Math.PI * 2 * childIndex) / (Number(split.childCount) || 3);
+        this.spawnEnemy(split.childType || 'swarmer', enemy.routeIndex, {
+          x: enemy.x + Math.cos(angle) * (Number(split.spreadRadius) || 34),
+          y: enemy.y + Math.sin(angle) * (Number(split.spreadRadius) || 34),
+          waypointIndex: enemy.waypointIndex,
+          hpMultiplier: Number(split.childHpMultiplier) || 0.8,
+          countForWave: false
+        });
+      }
+    }
+    this.getActiveRunMutators().forEach(mutator => {
+      const chance = Number(mutator.modifiers?.splitOnDeathChance) || 0;
+      if (!enemy.isBoss && enemy.type !== 'splitter' && this.getRunRandom() < chance) {
+        const childCount = Math.max(1, Math.floor(Number(mutator.modifiers?.splitChildCount) || 1));
+        for (let childIndex = 0; childIndex < childCount; childIndex++) {
+          this.spawnEnemy(mutator.modifiers?.splitChildType || 'swarmer', enemy.routeIndex, {
+            x: enemy.x + ((childIndex - ((childCount - 1) / 2)) * 16),
+            y: enemy.y,
+            waypointIndex: enemy.waypointIndex,
+            countForWave: false
+          });
+        }
+      }
+    });
 
     this.mutantsKilled++;
     this.score += enemy.isLeviathan ? 2000 : (enemy.isBoss ? 600 : 50);
@@ -3256,23 +5201,66 @@ class GameEngine {
     if (this.mutantsKilled >= 1) this.unlockAchievement('first_blood');
     if (enemy.isLeviathan) this.unlockAchievement('wave_15');
 
-    const coinValue = enemy.isBoss ? 100 : (Math.random() < 0.45 ? 10 : 0);
+    const isHeavy = ['brute', 'bulwark'].includes(enemy.type);
+    const isElite = enemy.isBoss || isHeavy || SPECIALIST_ENEMY_TYPES.includes(enemy.type);
+    const vesperaPassive = this.selectedHero?.id === 'vespera'
+      ? EXPANSION?.heroKits?.vespera?.passive
+      : null;
+    const vesperaModifiers = vesperaPassive?.modifiers || {};
+    const rewardMultiplier = this.getRunModifierProduct('coinRewardMultiplier')
+      * (isHeavy ? this.getRunModifierProduct('heavyRewardMultiplier') : 1)
+      * (isElite ? (Number(vesperaModifiers.eliteRewardMultiplier) || 1) : 1)
+      * this.getCoinValueMultiplier();
+    const coinValue = Math.round(
+      (enemy.isBoss ? 100 : (this.getRunRandom() < 0.45 ? 10 : 0)) * rewardMultiplier
+    );
     if (coinValue > 0) {
       this.coins += coinValue;
       this.totalCoinsEarned += coinValue;
       this.addFloatingText(`+${coinValue} 🪙`, enemy.x, enemy.y, '#f59e0b');
     }
+    if (vesperaPassive && isElite) {
+      const buffRadius = Number(vesperaModifiers.radius) || 180;
+      const buffDuration = (Number(vesperaModifiers.buffDurationMs) || 6000) / 1000;
+      const damageMultiplier = Number(vesperaModifiers.onEliteDeathDamageMultiplier) || 1.18;
+      let buffedDefenses = 0;
+      this.placedTowers.forEach(defense => {
+        if (Math.hypot(defense.x - enemy.x, defense.y - enemy.y) > buffRadius) return;
+        defense.imperialBuffTimer = Math.max(
+          Number(defense.imperialBuffTimer) || 0,
+          buffDuration
+        );
+        defense.imperialDamageMultiplier = Math.max(
+          Number(defense.imperialDamageMultiplier) || 1,
+          damageMultiplier
+        );
+        buffedDefenses++;
+      });
+      if (buffedDefenses > 0) {
+        this.addFloatingText(
+          `TRIBUT Ã—${buffedDefenses}`,
+          enemy.x,
+          enemy.y - 26,
+          '#ec4899'
+        );
+      }
+    }
 
     this.gainFrenzy(enemy.isBoss ? 24 : 7);
     this.gainAffinity(enemy.isBoss ? 14 : 2);
 
-    if (Math.random() < 0.08) {
-      const pType = POWERUP_TYPES[Math.floor(Math.random() * POWERUP_TYPES.length)];
+    if (this.getRunRandom() < 0.08) {
+      const pType = POWERUP_TYPES[Math.floor(this.getRunRandom() * POWERUP_TYPES.length)];
       this.addBoundedLoot('powerup', { x: enemy.x, y: enemy.y, radius: 16, type: pType });
     }
 
-    if (enemy.isBoss || Math.random() < 0.07) {
-      const isRed = enemy.isBoss || Math.random() < 0.25;
+    const guaranteedCrateInterval = Math.floor(
+      this.getRunModifierMaximum('guaranteedCrateEveryKills')
+    );
+    const guaranteedCrate = guaranteedCrateInterval > 0
+      && this.mutantsKilled % guaranteedCrateInterval === 0;
+    if (enemy.isBoss || guaranteedCrate || this.getRunRandom() < 0.07) {
+      const isRed = enemy.isBoss || this.getRunRandom() < 0.25;
       this.addBoundedLoot('crate', { x: enemy.x, y: enemy.y, type: isRed ? 'red' : 'blue', radius: 14 });
       audio.playPickup();
     }
@@ -3293,7 +5281,14 @@ class GameEngine {
 
   gainFrenzy(amount) {
     if (this.isOverdriveActive) return;
-    this.frenzyMeter = Math.min(this.maxFrenzyMeter, this.frenzyMeter + amount);
+    const chargeMultiplier = this.placedTowers
+      .filter(tower => tower.type === 'shrine')
+      .reduce((multiplier, shrine) => {
+        const specialization = this.getDefenseSpecializationOptions(shrine)
+          .find(option => option.id === shrine.specializationId);
+        return multiplier * (Number(specialization?.modifiers?.ultimateChargeMultiplier) || 1);
+      }, 1);
+    this.frenzyMeter = Math.min(this.maxFrenzyMeter, this.frenzyMeter + (amount * chargeMultiplier));
     if (this.frenzyMeter >= this.maxFrenzyMeter) {
       this.announce('Overdrive prêt. Appuyez sur F ou utilisez le bouton Overdrive.');
     }
@@ -3373,60 +5368,284 @@ class GameEngine {
     return this.placedTowers.some(tower => tower.type === 'magnet' && Math.hypot(tower.x - item.x, tower.y - item.y) <= tower.range);
   }
 
+  getCoinValueMultiplier() {
+    return this.placedTowers
+      .filter(tower => tower.type === 'magnet')
+      .reduce((multiplier, magnet) => {
+        const specialization = this.getDefenseSpecializationOptions(magnet)
+          .find(option => option.id === magnet.specializationId);
+        return multiplier * (Number(specialization?.modifiers?.coinValueMultiplier) || 1);
+      }, 1);
+  }
+
   triggerHeroAbility() {
     if (this.abilityCooldownTimer > 0 || this.isPaused) return;
+    return this.armHeroAbilityTargeting();
+  }
+
+  armHeroAbilityTargeting() {
+    if (this.abilityCooldownTimer > 0 || this.isPaused || this.isGameOver) {
+      return { ok: false, reason: 'unavailable' };
+    }
+    const kit = EXPANSION?.heroKits?.[this.selectedHero.id];
+    this.activeHeroTargeting = {
+      heroId: this.selectedHero.id,
+      targeting: kit?.active?.targeting || 'ground_point',
+      ability: kit?.active || null
+    };
+    if (this.canvas?.dataset) this.canvas.dataset.abilityTargeting = this.activeHeroTargeting.targeting;
+    const button = document.getElementById('btn-hero-skill');
+    button?.setAttribute('aria-pressed', 'true');
+    this.showFeedback(`${this.selectedHero.abilityName} · choisissez une cible`, '#00f0ff');
+    return { ok: true, targeting: this.activeHeroTargeting };
+  }
+
+  cancelHeroAbilityTargeting() {
+    if (!this.activeHeroTargeting) return false;
+    this.activeHeroTargeting = null;
+    if (this.canvas?.dataset) delete this.canvas.dataset.abilityTargeting;
+    document.getElementById('btn-hero-skill')?.setAttribute('aria-pressed', 'false');
+    this.announce('Ciblage du pouvoir annulé.');
+    return true;
+  }
+
+  executeHeroAbilityAt(x, y) {
+    const targeting = this.activeHeroTargeting;
+    if (!targeting || targeting.heroId !== this.selectedHero.id) {
+      return { ok: false, reason: 'not-armed' };
+    }
+    const metrics = this.getBattlefieldCameraMetrics();
+    const targetX = Math.max(metrics.approachLeft, Math.min(metrics.approachRight, Number(x) || 0));
+    const targetY = Math.max(metrics.approachTop, Math.min(metrics.approachBottom, Number(y) || 0));
+    const heroId = this.selectedHero.id;
+    const effect = targeting.ability?.effect || {};
+    let affected = 0;
+    let color = '#00f0ff';
+
+    if (heroId === 'aria') {
+      this.decoys.push({
+        x: targetX,
+        y: targetY,
+        radius: Number(effect.radius) || 125,
+        life: (Number(effect.durationMs) || 6000) / 1000,
+        shieldHp: Number(effect.shieldHp) || 850,
+        pulseDamage: 0,
+        pulseRadius: 0,
+        explosionDamage: 0,
+        explosionRadius: 0,
+        color: '#67e8f9',
+        heroId
+      });
+      color = '#67e8f9';
+    } else if (heroId === 'kira') {
+      this.decoys.push({
+        x: targetX,
+        y: targetY,
+        radius: 24,
+        life: (Number(effect.durationMs) || 5200) / 1000,
+        pulseDamage: 0,
+        pulseRadius: Number(effect.tauntRadius) || 150,
+        explosionDamage: Number(effect.explosionDamage) || 260,
+        explosionRadius: Number(effect.explosionRadius) || 105,
+        color: '#a855f7',
+        heroId
+      });
+      color = '#a855f7';
+    } else if (heroId === 'rin') {
+      this.hazards.push({
+        x: targetX,
+        y: targetY,
+        radius: Number(effect.radius) || 145,
+        damage: (Number(effect.damagePerSecond) || 72) * 0.45,
+        life: (Number(effect.durationMs) || 6500) / 1000,
+        tickTimer: 0,
+        color: '#f97316',
+        ground: false,
+        heroId: 'rin',
+        pullStrength: Number(effect.pullStrength) || 0.5
+      });
+      color = '#f97316';
+    } else if (heroId === 'selene') {
+      const angle = Math.atan2(targetY - this.citadel.y, targetX - this.citadel.x);
+      const end = {
+        x: this.citadel.x + Math.cos(angle) * (Number(effect.length) || 560),
+        y: this.citadel.y + Math.sin(angle) * (Number(effect.length) || 560)
+      };
+      this.enemies.forEach(enemy => {
+        if (this.distToSegment(enemy, this.citadel, end) <= enemy.radius + ((Number(effect.width) || 52) / 2)) {
+          this.damageEnemy(enemy, Number(effect.damage) || 310);
+          enemy.slowTimer = Math.max(enemy.slowTimer || 0, (Number(effect.slowDurationMs) || 5000) / 1000);
+          affected++;
+        }
+      });
+      this.particles.push({
+        type: 'rail_beam',
+        x1: this.citadel.x,
+        y1: this.citadel.y,
+        x2: end.x,
+        y2: end.y,
+        life: 0.5,
+        color: '#67e8f9'
+      });
+      color = '#67e8f9';
+    } else if (heroId === 'vespera') {
+      const enemy = this.enemies
+        .filter(candidate => !candidate.isBoss && !candidate.dead)
+        .sort((left, right) => (
+          Math.hypot(left.x - targetX, left.y - targetY) - Math.hypot(right.x - targetX, right.y - targetY)
+        ))[0];
+      if (!enemy || Math.hypot(enemy.x - targetX, enemy.y - targetY) > 120) {
+        return { ok: false, reason: 'invalid-target' };
+      }
+      enemy.convertedTimer = (Number(effect.durationMs) || 8500) / 1000;
+      enemy.convertedDamageMultiplier = Number(effect.convertedDamageMultiplier) || 1.4;
+      affected = 1;
+      color = '#ec4899';
+    } else if (heroId === 'carmilla') {
+      const defense = this.placedTowers
+        .slice()
+        .sort((left, right) => (
+          Math.hypot(left.x - targetX, left.y - targetY) - Math.hypot(right.x - targetX, right.y - targetY)
+        ))[0];
+      if (!defense || Math.hypot(defense.x - targetX, defense.y - targetY) > this.getDefenseHitRadius(defense) * 2) {
+        return { ok: false, reason: 'invalid-target' };
+      }
+      const storedCharge = Math.max(0, Number(this.carmillaStoredCharge) || 0);
+      const reserveDamageMultiplier = 1 + (storedCharge / 100);
+      const reserveDurationMultiplier = 1 + (storedCharge / 200);
+      defense.hp = Math.max(1, defense.hp * (1 - (Number(effect.defenseHpCostPercent) || 0.22)));
+      defense.damage *= (Number(effect.damageMultiplier) || 1.75) * reserveDamageMultiplier;
+      if (defense.fireRate > 0) defense.fireRate *= Number(effect.fireRateMultiplier) || 0.65;
+      defense.abilityBuffTimer = (
+        ((Number(effect.durationMs) || 7500) / 1000) * reserveDurationMultiplier
+      );
+      defense.abilityLifesteal = (Number(effect.lifesteal) || 0.18) + (storedCharge / 500);
+      this.carmillaStoredCharge = 0;
+      affected = 1;
+      color = '#be123c';
+    }
 
     audio.playAbility();
-    this.abilityCooldownTimer = this.selectedHero.cooldown;
-    this.decoysDeployedCount++;
-
-    const angle = Math.random() * Math.PI * 2;
-    this.heroFacingAngle = angle;
+    this.abilityCooldownTimer = (Number(targeting.ability?.cooldownMs)
+      ? targeting.ability.cooldownMs / 1000
+      : this.selectedHero.cooldown) * this.getHeroCooldownMultiplier();
+    if (heroId === 'kira') this.decoysDeployedCount++;
+    this.heroFacingAngle = Math.atan2(targetY - this.citadel.y, targetX - this.citadel.x);
     this.heroAnimationState = 'ability';
     this.heroAnimationTimer = 0.72;
-    const decoy = {
-      x: this.citadel.x + Math.cos(angle) * 120,
-      y: this.citadel.y + Math.sin(angle) * 120,
-      radius: 22,
-      life: 8,
-      pulseDamage: 30,
-      pulseRadius: 70,
-      explosionDamage: 90,
-      explosionRadius: 110,
-      color: '#00f0ff',
-      heroId: this.selectedHero.id
-    };
-    if (this.selectedHero.id === 'aria') {
-      decoy.life = 11;
-      decoy.radius = 30;
-      decoy.explosionDamage = 60;
-    } else if (this.selectedHero.id === 'kira') {
-      decoy.life = 6;
-      decoy.pulseDamage = 45;
-      decoy.explosionDamage = 150;
-      decoy.color = '#a855f7';
-    } else if (this.selectedHero.id === 'rin') {
-      decoy.pulseDamage = 52;
-      decoy.pulseRadius = 90;
-      decoy.color = '#f97316';
-      this.hazards.push({ x: decoy.x, y: decoy.y, radius: 95, damage: 18, life: 8, tickTimer: 0, color: '#f97316' });
-    } else if (this.selectedHero.id === 'selene') {
-      decoy.pulseDamage = 58;
-      decoy.pulseRadius = 115;
-      decoy.color = '#67e8f9';
-    } else if (this.selectedHero.id === 'vespera') {
-      decoy.pulseDamage = 68;
-      decoy.pulseRadius = 120;
-      decoy.color = '#ec4899';
-    } else if (this.selectedHero.id === 'carmilla') {
-      decoy.pulseDamage = 40;
-      decoy.healOnPulse = 4;
-      decoy.color = '#be123c';
-    }
-    this.decoys.push(decoy);
-    this.showFeedback(`${this.selectedHero.abilityName} déployé`, decoy.color);
-
+    this.activeHeroTargeting = null;
+    if (this.canvas?.dataset) delete this.canvas.dataset.abilityTargeting;
+    document.getElementById('btn-hero-skill')?.setAttribute('aria-pressed', 'false');
+    this.showFeedback(`${this.selectedHero.abilityName} déclenché${affected ? ` · ${affected}` : ''}`, color);
     this.checkGalleryUnlocks();
+    return { ok: true, heroId, affected };
+  }
+
+  applySelectedHeroUltimate() {
+    const heroId = this.selectedHero.id;
+    const kit = EXPANSION?.heroKits?.[heroId];
+    const effect = kit?.ultimate?.effect || {};
+
+    if (heroId === 'aria') {
+      this.healCitadel(
+        this.citadel.maxHp * (Number(effect.citadelHealPercent) || 0.2)
+      );
+      const duration = (Number(effect.barrierInvulnerabilityMs) || 7000) / 1000;
+      this.placedTowers
+        .filter(defense => defense.type === 'barrier')
+        .forEach(defense => {
+          defense.ultimateInvulnerableTimer = Math.max(
+            Number(defense.ultimateInvulnerableTimer) || 0,
+            duration
+          );
+        });
+      this.heroUltimateDefenseDamageTimer = duration;
+    } else if (heroId === 'kira') {
+      this.enemies
+        .filter(enemy => !enemy.dead && !enemy.isBoss)
+        .sort((left, right) => right.hp - left.hp)
+        .slice(0, Number(effect.targetCount) || 6)
+        .forEach(enemy => {
+          this.damageEnemy(enemy, Number(effect.damage) || 620);
+          if (!enemy.dead) {
+            enemy.markedDamageTakenMultiplier = Math.max(
+              Number(enemy.markedDamageTakenMultiplier) || 1,
+              1.22
+            );
+            enemy.markedTimer = Math.max(Number(enemy.markedTimer) || 0, 8);
+          }
+        });
+    } else if (heroId === 'rin') {
+      this.spawnRoutes.forEach(route => {
+        const points = route.polyline || [];
+        const anchor = points[Math.max(0, Math.floor((points.length - 1) / 2))] || route.spawn;
+        this.hazards.push({
+          x: anchor.x,
+          y: anchor.y,
+          radius: 120,
+          damage: (Number(effect.routeDamagePerSecond) || 95) * 0.45,
+          life: (Number(effect.durationMs) || 5500) / 1000,
+          tickTimer: 0,
+          color: '#f97316',
+          ground: false,
+          heroId: 'rin'
+        });
+      });
+    } else if (heroId === 'selene') {
+      const duration = (Number(effect.enemyTimeStopMs) || 5000) / 1000;
+      this.freezeTimer = Math.max(this.freezeTimer, duration);
+      this.hostileProjectileFreezeTimer = Math.max(
+        this.hostileProjectileFreezeTimer,
+        (Number(effect.hostileProjectileTimeStopMs) || 5000) / 1000
+      );
+    } else if (heroId === 'vespera') {
+      const fearDuration = (Number(effect.fearDurationMs) || 4200) / 1000;
+      this.enemies
+        .filter(enemy => !enemy.dead && !enemy.isBoss)
+        .forEach(enemy => {
+          enemy.stunTimer = Math.max(enemy.stunTimer || 0, fearDuration);
+        });
+      const threshold = Number(effect.permanentConvertHealthThreshold) || 0.2;
+      const converted = this.enemies
+        .filter(enemy => (
+          !enemy.dead
+          && !enemy.isBoss
+          && SPECIALIST_ENEMY_TYPES.includes(enemy.type)
+          && enemy.hp / Math.max(1, enemy.maxHp) <= threshold
+        ))
+        .sort((left, right) => right.damage - left.damage)[0];
+      if (converted) {
+        const index = this.enemies.indexOf(converted);
+        if (index >= 0) this.enemies.splice(index, 1);
+        this.mercenaries.push({
+          x: converted.x,
+          y: converted.y,
+          angle: this.mercenaries.length * ((Math.PI * 2) / 3),
+          damage: Math.max(30, converted.damage * 1.4),
+          fireRate: 520,
+          range: 330,
+          timer: 0,
+          name: `${converted.name} ralliée`
+        });
+      }
+    } else if (heroId === 'carmilla') {
+      [...this.enemies].forEach(enemy => {
+        this.damageEnemy(enemy, Number(effect.globalDamage) || 360);
+      });
+      this.placedTowers.forEach(defense => {
+        defense.hp = Math.min(
+          defense.maxHp,
+          defense.hp + (defense.maxHp * (Number(effect.defenseHealPercent) || 0.35))
+        );
+      });
+      this.invincibleTimer = Math.max(
+        this.invincibleTimer,
+        (Number(effect.durationMs) || 6000) / 1000
+      );
+    }
+
+    this.showFeedback(kit?.ultimate?.name || 'Ultime de Valkyrie', '#f59e0b');
+    this.updateHUD();
   }
 
   triggerOverdrive() {
@@ -3440,6 +5659,7 @@ class GameEngine {
     this.isOverdriveActive = true;
     this.overdriveTimer = 6.0;
     this.overdriveCount++;
+    this.applySelectedHeroUltimate();
 
     if (this.overdriveCount >= 3) this.unlockAchievement('frenzy_master');
 
@@ -3510,21 +5730,29 @@ class GameEngine {
     document.getElementById('tower-floor-txt').textContent = this.towerCompleted
       ? 'Tour maîtrisée · Étage 100 rejouable'
       : `Étage ${this.towerFloor} / 100`;
-    const mutators = [
-      { id: 'armored', name: 'Carapace abyssale', desc: '+65 % de santé ennemie.' },
-      { id: 'haste', name: 'Pulsation accélérée', desc: '+35 % de vitesse ennemie.' },
-      { id: 'swarm', name: 'Marée démoniaque', desc: '+50 % d’ennemis, cadence accrue.' }
-    ];
+    const mutators = (EXPANSION.infinitumMutators || []).length > 0
+      ? EXPANSION.infinitumMutators
+      : [
+        { id: 'armored', name: 'Carapace abyssale', description: '+65 % de santé ennemie.' },
+        { id: 'haste', name: 'Pulsation accélérée', description: '+35 % de vitesse ennemie.' },
+        { id: 'swarm', name: 'Marée démoniaque', description: '+50 % d’ennemis, cadence accrue.' }
+      ];
     if (!this.pendingTowerMutator || this.pendingTowerMutatorFloor !== this.towerFloor) {
-      this.pendingTowerMutator = mutators[Math.floor(Math.random() * mutators.length)];
+      const available = mutators.filter(mutator => !this.towerMutators.some(active => active.id === mutator.id));
+      const candidates = available.length > 0 ? available : mutators;
+      this.pendingTowerMutator = candidates[Math.floor(this.getRunRandom() * candidates.length)];
       this.pendingTowerMutatorFloor = this.towerFloor;
     }
-    document.getElementById('tower-mutator-txt').textContent = `${this.pendingTowerMutator.name} — ${this.pendingTowerMutator.desc}`;
+    document.getElementById('tower-mutator-txt').textContent = `${this.pendingTowerMutator.name} — ${this.pendingTowerMutator.description || this.pendingTowerMutator.desc}`;
+    this.updateInfinitumProgress();
 
     const startButton = document.getElementById('btn-start-floor');
     startButton.textContent = this.towerCompleted ? 'Rejouer l’Étage 100' : `Gravir l’Étage ${this.towerFloor}`;
     startButton.onclick = () => {
       const floorMutator = this.pendingTowerMutator;
+      if (!this.towerMutators.some(mutator => mutator.id === floorMutator.id)) {
+        this.towerMutators.push(floorMutator);
+      }
       this.campaignStateBeforeTower = {
         wave: this.wave,
         waveActive: this.waveActive,
@@ -3534,6 +5762,9 @@ class GameEngine {
         bossSpawnedThisWave: this.bossSpawnedThisWave,
         waveRewardClaimed: this.waveRewardClaimed,
         spawnTimer: this.spawnTimer,
+        waveSpawnQueue: this.waveSpawnQueue,
+        waveSpawnElapsedMs: this.waveSpawnElapsedMs,
+        activeWaveDefinition: this.activeWaveDefinition,
         enemies: this.enemies,
         enemyBullets: this.enemyBullets,
         projectiles: this.projectiles,
@@ -3553,7 +5784,12 @@ class GameEngine {
       this.crates = [];
       this.powerups = [];
       this.hazards = [];
-      this.configureWave(this.towerFloor, { towerMode: true, mutator: floorMutator });
+      this.infinitumCanReturn = false;
+      this.configureWave(this.towerFloor, {
+        towerMode: true,
+        mutator: floorMutator,
+        mutators: this.towerMutators
+      });
       this.pendingTowerMutator = null;
       this.pendingTowerMutatorFloor = null;
       this.closeModal(modal, false);
@@ -3561,10 +5797,43 @@ class GameEngine {
         this.closeModal('hq-menu-modal', false);
       }
       this.showFeedback(`Étage ${this.towerFloor} : ${floorMutator.name}`, '#a855f7');
+      this.updateInfinitumProgress();
       this.updateHUD();
       this.focusBattlefield();
     };
     this.openModal(modal);
+  }
+
+  canReturnFromInfinitum() {
+    return !this.isTowerMode || this.infinitumCanReturn || this.wave % 10 === 0 || this.wave >= 100;
+  }
+
+  updateInfinitumProgress() {
+    const segmentStart = Math.floor((Math.max(1, this.towerFloor) - 1) / 10) * 10 + 1;
+    const segmentEnd = Math.min(100, segmentStart + 9);
+    const completedInSegment = Math.max(0, Math.min(10, this.towerFloor - segmentStart));
+    const progress = document.getElementById('infinitum-segment-progress');
+    const text = document.getElementById('infinitum-segment-txt');
+    const floorList = document.getElementById('infinitum-floor-list');
+    const cumulative = document.getElementById('infinitum-cumulative-mutators');
+    if (progress) {
+      progress.max = 10;
+      progress.value = completedInSegment;
+      progress.setAttribute('aria-valuenow', String(completedInSegment));
+    }
+    if (text) text.textContent = `Segment ${segmentStart}–${segmentEnd} · ${completedInSegment}/10`;
+    if (floorList) {
+      floorList.textContent = Array.from(
+        { length: segmentEnd - segmentStart + 1 },
+        (_, index) => {
+          const floor = segmentStart + index;
+          return `${floor < this.towerFloor ? '✓' : (floor === this.towerFloor ? '●' : '○')} ${floor}`;
+        }
+      ).join(' · ');
+    }
+    if (cumulative) {
+      cumulative.textContent = this.towerMutators.map(mutator => mutator.name).join(' · ') || 'Aucun mutateur cumulé';
+    }
   }
 
   openMercenaryModal() {
@@ -3605,12 +5874,167 @@ class GameEngine {
     if (!modal) return;
 
     const hero = this.selectedHero;
-    const imgSrc = hero.activeSkin === 'alt' && hero.altAvatar ? hero.altAvatar : hero.avatar;
-    document.getElementById('studio-preview-img').src = imgSrc;
-    document.getElementById('studio-preview-img').alt = `Portrait boudoir non nu de ${hero.name}, ${hero.age} ans`;
+    this.syncVnExpansionConsent(hero.id, hero.romanceOptIn === true);
+    const studioHeroine = this.getVnExpansion()?.studio?.heroines?.[hero.id];
+    const poseSelect = document.getElementById('studio-pose-select');
+    const ambienceSelect = document.getElementById('studio-ambience-select');
+    const maturitySelect = document.getElementById('studio-maturity-select');
+    const fillSelect = (select, options) => {
+      if (!select) return;
+      select.innerHTML = '';
+      options.forEach(item => {
+        const option = document.createElement('option');
+        option.value = item.id;
+        option.textContent = item.label;
+        select.appendChild(option);
+      });
+    };
+    fillSelect(poseSelect, studioHeroine?.poses || []);
+    fillSelect(ambienceSelect, studioHeroine?.ambiences || []);
+    if (maturitySelect) maturitySelect.value = this.vnExpansionState?.maturity || 'suggestive';
     document.getElementById('studio-hero-title').textContent = hero.name;
-
+    modal.dataset.heroId = hero.id;
+    this.updatePhotoStudioPreview();
+    this.renderStudioConclusionGallery();
     this.openModal(modal);
+  }
+
+  getStudioPreviewSource(heroId, poseId) {
+    const expansion = this.getVnExpansion();
+    const studioHeroine = expansion?.studio?.heroines?.[heroId];
+    const poseIndex = Math.max(0, (studioHeroine?.poses || []).findIndex(pose => pose.id === poseId));
+    const pose = studioHeroine?.poses?.[poseIndex];
+    const candidate = this.resolveVnExpansionAsset(pose?.previewSrc);
+    if (candidate && !candidate.includes('/vn/studio/')) return candidate;
+    const chapterId = expansion?.heroines?.[heroId]?.chapterIds?.[poseIndex];
+    const chapterCg = this.resolveVnExpansionAsset(expansion?.getChapter?.(heroId, chapterId)?.cgSrc);
+    const hero = HERO_CLASSES[heroId];
+    return chapterCg || (hero?.activeSkin === 'alt' && hero.altAvatar ? hero.altAvatar : hero?.avatar);
+  }
+
+  updatePhotoStudioPreview() {
+    const modal = document.getElementById('photo-studio-modal');
+    const heroId = modal?.dataset.heroId || this.selectedHero?.id;
+    const hero = HERO_CLASSES[heroId];
+    const expansion = this.getVnExpansion();
+    const studioHeroine = expansion?.studio?.heroines?.[heroId];
+    const poseSelect = document.getElementById('studio-pose-select');
+    const ambienceSelect = document.getElementById('studio-ambience-select');
+    const preview = document.getElementById('studio-preview-img');
+    if (!hero || !preview) return;
+    const pose = studioHeroine?.poses?.find(item => item.id === poseSelect?.value)
+      || studioHeroine?.poses?.[0];
+    const ambience = studioHeroine?.ambiences?.find(item => item.id === ambienceSelect?.value)
+      || studioHeroine?.ambiences?.[0];
+    const previewSrc = this.getStudioPreviewSource(heroId, pose?.id);
+    preview.onerror = previewSrc
+      ? () => {
+        preview.onerror = null;
+        preview.src = hero.activeSkin === 'alt' && hero.altAvatar ? hero.altAvatar : hero.avatar;
+      }
+      : null;
+    preview.src = previewSrc;
+    preview.alt = `${pose?.label || 'Portrait'} de ${hero.name}, adulte de ${hero.age} ans, mise en scène non nue et consentie`;
+    const frame = preview.closest?.('.studio-preview-frame');
+    if (frame) {
+      const backdrop = this.resolveVnExpansionAsset(ambience?.backdropSrc);
+      frame.style.backgroundImage = backdrop ? `url("${backdrop}")` : '';
+      frame.dataset.ambience = ambience?.id || '';
+    }
+    const consent = this.getVnExpansionHeroineState(heroId)?.consent;
+    const note = document.getElementById('studio-consent-note');
+    if (note) {
+      note.textContent = consent?.granted && !consent.revoked
+        ? `Accord actif de ${hero.name}. Pose et ambiance restent modifiables ou révocables à tout moment.`
+        : `Portrait public non nu de ${hero.name}. Le mode intimiste attend un accord actif et révocable.`;
+    }
+  }
+
+  setStudioMaturity(mode) {
+    const modal = document.getElementById('photo-studio-modal');
+    const heroId = modal?.dataset.heroId || this.selectedHero?.id;
+    const consent = this.getVnExpansionHeroineState(heroId)?.consent;
+    const select = document.getElementById('studio-maturity-select');
+    const note = document.getElementById('studio-consent-note');
+    const requested = mode === 'intense' ? 'intense' : 'suggestive';
+    if (requested === 'intense' && (!consent?.granted || consent.revoked)) {
+      if (select) select.value = 'suggestive';
+      if (note) note.textContent = 'Mode intimiste refusé : un accord adulte actif est requis. Aucun autre réglage ni progression n’est modifié.';
+      return;
+    }
+    const expansion = this.getVnExpansion();
+    if (expansion?.persistence?.setMaturity) {
+      this.vnExpansionState = expansion.persistence.setMaturity(
+        this.vnExpansionState,
+        requested,
+        localStorage
+      );
+    }
+    if (note) {
+      note.textContent = requested === 'intense'
+        ? 'Mode intimiste actif : tension romantique et cadrage rapproché, sans contenu graphique, avec fondu au noir.'
+        : 'Mode suggestif actif : portraits non nus et consentement révocable à tout moment.';
+    }
+    this.updatePhotoStudioPreview();
+    this.renderStudioConclusionGallery();
+  }
+
+  getStudioConclusionUnlockState(conclusion) {
+    const results = Object.values(this.vnSceneProgress.chapterResults || {});
+    const completed = results.filter(result => String(result).startsWith('completed')).length;
+    const heroineStates = Object.values(this.vnExpansionState?.heroines || {});
+    const heroinesWithMemories = heroineStates.filter(state => (state.memories || []).length > 0).length;
+    const allConsenting = heroineStates.length === 6 && heroineStates.every(state => (
+      state.consent?.granted === true && state.consent?.revoked !== true
+    ));
+    if (conclusion.id === 'haven-lanterns') return completed >= 6;
+    if (conclusion.id === 'six-free-voices') return heroinesWithMemories >= 6;
+    if (conclusion.id === 'chosen-night') {
+      return completed >= 18
+        && allConsenting
+        && this.vnExpansionState?.maturity === 'intense';
+    }
+    return false;
+  }
+
+  renderStudioConclusionGallery() {
+    const gallery = document.getElementById('studio-conclusion-gallery');
+    const conclusions = this.getVnExpansion()?.studio?.conclusionCgs || [];
+    if (!gallery) return;
+    gallery.innerHTML = '';
+    if (conclusions.length === 0) {
+      const empty = document.createElement('p');
+      empty.className = 'empty-state';
+      empty.textContent = 'Les conclusions illustrées ne sont pas encore disponibles.';
+      gallery.appendChild(empty);
+      return;
+    }
+    conclusions.forEach(conclusion => {
+      const unlocked = this.getStudioConclusionUnlockState(conclusion);
+      const figure = document.createElement('figure');
+      figure.className = 'studio-conclusion-card';
+      figure.dataset.unlocked = String(unlocked);
+      if (unlocked) {
+        const image = document.createElement('img');
+        image.src = this.resolveVnExpansionAsset(conclusion.cgSrc);
+        image.alt = `${conclusion.title}, conclusion adulte consentie et non graphique`;
+        figure.appendChild(image);
+      } else {
+        const lock = document.createElement('span');
+        lock.className = 'studio-conclusion-lock';
+        lock.setAttribute('aria-hidden', 'true');
+        lock.textContent = '◇';
+        figure.appendChild(lock);
+      }
+      const caption = document.createElement('figcaption');
+      const title = document.createElement('strong');
+      title.textContent = conclusion.title;
+      const requirement = document.createElement('span');
+      requirement.textContent = unlocked ? 'Déverrouillée' : conclusion.requirement;
+      caption.append(title, requirement);
+      figure.appendChild(caption);
+      gallery.appendChild(figure);
+    });
   }
 
   openHaremModal(focusRequest = null) {
@@ -3697,6 +6121,7 @@ class GameEngine {
         revokeButton.textContent = 'RÉVOQUER L’ACCORD';
         revokeButton.onclick = () => {
           hero.romanceOptIn = false;
+          this.syncVnExpansionConsent(hero.id, false);
           this.redirectSavedVnSessionAfterRevocation(hero.id);
           hero.lastLoungeMessage = 'L’accord relationnel est révoqué immédiatement, sans perte de confiance ni impact militaire.';
           this.saveProgress();
@@ -3744,9 +6169,11 @@ class GameEngine {
   requestRomanceOptIn(hero) {
     if (hero.unlocked === false) return;
     if (hero.allied && hero.affinityLvl < 2) {
+      this.syncVnExpansionConsent(hero.id, false);
       hero.lastLoungeMessage = 'Elle décline calmement pour le moment. Aucun crédit ni point de confiance n’est perdu.';
     } else {
       hero.romanceOptIn = true;
+      this.syncVnExpansionConsent(hero.id, true);
       hero.lastLoungeMessage = 'Elle accepte librement de rejoindre le Salon, en rappelant que cet accord reste révocable.';
       audio.playAbility();
       this.saveProgress();
@@ -3769,6 +6196,116 @@ class GameEngine {
       this.saveProgress();
     }
     this.announceLoungeResult(hero, 'invite');
+  }
+
+  getVnExpansion() {
+    const data = typeof window !== 'undefined' ? window.INFERNAL_VN_EXPANSION : null;
+    return data?.schema === 'infernal-city.vn-expansion/1' ? data : null;
+  }
+
+  loadVnExpansionState() {
+    const expansion = this.getVnExpansion();
+    try {
+      return expansion?.persistence?.loadState
+        ? expansion.persistence.loadState(typeof localStorage !== 'undefined' ? localStorage : null)
+        : null;
+    } catch (error) {
+      console.warn('Progression narrative étendue indisponible :', error);
+      return expansion?.persistence?.createDefaultState?.() || null;
+    }
+  }
+
+  syncVnExpansionConsent(heroId, granted) {
+    const expansion = this.getVnExpansion();
+    const action = granted
+      ? expansion?.persistence?.grantConsent
+      : expansion?.persistence?.revokeConsent;
+    if (!action) return;
+    this.vnExpansionState = action(this.vnExpansionState, heroId, localStorage);
+  }
+
+  getVnExpansionChapter(heroId, chapterId) {
+    return this.getVnExpansion()?.getChapter?.(heroId, chapterId) || null;
+  }
+
+  getVnExpansionHeroineState(heroId) {
+    return this.vnExpansionState?.heroines?.[heroId] || null;
+  }
+
+  getVnPersistentCallbackSummary(heroId) {
+    const state = this.getVnExpansionHeroineState(heroId);
+    if (!state) return '';
+    const traits = Object.entries(state.traits || {})
+      .filter(([, count]) => Number(count) > 0)
+      .map(([trait, count]) => `${trait} ${count}`);
+    return traits.length > 0 ? `Mémoire persistante : ${traits.join(' · ')}` : '';
+  }
+
+  resolveVnExpansionAsset(src) {
+    if (typeof src !== 'string') return '';
+    // Runtime art is optimized as WebP. Accept the original manifest suffix so
+    // older cached data modules remain compatible during the PWA transition.
+    if (/^assets\/vn\/(?:cg\/chapters|cg\/conclusions|expressions)\/.+\.png$/u.test(src)) {
+      return src.replace(/\.png$/u, '.webp');
+    }
+    return src;
+  }
+
+  applyVnMusicMood(mood = '') {
+    const normalized = String(mood).toLowerCase();
+    const station = /gothic|abyss|regal/u.test(normalized)
+      ? 'gothic'
+      : /industrial|flame|ritual/u.test(normalized)
+        ? 'industrial'
+        : /lunar|ambient|intimat|quiet/u.test(normalized)
+          ? 'chillwave'
+          : 'synthwave';
+    if (this.vnPreviousRadioStation === null) {
+      this.vnPreviousRadioStation = audio.currentStation || 'synthwave';
+    }
+    if (audio.currentStation === station) return;
+    const wasPlaying = audio.isPlayingMusic === true;
+    if (wasPlaying) audio.stopMusic?.();
+    audio.setStation?.(station);
+    if (wasPlaying) audio.startMusic?.();
+  }
+
+  restoreVnMusicMood() {
+    if (this.vnPreviousRadioStation === null) return;
+    const station = this.vnPreviousRadioStation;
+    this.vnPreviousRadioStation = null;
+    if (audio.currentStation === station) return;
+    const wasPlaying = audio.isPlayingMusic === true;
+    if (wasPlaying) audio.stopMusic?.();
+    audio.setStation?.(station);
+    if (wasPlaying) audio.startMusic?.();
+  }
+
+  setVnExpressionMood(heroId, mood = 'neutral', chapterId = '') {
+    const portrait = document.getElementById('vn-expression-portrait');
+    if (!portrait) return;
+    const chapter = this.getVnExpansionChapter(heroId, chapterId);
+    const sheet = this.resolveVnExpansionAsset(chapter?.expressionSheetSrc);
+    if (!sheet) {
+      portrait.hidden = true;
+      return;
+    }
+    const normalizedMood = String(mood || 'neutral').toLowerCase();
+    let cell = 0;
+    if (/warm|soft|smil|relief|tender|playful|hope|joy/u.test(normalizedMood)) cell = 1;
+    else if (/command|resolve|firm|regal|proud|focus/u.test(normalizedMood)) cell = 2;
+    else if (/reflect|memory|sad|vulner|quiet|melanch/u.test(normalizedMood)) cell = 3;
+    else if (/surpris|shock|alarm|tense|fear/u.test(normalizedMood)) cell = 4;
+    else if (/ritual|ceremon|mystic|lunar|abyss/u.test(normalizedMood)) cell = 5;
+    else if (/relax|calm|peace|safe/u.test(normalizedMood)) cell = 6;
+    else if (/intimat|romantic|sensual|desire/u.test(normalizedMood)) cell = 7;
+    else if (/teas|wink|amused|laugh/u.test(normalizedMood)) cell = 8;
+    const column = cell % 3;
+    const row = Math.floor(cell / 3);
+    portrait.style.backgroundImage = `url("${sheet}")`;
+    portrait.style.backgroundPosition = `${column * 50}% ${row * 50}%`;
+    portrait.setAttribute('aria-label', `Expression ${normalizedMood} de ${HERO_CLASSES[heroId]?.name || 'l’héroïne'}`);
+    portrait.hidden = false;
   }
 
   getVnData() {
@@ -3898,8 +6435,26 @@ class GameEngine {
     const image = document.getElementById('vn-scene-img');
     const hero = HERO_CLASSES[heroId];
     if (!image || !hero) return;
-    image.src = VN_NARRATIVE_CGS[heroId] || chapter?.presentation?.portrait || hero.avatar;
+    const expansionChapter = chapter?.id
+      ? this.getVnExpansionChapter(heroId, chapter.id)
+      : null;
+    const fallback = VN_NARRATIVE_CGS[heroId] || chapter?.presentation?.portrait || hero.avatar;
+    const narrativeCg = this.resolveVnExpansionAsset(expansionChapter?.cgSrc);
+    image.onerror = narrativeCg
+      ? () => {
+        image.onerror = null;
+        image.src = fallback;
+      }
+      : null;
+    image.src = narrativeCg || fallback;
     image.alt = `${hero.name}, adulte de ${hero.age} ans, pendant une conversation privée à Haven`;
+    image.dataset.musicMood = expansionChapter?.musicMood || 'haven-night';
+    image.dataset.backdrop = expansionChapter?.backdropSrc || '';
+    image.dataset.maturity = this.vnExpansionState?.maturity || 'suggestive';
+    if (expansionChapter?.musicMood) this.applyVnMusicMood(expansionChapter.musicMood);
+    else this.restoreVnMusicMood();
+    const portrait = document.getElementById('vn-expression-portrait');
+    if (portrait && !chapter) portrait.hidden = true;
   }
 
   openVisualNovel(heroId) {
@@ -3911,6 +6466,7 @@ class GameEngine {
       return;
     }
     this.vnSceneProgress.dataVersion = data.version;
+    this.syncVnExpansionConsent(heroId, hero.romanceOptIn === true);
     this.activeVnSession = null;
     this.renderVnChapterBrowser(heroId);
     this.openModal(modal);
@@ -3965,6 +6521,13 @@ class GameEngine {
             ? `Verrouillé · ${lockReason}`
             : 'Commencer';
       button.append(title, subtitle, summary, state);
+      const narrativeState = this.getVnExpansionHeroineState(heroId);
+      if ((narrativeState?.memories || []).some(memory => memory.startsWith(`${heroId}.${chapter.id}.`))) {
+        const memory = document.createElement('span');
+        memory.className = 'vn-chapter-memory';
+        memory.textContent = 'Souvenir de lore actif · rappelé dans les échanges suivants';
+        button.appendChild(memory);
+      }
       button.onclick = () => this.startVnChapter(heroId, chapter.id);
       list.appendChild(button);
     });
@@ -4002,9 +6565,13 @@ class GameEngine {
         isReplay
       };
     document.getElementById('vn-chapter-browser').hidden = true;
-    document.getElementById('vn-dialogue-panel').hidden = false;
+    const dialoguePanel = document.getElementById('vn-dialogue-panel');
+    dialoguePanel.hidden = false;
     document.getElementById('vn-modal-title').textContent = chapter.title;
     document.getElementById('vn-chapter-subtitle').textContent = chapter.subtitle;
+    const maturity = this.vnExpansionState?.maturity || 'suggestive';
+    if (dialoguePanel.dataset) dialoguePanel.dataset.maturity = maturity;
+    else dialoguePanel.setAttribute?.('data-maturity', maturity);
     this.setVnSceneImage(heroId, chapter);
     this.renderActiveVnBeat({ focus: true });
   }
@@ -4044,6 +6611,81 @@ class GameEngine {
     if (list.parentElement?.open) list.scrollTop = list.scrollHeight;
   }
 
+  renderVnLoreChoices(context = this.getActiveVnContext()) {
+    const container = document.getElementById('vn-lore-container');
+    const prompt = document.getElementById('vn-lore-prompt');
+    if (!container) return;
+    container.querySelectorAll('button').forEach(button => button.remove());
+    const expansionChapter = context
+      ? this.getVnExpansionChapter(context.session.heroId, context.session.chapterId)
+      : null;
+    const heroineState = context
+      ? this.getVnExpansionHeroineState(context.session.heroId)
+      : null;
+    const choices = expansionChapter?.loreChoices || [];
+    const consentActive = heroineState?.consent?.granted === true
+      && heroineState?.consent?.revoked !== true;
+    if (!context || context.beat.kind !== 'dialogue' || choices.length === 0 || !consentActive) {
+      container.hidden = true;
+      return;
+    }
+
+    const memoryPrefix = `${context.session.heroId}.${context.session.chapterId}.`;
+    const selectedMemory = (heroineState.memories || []).find(memory => memory.startsWith(memoryPrefix));
+    if (prompt) {
+      prompt.textContent = selectedMemory
+        ? 'Souvenir narratif enregistré — sans bonus ni pénalité de combat'
+        : 'Choisissez une seule question personnelle — choix non sexuel et purement narratif';
+    }
+    choices.forEach(choice => {
+      const memoryId = `${memoryPrefix}${choice.id}`;
+      const selected = selectedMemory === memoryId;
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'vn-lore-btn';
+      button.dataset.loreChoiceId = choice.id;
+      button.disabled = Boolean(selectedMemory);
+      button.textContent = selected ? `✓ ${choice.label}` : choice.label;
+      button.onclick = () => this.chooseVnLoreOption(choice);
+      container.appendChild(button);
+    });
+    container.hidden = false;
+  }
+
+  chooseVnLoreOption(choice) {
+    const context = this.getActiveVnContext();
+    const expansion = this.getVnExpansion();
+    if (!context || !choice || !expansion?.persistence?.recordLoreChoice) return;
+    const result = expansion.persistence.recordLoreChoice(
+      this.vnExpansionState,
+      context.session.heroId,
+      context.session.chapterId,
+      choice.id,
+      localStorage
+    );
+    const status = document.getElementById('vn-status');
+    if (!result.applied) {
+      if (status) {
+        status.textContent = result.reason === 'consent-required'
+          ? 'Ce choix attend un accord actif. Vous pouvez arrêter ou revenir aux chapitres.'
+          : 'Ce souvenir narratif n’a pas pu être enregistré.';
+      }
+      return;
+    }
+    this.vnExpansionState = result.state;
+    this.lastVnCallbackMessage = `Souvenir conservé : ${choice.persistentTrait}. Il sera rappelé dans les prochains échanges.`;
+    this.recordVnHistory(
+      `lore.${context.session.chapterId}.${choice.id}`,
+      'Mémoire partagée',
+      choice.label
+    );
+    this.renderVnHistory();
+    this.renderVnLoreChoices(context);
+    this.persistActiveVnSession();
+    if (status) status.textContent = this.lastVnCallbackMessage;
+    this.announce(this.lastVnCallbackMessage);
+  }
+
   persistActiveVnSession() {
     const session = this.activeVnSession;
     if (!session) return;
@@ -4074,6 +6716,7 @@ class GameEngine {
     document.getElementById('vn-modal-title').textContent = chapter.title;
     document.getElementById('vn-chapter-subtitle').textContent = chapter.subtitle;
     choiceContainer.querySelectorAll('button').forEach(button => button.remove());
+    this.renderVnLoreChoices(context);
 
     if (beat.kind === 'dialogue') {
       session.lineIndex = Math.max(0, Math.min(session.lineIndex, beat.lines.length - 1));
@@ -4083,6 +6726,7 @@ class GameEngine {
       progress.textContent = `${session.lineIndex + 1} / ${beat.lines.length}`;
       dialogueText.textContent = line.text;
       panel.dataset.mood = line.mood || 'neutral';
+      this.setVnExpressionMood(session.heroId, line.mood || 'neutral', session.chapterId);
       choiceContainer.hidden = true;
       continueButton.hidden = false;
       continueButton.textContent = beat.end && session.lineIndex === beat.lines.length - 1
@@ -4090,7 +6734,10 @@ class GameEngine {
         : 'CONTINUER';
       this.recordVnHistory(`${beat.id}.${session.lineIndex}`, resolvedSpeaker, line.text);
       this.renderVnHistory();
-      status.textContent = `${resolvedSpeaker} : ${line.text}`;
+      const callback = this.getVnPersistentCallbackSummary(session.heroId);
+      status.textContent = callback
+        ? `${callback}. ${resolvedSpeaker} : ${line.text}`
+        : `${resolvedSpeaker} : ${line.text}`;
       this.persistActiveVnSession();
       if (focus) requestAnimationFrame(() => continueButton.focus());
       return;
@@ -4099,6 +6746,7 @@ class GameEngine {
     speakerName.textContent = 'Décision réciproque';
     progress.textContent = 'CHOIX DE CONSENTEMENT';
     dialogueText.textContent = 'Aucune option n’est présélectionnée et aucun choix n’est chronométré.';
+    this.setVnExpressionMood(session.heroId, 'reflective', session.chapterId);
     choicePrompt.textContent = beat.prompt;
     choiceContainer.hidden = false;
     continueButton.hidden = true;
@@ -4160,7 +6808,10 @@ class GameEngine {
   applyVnEffects(effects, token, hero) {
     if (!effects || !hero) return;
     // Revocation remains immediate even during a replay of an already-seen path.
-    if (typeof effects.romanceOptIn === 'boolean') hero.romanceOptIn = effects.romanceOptIn;
+    if (typeof effects.romanceOptIn === 'boolean') {
+      hero.romanceOptIn = effects.romanceOptIn;
+      this.syncVnExpansionConsent(hero.id, effects.romanceOptIn);
+    }
     // `onceEffects` applies to the whole completed chapter, not only to the
     // exact branch previously read. Alternate replays therefore cannot grant
     // fresh XP through a different option.
@@ -4231,6 +6882,7 @@ class GameEngine {
     const context = this.getActiveVnContext();
     if (!context) return;
     context.hero.romanceOptIn = false;
+    this.syncVnExpansionConsent(context.hero.id, false);
     context.hero.lastLoungeMessage = 'L’accord relationnel est révoqué immédiatement. Confiance et alliance restent intactes.';
     this.saveProgress();
     if (context.chapter.beats.some(beat => beat.id === 'revoke')) {
@@ -4447,7 +7099,11 @@ class GameEngine {
     });
     available.push({ type: 'heal', title: 'Réparation d\'Urgence', desc: 'Restaure 200 HP à la Citadelle.', icon: '🛠️' });
 
-    const options = available.sort(() => 0.5 - Math.random()).slice(0, 3);
+    const options = available
+      .map(option => ({ option, order: this.getRunRandom() }))
+      .sort((left, right) => left.order - right.order)
+      .slice(0, 3)
+      .map(entry => entry.option);
     options.forEach(opt => {
       const card = document.createElement('button');
       card.type = 'button';
@@ -4455,7 +7111,7 @@ class GameEngine {
       card.innerHTML = `<div class="upgrade-info"><div class="upgrade-icon">${opt.icon}</div><div class="upgrade-text"><h4>${opt.title}</h4><p>${opt.desc}</p></div></div>`;
       card.addEventListener('click', () => {
         if (opt.type === 'weapon') { opt.wp.level++; this.updateWeaponsHUD(); }
-        else if (opt.type === 'heal') { this.citadel.hp = Math.min(this.citadel.maxHp, this.citadel.hp + 200); }
+        else if (opt.type === 'heal') { this.healCitadel(200); }
         if (this.pendingLevelChoices > 0) this.pendingLevelChoices--;
         if (this.pendingLevelChoices > 0) {
           this.triggerLevelUpModal();
@@ -4628,6 +7284,7 @@ class GameEngine {
     document.getElementById('go-time-txt').textContent = this.formatRunTime();
     document.getElementById('go-meta-txt').textContent = `${this.runMetaCoinsEarned} ◆`;
     document.getElementById('go-record-txt').textContent = `Records · score ${this.bestScore} · vague ${this.bestWave}`;
+    this.recordRunHistory({ victory: false });
     this.saveProgress();
     this.openModal('game-over-modal');
     this.announce(`La Citadelle est tombée à la vague ${this.wave}. Score ${this.score}.`);
@@ -4731,10 +7388,13 @@ class GameEngine {
     this.ctx.fillStyle = '#030710';
     this.ctx.fillRect(view.left, view.top, viewWidth, viewHeight);
 
-    const approachLeft = -BATTLEFIELD_APPROACH_MARGIN;
-    const approachTop = -BATTLEFIELD_APPROACH_MARGIN;
-    const approachWidth = w + (BATTLEFIELD_APPROACH_MARGIN * 2);
-    const approachHeight = h + (BATTLEFIELD_APPROACH_MARGIN * 2);
+    const bounds = this.worldLayout?.approachBounds;
+    const approachLeft = Number.isFinite(bounds?.minX) ? bounds.minX : -BATTLEFIELD_APPROACH_MARGIN;
+    const approachTop = Number.isFinite(bounds?.minY) ? bounds.minY : -BATTLEFIELD_APPROACH_MARGIN;
+    const approachRight = Number.isFinite(bounds?.maxX) ? bounds.maxX : w + BATTLEFIELD_APPROACH_MARGIN;
+    const approachBottom = Number.isFinite(bounds?.maxY) ? bounds.maxY : h + BATTLEFIELD_APPROACH_MARGIN;
+    const approachWidth = approachRight - approachLeft;
+    const approachHeight = approachBottom - approachTop;
 
     if (this.isSpriteReady(this.approachTerrainImage)) {
       // Anchor the OpenAI-authored tactical plate to logical world bounds.
@@ -4775,9 +7435,27 @@ class GameEngine {
       this.ctx.fillRect(view.left, view.top, viewWidth, viewHeight);
     }
 
-    // The tileable city floor marks the true collision/placement rectangle.
-    // The longer generated causeways outside it are traversal-only.
-    this.drawInfernalFloor(w, h);
+    // Keep the authored layout visible inside the build rectangle. The former
+    // opaque tile pass hid the Western Wall city and the asymmetric roads.
+    // A restrained blend still differentiates the playable area without
+    // replacing the generated tactical plate.
+    if (this.isSpriteReady(this.approachTerrainImage)) {
+      if (!this.floorPattern && this.isSpriteReady(this.floorImage) && typeof this.ctx.createPattern === 'function') {
+        this.floorPattern = this.ctx.createPattern(this.floorImage, 'repeat');
+      }
+      this.ctx.save();
+      this.ctx.globalAlpha = 0.16;
+      if (this.floorPattern) {
+        this.ctx.fillStyle = this.floorPattern;
+        this.ctx.fillRect(0, 0, w, h);
+      }
+      this.ctx.fillStyle = '#020711';
+      this.ctx.globalAlpha = 0.2;
+      this.ctx.fillRect(0, 0, w, h);
+      this.ctx.restore();
+    } else {
+      this.drawInfernalFloor(w, h);
+    }
     this.ctx.save();
     this.ctx.strokeStyle = 'rgba(0, 240, 255, 0.42)';
     this.ctx.lineWidth = 3;
@@ -4789,9 +7467,9 @@ class GameEngine {
 
   drawSpawnGates(w, h) {
     if (!this.isSpriteReady(this.spawnGateAtlasImage)) return;
-    const warningSide = this.waveActive && this.enemiesSpawnedThisWave < this.waveSpawnTarget
-      ? SPAWN_GATE_SECTORS[this.nextSpawnGateIndex % SPAWN_GATE_SECTORS.length]
-      : null;
+    const warningRouteIndex = this.waveActive && this.enemiesSpawnedThisWave < this.waveSpawnTarget
+      ? (this.waveSpawnQueue[0]?.routeIndex ?? this.nextSpawnGateIndex)
+      : -1;
     const rotations = {
       north: 0,
       east: Math.PI / 2,
@@ -4800,10 +7478,12 @@ class GameEngine {
     };
     const gateSize = this.getReadableWorldSize(SPAWN_GATE_WORLD_SIZE, 38);
 
-    SPAWN_GATE_SECTORS.forEach((side, row) => {
+    this.spawnRoutes.forEach((route, routeIndex) => {
+      const side = route.side;
+      const row = Math.max(0, SPAWN_GATE_SECTORS.indexOf(side));
       const pulse = this.spawnGatePulses[side] || 0;
-      const frame = pulse > 0.5 ? 2 : (pulse > 0 ? 3 : (side === warningSide ? 1 : 0));
-      const position = this.getSpawnGatePosition(side, w, h);
+      const frame = pulse > 0.5 ? 2 : (pulse > 0 ? 3 : (routeIndex === warningRouteIndex ? 1 : 0));
+      const position = route.polyline[0] || route.spawn || this.getSpawnGatePosition(side, w, h);
       this.drawAtlasFrame(
         this.spawnGateAtlasImage,
         { row },
@@ -5230,14 +7910,17 @@ class GameEngine {
     this.ctx.restore();
   }
 
-  createExplosion(x, y, radius, damage) {
+  createExplosion(x, y, radius, damage, options = {}) {
     for (let i = 0; i < 16; i++) {
       const angle = (Math.PI * 2 / 16) * i;
       this.particles.push({ x, y, vx: Math.cos(angle) * radius * 3, vy: Math.sin(angle) * radius * 3, radius: 4, color: '#a855f7', life: 0.3 });
     }
     if (damage > 0) {
       [...this.enemies].forEach(e => {
-        if (Math.hypot(e.x - x, e.y - y) <= radius + e.radius) this.damageEnemy(e, damage);
+        if (options.groundOnly && e.type === 'flying') return;
+        if (Math.hypot(e.x - x, e.y - y) <= radius + e.radius) {
+          this.damageEnemyFromDefense(options.sourceDefense, e, damage);
+        }
       });
     }
   }
@@ -5297,6 +7980,20 @@ class GameEngine {
       affFill.setAttribute('aria-valuenow', String(Math.max(0, Math.round(this.affinityXp))));
     }
     const affLvl = document.getElementById('affinity-lvl-txt'); if (affLvl) affLvl.textContent = `Rang ${this.selectedHero.affinityLvl || 1}`;
+    const heroSkillButton = document.getElementById('btn-hero-skill');
+    if (heroSkillButton) {
+      const reserve = this.selectedHero.id === 'carmilla'
+        ? Math.round(Number(this.carmillaStoredCharge) || 0)
+        : 0;
+      heroSkillButton.textContent = `âš¡ ${this.selectedHero.abilityName}${reserve > 0 ? ` Â· RÃ‰SERVE ${reserve}` : ''}`;
+      heroSkillButton.dataset.storedCharge = String(reserve);
+      if (reserve > 0 && this.abilityCooldownTimer <= 0) {
+        heroSkillButton.setAttribute(
+          'aria-label',
+          `${this.selectedHero.abilityName}, rÃ©serve Ã©carlate ${reserve}, prÃªt`
+        );
+      }
+    }
     const frenzyFill = document.getElementById('frenzy-meter-fill');
     if (frenzyFill) {
       frenzyFill.style.width = `${Math.min(100, (this.frenzyMeter / this.maxFrenzyMeter) * 100)}%`;

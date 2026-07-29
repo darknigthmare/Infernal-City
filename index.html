@@ -59,6 +59,42 @@
           <small id="difficulty-description">L’expérience équilibrée prévue pour une première campagne complète.</small>
         </label>
 
+        <section class="deployment-planner" aria-labelledby="deployment-planner-title">
+          <div class="planner-heading">
+            <div>
+              <p class="section-eyebrow">THÉÂTRE D’OPÉRATIONS</p>
+              <h3 id="deployment-planner-title">Choisir le terrain</h3>
+            </div>
+            <span class="release-chip">MISE À JOUR 2.3</span>
+          </div>
+
+          <label class="difficulty-field" for="layout-select">
+            <span>Configuration tactique</span>
+            <select id="layout-select" aria-describedby="layout-description">
+              <option value="convergence">Convergence — attaques depuis quatre côtés</option>
+              <option value="western_wall">Muraille occidentale — Citadelle à gauche, hordes à droite</option>
+              <option value="southern_watch">Veille du Sud — Citadelle au nord, hordes au sud</option>
+              <option value="twin_rift">Double Faille — deux voies parallèles depuis la droite</option>
+              <option value="rotation">Rotation de campagne — terrain différent à chaque secteur</option>
+            </select>
+            <small id="layout-description">Convergence conserve les quatre portes historiques. Les autres terrains imposent des angles de défense asymétriques.</small>
+          </label>
+
+          <div class="daily-challenge-card" id="daily-challenge-summary" role="region" aria-labelledby="daily-challenge-title">
+            <div>
+              <p class="section-eyebrow">CONTRAT QUOTIDIEN</p>
+              <h3 id="daily-challenge-title">Défi du jour</h3>
+            </div>
+            <dl class="daily-challenge-facts">
+              <div><dt>Date</dt><dd id="daily-challenge-date">—</dd></div>
+              <div><dt>Terrain</dt><dd id="daily-challenge-layout">À révéler</dd></div>
+              <div><dt>Mutateurs</dt><dd id="daily-challenge-mutators">À révéler</dd></div>
+            </dl>
+            <button class="btn-secondary" id="btn-daily-challenge" type="button" aria-describedby="daily-challenge-rules">LANCER LE DÉFI DU JOUR</button>
+            <small id="daily-challenge-rules">Même contrat pour toute la journée, avec composition et mutateurs déterministes.</small>
+          </div>
+        </section>
+
         <ol class="briefing-steps">
           <li><strong>Observer & construire</strong><span>Faites glisser le terrain ou utilisez WASD pour déplacer la caméra, zoomez avec la molette, le pincement ou les boutons − / CADRER / +, puis touchez brièvement pour construire ou gérer une tour.</span></li>
           <li><strong>Évoluer</strong><span>Les éliminations donnent de l’XP. Chaque niveau améliore votre arsenal automatique.</span></li>
@@ -207,8 +243,10 @@
 
     <aside id="mission-status-panel" aria-label="État de la mission">
       <span id="mission-objective-txt">Objectif · atteindre la vague 15</span>
+      <span id="mission-map-txt">Terrain · Convergence</span>
       <span id="mission-level-txt">Niveau 1 · XP 0 / 100</span>
       <span id="mission-difficulty-txt">Siège standard</span>
+      <span id="mission-next-wave-txt">Prochaine composition · reconnaissance</span>
       <span id="mission-threat-txt" data-state="calm">Approches · aucune menace</span>
     </aside>
 
@@ -312,6 +350,18 @@
             <h4>Hauts Faits & Succès</h4>
             <p>Suivez vos accomplissements et récoltez des Crédits Haven.</p>
           </button>
+
+          <button class="hq-card" id="btn-run-history-toggle" type="button">
+            <div class="hq-card-icon" aria-hidden="true">▤</div>
+            <h4>Historique des sorties</h4>
+            <p>Comparez terrains, mutateurs, scores et compositions de vos derniers runs.</p>
+          </button>
+
+          <button class="hq-card" id="btn-settings-toggle" type="button">
+            <div class="hq-card-icon" aria-hidden="true">⚙</div>
+            <h4>Paramètres & sauvegarde</h4>
+            <p>Réglez le son, la lisibilité et la manette, puis exportez ou importez votre progression.</p>
+          </button>
         </div>
 
         <div style="text-align: center; margin-top: 15px;">
@@ -351,16 +401,34 @@
     </div>
 
     <!-- Tower Infinitum Modal -->
-    <div class="modal-overlay" id="tower-infinitum-modal">
-      <div class="modal-box" style="text-align: center; max-width: 550px;">
-        <button class="btn-close">&times;</button>
-        <h2 class="modal-title" style="color: #a855f7;">🌀 TOUR INFINITUM (100 ÉTAGES)</h2>
+    <div class="modal-overlay" id="tower-infinitum-modal" role="dialog" aria-modal="true" aria-labelledby="tower-infinitum-title">
+      <div class="modal-box infinitum-box">
+        <button class="btn-close" type="button" aria-label="Fermer la Tour Infinitum">&times;</button>
+        <h2 class="modal-title" id="tower-infinitum-title" style="color: #a855f7;">🌀 TOUR INFINITUM</h2>
         <p class="modal-subtitle" id="tower-floor-txt">Étage 1 / 100</p>
         <p class="mutator-preview" id="tower-mutator-txt">Mutateur à révéler au lancement.</p>
         <p class="mode-rule">La campagne est suspendue pendant le défi. Structures, arsenal, dégâts et Bio-Coins restent partagés : entrer dans la Tour est un choix tactique risqué.</p>
-        <p style="color: #cbd5e1; margin: 15px 0;">Affrontez un mutateur verrouillé à chaque étage et gagnez des Crédits Haven permanents.</p>
 
-        <button class="btn-primary" id="btn-start-floor">Gravir l'Étage 🌀</button>
+        <section class="infinitum-segment" aria-labelledby="infinitum-segment-title">
+          <div class="infinitum-segment-heading">
+            <h3 id="infinitum-segment-title">Segment actuel · 10 étages</h3>
+            <output id="infinitum-segment-txt" for="infinitum-segment-progress">0 / 10</output>
+          </div>
+          <progress id="infinitum-segment-progress" max="10" value="0">0 sur 10</progress>
+          <ol class="infinitum-floor-list" id="infinitum-floor-list" aria-label="Progression des dix étages">
+            <li data-floor-state="current">1</li><li>2</li><li>3</li><li>4</li><li>5</li>
+            <li>6</li><li>7</li><li>8</li><li>9</li><li data-floor-state="boss">10</li>
+          </ol>
+        </section>
+
+        <section class="infinitum-mutators" aria-labelledby="infinitum-mutators-title">
+          <h3 id="infinitum-mutators-title">Mutateurs cumulés</h3>
+          <ul id="infinitum-cumulative-mutators">
+            <li>Aucun mutateur cumulé pour ce segment.</li>
+          </ul>
+        </section>
+
+        <button class="btn-primary" id="btn-start-floor" type="button">GRAVIR L’ÉTAGE</button>
       </div>
     </div>
 
@@ -388,22 +456,58 @@
     </div>
 
     <!-- Photo Studio Modal -->
-    <div class="modal-overlay" id="photo-studio-modal">
-      <div class="modal-box" style="text-align: center; max-width: 750px;">
-        <button class="btn-close">&times;</button>
-        <h2 class="modal-title" style="color: #00f0ff;">📸 STUDIO BOUDOIR NÉON (18+)</h2>
+    <div class="modal-overlay" id="photo-studio-modal" role="dialog" aria-modal="true" aria-labelledby="studio-title">
+      <div class="modal-box studio-2-box">
+        <button class="btn-close" type="button" aria-label="Fermer le Studio 2.0">&times;</button>
+        <p class="section-eyebrow">STUDIO 2.0 · 18+</p>
+        <h2 class="modal-title" id="studio-title" style="color: #00f0ff;">📸 STUDIO BOUDOIR NÉON</h2>
         <p class="modal-subtitle" id="studio-hero-title">Valkyrie Active</p>
-        <p class="consent-note">Portraits suggestifs non nus, réalisés et exposés avec l’accord de chaque modèle adulte.</p>
+        <p class="consent-note" id="studio-consent-note">Portraits d’adultes réalisés et exposés avec leur accord explicite. La pose et l’ambiance peuvent être interrompues ou modifiées à tout moment.</p>
 
-        <div style="margin: 15px 0;">
-          <img id="studio-preview-img" src="assets/cg_aria.jpg" alt="Portrait boudoir non nu de Commandante Aria, 34 ans" style="width: 100%; max-width: 450px; max-height: 380px; border-radius: 14px; border: 2px solid #00f0ff; object-fit: cover;">
+        <div class="studio-workspace">
+          <div class="studio-preview-frame">
+            <img id="studio-preview-img" src="assets/cg_aria.jpg" alt="Portrait boudoir non nu de Commandante Aria, 34 ans">
+          </div>
+          <div class="studio-controls">
+            <label for="studio-pose-select">
+              <span>Pose</span>
+              <select id="studio-pose-select">
+                <option value="command">Autorité calme</option>
+                <option value="profile">Profil nocturne</option>
+                <option value="lounge">Détente au salon</option>
+              </select>
+            </label>
+            <label for="studio-ambience-select">
+              <span>Ambiance</span>
+              <select id="studio-ambience-select">
+                <option value="crimson">Velours carmin</option>
+                <option value="cyan">Néon cyan</option>
+                <option value="moonlight">Clair de lune</option>
+              </select>
+            </label>
+            <label for="studio-maturity-select">
+              <span>Intensité adulte</span>
+              <select id="studio-maturity-select" aria-describedby="studio-maturity-help">
+                <option value="suggestive">Suggestive</option>
+                <option value="intense">Intense et intimiste</option>
+              </select>
+              <small id="studio-maturity-help">Ce réglage change la composition artistique, jamais les règles de consentement ni les limites du modèle.</small>
+            </label>
+          </div>
         </div>
 
-        <div class="studio-filters">
+        <div class="studio-filters" role="group" aria-label="Filtres lumineux rapides">
           <button class="studio-btn" type="button" data-studio-color="#ff2a5f">Rouge Néon</button>
           <button class="studio-btn" type="button" data-studio-color="#00f0ff">Cyber Cyan</button>
           <button class="studio-btn" type="button" data-studio-color="#10b981">Vert Matrix</button>
         </div>
+
+        <section class="studio-conclusions" aria-labelledby="studio-conclusions-title">
+          <h3 id="studio-conclusions-title">Galerie des conclusions</h3>
+          <div id="studio-conclusion-gallery" class="studio-conclusion-gallery">
+            <p class="empty-state">Terminez une route relationnelle consentie pour révéler sa conclusion illustrée.</p>
+          </div>
+        </section>
       </div>
     </div>
 
@@ -491,6 +595,7 @@
         <section class="vn-stage" aria-describedby="vn-status">
           <img id="vn-scene-img" src="assets/cover.jpg" alt="Citadelle Haven au-dessus de la côte infernale">
           <div class="vn-stage-shade" aria-hidden="true"></div>
+          <div class="vn-expression-portrait" id="vn-expression-portrait" role="img" aria-label="Expression actuelle de l’héroïne" hidden></div>
 
           <header class="vn-scene-header">
             <p class="section-eyebrow" id="vn-hero-label">SALON NOCTURNE · VISUAL NOVEL</p>
@@ -513,6 +618,9 @@
               <summary>Historique de la conversation</summary>
               <ol id="vn-history-list"></ol>
             </details>
+            <fieldset class="vn-lore-container" id="vn-lore-container" hidden>
+              <legend id="vn-lore-prompt">Question personnelle sans conséquence militaire</legend>
+            </fieldset>
             <fieldset class="vn-choice-container" id="vn-choice-container">
               <legend id="vn-choice-prompt"></legend>
             </fieldset>
@@ -647,11 +755,99 @@
         <p class="modal-subtitle" id="defense-management-level">Niveau 1 / 3</p>
         <dl class="defense-management-stats" id="defense-management-stats"></dl>
         <p class="defense-management-investment" id="defense-management-investment"></p>
+        <section class="defense-specialization" id="defense-specialization-section" aria-labelledby="defense-specialization-title" hidden>
+          <p class="section-eyebrow">ÉVOLUTION DÉFINITIVE</p>
+          <h3 id="defense-specialization-title">Choisir une spécialisation</h3>
+          <p id="defense-specialization-help">Ce choix modifie durablement le rôle de cette défense pour le reste du run.</p>
+          <div id="defense-specialization-options" class="defense-specialization-options" role="group" aria-describedby="defense-specialization-help">
+            <button class="specialization-choice" id="btn-defense-specialization-a" type="button" data-specialization-index="0">
+              <strong>Branche A</strong>
+              <span>Spécialisation à révéler.</span>
+            </button>
+            <button class="specialization-choice" id="btn-defense-specialization-b" type="button" data-specialization-index="1">
+              <strong>Branche B</strong>
+              <span>Spécialisation à révéler.</span>
+            </button>
+          </div>
+        </section>
         <div class="defense-management-actions">
           <button class="btn-primary" id="btn-defense-upgrade" type="button">AMÉLIORER</button>
           <button class="btn-secondary defense-sell-btn" id="btn-defense-sell" type="button">VENDRE</button>
         </div>
         <p class="defense-management-status" id="defense-management-status" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+
+    <!-- Settings and local save portability -->
+    <div class="modal-overlay" id="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settings-title" aria-describedby="settings-description">
+      <div class="modal-box settings-box">
+        <button class="btn-close" type="button" aria-label="Fermer les paramètres">&times;</button>
+        <p class="section-eyebrow">CONFORT DE JEU</p>
+        <h2 class="modal-title" id="settings-title">PARAMÈTRES & SAUVEGARDE</h2>
+        <p class="modal-subtitle" id="settings-description">Adaptez le son et la lisibilité. Les changements sont appliqués sans recommencer la campagne.</p>
+
+        <div class="settings-grid">
+          <label class="range-setting" for="music-volume">
+            <span>Volume musique <output id="music-volume-output" for="music-volume">70 %</output></span>
+            <input id="music-volume" type="range" min="0" max="100" step="5" value="70">
+          </label>
+          <label class="range-setting" for="sfx-volume">
+            <span>Volume effets <output id="sfx-volume-output" for="sfx-volume">80 %</output></span>
+            <input id="sfx-volume" type="range" min="0" max="100" step="5" value="80">
+          </label>
+          <label for="contrast-mode">
+            <span>Contraste</span>
+            <select id="contrast-mode">
+              <option value="default">Néon standard</option>
+              <option value="high">Contraste renforcé</option>
+              <option value="mono">Monochrome lisible</option>
+            </select>
+          </label>
+          <label for="text-size">
+            <span>Taille du texte</span>
+            <select id="text-size">
+              <option value="default">Standard</option>
+              <option value="large">Grande</option>
+              <option value="extra-large">Très grande</option>
+            </select>
+          </label>
+        </div>
+
+        <section class="gamepad-card" aria-labelledby="gamepad-title">
+          <div>
+            <h3 id="gamepad-title">Manette</h3>
+            <p id="gamepad-status" role="status">Aucune manette détectée. Connectez-en une puis appuyez sur un bouton.</p>
+            <p class="gamepad-help">Stick gauche : caméra · stick droit : curseur · gâchettes : zoom · A : construire/valider · X : pouvoir · Y : Overdrive · LB/RB : défense · B : annuler/cadrer · Menu : QG.</p>
+          </div>
+          <span class="release-chip">CONTRÔLES ACTIFS</span>
+        </section>
+
+        <section class="save-portability" aria-labelledby="save-portability-title">
+          <h3 id="save-portability-title">Progression portable</h3>
+          <p>Le fichier exporté reste local à votre appareil. Vérifiez son origine avant toute importation.</p>
+          <div class="save-portability-actions">
+            <button class="btn-secondary" id="btn-export-save" type="button">EXPORTER LA SAUVEGARDE</button>
+            <label class="btn-secondary import-save-label" for="import-save-input">IMPORTER UN FICHIER</label>
+            <input class="sr-only" id="import-save-input" type="file" accept="application/json,.json">
+          </div>
+          <p id="settings-status" class="system-status" role="status" aria-live="polite">Aucune opération de sauvegarde en cours.</p>
+        </section>
+      </div>
+    </div>
+
+    <!-- Run history -->
+    <div class="modal-overlay" id="run-history-modal" role="dialog" aria-modal="true" aria-labelledby="run-history-title">
+      <div class="modal-box run-history-box">
+        <button class="btn-close" type="button" aria-label="Fermer l’historique">&times;</button>
+        <p class="section-eyebrow">ARCHIVES TACTIQUES</p>
+        <h2 class="modal-title" id="run-history-title">HISTORIQUE DES RUNS</h2>
+        <p class="modal-subtitle">Les dix dernières sorties sont conservées localement, sans transmission réseau.</p>
+        <div class="run-history-head" aria-hidden="true">
+          <span>Date</span><span>Terrain</span><span>Résultat</span><span>Score</span>
+        </div>
+        <ol id="run-history-list" class="run-history-list">
+          <li class="empty-state">Aucune sortie archivée. Votre prochaine campagne apparaîtra ici.</li>
+        </ol>
       </div>
     </div>
 
@@ -718,6 +914,8 @@
 
   <script src="audio.v8.js"></script>
   <script src="vn-scenes.v1.js"></script>
+  <script src="expansion.v1.js"></script>
+  <script src="vn-expansion.v1.js"></script>
   <script src="game.v9.js"></script>
   <script src="pwa.v4.js"></script>
 </body>

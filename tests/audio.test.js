@@ -148,3 +148,14 @@ test('le budget de voix se libère lorsque les sources se terminent', () => {
   assert.equal(engine.activeHotSfxVoices, 2);
   assert.equal(engine.ctx.bufferSources.length, 1);
 });
+
+test('les volumes musique et effets sont independants, bornes et appliques au mix existant', () => {
+  const engine = createSoundEngine();
+
+  assert.equal(engine.setMusicVolume(0.35), 0.35);
+  assert.equal(engine.setSfxVolume(1.5), 1);
+  assert.equal(engine.musicGain.gain.value, 0.125);
+  assert.ok(Math.abs(engine.sfxGain.gain.value - 0.4375) < Number.EPSILON);
+  assert.equal(engine.setMusicVolume(-1), 0);
+  assert.equal(engine.musicGain.gain.value, 0);
+});

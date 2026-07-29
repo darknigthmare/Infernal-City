@@ -9,6 +9,8 @@ const vm = require('node:vm');
 const ROOT = path.resolve(__dirname, '..');
 const GAME_SOURCE = fs.readFileSync(path.join(ROOT, 'game.v9.js'), 'utf8');
 const VN_SOURCE = fs.readFileSync(path.join(ROOT, 'vn-scenes.v1.js'), 'utf8');
+const VN_EXPANSION_SOURCE = fs.readFileSync(path.join(ROOT, 'vn-expansion.v1.js'), 'utf8');
+const EXPANSION_SOURCE = fs.readFileSync(path.join(ROOT, 'expansion.v1.js'), 'utf8');
 
 function createClassList() {
   const values = new Set();
@@ -75,6 +77,9 @@ function loadGameModule(seed = {}) {
     addEventListener() {},
     removeEventListener() {}
   };
+  const navigator = {
+    getGamepads() { return []; }
+  };
 
   const audio = new Proxy(
     { currentStation: 'synthwave' },
@@ -90,6 +95,7 @@ function loadGameModule(seed = {}) {
     console,
     document,
     window,
+    navigator,
     localStorage,
     audio,
     requestAnimationFrame() {},
@@ -105,6 +111,7 @@ function loadGameModule(seed = {}) {
   const exportHook = `
     ;globalThis.__INFERNAL_CITY_TEST__ = {
       GameEngine,
+      EXPANSION,
       CAMPAIGN_FINAL_WAVE,
       BATTLEFIELD_APPROACH_MARGIN,
       DEFENSE_MIN_SCREEN_HIT_DIAMETER,
@@ -126,7 +133,9 @@ function loadGameModule(seed = {}) {
       GALLERY_ITEMS
     };
   `;
+  vm.runInContext(EXPANSION_SOURCE, context, { filename: 'expansion.v1.js' });
   vm.runInContext(VN_SOURCE, context, { filename: 'vn-scenes.v1.js' });
+  vm.runInContext(VN_EXPANSION_SOURCE, context, { filename: 'vn-expansion.v1.js' });
   vm.runInContext(`${GAME_SOURCE}\n${exportHook}`, context, { filename: 'game.v9.js' });
 
   return {
@@ -135,7 +144,8 @@ function loadGameModule(seed = {}) {
     stored,
     audio,
     document,
-    window
+    window,
+    navigator
   };
 }
 
@@ -242,13 +252,16 @@ test('chaque arme possede des donnees completes pour son evolution', () => {
   });
 });
 
-test('les sept archetypes ennemis possedent un sprite OpenAI local', () => {
+test('les onze archetypes ennemis possedent un sprite OpenAI local', () => {
   const { ENEMY_SPRITE_DATA } = loadGameModule();
-  const expectedTypes = ['swarmer', 'runner', 'brute', 'vespera', 'carmilla', 'hellwarden', 'leviathan'];
+  const expectedTypes = [
+    'swarmer', 'runner', 'brute', 'flying', 'bulwark', 'artillery',
+    'splitter', 'vespera', 'carmilla', 'hellwarden', 'leviathan'
+  ];
 
   assert.deepEqual(Object.keys(ENEMY_SPRITE_DATA).sort(), expectedTypes.sort());
   Object.values(ENEMY_SPRITE_DATA).forEach(sprite => {
-    assert.match(sprite.src, /^assets\/animations\/enemies\/enemy-atlas-\d+\.png$/);
+    assert.match(sprite.src, /^assets\/animations\/enemies\/enemy-(?:atlas-\d+|specialist-atlas)\.png$/);
     assert.ok(Number.isInteger(sprite.row) && sprite.row >= 0 && sprite.row < 4);
     assert.ok(sprite.size >= 34);
     const assetPath = path.join(ROOT, sprite.src);
@@ -446,7 +459,7 @@ test('la sauvegarde restaure metaprogression, heroine choisie et relation', () =
   first.saveProgress();
 
   const rawSave = JSON.parse(localStorage.getItem('valkyrie_sweeper_save'));
-  assert.equal(rawSave.version, 5);
+  assert.equal(rawSave.version, 6);
   assert.equal(rawSave.metaCoins, 777);
   assert.equal(rawSave.characterProgress.kira.affinityLvl, 4);
 
@@ -481,15 +494,15 @@ test('quotas, recompenses de vague et boss restent deterministes et uniques', ()
   engine.unlockAchievement = () => {};
 
   engine.configureWave(1);
-  assert.equal(engine.waveSpawnTarget, 10);
+  assert.equal(engine.waveSpawnTarget, 12);
   engine.configureWave(5);
-  assert.equal(engine.waveSpawnTarget, 18);
-  engine.configureWave(5, { mutator: { id: 'swarm' } });
+  assert.equal(engine.waveSpawnTarget, 33);
+  engine.configureWave(5, { towerMode: true, mutator: { id: 'swarm' } });
   assert.equal(engine.waveSpawnTarget, 27);
-  engine.configureWave(100);
-  assert.equal(engine.waveSpawnTarget, 48, 'Le quota maximal doit etre borne');
+  engine.configureWave(100, { towerMode: true });
+  assert.equal(engine.waveSpawnTarget, 96, 'Le quota maximal doit etre borne');
 
-  engine.configureWave(5);
+  engine.configureWave(5, { towerMode: true });
   HERO_CLASSES.vespera.allied = false;
   engine.enemiesSpawnedThisWave = engine.waveSpawnTarget - 1;
   engine.spawnMutant();
@@ -500,10 +513,7 @@ test('quotas, recompenses de vague et boss restent deterministes et uniques', ()
     1,
     'Une vague ne doit jamais produire deux boss'
   );
-  assert.equal(
-    engine.enemies.filter(enemy => enemy.recruitableBossId === 'vespera').length,
-    1
-  );
+  assert.equal(engine.enemies[0].type, 'hellwarden');
 
   const rewardEngine = createEngine(GameEngine);
   rewardEngine.saveProgress = () => {};
@@ -518,18 +528,18 @@ test('quotas, recompenses de vague et boss restent deterministes et uniques', ()
   assert.equal(rewardEngine.waveActive, false);
   rewardEngine.updateSpawns(4);
   assert.equal(rewardEngine.wave, 6);
-  assert.equal(rewardEngine.waveSpawnTarget, 20);
+  assert.equal(rewardEngine.waveSpawnTarget, 23);
 
   const leviathanEngine = createEngine(GameEngine);
   leviathanEngine.configureWave(15);
-  leviathanEngine.enemiesSpawnedThisWave = leviathanEngine.waveSpawnTarget - 1;
-  leviathanEngine.spawnMutant();
+  const leviathanSpec = leviathanEngine.waveSpawnQueue.find(entry => entry.type === 'leviathan');
+  leviathanEngine.spawnMutant(leviathanSpec);
   const bosses = leviathanEngine.enemies.filter(enemy => enemy.isBoss);
   assert.equal(bosses.length, 1);
   assert.equal(bosses[0].type, 'leviathan');
 });
 
-test('la Tour restaure la vague suspendue et utilise un boss generique', () => {
+test('la Tour monte sans retour avant le palier 10 puis restaure la vague suspendue', () => {
   const { GameEngine } = loadGameModule();
   const engine = createEngine(GameEngine);
   engine.saveProgress = () => {};
@@ -568,11 +578,22 @@ test('la Tour restaure la vague suspendue et utilise un boss generique', () => {
   engine.completeWave();
   engine.updateSpawns(4);
 
+  assert.equal(engine.wave, 6);
+  assert.equal(engine.isTowerMode, true);
+  assert.equal(engine.campaignStateBeforeTower.wave, 7);
+
+  engine.towerFloor = 10;
+  engine.configureWave(10, { towerMode: true, mutators: engine.towerMutators });
+  engine.enemies = [];
+  engine.enemiesSpawnedThisWave = engine.waveSpawnTarget;
+  engine.completeWave();
+  engine.updateSpawns(4);
+
   assert.equal(engine.wave, 7);
   assert.equal(engine.waveActive, true);
   assert.equal(engine.enemies[0], campaignEnemy);
   assert.equal(engine.isTowerMode, false);
-  assert.equal(engine.towerFloor, 6);
+  assert.equal(engine.towerFloor, 11);
   assert.equal(engine.campaignStateBeforeTower, null);
 });
 
@@ -592,22 +613,29 @@ test('les defenses evoluent jusqu au niveau 3 sans double multiplication des deg
   assert.equal(engine.findPlacedDefenseAt(260, 260), null);
 
   const levelTwo = engine.upgradeDefense(defense);
-  assert.deepEqual({ ...levelTwo }, { ok: true, cost: 38, level: 2 });
+  assert.equal(levelTwo.ok, true);
+  assert.equal(levelTwo.requiresSpecialization, true);
+  assert.equal(levelTwo.specializationOptions.length, 2);
   assert.equal(defense.damage, 23.25);
   assert.equal(defense.range, 264);
   assert.equal(defense.fireRate, 264);
   assert.equal(engine.getDefenseUpgradeCost(defense), 53);
 
+  const choice = engine.chooseDefenseSpecialization(defense, levelTwo.specializationOptions[0].id);
+  assert.equal(choice.ok, true);
+  assert.equal(defense.specializationId, 'vulcan_cerberus');
+  assert.ok(defense.damage > 23.25);
+
   engine.projectiles = [];
   engine.fireTower(defense, { x: 300, y: 200, radius: 12, dead: false });
-  assert.equal(engine.projectiles[0].damage, 23.25, 'le niveau ne doit pas remultiplier les degats deja calcules');
+  assert.equal(engine.projectiles[0].damage, defense.damage, 'le niveau ne doit pas remultiplier les degats deja calcules');
 
   const levelThree = engine.upgradeDefense(defense);
   assert.equal(levelThree.ok, true);
   assert.equal(defense.level, DEFENSE_MAX_LEVEL);
-  assert.equal(defense.damage, 33.75);
-  assert.equal(defense.range, 288);
-  assert.equal(defense.fireRate, 228);
+  assert.equal(defense.damage, 43.2);
+  assert.equal(defense.range, 276);
+  assert.equal(defense.fireRate, 164);
   assert.equal(engine.getDefenseUpgradeCost(defense), null);
 });
 
@@ -898,7 +926,7 @@ test('les atlas suivent les etats de tir, impact et competence', () => {
   const engine = createEngine(GameEngine);
 
   assert.equal(Object.keys(TOWER_SPRITE_DATA).length, 20);
-  assert.equal(Object.keys(ENEMY_SPRITE_DATA).length, 7);
+  assert.equal(Object.keys(ENEMY_SPRITE_DATA).length, 11);
   assert.equal(Object.keys(HERO_SPRITE_DATA).length, 6);
 
   const tower = { animationTimer: 0.2, animationPhase: 0 };
@@ -1532,4 +1560,527 @@ test('les effets VN ne peuvent pas etre farmes en relecture et la revocation res
   assert.ok(!engine.vnSceneProgress.flags.includes('vn.aria.shield-dance.complete'));
   assert.match(GAME_SOURCE, /btn-vn-revoke/);
   assert.match(GAME_SOURCE, /this\.transitionVnBeat\('revoke'\)/);
+});
+
+test('les variantes de terrain placent la Citadelle et limitent leurs vraies routes de horde', () => {
+  const { GameEngine, EXPANSION } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const expectations = {
+    convergence: { x: 600, y: 400, routes: 4, sides: ['east', 'north', 'south', 'west'] },
+    western_wall: { x: 140, y: 400, routes: 3, sides: ['east'] },
+    southern_watch: { x: 600, y: 125, routes: 3, sides: ['south'] },
+    twin_rift: { x: 165, y: 400, routes: 2, sides: ['east'] }
+  };
+
+  assert.match(GAME_SOURCE, /EXPANSION_FALLBACK/);
+  Object.entries(expectations).forEach(([layoutId, expected]) => {
+    const result = engine.applyWorldLayout(layoutId, { force: true, repositionUnits: false });
+    assert.equal(result.ok, true);
+    assert.equal(engine.selectedLayoutId, layoutId);
+    assert.deepEqual(
+      { x: engine.citadel.x, y: engine.citadel.y },
+      { x: expected.x, y: expected.y }
+    );
+    assert.equal(engine.spawnRoutes.length, expected.routes);
+    assert.deepEqual([...new Set(engine.spawnRoutes.map(route => route.side))].sort(), expected.sides);
+    assert.equal(engine.worldWidth, EXPANSION.world.width);
+  });
+});
+
+test('un ennemi suit chaque segment de sa polyline au lieu de viser directement la Citadelle', () => {
+  const { GameEngine } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  engine.applyWorldLayout('western_wall', { force: true, repositionUnits: false });
+  const enemy = engine.spawnEnemy('swarmer', 0, { countForWave: false });
+  enemy.speed = 100;
+
+  for (let step = 0; step < 36; step++) engine.updateEnemies(0.1);
+
+  assert.ok(enemy.waypointIndex >= 2, 'le premier waypoint doit etre franchi');
+  assert.ok(enemy.x < 1185, 'la horde doit progresser depuis le bord droit');
+  assert.ok(enemy.y < 220, 'elle doit rester sur la branche nord de la route');
+  assert.equal(enemy.routeId, 'western_wall_east_north');
+});
+
+test('le directeur des quinze vagues programme les quatre specialistes et les trois boss', () => {
+  const { GameEngine } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const expectedByWave = new Map([
+    [4, 'flying'],
+    [5, 'bulwark'],
+    [6, 'artillery'],
+    [7, 'splitter']
+  ]);
+
+  expectedByWave.forEach((type, wave) => {
+    engine.configureWave(wave);
+    assert.ok(engine.waveSpawnQueue.some(entry => entry.type === type), `specialiste ${type} absent`);
+  });
+  [[5, 'vespera'], [10, 'carmilla'], [15, 'leviathan']].forEach(([wave, boss]) => {
+    engine.configureWave(wave);
+    const bossEntries = engine.waveSpawnQueue.filter(entry => entry.type === boss && entry.boss);
+    assert.equal(bossEntries.length, 1);
+  });
+
+  engine.endlessMode = true;
+  engine.configureWave(30);
+  assert.equal(engine.waveSpawnQueue.length, 0);
+  assert.ok(engine.waveSpawnTarget <= 96, 'le fallback Infinitum/endless doit rester borne');
+});
+
+test('volant rempart artillerie et scissipare possedent leurs comportements actifs', () => {
+  const { GameEngine, TOWER_TYPES } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  engine.applyWorldLayout('western_wall', { force: true, repositionUnits: false });
+
+  const flying = engine.spawnEnemy('flying', 1, { countForWave: false });
+  const barrier = engine.createPlacedDefense(TOWER_TYPES.aegis_barrier, flying.x - 12, flying.y);
+  engine.placedTowers = [barrier];
+  const barrierHp = barrier.hp;
+  const flyingHp = flying.hp;
+  engine.hazards = [{ x: flying.x, y: flying.y, radius: 100, damage: 999, life: 2, tickTimer: 0.5, color: '#fff' }];
+  engine.updateHazards(0.1);
+  engine.updateEnemies(0.1);
+  assert.equal(flying.hp, flyingHp, 'un volant ignore le piege au sol');
+  assert.equal(barrier.hp, barrierHp, 'un volant ignore la barriere');
+
+  const bulwark = engine.spawnEnemy('bulwark', 1, { x: 900, y: 400, countForWave: false });
+  const ally = engine.spawnEnemy('swarmer', 1, { x: 920, y: 400, countForWave: false });
+  const allyHp = ally.hp;
+  engine.damageEnemy(bulwark, 100);
+  assert.equal(bulwark.hp, bulwark.maxHp, 'le bouclier absorbe avant les HP');
+  assert.equal(bulwark.shield, bulwark.maxShield - 100);
+  engine.damageEnemy(ally, 100);
+  assert.equal(Math.round(allyHp - ally.hp), 82, 'aura de reduction du Rempart');
+
+  const defense = engine.createPlacedDefense(TOWER_TYPES.vulcan_turret, 760, 400);
+  engine.placedTowers = [defense];
+  const artillery = engine.spawnEnemy('artillery', 1, { x: 1000, y: 400, countForWave: false });
+  const artilleryX = artillery.x;
+  for (let step = 0; step < 36; step++) engine.updateEnemies(0.1);
+  assert.equal(artillery.x, artilleryX, 'l artillerie se deploie au lieu d avancer');
+  assert.ok(engine.enemyBullets.some(bullet => bullet.sourceType === 'artillery'));
+
+  const splitter = engine.spawnEnemy('splitter', 1, { x: 850, y: 400, countForWave: false });
+  engine.killEnemy(splitter);
+  assert.ok(engine.enemies.filter(enemy => enemy.type === 'swarmer' && !enemy.dead).length >= 3);
+});
+
+test('Vespera Carmilla et Leviathan telegraphient trois phases et des patterns distincts', () => {
+  const { GameEngine } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const bulletCounts = {};
+
+  ['vespera', 'carmilla', 'leviathan'].forEach(type => {
+    engine.enemies = [];
+    engine.enemyBullets = [];
+    const boss = engine.spawnEnemy(type, 0, { countForWave: false, isBoss: true });
+    boss.hp = boss.maxHp * 0.6;
+    assert.equal(engine.updateBossPhase(boss), 2);
+    assert.ok(boss.telegraphTimer > 0);
+    boss.hp = boss.maxHp * 0.25;
+    assert.equal(engine.updateBossPhase(boss), 3);
+    engine.fireBossPattern(boss);
+    bulletCounts[type] = engine.enemyBullets.length;
+    assert.ok(engine.enemyBullets.every(bullet => bullet.bossPhase === 3));
+  });
+
+  assert.notEqual(bulletCounts.vespera, bulletCounts.carmilla);
+  assert.notEqual(bulletCounts.carmilla, bulletCounts.leviathan);
+  assert.ok(bulletCounts.leviathan > bulletCounts.vespera);
+});
+
+test('le bouton de pouvoir arme un ciblage puis les six kits appliquent un effet au clic', () => {
+  const { GameEngine, HERO_CLASSES, TOWER_TYPES } = loadGameModule();
+  const engine = createEngine(GameEngine);
+
+  engine.selectedHero = HERO_CLASSES.aria;
+  assert.equal(engine.triggerHeroAbility().ok, true);
+  assert.equal(engine.abilityCooldownTimer, 0, 'le cooldown commence seulement apres le clic cible');
+  assert.equal(engine.executeHeroAbilityAt(700, 400).ok, true);
+  assert.ok(engine.decoys.some(decoy => decoy.shieldHp > 0));
+
+  engine.abilityCooldownTimer = 0;
+  engine.selectedHero = HERO_CLASSES.kira;
+  engine.triggerHeroAbility();
+  engine.executeHeroAbilityAt(720, 400);
+  assert.ok(engine.decoys.some(decoy => decoy.heroId === 'kira' && decoy.explosionDamage > 0));
+
+  engine.abilityCooldownTimer = 0;
+  engine.selectedHero = HERO_CLASSES.rin;
+  engine.triggerHeroAbility();
+  engine.executeHeroAbilityAt(740, 400);
+  assert.ok(engine.hazards.some(hazard => hazard.ground === false));
+
+  engine.enemies = [];
+  const lunarTarget = engine.spawnEnemy('swarmer', 0, { x: 760, y: 400, countForWave: false });
+  engine.abilityCooldownTimer = 0;
+  engine.selectedHero = HERO_CLASSES.selene;
+  engine.triggerHeroAbility();
+  assert.equal(engine.executeHeroAbilityAt(900, 400).ok, true);
+  assert.ok(lunarTarget.dead || lunarTarget.slowTimer > 0);
+
+  const convertTarget = engine.spawnEnemy('brute', 0, { x: 700, y: 400, countForWave: false });
+  engine.abilityCooldownTimer = 0;
+  engine.selectedHero = HERO_CLASSES.vespera;
+  engine.triggerHeroAbility();
+  assert.equal(engine.executeHeroAbilityAt(700, 400).ok, true);
+  assert.ok(convertTarget.convertedTimer > 0);
+
+  const defense = engine.createPlacedDefense(TOWER_TYPES.vulcan_turret, 680, 470);
+  engine.placedTowers = [defense];
+  engine.abilityCooldownTimer = 0;
+  engine.selectedHero = HERO_CLASSES.carmilla;
+  engine.triggerHeroAbility();
+  assert.equal(engine.executeHeroAbilityAt(680, 470).ok, true);
+  assert.ok(defense.abilityBuffTimer > 0);
+
+  engine.abilityCooldownTimer = 0;
+  engine.triggerHeroAbility();
+  assert.equal(engine.cancelHeroAbilityTargeting(), true);
+  assert.equal(engine.activeHeroTargeting, null);
+});
+
+test('la specialisation de niveau 2 applique ses modificateurs et sa priorite de cible', () => {
+  const { GameEngine, TOWER_TYPES } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const defense = engine.createPlacedDefense(TOWER_TYPES.missile_pod, 600, 400);
+  engine.placedTowers = [defense];
+  engine.coins = 1000;
+  const upgrade = engine.upgradeDefense(defense);
+  assert.equal(upgrade.requiresSpecialization, true);
+  const bunkerBuster = upgrade.specializationOptions.find(option => option.id === 'missile_bunker_buster');
+  assert.ok(bunkerBuster);
+  const unmodifiedDamage = defense.damage;
+  assert.equal(engine.chooseDefenseSpecialization(defense, bunkerBuster.id).ok, true);
+  assert.ok(defense.damage > unmodifiedDamage);
+  assert.ok(defense.targetPriorities.includes('artillery'));
+
+  const nearbySwarmer = engine.spawnEnemy('swarmer', 0, { x: 640, y: 400, countForWave: false });
+  const artillery = engine.spawnEnemy('artillery', 0, { x: 820, y: 400, countForWave: false });
+  assert.equal(engine.findTarget(600, 400, defense.range, defense), artillery);
+  assert.notEqual(nearbySwarmer, artillery);
+});
+
+test('Infinitum cumule ses mutateurs et ne rend le QG qu aux paliers de dix', () => {
+  const { GameEngine, EXPANSION } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  engine.towerMutators = [EXPANSION.infinitumMutators[0], EXPANSION.infinitumMutators[1]];
+  engine.configureWave(9, { towerMode: true, mutators: engine.towerMutators });
+  assert.equal(engine.canReturnFromInfinitum(), false);
+  engine.waveActive = false;
+  engine.enemies = [];
+  engine.advanceWave();
+  assert.equal(engine.wave, 10);
+  assert.equal(engine.isTowerMode, true);
+  assert.equal(engine.towerMutators.length, 2);
+  engine.infinitumCanReturn = true;
+  assert.equal(engine.canReturnFromInfinitum(), true);
+});
+
+test('le defi quotidien est seede et l historique sauvegarde seulement dix runs', () => {
+  const { GameEngine, EXPANSION, localStorage } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const first = engine.startDailyChallenge('2026-07-29T12:00:00Z', 'qa');
+  const expected = EXPANSION.utils.createDailyChallenge('2026-07-29T20:00:00Z', 'qa');
+  assert.equal(first.seed, expected.seed);
+  assert.equal(first.layoutId, expected.layoutId);
+  assert.deepEqual([...first.mutatorIds], [...expected.mutatorIds]);
+
+  const rngA = EXPANSION.utils.createSeededRng(first.seed);
+  const rngB = EXPANSION.utils.createSeededRng(expected.seed);
+  assert.deepEqual(
+    Array.from({ length: 8 }, () => rngA()),
+    Array.from({ length: 8 }, () => rngB())
+  );
+
+  for (let index = 0; index < 12; index++) {
+    engine.recordRunHistory({ id: `run-${index}`, score: index });
+  }
+  assert.equal(engine.runHistory.length, 10);
+  assert.equal(engine.runHistory[0].id, 'run-11');
+  const save = JSON.parse(localStorage.getItem('valkyrie_sweeper_save'));
+  assert.equal(save.runHistory.length, 10);
+});
+
+test('la rotation de carte attend une intermission vide et conserve les defenses', () => {
+  const { GameEngine, TOWER_TYPES } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  engine.applyWorldLayout('convergence', { force: true, repositionUnits: false });
+  const defense = engine.createPlacedDefense(TOWER_TYPES.vulcan_turret, 700, 400);
+  engine.placedTowers = [defense];
+  engine.setMapRotation(['convergence', 'western_wall', 'southern_watch']);
+  engine.waveActive = true;
+  assert.equal(engine.rotateWorldLayoutBetweenWaves(), false);
+  engine.waveActive = false;
+  engine.enemies = [];
+  assert.equal(engine.rotateWorldLayoutBetweenWaves(), true);
+  assert.equal(engine.selectedLayoutId, 'western_wall');
+  assert.equal(engine.placedTowers.length, 1);
+  assert.ok(defense.x >= engine.worldLayout.buildBounds.minX);
+  assert.ok(defense.y >= engine.worldLayout.buildBounds.minY);
+});
+
+test('le runtime VN 2.3 charge les vraies CG, les expressions et une memoire de lore sans effet militaire', () => {
+  const {
+    GameEngine, HERO_CLASSES, document, window, audio
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const expansion = window.INFERNAL_VN_EXPANSION;
+  const chapter = engine.getVnChapter('aria', 'midnight-relief');
+  const expansionChapter = expansion.getChapter('aria', chapter.id);
+  const scene = createElement('img');
+  const expression = createElement('div');
+  const status = createElement('p');
+  const history = createElement('ol');
+  const lore = createElement('fieldset');
+  const prompt = createElement('legend');
+  const elements = new Map([
+    ['vn-scene-img', scene],
+    ['vn-expression-portrait', expression],
+    ['vn-status', status],
+    ['vn-history-list', history],
+    ['vn-lore-container', lore],
+    ['vn-lore-prompt', prompt]
+  ]);
+  document.getElementById = id => elements.get(id) || null;
+
+  HERO_CLASSES.aria.romanceOptIn = true;
+  audio.currentStation = 'heavy';
+  audio.setStation = station => { audio.currentStation = station; };
+  engine.syncVnExpansionConsent('aria', true);
+  engine.activeVnSession = {
+    heroId: 'aria',
+    chapterId: chapter.id,
+    beatId: chapter.entryBeat,
+    lineIndex: 0,
+    history: [],
+    isReplay: false
+  };
+  const before = {
+    score: engine.score,
+    coins: engine.coins,
+    wave: engine.wave,
+    hp: engine.citadel.hp
+  };
+  engine.setVnSceneImage('aria', chapter);
+  engine.setVnExpressionMood('aria', 'warm', chapter.id);
+  engine.chooseVnLoreOption(expansionChapter.loreChoices[0]);
+
+  assert.equal(scene.src, 'assets/vn/cg/chapters/aria-midnight-relief.webp');
+  assert.equal(audio.currentStation, 'industrial');
+  assert.match(expression.style.backgroundImage, /aria-expressions-v1\.webp/u);
+  assert.equal(expression.hidden, false);
+  assert.equal(engine.vnExpansionState.heroines.aria.memories.length, 1);
+  assert.equal(engine.vnExpansionState.heroines.aria.traits.devoir, 1);
+  assert.deepEqual(
+    { score: engine.score, coins: engine.coins, wave: engine.wave, hp: engine.citadel.hp },
+    before,
+    'une branche narrative ne modifie aucune ressource ni statistique militaire'
+  );
+  engine.setVnSceneImage('aria');
+  assert.equal(audio.currentStation, 'heavy', 'la station choisie par le joueur est restauree');
+
+  engine.syncVnExpansionConsent('aria', false);
+  assert.equal(engine.vnExpansionState.heroines.aria.consent.revoked, true);
+  assert.equal(engine.vnExpansionState.heroines.aria.consent.granted, false);
+});
+
+test('les reglages 2.3 persistent son, contraste, texte et la sauvegarde portable valide avant ecriture', async () => {
+  const {
+    GameEngine, localStorage, document
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  engine.musicVolume = 0.35;
+  engine.sfxVolume = 0.55;
+  engine.contrastMode = 'high';
+  engine.textSize = 'large';
+  engine.applyVisualPreferences();
+  engine.saveProgress();
+
+  const saved = JSON.parse(localStorage.getItem('valkyrie_sweeper_save'));
+  assert.equal(saved.musicVolume, 0.35);
+  assert.equal(saved.sfxVolume, 0.55);
+  assert.equal(saved.contrastMode, 'high');
+  assert.equal(saved.textSize, 'large');
+  assert.equal(document.body.dataset.contrast, 'high');
+  assert.equal(document.body.dataset.textSize, 'large');
+
+  const portable = engine.createPortableSavePayload();
+  assert.equal(portable.schema, 'infernal-city.portable-save/1');
+  assert.equal(portable.campaign.version, 6);
+  assert.equal(portable.narrative.dataVersion, 1);
+  const original = localStorage.getItem('valkyrie_sweeper_save');
+  const settingsStatus = createElement('p');
+  document.getElementById = id => id === 'settings-status' ? settingsStatus : null;
+  const rejected = await engine.importPortableSaveFile({
+    size: 32,
+    text: async () => '{"version":999}'
+  });
+  assert.equal(rejected, false);
+  assert.equal(localStorage.getItem('valkyrie_sweeper_save'), original);
+  assert.match(settingsStatus.textContent, /Import refus/u);
+});
+
+test('Studio 2 utilise trois images reelles par heroine et calcule les conclusions sans debloquer par erreur', () => {
+  const {
+    GameEngine, window
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const studio = window.INFERNAL_VN_EXPANSION.studio.heroines.aria;
+  assert.equal(studio.poses.length, 3);
+  assert.equal(studio.ambiences.length, 3);
+  studio.poses.forEach(pose => {
+    assert.match(engine.getStudioPreviewSource('aria', pose.id), /^assets\/vn\/cg\/chapters\/.+\.webp$/u);
+  });
+  window.INFERNAL_VN_EXPANSION.studio.conclusionCgs.forEach(conclusion => {
+    assert.equal(engine.getStudioConclusionUnlockState(conclusion), false);
+  });
+});
+
+test('les six passifs de heroine produisent des effets de combat mesurables', () => {
+  const {
+    GameEngine, HERO_CLASSES, TOWER_TYPES
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+
+  engine.selectedHero = HERO_CLASSES.aria;
+  const aegisDefense = engine.createPlacedDefense(TOWER_TYPES.vulcan_turret, 680, 400);
+  const distantDefense = engine.createPlacedDefense(TOWER_TYPES.vulcan_turret, 1000, 400);
+  assert.ok(aegisDefense.maxHp > distantDefense.maxHp);
+  assert.equal(aegisDefense.stunIgnoresRemaining, 1);
+  engine.placedTowers = [aegisDefense];
+  const artilleryHit = () => ({
+    x: aegisDefense.x,
+    y: aegisDefense.y,
+    vx: 0,
+    vy: 0,
+    damage: 1,
+    radius: 9,
+    stunDuration: 1,
+    sourceType: 'artillery'
+  });
+  engine.enemyBullets = [artilleryHit()];
+  engine.updateEnemyBullets(0);
+  assert.equal(aegisDefense.disabledTimer, 0, 'le premier etourdissement est absorbe');
+  engine.enemyBullets = [artilleryHit()];
+  engine.updateEnemyBullets(0);
+  assert.equal(aegisDefense.disabledTimer, 1, 'le suivant interrompt bien la defense');
+
+  engine.selectedHero = HERO_CLASSES.kira;
+  engine.enemies = [];
+  const firstRouteTarget = engine.spawnEnemy('brute', 0, { x: 800, y: 350, countForWave: false });
+  const secondRouteTarget = engine.spawnEnemy('brute', 0, { x: 820, y: 350, countForWave: false });
+  const otherRouteTarget = engine.spawnEnemy('brute', 1, { x: 800, y: 450, countForWave: false });
+  engine.damageEnemy(firstRouteTarget, 1);
+  engine.damageEnemy(secondRouteTarget, 1);
+  engine.damageEnemy(otherRouteTarget, 1);
+  assert.ok(firstRouteTarget.markedDamageTakenMultiplier > 1);
+  assert.equal(secondRouteTarget.markedDamageTakenMultiplier, 1);
+  assert.ok(otherRouteTarget.markedDamageTakenMultiplier > 1);
+
+  engine.selectedHero = HERO_CLASSES.rin;
+  const emberTarget = engine.spawnEnemy('brute', 0, { x: 760, y: 400, countForWave: false });
+  for (let stack = 0; stack < 8; stack++) engine.applyRinArmorBreak(emberTarget);
+  assert.equal(emberTarget.rinEmberStacks, 5);
+  assert.ok(emberTarget.armorBreakMultiplier > 1.17);
+
+  engine.selectedHero = HERO_CLASSES.selene;
+  engine.enemies = [];
+  const lunarDefense = engine.createPlacedDefense(TOWER_TYPES.vulcan_turret, 600, 400);
+  const slowedTarget = engine.spawnEnemy('brute', 0, { x: 710, y: 400, countForWave: false });
+  slowedTarget.slowTimer = 2;
+  assert.equal(engine.findTarget(600, 400, 100, lunarDefense), slowedTarget);
+  slowedTarget.slowTimer = 0;
+  assert.equal(engine.findTarget(600, 400, 100, lunarDefense), null);
+
+  engine.selectedHero = HERO_CLASSES.vespera;
+  engine.enemies = [];
+  const tributeDefense = engine.createPlacedDefense(TOWER_TYPES.vulcan_turret, 700, 400);
+  engine.placedTowers = [tributeDefense];
+  engine.coins = 0;
+  engine.getRunRandom = () => 0.1;
+  const elite = engine.spawnEnemy('brute', 0, { x: 680, y: 400, countForWave: false });
+  engine.killEnemy(elite);
+  assert.equal(engine.coins, 13);
+  assert.ok(tributeDefense.imperialBuffTimer > 0);
+  assert.ok(tributeDefense.imperialDamageMultiplier > 1);
+
+  engine.selectedHero = HERO_CLASSES.carmilla;
+  engine.citadel.hp = engine.citadel.maxHp;
+  engine.healCitadel(40);
+  assert.equal(engine.carmillaStoredCharge, 18);
+  const pactDefense = engine.createPlacedDefense(TOWER_TYPES.vulcan_turret, 680, 470);
+  engine.placedTowers = [pactDefense];
+  const baseDamage = pactDefense.damage;
+  engine.abilityCooldownTimer = 0;
+  engine.triggerHeroAbility();
+  assert.equal(engine.executeHeroAbilityAt(680, 470).ok, true);
+  assert.ok(pactDefense.damage > baseDamage * 1.75);
+  assert.equal(engine.carmillaStoredCharge, 0);
+});
+
+test('la manette pilote camera zoom curseur et pouvoir sans bloquer le clavier', () => {
+  const {
+    GameEngine, navigator
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const buttons = Array.from({ length: 16 }, () => ({ pressed: false, value: 0 }));
+  buttons[2] = { pressed: true, value: 1 };
+  buttons[7] = { pressed: false, value: 1 };
+  navigator.getGamepads = () => [{
+    index: 0,
+    connected: true,
+    id: 'QA Pad',
+    axes: [1, 0, 1, 0],
+    buttons
+  }];
+  engine.connectedGamepadIndex = 0;
+  engine.worldLayout = { buildBounds: { minX: 100, minY: 100, maxX: 1100, maxY: 700 } };
+  engine.buildCursor = { x: 600, y: 400, visible: false };
+  engine.getBattlefieldView = () => ({
+    scale: 1,
+    screenCenterX: 600,
+    screenCenterY: 400
+  });
+  let panned = 0;
+  let zoomed = 0;
+  let powerArmed = 0;
+  engine.panBattlefieldCameraBy = () => { panned++; };
+  engine.zoomBattlefieldCameraBy = () => { zoomed++; };
+  engine.triggerHeroAbility = () => { powerArmed++; };
+
+  assert.equal(engine.updateGamepadControls(0.5), true);
+  assert.equal(panned, 1);
+  assert.equal(zoomed, 1);
+  assert.ok(engine.buildCursor.x > 600);
+  assert.equal(engine.buildCursor.visible, true);
+  assert.equal(powerArmed, 1);
+});
+
+test('entrer dans le jeu precharge les atlas de combat meme si le terrain est deja en cache', () => {
+  const {
+    GameEngine, document
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const gate = createElement('div');
+  gate.classList.add('active');
+  document.getElementById = id => id === 'adult-gate-modal' ? gate : null;
+  engine.spriteAtlasImages = { 'assets/environment/map-western-wall.png': {} };
+  engine.enemySpriteImages = {};
+  engine.towerSpriteImages = {};
+  engine.heroSpriteImages = {};
+  engine.syncMusicButtonState = () => {};
+  engine.syncModalAccessibility = () => {};
+  engine.openMissionBriefing = () => {};
+  let preloads = 0;
+  engine.preloadBattleSprites = () => { preloads++; };
+
+  engine.enterAdultExperience();
+  assert.equal(preloads, 1);
+  assert.equal(gate.classList.contains('active'), false);
+});
+
+test('le runtime ne tente jamais de remplacer la propriete DOM dataset en lecture seule', () => {
+  assert.doesNotMatch(GAME_SOURCE, /\.dataset\s*=/u);
 });

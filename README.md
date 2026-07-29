@@ -2,6 +2,27 @@
 
 Roguelite de défense cyber-gothique en HTML, CSS et JavaScript natifs.
 
+## Mise à jour 2.3 — La Guerre des Quatre Portes
+
+- Quatre théâtres tactiques sur un monde fixe de 1 200 × 800 : Convergence,
+  Muraille occidentale, Veille du Sud et Double Faille. La rotation de campagne
+  alterne ces configurations sans déplacer artificiellement les unités.
+- Les terrains asymétriques changent réellement les lignes d’arrivée :
+  Citadelle à gauche avec hordes venant de droite, défense nord contre assaut
+  du sud, ou double voie parallèle.
+- Quinze vagues déterministes annoncent leur prochaine composition. Les unités
+  volantes, protectrices, diviseuses et d’artillerie demandent chacune une
+  réponse différente.
+- Chaque défense possède deux spécialisations définitives, et les six héroïnes
+  ont désormais un pouvoir ciblable propre.
+- Défi quotidien déterministe, historique local des runs et Tour Infinitum
+  poursuivie par segments de dix étages à mutateurs cumulés.
+- Studio 2.0 : pose, ambiance, intensité artistique suggestive ou intimiste et
+  galerie des conclusions. Tous les modèles sont adultes et chaque séance
+  reste facultative, consentie et révocable.
+- Paramètres centralisés pour volumes, contraste, taille du texte, détection de
+  manette et sauvegarde portable JSON.
+
 ## Boucles de jeu
 
 - Campagne complète de 15 vagues avec boss aux vagues 5, 10 et 15, écran de
@@ -53,12 +74,14 @@ Le projet ne requiert aucune dépendance ni étape de compilation.
 ## Installation et mode hors ligne
 
 Le jeu enregistre un service worker sur `localhost` ou depuis une origine HTTPS.
-Après une première visite en ligne, les fichiers essentiels, les sols, la côte,
-les dix planches d’animation et le corpus VN sont précachés. Les six CG
-narratives et les autres portraits de galerie rejoignent ensuite le cache à la
-demande, à leur première consultation, pour éviter une installation initiale
-trop lourde. Le manifeste et les icônes PNG 192/512 permettent de proposer
-l’installation en application autonome.
+Après une première visite en ligne, les scripts essentiels, le terrain
+Convergence, les dix planches historiques et l’atlas des ennemis spécialisés
+sont précachés. Les grands terrains asymétriques, les CG narratives, les
+portraits de galerie et les compositions du Studio 2.0 rejoignent un cache
+média séparé à leur première consultation. Cela conserve une installation
+initiale sous le budget de 20 Mio sans sacrifier leur disponibilité hors ligne
+après découverte. Le manifeste 2.3 et les icônes PNG 192/512 permettent de
+proposer l’installation en application autonome.
 
 Les actifs cœur portent un nom de version et le code utilise le réseau en
 priorité lorsqu’il est disponible, puis le cache hors ligne en secours. Le
