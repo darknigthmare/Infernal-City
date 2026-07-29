@@ -390,7 +390,7 @@ body {
   margin-bottom: 8px;
 }
 
-.hq-card h4 {
+.hq-card h3 {
   font-size: 1rem;
   font-weight: 800;
   color: var(--color-cyan);
@@ -1150,7 +1150,7 @@ body {
   font-size: 1.8rem;
 }
 
-.upgrade-text h4 {
+.upgrade-text h3 {
   font-size: 1rem;
   font-weight: 800;
   color: #fff;

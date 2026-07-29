@@ -9,6 +9,7 @@ const ROOT = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
 const css = fs.readFileSync(path.join(ROOT, 'styles.v8.css'), 'utf8');
 const worker = fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8');
+const gameSource = fs.readFileSync(path.join(ROOT, 'game.v9.js'), 'utf8');
 
 function hasId(id) {
   return new RegExp(`id="${id}"`).test(html);
@@ -96,6 +97,13 @@ test('touch, compact viewport, focus and reduced-motion rules remain explicit', 
   assert.match(css, /@media \(prefers-reduced-motion:\s*reduce\)/);
   assert.match(css, /\.settings-grid/);
   assert.match(css, /\.defense-specialization-options/);
+});
+
+test('card headings do not skip directly from modal h2 titles to h4', () => {
+  assert.doesNotMatch(html, /<h4(?:\s|>)/);
+  assert.doesNotMatch(gameSource, /<h4(?:\s|>)/);
+  assert.match(css, /\.hq-card h3/);
+  assert.match(css, /\.upgrade-text h3/);
 });
 
 test('PWA 2.3 keeps heavy terrains and CG in a separate runtime cache', () => {

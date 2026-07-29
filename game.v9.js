@@ -6055,7 +6055,7 @@ class GameEngine {
       const currentLine = hero.lastLoungeMessage || hero.loungeLines[Math.max(0, Math.min(4, hero.affinityLvl - 1))];
       card.innerHTML = `
         <img src="${avatarSrc}" alt="Portrait adulte de ${hero.name}">
-        <h4 style="color:#ec4899;">${hero.name}</h4>
+        <h3 style="color:#ec4899;">${hero.name}</h3>
         <div class="adult-profile-meta">
           <span>${hero.age} ans</span>
           <span>Confiance ${hero.affinityLvl}/5</span>
@@ -6946,7 +6946,7 @@ class GameEngine {
     ACHIEVEMENTS.forEach(a => {
       const card = document.createElement('div');
       card.className = `achieve-card ${a.unlocked ? 'unlocked' : ''}`;
-      card.innerHTML = `<div><h4 style="color: ${a.unlocked ? '#f59e0b' : '#fff'};">${a.name} ${a.unlocked ? '🏆' : '🔒'}</h4><p style="font-size:0.8rem; color:#94a3b8;">${a.desc}</p></div><div class="meta-currency">+${a.reward} ◆</div>`;
+      card.innerHTML = `<div><h3 style="color: ${a.unlocked ? '#f59e0b' : '#fff'};">${a.name} ${a.unlocked ? '🏆' : '🔒'}</h3><p style="font-size:0.8rem; color:#94a3b8;">${a.desc}</p></div><div class="meta-currency">+${a.reward} ◆</div>`;
       container.appendChild(card);
     });
     this.openModal(modal);
@@ -7006,7 +7006,7 @@ class GameEngine {
       cardDefault.dataset.heroId = hero.id;
       cardDefault.dataset.skin = 'default';
       cardDefault.setAttribute('aria-pressed', String(hero.activeSkin !== 'alt'));
-      cardDefault.innerHTML = `<img src="${hero.avatar}" alt="${hero.name}, ${hero.age} ans"><h4>${hero.name} — Armure classique</h4>`;
+      cardDefault.innerHTML = `<img src="${hero.avatar}" alt="${hero.name}, ${hero.age} ans"><h3>${hero.name} — Armure classique</h3>`;
       cardDefault.onclick = () => this.applyHeroSkin(hero, 'default');
       container.appendChild(cardDefault);
 
@@ -7017,7 +7017,7 @@ class GameEngine {
         cardAlt.dataset.heroId = hero.id;
         cardAlt.dataset.skin = 'alt';
         cardAlt.setAttribute('aria-pressed', String(hero.activeSkin === 'alt'));
-        cardAlt.innerHTML = `<img src="${hero.altAvatar}" alt="${hero.name}, tenue suggestive adulte"><h4 style="color: #ec4899;">${hero.name} — Tenue nocturne 18+</h4>`;
+        cardAlt.innerHTML = `<img src="${hero.altAvatar}" alt="${hero.name}, tenue suggestive adulte"><h3 style="color: #ec4899;">${hero.name} — Tenue nocturne 18+</h3>`;
         cardAlt.onclick = () => this.applyHeroSkin(hero, 'alt');
         container.appendChild(cardAlt);
       }
@@ -7108,7 +7108,7 @@ class GameEngine {
       const card = document.createElement('button');
       card.type = 'button';
       card.className = 'upgrade-card';
-      card.innerHTML = `<div class="upgrade-info"><div class="upgrade-icon">${opt.icon}</div><div class="upgrade-text"><h4>${opt.title}</h4><p>${opt.desc}</p></div></div>`;
+      card.innerHTML = `<div class="upgrade-info"><div class="upgrade-icon">${opt.icon}</div><div class="upgrade-text"><h3>${opt.title}</h3><p>${opt.desc}</p></div></div>`;
       card.addEventListener('click', () => {
         if (opt.type === 'weapon') { opt.wp.level++; this.updateWeaponsHUD(); }
         else if (opt.type === 'heal') { this.healCitadel(200); }
@@ -7140,7 +7140,7 @@ class GameEngine {
     const card = document.createElement('button');
     card.type = 'button';
     card.className = 'upgrade-card evolution';
-    card.innerHTML = `<div class="upgrade-info"><div class="upgrade-icon">🔥</div><div class="upgrade-text"><h4 style="color: #f59e0b;">ÉVOLUTION SUPER-ARME : ${targetWp.evolutionName}</h4><p>${targetWp.evolutionDesc}</p></div></div>`;
+    card.innerHTML = `<div class="upgrade-info"><div class="upgrade-icon">🔥</div><div class="upgrade-text"><h3 style="color: #f59e0b;">ÉVOLUTION SUPER-ARME : ${targetWp.evolutionName}</h3><p>${targetWp.evolutionDesc}</p></div></div>`;
     card.addEventListener('click', () => {
       targetWp.isEvolved = true; targetWp.name = targetWp.evolutionName; targetWp.damage *= 2.5;
       this.evolvedWeaponsCount++; this.unlockAchievement('super_weapon'); this.updateWeaponsHUD(); this.checkGalleryUnlocks();
