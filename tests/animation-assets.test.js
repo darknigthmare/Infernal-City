@@ -27,9 +27,11 @@ test('le manifeste couvre toutes les defenses, ennemis et heros jouables', () =>
 
   assert.equal(manifest.generator, 'OpenAI ImageGen integrated tool');
   assert.deepEqual(manifest.columns.towers, ['idle', 'charge', 'fire', 'cooldown']);
+  assert.deepEqual(manifest.columns.gates, ['dormant', 'warning', 'open', 'cooldown']);
   assert.equal(new Set(rows('towers')).size, 20);
   assert.equal(new Set(rows('enemies')).size, 7);
   assert.equal(new Set(rows('heroes')).size, 6);
+  assert.deepEqual(rows('gates'), ['north', 'east', 'south', 'west']);
 });
 
 test('chaque planche est un PNG RGBA carre et le sol OpenAI existe', () => {
@@ -50,6 +52,11 @@ test('chaque planche est un PNG RGBA carre et le sol OpenAI existe', () => {
   assert.ok(fs.existsSync(floorPath), `${manifest.floor.src}: sol absent`);
   const floor = readPngHeader(floorPath);
   assert.deepEqual({ width: floor.width, height: floor.height }, { width: 1024, height: 1024 });
+
+  const approachPath = path.join(ROOT, manifest.approachTerrain.src);
+  assert.ok(fs.existsSync(approachPath), `${manifest.approachTerrain.src}: terrain d'approche absent`);
+  const approach = readPngHeader(approachPath);
+  assert.deepEqual({ width: approach.width, height: approach.height }, { width: 1536, height: 1024 });
 });
 
 test('le runtime et le mode hors ligne referencent les nouveaux assets', () => {
@@ -60,7 +67,7 @@ test('le runtime et le mode hors ligne referencent les nouveaux assets', () => {
   assert.match(game, /preloadBattleSprites\(\)/);
   assert.match(game, /drawInfernalFloor\(w, h\)/);
   assert.match(game, /drawAtlasFrame\(/);
-  [...manifest.atlases.map(atlas => atlas.src), manifest.floor.src].forEach(src => {
+  [...manifest.atlases.map(atlas => atlas.src), manifest.floor.src, manifest.approachTerrain.src].forEach(src => {
     assert.ok(game.includes(src), `${src}: absent du runtime`);
     assert.ok(worker.includes(src), `${src}: absent du precache`);
   });

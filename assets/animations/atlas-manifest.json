@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "generator": "OpenAI ImageGen integrated tool",
   "layout": {
     "columns": 4,
@@ -11,12 +11,19 @@
   "columns": {
     "towers": ["idle", "charge", "fire", "cooldown"],
     "enemies": ["locomotion-contact", "locomotion-pass", "attack", "hit-recovery"],
-    "heroes": ["idle", "command", "attack", "ability"]
+    "heroes": ["idle", "command", "attack", "ability"],
+    "gates": ["dormant", "warning", "open", "cooldown"]
   },
   "floor": {
     "src": "assets/environment/infernal-city-floor.png",
     "opaque": true,
     "tileable": true
+  },
+  "approachTerrain": {
+    "src": "assets/environment/infernal-city-approach-terrain.png",
+    "opaque": true,
+    "view": "orthographic top-down 90 degrees",
+    "routes": ["north", "east", "south", "west"]
   },
   "atlases": [
     {
@@ -63,12 +70,19 @@
       "src": "assets/animations/heroes/hero-atlas-02.png",
       "category": "heroes",
       "rows": ["vespera", "carmilla", null, null]
+    },
+    {
+      "src": "assets/environment/infernal-city-spawn-gate-atlas.png",
+      "category": "gates",
+      "rows": ["north", "east", "south", "west"]
     }
   ],
   "promptDirection": {
     "towers": "Stable machine identity per row; idle, aiming or charge, firing peak, recoil or cooldown; no text, floor, shadows, borders or grid.",
     "enemies": "Preserve supplied identity references; stable facing and anchor; two locomotion poses, attack and hit recovery.",
     "heroes": "Preserve supplied adult character identity and combat costume; idle, command, primary attack and signature ability; nonsexual combat poses.",
-    "floor": "Seamless top-down infernal cyber-gothic street in dark stone and black steel with restrained magenta ember cracks and cyan conduits."
+    "floor": "Seamless top-down infernal cyber-gothic street in dark stone and black steel with restrained magenta ember cracks and cyan conduits.",
+    "approachTerrain": "Orthographic top-down volcanic coast and industrial causeways with four broad traversable routes converging on the central district.",
+    "gates": "Stable techno-gothic portal per row; dormant, warning charge, open abyssal breach and fading cooldown on transparent background."
   }
 }

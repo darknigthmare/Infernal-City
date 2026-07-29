@@ -14,12 +14,12 @@ Roguelite de défense cyber-gothique en HTML, CSS et JavaScript natifs.
   métaprogression.
 - Vingt défenses améliorables jusqu’au niveau 3 et revendables à 60 % de la
   valeur investie.
-- Caméra tactique adaptative cadrée entre les HUD : le terrain complet et les
-  quatre couloirs d’arrivée ennemis restent visibles sur bureau et mobile. Le
-  combat se met en pause avec une demande de portrait sur les paysages trop bas
-  pour rester lisibles.
-- Sol et côte cyber-infernale, vingt défenses, sept ennemis et six héros de
-  combat animés à partir d’assets OpenAI.
+- Monde logique fixe 1200 × 800, indépendant de l’écran, entouré de quatre
+  couloirs d’arrivée de 320 unités — exactement cinq fois l’ancienne profondeur.
+  La caméra tactique les cadre entre les HUD sur bureau et mobile, sans
+  téléporter les hordes lors d’une rotation.
+- Sol, terrain d’approche et quatre portails cyber-infernaux, vingt défenses,
+  sept ennemis et six héros de combat animés à partir d’assets OpenAI.
 - Quartier Général : commandantes, escadrille de familiers améliorable,
   mercenaires en patrouille, boutique, archives, Salon Nocturne et mini-jeu.
 - Visual novel relationnel : 18 chapitres, plus de 10 000 mots, historique,
@@ -53,8 +53,8 @@ Le projet ne requiert aucune dépendance ni étape de compilation.
 ## Installation et mode hors ligne
 
 Le jeu enregistre un service worker sur `localhost` ou depuis une origine HTTPS.
-Après une première visite en ligne, les fichiers essentiels, le sol, la côte,
-les neuf planches d’animation et le corpus VN sont précachés. Les six CG
+Après une première visite en ligne, les fichiers essentiels, les sols, la côte,
+les dix planches d’animation et le corpus VN sont précachés. Les six CG
 narratives et les autres portraits de galerie rejoignent ensuite le cache à la
 demande, à leur première consultation, pour éviter une installation initiale
 trop lourde. Le manifeste et les icônes PNG 192/512 permettent de proposer
@@ -66,12 +66,17 @@ cache actif reste versionné dans `sw.js`.
 
 ## Direction visuelle OpenAI
 
-La texture raccordable de l’arène et les neuf planches 4×4 ont été générées
-avec l’outil ImageGen intégré d’OpenAI. Elles couvrent les vingt défenses, les
-sept archétypes ennemis et les six héros jouables. Le canvas choisit les frames
+La texture raccordable de l’arène, le terrain orthographique d’approche et les
+dix planches 4×4 ont été générés avec l’outil ImageGen intégré d’OpenAI. Les
+neuf planches de combat couvrent les vingt défenses, les sept archétypes ennemis
+et les six héros jouables. Le canvas choisit les frames
 selon les états réels : charge/tir/recul, locomotion/attaque/impact et
 attaque/compétence héroïque. Le héros choisi est rendu physiquement sur la
 Citadelle et ses leurres utilisent aussi sa planche.
+
+La dixième planche anime les quatre portes lointaines (veille, avertissement,
+ouverture, fermeture). Les vagues tournent entre nord, est, sud et ouest ; le
+HUD affiche le secteur et l’ETA de la menace la plus proche.
 
 La côte panoramique et six CG de conversations ont également été générées avec
 ImageGen à partir des portraits établis. Leurs ancres d’identité, compositions

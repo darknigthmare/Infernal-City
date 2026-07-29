@@ -57,11 +57,13 @@ claire.
 - Barre de vingt défenses laborieuse au clavier.
 - SFX procéduraux recréés dans les chemins chauds.
 - Absence d’installation et de cache hors ligne.
-- Terrain trop proche : caméra tactique reculée, zone utile dégagée entre les
-  HUD et quatre couloirs d’approche désormais visibles ; les paysages trop bas
-  sont mis en pause avec une demande de passage en portrait.
-- Côte absente et CG narratives trop rares : panorama et six scènes cohérentes
-  générés avec OpenAI puis intégrés au combat et au visual novel.
+- Terrain trop proche : monde logique fixe 1200 × 800, indépendant du viewport,
+  ceinturé de quatre corridors de 320 unités (64 × 5). Les hordes apparaissent
+  aux portes lointaines en rotation nord/est/sud/ouest ; tailles écran, cibles
+  tactiles, projectiles, ETA et tirs de boss sont adaptés à ce recul.
+- Côte absente et CG narratives trop rares : panorama, terrain d’approche,
+  atlas de portails et six scènes cohérentes générés avec OpenAI puis intégrés
+  au combat et au visual novel.
 - Conversations relationnelles réduites à une phrase : corpus porté à 801
   répliques et 126 choix sur 18 chapitres.
 
@@ -88,9 +90,15 @@ claire.
 
 ## P2 non bloquants
 
-- Ajouter d’autres arènes/biomes, événements et archétypes ennemis à distance.
-- Remplacer les représentations canvas simples des familiers et mercenaires par
-  des assets OpenAI au niveau du sol, des tours, des ennemis et des héros animés.
+- OpenAI P1 : ajouter 12 CG pour donner une image propre à chacun des 18
+  chapitres, puis six planches d’expressions VN.
+- OpenAI P1 : produire les sprites de la Citadelle, du mercenaire Ray, du
+  Chiroptère, des caisses, ainsi que trois CG de conclusion.
+- OpenAI P2 : regrouper power-ups, projectiles, zones et particules dans un
+  atlas FX ; remplacer les emojis du QG par un atlas UI.
+- OpenAI P2 : ajouter les costumes combat alternatifs, évolutions visuelles des
+  tours niveaux 2–3 et biomes propres à la campagne, l’Infinitum et l’infini.
+- Ajouter d’autres événements et archétypes ennemis à distance.
 - Ajouter RNG seedé, historique détaillé des runs et simulations d’équilibrage.
 - Ajouter une vraie suite E2E navigateur/CI et des tests de lecteur d’écran.
 - Ajouter des voix, expressions faciales et décors alternatifs aux 18 chapitres
@@ -99,17 +107,16 @@ claire.
 ## Vérifications
 
 - `npm.cmd run check`
-- 43 tests automatisés réussis
+- 47 tests automatisés réussis
 - `node --check` sur les cinq scripts runtime et PWA
 - unicité des IDs HTML
 - références JS/HTML et assets locaux
 - routes HTTP locales
-- inspection visuelle bureau, 390 × 844 et 320 × 568
+- inspection visuelle bureau et 390 × 844, portail franchi et bataille jouée
 
-## Limite de l’audit visuel
+## Portée de l’audit visuel
 
-Le portail 18+ n’a pas été franchi automatiquement. Le canvas a été extrait
-directement pour inspecter le terrain bureau/mobile, et la modale VN a été
-rendue dans une session QA éphémère sans valider le portail ni activer un choix.
-Chargement, requêtes, console, reprise, historique et absence de débordement ont
-été contrôlés sans erreur.
+Le portail 18+ et le briefing ont été franchis dans une session QA éphémère.
+Une campagne standard a été lancée et inspectée sur bureau puis en portrait
+390 × 844. Terrain, quatre portes, hordes, ETA, choix de niveau, console et
+absence de débordement ont été contrôlés sans erreur.

@@ -106,6 +106,8 @@ function loadGameModule(seed = {}) {
     ;globalThis.__INFERNAL_CITY_TEST__ = {
       GameEngine,
       CAMPAIGN_FINAL_WAVE,
+      BATTLEFIELD_APPROACH_MARGIN,
+      DEFENSE_MIN_SCREEN_HIT_DIAMETER,
       DIFFICULTY_DATA,
       TOWER_TYPES,
       POWERUP_TYPES,
@@ -910,7 +912,7 @@ test('la camera montre le couloir ennemi hors terrain sans modifier les coordonn
   const restoredCenter = engine.screenToBattlefieldPoint(view.screenCenterX, view.screenCenterY, view);
   assert.equal(restoredCenter.x, 600);
   assert.equal(restoredCenter.y, 400);
-  assert.match(GAME_SOURCE, /const BATTLEFIELD_APPROACH_MARGIN = 64;/);
+  assert.match(GAME_SOURCE, /const BATTLEFIELD_APPROACH_MARGIN = 64 \* 5;/);
   assert.match(GAME_SOURCE, /this\.applyBattlefieldView\(view\);/);
   assert.match(GAME_SOURCE, /this\.screenToBattlefieldPoint\(screenX, screenY\)/);
 
@@ -954,6 +956,152 @@ test('la camera montre le couloir ennemi hors terrain sans modifier les coordonn
   assert.match(indexSource, /id="short-landscape-notice"/);
   assert.match(GAME_SOURCE, /newWidth > newHeight && newHeight <= 500/);
   assert.match(GAME_SOURCE, /!this\.requiresPortraitOrientation/);
+});
+
+test('le corridor approche x5 garde les quatre portes de horde visibles et loin du terrain central', () => {
+  const {
+    GameEngine,
+    BATTLEFIELD_APPROACH_MARGIN
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const width = engine.canvas.width;
+  const height = engine.canvas.height;
+  const view = engine.getBattlefieldView(width, height);
+
+  assert.equal(BATTLEFIELD_APPROACH_MARGIN, 320);
+
+  const spawns = Object.fromEntries(
+    ['north', 'east', 'south', 'west'].map(side => [
+      side,
+      engine.getSpawnPosition(side, 'swarmer', width, height)
+    ])
+  );
+
+  Object.entries(spawns).forEach(([side, spawn]) => {
+    assert.ok(Number.isFinite(spawn.x) && Number.isFinite(spawn.y), `${side}: spawn invalide`);
+    assert.ok(
+      spawn.x >= view.left && spawn.x <= view.right
+        && spawn.y >= view.top && spawn.y <= view.bottom,
+      `${side}: la porte doit rester dans l'enveloppe visible`
+    );
+  });
+
+  assert.ok(spawns.west.x <= -200, 'La horde ouest doit parcourir au moins 200 unites avant le terrain');
+  assert.ok(spawns.east.x >= width + 200, 'La horde est doit parcourir au moins 200 unites avant le terrain');
+  assert.ok(spawns.north.y <= -200, 'La horde nord doit parcourir au moins 200 unites avant le terrain');
+  assert.ok(spawns.south.y >= height + 200, 'La horde sud doit parcourir au moins 200 unites avant le terrain');
+  assert.ok(spawns.west.y >= 0 && spawns.west.y <= height);
+  assert.ok(spawns.east.y >= 0 && spawns.east.y <= height);
+  assert.ok(spawns.north.x >= 0 && spawns.north.x <= width);
+  assert.ok(spawns.south.x >= 0 && spawns.south.x <= width);
+});
+
+test('projectiles allies et tirs de boss vivent dans le corridor puis sont elimines au-dela', () => {
+  const { GameEngine, BATTLEFIELD_APPROACH_MARGIN } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const width = engine.canvas.width;
+  const height = engine.canvas.height;
+  const margin = BATTLEFIELD_APPROACH_MARGIN;
+  const inside = [
+    { id: 'west', x: -margin + 10, y: height / 2 },
+    { id: 'east', x: width + margin - 10, y: height / 2 },
+    { id: 'north', x: width / 2, y: -margin + 10 },
+    { id: 'south', x: width / 2, y: height + margin - 10 }
+  ];
+  const outside = [
+    { id: 'far-west', x: -margin - 1000, y: height / 2 },
+    { id: 'far-east', x: width + margin + 1000, y: height / 2 },
+    { id: 'far-north', x: width / 2, y: -margin - 1000 },
+    { id: 'far-south', x: width / 2, y: height + margin + 1000 }
+  ];
+
+  engine.enemies = [];
+  engine.projectiles = [...inside, ...outside].map(point => ({
+    ...point,
+    vx: 0,
+    vy: 0,
+    damage: 1,
+    radius: 3,
+    type: 'bullet',
+    color: '#fff'
+  }));
+  engine.updateProjectiles(0);
+  assert.deepEqual(
+    engine.projectiles.map(projectile => projectile.id).sort(),
+    inside.map(projectile => projectile.id).sort()
+  );
+
+  engine.placedTowers = [];
+  engine.enemyBullets = [...inside, ...outside].map(point => ({
+    ...point,
+    vx: 0,
+    vy: 0,
+    damage: 1,
+    radius: 3,
+    color: '#fff'
+  }));
+  engine.updateEnemyBullets(0);
+  assert.deepEqual(
+    engine.enemyBullets.map(projectile => projectile.id).sort(),
+    inside.map(projectile => projectile.id).sort()
+  );
+
+  assert.equal(typeof engine.getApproachCullBounds, 'function');
+});
+
+test('les cibles et silhouettes restent lisibles quelle que soit l echelle camera', () => {
+  const {
+    GameEngine,
+    DEFENSE_MIN_SCREEN_HIT_DIAMETER
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const view = engine.getBattlefieldView();
+  const defense = { x: 200, y: 200, radius: 18 };
+
+  assert.equal(DEFENSE_MIN_SCREEN_HIT_DIAMETER, 44);
+  const hitRadius = engine.getDefenseHitRadius(defense, view);
+  assert.ok(
+    hitRadius * view.scale >= DEFENSE_MIN_SCREEN_HIT_DIAMETER / 2,
+    'La cible tactile doit conserver un rayon ecran de 22 px'
+  );
+
+  engine.placedTowers = [defense];
+  engine.battlefieldViewScale = view.scale;
+  assert.equal(
+    engine.findPlacedDefenseAt(
+      defense.x + ((DEFENSE_MIN_SCREEN_HIT_DIAMETER / 2 - 0.5) / view.scale),
+      defense.y
+    ),
+    defense,
+    'Une activation a l interieur des 44 px ecran doit selectionner la defense'
+  );
+
+  assert.equal(engine.getReadableWorldSize(10, 16, 0.2), 80);
+  assert.equal(engine.getReadableWorldSize(100, 16, 0.5), 100);
+  assert.ok(
+    [...GAME_SOURCE.matchAll(/getReadableWorldSize\(/g)].length >= 2,
+    'Le helper de lisibilite doit etre utilise par le rendu, pas seulement declare'
+  );
+});
+
+test('la construction reste interdite dans le corridor hors rectangle central', () => {
+  const { GameEngine, TOWER_TYPES } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  engine.isPaused = false;
+  engine.isGameOver = false;
+  engine.coins = 100000;
+  engine.placedTowers = [];
+  engine.selectedTowerToBuild = Object.values(TOWER_TYPES)[0];
+
+  [
+    [-100, engine.canvas.height / 2],
+    [engine.canvas.width + 100, engine.canvas.height / 2],
+    [engine.canvas.width / 2, -100],
+    [engine.canvas.width / 2, engine.canvas.height + 100]
+  ].forEach(([x, y]) => engine.buildSelectedTowerAt(x, y));
+
+  assert.equal(engine.placedTowers.length, 0);
+  assert.equal(engine.coins, 100000, 'Un placement hors terrain ne doit rien couter');
 });
 
 test('les six heroines disposent de CG narratives et de chapitres VN accessibles sans faux verrou', () => {

@@ -3,11 +3,22 @@
 const CAMPAIGN_FINAL_WAVE = 15;
 const SAVE_VERSION = 5;
 const RUN_CHECKPOINT_VERSION = 1;
-// Keep the logical battlefield and every collision untouched while framing it
-// inside the space that is not covered by the HUD. The extra world-space margin
-// reveals incoming enemies before they cross the playable perimeter.
-const BATTLEFIELD_APPROACH_MARGIN = 64;
+// The player explicitly needs a long read on incoming hordes. Keep the compact
+// construction arena intact, but make its traversable approach belt five times
+// deeper than the previous 64-unit framing on every side.
+const BATTLEFIELD_APPROACH_MARGIN = 64 * 5;
 const BATTLEFIELD_MAX_VIEW_SCALE = 0.78;
+const BATTLEFIELD_WORLD_WIDTH = 1200;
+const BATTLEFIELD_WORLD_HEIGHT = 800;
+const BATTLEFIELD_SPAWN_VISUAL_GUTTER = 12;
+const BATTLEFIELD_PROJECTILE_PADDING = 120;
+const DEFENSE_MIN_SCREEN_HIT_DIAMETER = 44;
+const MIN_TOWER_SCREEN_SIZE = 30;
+const MIN_ENEMY_SCREEN_SIZE = 14;
+const MIN_BOSS_SCREEN_SIZE = 46;
+const MIN_HERO_SCREEN_SIZE = 46;
+const SPAWN_GATE_WORLD_SIZE = 132;
+const SPAWN_GATE_SECTORS = ['north', 'east', 'south', 'west'];
 
 const DIFFICULTY_DATA = {
   story: {
@@ -86,6 +97,8 @@ const SPRITE_ATLAS_COLUMNS = 4;
 const SPRITE_ATLAS_ROWS = 4;
 const FLOOR_TEXTURE_SRC = 'assets/environment/infernal-city-floor.png';
 const COASTLINE_IMAGE_SRC = 'assets/environment/infernal-city-coastline.png';
+const APPROACH_TERRAIN_IMAGE_SRC = 'assets/environment/infernal-city-approach-terrain.png';
+const SPAWN_GATE_ATLAS_SRC = 'assets/environment/infernal-city-spawn-gate-atlas.png';
 
 // Narrative CGs generated with OpenAI and anchored to each adult heroine's
 // established portrait. They are loaded only when the player opens the VN.
@@ -307,6 +320,7 @@ class GameEngine {
     this.runtimeError = null;
     this.lastPausedRenderTime = 0;
     this.accessibilityStatusTimer = 0;
+    this.threatReadoutTimer = 0;
     this.runElapsedSeconds = 0;
     this.runMetaCoinsEarned = 0;
     this.activeRunCheckpoint = null;
@@ -360,6 +374,11 @@ class GameEngine {
     this.floorImage = null;
     this.floorPattern = null;
     this.coastlineImage = null;
+    this.approachTerrainImage = null;
+    this.spawnGateAtlasImage = null;
+    this.spawnGatePulses = Object.fromEntries(SPAWN_GATE_SECTORS.map(side => [side, 0]));
+    this.nextSpawnGateIndex = 0;
+    this.battlefieldViewScale = 1;
     this.enemyBullets = [];
     this.projectiles = [];
     this.particles = [];
@@ -451,29 +470,15 @@ class GameEngine {
       orientationNotice.inert = !exposeToAssistiveTech;
       orientationNotice.setAttribute('aria-hidden', exposeToAssistiveTech ? 'false' : 'true');
     }
-    const oldWidth = this.worldWidth || newWidth;
-    const oldHeight = this.worldHeight || newHeight;
-    const scaleX = newWidth / oldWidth;
-    const scaleY = newHeight / oldHeight;
-
-    if (this.worldWidth && (scaleX !== 1 || scaleY !== 1)) {
-      [this.placedTowers, this.towerAnimationGhosts, this.mercenaries, this.petDrones, this.enemies, this.enemyBullets, this.projectiles, this.particles, this.floatingTexts, this.decoys, this.crates, this.powerups, this.hazards]
-        .forEach(collection => collection.forEach(entity => {
-          if (Number.isFinite(entity.x)) entity.x *= scaleX;
-          if (Number.isFinite(entity.y)) entity.y *= scaleY;
-          if (Number.isFinite(entity.x1)) entity.x1 *= scaleX;
-          if (Number.isFinite(entity.y1)) entity.y1 *= scaleY;
-          if (Number.isFinite(entity.x2)) entity.x2 *= scaleX;
-          if (Number.isFinite(entity.y2)) entity.y2 *= scaleY;
-        }));
-    }
-
+    // Canvas pixels are only a viewport. Gameplay always stays in a fixed
+    // 1200×800 logical arena, so rotating/resizing cannot teleport a distant
+    // horde toward the Citadel or distort projectile trajectories.
     this.canvas.width = newWidth;
     this.canvas.height = newHeight;
-    this.worldWidth = newWidth;
-    this.worldHeight = newHeight;
-    this.citadel.x = this.canvas.width / 2;
-    this.citadel.y = this.canvas.height / 2;
+    this.worldWidth = BATTLEFIELD_WORLD_WIDTH;
+    this.worldHeight = BATTLEFIELD_WORLD_HEIGHT;
+    this.citadel.x = this.worldWidth / 2;
+    this.citadel.y = this.worldHeight / 2;
     if (!this.buildCursor.visible) {
       this.buildCursor.x = this.citadel.x + 120;
       this.buildCursor.y = this.citadel.y;
@@ -513,18 +518,20 @@ class GameEngine {
       )
     );
     const safeHeight = Math.max(1, safeBottom - safeTop);
+    const worldWidth = this.worldWidth || BATTLEFIELD_WORLD_WIDTH;
+    const worldHeight = this.worldHeight || BATTLEFIELD_WORLD_HEIGHT;
     const fitScale = Math.min(
       BATTLEFIELD_MAX_VIEW_SCALE,
-      width / (width + (BATTLEFIELD_APPROACH_MARGIN * 2)),
-      safeHeight / (height + (BATTLEFIELD_APPROACH_MARGIN * 2))
+      width / (worldWidth + (BATTLEFIELD_APPROACH_MARGIN * 2)),
+      safeHeight / (worldHeight + (BATTLEFIELD_APPROACH_MARGIN * 2))
     );
     // Do not clamp the fitted zoom upward: on short portrait or landscape
     // screens that would put north/south spawns back underneath the HUD.
     const scale = fitScale;
     const screenCenterX = width / 2;
     const screenCenterY = safeTop + (safeHeight / 2);
-    const worldCenterX = width / 2;
-    const worldCenterY = height / 2;
+    const worldCenterX = worldWidth / 2;
+    const worldCenterY = worldHeight / 2;
 
     return {
       scale,
@@ -552,6 +559,70 @@ class GameEngine {
     this.ctx.translate(view.screenCenterX, view.screenCenterY);
     this.ctx.scale(view.scale, view.scale);
     this.ctx.translate(-view.worldCenterX, -view.worldCenterY);
+  }
+
+  getReadableWorldSize(baseWorldSize, minScreenSize, scale = this.battlefieldViewScale || 1) {
+    const safeBaseSize = Math.max(0, Number(baseWorldSize) || 0);
+    const safeScale = Math.max(0.01, Number(scale) || 1);
+    return Math.max(safeBaseSize, Math.max(0, Number(minScreenSize) || 0) / safeScale);
+  }
+
+  getDefenseHitRadius(defense, view = this.getBattlefieldView()) {
+    const collisionRadius = Math.max(26, (Number(defense?.radius) || 18) + 8);
+    const minScreenRadiusInWorld = (DEFENSE_MIN_SCREEN_HIT_DIAMETER / 2)
+      / Math.max(0.01, Number(view?.scale) || 1);
+    return Math.max(collisionRadius, minScreenRadiusInWorld);
+  }
+
+  getApproachCullBounds(padding = 0) {
+    const extra = BATTLEFIELD_APPROACH_MARGIN + Math.max(0, Number(padding) || 0);
+    const width = this.worldWidth || BATTLEFIELD_WORLD_WIDTH;
+    const height = this.worldHeight || BATTLEFIELD_WORLD_HEIGHT;
+    return {
+      left: -extra,
+      top: -extra,
+      right: width + extra,
+      bottom: height + extra
+    };
+  }
+
+  getSpawnPosition(side, type, width = this.worldWidth || BATTLEFIELD_WORLD_WIDTH, height = this.worldHeight || BATTLEFIELD_WORLD_HEIGHT) {
+    const isBossVisual = ['leviathan', 'vespera', 'carmilla', 'hellwarden'].includes(type);
+    const baseVisualSize = ENEMY_SPRITE_DATA[type]?.size || 42;
+    const spawnViewScale = this.getBattlefieldView(
+      this.canvas?.width || width,
+      this.canvas?.height || height
+    ).scale;
+    const spriteVisualRadius = this.getReadableWorldSize(
+      baseVisualSize,
+      isBossVisual ? MIN_BOSS_SCREEN_SIZE : MIN_ENEMY_SCREEN_SIZE,
+      spawnViewScale
+    ) / 2;
+    // The complete silhouette, including the Leviathan, remains inside the
+    // camera envelope from its first frame.
+    const offset = Math.max(
+      30,
+      BATTLEFIELD_APPROACH_MARGIN - spriteVisualRadius - BATTLEFIELD_SPAWN_VISUAL_GUTTER
+    );
+    const lateralExtent = side === 'north' || side === 'south' ? width : height;
+    const lateralJitter = isBossVisual
+      ? 0
+      : (Math.random() - 0.5) * Math.min(48, lateralExtent * 0.1);
+    const centerX = width / 2;
+    const centerY = height / 2;
+
+    if (side === 'north') return { x: centerX + lateralJitter, y: -offset };
+    if (side === 'east') return { x: width + offset, y: centerY + lateralJitter };
+    if (side === 'south') return { x: centerX + lateralJitter, y: height + offset };
+    return { x: -offset, y: centerY + lateralJitter };
+  }
+
+  getSpawnGatePosition(side, width = this.worldWidth || BATTLEFIELD_WORLD_WIDTH, height = this.worldHeight || BATTLEFIELD_WORLD_HEIGHT) {
+    const offset = BATTLEFIELD_APPROACH_MARGIN - (SPAWN_GATE_WORLD_SIZE / 2) - 8;
+    if (side === 'north') return { x: width / 2, y: -offset };
+    if (side === 'east') return { x: width + offset, y: height / 2 };
+    if (side === 'south') return { x: width / 2, y: height + offset };
+    return { x: -offset, y: height / 2 };
   }
 
   syncMissionStatusPosition() {
@@ -594,6 +665,8 @@ class GameEngine {
 
     this.floorImage = this.preloadSpriteAsset(FLOOR_TEXTURE_SRC, 'Texture de sol');
     this.coastlineImage = this.preloadSpriteAsset(COASTLINE_IMAGE_SRC, 'Côte infernale');
+    this.approachTerrainImage = this.preloadSpriteAsset(APPROACH_TERRAIN_IMAGE_SRC, 'Terrain d’approche');
+    this.spawnGateAtlasImage = this.preloadSpriteAsset(SPAWN_GATE_ATLAS_SRC, 'Portails d’approche');
     this.floorImage?.addEventListener('load', () => {
       // Recreate the pattern after late decoding or a context restoration.
       this.floorPattern = null;
@@ -1209,7 +1282,10 @@ class GameEngine {
       }
 
       if (document.activeElement === this.canvas) {
-        const step = e.shiftKey ? 50 : 20;
+        const view = this.getBattlefieldView();
+        // Keep keyboard travel constant in screen pixels despite the long-range
+        // tactical zoom used for the five-times-deeper approaches.
+        const step = (e.shiftKey ? 50 : 20) / Math.max(0.01, view.scale);
         if (e.key === 'ArrowLeft') this.buildCursor.x -= step;
         else if (e.key === 'ArrowRight') this.buildCursor.x += step;
         else if (e.key === 'ArrowUp') this.buildCursor.y -= step;
@@ -1225,8 +1301,8 @@ class GameEngine {
           return;
         } else return;
         e.preventDefault();
-        this.buildCursor.x = Math.max(25, Math.min(this.canvas.width - 25, this.buildCursor.x));
-        this.buildCursor.y = Math.max(80, Math.min(this.canvas.height - 125, this.buildCursor.y));
+        this.buildCursor.x = Math.max(25, Math.min(this.worldWidth - 25, this.buildCursor.x));
+        this.buildCursor.y = Math.max(25, Math.min(this.worldHeight - 25, this.buildCursor.y));
       }
     });
 
@@ -1547,9 +1623,10 @@ class GameEngine {
   findPlacedDefenseAt(x, y) {
     let nearest = null;
     let nearestDistance = Infinity;
+    const view = this.getBattlefieldView();
     this.placedTowers.forEach(defense => {
       const distance = Math.hypot(defense.x - x, defense.y - y);
-      const hitRadius = Math.max(26, Number(defense.radius) + 8);
+      const hitRadius = this.getDefenseHitRadius(defense, view);
       if (distance <= hitRadius && distance < nearestDistance) {
         nearest = defense;
         nearestDistance = distance;
@@ -1667,7 +1744,7 @@ class GameEngine {
     // The camera already maps the logical arena between the two HUD panels.
     // Reject only its actual world-space perimeter so mouse, touch and keyboard
     // placement all target the same collision coordinates at every zoom level.
-    if (x < 24 || x > this.canvas.width - 24 || y < 24 || y > this.canvas.height - 24) {
+    if (x < 24 || x > this.worldWidth - 24 || y < 24 || y > this.worldHeight - 24) {
       this.showFeedback('Placement impossible sous le HUD.', '#ef4444');
       return;
     }
@@ -1721,6 +1798,7 @@ class GameEngine {
     this.campaignVictoryClaimed = false;
     this.runtimeError = null;
     this.accessibilityStatusTimer = 0;
+    this.threatReadoutTimer = 0;
     this.runElapsedSeconds = 0;
     this.runMetaCoinsEarned = 0;
     this.score = 0;
@@ -1764,6 +1842,8 @@ class GameEngine {
     this.mercenaries = [];
     this.petDrones = [];
     this.enemies = [];
+    this.nextSpawnGateIndex = 0;
+    SPAWN_GATE_SECTORS.forEach(side => { this.spawnGatePulses[side] = 0; });
     this.enemyBullets = [];
     this.projectiles = [];
     this.particles = [];
@@ -2087,6 +2167,11 @@ class GameEngine {
       this.updateAccessibleBattlefieldStatus();
       this.accessibilityStatusTimer = 4;
     }
+    this.threatReadoutTimer -= dt;
+    if (this.threatReadoutTimer <= 0) {
+      this.updateThreatReadout();
+      this.threatReadoutTimer = 1;
+    }
 
     if (this.citadel.hp <= 0 && this.invincibleTimer <= 0) {
       this.triggerGameOver();
@@ -2110,7 +2195,35 @@ class GameEngine {
     const sectors = ['est', 'sud-est', 'sud', 'sud-ouest', 'ouest', 'nord-ouest', 'nord', 'nord-est'];
     const sectorIndex = Math.round(((angle + (Math.PI * 2)) % (Math.PI * 2)) / (Math.PI / 4)) % 8;
     const bossWarning = nearest.enemy.isBoss ? ` Boss ${nearest.enemy.name}.` : '';
-    status.textContent = `Vague ${this.wave}. ${this.enemies.length} menaces.${bossWarning} Plus proche à ${Math.round(nearest.distance)} pixels, secteur ${sectors[sectorIndex]}. Citadelle ${Math.max(0, Math.round(this.citadel.hp))} points de vie.`;
+    const effectiveSpeed = nearest.enemy.speed * (nearest.enemy.slowTimer > 0 ? 0.45 : 1);
+    const remainingDistance = Math.max(0, nearest.distance - this.citadel.radius - nearest.enemy.radius);
+    const eta = Math.ceil(remainingDistance / Math.max(1, effectiveSpeed));
+    status.textContent = `Vague ${this.wave}. ${this.enemies.length} menaces.${bossWarning} Contact estimé dans ${eta} secondes, secteur ${sectors[sectorIndex]}. Citadelle ${Math.max(0, Math.round(this.citadel.hp))} points de vie.`;
+  }
+
+  updateThreatReadout() {
+    const readout = document.getElementById('mission-threat-txt');
+    if (!readout) return;
+    if (!this.enemies.length) {
+      readout.textContent = this.waveActive ? 'Approches · en observation' : 'Approches · sécurisées';
+      readout.dataset.state = 'calm';
+      return;
+    }
+
+    const nearest = this.enemies.reduce((closest, enemy) => {
+      const distance = Math.hypot(enemy.x - this.citadel.x, enemy.y - this.citadel.y);
+      return !closest || distance < closest.distance ? { enemy, distance } : closest;
+    }, null);
+    const sectorLabels = { north: 'nord', east: 'est', south: 'sud', west: 'ouest' };
+    const effectiveSpeed = nearest.enemy.speed * (nearest.enemy.slowTimer > 0 ? 0.45 : 1);
+    const remainingDistance = Math.max(
+      0,
+      nearest.distance - this.citadel.radius - nearest.enemy.radius
+    );
+    const eta = Math.ceil(remainingDistance / Math.max(1, effectiveSpeed));
+    const sector = sectorLabels[nearest.enemy.spawnSide] || 'multiple';
+    readout.textContent = `${nearest.enemy.isBoss ? 'BOSS' : 'Approche'} · ${this.enemies.length} · ${sector} · ${eta} s`;
+    readout.dataset.state = nearest.enemy.isBoss ? 'boss' : 'approach';
   }
 
   updateMercenaries(dt) {
@@ -2367,6 +2480,9 @@ class GameEngine {
   }
 
   updateSpawns(dt) {
+    SPAWN_GATE_SECTORS.forEach(side => {
+      this.spawnGatePulses[side] = Math.max(0, (this.spawnGatePulses[side] || 0) - dt);
+    });
     if (this.campaignVictory) return;
     if (!this.waveActive) {
       this.waveIntermissionTimer -= dt;
@@ -2395,18 +2511,6 @@ class GameEngine {
   }
 
   spawnMutant() {
-    let x, y;
-    const w = this.canvas.width || window.innerWidth;
-    const h = this.canvas.height || window.innerHeight;
-
-    if (Math.random() < 0.5) {
-      x = Math.random() < 0.5 ? -30 : w + 30;
-      y = Math.random() * h;
-    } else {
-      x = Math.random() * w;
-      y = Math.random() < 0.5 ? -30 : h + 30;
-    }
-
     const bossDue = this.wave % 5 === 0
       && !this.bossSpawnedThisWave
       && this.enemiesSpawnedThisWave >= this.waveSpawnTarget - 1;
@@ -2430,6 +2534,12 @@ class GameEngine {
     const isLeviathan = type === 'leviathan';
     const isBoss = bossDue;
     if (bossDue) this.bossSpawnedThisWave = true;
+    const w = this.worldWidth || BATTLEFIELD_WORLD_WIDTH;
+    const h = this.worldHeight || BATTLEFIELD_WORLD_HEIGHT;
+    const spawnSide = SPAWN_GATE_SECTORS[this.nextSpawnGateIndex % SPAWN_GATE_SECTORS.length];
+    this.nextSpawnGateIndex = (this.nextSpawnGateIndex + 1) % SPAWN_GATE_SECTORS.length;
+    const { x, y } = this.getSpawnPosition(spawnSide, type, w, h);
+    this.spawnGatePulses[spawnSide] = 0.82;
 
     let hp = 30 + (this.wave * 15);
     let speed = 90 + Math.random() * 30;
@@ -2461,6 +2571,7 @@ class GameEngine {
     this.enemies.push({
       x, y, hp, maxHp: hp, speed, baseSpeed: speed, radius, color, name,
       isBoss: isBoss || isLeviathan, isLeviathan, type, recruitableBossId,
+      spawnSide,
       facingAngle: Math.atan2(this.citadel.y - y, this.citadel.x - x),
       animationPhase: Math.random() * 8, attackAnimationTimer: 0, hitAnimationTimer: 0,
       bulletTimer: 0, contactTimer: 0, stunTimer: 0, slowTimer: 0, dead: false
@@ -2469,6 +2580,7 @@ class GameEngine {
   }
 
   updateProjectiles(dt) {
+    const cullBounds = this.getApproachCullBounds(BATTLEFIELD_PROJECTILE_PADDING);
     for (let i = this.projectiles.length - 1; i >= 0; i--) {
       const p = this.projectiles[i];
       p.x += p.vx * dt;
@@ -2480,7 +2592,7 @@ class GameEngine {
         if (p.life <= 0) { this.projectiles.splice(i, 1); continue; }
       }
 
-      if (p.x < -100 || p.x > this.canvas.width + 100 || p.y < -100 || p.y > this.canvas.height + 100) {
+      if (p.x < cullBounds.left || p.x > cullBounds.right || p.y < cullBounds.top || p.y > cullBounds.bottom) {
         this.projectiles.splice(i, 1);
         continue;
       }
@@ -2518,6 +2630,7 @@ class GameEngine {
   }
 
   updateEnemyBullets(dt) {
+    const cullBounds = this.getApproachCullBounds(BATTLEFIELD_PROJECTILE_PADDING);
     for (let i = this.enemyBullets.length - 1; i >= 0; i--) {
       const b = this.enemyBullets[i];
       b.x += b.vx * dt;
@@ -2549,7 +2662,7 @@ class GameEngine {
         continue;
       }
 
-      if (b.x < -50 || b.x > this.canvas.width + 50 || b.y < -50 || b.y > this.canvas.height + 50) {
+      if (b.x < cullBounds.left || b.x > cullBounds.right || b.y < cullBounds.top || b.y > cullBounds.bottom) {
         this.enemyBullets.splice(i, 1);
       }
     }
@@ -2593,7 +2706,9 @@ class GameEngine {
       e.x += Math.cos(angle) * movementSpeed * dt;
       e.y += Math.sin(angle) * movementSpeed * dt;
 
-      if (e.isBoss) {
+      const bossInsideCombatArena = e.x >= 0 && e.x <= this.worldWidth
+        && e.y >= 0 && e.y <= this.worldHeight;
+      if (e.isBoss && bossInsideCombatArena) {
         e.bulletTimer += dt;
         if (e.bulletTimer >= (e.isLeviathan ? 0.8 : 1.2)) {
           e.bulletTimer = 0;
@@ -4249,7 +4364,28 @@ class GameEngine {
     this.ctx.fillStyle = '#030710';
     this.ctx.fillRect(view.left, view.top, viewWidth, viewHeight);
 
-    if (this.isSpriteReady(this.coastlineImage)) {
+    const approachLeft = -BATTLEFIELD_APPROACH_MARGIN;
+    const approachTop = -BATTLEFIELD_APPROACH_MARGIN;
+    const approachWidth = w + (BATTLEFIELD_APPROACH_MARGIN * 2);
+    const approachHeight = h + (BATTLEFIELD_APPROACH_MARGIN * 2);
+
+    if (this.isSpriteReady(this.approachTerrainImage)) {
+      // Anchor the OpenAI-authored tactical plate to logical world bounds.
+      // Its four roads therefore stay aligned on every device and resize.
+      this.ctx.drawImage(
+        this.approachTerrainImage,
+        0,
+        0,
+        this.approachTerrainImage.naturalWidth || this.approachTerrainImage.width,
+        this.approachTerrainImage.naturalHeight || this.approachTerrainImage.height,
+        approachLeft,
+        approachTop,
+        approachWidth,
+        approachHeight
+      );
+      this.ctx.fillStyle = 'rgba(1, 4, 12, 0.34)';
+      this.ctx.fillRect(approachLeft, approachTop, approachWidth, approachHeight);
+    } else if (this.isSpriteReady(this.coastlineImage)) {
       const sourceWidth = this.coastlineImage.naturalWidth || this.coastlineImage.width;
       const sourceHeight = this.coastlineImage.naturalHeight || this.coastlineImage.height;
       const coverScale = Math.max(viewWidth / sourceWidth, viewHeight / sourceHeight);
@@ -4272,8 +4408,8 @@ class GameEngine {
       this.ctx.fillRect(view.left, view.top, viewWidth, viewHeight);
     }
 
-    // The authored floor marks the true collision/placement rectangle while
-    // the coastline remains visible as the enemy approach corridor.
+    // The tileable city floor marks the true collision/placement rectangle.
+    // The longer generated causeways outside it are traversal-only.
     this.drawInfernalFloor(w, h);
     this.ctx.save();
     this.ctx.strokeStyle = 'rgba(0, 240, 255, 0.42)';
@@ -4284,41 +4420,75 @@ class GameEngine {
     this.ctx.restore();
   }
 
+  drawSpawnGates(w, h) {
+    if (!this.isSpriteReady(this.spawnGateAtlasImage)) return;
+    const warningSide = this.waveActive && this.enemiesSpawnedThisWave < this.waveSpawnTarget
+      ? SPAWN_GATE_SECTORS[this.nextSpawnGateIndex % SPAWN_GATE_SECTORS.length]
+      : null;
+    const rotations = {
+      north: 0,
+      east: Math.PI / 2,
+      south: Math.PI,
+      west: -Math.PI / 2
+    };
+    const gateSize = this.getReadableWorldSize(SPAWN_GATE_WORLD_SIZE, 38);
+
+    SPAWN_GATE_SECTORS.forEach((side, row) => {
+      const pulse = this.spawnGatePulses[side] || 0;
+      const frame = pulse > 0.5 ? 2 : (pulse > 0 ? 3 : (side === warningSide ? 1 : 0));
+      const position = this.getSpawnGatePosition(side, w, h);
+      this.drawAtlasFrame(
+        this.spawnGateAtlasImage,
+        { row },
+        frame,
+        position.x,
+        position.y,
+        gateSize,
+        {
+          rotation: rotations[side],
+          shadowColor: frame === 2 ? '#ff2aaf' : '#00f0ff',
+          shadowBlur: frame === 2 ? 22 : 8
+        }
+      );
+    });
+  }
+
   drawTower(tower, options = {}) {
     const spriteData = TOWER_SPRITE_DATA[tower.id];
     const sprite = this.towerSpriteImages[tower.id];
     const frame = spriteData ? this.getTowerAnimationFrame(tower, spriteData) : 0;
     const rotation = spriteData?.rotate ? (tower.facingAngle || 0) : undefined;
+    const visualSize = this.getReadableWorldSize(spriteData?.size || tower.radius * 2, MIN_TOWER_SCREEN_SIZE);
     const drawn = spriteData && this.drawAtlasFrame(
       sprite,
       spriteData,
       frame,
       tower.x,
       tower.y,
-      spriteData.size,
+      visualSize,
       { rotation, shadowColor: '#00f0ff', shadowBlur: 8 }
     );
 
     if (!drawn) {
       this.ctx.beginPath();
-      this.ctx.arc(tower.x, tower.y, tower.radius, 0, Math.PI * 2);
+      this.ctx.arc(tower.x, tower.y, Math.max(tower.radius, visualSize * 0.32), 0, Math.PI * 2);
       this.ctx.fillStyle = '#1e293b';
       this.ctx.fill();
       this.ctx.strokeStyle = '#00f0ff';
       this.ctx.lineWidth = 2;
       this.ctx.stroke();
-      this.ctx.font = '16px sans-serif';
+      this.ctx.font = `${this.getReadableWorldSize(16, 14)}px sans-serif`;
       this.ctx.textAlign = 'center';
       this.ctx.textBaseline = 'middle';
       this.ctx.fillText(tower.icon, tower.x, tower.y);
     }
 
     if (!options.suppressLevel) {
-      this.ctx.font = 'bold 9px Rajdhani';
+      this.ctx.font = `bold ${this.getReadableWorldSize(9, 9)}px Rajdhani`;
       this.ctx.textAlign = 'center';
       this.ctx.textBaseline = 'middle';
       this.ctx.fillStyle = '#67e8f9';
-      this.ctx.fillText(`L${tower.level}`, tower.x + 17, tower.y + 17);
+      this.ctx.fillText(`L${tower.level}`, tower.x + (visualSize * 0.3), tower.y + (visualSize * 0.3));
     }
   }
 
@@ -4335,7 +4505,7 @@ class GameEngine {
       frame,
       x,
       y,
-      options.size || spriteData.size,
+      this.getReadableWorldSize(options.size || spriteData.size, MIN_HERO_SCREEN_SIZE),
       {
         flipX: Math.cos(facingAngle || 0) < 0,
         alpha: options.alpha,
@@ -4349,7 +4519,10 @@ class GameEngine {
     const spriteData = ENEMY_SPRITE_DATA[enemy.type];
     const sprite = this.enemySpriteImages[enemy.type];
     const spriteReady = this.isSpriteReady(sprite);
-    const visualSize = spriteData?.size || enemy.radius * 2;
+    const visualSize = this.getReadableWorldSize(
+      spriteData?.size || enemy.radius * 2,
+      enemy.isBoss ? MIN_BOSS_SCREEN_SIZE : MIN_ENEMY_SCREEN_SIZE
+    );
     const visualRadius = spriteReady ? visualSize / 2 : enemy.radius;
 
     if (spriteReady) {
@@ -4390,19 +4563,23 @@ class GameEngine {
     }
 
     if (enemy.hp < enemy.maxHp) {
-      const healthWidth = enemy.isBoss ? Math.min(96, visualSize * 0.68) : 40;
-      const healthY = enemy.y - visualRadius - 12;
+      const healthWidth = this.getReadableWorldSize(
+        enemy.isBoss ? Math.min(96, visualSize * 0.68) : 40,
+        enemy.isBoss ? 72 : 34
+      );
+      const healthHeight = this.getReadableWorldSize(5, 4);
+      const healthY = enemy.y - visualRadius - this.getReadableWorldSize(12, 8);
       this.ctx.fillStyle = 'rgba(0,0,0,0.72)';
-      this.ctx.fillRect(enemy.x - healthWidth / 2, healthY, healthWidth, 5);
+      this.ctx.fillRect(enemy.x - healthWidth / 2, healthY, healthWidth, healthHeight);
       this.ctx.fillStyle = enemy.color;
-      this.ctx.fillRect(enemy.x - healthWidth / 2, healthY, healthWidth * Math.max(0, enemy.hp / enemy.maxHp), 5);
+      this.ctx.fillRect(enemy.x - healthWidth / 2, healthY, healthWidth * Math.max(0, enemy.hp / enemy.maxHp), healthHeight);
     }
 
     if (enemy.isBoss) {
-      this.ctx.font = 'bold 11px Rajdhani, sans-serif';
+      this.ctx.font = `bold ${this.getReadableWorldSize(11, 11)}px Rajdhani, sans-serif`;
       this.ctx.textAlign = 'center';
       this.ctx.fillStyle = '#fff';
-      this.ctx.fillText(enemy.name, enemy.x, enemy.y - visualRadius - 18);
+      this.ctx.fillText(enemy.name, enemy.x, enemy.y - visualRadius - this.getReadableWorldSize(18, 15));
     }
     this.ctx.restore();
   }
@@ -4410,9 +4587,12 @@ class GameEngine {
   render() {
     if (!this.ctx || !this.canvas) return;
 
-    const w = this.canvas.width || window.innerWidth || 1200;
-    const h = this.canvas.height || window.innerHeight || 800;
-    const view = this.getBattlefieldView(w, h);
+    const viewportWidth = this.canvas.width || window.innerWidth || 1200;
+    const viewportHeight = this.canvas.height || window.innerHeight || 800;
+    const w = this.worldWidth || BATTLEFIELD_WORLD_WIDTH;
+    const h = this.worldHeight || BATTLEFIELD_WORLD_HEIGHT;
+    const view = this.getBattlefieldView(viewportWidth, viewportHeight);
+    this.battlefieldViewScale = view.scale;
     const viewWidth = view.right - view.left;
     const viewHeight = view.bottom - view.top;
 
@@ -4440,6 +4620,10 @@ class GameEngine {
       this.ctx.stroke();
     }
 
+    // Four OpenAI-authored gates expose the next sector and pulse as each
+    // round-robin horde enters the five-times-deeper causeways.
+    this.drawSpawnGates(w, h);
+
     if (this.isOverdriveActive) {
       this.ctx.fillStyle = `rgba(245, 158, 11, ${0.08 + Math.sin(Date.now() * 0.01) * 0.04})`;
       this.ctx.fillRect(view.left, view.top, viewWidth, viewHeight);
@@ -4447,9 +4631,10 @@ class GameEngine {
 
     // Render Mercenaries
     this.mercenaries.forEach(m => {
+      const mercRadius = this.getReadableWorldSize(14, 9);
       this.ctx.save();
       this.ctx.beginPath();
-      this.ctx.arc(m.x, m.y, 14, 0, Math.PI * 2);
+      this.ctx.arc(m.x, m.y, mercRadius, 0, Math.PI * 2);
       this.ctx.fillStyle = '#f59e0b';
       this.ctx.shadowColor = '#f59e0b';
       this.ctx.shadowBlur = 10;
@@ -4459,9 +4644,10 @@ class GameEngine {
 
     // Render Pet Drones
     this.petDrones.forEach(d => {
+      const droneRadius = this.getReadableWorldSize(10, 8);
       this.ctx.save();
       this.ctx.beginPath();
-      this.ctx.arc(d.x, d.y, 10, 0, Math.PI * 2);
+      this.ctx.arc(d.x, d.y, droneRadius, 0, Math.PI * 2);
       this.ctx.fillStyle = '#ec4899';
       this.ctx.shadowColor = '#ec4899';
       this.ctx.shadowBlur = 12;
@@ -4485,10 +4671,12 @@ class GameEngine {
       this.drawTower(t);
       if (t.type === 'barrier') {
         const hpRatio = Math.max(0, t.hp / t.maxHp);
+        const hpWidth = this.getReadableWorldSize(40, 32);
+        const hpHeight = this.getReadableWorldSize(4, 3);
         this.ctx.fillStyle = 'rgba(0,0,0,0.7)';
-        this.ctx.fillRect(t.x - 20, t.y + 24, 40, 4);
+        this.ctx.fillRect(t.x - hpWidth / 2, t.y + 24, hpWidth, hpHeight);
         this.ctx.fillStyle = '#67e8f9';
-        this.ctx.fillRect(t.x - 20, t.y + 24, 40 * hpRatio, 4);
+        this.ctx.fillRect(t.x - hpWidth / 2, t.y + 24, hpWidth * hpRatio, hpHeight);
       }
       this.ctx.restore();
     });
@@ -4525,10 +4713,11 @@ class GameEngine {
     // Render Citadel
     const citX = this.citadel.x || (w / 2);
     const citY = this.citadel.y || (h / 2);
+    const citadelVisualRadius = this.getReadableWorldSize(this.citadel.radius, 24);
 
     this.ctx.save();
     this.ctx.beginPath();
-    this.ctx.arc(citX, citY, this.citadel.radius, 0, Math.PI * 2);
+    this.ctx.arc(citX, citY, citadelVisualRadius, 0, Math.PI * 2);
     this.ctx.fillStyle = '#121829';
     this.ctx.fill();
     this.ctx.strokeStyle = this.isOverdriveActive ? '#f59e0b' : '#ff2a5f';
@@ -4538,7 +4727,7 @@ class GameEngine {
     this.ctx.stroke();
 
     this.ctx.beginPath();
-    this.ctx.arc(citX, citY, 18, 0, Math.PI * 2);
+    this.ctx.arc(citX, citY, this.getReadableWorldSize(18, 9), 0, Math.PI * 2);
     this.ctx.fillStyle = '#00f0ff';
     this.ctx.shadowColor = '#00f0ff';
     this.ctx.shadowBlur = 15;
@@ -4548,25 +4737,27 @@ class GameEngine {
 
     // Render Crates
     this.crates.forEach(c => {
+      const crateRadius = this.getReadableWorldSize(c.radius, 7);
       this.ctx.save();
       this.ctx.fillStyle = c.type === 'red' ? '#ff2a5f' : '#00f0ff';
       this.ctx.shadowColor = c.type === 'red' ? '#ff2a5f' : '#00f0ff';
       this.ctx.shadowBlur = 10;
-      this.ctx.fillRect(c.x - c.radius, c.y - c.radius, c.radius * 2, c.radius * 2);
+      this.ctx.fillRect(c.x - crateRadius, c.y - crateRadius, crateRadius * 2, crateRadius * 2);
       this.ctx.restore();
     });
 
     // Render Powerups
     this.powerups.forEach(p => {
+      const powerupRadius = this.getReadableWorldSize(p.radius, 9);
       this.ctx.save();
       this.ctx.beginPath();
-      this.ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      this.ctx.arc(p.x, p.y, powerupRadius, 0, Math.PI * 2);
       this.ctx.fillStyle = p.type.color;
       this.ctx.shadowColor = p.type.color;
       this.ctx.shadowBlur = 15;
       this.ctx.fill();
 
-      this.ctx.font = '14px sans-serif';
+      this.ctx.font = `${this.getReadableWorldSize(14, 12)}px sans-serif`;
       this.ctx.textAlign = 'center';
       this.ctx.textBaseline = 'middle';
       this.ctx.fillText(p.type.icon, p.x, p.y);
@@ -4591,9 +4782,10 @@ class GameEngine {
 
     // Render Boss Bullets
     this.enemyBullets.forEach(b => {
+      const bulletRadius = this.getReadableWorldSize(b.radius, 4);
       this.ctx.save();
       this.ctx.beginPath();
-      this.ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
+      this.ctx.arc(b.x, b.y, bulletRadius, 0, Math.PI * 2);
       this.ctx.fillStyle = b.color;
       this.ctx.shadowColor = b.color;
       this.ctx.shadowBlur = 10;
@@ -4603,9 +4795,10 @@ class GameEngine {
 
     // Render Projectiles
     this.projectiles.forEach(p => {
+      const projectileRadius = this.getReadableWorldSize(p.radius, 2.5);
       this.ctx.save();
       this.ctx.beginPath();
-      this.ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      this.ctx.arc(p.x, p.y, projectileRadius, 0, Math.PI * 2);
       this.ctx.fillStyle = p.color;
       this.ctx.shadowColor = p.color;
       this.ctx.shadowBlur = 12;
@@ -4648,7 +4841,7 @@ class GameEngine {
     // Render Floating Text
     this.floatingTexts.forEach(t => {
       this.ctx.save();
-      this.ctx.font = 'bold 15px Rajdhani';
+      this.ctx.font = `bold ${this.getReadableWorldSize(15, 12)}px Rajdhani`;
       this.ctx.fillStyle = t.color;
       this.ctx.fillText(t.text, t.x, t.y);
       this.ctx.restore();
@@ -4752,6 +4945,7 @@ class GameEngine {
       overdriveButton.disabled = !ready;
       overdriveButton.setAttribute('aria-label', this.isOverdriveActive ? 'Overdrive actif' : ready ? 'Overdrive prêt, raccourci F' : `Overdrive chargé à ${Math.round(this.frenzyMeter)} pour cent`);
     }
+    this.updateThreatReadout();
     this.updateBuildBarAffordability();
   }
 
