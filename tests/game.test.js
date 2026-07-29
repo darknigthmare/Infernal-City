@@ -160,6 +160,62 @@ function createEngine(GameEngine) {
   return engine;
 }
 
+function installCameraInputHarness(engine, document, options = {}) {
+  const width = options.width || 1200;
+  const height = options.height || 800;
+  const listeners = new Map();
+  const capturedPointers = new Set();
+  const canvas = {
+    width,
+    height,
+    tabIndex: 0,
+    classList: createClassList(),
+    dataset: {},
+    setAttribute() {},
+    addEventListener(type, callback) {
+      listeners.set(type, callback);
+    },
+    getBoundingClientRect() {
+      return { left: 0, top: 0, width, height };
+    },
+    setPointerCapture(pointerId) {
+      capturedPointers.add(pointerId);
+    },
+    hasPointerCapture(pointerId) {
+      return capturedPointers.has(pointerId);
+    },
+    releasePointerCapture(pointerId) {
+      capturedPointers.delete(pointerId);
+    },
+    focus() {}
+  };
+
+  engine.canvas = canvas;
+  engine.isPaused = false;
+  engine.isGameOver = false;
+  document.getElementById = () => null;
+  engine.bindEvents();
+
+  return {
+    canvas,
+    dispatch(type, overrides = {}) {
+      const callback = listeners.get(type);
+      assert.ok(callback, `Ecouteur camera absent: ${type}`);
+      const event = {
+        pointerId: 1,
+        pointerType: 'mouse',
+        button: 0,
+        clientX: width / 2,
+        clientY: height / 2,
+        preventDefault() {},
+        ...overrides
+      };
+      callback(event);
+      return event;
+    }
+  };
+}
+
 test('toutes les methodes this.* appelees existent sur GameEngine', () => {
   const declarations = new Set(
     [...GAME_SOURCE.matchAll(/^  ([A-Za-z_$][A-Za-z0-9_$]*)\([^;\n]*\) \{/gm)]
@@ -886,7 +942,7 @@ test('le rendu decoupe exactement la cellule 4x4 demandee', () => {
   assert.deepEqual(drawCalls[0].slice(5), [-32, -32, 64, 64]);
 });
 
-test('la camera montre le couloir ennemi hors terrain sans modifier les coordonnees de jeu', () => {
+test('la camera couvre toute la largeur puis cadre les quatre approches sur demande', () => {
   const { GameEngine, document } = loadGameModule();
   const engine = createEngine(GameEngine);
   let hudRects = {
@@ -901,17 +957,26 @@ test('la camera montre le couloir ennemi hors terrain sans modifier les coordonn
   );
   const view = engine.getBattlefieldView(1200, 800);
   const projectX = worldX => view.screenCenterX + ((worldX - view.worldCenterX) * view.scale);
-  const projectY = worldY => view.screenCenterY + ((worldY - view.worldCenterY) * view.scale);
 
-  assert.ok(view.scale > 0 && view.scale < 0.78, `Zoom inattendu: ${view.scale}`);
-  assert.ok(projectX(-30) > 0, 'Le spawn ouest doit etre visible avant de franchir le terrain');
-  assert.ok(projectX(1230) < 1200, 'Le spawn est doit etre visible avant de franchir le terrain');
-  assert.ok(projectY(-30) > view.safeTop, 'Le spawn nord doit apparaitre sous le HUD');
-  assert.ok(projectY(830) < view.safeBottom, 'Le spawn sud doit apparaitre au-dessus des defenses');
+  assert.equal(view.zoom, 1);
+  assert.ok(view.scale > 0, `Zoom inattendu: ${view.scale}`);
+  assert.ok(projectX(-320) <= 0.001, 'Le bord ouest doit atteindre le bord de la fenetre');
+  assert.ok(projectX(1520) >= 1199.999, 'Le bord est doit atteindre le bord de la fenetre');
 
   const restoredCenter = engine.screenToBattlefieldPoint(view.screenCenterX, view.screenCenterY, view);
   assert.equal(restoredCenter.x, 600);
   assert.equal(restoredCenter.y, 400);
+  engine.fitBattlefieldCamera(1200, 800);
+  const fittedView = engine.getBattlefieldView(1200, 800);
+  const fittedProjectX = worldX => fittedView.screenCenterX
+    + ((worldX - fittedView.worldCenterX) * fittedView.scale);
+  const fittedProjectY = worldY => fittedView.screenCenterY
+    + ((worldY - fittedView.worldCenterY) * fittedView.scale);
+  assert.ok(fittedView.zoom < 1, 'Cadrer doit dezoomer depuis la vue pleine largeur');
+  assert.ok(fittedProjectX(-320) >= -0.001);
+  assert.ok(fittedProjectX(1520) <= 1200.001);
+  assert.ok(fittedProjectY(-320) >= fittedView.safeTop - 0.001);
+  assert.ok(fittedProjectY(1120) <= fittedView.safeBottom + 0.001);
   assert.match(GAME_SOURCE, /const BATTLEFIELD_APPROACH_MARGIN = 64 \* 5;/);
   assert.match(GAME_SOURCE, /this\.applyBattlefieldView\(view\);/);
   assert.match(GAME_SOURCE, /this\.screenToBattlefieldPoint\(screenX, screenY\)/);
@@ -928,6 +993,7 @@ test('la camera montre le couloir ennemi hors terrain sans modifier les coordonn
       return { left: 0, top: 0, width: 360, height: 640 };
     }
   };
+  engine.fitBattlefieldCamera(360, 640);
   const mobileView = engine.getBattlefieldView(360, 640);
   const mobileNorthSpawn = mobileView.screenCenterY + ((-30 - mobileView.worldCenterY) * mobileView.scale);
   const mobileSouthSpawn = mobileView.screenCenterY + ((670 - mobileView.worldCenterY) * mobileView.scale);
@@ -947,6 +1013,7 @@ test('la camera montre le couloir ennemi hors terrain sans modifier les coordonn
       return { left: 0, top: 0, width: 844, height: 390 };
     }
   };
+  engine.fitBattlefieldCamera(844, 390);
   const landscapeView = engine.getBattlefieldView(844, 390);
   const landscapeNorthSpawn = landscapeView.screenCenterY + ((-30 - landscapeView.worldCenterY) * landscapeView.scale);
   const landscapeSouthSpawn = landscapeView.screenCenterY + ((420 - landscapeView.worldCenterY) * landscapeView.scale);
@@ -958,6 +1025,246 @@ test('la camera montre le couloir ennemi hors terrain sans modifier les coordonn
   assert.match(GAME_SOURCE, /!this\.requiresPortraitOrientation/);
 });
 
+test('zoom ancre et pan borne preservent les coordonnees logiques', () => {
+  const { GameEngine } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const anchor = { x: 540, y: 360 };
+  const before = engine.screenToBattlefieldPoint(anchor.x, anchor.y);
+  engine.setBattlefieldCameraZoom(1.8, anchor.x, anchor.y);
+  const after = engine.screenToBattlefieldPoint(anchor.x, anchor.y);
+
+  assert.ok(Math.abs(before.x - after.x) < 1e-9, 'le zoom doit rester ancre sous le pointeur');
+  assert.ok(Math.abs(before.y - after.y) < 1e-9, 'le zoom doit rester ancre sous le pointeur');
+
+  engine.panBattlefieldCameraBy(1e6, 1e6);
+  let view = engine.getBattlefieldView();
+  const safeLeft = engine.screenToBattlefieldPoint(0, view.safeTop, view);
+  assert.ok(Math.abs(safeLeft.x - (-320)) < 1e-6, 'le pan ouest doit etre borne');
+  assert.ok(Math.abs(safeLeft.y - (-320)) < 1e-6, 'le pan nord doit etre borne');
+
+  engine.panBattlefieldCameraBy(-1e6, -1e6);
+  view = engine.getBattlefieldView();
+  const safeRight = engine.screenToBattlefieldPoint(1200, view.safeBottom, view);
+  assert.ok(Math.abs(safeRight.x - 1520) < 1e-6, 'le pan est doit etre borne');
+  assert.ok(Math.abs(safeRight.y - 1120) < 1e-6, 'le pan sud doit etre borne');
+
+  engine.setBattlefieldCameraZoom(999, view.screenCenterX, view.screenCenterY);
+  assert.equal(engine.camera.zoom, 3.5);
+  engine.setBattlefieldCameraZoom(0.001, view.screenCenterX, view.screenCenterY);
+  assert.equal(engine.camera.zoom, engine.getBattlefieldCameraMetrics().minZoom);
+});
+
+test('redimensionner la fenetre ne deplace aucune entite du monde', () => {
+  const { GameEngine, document, window } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const orientationNotice = createElement('div');
+  orientationNotice.hidden = true;
+  document.getElementById = id => (id === 'short-landscape-notice' ? orientationNotice : null);
+  engine.enemies = [{ x: -245, y: 377, hp: 10 }];
+  engine.projectiles = [{ x: 1315, y: 401, vx: 0, vy: 0 }];
+  const before = JSON.parse(JSON.stringify({
+    enemies: engine.enemies,
+    projectiles: engine.projectiles
+  }));
+
+  window.innerWidth = 390;
+  window.innerHeight = 844;
+  engine.resizeCanvas();
+
+  assert.deepEqual(JSON.parse(JSON.stringify(engine.enemies)), before.enemies);
+  assert.deepEqual(JSON.parse(JSON.stringify(engine.projectiles)), before.projectiles);
+  assert.equal(engine.worldWidth, 1200);
+  assert.equal(engine.worldHeight, 800);
+});
+
+test('les controles camera couvrent souris tactile pincement boutons et clavier', () => {
+  const indexSource = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  const stylesSource = fs.readFileSync(path.join(ROOT, 'styles.v8.css'), 'utf8');
+
+  ['btn-camera-zoom-out', 'btn-camera-fit', 'btn-camera-zoom-in', 'camera-zoom-txt']
+    .forEach(id => assert.match(indexSource, new RegExp(`id="${id}"`)));
+  assert.match(GAME_SOURCE, /addEventListener\('pointerdown'/);
+  assert.match(GAME_SOURCE, /addEventListener\('pointermove'/);
+  assert.match(GAME_SOURCE, /addEventListener\('pointerup'/);
+  assert.match(GAME_SOURCE, /addEventListener\('pointercancel'/);
+  assert.match(GAME_SOURCE, /addEventListener\('wheel'[\s\S]*\{ passive: false \}/);
+  assert.match(GAME_SOURCE, /cameraGesture\?\.type !== 'pinch'/);
+  assert.match(GAME_SOURCE, />= 6;/);
+  assert.match(GAME_SOURCE, /suppressNextBattlefieldClick/);
+  assert.match(GAME_SOURCE, /e\.key === '0'[\s\S]*fitBattlefieldCamera/);
+  assert.match(GAME_SOURCE, /cameraKey === 'w'[\s\S]*cameraKey === 's'/);
+  assert.match(GAME_SOURCE, /aria-keyshortcuts', 'B W A S D \+ - 0'/);
+  assert.match(indexSource, /id="camera-zoom-txt"[^>]*aria-live="off"/);
+  assert.match(indexSource, /camera-controls-help">[^<]*W A S D/);
+  assert.match(stylesSource, /#game-canvas[\s\S]*touch-action: none/);
+  assert.match(stylesSource, /\.camera-control-btn[\s\S]*min-height: 44px/);
+  assert.match(stylesSource, /max-height: 592px[\s\S]*grid-template-columns: repeat\(3, 44px\)/);
+});
+
+test('un drag supprime seulement son clic synthetique puis laisse passer le clic suivant', () => {
+  const { GameEngine, document } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  let buildCount = 0;
+  engine.findPlacedDefenseAt = () => null;
+  engine.buildSelectedTowerAt = () => { buildCount += 1; };
+  const camera = installCameraInputHarness(engine, document);
+
+  engine.setBattlefieldCameraZoom(1.5, 600, 400);
+  const cameraXBeforeDrag = engine.camera.x;
+  camera.dispatch('pointerdown', { clientX: 600 });
+  camera.dispatch('pointermove', { clientX: 630 });
+  camera.dispatch('pointerup', { clientX: 630 });
+  camera.dispatch('click', { clientX: 630 });
+
+  assert.notEqual(engine.camera.x, cameraXBeforeDrag, 'le drag doit deplacer la camera');
+  assert.equal(buildCount, 0, 'le clic synthetique du drag ne doit pas construire');
+
+  camera.dispatch('click', { clientX: 600 });
+  assert.equal(buildCount, 1, 'le clic bref suivant doit construire normalement');
+});
+
+test('un navigateur sans clic synthetique ne peut pas laisser la suppression armee', async () => {
+  const { GameEngine, document } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  let buildCount = 0;
+  engine.findPlacedDefenseAt = () => null;
+  engine.buildSelectedTowerAt = () => { buildCount += 1; };
+  const camera = installCameraInputHarness(engine, document);
+
+  engine.setBattlefieldCameraZoom(1.5, 600, 400);
+  camera.dispatch('pointerdown', { clientX: 600 });
+  camera.dispatch('pointermove', { clientX: 630 });
+  camera.dispatch('pointerup', { clientX: 630 });
+  await new Promise(resolve => setTimeout(resolve, 140));
+  camera.dispatch('click', { clientX: 600 });
+
+  assert.equal(buildCount, 1, 'le prochain clic volontaire ne doit jamais etre perdu');
+});
+
+test('pointercancel ne supprime pas le prochain clic volontaire', () => {
+  const { GameEngine, document } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  let buildCount = 0;
+  engine.findPlacedDefenseAt = () => null;
+  engine.buildSelectedTowerAt = () => { buildCount += 1; };
+  const camera = installCameraInputHarness(engine, document);
+
+  engine.setBattlefieldCameraZoom(1.5, 600, 400);
+  camera.dispatch('pointerdown', { clientX: 600 });
+  camera.dispatch('pointermove', { clientX: 630 });
+  camera.dispatch('pointercancel', { clientX: 630 });
+  camera.dispatch('click', { clientX: 600 });
+
+  assert.equal(buildCount, 1, 'une annulation ne doit pas avaler le clic suivant');
+});
+
+test('un pincement qui translate et zoome conserve son point monde sous le milieu', () => {
+  const { GameEngine, document } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const camera = installCameraInputHarness(engine, document);
+
+  engine.setBattlefieldCameraZoom(1.5, 600, 400);
+  const previousMidpoint = { x: 500, y: 400 };
+  const anchoredWorldPoint = engine.screenToBattlefieldPoint(
+    previousMidpoint.x,
+    previousMidpoint.y
+  );
+
+  camera.dispatch('pointerdown', {
+    pointerId: 11,
+    pointerType: 'touch',
+    clientX: 400
+  });
+  camera.dispatch('pointerdown', {
+    pointerId: 12,
+    pointerType: 'touch',
+    clientX: 600
+  });
+  camera.dispatch('pointermove', {
+    pointerId: 11,
+    pointerType: 'touch',
+    clientX: 400
+  });
+  camera.dispatch('pointermove', {
+    pointerId: 12,
+    pointerType: 'touch',
+    clientX: 720
+  });
+
+  const translatedMidpoint = { x: 560, y: 400 };
+  const worldPointAfterPinch = engine.screenToBattlefieldPoint(
+    translatedMidpoint.x,
+    translatedMidpoint.y
+  );
+  assert.ok(
+    Math.abs(anchoredWorldPoint.x - worldPointAfterPinch.x) < 1e-9,
+    'le pincement ne doit pas deriver horizontalement'
+  );
+  assert.ok(
+    Math.abs(anchoredWorldPoint.y - worldPointAfterPinch.y) < 1e-9,
+    'le pincement ne doit pas deriver verticalement'
+  );
+  assert.ok(Math.abs(engine.camera.zoom - 2.4) < 1e-9, 'le rapport de pincement doit zoomer');
+});
+
+test('resize synchronise le zoom affiche et l etat du bouton de dezoom', () => {
+  const { GameEngine, document, window } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  let viewportMode = 'landscape';
+  const zoomOutput = createElement('output');
+  const zoomOutButton = createElement('button');
+  const zoomInButton = createElement('button');
+  const orientationNotice = createElement('div');
+  const hudRects = {
+    landscape: {
+      'hud-header': { bottom: 112 },
+      'mission-status-panel': { bottom: 141 },
+      'hud-build-bar': { top: 230 }
+    },
+    portrait: {
+      'hud-header': { bottom: 155 },
+      'mission-status-panel': { bottom: 207 },
+      'hud-build-bar': { top: 700 }
+    }
+  };
+
+  document.getElementById = id => {
+    if (id === 'camera-zoom-txt') return zoomOutput;
+    if (id === 'btn-camera-zoom-out') return zoomOutButton;
+    if (id === 'btn-camera-zoom-in') return zoomInButton;
+    if (id === 'short-landscape-notice') return orientationNotice;
+    const rect = hudRects[viewportMode][id];
+    return rect ? { getBoundingClientRect: () => ({ ...rect }) } : null;
+  };
+  engine.canvas = {
+    width: 844,
+    height: 390,
+    getBoundingClientRect() {
+      return {
+        left: 0,
+        top: 0,
+        width: window.innerWidth,
+        height: window.innerHeight
+      };
+    }
+  };
+
+  window.innerWidth = 844;
+  window.innerHeight = 390;
+  engine.setBattlefieldCameraZoom(0.2, 422, 195, 844, 390);
+  assert.equal(zoomOutput.textContent, '20 %');
+  assert.equal(zoomOutButton.disabled, false);
+
+  viewportMode = 'portrait';
+  window.innerWidth = 390;
+  window.innerHeight = 844;
+  engine.resizeCanvas();
+
+  assert.equal(zoomOutput.textContent, `${Math.round(engine.camera.zoom * 100)} %`);
+  assert.equal(zoomOutput.textContent, '64 %');
+  assert.equal(zoomOutButton.disabled, true, 'le nouveau minimum doit desactiver le bouton');
+});
+
 test('le corridor approche x5 garde les quatre portes de horde visibles et loin du terrain central', () => {
   const {
     GameEngine,
@@ -966,6 +1273,7 @@ test('le corridor approche x5 garde les quatre portes de horde visibles et loin 
   const engine = createEngine(GameEngine);
   const width = engine.canvas.width;
   const height = engine.canvas.height;
+  engine.fitBattlefieldCamera(width, height);
   const view = engine.getBattlefieldView(width, height);
 
   assert.equal(BATTLEFIELD_APPROACH_MARGIN, 320);

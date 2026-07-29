@@ -60,7 +60,7 @@
         </label>
 
         <ol class="briefing-steps">
-          <li><strong>Construire</strong><span>Choisissez une défense, puis touchez le champ de bataille. Touchez une tour placée pour l’améliorer ou la vendre.</span></li>
+          <li><strong>Observer & construire</strong><span>Faites glisser le terrain ou utilisez WASD pour déplacer la caméra, zoomez avec la molette, le pincement ou les boutons − / CADRER / +, puis touchez brièvement pour construire ou gérer une tour.</span></li>
           <li><strong>Évoluer</strong><span>Les éliminations donnent de l’XP. Chaque niveau améliore votre arsenal automatique.</span></li>
           <li><strong>Survivre</strong><span>Bio-Coins = achats du run. Crédits Haven = améliorations permanentes au QG.</span></li>
           <li><strong>Déchaîner</strong><span>Remplissez la Frénésie et activez l’Overdrive avec le bouton ou la touche F.</span></li>
@@ -163,12 +163,46 @@
     </header>
 
     <!-- Main Game Canvas -->
-    <canvas id="game-canvas"></canvas>
+    <canvas
+      id="game-canvas"
+      tabindex="0"
+      aria-label="Champ de bataille interactif"
+      aria-describedby="camera-controls-help battlefield-status"
+    ></canvas>
+
+    <div id="camera-controls" class="camera-controls" role="group" aria-label="Contrôles de caméra">
+      <button
+        class="camera-control-btn"
+        id="btn-camera-zoom-out"
+        type="button"
+        aria-label="Dézoomer la caméra"
+        aria-controls="game-canvas"
+        title="Dézoomer"
+      >−</button>
+      <button
+        class="camera-control-btn camera-fit-btn"
+        id="btn-camera-fit"
+        type="button"
+        aria-label="Cadrer tout le terrain"
+        aria-controls="game-canvas"
+        title="Afficher tout le terrain"
+      >CADRER</button>
+      <button
+        class="camera-control-btn"
+        id="btn-camera-zoom-in"
+        type="button"
+        aria-label="Zoomer la caméra"
+        aria-controls="game-canvas"
+        title="Zoomer"
+      >+</button>
+      <output id="camera-zoom-txt" class="camera-zoom-output" for="btn-camera-zoom-out btn-camera-fit btn-camera-zoom-in" aria-live="off">100 %</output>
+    </div>
+    <p class="sr-only" id="camera-controls-help">Faites glisser le champ de bataille ou utilisez W A S D pour déplacer la caméra. Utilisez la molette de la souris, un pincement à deux doigts, plus, moins, zéro ou les boutons de caméra pour zoomer, dézoomer et cadrer tout le terrain. Un toucher ou clic bref sert à construire et à sélectionner les tours.</p>
 
     <div id="short-landscape-notice" class="orientation-notice" role="alert" aria-hidden="true" hidden>
       <span class="orientation-notice-icon" aria-hidden="true">↻</span>
       <h2>TOURNEZ VOTRE APPAREIL</h2>
-      <p>Le champ de bataille est mis en pause. Passez en portrait pour voir les quatre voies d’arrivée et jouer confortablement.</p>
+      <p>Le champ de bataille est mis en pause. Passez en portrait, puis déplacez ou cadrez la caméra pour surveiller les quatre voies d’arrivée.</p>
     </div>
 
     <aside id="mission-status-panel" aria-label="État de la mission">

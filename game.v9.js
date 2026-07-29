@@ -7,7 +7,7 @@ const RUN_CHECKPOINT_VERSION = 1;
 // construction arena intact, but make its traversable approach belt five times
 // deeper than the previous 64-unit framing on every side.
 const BATTLEFIELD_APPROACH_MARGIN = 64 * 5;
-const BATTLEFIELD_MAX_VIEW_SCALE = 0.78;
+const BATTLEFIELD_MAX_CAMERA_ZOOM = 3.5;
 const BATTLEFIELD_WORLD_WIDTH = 1200;
 const BATTLEFIELD_WORLD_HEIGHT = 800;
 const BATTLEFIELD_SPAWN_VISUAL_GUTTER = 12;
@@ -379,6 +379,14 @@ class GameEngine {
     this.spawnGatePulses = Object.fromEntries(SPAWN_GATE_SECTORS.map(side => [side, 0]));
     this.nextSpawnGateIndex = 0;
     this.battlefieldViewScale = 1;
+    // Camera coordinates stay in the fixed logical world. Zoom 1 is the
+    // responsive cover view, so the approach terrain fills the usable viewport
+    // without being stretched.
+    this.camera = {
+      x: BATTLEFIELD_WORLD_WIDTH / 2,
+      y: BATTLEFIELD_WORLD_HEIGHT / 2,
+      zoom: 1
+    };
     this.enemyBullets = [];
     this.projectiles = [];
     this.particles = [];
@@ -483,10 +491,12 @@ class GameEngine {
       this.buildCursor.x = this.citadel.x + 120;
       this.buildCursor.y = this.citadel.y;
     }
+    this.constrainBattlefieldCamera(newWidth, newHeight);
+    this.updateBattlefieldCameraControls(newWidth, newHeight);
     requestAnimationFrame(() => this.syncMissionStatusPosition());
   }
 
-  getBattlefieldView(width = this.canvas?.width || 1200, height = this.canvas?.height || 800) {
+  getBattlefieldCameraMetrics(width = this.canvas?.width || 1200, height = this.canvas?.height || 800) {
     const rect = this.canvas?.getBoundingClientRect?.() || {
       left: 0,
       top: 0,
@@ -520,32 +530,192 @@ class GameEngine {
     const safeHeight = Math.max(1, safeBottom - safeTop);
     const worldWidth = this.worldWidth || BATTLEFIELD_WORLD_WIDTH;
     const worldHeight = this.worldHeight || BATTLEFIELD_WORLD_HEIGHT;
+    const approachWidth = worldWidth + (BATTLEFIELD_APPROACH_MARGIN * 2);
+    const approachHeight = worldHeight + (BATTLEFIELD_APPROACH_MARGIN * 2);
     const fitScale = Math.min(
-      BATTLEFIELD_MAX_VIEW_SCALE,
-      width / (worldWidth + (BATTLEFIELD_APPROACH_MARGIN * 2)),
-      safeHeight / (worldHeight + (BATTLEFIELD_APPROACH_MARGIN * 2))
+      width / approachWidth,
+      safeHeight / approachHeight
     );
-    // Do not clamp the fitted zoom upward: on short portrait or landscape
-    // screens that would put north/south spawns back underneath the HUD.
-    const scale = fitScale;
-    const screenCenterX = width / 2;
-    const screenCenterY = safeTop + (safeHeight / 2);
-    const worldCenterX = worldWidth / 2;
-    const worldCenterY = worldHeight / 2;
+    // Zoom 100% is a uniform cover view. The authored terrain spans the full
+    // width and usable height without stretching; the dynamic minimum exposes
+    // all four distant approaches when the player asks to "Cadrer".
+    const baseScale = Math.max(
+      width / approachWidth,
+      safeHeight / approachHeight
+    );
+    const minZoom = Math.min(1, fitScale / Math.max(0.0001, baseScale));
+
+    return {
+      width,
+      height,
+      safeTop,
+      safeBottom,
+      safeHeight,
+      screenCenterX: width / 2,
+      screenCenterY: safeTop + (safeHeight / 2),
+      worldWidth,
+      worldHeight,
+      approachLeft: -BATTLEFIELD_APPROACH_MARGIN,
+      approachTop: -BATTLEFIELD_APPROACH_MARGIN,
+      approachRight: worldWidth + BATTLEFIELD_APPROACH_MARGIN,
+      approachBottom: worldHeight + BATTLEFIELD_APPROACH_MARGIN,
+      approachWidth,
+      approachHeight,
+      fitScale,
+      baseScale,
+      minZoom,
+      maxZoom: BATTLEFIELD_MAX_CAMERA_ZOOM
+    };
+  }
+
+  constrainBattlefieldCamera(width = this.canvas?.width || 1200, height = this.canvas?.height || 800, metrics = this.getBattlefieldCameraMetrics(width, height)) {
+    if (!this.camera) {
+      this.camera = {
+        x: metrics.worldWidth / 2,
+        y: metrics.worldHeight / 2,
+        zoom: 1
+      };
+    }
+    this.camera.zoom = Math.max(
+      metrics.minZoom,
+      Math.min(metrics.maxZoom, Number(this.camera.zoom) || 1)
+    );
+    const scale = Math.max(0.0001, metrics.baseScale * this.camera.zoom);
+    const visibleWidth = width / scale;
+    const visibleSafeHeight = metrics.safeHeight / scale;
+    if (visibleWidth >= metrics.approachWidth) {
+      this.camera.x = (metrics.approachLeft + metrics.approachRight) / 2;
+    } else {
+      this.camera.x = Math.max(
+        metrics.approachLeft + (visibleWidth / 2),
+        Math.min(metrics.approachRight - (visibleWidth / 2), Number(this.camera.x) || 0)
+      );
+    }
+    if (visibleSafeHeight >= metrics.approachHeight) {
+      this.camera.y = (metrics.approachTop + metrics.approachBottom) / 2;
+    } else {
+      this.camera.y = Math.max(
+        metrics.approachTop + (visibleSafeHeight / 2),
+        Math.min(metrics.approachBottom - (visibleSafeHeight / 2), Number(this.camera.y) || 0)
+      );
+    }
+    return this.camera;
+  }
+
+  getBattlefieldView(width = this.canvas?.width || 1200, height = this.canvas?.height || 800) {
+    const metrics = this.getBattlefieldCameraMetrics(width, height);
+    const camera = this.constrainBattlefieldCamera(width, height, metrics);
+    const scale = metrics.baseScale * camera.zoom;
+    const screenCenterX = metrics.screenCenterX;
+    const screenCenterY = metrics.screenCenterY;
+    const worldCenterX = camera.x;
+    const worldCenterY = camera.y;
 
     return {
       scale,
+      baseScale: metrics.baseScale,
+      fitScale: metrics.fitScale,
+      minZoom: metrics.minZoom,
+      maxZoom: metrics.maxZoom,
+      zoom: camera.zoom,
       screenCenterX,
       screenCenterY,
       worldCenterX,
       worldCenterY,
-      safeTop,
-      safeBottom,
+      safeTop: metrics.safeTop,
+      safeBottom: metrics.safeBottom,
       left: worldCenterX + ((0 - screenCenterX) / scale),
       top: worldCenterY + ((0 - screenCenterY) / scale),
       right: worldCenterX + ((width - screenCenterX) / scale),
       bottom: worldCenterY + ((height - screenCenterY) / scale)
     };
+  }
+
+  setBattlefieldCameraZoom(zoom, anchorX, anchorY, width = this.canvas?.width || 1200, height = this.canvas?.height || 800) {
+    const beforeView = this.getBattlefieldView(width, height);
+    const safeAnchorX = Number.isFinite(anchorX) ? anchorX : beforeView.screenCenterX;
+    const safeAnchorY = Number.isFinite(anchorY) ? anchorY : beforeView.screenCenterY;
+    const anchoredWorldPoint = this.screenToBattlefieldPoint(
+      safeAnchorX,
+      safeAnchorY,
+      beforeView
+    );
+    const metrics = this.getBattlefieldCameraMetrics(width, height);
+    this.camera.zoom = Math.max(
+      metrics.minZoom,
+      Math.min(metrics.maxZoom, Number(zoom) || 1)
+    );
+    const newScale = Math.max(0.0001, metrics.baseScale * this.camera.zoom);
+    const worldAfterZoom = {
+      x: this.camera.x + ((safeAnchorX - metrics.screenCenterX) / newScale),
+      y: this.camera.y + ((safeAnchorY - metrics.screenCenterY) / newScale)
+    };
+    this.camera.x += anchoredWorldPoint.x - worldAfterZoom.x;
+    this.camera.y += anchoredWorldPoint.y - worldAfterZoom.y;
+    this.constrainBattlefieldCamera(width, height, metrics);
+    this.updateBattlefieldCameraControls(width, height);
+    return this.camera.zoom;
+  }
+
+  zoomBattlefieldCameraBy(factor, anchorX, anchorY, width = this.canvas?.width || 1200, height = this.canvas?.height || 800) {
+    return this.setBattlefieldCameraZoom(
+      this.camera.zoom * Math.max(0.01, Number(factor) || 1),
+      anchorX,
+      anchorY,
+      width,
+      height
+    );
+  }
+
+  panBattlefieldCameraBy(deltaScreenX, deltaScreenY, width = this.canvas?.width || 1200, height = this.canvas?.height || 800) {
+    const view = this.getBattlefieldView(width, height);
+    this.camera.x -= (Number(deltaScreenX) || 0) / Math.max(0.0001, view.scale);
+    this.camera.y -= (Number(deltaScreenY) || 0) / Math.max(0.0001, view.scale);
+    this.constrainBattlefieldCamera(width, height);
+    this.updateBattlefieldCameraControls(width, height);
+    return this.camera;
+  }
+
+  resetBattlefieldCamera(width = this.canvas?.width || 1200, height = this.canvas?.height || 800) {
+    const metrics = this.getBattlefieldCameraMetrics(width, height);
+    this.camera.x = metrics.worldWidth / 2;
+    this.camera.y = metrics.worldHeight / 2;
+    this.camera.zoom = 1;
+    this.constrainBattlefieldCamera(width, height, metrics);
+    this.updateBattlefieldCameraControls(width, height);
+    return this.camera;
+  }
+
+  fitBattlefieldCamera(width = this.canvas?.width || 1200, height = this.canvas?.height || 800) {
+    const metrics = this.getBattlefieldCameraMetrics(width, height);
+    this.camera.x = metrics.worldWidth / 2;
+    this.camera.y = metrics.worldHeight / 2;
+    this.camera.zoom = metrics.minZoom;
+    this.constrainBattlefieldCamera(width, height, metrics);
+    this.updateBattlefieldCameraControls(width, height);
+    return this.camera;
+  }
+
+  updateBattlefieldCameraControls(width = this.canvas?.width || 1200, height = this.canvas?.height || 800) {
+    const metrics = this.getBattlefieldCameraMetrics(width, height);
+    const zoom = Math.max(
+      metrics.minZoom,
+      Math.min(metrics.maxZoom, Number(this.camera?.zoom) || 1)
+    );
+    const label = `${Math.round(zoom * 100)} %`;
+    const output = document.getElementById('camera-zoom-txt');
+    if (output && output.textContent !== label) {
+      output.textContent = label;
+      output.value = label;
+    }
+    const zoomOut = document.getElementById('btn-camera-zoom-out');
+    const zoomIn = document.getElementById('btn-camera-zoom-in');
+    if (zoomOut) zoomOut.disabled = zoom <= metrics.minZoom + 0.0001;
+    if (zoomIn) zoomIn.disabled = zoom >= metrics.maxZoom - 0.0001;
+  }
+
+  announceBattlefieldCameraZoom() {
+    this.announce(`Zoom camÃ©ra ${Math.round((Number(this.camera?.zoom) || 1) * 100)} pour cent.`);
   }
 
   screenToBattlefieldPoint(screenX, screenY, view = this.getBattlefieldView()) {
@@ -1200,13 +1370,166 @@ class GameEngine {
     if (this.canvas) {
       this.canvas.tabIndex = 0;
       this.canvas.setAttribute('role', 'application');
-      this.canvas.setAttribute('aria-label', 'Champ de bataille. Cliquez ou touchez une défense existante pour la gérer. Au clavier, utilisez les flèches pour déplacer le curseur, puis Entrée pour gérer la défense visée ou construire. Appuyez sur B pour choisir une défense.');
-      this.canvas.setAttribute('aria-keyshortcuts', 'B');
-      this.canvas.addEventListener('click', (e) => {
-        if (this.isPaused || this.isGameOver) return;
+      this.canvas.setAttribute('aria-label', 'Champ de bataille. Faites glisser ou utilisez W A S D pour déplacer la caméra. Utilisez la molette, un pincement, plus ou moins pour zoomer, et zéro pour tout cadrer. Un clic ou toucher bref construit ou gère une défense. Les flèches déplacent le curseur de construction.');
+      this.canvas.setAttribute('aria-keyshortcuts', 'B W A S D + - 0');
+      this.cameraPointers = new Map();
+      this.cameraGesture = null;
+      this.suppressNextBattlefieldClick = false;
+      this.cameraClickSuppressionTimer = null;
+      this.cameraZoomAnnouncementTimer = null;
+      const toCanvasPoint = (clientX, clientY) => {
         const rect = this.canvas.getBoundingClientRect();
-        const screenX = (e.clientX - rect.left) * (this.canvas.width / Math.max(1, rect.width));
-        const screenY = (e.clientY - rect.top) * (this.canvas.height / Math.max(1, rect.height));
+        return {
+          x: (clientX - rect.left) * (this.canvas.width / Math.max(1, rect.width)),
+          y: (clientY - rect.top) * (this.canvas.height / Math.max(1, rect.height))
+        };
+      };
+      const beginSinglePointerPan = (pointerId, point, alreadyMoved = false) => {
+        this.cameraGesture = {
+          type: 'pan',
+          pointerId,
+          startX: point.x,
+          startY: point.y,
+          lastX: point.x,
+          lastY: point.y,
+          moved: alreadyMoved
+        };
+      };
+      const updatePointerGesture = (e) => {
+        if (!this.cameraPointers.has(e.pointerId)) return;
+        const point = toCanvasPoint(e.clientX, e.clientY);
+        this.cameraPointers.set(e.pointerId, point);
+        const activePointers = [...this.cameraPointers.entries()];
+
+        if (activePointers.length >= 2) {
+          const [[, first], [, second]] = activePointers;
+          const midpoint = {
+            x: (first.x + second.x) / 2,
+            y: (first.y + second.y) / 2
+          };
+          const distance = Math.max(1, Math.hypot(second.x - first.x, second.y - first.y));
+          if (this.cameraGesture?.type !== 'pinch') {
+            this.cameraGesture = {
+              type: 'pinch',
+              lastMidpoint: midpoint,
+              lastDistance: distance,
+              moved: true
+            };
+          } else {
+            const factor = distance / Math.max(1, this.cameraGesture.lastDistance);
+            // Preserve the world point under the previous midpoint, then move
+            // it to the new midpoint. Anchoring on the new midpoint before
+            // panning would make a translating pinch drift across the map.
+            this.zoomBattlefieldCameraBy(
+              factor,
+              this.cameraGesture.lastMidpoint.x,
+              this.cameraGesture.lastMidpoint.y
+            );
+            this.panBattlefieldCameraBy(
+              midpoint.x - this.cameraGesture.lastMidpoint.x,
+              midpoint.y - this.cameraGesture.lastMidpoint.y
+            );
+            this.cameraGesture.lastMidpoint = midpoint;
+            this.cameraGesture.lastDistance = distance;
+          }
+          this.canvas.classList.add('is-panning');
+          this.canvas.dataset.cameraDragging = 'true';
+          e.preventDefault();
+          return;
+        }
+
+        const gesture = this.cameraGesture;
+        if (gesture?.type !== 'pan' || gesture.pointerId !== e.pointerId) return;
+        const crossedDragThreshold = Math.hypot(
+          point.x - gesture.startX,
+          point.y - gesture.startY
+        ) >= 6;
+        if (!gesture.moved && crossedDragThreshold) {
+          gesture.moved = true;
+          this.panBattlefieldCameraBy(
+            point.x - gesture.startX,
+            point.y - gesture.startY
+          );
+        } else if (gesture.moved) {
+          this.panBattlefieldCameraBy(
+            point.x - gesture.lastX,
+            point.y - gesture.lastY
+          );
+        }
+        gesture.lastX = point.x;
+        gesture.lastY = point.y;
+        if (gesture.moved) {
+          this.canvas.classList.add('is-panning');
+          this.canvas.dataset.cameraDragging = 'true';
+          e.preventDefault();
+        }
+      };
+      const finishPointerGesture = (e, suppressClickAfterMovement = true) => {
+        if (!this.cameraPointers.has(e.pointerId)) return;
+        const gestureWasPinch = this.cameraGesture?.type === 'pinch';
+        const gestureWasMoved = this.cameraGesture?.moved === true
+          || gestureWasPinch;
+        this.cameraPointers.delete(e.pointerId);
+        if (this.canvas.hasPointerCapture?.(e.pointerId)) {
+          this.canvas.releasePointerCapture(e.pointerId);
+        }
+        const remaining = [...this.cameraPointers.entries()];
+        if (remaining.length === 1) {
+          const [pointerId, point] = remaining[0];
+          beginSinglePointerPan(pointerId, point, gestureWasMoved);
+        } else if (remaining.length === 0) {
+          this.cameraGesture = null;
+          this.canvas.classList.remove('is-panning');
+          delete this.canvas.dataset.cameraDragging;
+        }
+        // pointercancel never synthesizes a click. Arming suppression here
+        // would incorrectly discard the player's next deliberate placement.
+        if (gestureWasMoved && suppressClickAfterMovement) {
+          this.suppressNextBattlefieldClick = true;
+          clearTimeout(this.cameraClickSuppressionTimer);
+          // Compatibility clicks follow pointerup immediately. Clear the guard
+          // soon afterwards so a browser that emits no synthetic click cannot
+          // make the next deliberate tap disappear.
+          this.cameraClickSuppressionTimer = setTimeout(() => {
+            this.suppressNextBattlefieldClick = false;
+          }, 120);
+        }
+        if (gestureWasPinch) this.announceBattlefieldCameraZoom();
+      };
+
+      this.canvas.addEventListener('pointerdown', (e) => {
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        const point = toCanvasPoint(e.clientX, e.clientY);
+        this.cameraPointers.set(e.pointerId, point);
+        this.canvas.setPointerCapture?.(e.pointerId);
+        if (this.cameraPointers.size === 1) {
+          beginSinglePointerPan(e.pointerId, point);
+        } else {
+          // The first move initializes the pinch from the two live pointers.
+          this.cameraGesture = null;
+        }
+      });
+      this.canvas.addEventListener('pointermove', updatePointerGesture);
+      this.canvas.addEventListener('pointerup', finishPointerGesture);
+      this.canvas.addEventListener('pointercancel', e => finishPointerGesture(e, false));
+      this.canvas.addEventListener('wheel', (e) => {
+        const point = toCanvasPoint(e.clientX, e.clientY);
+        const factor = Math.max(0.75, Math.min(1.25, Math.exp(-e.deltaY * 0.0015)));
+        this.zoomBattlefieldCameraBy(factor, point.x, point.y);
+        clearTimeout(this.cameraZoomAnnouncementTimer);
+        this.cameraZoomAnnouncementTimer = setTimeout(
+          () => this.announceBattlefieldCameraZoom(),
+          250
+        );
+        e.preventDefault();
+      }, { passive: false });
+      this.canvas.addEventListener('click', (e) => {
+        if (this.suppressNextBattlefieldClick) {
+          this.suppressNextBattlefieldClick = false;
+          return;
+        }
+        if (this.isPaused || this.isGameOver) return;
+        const { x: screenX, y: screenY } = toCanvasPoint(e.clientX, e.clientY);
         const { x, y } = this.screenToBattlefieldPoint(screenX, screenY);
         this.buildCursor.x = x;
         this.buildCursor.y = y;
@@ -1221,6 +1544,24 @@ class GameEngine {
       this.canvas.addEventListener('focus', () => { this.buildCursor.visible = true; });
       this.canvas.addEventListener('blur', () => { this.buildCursor.visible = false; });
     }
+
+    const zoomCameraAtSafeCenter = factor => {
+      const view = this.getBattlefieldView();
+      this.zoomBattlefieldCameraBy(factor, view.screenCenterX, view.screenCenterY);
+    };
+    document.getElementById('btn-camera-zoom-out')?.addEventListener('click', () => {
+      zoomCameraAtSafeCenter(1 / 1.2);
+      this.announceBattlefieldCameraZoom();
+    });
+    document.getElementById('btn-camera-fit')?.addEventListener('click', () => {
+      this.fitBattlefieldCamera();
+      this.announceBattlefieldCameraZoom();
+    });
+    document.getElementById('btn-camera-zoom-in')?.addEventListener('click', () => {
+      zoomCameraAtSafeCenter(1.2);
+      this.announceBattlefieldCameraZoom();
+    });
+    this.updateBattlefieldCameraControls();
 
     document.getElementById('btn-enter-adult')?.addEventListener('click', () => this.enterAdultExperience());
     document.getElementById('btn-decline-adult')?.addEventListener('click', () => this.declineAdultExperience());
@@ -1275,6 +1616,24 @@ class GameEngine {
         if (this.focusSelectedBuildCard()) e.preventDefault();
         return;
       }
+      if (!activeModal && (e.key === '+' || e.key === '=')) {
+        e.preventDefault();
+        zoomCameraAtSafeCenter(1.2);
+        this.announceBattlefieldCameraZoom();
+        return;
+      }
+      if (!activeModal && (e.key === '-' || e.key === '_')) {
+        e.preventDefault();
+        zoomCameraAtSafeCenter(1 / 1.2);
+        this.announceBattlefieldCameraZoom();
+        return;
+      }
+      if (!activeModal && e.key === '0') {
+        e.preventDefault();
+        this.fitBattlefieldCamera();
+        this.announceBattlefieldCameraZoom();
+        return;
+      }
       if (e.key === 'f' || e.key === 'F') {
         e.preventDefault();
         this.triggerOverdrive();
@@ -1283,26 +1642,34 @@ class GameEngine {
 
       if (document.activeElement === this.canvas) {
         const view = this.getBattlefieldView();
-        // Keep keyboard travel constant in screen pixels despite the long-range
-        // tactical zoom used for the five-times-deeper approaches.
-        const step = (e.shiftKey ? 50 : 20) / Math.max(0.01, view.scale);
-        if (e.key === 'ArrowLeft') this.buildCursor.x -= step;
-        else if (e.key === 'ArrowRight') this.buildCursor.x += step;
-        else if (e.key === 'ArrowUp') this.buildCursor.y -= step;
-        else if (e.key === 'ArrowDown') this.buildCursor.y += step;
-        else if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          const existingDefense = this.findPlacedDefenseAt(this.buildCursor.x, this.buildCursor.y);
-          if (existingDefense) {
-            this.openDefenseManagementModal(existingDefense);
+        const cameraStep = e.shiftKey ? 140 : 70;
+        const cameraKey = e.key.toLowerCase();
+        if (cameraKey === 'a') this.panBattlefieldCameraBy(cameraStep, 0);
+        else if (cameraKey === 'd') this.panBattlefieldCameraBy(-cameraStep, 0);
+        else if (cameraKey === 'w') this.panBattlefieldCameraBy(0, cameraStep);
+        else if (cameraKey === 's') this.panBattlefieldCameraBy(0, -cameraStep);
+        else {
+          // Keep keyboard travel constant in screen pixels despite the long-range
+          // tactical zoom used for the five-times-deeper approaches.
+          const step = (e.shiftKey ? 50 : 20) / Math.max(0.01, view.scale);
+          if (e.key === 'ArrowLeft') this.buildCursor.x -= step;
+          else if (e.key === 'ArrowRight') this.buildCursor.x += step;
+          else if (e.key === 'ArrowUp') this.buildCursor.y -= step;
+          else if (e.key === 'ArrowDown') this.buildCursor.y += step;
+          else if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            const existingDefense = this.findPlacedDefenseAt(this.buildCursor.x, this.buildCursor.y);
+            if (existingDefense) {
+              this.openDefenseManagementModal(existingDefense);
+              return;
+            }
+            this.buildSelectedTowerAt(this.buildCursor.x, this.buildCursor.y);
             return;
-          }
-          this.buildSelectedTowerAt(this.buildCursor.x, this.buildCursor.y);
-          return;
-        } else return;
+          } else return;
+          this.buildCursor.x = Math.max(25, Math.min(this.worldWidth - 25, this.buildCursor.x));
+          this.buildCursor.y = Math.max(25, Math.min(this.worldHeight - 25, this.buildCursor.y));
+        }
         e.preventDefault();
-        this.buildCursor.x = Math.max(25, Math.min(this.worldWidth - 25, this.buildCursor.x));
-        this.buildCursor.y = Math.max(25, Math.min(this.worldHeight - 25, this.buildCursor.y));
       }
     });
 
