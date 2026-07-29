@@ -1018,7 +1018,7 @@ class GameEngine {
   }
 
   announceBattlefieldCameraZoom() {
-    this.announce(`Zoom camÃ©ra ${Math.round((Number(this.camera?.zoom) || 1) * 100)} pour cent.`);
+    this.announce(`Zoom caméra ${Math.round((Number(this.camera?.zoom) || 1) * 100)} pour cent.`);
   }
 
   screenToBattlefieldPoint(screenX, screenY, view = this.getBattlefieldView()) {
@@ -5238,7 +5238,7 @@ class GameEngine {
       });
       if (buffedDefenses > 0) {
         this.addFloatingText(
-          `TRIBUT Ã—${buffedDefenses}`,
+          `TRIBUT ×${buffedDefenses}`,
           enemy.x,
           enemy.y - 26,
           '#ec4899'
@@ -7985,12 +7985,12 @@ class GameEngine {
       const reserve = this.selectedHero.id === 'carmilla'
         ? Math.round(Number(this.carmillaStoredCharge) || 0)
         : 0;
-      heroSkillButton.textContent = `âš¡ ${this.selectedHero.abilityName}${reserve > 0 ? ` Â· RÃ‰SERVE ${reserve}` : ''}`;
+      heroSkillButton.textContent = `⚡ ${this.selectedHero.abilityName}${reserve > 0 ? ` · RÉSERVE ${reserve}` : ''}`;
       heroSkillButton.dataset.storedCharge = String(reserve);
       if (reserve > 0 && this.abilityCooldownTimer <= 0) {
         heroSkillButton.setAttribute(
           'aria-label',
-          `${this.selectedHero.abilityName}, rÃ©serve Ã©carlate ${reserve}, prÃªt`
+          `${this.selectedHero.abilityName}, réserve écarlate ${reserve}, prêt`
         );
       }
     }

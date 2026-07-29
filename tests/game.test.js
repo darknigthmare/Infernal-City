@@ -2084,3 +2084,7 @@ test('entrer dans le jeu precharge les atlas de combat meme si le terrain est de
 test('le runtime ne tente jamais de remplacer la propriete DOM dataset en lecture seule', () => {
   assert.doesNotMatch(GAME_SOURCE, /\.dataset\s*=/u);
 });
+
+test('les libelles dynamiques visibles ne contiennent aucun residu UTF-8 mal decode', () => {
+  assert.doesNotMatch(GAME_SOURCE, /camÃ©ra|TRIBUT Ã—|âš¡|RÃ‰SERVE|rÃ©serve|Ã©carlate|prÃªt/u);
+});
