@@ -165,6 +165,12 @@
     <!-- Main Game Canvas -->
     <canvas id="game-canvas"></canvas>
 
+    <div id="short-landscape-notice" class="orientation-notice" role="alert" aria-hidden="true" hidden>
+      <span class="orientation-notice-icon" aria-hidden="true">↻</span>
+      <h2>TOURNEZ VOTRE APPAREIL</h2>
+      <p>Le champ de bataille est mis en pause. Passez en portrait pour voir les quatre voies d’arrivée et jouer confortablement.</p>
+    </div>
+
     <aside id="mission-status-panel" aria-label="État de la mission">
       <span id="mission-objective-txt">Objectif · atteindre la vague 15</span>
       <span id="mission-level-txt">Niveau 1 · XP 0 / 100</span>
@@ -443,6 +449,50 @@
       </div>
     </div>
 
+    <!-- Long-form, consent-aware visual novel conversations -->
+    <div class="modal-overlay visual-novel-overlay" id="visual-novel-modal" role="dialog" aria-modal="true" aria-labelledby="vn-modal-title">
+      <div class="vn-shell">
+        <button class="btn-close" type="button">&times;</button>
+        <section class="vn-stage" aria-describedby="vn-status">
+          <img id="vn-scene-img" src="assets/cover.jpg" alt="Citadelle Haven au-dessus de la côte infernale">
+          <div class="vn-stage-shade" aria-hidden="true"></div>
+
+          <header class="vn-scene-header">
+            <p class="section-eyebrow" id="vn-hero-label">SALON NOCTURNE · VISUAL NOVEL</p>
+            <h2 id="vn-modal-title">Conversations de Haven</h2>
+            <p id="vn-chapter-subtitle">Choisissez un chapitre relationnel.</p>
+          </header>
+
+          <div class="vn-chapter-browser" id="vn-chapter-browser">
+            <p class="vn-boundary" id="vn-boundary-copy"></p>
+            <div class="vn-chapter-list" id="vn-chapter-list"></div>
+          </div>
+
+          <div class="vn-dialogue-panel" id="vn-dialogue-panel" hidden>
+            <div class="vn-dialogue-meta">
+              <strong id="vn-speaker-name">Narration</strong>
+              <span id="vn-line-progress">1 / 1</span>
+            </div>
+            <p class="vn-dialogue-text" id="vn-dialogue-text"></p>
+            <details class="vn-history">
+              <summary>Historique de la conversation</summary>
+              <ol id="vn-history-list"></ol>
+            </details>
+            <fieldset class="vn-choice-container" id="vn-choice-container">
+              <legend id="vn-choice-prompt"></legend>
+            </fieldset>
+            <div class="vn-dialogue-actions">
+              <button class="btn-secondary vn-revoke-btn" id="btn-vn-revoke" type="button">RÉVOQUER</button>
+              <button class="btn-secondary" id="btn-vn-chapters" type="button">CHAPITRES</button>
+              <button class="btn-primary" id="btn-vn-continue" type="button">CONTINUER</button>
+            </div>
+          </div>
+
+          <p class="vn-status" id="vn-status" role="status" aria-live="polite">Les pauses et refus ne retirent ni confiance ni efficacité militaire.</p>
+        </section>
+      </div>
+    </div>
+
     <div class="modal-overlay" id="tower-complete-modal" role="dialog" aria-modal="true" aria-labelledby="tower-complete-title">
       <div class="modal-box run-summary-box">
         <p class="section-eyebrow">TOUR INFINITUM · ÉTAGE 100</p>
@@ -632,6 +682,7 @@
   </div>
 
   <script src="audio.v8.js"></script>
+  <script src="vn-scenes.v1.js"></script>
   <script src="game.v9.js"></script>
   <script src="pwa.v4.js"></script>
 </body>

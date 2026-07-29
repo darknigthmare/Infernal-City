@@ -32,12 +32,26 @@ test('le manifeste PWA reference deux icones PNG carrees valides', () => {
 test('le service worker precache uniquement des fichiers locaux existants', () => {
   const source = fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8');
   const urls = [...source.matchAll(/^\s*'\.\/([^']*)'/gm)].map(match => match[1]);
+  const narrativeCgs = [
+    'assets/cg_aria_nightwatch.png',
+    'assets/cg_kira_rooftop.png',
+    'assets/cg_rin_embers.png',
+    'assets/cg_selene_observatory.png',
+    'assets/cg_vespera_truce.png',
+    'assets/cg_carmilla_library.png'
+  ];
   assert.ok(urls.includes('index.html'));
   assert.ok(urls.includes('assets/icons/icon-512.png'));
   urls.filter(Boolean).forEach(relativePath => {
     assert.ok(fs.existsSync(path.join(ROOT, relativePath)), `${relativePath}: précache introuvable`);
   });
-  assert.doesNotMatch(source, /assets\/cg_carmilla\.jpg/, 'les CG lourdes doivent rester chargées à la demande');
+  narrativeCgs.forEach(relativePath => {
+    assert.ok(!urls.includes(relativePath), `${relativePath}: les CG lourdes doivent rester chargées à la demande`);
+  });
+  const precacheBytes = urls
+    .filter(Boolean)
+    .reduce((total, relativePath) => total + fs.statSync(path.join(ROOT, relativePath)).size, 0);
+  assert.ok(precacheBytes < 20 * 1024 * 1024, `budget de précache excessif: ${precacheBytes} octets`);
 });
 
 test('le script PWA limite son enregistrement aux contextes surs', () => {
@@ -55,7 +69,10 @@ test('les actifs coeur sont fingerprints et servis network first', () => {
   assert.match(index, /audio\.v8\.js/);
   assert.match(index, /game\.v9\.js/);
   assert.match(index, /pwa\.v4\.js/);
-  assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}v5`/);
+  assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}v6`/);
+  assert.match(worker, /vn-scenes\.v1\.js/);
+  assert.match(worker, /infernal-city-coastline\.png/);
   assert.match(worker, /isMutableCoreAsset/);
   assert.match(worker, /if \(isMutableCoreAsset\) \{\s*event\.respondWith\(\s*fetch\(request\)/);
+  assert.match(worker, /cache\.put\(request, response\.clone\(\)\)/);
 });

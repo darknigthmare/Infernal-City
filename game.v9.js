@@ -1,8 +1,13 @@
 /* Valkyrie Sweeper: Dark Siege - Comprehensive Game Engine */
 
 const CAMPAIGN_FINAL_WAVE = 15;
-const SAVE_VERSION = 4;
+const SAVE_VERSION = 5;
 const RUN_CHECKPOINT_VERSION = 1;
+// Keep the logical battlefield and every collision untouched while framing it
+// inside the space that is not covered by the HUD. The extra world-space margin
+// reveals incoming enemies before they cross the playable perimeter.
+const BATTLEFIELD_APPROACH_MARGIN = 64;
+const BATTLEFIELD_MAX_VIEW_SCALE = 0.78;
 
 const DIFFICULTY_DATA = {
   story: {
@@ -80,6 +85,18 @@ const LOOT_CONFIG = { maxCrates: 32, maxPowerups: 32, lifetime: 20 };
 const SPRITE_ATLAS_COLUMNS = 4;
 const SPRITE_ATLAS_ROWS = 4;
 const FLOOR_TEXTURE_SRC = 'assets/environment/infernal-city-floor.png';
+const COASTLINE_IMAGE_SRC = 'assets/environment/infernal-city-coastline.png';
+
+// Narrative CGs generated with OpenAI and anchored to each adult heroine's
+// established portrait. They are loaded only when the player opens the VN.
+const VN_NARRATIVE_CGS = {
+  aria: 'assets/cg_aria_nightwatch.png',
+  kira: 'assets/cg_kira_rooftop.png',
+  rin: 'assets/cg_rin_embers.png',
+  selene: 'assets/cg_selene_observatory.png',
+  vespera: 'assets/cg_vespera_truce.png',
+  carmilla: 'assets/cg_carmilla_library.png'
+};
 
 // OpenAI-authored defense atlases. Every row is one defense and every column
 // is a gameplay phase: idle, charge, fire and recoil/cooldown.
@@ -342,6 +359,7 @@ class GameEngine {
     this.spriteAtlasImages = {};
     this.floorImage = null;
     this.floorPattern = null;
+    this.coastlineImage = null;
     this.enemyBullets = [];
     this.projectiles = [];
     this.particles = [];
@@ -357,6 +375,7 @@ class GameEngine {
 
     this.isPaused = false;
     this.isGameOver = false;
+    this.requiresPortraitOrientation = false;
     this.lastTime = 0;
 
     this.gridOffset = 0;
@@ -364,6 +383,14 @@ class GameEngine {
     this.heroAnimationState = 'idle';
     this.heroAnimationTimer = 0;
     this.heroFacingAngle = 0;
+    this.vnSceneProgress = {
+      dataVersion: '1.0.0',
+      flags: [],
+      chapterResults: {},
+      appliedEffects: [],
+      active: null
+    };
+    this.activeVnSession = null;
 
     this.loadProgress();
   }
@@ -414,6 +441,16 @@ class GameEngine {
     if (!this.canvas) return;
     const newWidth = window.innerWidth || 1200;
     const newHeight = window.innerHeight || 800;
+    const shortLandscape = newWidth > newHeight && newHeight <= 500;
+    const orientationNotice = document.getElementById('short-landscape-notice');
+    this.requiresPortraitOrientation = shortLandscape;
+    if (orientationNotice) {
+      const gateIsActive = document.getElementById('adult-gate-modal')?.classList.contains('active') === true;
+      const exposeToAssistiveTech = shortLandscape && !gateIsActive;
+      orientationNotice.hidden = !shortLandscape;
+      orientationNotice.inert = !exposeToAssistiveTech;
+      orientationNotice.setAttribute('aria-hidden', exposeToAssistiveTech ? 'false' : 'true');
+    }
     const oldWidth = this.worldWidth || newWidth;
     const oldHeight = this.worldHeight || newHeight;
     const scaleX = newWidth / oldWidth;
@@ -442,6 +479,79 @@ class GameEngine {
       this.buildCursor.y = this.citadel.y;
     }
     requestAnimationFrame(() => this.syncMissionStatusPosition());
+  }
+
+  getBattlefieldView(width = this.canvas?.width || 1200, height = this.canvas?.height || 800) {
+    const rect = this.canvas?.getBoundingClientRect?.() || {
+      left: 0,
+      top: 0,
+      width,
+      height
+    };
+    const cssWidth = Math.max(1, rect.width || width);
+    const cssHeight = Math.max(1, rect.height || height);
+    const cssToCanvasY = height / cssHeight;
+    const headerRect = document.getElementById('hud-header')?.getBoundingClientRect?.();
+    const missionStatusRect = document.getElementById('mission-status-panel')?.getBoundingClientRect?.();
+    const buildBarRect = document.getElementById('hud-build-bar')?.getBoundingClientRect?.();
+    const topObstructionBottom = Math.max(
+      headerRect?.bottom ?? (rect.top + 76),
+      missionStatusRect?.bottom ?? 0
+    );
+    const safeTop = Math.min(
+      height - 1,
+      Math.max(
+        0,
+        ((topObstructionBottom - rect.top) + 8) * cssToCanvasY
+      )
+    );
+    const safeBottom = Math.max(
+      safeTop + 1,
+      Math.min(
+        height,
+        (((buildBarRect?.top ?? (rect.top + cssHeight - 170)) - rect.top) - 8) * cssToCanvasY
+      )
+    );
+    const safeHeight = Math.max(1, safeBottom - safeTop);
+    const fitScale = Math.min(
+      BATTLEFIELD_MAX_VIEW_SCALE,
+      width / (width + (BATTLEFIELD_APPROACH_MARGIN * 2)),
+      safeHeight / (height + (BATTLEFIELD_APPROACH_MARGIN * 2))
+    );
+    // Do not clamp the fitted zoom upward: on short portrait or landscape
+    // screens that would put north/south spawns back underneath the HUD.
+    const scale = fitScale;
+    const screenCenterX = width / 2;
+    const screenCenterY = safeTop + (safeHeight / 2);
+    const worldCenterX = width / 2;
+    const worldCenterY = height / 2;
+
+    return {
+      scale,
+      screenCenterX,
+      screenCenterY,
+      worldCenterX,
+      worldCenterY,
+      safeTop,
+      safeBottom,
+      left: worldCenterX + ((0 - screenCenterX) / scale),
+      top: worldCenterY + ((0 - screenCenterY) / scale),
+      right: worldCenterX + ((width - screenCenterX) / scale),
+      bottom: worldCenterY + ((height - screenCenterY) / scale)
+    };
+  }
+
+  screenToBattlefieldPoint(screenX, screenY, view = this.getBattlefieldView()) {
+    return {
+      x: view.worldCenterX + ((screenX - view.screenCenterX) / view.scale),
+      y: view.worldCenterY + ((screenY - view.screenCenterY) / view.scale)
+    };
+  }
+
+  applyBattlefieldView(view) {
+    this.ctx.translate(view.screenCenterX, view.screenCenterY);
+    this.ctx.scale(view.scale, view.scale);
+    this.ctx.translate(-view.worldCenterX, -view.worldCenterY);
   }
 
   syncMissionStatusPosition() {
@@ -483,6 +593,7 @@ class GameEngine {
     });
 
     this.floorImage = this.preloadSpriteAsset(FLOOR_TEXTURE_SRC, 'Texture de sol');
+    this.coastlineImage = this.preloadSpriteAsset(COASTLINE_IMAGE_SRC, 'Côte infernale');
     this.floorImage?.addEventListener('load', () => {
       // Recreate the pattern after late decoding or a context restoration.
       this.floorPattern = null;
@@ -667,6 +778,8 @@ class GameEngine {
             }
           });
         }
+        const loadedVnProgress = this.sanitizeLoadedVnProgress(data.vnSceneProgress);
+        if (loadedVnProgress) this.vnSceneProgress = loadedVnProgress;
         if (data.selectedHeroId && HERO_CLASSES[data.selectedHeroId] && HERO_CLASSES[data.selectedHeroId].unlocked !== false) {
           this.selectedHero = HERO_CLASSES[data.selectedHeroId];
         }
@@ -715,7 +828,14 @@ class GameEngine {
         unlockedGallery: unlockedIds,
         recruitedBosses,
         achievements,
-        characterProgress
+        characterProgress,
+        vnSceneProgress: {
+          dataVersion: this.vnSceneProgress.dataVersion,
+          flags: [...this.vnSceneProgress.flags],
+          chapterResults: { ...this.vnSceneProgress.chapterResults },
+          appliedEffects: [...this.vnSceneProgress.appliedEffects],
+          active: this.vnSceneProgress.active
+        }
       };
       localStorage.setItem('valkyrie_sweeper_save', JSON.stringify(data));
     } catch (e) {
@@ -767,7 +887,17 @@ class GameEngine {
     const app = document.getElementById('app-container');
     if (app) {
       [...app.children].forEach(child => {
-        if (child.classList?.contains('modal-overlay') || child.id === 'game-announcer') return;
+        if (child.id === 'short-landscape-notice') {
+          const gateIsTop = topModal?.id === 'adult-gate-modal';
+          const exposeToAssistiveTech = this.requiresPortraitOrientation && !gateIsTop;
+          child.inert = !exposeToAssistiveTech;
+          child.setAttribute('aria-hidden', exposeToAssistiveTech ? 'false' : 'true');
+          return;
+        }
+        if (
+          child.classList?.contains('modal-overlay')
+          || child.id === 'game-announcer'
+        ) return;
         child.inert = Boolean(topModal);
       });
     }
@@ -778,6 +908,9 @@ class GameEngine {
     return [...modal.querySelectorAll('button:not([disabled]), select:not([disabled]), input:not([disabled]), textarea:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])')]
       .filter(element => {
         if (element.hidden || element.getAttribute('aria-hidden') === 'true') return false;
+        const blockedAncestor = element.closest?.('[hidden], [inert], [aria-hidden="true"]');
+        if (blockedAncestor && blockedAncestor !== modal) return false;
+        if (typeof element.getClientRects === 'function' && element.getClientRects().length === 0) return false;
         if (typeof window.getComputedStyle !== 'function') return true;
         const style = window.getComputedStyle(element);
         return style.display !== 'none' && style.visibility !== 'hidden';
@@ -999,8 +1132,9 @@ class GameEngine {
       this.canvas.addEventListener('click', (e) => {
         if (this.isPaused || this.isGameOver) return;
         const rect = this.canvas.getBoundingClientRect();
-        const x = (e.clientX - rect.left) * (this.canvas.width / Math.max(1, rect.width));
-        const y = (e.clientY - rect.top) * (this.canvas.height / Math.max(1, rect.height));
+        const screenX = (e.clientX - rect.left) * (this.canvas.width / Math.max(1, rect.width));
+        const screenY = (e.clientY - rect.top) * (this.canvas.height / Math.max(1, rect.height));
+        const { x, y } = this.screenToBattlefieldPoint(screenX, screenY);
         this.buildCursor.x = x;
         this.buildCursor.y = y;
         const existingDefense = this.findPlacedDefenseAt(x, y);
@@ -1045,6 +1179,10 @@ class GameEngine {
 
     const btnSkill = document.getElementById('btn-hero-skill');
     if (btnSkill) btnSkill.addEventListener('click', () => this.triggerHeroAbility());
+
+    document.getElementById('btn-vn-continue')?.addEventListener('click', () => this.advanceVnDialogue());
+    document.getElementById('btn-vn-chapters')?.addEventListener('click', () => this.pauseVnToChapterBrowser());
+    document.getElementById('btn-vn-revoke')?.addEventListener('click', () => this.revokeActiveVnConsent());
 
     const btnOverdrive = document.getElementById('btn-overdrive');
     if (btnOverdrive) btnOverdrive.addEventListener('click', () => this.triggerOverdrive());
@@ -1526,9 +1664,10 @@ class GameEngine {
 
   buildSelectedTowerAt(x, y) {
     if (this.isPaused || this.isGameOver) return;
-    const headerBottom = document.getElementById('hud-header')?.getBoundingClientRect().bottom || 76;
-    const buildBarTop = document.getElementById('hud-build-bar')?.getBoundingClientRect().top || (this.canvas.height - 170);
-    if (x < 24 || x > this.canvas.width - 24 || y < headerBottom + 8 || y > buildBarTop - 8) {
+    // The camera already maps the logical arena between the two HUD panels.
+    // Reject only its actual world-space perimeter so mouse, touch and keyboard
+    // placement all target the same collision coordinates at every zoom level.
+    if (x < 24 || x > this.canvas.width - 24 || y < 24 || y > this.canvas.height - 24) {
       this.showFeedback('Placement impossible sous le HUD.', '#ef4444');
       return;
     }
@@ -1870,7 +2009,7 @@ class GameEngine {
 
       const timeScale = this.isOverdriveActive ? 0.7 : 1.0;
 
-      if (!this.isPaused && !this.isGameOver && !this.campaignVictory) {
+      if (!this.isPaused && !this.requiresPortraitOrientation && !this.isGameOver && !this.campaignVictory) {
         this.update(dt * timeScale);
       }
       const shouldRender = !document.hidden
@@ -3021,6 +3160,18 @@ class GameEngine {
         <div class="relationship-actions"></div>`;
       const actions = card.querySelector('.relationship-actions');
 
+      if (this.getVnHeroine(hero.id)) {
+        const unlockedChapters = this.getUnlockedVnChapterCount(hero);
+        const totalChapters = this.getVnHeroine(hero.id).chapters.length;
+        const vnButton = document.createElement('button');
+        vnButton.type = 'button';
+        vnButton.className = 'btn-secondary';
+        vnButton.dataset.action = 'vn';
+        vnButton.textContent = `HISTOIRE VN · ${unlockedChapters}/${totalChapters}`;
+        vnButton.onclick = () => this.openVisualNovel(hero.id);
+        actions.appendChild(vnButton);
+      }
+
       if (hero.romanceOptIn) {
         const talkButton = document.createElement('button');
         talkButton.type = 'button';
@@ -3064,6 +3215,7 @@ class GameEngine {
         revokeButton.textContent = 'RÉVOQUER L’ACCORD';
         revokeButton.onclick = () => {
           hero.romanceOptIn = false;
+          this.redirectSavedVnSessionAfterRevocation(hero.id);
           hero.lastLoungeMessage = 'L’accord relationnel est révoqué immédiatement, sans perte de confiance ni impact militaire.';
           this.saveProgress();
           this.announceLoungeResult(hero, 'opt-in');
@@ -3135,6 +3287,475 @@ class GameEngine {
       this.saveProgress();
     }
     this.announceLoungeResult(hero, 'invite');
+  }
+
+  getVnData() {
+    const data = typeof window !== 'undefined' ? window.INFERNAL_VN_SCENES : null;
+    return data?.schema === 'infernal-city.vn-scenes/1' ? data : null;
+  }
+
+  getVnHeroine(heroId) {
+    return this.getVnData()?.heroines?.[heroId] || null;
+  }
+
+  getVnChapter(heroId, chapterId) {
+    return this.getVnHeroine(heroId)?.chapters?.find(chapter => chapter.id === chapterId) || null;
+  }
+
+  getVnChapterKey(heroId, chapterId) {
+    return `${heroId}.${chapterId}`;
+  }
+
+  sanitizeLoadedVnProgress(savedProgress) {
+    const data = this.getVnData();
+    if (!data || !savedProgress || typeof savedProgress !== 'object') return null;
+    if (savedProgress.dataVersion !== data.version) return null;
+
+    const chapterKeys = new Set();
+    const completionFlags = new Set();
+    Object.values(data.heroines).forEach(heroine => {
+      heroine.chapters.forEach(chapter => {
+        chapterKeys.add(this.getVnChapterKey(heroine.id, chapter.id));
+        chapter.beats.forEach(beat => {
+          (beat.onEnterEffects?.setFlags || []).forEach(flag => completionFlags.add(flag));
+        });
+      });
+    });
+
+    const flags = Array.isArray(savedProgress.flags)
+      ? [...new Set(savedProgress.flags.filter(flag => completionFlags.has(flag)))].slice(0, 64)
+      : [];
+    const chapterResults = {};
+    if (savedProgress.chapterResults && typeof savedProgress.chapterResults === 'object') {
+      Object.entries(savedProgress.chapterResults).forEach(([key, endState]) => {
+        if (chapterKeys.has(key) && typeof endState === 'string') chapterResults[key] = endState;
+      });
+    }
+    const appliedEffects = Array.isArray(savedProgress.appliedEffects)
+      ? [...new Set(savedProgress.appliedEffects.filter(token => typeof token === 'string' && token.length <= 160))].slice(0, 256)
+      : [];
+
+    let active = null;
+    const candidate = savedProgress.active;
+    const chapter = candidate && this.getVnChapter(candidate.heroId, candidate.chapterId);
+    const beat = chapter?.beats?.find(item => item.id === candidate.beatId);
+    if (chapter && beat) {
+      const lineIndex = Math.max(0, Math.floor(Number(candidate.lineIndex) || 0));
+      const history = Array.isArray(candidate.history)
+        ? candidate.history
+          .filter(entry => entry && typeof entry.key === 'string' && typeof entry.text === 'string' && typeof entry.speaker === 'string')
+          .slice(-80)
+          .map(entry => ({ key: entry.key.slice(0, 180), speaker: entry.speaker.slice(0, 80), text: entry.text.slice(0, 1200) }))
+        : [];
+      active = {
+        heroId: candidate.heroId,
+        chapterId: candidate.chapterId,
+        beatId: candidate.beatId,
+        lineIndex: beat.kind === 'dialogue' ? Math.min(lineIndex, Math.max(0, beat.lines.length - 1)) : 0,
+        history
+      };
+    }
+
+    return {
+      dataVersion: data.version,
+      flags,
+      chapterResults,
+      appliedEffects,
+      active
+    };
+  }
+
+  getVnChapterLockReason(hero, chapter) {
+    if (!hero || hero.unlocked === false) return 'Héroïne non disponible';
+    const unlock = chapter.unlock || {};
+    // Consent is checked before the replay exception: completing a romantic
+    // chapter never turns a past agreement into permanent authorization.
+    if (unlock.romanceOptIn === true && !hero.romanceOptIn) return 'Accord relationnel requis';
+    const key = this.getVnChapterKey(hero.id, chapter.id);
+    if (this.vnSceneProgress.chapterResults[key]?.startsWith('completed')) return '';
+    if ((hero.affinityLvl || 1) < (unlock.affinityMin || 1)) {
+      return `Confiance ${unlock.affinityMin}/5 requise`;
+    }
+    // A false value means "no prerequisite", never "must currently be false".
+    if (unlock.alliedRequired === true && !hero.allied) return 'Alliance libre requise';
+    if (unlock.privateMomentRequired === true && !hero.privateMomentUnlocked) return 'Moment privé requis';
+    const missingFlag = (unlock.flags || []).find(flag => !this.vnSceneProgress.flags.includes(flag));
+    if (missingFlag) return 'Chapitre précédent à terminer';
+    return '';
+  }
+
+  canResumeVnChapter(hero, chapter) {
+    const active = this.vnSceneProgress.active;
+    if (!hero || !chapter || active?.heroId !== hero.id || active?.chapterId !== chapter.id) return false;
+    const beat = chapter.beats.find(item => item.id === active.beatId);
+    // A saved boundary acknowledgement must remain readable after revocation,
+    // but no romantic dialogue can resume without current consent.
+    if (beat?.end === true && ['revoked', 'paused'].includes(beat.endState)) return true;
+    return !this.getVnChapterLockReason(hero, chapter);
+  }
+
+  redirectSavedVnSessionAfterRevocation(heroId) {
+    const active = this.vnSceneProgress.active;
+    if (active?.heroId !== heroId) return;
+    const chapter = this.getVnChapter(heroId, active.chapterId);
+    const revokeBeat = chapter?.beats?.find(beat => beat.id === 'revoke' && beat.end === true);
+    this.vnSceneProgress.active = revokeBeat
+      ? { ...active, beatId: revokeBeat.id, lineIndex: 0 }
+      : null;
+  }
+
+  getUnlockedVnChapterCount(hero) {
+    const heroine = this.getVnHeroine(hero?.id);
+    if (!heroine) return 0;
+    return heroine.chapters.filter(chapter => (
+      this.canResumeVnChapter(hero, chapter) || !this.getVnChapterLockReason(hero, chapter)
+    )).length;
+  }
+
+  setVnSceneImage(heroId, chapter = null) {
+    const image = document.getElementById('vn-scene-img');
+    const hero = HERO_CLASSES[heroId];
+    if (!image || !hero) return;
+    image.src = VN_NARRATIVE_CGS[heroId] || chapter?.presentation?.portrait || hero.avatar;
+    image.alt = `${hero.name}, adulte de ${hero.age} ans, pendant une conversation privée à Haven`;
+  }
+
+  openVisualNovel(heroId) {
+    const modal = document.getElementById('visual-novel-modal');
+    const data = this.getVnData();
+    const hero = HERO_CLASSES[heroId];
+    if (!modal || !data || !hero || hero.unlocked === false) {
+      this.showFeedback('Scènes Visual Novel indisponibles.', '#ef4444');
+      return;
+    }
+    this.vnSceneProgress.dataVersion = data.version;
+    this.activeVnSession = null;
+    this.renderVnChapterBrowser(heroId);
+    this.openModal(modal);
+    requestAnimationFrame(() => {
+      document.querySelector('#vn-chapter-list .vn-chapter-card:not([disabled])')?.focus();
+    });
+  }
+
+  renderVnChapterBrowser(heroId, statusMessage = '') {
+    const heroine = this.getVnHeroine(heroId);
+    const hero = HERO_CLASSES[heroId];
+    const browser = document.getElementById('vn-chapter-browser');
+    const dialoguePanel = document.getElementById('vn-dialogue-panel');
+    const list = document.getElementById('vn-chapter-list');
+    if (!heroine || !hero || !browser || !dialoguePanel || !list) return;
+
+    browser.hidden = false;
+    dialoguePanel.hidden = true;
+    document.getElementById('vn-hero-label').textContent = `${heroine.displayName} · ${heroine.age} ANS · VISUAL NOVEL`;
+    document.getElementById('vn-modal-title').textContent = heroine.displayName;
+    document.getElementById('vn-chapter-subtitle').textContent = `${heroine.title} · ${heroine.voice}`;
+    document.getElementById('vn-boundary-copy').textContent = heroine.boundary;
+    document.getElementById('vn-status').textContent = statusMessage
+      || 'Choisissez un chapitre. Une relecture ne redonne jamais de progression.';
+    this.setVnSceneImage(heroId);
+    list.innerHTML = '';
+
+    heroine.chapters.forEach(chapter => {
+      const key = this.getVnChapterKey(heroId, chapter.id);
+      const result = this.vnSceneProgress.chapterResults[key];
+      const isResume = this.canResumeVnChapter(hero, chapter);
+      const lockReason = isResume ? '' : this.getVnChapterLockReason(hero, chapter);
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'vn-chapter-card';
+      button.dataset.chapterId = chapter.id;
+      button.disabled = Boolean(lockReason);
+
+      const title = document.createElement('strong');
+      title.textContent = chapter.title;
+      const subtitle = document.createElement('span');
+      subtitle.textContent = `${chapter.subtitle} · ${chapter.estimatedMinutes} min`;
+      const summary = document.createElement('span');
+      summary.textContent = chapter.summary;
+      const state = document.createElement('span');
+      state.className = 'vn-chapter-state';
+      state.textContent = isResume
+        ? 'Reprendre la conversation'
+        : result?.startsWith('completed')
+          ? 'Terminé · relire sans gain'
+          : lockReason
+            ? `Verrouillé · ${lockReason}`
+            : 'Commencer';
+      button.append(title, subtitle, summary, state);
+      button.onclick = () => this.startVnChapter(heroId, chapter.id);
+      list.appendChild(button);
+    });
+  }
+
+  startVnChapter(heroId, chapterId) {
+    const chapter = this.getVnChapter(heroId, chapterId);
+    const hero = HERO_CLASSES[heroId];
+    if (!chapter || !hero) return;
+    const resume = this.vnSceneProgress.active;
+    const isResume = this.canResumeVnChapter(hero, chapter);
+    const chapterResult = this.vnSceneProgress.chapterResults[this.getVnChapterKey(heroId, chapterId)];
+    const isReplay = chapterResult?.startsWith('completed') === true;
+    const lockReason = isResume ? '' : this.getVnChapterLockReason(hero, chapter);
+    if (lockReason) {
+      document.getElementById('vn-status').textContent = lockReason;
+      return;
+    }
+
+    this.activeVnSession = isResume
+      ? {
+        heroId,
+        chapterId,
+        beatId: resume.beatId,
+        lineIndex: resume.lineIndex,
+        history: [...(resume.history || [])],
+        isReplay
+      }
+      : {
+        heroId,
+        chapterId,
+        beatId: chapter.entryBeat,
+        lineIndex: 0,
+        history: [],
+        isReplay
+      };
+    document.getElementById('vn-chapter-browser').hidden = true;
+    document.getElementById('vn-dialogue-panel').hidden = false;
+    document.getElementById('vn-modal-title').textContent = chapter.title;
+    document.getElementById('vn-chapter-subtitle').textContent = chapter.subtitle;
+    this.setVnSceneImage(heroId, chapter);
+    this.renderActiveVnBeat({ focus: true });
+  }
+
+  getActiveVnContext() {
+    const session = this.activeVnSession;
+    if (!session) return null;
+    const hero = HERO_CLASSES[session.heroId];
+    const heroine = this.getVnHeroine(session.heroId);
+    const chapter = this.getVnChapter(session.heroId, session.chapterId);
+    const beat = chapter?.beats?.find(item => item.id === session.beatId);
+    return hero && heroine && chapter && beat ? { session, hero, heroine, chapter, beat } : null;
+  }
+
+  getVnSpeakerName(speaker, heroine) {
+    if (speaker === 'hero') return heroine.displayName;
+    if (speaker === 'player') return 'Vous';
+    return 'Narration';
+  }
+
+  recordVnHistory(key, speaker, text) {
+    const session = this.activeVnSession;
+    if (!session || session.history.some(entry => entry.key === key)) return;
+    session.history.push({ key, speaker, text });
+    if (session.history.length > 80) session.history.splice(0, session.history.length - 80);
+  }
+
+  renderVnHistory() {
+    const list = document.getElementById('vn-history-list');
+    if (!list || !this.activeVnSession) return;
+    list.innerHTML = '';
+    this.activeVnSession.history.forEach(entry => {
+      const item = document.createElement('li');
+      item.textContent = `${entry.speaker} — ${entry.text}`;
+      list.appendChild(item);
+    });
+    if (list.parentElement?.open) list.scrollTop = list.scrollHeight;
+  }
+
+  persistActiveVnSession() {
+    const session = this.activeVnSession;
+    if (!session) return;
+    this.vnSceneProgress.active = {
+      heroId: session.heroId,
+      chapterId: session.chapterId,
+      beatId: session.beatId,
+      lineIndex: session.lineIndex,
+      history: session.history.slice(-80).map(entry => ({ ...entry }))
+    };
+    this.saveProgress();
+  }
+
+  renderActiveVnBeat({ focus = false } = {}) {
+    const context = this.getActiveVnContext();
+    if (!context) return;
+    const { session, heroine, chapter, beat } = context;
+    const speakerName = document.getElementById('vn-speaker-name');
+    const progress = document.getElementById('vn-line-progress');
+    const dialogueText = document.getElementById('vn-dialogue-text');
+    const choiceContainer = document.getElementById('vn-choice-container');
+    const choicePrompt = document.getElementById('vn-choice-prompt');
+    const continueButton = document.getElementById('btn-vn-continue');
+    const panel = document.getElementById('vn-dialogue-panel');
+    const status = document.getElementById('vn-status');
+    if (!speakerName || !progress || !dialogueText || !choiceContainer || !continueButton || !panel || !status) return;
+
+    document.getElementById('vn-modal-title').textContent = chapter.title;
+    document.getElementById('vn-chapter-subtitle').textContent = chapter.subtitle;
+    choiceContainer.querySelectorAll('button').forEach(button => button.remove());
+
+    if (beat.kind === 'dialogue') {
+      session.lineIndex = Math.max(0, Math.min(session.lineIndex, beat.lines.length - 1));
+      const line = beat.lines[session.lineIndex];
+      const resolvedSpeaker = this.getVnSpeakerName(line.speaker, heroine);
+      speakerName.textContent = resolvedSpeaker;
+      progress.textContent = `${session.lineIndex + 1} / ${beat.lines.length}`;
+      dialogueText.textContent = line.text;
+      panel.dataset.mood = line.mood || 'neutral';
+      choiceContainer.hidden = true;
+      continueButton.hidden = false;
+      continueButton.textContent = beat.end && session.lineIndex === beat.lines.length - 1
+        ? 'TERMINER LE CHAPITRE'
+        : 'CONTINUER';
+      this.recordVnHistory(`${beat.id}.${session.lineIndex}`, resolvedSpeaker, line.text);
+      this.renderVnHistory();
+      status.textContent = `${resolvedSpeaker} : ${line.text}`;
+      this.persistActiveVnSession();
+      if (focus) requestAnimationFrame(() => continueButton.focus());
+      return;
+    }
+
+    speakerName.textContent = 'Décision réciproque';
+    progress.textContent = 'CHOIX DE CONSENTEMENT';
+    dialogueText.textContent = 'Aucune option n’est présélectionnée et aucun choix n’est chronométré.';
+    choicePrompt.textContent = beat.prompt;
+    choiceContainer.hidden = false;
+    continueButton.hidden = true;
+    beat.options.forEach(option => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'vn-choice-btn';
+      button.dataset.consentAction = option.consentAction;
+      button.textContent = option.label;
+      button.onclick = () => this.chooseVnOption(option);
+      choiceContainer.appendChild(button);
+    });
+    status.textContent = beat.prompt;
+    this.persistActiveVnSession();
+    if (focus) requestAnimationFrame(() => choiceContainer.querySelector('button')?.focus());
+  }
+
+  transitionVnBeat(nextBeatId, { focus = true } = {}) {
+    const context = this.getActiveVnContext();
+    const nextBeat = context?.chapter.beats.find(beat => beat.id === nextBeatId);
+    if (!context || !nextBeat) {
+      this.pauseVnToChapterBrowser('La scène a été interrompue sans modifier votre progression.');
+      return;
+    }
+    context.session.beatId = nextBeatId;
+    context.session.lineIndex = 0;
+    this.renderActiveVnBeat({ focus });
+  }
+
+  advanceVnDialogue() {
+    const context = this.getActiveVnContext();
+    if (!context || context.beat.kind !== 'dialogue') return;
+    const { session, beat } = context;
+    if (session.lineIndex < beat.lines.length - 1) {
+      session.lineIndex++;
+      this.renderActiveVnBeat();
+      return;
+    }
+    if (beat.end) {
+      this.finishVnChapter(beat);
+      return;
+    }
+    this.transitionVnBeat(beat.nextBeat);
+  }
+
+  chooseVnOption(option) {
+    const context = this.getActiveVnContext();
+    if (!context || context.beat.kind !== 'choice') return;
+    const token = `${context.session.heroId}.${context.session.chapterId}.${context.beat.id}.option.${option.id}`;
+    this.recordVnHistory(
+      `choice.${context.beat.id}.${option.id}`,
+      'Vous',
+      option.label
+    );
+    this.applyVnEffects(option.effects, token, context.hero);
+    this.transitionVnBeat(option.nextBeat);
+  }
+
+  applyVnEffects(effects, token, hero) {
+    if (!effects || !hero) return;
+    // Revocation remains immediate even during a replay of an already-seen path.
+    if (typeof effects.romanceOptIn === 'boolean') hero.romanceOptIn = effects.romanceOptIn;
+    // `onceEffects` applies to the whole completed chapter, not only to the
+    // exact branch previously read. Alternate replays therefore cannot grant
+    // fresh XP through a different option.
+    if (this.activeVnSession?.isReplay) {
+      this.saveProgress();
+      return;
+    }
+    if (this.vnSceneProgress.appliedEffects.includes(token)) {
+      this.saveProgress();
+      return;
+    }
+    const relationshipXp = Math.max(0, Math.floor(Number(effects.relationshipXp) || 0));
+    if (relationshipXp > 0) this.gainHeroAffinity(hero, relationshipXp);
+    (effects.setFlags || []).forEach(flag => {
+      if (!this.vnSceneProgress.flags.includes(flag)) this.vnSceneProgress.flags.push(flag);
+    });
+    this.vnSceneProgress.appliedEffects.push(token);
+    this.saveProgress();
+  }
+
+  finishVnChapter(endBeat) {
+    const context = this.getActiveVnContext();
+    if (!context) return;
+    const { session, hero, chapter } = context;
+    const endToken = `${session.heroId}.${session.chapterId}.${endBeat.id}.end`;
+    this.applyVnEffects(endBeat.onEnterEffects, endToken, hero);
+    const key = this.getVnChapterKey(session.heroId, session.chapterId);
+    const endState = endBeat.endState || 'completed';
+    const previousResult = this.vnSceneProgress.chapterResults[key];
+    // Completion is monotonic. A later replay may pause or revoke consent, but
+    // it must not erase the fact that this chapter already granted its rewards.
+    this.vnSceneProgress.chapterResults[key] = previousResult?.startsWith('completed')
+      ? previousResult
+      : endState;
+    this.vnSceneProgress.active = null;
+    this.activeVnSession = null;
+    hero.lastLoungeMessage = endState === 'revoked'
+      ? 'Votre accord romantique est retiré sans altérer votre confiance ni votre alliance.'
+      : endState === 'paused'
+        ? 'La conversation est mise en pause sans perte de confiance.'
+        : `Vous avez terminé « ${chapter.title} ». Cette scène peut être relue sans nouveau gain.`;
+    this.saveProgress();
+    const message = endState.startsWith('completed')
+      ? `Chapitre terminé : ${chapter.title}`
+      : endState === 'revoked'
+        ? 'Accord révoqué. Alliance et confiance préservées.'
+        : 'Conversation terminée sans pénalité.';
+    this.renderVnChapterBrowser(session.heroId, message);
+    this.announce(message);
+    requestAnimationFrame(() => {
+      document.querySelector(`#vn-chapter-list [data-chapter-id="${session.chapterId}"]`)?.focus();
+    });
+  }
+
+  pauseVnToChapterBrowser(statusMessage = 'Conversation mise en pause. Votre ligne actuelle est sauvegardée.') {
+    const context = this.getActiveVnContext();
+    if (!context) return;
+    this.persistActiveVnSession();
+    const heroId = context.session.heroId;
+    this.activeVnSession = null;
+    this.renderVnChapterBrowser(heroId, statusMessage);
+    requestAnimationFrame(() => {
+      document.querySelector(`#vn-chapter-list [data-chapter-id="${context.session.chapterId}"]`)?.focus();
+    });
+  }
+
+  revokeActiveVnConsent() {
+    const context = this.getActiveVnContext();
+    if (!context) return;
+    context.hero.romanceOptIn = false;
+    context.hero.lastLoungeMessage = 'L’accord relationnel est révoqué immédiatement. Confiance et alliance restent intactes.';
+    this.saveProgress();
+    if (context.chapter.beats.some(beat => beat.id === 'revoke')) {
+      this.transitionVnBeat('revoke');
+    } else {
+      this.pauseVnToChapterBrowser('Accord révoqué sans pénalité.');
+    }
   }
 
   openSlotMachineModal() {
@@ -3595,9 +4216,9 @@ class GameEngine {
     return Math.floor(this.animationClock * 1.4) % 7 === 6 ? 1 : 0;
   }
 
-  drawInfernalFloor(w, h) {
+  drawInfernalFloor(w, h, x = 0, y = 0) {
     this.ctx.fillStyle = '#070b14';
-    this.ctx.fillRect(0, 0, w, h);
+    this.ctx.fillRect(x, y, w, h);
     if (!this.isSpriteReady(this.floorImage)) return;
 
     if (!this.floorPattern && typeof this.ctx.createPattern === 'function') {
@@ -3607,15 +4228,60 @@ class GameEngine {
     this.ctx.globalAlpha = 0.9;
     if (this.floorPattern) {
       this.ctx.fillStyle = this.floorPattern;
-      this.ctx.fillRect(0, 0, w, h);
+      this.ctx.fillRect(x, y, w, h);
     } else {
-      this.ctx.drawImage(this.floorImage, 0, 0, w, h);
+      this.ctx.drawImage(this.floorImage, x, y, w, h);
     }
     this.ctx.restore();
 
     // Maintain contrast for bullets, hazard telegraphs and small enemies.
     this.ctx.fillStyle = 'rgba(3, 7, 16, 0.38)';
-    this.ctx.fillRect(0, 0, w, h);
+    this.ctx.fillRect(x, y, w, h);
+  }
+
+  drawBattlefieldFloor(w, h, view) {
+    if (!view) {
+      this.drawInfernalFloor(w, h);
+      return;
+    }
+    const viewWidth = view.right - view.left;
+    const viewHeight = view.bottom - view.top;
+    this.ctx.fillStyle = '#030710';
+    this.ctx.fillRect(view.left, view.top, viewWidth, viewHeight);
+
+    if (this.isSpriteReady(this.coastlineImage)) {
+      const sourceWidth = this.coastlineImage.naturalWidth || this.coastlineImage.width;
+      const sourceHeight = this.coastlineImage.naturalHeight || this.coastlineImage.height;
+      const coverScale = Math.max(viewWidth / sourceWidth, viewHeight / sourceHeight);
+      const cropWidth = viewWidth / coverScale;
+      const cropHeight = viewHeight / coverScale;
+      const sourceX = (sourceWidth - cropWidth) / 2;
+      const sourceY = (sourceHeight - cropHeight) / 2;
+      this.ctx.drawImage(
+        this.coastlineImage,
+        sourceX,
+        sourceY,
+        cropWidth,
+        cropHeight,
+        view.left,
+        view.top,
+        viewWidth,
+        viewHeight
+      );
+      this.ctx.fillStyle = 'rgba(1, 4, 12, 0.44)';
+      this.ctx.fillRect(view.left, view.top, viewWidth, viewHeight);
+    }
+
+    // The authored floor marks the true collision/placement rectangle while
+    // the coastline remains visible as the enemy approach corridor.
+    this.drawInfernalFloor(w, h);
+    this.ctx.save();
+    this.ctx.strokeStyle = 'rgba(0, 240, 255, 0.42)';
+    this.ctx.lineWidth = 3;
+    this.ctx.shadowColor = '#00f0ff';
+    this.ctx.shadowBlur = 12;
+    this.ctx.strokeRect(0, 0, w, h);
+    this.ctx.restore();
   }
 
   drawTower(tower, options = {}) {
@@ -3746,9 +4412,15 @@ class GameEngine {
 
     const w = this.canvas.width || window.innerWidth || 1200;
     const h = this.canvas.height || window.innerHeight || 800;
+    const view = this.getBattlefieldView(w, h);
+    const viewWidth = view.right - view.left;
+    const viewHeight = view.bottom - view.top;
+
+    this.ctx.save();
+    this.applyBattlefieldView(view);
 
     // OpenAI-authored tileable street floor, with a dark fallback while loading.
-    this.drawInfernalFloor(w, h);
+    this.drawBattlefieldFloor(w, h, view);
 
     // Retain a restrained tactical grid above the authored floor.
     this.gridOffset = (this.gridOffset + 0.4) % 40;
@@ -3770,7 +4442,7 @@ class GameEngine {
 
     if (this.isOverdriveActive) {
       this.ctx.fillStyle = `rgba(245, 158, 11, ${0.08 + Math.sin(Date.now() * 0.01) * 0.04})`;
-      this.ctx.fillRect(0, 0, w, h);
+      this.ctx.fillRect(view.left, view.top, viewWidth, viewHeight);
     }
 
     // Render Mercenaries
@@ -3995,6 +4667,7 @@ class GameEngine {
       this.ctx.stroke();
       this.ctx.restore();
     }
+    this.ctx.restore();
   }
 
   createExplosion(x, y, radius, damage) {

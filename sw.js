@@ -1,19 +1,21 @@
 'use strict';
 
 const CACHE_PREFIX = 'infernal-city-';
-const CACHE_NAME = `${CACHE_PREFIX}v5`;
+const CACHE_NAME = `${CACHE_PREFIX}v6`;
 
 const PRECACHE_URLS = [
   './',
   './index.html',
   './styles.v8.css',
   './audio.v8.js',
+  './vn-scenes.v1.js',
   './game.v9.js',
   './pwa.v4.js',
   './manifest.webmanifest',
   './assets/cover.jpg',
   './assets/cg_aria.jpg',
   './assets/environment/infernal-city-floor.png',
+  './assets/environment/infernal-city-coastline.png',
   './assets/animations/towers/tower-atlas-01.png',
   './assets/animations/towers/tower-atlas-02.png',
   './assets/animations/towers/tower-atlas-03.png',

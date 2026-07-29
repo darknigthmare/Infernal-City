@@ -8,6 +8,7 @@ const vm = require('node:vm');
 
 const ROOT = path.resolve(__dirname, '..');
 const GAME_SOURCE = fs.readFileSync(path.join(ROOT, 'game.v9.js'), 'utf8');
+const VN_SOURCE = fs.readFileSync(path.join(ROOT, 'vn-scenes.v1.js'), 'utf8');
 
 function createClassList() {
   const values = new Set();
@@ -115,19 +116,24 @@ function loadGameModule(seed = {}) {
       ENEMY_SPRITE_DATA,
       HERO_SPRITE_DATA,
       FLOOR_TEXTURE_SRC,
+      COASTLINE_IMAGE_SRC,
+      VN_NARRATIVE_CGS,
       WEAPONS_DATA,
       HERO_CLASSES,
       ACHIEVEMENTS,
       GALLERY_ITEMS
     };
   `;
+  vm.runInContext(VN_SOURCE, context, { filename: 'vn-scenes.v1.js' });
   vm.runInContext(`${GAME_SOURCE}\n${exportHook}`, context, { filename: 'game.v9.js' });
 
   return {
     ...context.__INFERNAL_CITY_TEST__,
     localStorage,
     stored,
-    audio
+    audio,
+    document,
+    window
   };
 }
 
@@ -382,7 +388,7 @@ test('la sauvegarde restaure metaprogression, heroine choisie et relation', () =
   first.saveProgress();
 
   const rawSave = JSON.parse(localStorage.getItem('valkyrie_sweeper_save'));
-  assert.equal(rawSave.version, 4);
+  assert.equal(rawSave.version, 5);
   assert.equal(rawSave.metaCoins, 777);
   assert.equal(rawSave.characterProgress.kira.affinityLvl, 4);
 
@@ -624,6 +630,32 @@ test('la modale de gestion des defenses possede ses controles accessibles', () =
     assert.match(indexSource, new RegExp(`id="${id}"`), `${id}: controle absent`);
   });
   assert.match(indexSource, /id="defense-management-status"[^>]*role="status"[^>]*aria-live="polite"/);
+
+  const { GameEngine } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const hiddenPanel = {};
+  const hiddenNestedControl = {
+    hidden: false,
+    getAttribute: () => null,
+    closest: () => hiddenPanel,
+    getClientRects: () => [{ width: 100, height: 44 }]
+  };
+  const visibleControl = {
+    hidden: false,
+    getAttribute: () => null,
+    closest: () => null,
+    getClientRects: () => [{ width: 100, height: 44 }]
+  };
+  const modal = {
+    querySelectorAll: () => [hiddenNestedControl, visibleControl]
+  };
+  const focusableControls = engine.getFocusableControls(modal);
+  assert.equal(
+    focusableControls.length,
+    1,
+    'le piege de focus doit ignorer les boutons places dans un panneau cache'
+  );
+  assert.equal(focusableControls[0], visibleControl);
 });
 
 test('la barre des defenses est une toolbar a tabindex roving avec retour canvas', () => {
@@ -755,7 +787,7 @@ test('les difficultes modifient reellement la citadelle et les recompenses', () 
   assert.ok((nightmare.coins - nightmareCoins) > (story.coins - storyCoins));
 });
 
-test('une sauvegarde V2 migre ses anciens credits vers la V4', () => {
+test('une sauvegarde V2 migre ses anciens credits vers la V5', () => {
   const legacy = {
     version: 2,
     coins: 640,
@@ -850,4 +882,198 @@ test('le rendu decoupe exactement la cellule 4x4 demandee', () => {
   assert.equal(engine.drawAtlasFrame(image, { row: 2 }, 3, 100, 80, 64, { flipX: true }), true);
   assert.deepEqual(drawCalls[0].slice(1, 5), [768, 512, 256, 256]);
   assert.deepEqual(drawCalls[0].slice(5), [-32, -32, 64, 64]);
+});
+
+test('la camera montre le couloir ennemi hors terrain sans modifier les coordonnees de jeu', () => {
+  const { GameEngine, document } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  let hudRects = {
+    'hud-header': { bottom: 88 },
+    'mission-status-panel': { bottom: 127 },
+    'hud-build-bar': { top: 650 }
+  };
+  document.getElementById = id => (
+    hudRects[id]
+      ? { getBoundingClientRect: () => ({ ...hudRects[id] }) }
+      : null
+  );
+  const view = engine.getBattlefieldView(1200, 800);
+  const projectX = worldX => view.screenCenterX + ((worldX - view.worldCenterX) * view.scale);
+  const projectY = worldY => view.screenCenterY + ((worldY - view.worldCenterY) * view.scale);
+
+  assert.ok(view.scale > 0 && view.scale < 0.78, `Zoom inattendu: ${view.scale}`);
+  assert.ok(projectX(-30) > 0, 'Le spawn ouest doit etre visible avant de franchir le terrain');
+  assert.ok(projectX(1230) < 1200, 'Le spawn est doit etre visible avant de franchir le terrain');
+  assert.ok(projectY(-30) > view.safeTop, 'Le spawn nord doit apparaitre sous le HUD');
+  assert.ok(projectY(830) < view.safeBottom, 'Le spawn sud doit apparaitre au-dessus des defenses');
+
+  const restoredCenter = engine.screenToBattlefieldPoint(view.screenCenterX, view.screenCenterY, view);
+  assert.equal(restoredCenter.x, 600);
+  assert.equal(restoredCenter.y, 400);
+  assert.match(GAME_SOURCE, /const BATTLEFIELD_APPROACH_MARGIN = 64;/);
+  assert.match(GAME_SOURCE, /this\.applyBattlefieldView\(view\);/);
+  assert.match(GAME_SOURCE, /this\.screenToBattlefieldPoint\(screenX, screenY\)/);
+
+  hudRects = {
+    'hud-header': { bottom: 155 },
+    'mission-status-panel': { bottom: 207 },
+    'hud-build-bar': { top: 432 }
+  };
+  engine.canvas = {
+    width: 360,
+    height: 640,
+    getBoundingClientRect() {
+      return { left: 0, top: 0, width: 360, height: 640 };
+    }
+  };
+  const mobileView = engine.getBattlefieldView(360, 640);
+  const mobileNorthSpawn = mobileView.screenCenterY + ((-30 - mobileView.worldCenterY) * mobileView.scale);
+  const mobileSouthSpawn = mobileView.screenCenterY + ((670 - mobileView.worldCenterY) * mobileView.scale);
+  assert.ok(mobileView.scale < 0.32, 'un écran court doit pouvoir reculer sous le zoom minimal historique');
+  assert.ok(mobileNorthSpawn > mobileView.safeTop, 'Le spawn nord mobile doit rester visible');
+  assert.ok(mobileSouthSpawn < mobileView.safeBottom, 'Le spawn sud mobile doit rester visible');
+
+  hudRects = {
+    'hud-header': { bottom: 112 },
+    'mission-status-panel': { bottom: 141 },
+    'hud-build-bar': { top: 230 }
+  };
+  engine.canvas = {
+    width: 844,
+    height: 390,
+    getBoundingClientRect() {
+      return { left: 0, top: 0, width: 844, height: 390 };
+    }
+  };
+  const landscapeView = engine.getBattlefieldView(844, 390);
+  const landscapeNorthSpawn = landscapeView.screenCenterY + ((-30 - landscapeView.worldCenterY) * landscapeView.scale);
+  const landscapeSouthSpawn = landscapeView.screenCenterY + ((420 - landscapeView.worldCenterY) * landscapeView.scale);
+  assert.ok(landscapeNorthSpawn > landscapeView.safeTop, 'Le spawn nord paysage doit rester visible');
+  assert.ok(landscapeSouthSpawn < landscapeView.safeBottom, 'Le spawn sud paysage doit rester visible');
+  const indexSource = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  assert.match(indexSource, /id="short-landscape-notice"/);
+  assert.match(GAME_SOURCE, /newWidth > newHeight && newHeight <= 500/);
+  assert.match(GAME_SOURCE, /!this\.requiresPortraitOrientation/);
+});
+
+test('les six heroines disposent de CG narratives et de chapitres VN accessibles sans faux verrou', () => {
+  const { GameEngine, HERO_CLASSES, VN_NARRATIVE_CGS, COASTLINE_IMAGE_SRC } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  assert.deepEqual(Object.keys(VN_NARRATIVE_CGS).sort(), ['aria', 'carmilla', 'kira', 'rin', 'selene', 'vespera']);
+  assert.equal(COASTLINE_IMAGE_SRC, 'assets/environment/infernal-city-coastline.png');
+
+  const ariaScenes = engine.getVnHeroine('aria');
+  assert.equal(ariaScenes.chapters.length, 3);
+  HERO_CLASSES.aria.affinityLvl = 1;
+  HERO_CLASSES.aria.romanceOptIn = true;
+  assert.equal(
+    engine.getVnChapterLockReason(HERO_CLASSES.aria, ariaScenes.chapters[0]),
+    '',
+    'romanceOptIn:false signifie absence de prerequis et non obligation de desactiver la romance'
+  );
+  HERO_CLASSES.aria.affinityLvl = 2;
+  assert.match(
+    engine.getVnChapterLockReason(HERO_CLASSES.aria, ariaScenes.chapters[1]),
+    /Chapitre pr.c.dent/u,
+    'la suite reste liee au drapeau de completion'
+  );
+
+  const romanticChapter = ariaScenes.chapters[1];
+  const romanticKey = engine.getVnChapterKey('aria', romanticChapter.id);
+  engine.vnSceneProgress.chapterResults[romanticKey] = 'completed';
+  HERO_CLASSES.aria.romanceOptIn = false;
+  assert.match(
+    engine.getVnChapterLockReason(HERO_CLASSES.aria, romanticChapter),
+    /Accord relationnel requis/,
+    'un chapitre romantique termine ne devient jamais une autorisation permanente'
+  );
+
+  engine.vnSceneProgress.active = {
+    heroId: 'aria',
+    chapterId: romanticChapter.id,
+    beatId: 'middle',
+    lineIndex: 0,
+    history: []
+  };
+  assert.equal(engine.canResumeVnChapter(HERO_CLASSES.aria, romanticChapter), false);
+  engine.redirectSavedVnSessionAfterRevocation('aria');
+  assert.equal(engine.vnSceneProgress.active.beatId, 'revoke');
+  assert.equal(
+    engine.canResumeVnChapter(HERO_CLASSES.aria, romanticChapter),
+    true,
+    'seul le message terminal de revocation reste reprenable sans accord'
+  );
+});
+
+test('les effets VN ne peuvent pas etre farmes en relecture et la revocation reste immediate', () => {
+  const { GameEngine, HERO_CLASSES, document } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  let grantedXp = 0;
+  engine.gainHeroAffinity = (_hero, amount) => { grantedXp += amount; };
+  HERO_CLASSES.aria.romanceOptIn = true;
+
+  const effects = { relationshipXp: 3, romanceOptIn: false, setFlags: ['vn.aria.midnight-relief.complete'] };
+  engine.applyVnEffects(effects, 'aria.midnight-relief.close.end', HERO_CLASSES.aria);
+  engine.applyVnEffects(effects, 'aria.midnight-relief.close.end', HERO_CLASSES.aria);
+
+  assert.equal(grantedXp, 3);
+  assert.equal(HERO_CLASSES.aria.romanceOptIn, false);
+  assert.equal(engine.vnSceneProgress.appliedEffects.length, 1);
+  assert.deepEqual(Array.from(engine.vnSceneProgress.flags), ['vn.aria.midnight-relief.complete']);
+
+  engine.activeVnSession = { isReplay: true };
+  HERO_CLASSES.aria.romanceOptIn = true;
+  engine.applyVnEffects(
+    {
+      relationshipXp: 5,
+      romanceOptIn: false,
+      setFlags: ['vn.aria.shield-dance.complete']
+    },
+    'aria.midnight-relief.alternate.option',
+    HERO_CLASSES.aria
+  );
+
+  assert.equal(grantedXp, 3, 'une autre branche de relecture ne doit pas redonner d XP');
+  assert.equal(HERO_CLASSES.aria.romanceOptIn, false, 'la revocation reste effective en relecture');
+  assert.ok(!engine.vnSceneProgress.flags.includes('vn.aria.shield-dance.complete'));
+
+  const chapter = engine.getVnHeroine('aria').chapters[0];
+  const chapterKey = engine.getVnChapterKey('aria', chapter.id);
+  const revokeBeat = chapter.beats.find(beat => beat.id === 'revoke');
+  engine.vnSceneProgress.chapterResults[chapterKey] = 'completed';
+  engine.activeVnSession = {
+    heroId: 'aria',
+    chapterId: chapter.id,
+    beatId: revokeBeat.id,
+    lineIndex: 0,
+    history: [],
+    isReplay: true
+  };
+  engine.finishVnChapter(revokeBeat);
+  assert.equal(
+    engine.vnSceneProgress.chapterResults[chapterKey],
+    'completed',
+    'pause ou revocation en relecture ne doit jamais effacer la completion'
+  );
+
+  const vnElements = new Map([
+    ['vn-chapter-browser', { hidden: false }],
+    ['vn-dialogue-panel', { hidden: true }],
+    ['vn-modal-title', { textContent: '' }],
+    ['vn-chapter-subtitle', { textContent: '' }]
+  ]);
+  document.getElementById = id => vnElements.get(id) || null;
+  engine.renderActiveVnBeat = () => {};
+  HERO_CLASSES.aria.romanceOptIn = true;
+  engine.startVnChapter('aria', chapter.id);
+  assert.equal(engine.activeVnSession.isReplay, true);
+  engine.applyVnEffects(
+    { relationshipXp: 9, setFlags: ['vn.aria.shield-dance.complete'] },
+    'aria.midnight-relief.unseen-replay-token',
+    HERO_CLASSES.aria
+  );
+  assert.equal(grantedXp, 3, 'le cycle completion puis revocation ne doit pas rouvrir le farming');
+  assert.ok(!engine.vnSceneProgress.flags.includes('vn.aria.shield-dance.complete'));
+  assert.match(GAME_SOURCE, /btn-vn-revoke/);
+  assert.match(GAME_SOURCE, /this\.transitionVnBeat\('revoke'\)/);
 });

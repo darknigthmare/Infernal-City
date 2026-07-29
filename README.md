@@ -14,10 +14,16 @@ Roguelite de défense cyber-gothique en HTML, CSS et JavaScript natifs.
   métaprogression.
 - Vingt défenses améliorables jusqu’au niveau 3 et revendables à 60 % de la
   valeur investie.
-- Sol cyber-infernal, vingt défenses, sept ennemis et six héros de combat
-  animés à partir d’assets OpenAI.
+- Caméra tactique adaptative cadrée entre les HUD : le terrain complet et les
+  quatre couloirs d’arrivée ennemis restent visibles sur bureau et mobile. Le
+  combat se met en pause avec une demande de portrait sur les paysages trop bas
+  pour rester lisibles.
+- Sol et côte cyber-infernale, vingt défenses, sept ennemis et six héros de
+  combat animés à partir d’assets OpenAI.
 - Quartier Général : commandantes, escadrille de familiers améliorable,
   mercenaires en patrouille, boutique, archives, Salon Nocturne et mini-jeu.
+- Visual novel relationnel : 18 chapitres, plus de 10 000 mots, historique,
+  reprise sauvegardée et 126 choix pour six héroïnes adultes.
 
 ## Contenu adulte
 
@@ -25,6 +31,8 @@ Le jeu est réservé aux personnes majeures. Tous les personnages relationnels o
 au moins 27 ans. Les romances sont facultatives, séparées des alliances
 militaires et reposent sur un consentement libre et révocable. Les scènes
 intimes restent suggestives et se terminent par un fondu au noir.
+Les choix VN ne sont ni chronométrés ni présélectionnés. Pause, limite et
+révocation préservent toujours la confiance et l’efficacité militaire.
 
 ## Lancer le jeu
 
@@ -45,10 +53,12 @@ Le projet ne requiert aucune dépendance ni étape de compilation.
 ## Installation et mode hors ligne
 
 Le jeu enregistre un service worker sur `localhost` ou depuis une origine HTTPS.
-Après une première visite en ligne, les fichiers essentiels, le sol et les neuf
-planches d’animation de combat sont précachés. Les portraits de galerie
-rejoignent ensuite le cache à la demande. Le manifeste et les icônes PNG 192/512
-permettent de proposer l’installation en application autonome.
+Après une première visite en ligne, les fichiers essentiels, le sol, la côte,
+les neuf planches d’animation et le corpus VN sont précachés. Les six CG
+narratives et les autres portraits de galerie rejoignent ensuite le cache à la
+demande, à leur première consultation, pour éviter une installation initiale
+trop lourde. Le manifeste et les icônes PNG 192/512 permettent de proposer
+l’installation en application autonome.
 
 Les actifs cœur portent un nom de version et le code utilise le réseau en
 priorité lorsqu’il est disponible, puis le cache hors ligne en secours. Le
@@ -63,6 +73,10 @@ selon les états réels : charge/tir/recul, locomotion/attaque/impact et
 attaque/compétence héroïque. Le héros choisi est rendu physiquement sur la
 Citadelle et ses leurres utilisent aussi sa planche.
 
+La côte panoramique et six CG de conversations ont également été générées avec
+ImageGen à partir des portraits établis. Leurs ancres d’identité, compositions
+et prompts finaux sont documentés dans `assets/CG_PROMPTS.md`.
+
 Les chemins, lignes, colonnes et résumés des prompts sont documentés dans
 `assets/animations/atlas-manifest.json`.
 
@@ -76,3 +90,5 @@ Les chemins, lignes, colonnes et résumés des prompts sont documentés dans
   `Échap` pour revenir au champ de bataille.
 - `F` : activer Overdrive lorsqu’il est chargé.
 - Quartier Général : mettre le combat en pause et gérer l’équipe.
+- Salon Nocturne : ouvrir « Histoire VN », lire ligne par ligne, consulter
+  l’historique ou reprendre plus tard exactement au même beat.

@@ -114,6 +114,47 @@ body {
   z-index: 1;
 }
 
+.orientation-notice {
+  position: absolute;
+  inset: 0;
+  z-index: 900;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 8px;
+  padding: 24px;
+  text-align: center;
+  background:
+    radial-gradient(circle at center, rgba(0, 240, 255, 0.14), transparent 54%),
+    rgba(3, 6, 16, 0.97);
+  border: 2px solid rgba(0, 240, 255, 0.65);
+}
+
+.orientation-notice[hidden] {
+  display: none;
+}
+
+.orientation-notice-icon {
+  font-size: clamp(2.4rem, 13vh, 4rem);
+  line-height: 1;
+  color: var(--color-cyan);
+  text-shadow: 0 0 22px var(--color-cyan-glow);
+}
+
+.orientation-notice h2 {
+  margin: 0;
+  font-family: var(--font-tech);
+  color: var(--color-cyan);
+  letter-spacing: 0.08em;
+}
+
+.orientation-notice p {
+  max-width: 560px;
+  margin: 0;
+  color: var(--text-main);
+  line-height: 1.45;
+}
+
 /* CRT Scanline Overlay */
 .crt-overlay {
   position: absolute;
@@ -1217,6 +1258,12 @@ body {
   grid-column: 1 / -1;
 }
 
+.relationship-actions [data-action="vn"] {
+  grid-column: 1 / -1;
+  border-color: rgba(0, 240, 255, 0.48);
+  color: #bae6fd;
+}
+
 .harem-card:hover {
   border-color: var(--color-pink);
   transform: translateY(-4px);
@@ -1230,6 +1277,355 @@ body {
   object-fit: cover;
   border: 2px solid var(--color-pink);
   margin-bottom: 8px;
+}
+
+/* Long-form visual novel */
+.visual-novel-overlay {
+  padding: 16px;
+}
+
+.vn-shell {
+  position: relative;
+  width: min(1180px, 100%);
+  height: min(760px, calc(100dvh - 32px));
+  overflow: hidden;
+  border: 1px solid rgba(236, 72, 153, 0.7);
+  border-radius: 22px;
+  background: #070b14;
+  box-shadow: 0 24px 90px rgba(0, 0, 0, 0.8), 0 0 38px rgba(236, 72, 153, 0.22);
+}
+
+.vn-shell > .btn-close {
+  z-index: 8;
+}
+
+.vn-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  isolation: isolate;
+}
+
+#vn-scene-img {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 24%;
+}
+
+.vn-stage-shade {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(90deg, rgba(3, 7, 16, 0.94) 0%, rgba(3, 7, 16, 0.58) 48%, rgba(3, 7, 16, 0.12) 100%),
+    linear-gradient(0deg, rgba(3, 7, 16, 0.98) 0%, transparent 58%);
+  pointer-events: none;
+}
+
+.vn-scene-header {
+  width: min(660px, calc(100% - 96px));
+  padding: 32px 34px 8px;
+}
+
+.vn-scene-header h2 {
+  margin: 2px 0 4px;
+  color: #fdf2f8;
+  font-family: "Rajdhani", sans-serif;
+  font-size: clamp(1.65rem, 4vw, 3rem);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+#vn-chapter-subtitle {
+  color: #bae6fd;
+  font-size: 0.9rem;
+}
+
+.vn-chapter-browser {
+  width: min(650px, calc(100% - 48px));
+  max-height: calc(100% - 142px);
+  padding: 10px 34px 34px;
+  overflow-y: auto;
+}
+
+.vn-boundary {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-left: 3px solid #00f0ff;
+  border-radius: 0 10px 10px 0;
+  background: rgba(0, 240, 255, 0.08);
+  color: #dbeafe;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.vn-chapter-list {
+  display: grid;
+  gap: 10px;
+}
+
+.vn-chapter-card {
+  width: 100%;
+  min-height: 88px;
+  padding: 12px 14px;
+  border: 1px solid rgba(236, 72, 153, 0.4);
+  border-radius: 12px;
+  background: rgba(10, 15, 28, 0.88);
+  color: #f8fafc;
+  text-align: left;
+}
+
+.vn-chapter-card:not([disabled]):hover,
+.vn-chapter-card:not([disabled]):focus-visible {
+  border-color: #67e8f9;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.18);
+}
+
+.vn-chapter-card[disabled] {
+  opacity: 0.74;
+  cursor: not-allowed;
+}
+
+.vn-chapter-card strong,
+.vn-chapter-card span {
+  display: block;
+}
+
+.vn-chapter-card strong {
+  color: #f9a8d4;
+  font-size: 1rem;
+}
+
+.vn-chapter-card span {
+  margin-top: 3px;
+  color: #cbd5e1;
+  font-size: 0.73rem;
+  line-height: 1.35;
+}
+
+.vn-chapter-state {
+  color: #67e8f9 !important;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.vn-dialogue-panel {
+  position: absolute;
+  right: 26px;
+  bottom: 26px;
+  left: 26px;
+  padding: 18px 20px;
+  border: 1px solid rgba(0, 240, 255, 0.56);
+  border-radius: 16px;
+  background: rgba(4, 8, 18, 0.94);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.62);
+  backdrop-filter: blur(12px);
+}
+
+.vn-dialogue-panel[hidden],
+.vn-chapter-browser[hidden] {
+  display: none;
+}
+
+.vn-dialogue-meta,
+.vn-dialogue-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+#vn-speaker-name {
+  color: #f9a8d4;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+#vn-line-progress {
+  color: #67e8f9;
+  font-size: 0.72rem;
+}
+
+.vn-dialogue-text {
+  min-height: 76px;
+  margin: 12px 0;
+  color: #f8fafc;
+  font-size: clamp(0.92rem, 2vw, 1.08rem);
+  line-height: 1.58;
+}
+
+.vn-choice-container {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 10px 0 14px;
+  padding: 0;
+  border: 0;
+}
+
+.vn-choice-container[hidden] {
+  display: none;
+}
+
+.vn-choice-container legend {
+  width: 100%;
+  margin-bottom: 8px;
+  color: #bae6fd;
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+.vn-choice-btn {
+  min-height: 48px;
+  padding: 9px 12px;
+  border: 1px solid rgba(236, 72, 153, 0.45);
+  border-radius: 9px;
+  background: rgba(236, 72, 153, 0.1);
+  color: #fdf2f8;
+  font-size: 0.78rem;
+  line-height: 1.3;
+  text-align: left;
+}
+
+.vn-choice-btn:hover,
+.vn-choice-btn:focus-visible {
+  border-color: #00f0ff;
+  background: rgba(0, 240, 255, 0.12);
+}
+
+.vn-choice-btn[data-consent-action="revoke"] {
+  border-color: rgba(248, 113, 113, 0.58);
+  color: #fecaca;
+}
+
+.vn-dialogue-actions {
+  justify-content: flex-end;
+}
+
+.vn-dialogue-actions button {
+  min-width: min(170px, 31%);
+}
+
+.vn-revoke-btn {
+  border-color: rgba(248, 113, 113, 0.62);
+  color: #fecaca;
+}
+
+.vn-history {
+  margin: -2px 0 8px;
+  color: #94a3b8;
+  font-size: 0.72rem;
+}
+
+.vn-history summary {
+  min-height: 30px;
+  cursor: pointer;
+  color: #67e8f9;
+}
+
+.vn-history ol {
+  max-height: 118px;
+  margin: 4px 0 8px;
+  padding: 8px 8px 8px 28px;
+  overflow-y: auto;
+  border-radius: 8px;
+  background: rgba(15, 23, 42, 0.72);
+}
+
+.vn-history li {
+  margin-bottom: 5px;
+  line-height: 1.35;
+}
+
+.vn-status {
+  position: absolute;
+  right: 36px;
+  bottom: 12px;
+  left: 36px;
+  z-index: 4;
+  color: #94a3b8;
+  font-size: 0.65rem;
+  text-align: center;
+  pointer-events: none;
+}
+
+@media (max-width: 700px) {
+  .visual-novel-overlay {
+    padding: 6px;
+  }
+
+  .vn-shell {
+    height: calc(100dvh - 12px);
+    border-radius: 14px;
+  }
+
+  #vn-scene-img {
+    height: 48%;
+    object-position: center 18%;
+  }
+
+  .vn-stage-shade {
+    background: linear-gradient(0deg, #030710 0%, rgba(3, 7, 16, 0.94) 56%, rgba(3, 7, 16, 0.14) 100%);
+  }
+
+  .vn-scene-header {
+    width: calc(100% - 52px);
+    padding: 20px 18px 6px;
+  }
+
+  .vn-chapter-browser {
+    position: absolute;
+    top: 42%;
+    bottom: 18px;
+    width: 100%;
+    max-height: none;
+    padding: 12px 14px 24px;
+  }
+
+  .vn-dialogue-panel {
+    right: 8px;
+    bottom: 24px;
+    left: 8px;
+    max-height: 64%;
+    padding: 13px;
+    overflow-y: auto;
+  }
+
+  .vn-dialogue-text {
+    min-height: 58px;
+    margin: 8px 0;
+    font-size: 0.88rem;
+    line-height: 1.45;
+  }
+
+  .vn-choice-container {
+    grid-template-columns: 1fr;
+  }
+
+  .vn-dialogue-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .vn-dialogue-actions button {
+    min-width: 0;
+    padding-inline: 8px;
+  }
+
+  .vn-dialogue-actions .vn-revoke-btn {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .vn-status {
+    right: 12px;
+    left: 12px;
+  }
 }
 
 /* Slot Machine Grid */

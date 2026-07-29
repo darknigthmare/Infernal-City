@@ -1,6 +1,6 @@
 # Audit complet — Infernal City
 
-Date : 28 juillet 2026
+Date : 29 juillet 2026
 
 ## Verdict
 
@@ -24,6 +24,8 @@ claire.
 9. Défaite : résumé, records, nouveau run ou retour au briefing.
 10. Victoire : conclusion vague 15, épilogue, nouvelle campagne ou mode infini.
 11. Tour Infinitum : 100 étages, mutateur verrouillé et conclusion dédiée.
+12. Salon Nocturne : 18 chapitres VN, historique, reprise et choix de
+    consentement sans pénalité.
 
 ## P0 résolus
 
@@ -55,6 +57,13 @@ claire.
 - Barre de vingt défenses laborieuse au clavier.
 - SFX procéduraux recréés dans les chemins chauds.
 - Absence d’installation et de cache hors ligne.
+- Terrain trop proche : caméra tactique reculée, zone utile dégagée entre les
+  HUD et quatre couloirs d’approche désormais visibles ; les paysages trop bas
+  sont mis en pause avec une demande de passage en portrait.
+- Côte absente et CG narratives trop rares : panorama et six scènes cohérentes
+  générés avec OpenAI puis intégrés au combat et au visual novel.
+- Conversations relationnelles réduites à une phrase : corpus porté à 801
+  répliques et 126 choix sur 18 chapitres.
 
 ## Cohérence adulte
 
@@ -65,6 +74,9 @@ claire.
 - L’accord relationnel est facultatif, explicite et révocable sans pénalité.
 - Un cadeau ne modifie plus la confiance.
 - Les moments privés restent suggestifs et utilisent un fondu au noir.
+- Chaque chapitre VN possède deux checkpoints explicites ; aucun choix n’est
+  chronométré ou présélectionné.
+- Une relecture ne peut pas redonner d’XP relationnelle.
 
 ## Longévité
 
@@ -81,13 +93,14 @@ claire.
   des assets OpenAI au niveau du sol, des tours, des ennemis et des héros animés.
 - Ajouter RNG seedé, historique détaillé des runs et simulations d’équilibrage.
 - Ajouter une vraie suite E2E navigateur/CI et des tests de lecteur d’écran.
-- Enrichir les dialogues et épilogues adultes sans rendre les scènes graphiques.
+- Ajouter des voix, expressions faciales et décors alternatifs aux 18 chapitres
+  sans rendre les scènes graphiques.
 
 ## Vérifications
 
 - `npm.cmd run check`
-- 37 tests automatisés réussis
-- `node --check` sur les quatre scripts runtime et PWA
+- 43 tests automatisés réussis
+- `node --check` sur les cinq scripts runtime et PWA
 - unicité des IDs HTML
 - références JS/HTML et assets locaux
 - routes HTTP locales
@@ -95,7 +108,8 @@ claire.
 
 ## Limite de l’audit visuel
 
-Le portail 18+ a été inspecté aux trois formats. Le parcours post-portail a été
-validé par les tests, les invariants DOM, les routes et deux chargements
-navigateur sans erreur console ; sa validation visuelle complète demande une
-confirmation d’âge manuelle dans l’aperçu.
+Le portail 18+ n’a pas été franchi automatiquement. Le canvas a été extrait
+directement pour inspecter le terrain bureau/mobile, et la modale VN a été
+rendue dans une session QA éphémère sans valider le portail ni activer un choix.
+Chargement, requêtes, console, reprise, historique et absence de débordement ont
+été contrôlés sans erreur.
