@@ -1,7 +1,7 @@
 /* Valkyrie Sweeper: Dark Siege - Comprehensive Game Engine */
 
 const CAMPAIGN_FINAL_WAVE = 15;
-const SAVE_VERSION = 6;
+const SAVE_VERSION = 7;
 const RUN_CHECKPOINT_VERSION = 1;
 // The player explicitly needs a long read on incoming hordes. Keep the compact
 // construction arena intact, but make its traversable approach belt five times
@@ -72,6 +72,19 @@ const EXPANSION = (
   (typeof window !== 'undefined' && window.INFERNAL_CITY_EXPANSION)
   || (typeof globalThis !== 'undefined' && globalThis.INFERNAL_CITY_EXPANSION)
   || EXPANSION_FALLBACK
+);
+const CHARACTER_EXPANSION_FALLBACK = Object.freeze({
+  version: 'fallback',
+  heroines: {},
+  heroKits: {},
+  bosses: {},
+  bossDefinitions: {},
+  campaigns: {}
+});
+const CHARACTER_EXPANSION = (
+  (typeof window !== 'undefined' && window.INFERNAL_CITY_CHARACTERS)
+  || (typeof globalThis !== 'undefined' && globalThis.INFERNAL_CITY_CHARACTERS)
+  || CHARACTER_EXPANSION_FALLBACK
 );
 
 const DIFFICULTY_DATA = {
@@ -162,7 +175,11 @@ const VN_NARRATIVE_CGS = {
   rin: 'assets/cg_rin_embers.png',
   selene: 'assets/cg_selene_observatory.png',
   vespera: 'assets/cg_vespera_truce.png',
-  carmilla: 'assets/cg_carmilla_library.png'
+  carmilla: 'assets/cg_carmilla_library.png',
+  ...Object.fromEntries(
+    Object.values(CHARACTER_EXPANSION?.vn?.heroines || {})
+      .map(heroine => [heroine.id, heroine.chapters?.[0]?.cgSrc || heroine.portrait])
+  )
 };
 
 // OpenAI-authored defense atlases. Every row is one defense and every column
@@ -203,7 +220,20 @@ const ENEMY_SPRITE_DATA = {
   splitter: { src: 'assets/animations/enemies/enemy-specialist-atlas.png', row: 3, size: 62, rotate: false, fps: 7 },
   vespera: { src: 'assets/animations/enemies/enemy-atlas-02.png', row: 0, size: 110, rotate: false, fps: 6 },
   carmilla: { src: 'assets/animations/enemies/enemy-atlas-02.png', row: 1, size: 124, rotate: false, fps: 6 },
-  leviathan: { src: 'assets/animations/enemies/enemy-atlas-02.png', row: 2, size: 188, rotate: true, rotationOffset: 0, fps: 4 }
+  leviathan: { src: 'assets/animations/enemies/enemy-atlas-02.png', row: 2, size: 188, rotate: true, rotationOffset: 0, fps: 4 },
+  ...Object.fromEntries(
+    Object.values(CHARACTER_EXPANSION?.bossDefinitions || CHARACTER_EXPANSION?.bosses || {})
+      .map(boss => [
+        boss.id,
+        {
+          ...boss.spriteAtlas,
+          row: 0,
+          fps: 6,
+          rotate: false,
+          layout: 'state_rows'
+        }
+      ])
+  )
 };
 
 // The selected adult hero is now a physical defender at the Citadel rather
@@ -214,7 +244,19 @@ const HERO_SPRITE_DATA = {
   rin: { src: 'assets/animations/heroes/hero-atlas-01.png', row: 2, size: 94 },
   selene: { src: 'assets/animations/heroes/hero-atlas-01.png', row: 3, size: 96 },
   vespera: { src: 'assets/animations/heroes/hero-atlas-02.png', row: 0, size: 104 },
-  carmilla: { src: 'assets/animations/heroes/hero-atlas-02.png', row: 1, size: 98 }
+  carmilla: { src: 'assets/animations/heroes/hero-atlas-02.png', row: 1, size: 98 },
+  ...Object.fromEntries(
+    Object.values(CHARACTER_EXPANSION?.heroines || {})
+      .map(hero => [
+        hero.id,
+        {
+          ...hero.spriteAtlas,
+          row: 0,
+          fps: 7,
+          layout: 'state_rows'
+        }
+      ])
+  )
 };
 
 // Weapon Base Definitions
@@ -313,7 +355,18 @@ const HERO_CLASSES = {
       'Votre pacte privé inscrit limites, signal d’arrêt et soin mutuel après toute rencontre.',
       'Elle ouvre les rideaux de velours sur une invitation réciproque ; la scène se fond au noir.'
     ]
-  }
+  },
+  ...Object.fromEntries(
+    Object.values(CHARACTER_EXPANSION.heroines || {}).map(hero => [
+      hero.id,
+      {
+        ...hero,
+        relationship: { ...(hero.relationship || {}) },
+        loungeLines: [...(hero.loungeLines || [])],
+        unlockRule: { ...(hero.unlockRule || {}) }
+      }
+    ])
+  )
 };
 
 // Achievement definitions
@@ -339,7 +392,32 @@ const GALLERY_ITEMS = [
   { id: 'vespera', age: 146, name: 'Impératrice Vespera', subtitle: 'Souveraine Abyssale adulte', img: 'assets/cg_vespera.jpg', unlockReq: 'Conclure une alliance libre avec Vespera (Vague 5)', unlocked: false, quote: '"Je ne sers personne. Mais je pourrais choisir de marcher à tes côtés."', story: 'Souveraine adulte de 146 ans, Vespera ne confond jamais alliance, désir et soumission.', stats: { Âge: '146 ans', Puissance: 'EX+', Agilité: 'S', Armure: 'S' } },
   { id: 'carmilla', age: 312, name: 'Reine Carmilla', subtitle: 'Impératrice gothique adulte', img: 'assets/cg_carmilla.jpg', unlockReq: 'Conclure une alliance libre avec Carmilla (Vague 10)', unlocked: false, quote: '"Un pacte n’a de valeur que signé sans peur."', story: 'Souveraine adulte de 312 ans, Carmilla protège sa liberté comme celle de ses partenaires.', stats: { Âge: '312 ans', Puissance: 'EX+', Agilité: 'S+', Armure: 'S' } },
   { id: 'selene', age: 31, name: 'Sélène', subtitle: 'Oracle Cyber-Lunaire adulte', img: 'assets/cg_selene.jpg', altImg: 'assets/cg_selene_translucent.jpg', unlockReq: 'Activer le Mode Overdrive', unlocked: false, quote: '"La lumière stellaire guidera notre victoire."', story: 'Oracle de 31 ans, Sélène canalise l\'énergie lunaire et renouvelle son consentement à chaque étape.', stats: { Âge: '31 ans', Puissance: 'S+', Agilité: 'A+', Armure: 'A' } },
-  { id: 'nova', age: 27, name: 'Nova', subtitle: 'Ingénieure adulte de l’Armurerie', img: 'assets/cg_nova.jpg', unlockReq: 'Récolter 500 Bio-Coins', unlocked: false, quote: '"Systèmes au maximum de puissance !"', story: 'Ingénieure de 27 ans, Nova dirige l’armurerie et garde le plein contrôle de son image dans les archives.', stats: { Âge: '27 ans', Puissance: 'A', Agilité: 'S', Armure: 'A+' } }
+  { id: 'nova', age: 27, name: 'Nova', subtitle: 'Ingénieure adulte de l’Armurerie', img: 'assets/cg_nova.jpg', unlockReq: 'Récolter 500 Bio-Coins', unlocked: false, quote: '"Systèmes au maximum de puissance !"', story: 'Ingénieure de 27 ans, Nova dirige l’armurerie et garde le plein contrôle de son image dans les archives.', stats: { Âge: '27 ans', Puissance: 'A', Agilité: 'S', Armure: 'A+' } },
+  ...Object.values(CHARACTER_EXPANSION.heroines || {}).map(hero => ({
+    id: hero.id,
+    age: hero.age,
+    name: hero.name,
+    subtitle: `${hero.title} · héroïne adulte`,
+    img: hero.avatar,
+    altImg: hero.altAvatar,
+    unlockReq: hero.unlockRule?.label || 'Progresser dans Les Dix Trônes.',
+    unlocked: hero.unlockRule?.type === 'default',
+    quote: `"${hero.boundary}"`,
+    story: `${hero.name}, ${hero.age} ans, rejoint Haven avec un kit jouable consacré à ${CHARACTER_EXPANSION.heroKits?.[hero.id]?.role || 'la défense'}. Ses choix relationnels restent séparés de sa valeur militaire.`,
+    stats: { Âge: `${hero.age} ans`, Puissance: 'S', Agilité: 'S', Armure: 'A+' }
+  })),
+  {
+    id: 'ten_thrones_conclusion',
+    age: 28,
+    name: 'L’Aube après les Dix Trônes',
+    subtitle: 'Conclusion de campagne · protagonistes adultes',
+    img: 'assets/vn/cg/ten-thrones-conclusion-v1.webp',
+    unlockReq: 'Achever les vingt vagues des Dix Trônes',
+    unlocked: false,
+    quote: '"Les Trônes sont tombés. Nos choix, eux, restent les nôtres."',
+    story: 'La dernière archive rassemble les héroïnes adultes de Haven après la chute de Madame Noctis. Elle célèbre leur victoire sans confondre camaraderie, alliance et consentement romantique.',
+    stats: { Âge: '28 ans et plus', Puissance: 'EX', Agilité: 'S', Armure: 'EX' }
+  }
 ];
 
 class GameEngine {
@@ -354,6 +432,9 @@ class GameEngine {
 
     this.citadel = { x: 600, y: 400, radius: 45, hp: 500, maxHp: 500 };
     this.selectedLayoutId = 'convergence';
+    this.activeCampaignId = 'four_gates';
+    this.defeatedBossIds = [];
+    this.activeBossHuntId = null;
     this.worldLayout = null;
     this.spawnRoutes = [];
     this.mapRotation = [];
@@ -423,7 +504,11 @@ class GameEngine {
     this.lastGamepadStatusPoll = 0;
     this.gamepadButtonState = [];
     this.kiraMarkedRoutes = new Set();
+    this.nyxExposedRoutes = new Set();
     this.carmillaStoredCharge = 0;
+    this.mircallaRetaliationCharge = 0;
+    this.hanaPassiveChargeTimer = 0;
+    this.hanaPassiveReady = false;
 
     this.freezeTimer = 0;
     this.quadDamageTimer = 0;
@@ -477,6 +562,7 @@ class GameEngine {
     this.crates = [];
     this.powerups = [];
     this.hazards = [];
+    this.bossHazards = [];
 
     this.abilityCooldownTimer = 0;
     this.activeHeroTargeting = null;
@@ -1120,10 +1206,34 @@ class GameEngine {
     return image;
   }
 
+  ensureEnemySprite(type) {
+    const spriteData = ENEMY_SPRITE_DATA[type];
+    if (!spriteData) return null;
+    const image = this.preloadSpriteAsset(spriteData.src, 'Planche ennemie');
+    if (image) this.enemySpriteImages[type] = image;
+    return image || null;
+  }
+
+  ensureHeroSprite(heroId = this.selectedHero?.id) {
+    const spriteData = HERO_SPRITE_DATA[heroId];
+    if (!spriteData) return null;
+    const image = this.preloadSpriteAsset(spriteData.src, 'Planche de héros');
+    if (image) this.heroSpriteImages[heroId] = image;
+    return image || null;
+  }
+
   preloadEnemySprites() {
-    Object.entries(ENEMY_SPRITE_DATA).forEach(([type, spriteData]) => {
-      this.enemySpriteImages[type] = this.preloadSpriteAsset(spriteData.src, 'Planche ennemie');
-    });
+    Object.keys(ENEMY_SPRITE_DATA)
+      .filter(type => !this.getBossDefinition(type))
+      .forEach(type => this.ensureEnemySprite(type));
+  }
+
+  preloadWaveCharacterBosses(queue = this.waveSpawnQueue) {
+    if (!this.hasEnteredAdultExperience || !Array.isArray(queue)) return [];
+    const bossTypes = [...new Set(queue.map(entry => entry?.type).filter(Boolean))]
+      .filter(type => this.getBossDefinition(type));
+    bossTypes.forEach(type => this.ensureEnemySprite(type));
+    return bossTypes;
   }
 
   preloadBattleSprites() {
@@ -1131,8 +1241,11 @@ class GameEngine {
     Object.entries(TOWER_SPRITE_DATA).forEach(([id, spriteData]) => {
       this.towerSpriteImages[id] = this.preloadSpriteAsset(spriteData.src, 'Planche de défense');
     });
-    Object.entries(HERO_SPRITE_DATA).forEach(([id, spriteData]) => {
-      this.heroSpriteImages[id] = this.preloadSpriteAsset(spriteData.src, 'Planche de héros');
+    Object.keys(HERO_SPRITE_DATA).forEach(heroId => {
+      const isCharacterExpansionHero = Boolean(CHARACTER_EXPANSION?.heroines?.[heroId]);
+      if (!isCharacterExpansionHero || heroId === this.selectedHero?.id) {
+        this.ensureHeroSprite(heroId);
+      }
     });
 
     this.floorImage = this.preloadSpriteAsset(FLOOR_TEXTURE_SRC, 'Texture de sol');
@@ -1151,7 +1264,9 @@ class GameEngine {
     if (Number(checkpoint.version) !== RUN_CHECKPOINT_VERSION) return false;
     if (!DIFFICULTY_DATA[checkpoint.difficulty]) return false;
     const nextWave = Math.floor(Number(checkpoint.nextWave));
-    if (!Number.isFinite(nextWave) || nextWave < 2 || nextWave > CAMPAIGN_FINAL_WAVE) return false;
+    const checkpointCampaign = CHARACTER_EXPANSION?.campaigns?.[checkpoint.activeCampaignId];
+    const checkpointFinalWave = Number(checkpointCampaign?.finalWave) || CAMPAIGN_FINAL_WAVE;
+    if (!Number.isFinite(nextWave) || nextWave < 2 || nextWave > checkpointFinalWave) return false;
     if (!Array.isArray(checkpoint.placedTowers) || !checkpoint.weapons || typeof checkpoint.weapons !== 'object') return false;
     return Number.isFinite(checkpoint.citadelHp)
       && Number.isFinite(checkpoint.coins)
@@ -1164,11 +1279,12 @@ class GameEngine {
       || this.endlessMode
       || this.dailyChallenge
       || this.campaignVictory
-      || this.wave >= CAMPAIGN_FINAL_WAVE
+      || this.wave >= this.getCampaignFinalWave()
     ) return null;
     return {
       version: RUN_CHECKPOINT_VERSION,
       nextWave: this.wave + 1,
+      activeCampaignId: this.activeCampaignId,
       difficulty: this.difficulty,
       selectedHeroId: this.selectedHero.id,
       selectedLayoutId: this.selectedLayoutId,
@@ -1221,6 +1337,7 @@ class GameEngine {
     }
     this.startNewGame({
       difficulty: checkpoint.difficulty,
+      campaignId: checkpoint.activeCampaignId || 'four_gates',
       layoutId: this.selectedLayoutId,
       preserveCheckpoint: true,
       silent: true
@@ -1263,6 +1380,7 @@ class GameEngine {
     this.crates = [];
     this.powerups = [];
     this.hazards = [];
+    this.bossHazards = [];
     this.activeRunCheckpoint = checkpoint;
     this.savedRunCheckpoint = checkpoint;
     this.configureWave(checkpoint.nextWave);
@@ -1293,6 +1411,12 @@ class GameEngine {
           this.applyWorldLayout(this.selectedLayoutId, { force: true, repositionUnits: false });
         }
         if (Array.isArray(data.mapRotation)) this.setMapRotation(data.mapRotation);
+        this.activeCampaignId = CHARACTER_EXPANSION?.campaigns?.[data.activeCampaignId]
+          ? data.activeCampaignId
+          : 'four_gates';
+        this.defeatedBossIds = Array.isArray(data.defeatedBossIds)
+          ? [...new Set(data.defeatedBossIds.filter(id => this.getBossDefinition(id)))]
+          : [];
         this.runHistory = Array.isArray(data.runHistory)
           ? data.runHistory.filter(entry => entry && typeof entry === 'object').slice(0, 10)
           : [];
@@ -1349,6 +1473,11 @@ class GameEngine {
             if (data.achievements.includes(a.id)) a.unlocked = true;
           });
         }
+        if (Array.isArray(data.unlockedHeroIds)) {
+          data.unlockedHeroIds.forEach(heroId => {
+            if (HERO_CLASSES[heroId]) HERO_CLASSES[heroId].unlocked = true;
+          });
+        }
         if (data.characterProgress && typeof data.characterProgress === 'object') {
           Object.values(HERO_CLASSES).forEach(hero => {
             const progress = data.characterProgress[hero.id];
@@ -1386,6 +1515,9 @@ class GameEngine {
       const unlockedIds = GALLERY_ITEMS.filter(i => i.unlocked).map(i => i.id);
       const recruitedBosses = Object.values(HERO_CLASSES).filter(h => h.allied).map(h => h.id);
       const achievements = ACHIEVEMENTS.filter(a => a.unlocked).map(a => a.id);
+      const unlockedHeroIds = Object.values(HERO_CLASSES)
+        .filter(hero => hero.unlocked !== false)
+        .map(hero => hero.id);
       const characterProgress = {};
       Object.values(HERO_CLASSES).forEach(hero => {
         characterProgress[hero.id] = {
@@ -1405,6 +1537,8 @@ class GameEngine {
         towerCompleted: this.towerCompleted,
         towerMutatorIds: this.towerMutators.map(mutator => mutator.id),
         selectedLayoutId: this.selectedLayoutId,
+        activeCampaignId: this.activeCampaignId,
+        defeatedBossIds: this.defeatedBossIds.slice(0, 32),
         mapRotation: this.mapRotation.slice(),
         runHistory: this.runHistory.slice(0, 10),
         bestScore: this.bestScore,
@@ -1423,6 +1557,7 @@ class GameEngine {
         unlockedGallery: unlockedIds,
         recruitedBosses,
         achievements,
+        unlockedHeroIds,
         characterProgress,
         vnSceneProgress: {
           dataVersion: this.vnSceneProgress.dataVersion,
@@ -1962,6 +2097,37 @@ class GameEngine {
     return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
   }
 
+  getHeroKit(heroId = this.selectedHero?.id) {
+    return CHARACTER_EXPANSION?.heroKits?.[heroId]
+      || EXPANSION?.heroKits?.[heroId]
+      || null;
+  }
+
+  getBossDefinition(type) {
+    return CHARACTER_EXPANSION?.bossDefinitions?.[type]
+      || CHARACTER_EXPANSION?.bosses?.[type]
+      || null;
+  }
+
+  isEnemyFlying(enemy) {
+    if (!enemy) return false;
+    if (enemy.type === 'flying') return true;
+    const definition = this.getBossDefinition(enemy.bossDefinitionId || enemy.type);
+    return definition?.traits?.includes('flying') === true;
+  }
+
+  getCampaignDefinition(campaignId = this.activeCampaignId) {
+    return CHARACTER_EXPANSION?.campaigns?.[campaignId] || null;
+  }
+
+  getCampaignFinalWave() {
+    return Number(this.getCampaignDefinition()?.finalWave) || CAMPAIGN_FINAL_WAVE;
+  }
+
+  getCampaignDisplayName() {
+    return this.getCampaignDefinition()?.name || 'La Guerre des Quatre Portes';
+  }
+
   openMissionBriefing() {
     const modal = document.getElementById('mission-briefing-modal');
     if (!modal) return;
@@ -1969,15 +2135,20 @@ class GameEngine {
     const checkpointCard = document.getElementById('checkpoint-card');
     const continueButton = document.getElementById('btn-continue-run');
     const difficultySelect = document.getElementById('difficulty-select');
+    const campaignSelect = document.getElementById('campaign-select');
     const layoutSelect = document.getElementById('layout-select');
     const saveWarning = document.getElementById('save-warning');
     const selectedDifficulty = checkpoint?.difficulty || this.difficulty || 'standard';
     if (difficultySelect) difficultySelect.value = selectedDifficulty;
+    if (campaignSelect) campaignSelect.value = checkpoint?.activeCampaignId
+      || this.activeCampaignId
+      || 'four_gates';
     if (layoutSelect) layoutSelect.value = this.rotationEnabled
       ? 'rotation'
       : (checkpoint?.selectedLayoutId || this.selectedLayoutId);
     if (saveWarning) saveWarning.hidden = !this.saveLoadError;
     this.updateDifficultyDescription(selectedDifficulty);
+    this.updateCampaignDescription(campaignSelect?.value || this.activeCampaignId);
     this.updateLayoutDescription(layoutSelect?.value || this.selectedLayoutId);
 
     if (checkpointCard) checkpointCard.hidden = !checkpoint;
@@ -1998,6 +2169,21 @@ class GameEngine {
     if (description) description.textContent = difficulty.desc;
   }
 
+  updateCampaignDescription(campaignId) {
+    const campaign = CHARACTER_EXPANSION?.campaigns?.[campaignId];
+    const description = document.getElementById('campaign-description');
+    const objective = document.getElementById('campaign-objective');
+    if (description) {
+      description.textContent = campaign?.description
+        || 'La campagne historique mène au Léviathan en quinze vagues.';
+    }
+    if (objective) {
+      objective.textContent = campaign
+        ? `Vague ${campaign.finalWave} · ${campaign.finalBossName || 'Dixième Trône'}`
+        : 'Vague 15 · Titan Léviathan';
+    }
+  }
+
   updateLayoutDescription(layoutId) {
     const layout = this.getWorldLayout(layoutId);
     const description = document.getElementById('layout-description');
@@ -2008,17 +2194,22 @@ class GameEngine {
 
   beginNewCampaign() {
     const difficultyId = document.getElementById('difficulty-select')?.value || 'standard';
+    const campaignId = document.getElementById('campaign-select')?.value || 'four_gates';
     const layoutId = document.getElementById('layout-select')?.value || this.selectedLayoutId;
     const rotation = layoutId === 'rotation' ? Object.keys(EXPANSION?.worldLayouts || {}) : [];
     this.selectedLayoutId = EXPANSION?.worldLayouts?.[layoutId] ? layoutId : 'convergence';
     this.closeModal('mission-briefing-modal', false);
     this.startNewGame({
       difficulty: difficultyId,
+      campaignId,
       layoutId: this.selectedLayoutId,
       rotation
     });
     this.focusBattlefield();
-    this.announce(`Nouvelle campagne en difficulté ${DIFFICULTY_DATA[this.difficulty].name}. Objectif : tenir quinze vagues.`);
+    this.announce(
+      `Nouvelle campagne ${this.getCampaignDisplayName()} en difficulté ${DIFFICULTY_DATA[this.difficulty].name}. `
+      + `Objectif : tenir ${this.getCampaignFinalWave()} vagues.`
+    );
   }
 
   continueSavedCampaign() {
@@ -2303,6 +2494,9 @@ class GameEngine {
     document.getElementById('difficulty-select')?.addEventListener('change', event => {
       this.updateDifficultyDescription(event.target.value);
     });
+    document.getElementById('campaign-select')?.addEventListener('change', event => {
+      this.updateCampaignDescription(event.target.value);
+    });
     document.getElementById('layout-select')?.addEventListener('change', event => {
       if (event.target.value === 'rotation') {
         this.setMapRotation(Object.keys(EXPANSION?.worldLayouts || {}));
@@ -2470,6 +2664,7 @@ class GameEngine {
         const targetId = card.id;
         if (targetId === 'btn-harem-toggle') this.openHaremModal();
         else if (targetId === 'btn-roster-toggle') this.openRosterModal();
+        else if (targetId === 'btn-antagonist-codex-toggle') this.openAntagonistCodex();
         else if (targetId === 'btn-wardrobe-toggle') this.openWardrobeModal();
         else if (targetId === 'btn-biolab-toggle') this.openBiolabModal();
         else if (targetId === 'btn-mercs-toggle') this.openMercenaryModal();
@@ -2652,7 +2847,7 @@ class GameEngine {
 
   createPlacedDefense(towerType, x, y, options = {}) {
     const ariaPassive = this.selectedHero?.id === 'aria'
-      ? EXPANSION?.heroKits?.aria?.passive
+      ? this.getHeroKit('aria')?.passive
       : null;
     const ariaModifiers = ariaPassive?.modifiers || {};
     const isInsideAriaAegis = ariaPassive
@@ -3037,6 +3232,10 @@ class GameEngine {
   startNewGame(options = {}) {
     const requestedDifficulty = options.difficulty || this.difficulty || 'standard';
     this.difficulty = DIFFICULTY_DATA[requestedDifficulty] ? requestedDifficulty : 'standard';
+    const requestedCampaignId = options.campaignId || this.activeCampaignId || 'four_gates';
+    this.activeCampaignId = CHARACTER_EXPANSION?.campaigns?.[requestedCampaignId]
+      ? requestedCampaignId
+      : 'four_gates';
     if (!options.preserveCheckpoint) this.clearRunCheckpoint();
     const requestedLayoutId = options.layoutId || this.selectedLayoutId || 'convergence';
     this.selectedLayoutId = EXPANSION?.worldLayouts?.[requestedLayoutId]
@@ -3056,6 +3255,7 @@ class GameEngine {
     this.endlessMode = false;
     this.campaignVictory = false;
     this.campaignVictoryClaimed = false;
+    this.activeBossHuntId = null;
     this.runtimeError = null;
     this.accessibilityStatusTimer = 0;
     this.threatReadoutTimer = 0;
@@ -3087,7 +3287,11 @@ class GameEngine {
     this.mutantsKilled = 0;
     this.overdriveCount = 0;
     this.kiraMarkedRoutes = new Set();
+    this.nyxExposedRoutes = new Set();
     this.carmillaStoredCharge = 0;
+    this.mircallaRetaliationCharge = 0;
+    this.hanaPassiveChargeTimer = 0;
+    this.hanaPassiveReady = false;
     this.lastTime = 0;
     this.animationClock = 0;
     this.heroAnimationState = 'idle';
@@ -3116,6 +3320,7 @@ class GameEngine {
     this.crates = [];
     this.powerups = [];
     this.hazards = [];
+    this.bossHazards = [];
     this.floatingTexts = [];
 
     this.configureWave(1);
@@ -3162,6 +3367,7 @@ class GameEngine {
 
   configureWave(number, options = {}) {
     this.wave = Math.max(1, Math.floor(number));
+    if (this.nyxExposedRoutes instanceof Set) this.nyxExposedRoutes.clear();
     this.waveActive = true;
     this.waveIntermissionTimer = 0;
     this.enemiesSpawnedThisWave = 0;
@@ -3187,6 +3393,7 @@ class GameEngine {
     const hasSwarmMutator = this.getActiveRunMutators().some(mutator => ['swarm', 'long_march'].includes(mutator.id));
     this.waveSpawnTarget = Math.min(96, Math.round(baseTarget * (hasSwarmMutator ? 1.5 : 1)));
     this.waveSpawnQueue = this.buildWaveSpawnQueue(this.wave);
+    this.preloadWaveCharacterBosses(this.waveSpawnQueue);
     if (this.waveSpawnQueue.length > 0) this.waveSpawnTarget = this.waveSpawnQueue.length;
     const nextWaveText = document.getElementById('mission-next-wave-txt');
     if (nextWaveText) {
@@ -3204,12 +3411,16 @@ class GameEngine {
   }
 
   buildWaveSpawnQueue(waveNumber = this.wave) {
-    if (this.isTowerMode || this.endlessMode || waveNumber > CAMPAIGN_FINAL_WAVE) {
+    const finalWave = this.getCampaignFinalWave();
+    if (this.isTowerMode || this.endlessMode || waveNumber > finalWave) {
       this.activeWaveDefinition = null;
       return [];
     }
     const waveScript = EXPANSION?.waveScripts?.siege_15;
-    const waveDefinition = waveScript?.waves?.find(candidate => candidate.number === waveNumber);
+    const authoredWaveNumber = this.activeCampaignId === 'ten_thrones'
+      ? (((Math.max(1, waveNumber) - 1) % CAMPAIGN_FINAL_WAVE) + 1)
+      : waveNumber;
+    const waveDefinition = waveScript?.waves?.find(candidate => candidate.number === authoredWaveNumber);
     this.activeWaveDefinition = waveDefinition || null;
     if (!waveDefinition?.groups) return [];
     const routeCount = Math.max(1, this.spawnRoutes.length);
@@ -3230,13 +3441,22 @@ class GameEngine {
         });
       }
     });
-    const bossTypes = { 5: 'vespera', 10: 'carmilla', 15: 'leviathan' };
-    const bossType = bossTypes[waveNumber];
+    const historicBossTypes = { 5: 'vespera', 10: 'carmilla', 15: 'leviathan' };
+    const campaign = this.getCampaignDefinition();
+    const bossSchedule = campaign?.bossSchedule;
+    const scheduledBossEntry = Array.isArray(bossSchedule)
+      ? bossSchedule.find(entry => Number(entry.wave) === Number(waveNumber))
+      : null;
+    const scheduledBoss = scheduledBossEntry?.bossId || bossSchedule?.[waveNumber];
+    const bossType = campaign ? scheduledBoss : historicBossTypes[waveNumber];
     if (bossType) {
       const lastAtMs = queue.reduce((maximum, entry) => Math.max(maximum, entry.atMs), 0);
+      const bossRouteIndex = scheduledBossEntry?.routePolicy === 'farthest'
+        ? routeCount - 1
+        : (waveNumber === 10 && !campaign ? Math.min(1, routeCount - 1) : 0);
       queue.push({
         type: bossType,
-        routeIndex: waveNumber === 10 ? Math.min(1, routeCount - 1) : 0,
+        routeIndex: bossRouteIndex,
         atMs: lastAtMs + 1600,
         boss: true
       });
@@ -3250,20 +3470,57 @@ class GameEngine {
     this.waveActive = false;
     this.waveIntermissionTimer = 3.5;
     const rewardMultiplier = DIFFICULTY_DATA[this.difficulty]?.reward || 1;
-    const runReward = Math.round((25 + (this.wave * 5)) * rewardMultiplier);
-    const metaReward = Math.round((8 + (this.wave * 2)) * rewardMultiplier);
+    const isBossHunt = !this.isTowerMode && Boolean(this.activeBossHuntId);
+    const runReward = isBossHunt
+      ? 0
+      : Math.round((25 + (this.wave * 5)) * rewardMultiplier);
+    const metaReward = isBossHunt
+      ? 0
+      : Math.round((8 + (this.wave * 2)) * rewardMultiplier);
     this.coins += runReward;
     this.metaCoins += metaReward;
     this.runMetaCoinsEarned += metaReward;
     this.totalCoinsEarned += runReward;
-    this.score += this.wave * 100;
-    if (!this.isTowerMode) {
+    if (!isBossHunt) this.score += this.wave * 100;
+    if (!this.isTowerMode && !isBossHunt) {
       this.bestWave = Math.max(this.bestWave, this.wave);
       this.bestScore = Math.max(this.bestScore, this.score);
     }
-    this.showFeedback(`Vague ${this.wave} sécurisée : +${runReward} 🪙 et +${metaReward} ◆`, '#10b981');
-    if (!this.isTowerMode && this.wave >= 5) this.unlockAchievement('wave_5');
-    if (!this.isTowerMode && this.wave >= 10) this.unlockAchievement('wave_10');
+    this.showFeedback(
+      isBossHunt
+        ? `Chasse de la vague ${this.wave} sécurisée · seules les récompenses propres au Trône sont conservées`
+        : `Vague ${this.wave} sécurisée : +${runReward} 🪙 et +${metaReward} ◆`,
+      '#10b981'
+    );
+    if (!this.isTowerMode && !isBossHunt && this.wave >= 5) this.unlockAchievement('wave_5');
+    if (!this.isTowerMode && !isBossHunt && this.wave >= 10) this.unlockAchievement('wave_10');
+    if (!this.isTowerMode && !isBossHunt && this.activeCampaignId === 'ten_thrones') {
+      Object.values(HERO_CLASSES).forEach(hero => {
+        if (
+          hero.unlocked === false
+          && hero.unlockRule?.type === 'wave_cleared'
+          && this.wave >= Number(hero.unlockRule.threshold)
+        ) {
+          hero.unlocked = true;
+          this.unlockGalleryItem(hero.id);
+          this.showFeedback(`${hero.name} rejoint la Salle de Commandement.`, '#00f0ff');
+        }
+      });
+    }
+    if (isBossHunt) {
+      const huntedBoss = this.getBossDefinition(this.activeBossHuntId);
+      this.activeBossHuntId = null;
+      this.waveIntermissionTimer = 0;
+      this.clearRunCheckpoint();
+      this.saveProgress();
+      this.updateHUD();
+      this.openAntagonistCodex();
+      this.announce(
+        `Chasse terminée contre ${huntedBoss?.name || 'le Trône'}. `
+        + 'Aucune récompense de fin de campagne ni point de contrôle n’a été accordé.'
+      );
+      return;
+    }
     if (this.isTowerMode) {
       if (this.towerFloor >= 100) {
         const towerAchievement = ACHIEVEMENTS.find(item => item.id === 'tower_100');
@@ -3278,7 +3535,7 @@ class GameEngine {
         this.towerFloor++;
       }
     }
-    if (!this.isTowerMode && !this.endlessMode && this.wave >= CAMPAIGN_FINAL_WAVE) {
+    if (!this.isTowerMode && !this.endlessMode && this.wave >= this.getCampaignFinalWave()) {
       this.triggerCampaignVictory();
       return;
     }
@@ -3327,6 +3584,7 @@ class GameEngine {
         this.crates = state.crates;
         this.powerups = state.powerups;
         this.hazards = state.hazards;
+        this.bossHazards = state.bossHazards || [];
         this.isTowerMode = false;
         this.towerMutator = null;
         this.lastWaveStatusSecond = null;
@@ -3355,11 +3613,25 @@ class GameEngine {
     this.campaignVictory = true;
     this.waveIntermissionTimer = 0;
     this.clearRunCheckpoint();
+    const campaignDefinition = this.getCampaignDefinition();
+    const completionRewards = campaignDefinition?.completionRewards || {};
+    this.score += Math.max(0, Math.floor(Number(completionRewards.score) || 0));
+    const campaignMetaReward = Math.max(
+      0,
+      Math.floor(Number(completionRewards.metaCoins) || 0)
+    );
+    this.metaCoins += campaignMetaReward;
+    this.runMetaCoinsEarned += campaignMetaReward;
+    const conclusionGalleryId = typeof completionRewards.galleryItemId === 'string'
+      ? completionRewards.galleryItemId
+      : '';
+    if (conclusionGalleryId) this.unlockGalleryItem(conclusionGalleryId);
     const finalScoreMultiplier = (Number(this.dailyChallenge?.rules?.scoreMultiplier) || 1)
       * this.getRunModifierProduct('completionScoreMultiplier');
     this.score = Math.max(0, Math.round(this.score * finalScoreMultiplier));
     this.bestScore = Math.max(this.bestScore, this.score);
-    this.bestWave = Math.max(this.bestWave, CAMPAIGN_FINAL_WAVE);
+    const finalWave = this.getCampaignFinalWave();
+    this.bestWave = Math.max(this.bestWave, finalWave);
     this.campaignCompletions++;
     this.unlockAchievement('campaign_clear');
 
@@ -3368,12 +3640,24 @@ class GameEngine {
       const element = document.getElementById(id);
       if (element) element.textContent = value;
     };
-    setSummaryText('victory-wave-txt', `${CAMPAIGN_FINAL_WAVE} / ${CAMPAIGN_FINAL_WAVE}`);
+    setSummaryText('victory-wave-txt', `${finalWave} / ${finalWave}`);
     setSummaryText('victory-kills-txt', this.mutantsKilled);
     setSummaryText('victory-score-txt', this.score);
     setSummaryText('victory-time-txt', this.formatRunTime());
     setSummaryText('victory-meta-txt', `${this.runMetaCoinsEarned} ◆`);
     setSummaryText('victory-difficulty-txt', difficulty.name);
+    const victoryTitle = document.getElementById('victory-title');
+    const victoryDescription = document.getElementById('victory-description');
+    if (victoryTitle) {
+      victoryTitle.textContent = campaignDefinition
+        ? `${campaignDefinition.finalBossName || 'LE DIXIÈME TRÔNE'} EST NEUTRALISÉE`
+        : 'LE LÉVIATHAN EST NEUTRALISÉ';
+    }
+    if (victoryDescription) {
+      victoryDescription.textContent = campaignDefinition
+        ? `${campaignDefinition.name} est achevée. Les dix assauts ont été lus, contrés et consignés dans le Codex de Haven.`
+        : 'La guerre des Quatre Portes est achevée. Haven survit au Titan Léviathan et reprend le contrôle de ses remparts.';
+    }
     const ending = document.getElementById('victory-ending-copy');
     if (ending) {
       ending.textContent = this.selectedHero.romanceOptIn && this.selectedHero.privateMomentUnlocked
@@ -3383,7 +3667,8 @@ class GameEngine {
     this.recordRunHistory({ victory: true });
     this.saveProgress();
     this.openModal('victory-modal');
-    this.announce('Campagne terminée. Haven est sauvée et le Léviathan neutralisé.');
+    const finalBossName = campaignDefinition?.finalBossName || 'Titan Léviathan';
+    this.announce(`Campagne ${this.getCampaignDisplayName()} terminée. Haven est sauvée et ${finalBossName} neutralisée.`);
   }
 
   continueEndlessMode() {
@@ -3391,7 +3676,7 @@ class GameEngine {
     this.endlessMode = true;
     this.campaignVictory = false;
     this.closeModal('victory-modal', false);
-    this.configureWave(CAMPAIGN_FINAL_WAVE + 1);
+    this.configureWave(this.getCampaignFinalWave() + 1);
     this.showFeedback('Mode infini engagé · les vagues n’ont plus de limite.', '#f59e0b');
     this.saveProgress();
     this.focusBattlefield();
@@ -3497,6 +3782,32 @@ class GameEngine {
     if (this.invincibleTimer > 0) this.invincibleTimer -= dt;
     if (this.hostileProjectileFreezeTimer > 0) this.hostileProjectileFreezeTimer -= dt;
     if (this.heroUltimateDefenseDamageTimer > 0) this.heroUltimateDefenseDamageTimer -= dt;
+    if (this.selectedHero?.id === 'hana') {
+      const chargeMs = Number(this.getHeroKit('hana')?.passive?.modifiers?.idleChargeMs) || 2200;
+      this.hanaPassiveChargeTimer += dt;
+      if (this.hanaPassiveChargeTimer >= chargeMs / 1000) this.hanaPassiveReady = true;
+    }
+    if (this.selectedHero?.id === 'aurelia') {
+      const modifiers = this.getHeroKit('aurelia')?.passive?.modifiers || {};
+      const threshold = Number(modifiers.healthThreshold) || 0.7;
+      const regeneration = Number(modifiers.regenerationPerSecond) || 4;
+      this.placedTowers.forEach(defense => {
+        if (defense.hp / Math.max(1, defense.maxHp) > threshold) return;
+        defense.hp = Math.min(defense.maxHp, defense.hp + (regeneration * dt));
+      });
+    }
+    if (this.selectedHero?.id === 'isolde') {
+      const modifiers = this.getHeroKit('isolde')?.passive?.modifiers || {};
+      this.enemies.forEach(enemy => {
+        const isElite = enemy.isBoss || SPECIALIST_ENEMY_TYPES.includes(enemy.type);
+        if (!isElite || enemy.hp / Math.max(1, enemy.maxHp) > Number(modifiers.healthThreshold || 0.5)) return;
+        enemy.damageDebuffMultiplier = Math.min(
+          Number(enemy.damageDebuffMultiplier) || 1,
+          Number(modifiers.enemyDamageMultiplier) || 0.78
+        );
+        enemy.damageDebuffTimer = Math.max(Number(enemy.damageDebuffTimer) || 0, 0.25);
+      });
+    }
 
     if (this.abilityCooldownTimer > 0) {
       this.abilityCooldownTimer -= dt;
@@ -3537,6 +3848,7 @@ class GameEngine {
     this.updateEnemies(dt);
     this.updateDecoys(dt);
     this.updateHazards(dt);
+    this.updateBossHazards(dt);
     this.updateParticles(dt);
     this.updateFloatingTexts(dt);
     this.updateCrates(dt);
@@ -3751,6 +4063,34 @@ class GameEngine {
       if (t.imperialBuffTimer > 0) {
         t.imperialBuffTimer = Math.max(0, t.imperialBuffTimer - dt);
         if (t.imperialBuffTimer <= 0) t.imperialDamageMultiplier = 1;
+      }
+      if (t.mindControlledTimer > 0) {
+        t.mindControlledTimer = Math.max(0, t.mindControlledTimer - dt);
+        t.mindControlPulseTimer = Math.max(0, (Number(t.mindControlPulseTimer) || 0) - dt);
+        if (t.mindControlPulseTimer <= 0) {
+          t.mindControlPulseTimer = 0.8;
+          const allyTarget = this.placedTowers
+            .filter(candidate => candidate !== t)
+            .sort((left, right) => (
+              Math.hypot(left.x - t.x, left.y - t.y)
+              - Math.hypot(right.x - t.x, right.y - t.y)
+            ))[0];
+          if (allyTarget && allyTarget.ultimateInvulnerableTimer <= 0) {
+            const betrayalDamage = Math.max(8, Math.round((Number(t.damage) || 18) * 0.32));
+            allyTarget.hp -= betrayalDamage;
+            this.addFloatingText(`EMPRISE -${betrayalDamage}`, allyTarget.x, allyTarget.y - 28, '#a855f7');
+            if (allyTarget.hp <= 0) {
+              const allyIndex = this.placedTowers.indexOf(allyTarget);
+              if (allyIndex >= 0) this.placedTowers.splice(allyIndex, 1);
+              this.showFeedback(`${allyTarget.name} détruite sous l’emprise de Noctis.`, '#a855f7');
+            }
+          } else if (!this.isOverdriveActive && this.invincibleTimer <= 0) {
+            this.citadel.hp -= 8;
+            this.addFloatingText('EMPRISE -8', this.citadel.x, this.citadel.y - 30, '#a855f7');
+          }
+        }
+        t.animationTimer = Math.max(t.animationTimer || 0, 0.12);
+        continue;
       }
       if (t.disabledTimer > 0) {
         t.disabledTimer = Math.max(0, t.disabledTimer - dt);
@@ -4040,8 +4380,16 @@ class GameEngine {
   canDefenseTargetEnemy(defense, enemy) {
     if (!enemy || enemy.dead) return false;
     if (
-      enemy.type === 'flying'
+      this.isEnemyFlying(enemy)
       && ['mine', 'napalm', 'acid', 'fire', 'barrier'].includes(defense?.type)
+    ) return false;
+    if (
+      enemy.stealthTimer > 0
+      && enemy.markedTimer <= 0
+      && !(
+        this.selectedHero?.id === 'vega'
+        && Math.hypot(enemy.x - this.citadel.x, enemy.y - this.citadel.y) <= 260
+      )
     ) return false;
     return true;
   }
@@ -4121,7 +4469,7 @@ class GameEngine {
       defense
       && this.selectedHero?.id === 'selene'
     )
-      ? (Number(EXPANSION?.heroKits?.selene?.passive?.modifiers?.rangeVsSlowedMultiplier) || 1.14)
+      ? (Number(this.getHeroKit('selene')?.passive?.modifiers?.rangeVsSlowedMultiplier) || 1.14)
       : 1;
     let minDist = range * seleneRangeMultiplier;
     let bestPriority = -1;
@@ -4264,7 +4612,9 @@ class GameEngine {
       x: Number.isFinite(options.x) ? options.x : route.polyline[0].x,
       y: Number.isFinite(options.y) ? options.y : route.polyline[0].y
     };
-    const definition = EXPANSION?.enemyDefinitions?.[type];
+    const bossDefinition = this.getBossDefinition(type);
+    if (bossDefinition && this.hasEnteredAdultExperience) this.ensureEnemySprite(type);
+    const definition = bossDefinition || EXPANSION?.enemyDefinitions?.[type];
     const stats = definition?.stats || {};
     const scale = 1 + (Math.max(0, this.wave - 1) * 0.1);
     let hp = (Number(stats.hp) || 45) * scale;
@@ -4274,7 +4624,7 @@ class GameEngine {
     let color = '#ff2a5f';
     let name = definition?.name || 'Démon Swarmer';
     const bossTypes = ['vespera', 'carmilla', 'leviathan', 'hellwarden'];
-    const isBoss = options.isBoss === true || bossTypes.includes(type);
+    const isBoss = options.isBoss === true || bossTypes.includes(type) || Boolean(bossDefinition);
     let recruitableBossId = null;
 
     if (type === 'leviathan') {
@@ -4290,6 +4640,10 @@ class GameEngine {
     } else if (type === 'hellwarden') {
       hp = 1100 + (this.wave * 420); speed = 52; radius = 44; damage = 45;
       color = '#f97316'; name = 'Gardienne Infernale';
+    } else if (bossDefinition) {
+      color = bossDefinition.color || '#ec4899';
+      name = bossDefinition.name || bossDefinition.title || type;
+      recruitableBossId = bossDefinition.recruitment?.available === true ? type : null;
     } else if (type === 'runner') color = '#00f0ff';
     else if (type === 'brute') color = '#a855f7';
     else if (type === 'flying') color = '#38bdf8';
@@ -4335,6 +4689,8 @@ class GameEngine {
       isBoss,
       isLeviathan: type === 'leviathan',
       type,
+      bossDefinitionId: bossDefinition?.id || null,
+      bossRewards: bossDefinition?.rewards ? { ...bossDefinition.rewards } : null,
       recruitableBossId,
       spawnSide: route.side,
       routeId: route.id,
@@ -4465,11 +4821,39 @@ class GameEngine {
       b.y += b.vy * dt;
 
       const interceptionField = this.decoys.find(decoy => (
-        decoy.shieldHp > 0
+        (decoy.shieldHp > 0 || decoy.projectileInterceptions > 0)
         && Math.hypot(decoy.x - b.x, decoy.y - b.y) <= decoy.radius + b.radius
       ));
       if (interceptionField) {
-        interceptionField.shieldHp -= b.damage;
+        if (interceptionField.projectileInterceptions > 0) {
+          interceptionField.projectileInterceptions--;
+          if (this.selectedHero?.id === 'mircalla') {
+            const modifiers = this.getHeroKit('mircalla')?.passive?.modifiers || {};
+            const maximumCharge = Number(modifiers.maximumCharge) || 40;
+            this.mircallaRetaliationCharge = Math.min(
+              maximumCharge,
+              (Number(this.mircallaRetaliationCharge) || 0)
+                + (Number(modifiers.chargePerIntercept) || 5)
+            );
+            if (this.mircallaRetaliationCharge >= maximumCharge) {
+              const retaliationTarget = this.enemies
+                .filter(enemy => !enemy.dead)
+                .sort((left, right) => (
+                  Math.hypot(left.x - interceptionField.x, left.y - interceptionField.y)
+                  - Math.hypot(right.x - interceptionField.x, right.y - interceptionField.y)
+                ))[0];
+              if (retaliationTarget) {
+                this.damageEnemy(
+                  retaliationTarget,
+                  maximumCharge * (Number(modifiers.retaliationDamagePerCharge) || 4)
+                );
+              }
+              this.mircallaRetaliationCharge = 0;
+            }
+          }
+        } else {
+          interceptionField.shieldHp -= b.damage;
+        }
         this.enemyBullets.splice(i, 1);
         continue;
       }
@@ -4590,9 +4974,18 @@ class GameEngine {
   updateBossPhase(boss) {
     if (!boss?.isBoss || boss.dead) return 0;
     const hpRatio = Math.max(0, boss.hp / Math.max(1, boss.maxHp));
-    const nextPhase = hpRatio <= BOSS_PHASE_THRESHOLDS[1]
-      ? 3
-      : (hpRatio <= BOSS_PHASE_THRESHOLDS[0] ? 2 : 1);
+    const bossDefinition = this.getBossDefinition(boss.type);
+    const authoredPhases = bossDefinition?.phases;
+    const nextPhase = Array.isArray(authoredPhases)
+      ? authoredPhases.reduce(
+        (phaseNumber, phase) => (
+          hpRatio <= Number(phase.threshold) ? Math.max(phaseNumber, phase.number) : phaseNumber
+        ),
+        1
+      )
+      : (hpRatio <= BOSS_PHASE_THRESHOLDS[1]
+        ? 3
+        : (hpRatio <= BOSS_PHASE_THRESHOLDS[0] ? 2 : 1));
     if (nextPhase > (boss.bossPhase || 1)) {
       boss.bossPhase = nextPhase;
       boss.telegraphTimer = boss.type === 'leviathan' ? 1.35 : 0.9;
@@ -4602,7 +4995,9 @@ class GameEngine {
         carmilla: ['Saigne-lune', 'Danse des lances', 'Banquet écarlate'],
         leviathan: ['Souffle du titan', 'Marée cataclysmique', 'Extinction']
       };
-      const patternName = patternNames[boss.type]?.[nextPhase - 1] || `Phase ${nextPhase}`;
+      const patternName = authoredPhases?.[nextPhase - 1]?.name
+        || patternNames[boss.type]?.[nextPhase - 1]
+        || `Phase ${nextPhase}`;
       this.showFeedback(`${boss.name} · ${patternName}`, boss.color);
       this.particles.push({
         type: 'gravity_ring',
@@ -4612,8 +5007,126 @@ class GameEngine {
         life: boss.telegraphTimer,
         color: boss.color
       });
+      this.applyBossSignature(boss, bossDefinition, nextPhase, 'phase');
     }
     return boss.bossPhase;
+  }
+
+  applyBossSignature(boss, definition, phase = 1, trigger = 'pattern') {
+    if (!boss || !definition) return null;
+    const result = { mechanic: definition.signature?.mechanic || definition.id, affected: 0 };
+    const selectInvestedDefenses = count => this.placedTowers
+      .slice()
+      .sort((left, right) => (right.investedCost || 0) - (left.investedCost || 0))
+      .slice(0, count);
+
+    if (definition.id === 'xyra' && trigger === 'phase') {
+      const restored = Math.min(boss.maxHp * 0.09, Math.max(0, boss.maxHp - boss.hp));
+      boss.hp += restored;
+      boss.shield = Math.max(Number(boss.shield) || 0, boss.maxHp * (0.08 + (phase * 0.02)));
+      boss.maxShield = Math.max(Number(boss.maxShield) || 0, boss.shield);
+      result.affected = Math.round(restored + boss.shield);
+    } else if (definition.id === 'ossuary' && trigger === 'phase') {
+      const shield = boss.maxHp * (0.12 + (phase * 0.04));
+      boss.shield = Math.max(Number(boss.shield) || 0, shield);
+      boss.maxShield = Math.max(Number(boss.maxShield) || 0, shield);
+      result.affected = Math.round(shield);
+    } else if (definition.id === 'nhalzara' && trigger === 'phase') {
+      const angle = (phase * 2.399) % (Math.PI * 2);
+      boss.x = Math.max(50, Math.min(this.worldWidth - 50, this.citadel.x + Math.cos(angle) * 360));
+      boss.y = Math.max(50, Math.min(this.worldHeight - 50, this.citadel.y + Math.sin(angle) * 250));
+      boss.telegraphTimer = Math.max(Number(boss.telegraphTimer) || 0, 1.1);
+      result.affected = 1;
+    } else if (definition.id === 'astarra' && (trigger === 'phase' || boss.patternIndex % 2 === 0)) {
+      this.bossHazards.push({
+        x: boss.x,
+        y: boss.y,
+        radius: 105 + (phase * 18),
+        damage: 12 + (phase * 5),
+        life: 4.8,
+        tickTimer: 0,
+        color: boss.color,
+        sourceType: boss.type,
+        label: 'AURA DE BRAISE'
+      });
+      result.affected = 1;
+    } else if (definition.id === 'umbrael' && (trigger === 'phase' || boss.patternIndex % 2 === 1)) {
+      boss.stealthTimer = Math.max(Number(boss.stealthTimer) || 0, 1.8 + (phase * 0.65));
+      boss.markedTimer = 0;
+      result.affected = 1;
+    } else if (definition.id === 'pestifera' && (trigger === 'phase' || boss.patternIndex % 2 === 0)) {
+      selectInvestedDefenses(Math.min(3, phase + 1)).forEach((defense, index) => {
+        this.bossHazards.push({
+          x: defense.x,
+          y: defense.y,
+          radius: 72 + (phase * 9),
+          damage: 9 + (phase * 4),
+          life: 5.5 + index,
+          tickTimer: 0,
+          color: boss.color,
+          sourceType: boss.type,
+          label: 'CORROSION'
+        });
+        result.affected++;
+      });
+    } else if (definition.id === 'vexara' && (trigger === 'phase' || boss.patternIndex % 2 === 0)) {
+      const target = selectInvestedDefenses(1)[0];
+      if (target) {
+        const angle = Math.atan2(target.y - boss.y, target.x - boss.x);
+        this.enemyBullets.push({
+          x: boss.x,
+          y: boss.y,
+          vx: Math.cos(angle) * 230,
+          vy: Math.sin(angle) * 230,
+          damage: 22 + (phase * 6),
+          radius: 11,
+          splashRadius: 82 + (phase * 16),
+          stunDuration: 0.6 + (phase * 0.25),
+          color: boss.color,
+          sourceType: boss.type,
+          sourceEnemy: boss
+        });
+        result.affected = 1;
+      }
+    } else if (definition.id === 'kalix' && (trigger === 'phase' || boss.patternIndex % 2 === 1)) {
+      selectInvestedDefenses(Math.min(3, phase)).forEach(defense => {
+        defense.disabledTimer = Math.max(Number(defense.disabledTimer) || 0, 0.9 + (phase * 0.55));
+        result.affected++;
+      });
+    } else if (definition.id === 'malika' && (trigger === 'phase' || boss.patternIndex % 2 === 0)) {
+      const mirageCount = Math.min(4, phase + 1);
+      for (let index = 0; index < mirageCount; index++) {
+        const angle = (Math.PI * 2 * index) / mirageCount;
+        const mirage = this.spawnEnemy(index % 2 === 0 ? 'runner' : 'swarmer', boss.routeIndex, {
+          x: boss.x + Math.cos(angle) * (boss.radius + 48),
+          y: boss.y + Math.sin(angle) * (boss.radius + 48),
+          waypointIndex: boss.waypointIndex,
+          hpMultiplier: 0.65 + (phase * 0.12),
+          countForWave: false
+        });
+        if (mirage) {
+          mirage.name = 'Mirage de Malika';
+          mirage.color = boss.color;
+          mirage.mirageSourceId = definition.id;
+          result.affected++;
+        }
+      }
+    } else if (definition.id === 'noctis' && (trigger === 'phase' || boss.patternIndex % 2 === 1)) {
+      selectInvestedDefenses(Math.min(2, phase)).forEach(defense => {
+        defense.mindControlledTimer = Math.max(
+          Number(defense.mindControlledTimer) || 0,
+          2.2 + (phase * 0.8)
+        );
+        defense.mindControlPulseTimer = 0;
+        result.affected++;
+      });
+    }
+
+    if (result.affected > 0) {
+      const label = definition.signature?.name || definition.title || definition.name;
+      this.showFeedback(`${definition.name} · ${label}`, definition.color || boss.color);
+    }
+    return result;
   }
 
   updateArtillerySiege(enemy, dt) {
@@ -4683,6 +5196,13 @@ class GameEngine {
           e.rinEmberStacks = 0;
         }
       }
+      if (e.damageDebuffTimer > 0) {
+        e.damageDebuffTimer -= dt;
+        if (e.damageDebuffTimer <= 0) e.damageDebuffMultiplier = 1;
+      }
+      if (e.stealthTimer > 0) {
+        e.stealthTimer = Math.max(0, e.stealthTimer - dt);
+      }
       if (e.stunTimer > 0) {
         e.stunTimer -= dt;
         continue;
@@ -4717,6 +5237,7 @@ class GameEngine {
       let targetPos = this.getEnemyRouteTarget(e);
       let followsRoute = true;
       let closestDecoyDist = Math.hypot(targetPos.x - e.x, targetPos.y - e.y);
+      let targetDecoy = null;
       let targetBarrier = null;
 
       this.decoys.forEach(d => {
@@ -4724,19 +5245,40 @@ class GameEngine {
         if (dist < closestDecoyDist) {
           closestDecoyDist = dist;
           targetPos = { x: d.x, y: d.y };
+          targetDecoy = d;
           followsRoute = false;
         }
       });
       this.placedTowers.forEach(tower => {
-        if (tower.type !== 'barrier' || e.type === 'flying') return;
+        if (tower.type !== 'barrier' || this.isEnemyFlying(e)) return;
         const dist = Math.hypot(tower.x - e.x, tower.y - e.y);
         if (dist < closestDecoyDist) {
           closestDecoyDist = dist;
           targetBarrier = tower;
+          targetDecoy = null;
           targetPos = { x: tower.x, y: tower.y };
           followsRoute = false;
         }
       });
+      if (targetDecoy && this.selectedHero?.id === 'zahra' && !this.isEnemyFlying(e)) {
+        const modifiers = this.getHeroKit('zahra')?.passive?.modifiers || {};
+        e.slowTimer = Math.max(
+          Number(e.slowTimer) || 0,
+          (Number(modifiers.revealDurationMs) || 8000) / 1000
+        );
+        e.slowSpeedMultiplier = Math.min(
+          Number(e.slowSpeedMultiplier) || 1,
+          Number(modifiers.slowMultiplier) || 0.8
+        );
+        e.markedDamageTakenMultiplier = Math.max(
+          Number(e.markedDamageTakenMultiplier) || 1,
+          Number(modifiers.redirectedDamageTakenMultiplier) || 1.12
+        );
+        e.markedTimer = Math.max(
+          Number(e.markedTimer) || 0,
+          (Number(modifiers.revealDurationMs) || 8000) / 1000
+        );
+      }
 
       const angle = Math.atan2(targetPos.y - e.y, targetPos.x - e.x);
       e.facingAngle = angle;
@@ -4750,7 +5292,13 @@ class GameEngine {
       if (e.isBoss && bossInsideCombatArena && e.telegraphTimer <= 0) {
         e.bulletTimer += dt;
         const phaseRate = 1 - ((Math.max(1, e.bossPhase) - 1) * 0.18);
-        if (e.bulletTimer >= (e.isLeviathan ? 0.8 : 1.2) * phaseRate) {
+        const authoredCooldown = Number(
+          this.getBossDefinition(e.type)?.phases?.[(e.bossPhase || 1) - 1]?.pattern?.cooldownMs
+        ) / 1000;
+        const attackInterval = Number.isFinite(authoredCooldown) && authoredCooldown > 0
+          ? authoredCooldown
+          : ((e.isLeviathan ? 0.8 : 1.2) * phaseRate);
+        if (e.bulletTimer >= attackInterval) {
           e.bulletTimer = 0;
           this.fireBossPattern(e);
         }
@@ -4766,7 +5314,10 @@ class GameEngine {
         }
         const barrierDamage = targetBarrier.ultimateInvulnerableTimer > 0
           ? 0
-          : (e.isBoss ? 90 : Math.max(8, Math.round(e.damage || (e.type === 'brute' ? 45 : 24))));
+          : Math.round(
+            (e.isBoss ? 90 : Math.max(8, e.damage || (e.type === 'brute' ? 45 : 24)))
+            * (e.damageDebuffTimer > 0 ? (e.damageDebuffMultiplier || 1) : 1)
+          );
         targetBarrier.hp -= barrierDamage;
         this.addFloatingText(
           barrierDamage > 0 ? `-${barrierDamage}` : 'AEGIS',
@@ -4797,7 +5348,10 @@ class GameEngine {
           e.contactTimer = Math.max(0, (e.contactTimer || 0) - dt);
           if (e.contactTimer <= 0) {
             if (!this.isOverdriveActive && this.invincibleTimer <= 0) {
-              const dmg = Math.round(e.damage || (e.isLeviathan ? 80 : 40));
+              const dmg = Math.round(
+                (e.damage || (e.isLeviathan ? 80 : 40))
+                * (e.damageDebuffTimer > 0 ? (e.damageDebuffMultiplier || 1) : 1)
+              );
               this.citadel.hp -= dmg;
               audio.playHurtVoice();
               this.addFloatingText(`-${dmg}`, this.citadel.x, this.citadel.y - 30, '#ff2a5f');
@@ -4810,7 +5364,10 @@ class GameEngine {
           continue;
         }
         if (!this.isOverdriveActive && this.invincibleTimer <= 0) {
-          const dmg = Math.round(e.damage || (e.type === 'brute' ? 20 : 8));
+          const dmg = Math.round(
+            (e.damage || (e.type === 'brute' ? 20 : 8))
+            * (e.damageDebuffTimer > 0 ? (e.damageDebuffMultiplier || 1) : 1)
+          );
           this.citadel.hp -= dmg;
           audio.playHurtVoice();
           this.addFloatingText(`-${dmg}`, this.citadel.x, this.citadel.y - 30, '#ff2a5f');
@@ -4833,7 +5390,9 @@ class GameEngine {
       this.enemyBullets.push({
         x: boss.x, y: boss.y,
         vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed,
-        damage: options.damage || 15, radius: options.radius || 7, color: boss.color,
+        damage: (options.damage || 15)
+          * (boss.damageDebuffTimer > 0 ? (boss.damageDebuffMultiplier || 1) : 1),
+        radius: options.radius || 7, color: boss.color,
         sourceType: boss.type,
         bossPhase: boss.bossPhase
       });
@@ -4850,7 +5409,7 @@ class GameEngine {
         y: boss.y,
         vx: Math.cos(angle) * speed,
         vy: Math.sin(angle) * speed,
-        damage,
+        damage: damage * (boss.damageDebuffTimer > 0 ? (boss.damageDebuffMultiplier || 1) : 1),
         radius: 8,
         color: boss.color,
         sourceType: boss.type,
@@ -4863,6 +5422,69 @@ class GameEngine {
   fireBossPattern(boss) {
     const phase = Math.max(1, boss.bossPhase || 1);
     boss.patternIndex = (boss.patternIndex || 0) + 1;
+    const bossDefinition = this.getBossDefinition(boss.type);
+    const authoredPattern = bossDefinition?.phases?.[phase - 1]?.pattern;
+    if (authoredPattern) {
+      const count = Math.max(4, Math.min(24, Number(authoredPattern.count) || 8));
+      const speed = Math.max(140, Number(authoredPattern.speed) || 210);
+      const damage = Math.max(8, Number(authoredPattern.damage) || 18);
+      boss.attackAnimationTimer = 0.48;
+      this.applyBossSignature(boss, bossDefinition, phase, 'pattern');
+      if (authoredPattern.type === 'aimed') {
+        this.fireAimedBossVolley(boss, Math.min(9, count), 0.12, speed, damage);
+      } else if (authoredPattern.type === 'summon') {
+        const summonCount = Math.max(2, Math.min(5, Math.round(count / 4)));
+        for (let summonIndex = 0; summonIndex < summonCount; summonIndex++) {
+          const angle = (Math.PI * 2 * summonIndex) / summonCount;
+          this.spawnEnemy(summonIndex % 2 === 0 ? 'runner' : 'swarmer', boss.routeIndex, {
+            x: boss.x + Math.cos(angle) * (boss.radius + 38),
+            y: boss.y + Math.sin(angle) * (boss.radius + 38),
+            waypointIndex: boss.waypointIndex,
+            hpMultiplier: 1 + (phase * 0.25),
+            countForWave: false
+          });
+        }
+        this.fireAimedBossVolley(boss, 3, 0.16, speed, damage);
+      } else if (authoredPattern.type === 'teleport') {
+        const angle = (boss.patternIndex * 2.399) % (Math.PI * 2);
+        const radius = 250 + ((boss.patternIndex % 3) * 55);
+        boss.x = Math.max(40, Math.min(this.worldWidth - 40, this.citadel.x + Math.cos(angle) * radius));
+        boss.y = Math.max(40, Math.min(this.worldHeight - 40, this.citadel.y + Math.sin(angle) * radius));
+        boss.telegraphTimer = 0.45;
+        this.fireAimedBossVolley(boss, Math.min(7, count), 0.1, speed + 30, damage);
+      } else if (authoredPattern.type === 'hazard') {
+        const hazardTarget = this.placedTowers
+          .slice()
+          .sort((left, right) => (right.investedCost || 0) - (left.investedCost || 0))[0];
+        const fallbackAngle = boss.patternIndex * 1.73;
+        this.bossHazards.push({
+          x: hazardTarget?.x || this.citadel.x + Math.cos(fallbackAngle) * 170,
+          y: hazardTarget?.y || this.citadel.y + Math.sin(fallbackAngle) * 170,
+          radius: 78 + (phase * 12),
+          damage: Math.max(8, Math.round(damage * 0.55)),
+          life: 4.2,
+          tickTimer: 0,
+          color: boss.color,
+          sourceType: boss.type
+        });
+        this.fireBossBulletRing(boss, {
+          count,
+          speed: Math.max(120, speed * 0.72),
+          damage,
+          radius: 11,
+          offset: boss.patternIndex * 0.21
+        });
+        this.fireAimedBossVolley(boss, 3, 0.2, speed, damage + 3);
+      } else {
+        this.fireBossBulletRing(boss, {
+          count,
+          speed,
+          damage,
+          offset: authoredPattern.type === 'spiral' ? boss.patternIndex * 0.31 : 0
+        });
+      }
+      return;
+    }
     if (boss.type === 'vespera') {
       if (phase === 1) this.fireBossBulletRing(boss, { count: 8, speed: 190 });
       else if (phase === 2) {
@@ -4932,9 +5554,32 @@ class GameEngine {
       if (hazard.tickTimer >= 0.45) {
         hazard.tickTimer = 0;
         [...this.enemies].forEach(enemy => {
-          if (enemy.type === 'flying' && hazard.ground !== false) return;
+          if (this.isEnemyFlying(enemy) && hazard.ground !== false) return;
           if (Math.hypot(enemy.x - hazard.x, enemy.y - hazard.y) <= hazard.radius + enemy.radius) {
-            this.damageEnemyFromDefense(hazard.sourceDefense, enemy, hazard.damage);
+            if (Number(hazard.damage) > 0) {
+              this.damageEnemyFromDefense(hazard.sourceDefense, enemy, hazard.damage);
+            }
+            if (Number(hazard.slowMultiplier) > 0) {
+              enemy.slowTimer = Math.max(Number(enemy.slowTimer) || 0, 0.8);
+              enemy.slowSpeedMultiplier = Math.min(
+                Number(enemy.slowSpeedMultiplier) || 1,
+                Number(hazard.slowMultiplier)
+              );
+            }
+            if (Number(hazard.damageTakenMultiplier) > 1) {
+              enemy.markedDamageTakenMultiplier = Math.max(
+                Number(enemy.markedDamageTakenMultiplier) || 1,
+                Number(hazard.damageTakenMultiplier)
+              );
+              enemy.markedTimer = Math.max(Number(enemy.markedTimer) || 0, 0.9);
+            }
+            if (Number(hazard.armorReduction) > 0) {
+              enemy.armorBreakMultiplier = Math.max(
+                Number(enemy.armorBreakMultiplier) || 1,
+                1 + Number(hazard.armorReduction)
+              );
+              enemy.armorBreakTimer = Math.max(Number(enemy.armorBreakTimer) || 0, 1);
+            }
             if (
               hazard.heroId === 'rin'
               || ['flame', 'napalm'].includes(hazard.sourceDefense?.type)
@@ -4943,8 +5588,53 @@ class GameEngine {
             }
           }
         });
+        if (Number(hazard.defenseHealPerTick) > 0) {
+          this.placedTowers.forEach(defense => {
+            if (Math.hypot(defense.x - hazard.x, defense.y - hazard.y) > hazard.radius) return;
+            defense.hp = Math.min(
+              defense.maxHp,
+              defense.hp + Number(hazard.defenseHealPerTick)
+            );
+          });
+        }
+        if (this.selectedHero?.id === 'amara') {
+          const passive = this.getHeroKit('amara')?.passive?.modifiers || {};
+          const healingRadius = Number(passive.radius) || 125;
+          const healing = Number(passive.healPerTick) || 3;
+          this.placedTowers.forEach(defense => {
+            if (Math.hypot(defense.x - hazard.x, defense.y - hazard.y) > healingRadius) return;
+            defense.hp = Math.min(defense.maxHp, defense.hp + healing);
+          });
+        }
       }
       if (hazard.life <= 0) this.hazards.splice(i, 1);
+    }
+  }
+
+  updateBossHazards(dt) {
+    for (let index = this.bossHazards.length - 1; index >= 0; index--) {
+      const hazard = this.bossHazards[index];
+      hazard.life -= dt;
+      hazard.tickTimer += dt;
+      if (hazard.tickTimer >= 0.6) {
+        hazard.tickTimer = 0;
+        this.placedTowers.slice().forEach(defense => {
+          if (Math.hypot(defense.x - hazard.x, defense.y - hazard.y) > hazard.radius + defense.radius) return;
+          if (defense.ultimateInvulnerableTimer > 0) return;
+          defense.hp -= hazard.damage;
+          this.addFloatingText(
+            `${hazard.label || 'MIASME'} -${hazard.damage}`,
+            defense.x,
+            defense.y - 28,
+            hazard.color
+          );
+          if (defense.hp <= 0) {
+            const defenseIndex = this.placedTowers.indexOf(defense);
+            if (defenseIndex >= 0) this.placedTowers.splice(defenseIndex, 1);
+          }
+        });
+      }
+      if (hazard.life <= 0) this.bossHazards.splice(index, 1);
     }
   }
 
@@ -4978,7 +5668,7 @@ class GameEngine {
     this.citadel.hp = Math.min(maximum, before + healed);
 
     if (this.selectedHero?.id === 'carmilla' && overheal > 0) {
-      const modifiers = EXPANSION?.heroKits?.carmilla?.passive?.modifiers || {};
+      const modifiers = this.getHeroKit('carmilla')?.passive?.modifiers || {};
       const maximumStoredCharge = Number(modifiers.maximumStoredCharge) || 35;
       this.carmillaStoredCharge = Math.min(
         maximumStoredCharge,
@@ -4995,7 +5685,7 @@ class GameEngine {
 
   applyRinArmorBreak(enemy) {
     if (!enemy || enemy.dead || this.selectedHero?.id !== 'rin') return;
-    const modifiers = EXPANSION?.heroKits?.rin?.passive?.modifiers || {};
+    const modifiers = this.getHeroKit('rin')?.passive?.modifiers || {};
     const reduction = Number(modifiers.armorReductionPerStack) || 0.035;
     const maximumStacks = Math.max(1, Math.floor(Number(modifiers.maxStacks) || 5));
     enemy.rinEmberStacks = Math.min(
@@ -5021,7 +5711,7 @@ class GameEngine {
       .find(option => option.id === defense.specializationId);
     const modifiers = specialization?.modifiers || {};
     let adjustedDamage = amount;
-    if (enemy.type === 'flying') adjustedDamage *= Number(modifiers.flyingDamageMultiplier) || 1;
+    if (this.isEnemyFlying(enemy)) adjustedDamage *= Number(modifiers.flyingDamageMultiplier) || 1;
     if (enemy.isBoss) adjustedDamage *= Number(modifiers.eliteDamageMultiplier) || 1;
     if (['brute', 'bulwark'].includes(enemy.type)) {
       adjustedDamage *= Number(modifiers.heavyDamageMultiplier) || 1;
@@ -5045,6 +5735,19 @@ class GameEngine {
       && enemy.hp / Math.max(1, enemy.maxHp) <= Number(modifiers.executeHealthThreshold)
     ) {
       adjustedDamage = Math.max(adjustedDamage, enemy.hp + enemy.shield);
+    }
+    if (
+      this.selectedHero?.id === 'vega'
+      && ['plasma', 'orbital'].includes(defense.type)
+      && (
+        enemy.type === 'umbrael'
+        || this.getBossDefinition(enemy.type)?.traits?.includes('shadow')
+        || enemy.markedTimer > 0
+      )
+    ) {
+      adjustedDamage *= Number(
+        this.getHeroKit('vega')?.passive?.modifiers?.plasmaDamageMultiplier
+      ) || 1.18;
     }
 
     const markMultiplier = Number(modifiers.markedDamageTakenMultiplier) || 0;
@@ -5081,10 +5784,27 @@ class GameEngine {
 
   damageEnemy(enemy, amount, options = {}) {
     if (!enemy || enemy.dead || !Number.isFinite(amount) || amount <= 0) return;
+    if (this.selectedHero?.id === 'nyx' && enemy.routeId) {
+      if (!(this.nyxExposedRoutes instanceof Set)) this.nyxExposedRoutes = new Set();
+      if (!this.nyxExposedRoutes.has(enemy.routeId)) {
+        const reduction = Number(
+          this.getHeroKit('nyx')?.passive?.modifiers?.resistanceReduction
+        ) || 0.18;
+        enemy.markedDamageTakenMultiplier = Math.max(
+          Number(enemy.markedDamageTakenMultiplier) || 1,
+          1 + reduction
+        );
+        enemy.markedTimer = Math.max(
+          Number(enemy.markedTimer) || 0,
+          (Number(this.getHeroKit('nyx')?.passive?.modifiers?.durationMs) || 7000) / 1000
+        );
+        this.nyxExposedRoutes.add(enemy.routeId);
+      }
+    }
     if (this.selectedHero?.id === 'kira' && enemy.routeId) {
       if (!(this.kiraMarkedRoutes instanceof Set)) this.kiraMarkedRoutes = new Set();
       if (!this.kiraMarkedRoutes.has(enemy.routeId)) {
-        const modifiers = EXPANSION?.heroKits?.kira?.passive?.modifiers || {};
+        const modifiers = this.getHeroKit('kira')?.passive?.modifiers || {};
         enemy.markedDamageTakenMultiplier = Math.max(
           Number(enemy.markedDamageTakenMultiplier) || 1,
           Number(modifiers.markedDamageTakenMultiplier) || 1.22
@@ -5097,6 +5817,35 @@ class GameEngine {
       }
     }
     let effectiveAmount = amount;
+    if (this.selectedHero?.id === 'hana' && this.hanaPassiveReady) {
+      effectiveAmount *= Number(
+        this.getHeroKit('hana')?.passive?.modifiers?.damageMultiplier
+      ) || 1.45;
+      this.hanaPassiveReady = false;
+      this.hanaPassiveChargeTimer = 0;
+    } else if (this.selectedHero?.id === 'hana') {
+      this.hanaPassiveChargeTimer = 0;
+    }
+    if (
+      this.selectedHero?.id === 'freyja'
+      && enemy.slowTimer > 0
+      && ['brute', 'bulwark'].includes(enemy.type)
+    ) {
+      const modifiers = this.getHeroKit('freyja')?.passive?.modifiers || {};
+      const maximumStacks = Number(modifiers.maximumStacks) || 4;
+      enemy.freyjaRimeStacks = Math.min(
+        maximumStacks,
+        (Number(enemy.freyjaRimeStacks) || 0) + 1
+      );
+      enemy.armorBreakMultiplier = Math.max(
+        Number(enemy.armorBreakMultiplier) || 1,
+        1 + (enemy.freyjaRimeStacks * (Number(modifiers.stackReduction) || 0.12))
+      );
+      enemy.armorBreakTimer = Math.max(
+        Number(enemy.armorBreakTimer) || 0,
+        (Number(modifiers.stackDurationMs) || 5000) / 1000
+      );
+    }
     effectiveAmount *= Number(enemy.markedDamageTakenMultiplier) || 1;
     effectiveAmount *= Number(enemy.armorBreakMultiplier) || 1;
     if (enemy.slowTimer > 0) {
@@ -5196,7 +5945,9 @@ class GameEngine {
     });
 
     this.mutantsKilled++;
-    this.score += enemy.isLeviathan ? 2000 : (enemy.isBoss ? 600 : 50);
+    const bossRewards = enemy.bossRewards || null;
+    this.score += bossRewards?.score
+      || (enemy.isLeviathan ? 2000 : (enemy.isBoss ? 600 : 50));
 
     if (this.mutantsKilled >= 1) this.unlockAchievement('first_blood');
     if (enemy.isLeviathan) this.unlockAchievement('wave_15');
@@ -5204,7 +5955,7 @@ class GameEngine {
     const isHeavy = ['brute', 'bulwark'].includes(enemy.type);
     const isElite = enemy.isBoss || isHeavy || SPECIALIST_ENEMY_TYPES.includes(enemy.type);
     const vesperaPassive = this.selectedHero?.id === 'vespera'
-      ? EXPANSION?.heroKits?.vespera?.passive
+      ? this.getHeroKit('vespera')?.passive
       : null;
     const vesperaModifiers = vesperaPassive?.modifiers || {};
     const rewardMultiplier = this.getRunModifierProduct('coinRewardMultiplier')
@@ -5212,12 +5963,27 @@ class GameEngine {
       * (isElite ? (Number(vesperaModifiers.eliteRewardMultiplier) || 1) : 1)
       * this.getCoinValueMultiplier();
     const coinValue = Math.round(
-      (enemy.isBoss ? 100 : (this.getRunRandom() < 0.45 ? 10 : 0)) * rewardMultiplier
+      (bossRewards?.coins
+        || (enemy.isBoss ? 100 : (this.getRunRandom() < 0.45 ? 10 : 0)))
+      * rewardMultiplier
     );
     if (coinValue > 0) {
       this.coins += coinValue;
       this.totalCoinsEarned += coinValue;
       this.addFloatingText(`+${coinValue} 🪙`, enemy.x, enemy.y, '#f59e0b');
+    }
+    if (this.selectedHero?.id === 'maris') {
+      const modifiers = this.getHeroKit('maris')?.passive?.modifiers || {};
+      const distance = Math.hypot(enemy.x - this.citadel.x, enemy.y - this.citadel.y);
+      if (
+        distance >= (Number(modifiers.minimumDistance) || 360)
+        && this.getRunRandom() < (Number(modifiers.coinChance) || 0.28)
+      ) {
+        const corsairShare = Number(modifiers.coinReward) || 4;
+        this.coins += corsairShare;
+        this.totalCoinsEarned += corsairShare;
+        this.addFloatingText(`PART +${corsairShare}`, enemy.x, enemy.y - 25, '#38bdf8');
+      }
     }
     if (vesperaPassive && isElite) {
       const buffRadius = Number(vesperaModifiers.radius) || 180;
@@ -5269,7 +6035,34 @@ class GameEngine {
       this.particles.push({ x: enemy.x, y: enemy.y, vx: (Math.random() - 0.5) * 200, vy: (Math.random() - 0.5) * 200, radius: 3 + Math.random() * 4, color: enemy.color, life: 0.4 });
     }
 
-    this.addXp(enemy.isBoss ? 160 : 20);
+    this.addXp(bossRewards?.xp || (enemy.isBoss ? 160 : 20));
+
+    if (enemy.bossDefinitionId) {
+      const firstDefeat = !this.defeatedBossIds.includes(enemy.bossDefinitionId);
+      if (firstDefeat) {
+        this.defeatedBossIds.push(enemy.bossDefinitionId);
+        const permanentReward = Math.max(0, Math.floor(Number(bossRewards?.metaCoins) || 0));
+        this.metaCoins += permanentReward;
+        this.runMetaCoinsEarned += permanentReward;
+        Object.values(HERO_CLASSES).forEach(hero => {
+          if (
+            hero.unlocked === false
+            && hero.unlockRule?.type === 'boss_defeated'
+            && hero.unlockRule.bossId === enemy.bossDefinitionId
+          ) {
+            hero.unlocked = true;
+            this.unlockGalleryItem(hero.id);
+            this.showFeedback(`${hero.name} rejoint la Salle de Commandement.`, '#00f0ff');
+          }
+        });
+      }
+      const definition = this.getBossDefinition(enemy.bossDefinitionId);
+      this.showFeedback(
+        `${definition?.name || enemy.name} neutralisée${firstDefeat ? ' · nouveau Trône consigné' : ''}`,
+        enemy.color
+      );
+      this.saveProgress();
+    }
 
     if (enemy.recruitableBossId) {
       this.triggerBossRecruitModal(enemy.recruitableBossId);
@@ -5387,7 +6180,7 @@ class GameEngine {
     if (this.abilityCooldownTimer > 0 || this.isPaused || this.isGameOver) {
       return { ok: false, reason: 'unavailable' };
     }
-    const kit = EXPANSION?.heroKits?.[this.selectedHero.id];
+    const kit = this.getHeroKit(this.selectedHero.id);
     this.activeHeroTargeting = {
       heroId: this.selectedHero.id,
       targeting: kit?.active?.targeting || 'ground_point',
@@ -5523,6 +6316,180 @@ class GameEngine {
       this.carmillaStoredCharge = 0;
       affected = 1;
       color = '#be123c';
+    } else if (CHARACTER_EXPANSION?.heroKits?.[heroId]) {
+      const mechanic = targeting.ability?.mechanic;
+      if (mechanic === 'nyx_chromatic_breach') {
+        this.hazards.push({
+          x: targetX,
+          y: targetY,
+          radius: Number(effect.radius) || 135,
+          damage: 1,
+          life: (Number(effect.durationMs) || 6000) / 1000,
+          tickTimer: 0,
+          color: '#22d3ee',
+          ground: false,
+          heroId,
+          slowMultiplier: Number(effect.slowMultiplier) || 0.62,
+          damageTakenMultiplier: Number(effect.damageTakenMultiplier) || 1.2
+        });
+        affected = 1;
+        color = '#22d3ee';
+      } else if (mechanic === 'aurelia_chrono_valve') {
+        this.placedTowers.forEach(defense => {
+          if (Math.hypot(defense.x - targetX, defense.y - targetY) > Number(effect.radius || 170)) return;
+          if (defense.fireRate > 0) {
+            defense.fireRate *= Number(effect.fireRateMultiplier) || 0.72;
+          }
+          defense.timer += Number(effect.cooldownReductionMs) || 400;
+          defense.abilityBuffTimer = Math.max(
+            Number(defense.abilityBuffTimer) || 0,
+            (Number(effect.durationMs) || 7000) / 1000
+          );
+          affected++;
+        });
+        color = '#f59e0b';
+      } else if (mechanic === 'maris_blacktide_broadside') {
+        const nearestEnemy = this.enemies
+          .filter(enemy => !enemy.dead)
+          .sort((left, right) => (
+            Math.hypot(left.x - targetX, left.y - targetY)
+            - Math.hypot(right.x - targetX, right.y - targetY)
+          ))[0];
+        const nearestRoute = this.spawnRoutes.find(route => route.id === nearestEnemy?.routeId)
+          || this.spawnRoutes
+          .map(route => ({
+            route,
+            distance: Math.min(
+              ...(route.polyline || [route.spawn]).map(point => Math.hypot(point.x - targetX, point.y - targetY))
+            )
+          }))
+          .sort((left, right) => left.distance - right.distance)[0]?.route;
+        this.enemies
+          .filter(enemy => !enemy.dead && enemy.routeId === nearestRoute?.id)
+          .sort((left, right) => right.waypointIndex - left.waypointIndex)
+          .slice(0, Number(effect.shellCount) || 7)
+          .forEach(enemy => {
+            this.createExplosion(
+              enemy.x,
+              enemy.y,
+              Number(effect.blastRadius) || 72,
+              Number(effect.damage) || 105
+            );
+            affected++;
+          });
+        color = '#38bdf8';
+      } else if (mechanic === 'zahra_thousand_skies_mirage') {
+        this.decoys.push({
+          x: targetX,
+          y: targetY,
+          radius: Number(effect.radius) || 150,
+          life: (Number(effect.durationMs) || 6500) / 1000,
+          pulseDamage: (Number(effect.burnDamagePerSecond) || 38) * 0.5,
+          pulseRadius: Number(effect.radius) || 150,
+          explosionDamage: 0,
+          color: '#fbbf24',
+          heroId
+        });
+        affected = 1;
+        color = '#fbbf24';
+      } else if (mechanic === 'mircalla_porcelain_court') {
+        this.decoys.push({
+          x: targetX,
+          y: targetY,
+          radius: Number(effect.radius) || 145,
+          life: (Number(effect.durationMs) || 7500) / 1000,
+          pulseDamage: 0,
+          pulseRadius: 0,
+          explosionDamage: 0,
+          projectileInterceptions: (Number(effect.sentinelCount) || 4)
+            * (Number(effect.interceptsPerSentinel) || 3),
+          color: '#f9a8d4',
+          heroId
+        });
+        affected = 1;
+        color = '#f9a8d4';
+      } else if (mechanic === 'isolde_mourne_requiem') {
+        this.enemies.forEach(enemy => {
+          if (Math.hypot(enemy.x - targetX, enemy.y - targetY) > Number(effect.radius || 210)) return;
+          enemy.damageDebuffMultiplier = Number(effect.enemyDamageMultiplier) || 0.72;
+          enemy.damageDebuffTimer = (Number(effect.durationMs) || 6000) / 1000;
+          affected++;
+        });
+        this.placedTowers
+          .filter(defense => defense.type === 'barrier')
+          .forEach(defense => {
+            defense.hp = Math.min(
+              defense.maxHp,
+              defense.hp + (defense.maxHp * (Number(effect.barrierHealPercent) || 0.22))
+            );
+          });
+        color = '#c084fc';
+      } else if (['hana_kurogane_moon', 'vega_heliosphere_lance'].includes(mechanic)) {
+        const angle = Math.atan2(targetY - this.citadel.y, targetX - this.citadel.x);
+        const end = {
+          x: this.citadel.x + Math.cos(angle) * (Number(effect.length) || 640),
+          y: this.citadel.y + Math.sin(angle) * (Number(effect.length) || 640)
+        };
+        this.enemies.forEach(enemy => {
+          if (this.distToSegment(enemy, this.citadel, end) > enemy.radius + ((Number(effect.width) || 46) / 2)) return;
+          this.damageEnemy(enemy, Number(effect.damage) || 360, {
+            ignoreShield: mechanic === 'vega_heliosphere_lance'
+          });
+          if (!enemy.dead && mechanic === 'hana_kurogane_moon') {
+            enemy.markedDamageTakenMultiplier = Math.max(
+              Number(enemy.markedDamageTakenMultiplier) || 1,
+              1.2
+            );
+            enemy.markedTimer = (Number(effect.markDurationMs) || 5500) / 1000;
+          }
+          affected++;
+        });
+        this.particles.push({
+          type: 'rail_beam',
+          x1: this.citadel.x,
+          y1: this.citadel.y,
+          x2: end.x,
+          y2: end.y,
+          life: 0.5,
+          color: mechanic === 'hana_kurogane_moon' ? '#fb7185' : '#fbbf24'
+        });
+        color = mechanic === 'hana_kurogane_moon' ? '#fb7185' : '#fbbf24';
+      } else if (mechanic === 'freyja_blizzard_oath') {
+        this.hazards.push({
+          x: targetX,
+          y: targetY,
+          radius: Number(effect.radius) || 175,
+          damage: 8,
+          life: (Number(effect.durationMs) || 7000) / 1000,
+          tickTimer: 0,
+          color: '#67e8f9',
+          ground: false,
+          heroId,
+          slowMultiplier: Number(effect.slowMultiplier) || 0.5
+        });
+        this.hostileProjectileFreezeTimer = Math.max(
+          this.hostileProjectileFreezeTimer,
+          (Number(effect.projectileFreezeMs) || 2500) / 1000
+        );
+        affected = 1;
+        color = '#67e8f9';
+      } else if (mechanic === 'amara_verdigris_bloom') {
+        this.hazards.push({
+          x: targetX,
+          y: targetY,
+          radius: Number(effect.radius) || 155,
+          damage: (Number(effect.damagePerSecond) || 62) * 0.45,
+          life: (Number(effect.durationMs) || 8500) / 1000,
+          tickTimer: 0,
+          color: '#34d399',
+          ground: false,
+          heroId,
+          armorReduction: Number(effect.armorReduction) || 0.24,
+          defenseHealPerTick: (Number(effect.defenseHealPerSecond) || 8) * 0.45
+        });
+        affected = 1;
+        color = '#34d399';
+      }
     }
 
     audio.playAbility();
@@ -5543,7 +6510,7 @@ class GameEngine {
 
   applySelectedHeroUltimate() {
     const heroId = this.selectedHero.id;
-    const kit = EXPANSION?.heroKits?.[heroId];
+    const kit = this.getHeroKit(heroId);
     const effect = kit?.ultimate?.effect || {};
 
     if (heroId === 'aria') {
@@ -5642,6 +6609,153 @@ class GameEngine {
         this.invincibleTimer,
         (Number(effect.durationMs) || 6000) / 1000
       );
+    } else if (CHARACTER_EXPANSION?.heroKits?.[heroId]) {
+      const mechanic = kit?.ultimate?.mechanic;
+      if (mechanic === 'nyx_city_blackout') {
+        const duration = (Number(effect.stunDurationMs) || 4200) / 1000;
+        this.enemies.forEach(enemy => {
+          enemy.stunTimer = Math.max(Number(enemy.stunTimer) || 0, duration);
+        });
+        this.placedTowers
+          .filter(defense => defense.id === 'railgun_pylon')
+          .forEach(defense => {
+            defense.damage *= Number(effect.railDamageMultiplier) || 1.35;
+            defense.abilityBuffTimer = Math.max(
+              Number(defense.abilityBuffTimer) || 0,
+              (Number(effect.buffDurationMs) || 6500) / 1000
+            );
+          });
+      } else if (mechanic === 'aurelia_golden_minute') {
+        this.freezeTimer = Math.max(
+          this.freezeTimer,
+          (Number(effect.enemyFreezeMs) || 4500) / 1000
+        );
+        this.placedTowers.forEach(defense => {
+          if (defense.fireRate > 0) {
+            defense.fireRate *= Number(effect.defenseFireRateMultiplier) || 0.62;
+          }
+          defense.abilityBuffTimer = Math.max(
+            Number(defense.abilityBuffTimer) || 0,
+            (Number(effect.defenseBuffMs) || 6000) / 1000
+          );
+        });
+      } else if (mechanic === 'maris_spectral_armada') {
+        const totalDamage = (Number(effect.volleys) || 3) * (Number(effect.damage) || 150);
+        [...this.enemies].forEach(enemy => {
+          this.damageEnemy(enemy, enemy.isBoss ? totalDamage * 0.55 : totalDamage);
+        });
+      } else if (mechanic === 'zahra_palace_of_dawn') {
+        this.spawnRoutes.forEach(route => {
+          const points = route.polyline || [];
+          const anchor = points[Math.max(0, Math.floor((points.length - 1) / 2))] || route.spawn;
+          this.decoys.push({
+            x: anchor.x,
+            y: anchor.y,
+            radius: 120,
+            life: (Number(effect.durationMs) || 8000) / 1000,
+            shieldHp: Number(effect.decoyHpPerRoute) || 700,
+            projectileInterceptions: Number(effect.projectileAbsorptions) || 12,
+            pulseDamage: 0,
+            pulseRadius: 0,
+            explosionDamage: 0,
+            color: '#fbbf24',
+            heroId
+          });
+        });
+      } else if (mechanic === 'mircalla_black_dollhouse') {
+        this.enemies
+          .filter(enemy => SPECIALIST_ENEMY_TYPES.includes(enemy.type))
+          .slice(0, Number(effect.targetLimit) || 8)
+          .forEach(enemy => {
+            enemy.stunTimer = Math.max(
+              Number(enemy.stunTimer) || 0,
+              (Number(effect.specialistStasisMs) || 5000) / 1000
+            );
+            this.damageEnemy(
+              enemy,
+              Math.max(80, enemy.damage * (Number(effect.reflectedDamageMultiplier) || 1.4))
+            );
+          });
+      } else if (mechanic === 'isolde_choir_of_last') {
+        const totalDamage = (Number(effect.pulseCount) || 5) * (Number(effect.pulseDamage) || 95);
+        [...this.enemies].forEach(enemy => {
+          this.damageEnemy(enemy, enemy.isBoss ? totalDamage * 0.45 : totalDamage);
+          if (!enemy.dead && !enemy.isBoss) {
+            enemy.stunTimer = Math.max(
+              Number(enemy.stunTimer) || 0,
+              (Number(effect.finalFearMs) || 3200) / 1000
+            );
+          }
+        });
+      } else if (mechanic === 'hana_seven_cuts') {
+        const targets = this.enemies
+          .filter(enemy => !enemy.dead)
+          .sort((left, right) => (
+            Math.hypot(left.x - this.citadel.x, left.y - this.citadel.y)
+            - Math.hypot(right.x - this.citadel.x, right.y - this.citadel.y)
+          ));
+        const strikeCount = Math.max(1, Math.floor(Number(effect.strikeCount) || 7));
+        for (let strikeIndex = 0; strikeIndex < strikeCount && targets.length > 0; strikeIndex++) {
+          const enemy = targets[strikeIndex % targets.length];
+          if (enemy.dead) {
+            targets.splice(strikeIndex % targets.length, 1);
+            strikeIndex--;
+            continue;
+          }
+          const multiplier = enemy.isBoss ? (Number(effect.bossDamageMultiplier) || 0.3) : 1;
+          this.damageEnemy(enemy, (Number(effect.strikeDamage) || 285) * multiplier);
+        }
+      } else if (mechanic === 'freyja_fimbul_countercharge') {
+        [...this.enemies].forEach(enemy => {
+          const angle = Math.atan2(enemy.y - this.citadel.y, enemy.x - this.citadel.x);
+          const pushDistance = Number(effect.pushDistance) || 150;
+          enemy.x += Math.cos(angle) * pushDistance;
+          enemy.y += Math.sin(angle) * pushDistance;
+          if (enemy.slowTimer > 0) {
+            this.damageEnemy(enemy, Number(effect.frozenDamage) || 420);
+            if (!enemy.dead) {
+              enemy.armorBreakMultiplier = Math.max(
+                Number(enemy.armorBreakMultiplier) || 1,
+                1 + (Number(effect.armorBreak) || 0.3)
+              );
+              enemy.armorBreakTimer = (Number(effect.armorBreakMs) || 6500) / 1000;
+            }
+          }
+        });
+      } else if (mechanic === 'vega_solari_corona') {
+        const totalDamage = (Number(effect.pulseCount) || 3) * (Number(effect.globalDamage) || 180);
+        [...this.enemies].forEach(enemy => {
+          this.damageEnemy(enemy, enemy.isBoss ? totalDamage * 0.6 : totalDamage);
+        });
+        this.enemyBullets = this.enemyBullets.filter(bullet => (
+          Math.hypot(bullet.x - this.citadel.x, bullet.y - this.citadel.y)
+          > (Number(effect.projectileClearRadius) || 1200)
+        ));
+      } else if (mechanic === 'amara_garden_after_ruin') {
+        const anchors = this.enemies
+          .filter(enemy => !enemy.dead)
+          .slice(0, Number(effect.gardenCount) || 8)
+          .map(enemy => ({ x: enemy.x, y: enemy.y }));
+        while (anchors.length < Math.min(Number(effect.gardenCount) || 8, this.spawnRoutes.length)) {
+          const route = this.spawnRoutes[anchors.length];
+          const points = route.polyline || [];
+          anchors.push(points[Math.max(0, Math.floor((points.length - 1) / 2))] || route.spawn);
+        }
+        anchors.forEach(anchor => {
+          this.hazards.push({
+            x: anchor.x,
+            y: anchor.y,
+            radius: Number(effect.radius) || 115,
+            damage: (Number(effect.damagePerSecond) || 78) * 0.45,
+            life: (Number(effect.durationMs) || 7000) / 1000,
+            tickTimer: 0,
+            color: '#34d399',
+            ground: false,
+            heroId
+          });
+        });
+        this.healCitadel(this.citadel.maxHp * (Number(effect.citadelHealPercent) || 0.16));
+      }
     }
 
     this.showFeedback(kit?.ultimate?.name || 'Ultime de Valkyrie', '#f59e0b');
@@ -5659,6 +6773,8 @@ class GameEngine {
     this.isOverdriveActive = true;
     this.overdriveTimer = 6.0;
     this.overdriveCount++;
+    this.heroAnimationState = 'ultimate';
+    this.heroAnimationTimer = 0.95;
     this.applySelectedHeroUltimate();
 
     if (this.overdriveCount >= 3) this.unlockAchievement('frenzy_master');
@@ -5773,7 +6889,8 @@ class GameEngine {
         decoys: this.decoys,
         crates: this.crates,
         powerups: this.powerups,
-        hazards: this.hazards
+        hazards: this.hazards,
+        bossHazards: this.bossHazards
       };
       this.enemies = [];
       this.enemyBullets = [];
@@ -5784,6 +6901,7 @@ class GameEngine {
       this.crates = [];
       this.powerups = [];
       this.hazards = [];
+      this.bossHazards = [];
       this.infinitumCanReturn = false;
       this.configureWave(this.towerFloor, {
         towerMode: true,
@@ -5984,13 +7102,17 @@ class GameEngine {
     const completed = results.filter(result => String(result).startsWith('completed')).length;
     const heroineStates = Object.values(this.vnExpansionState?.heroines || {});
     const heroinesWithMemories = heroineStates.filter(state => (state.memories || []).length > 0).length;
-    const allConsenting = heroineStates.length === 6 && heroineStates.every(state => (
+    const expectedHeroineCount = Object.keys(this.getVnExpansion()?.heroines || {}).length;
+    const expectedChapterCount = Object.keys(this.getVnExpansion()?.chapters || {}).length;
+    const allConsenting = expectedHeroineCount > 0
+      && heroineStates.length === expectedHeroineCount
+      && heroineStates.every(state => (
       state.consent?.granted === true && state.consent?.revoked !== true
-    ));
+      ));
     if (conclusion.id === 'haven-lanterns') return completed >= 6;
-    if (conclusion.id === 'six-free-voices') return heroinesWithMemories >= 6;
+    if (conclusion.id === 'six-free-voices') return heroinesWithMemories >= expectedHeroineCount;
     if (conclusion.id === 'chosen-night') {
-      return completed >= 18
+      return completed >= expectedChapterCount
         && allConsenting
         && this.vnExpansionState?.maturity === 'intense';
     }
@@ -7017,7 +8139,7 @@ class GameEngine {
         cardAlt.dataset.heroId = hero.id;
         cardAlt.dataset.skin = 'alt';
         cardAlt.setAttribute('aria-pressed', String(hero.activeSkin === 'alt'));
-        cardAlt.innerHTML = `<img src="${hero.altAvatar}" alt="${hero.name}, tenue suggestive adulte"><h3 style="color: #ec4899;">${hero.name} — Tenue nocturne 18+</h3>`;
+        cardAlt.innerHTML = `<img src="${hero.altAvatar}" alt="${hero.name}, portrait nocturne adulte"><h3 style="color: #ec4899;">${hero.name} — Portrait nocturne 18+</h3>`;
         cardAlt.onclick = () => this.applyHeroSkin(hero, 'alt');
         container.appendChild(cardAlt);
       }
@@ -7036,7 +8158,139 @@ class GameEngine {
     this.updateHeroPresentation();
     this.renderGallery();
     this.openWardrobeModal(hero.id, hero.activeSkin);
-    this.announce(`Tenue de ${hero.name} mise à jour sans relancer la partie.`);
+    this.announce(`Présentation de ${hero.name} mise à jour sans relancer la partie.`);
+  }
+
+  openAntagonistCodex() {
+    const grid = document.getElementById('antagonist-codex-grid');
+    if (!grid) return;
+    grid.replaceChildren();
+    const bossDefinitions = Object.values(
+      CHARACTER_EXPANSION?.bossDefinitions || CHARACTER_EXPANSION?.bosses || {}
+    );
+    bossDefinitions.forEach(definition => {
+      const card = document.createElement('article');
+      card.className = 'antagonist-card';
+      card.style.setProperty('--boss-color', definition.color || '#ec4899');
+
+      const preview = document.createElement('div');
+      preview.className = 'antagonist-preview';
+      const portraitSource = definition.portrait;
+      const atlasSource = definition.atlas
+        || definition.sprite?.src
+        || definition.spriteAtlas?.src;
+      const previewSource = portraitSource || atlasSource;
+      if (previewSource) preview.style.backgroundImage = `url("${previewSource}")`;
+      if (portraitSource) {
+        preview.classList.add('uses-portrait');
+      }
+      preview.setAttribute('role', 'img');
+      preview.setAttribute(
+        'aria-label',
+        `Aperçu de ${definition.name || definition.title || definition.id}`
+      );
+
+      const body = document.createElement('div');
+      body.className = 'antagonist-card-body';
+      const name = document.createElement('h3');
+      name.textContent = definition.name || definition.title || definition.id;
+      const title = document.createElement('p');
+      title.className = 'antagonist-title';
+      title.textContent = definition.title || definition.archetype || 'Souveraine hostile';
+      const signature = document.createElement('p');
+      signature.className = 'antagonist-signature';
+      signature.textContent = definition.signature
+        ? `${definition.signature.name} — ${definition.signature.description}`
+        : 'Mécanique signature non consignée.';
+
+      const phases = document.createElement('ol');
+      phases.className = 'antagonist-phases';
+      const phaseDefinitions = Array.isArray(definition.phases)
+        ? definition.phases
+        : Object.values(definition.phases || {});
+      phaseDefinitions.forEach((phase, index) => {
+        const item = document.createElement('li');
+        const pattern = phase.pattern?.name
+          || phase.pattern?.type
+          || phase.pattern
+          || phase.mechanic
+          || 'motif évolutif';
+        item.textContent = `${phase.name || `Phase ${index + 1}`} · ${pattern}`;
+        phases.appendChild(item);
+      });
+
+      const counter = document.createElement('p');
+      counter.className = 'antagonist-counter';
+      const counterplay = Array.isArray(definition.counterplay)
+        ? definition.counterplay
+          .map(entry => typeof entry === 'string' ? entry : entry?.text || entry?.label)
+          .filter(Boolean)
+          .join(' · ')
+        : definition.counterplay;
+      counter.textContent = `Contre : ${counterplay || 'Lisez les télégraphes et gardez une voie de repli.'}`;
+
+      const status = document.createElement('p');
+      status.className = 'antagonist-status';
+      const defeated = this.defeatedBossIds.includes(definition.id);
+      status.textContent = defeated ? 'TRÔNE NEUTRALISÉ' : 'TRÔNE ACTIF';
+
+      const huntButton = document.createElement('button');
+      huntButton.className = 'btn-secondary antagonist-hunt-btn';
+      huntButton.type = 'button';
+      huntButton.disabled = !defeated;
+      huntButton.textContent = defeated ? 'REJOUER LA CHASSE' : 'CHASSE VERROUILLÉE';
+      if (!defeated) {
+        huntButton.title = 'Neutralisez d’abord ce Trône dans la campagne Les Dix Trônes.';
+      }
+      huntButton.addEventListener('click', () => this.startVillainHunt(definition.id));
+
+      body.append(name, title, signature, phases, counter, status, huntButton);
+      card.append(preview, body);
+      grid.appendChild(card);
+    });
+    this.closeModal('hq-menu-modal', false);
+    this.openModal('antagonist-codex-modal');
+  }
+
+  startVillainHunt(bossId) {
+    const definition = this.getBossDefinition(bossId);
+    const campaign = CHARACTER_EXPANSION?.campaigns?.ten_thrones;
+    if (
+      !definition
+      || !campaign
+      || !this.defeatedBossIds.includes(bossId)
+    ) {
+      this.announce('Cette chasse reste verrouillée jusqu’à la première neutralisation du Trône en campagne.');
+      return false;
+    }
+    const scheduleEntry = Array.isArray(campaign.bossSchedule)
+      ? campaign.bossSchedule.find(entry => entry.bossId === bossId)
+      : Object.entries(campaign.bossSchedule || {})
+        .map(([wave, scheduledBossId]) => ({ wave: Number(wave), bossId: scheduledBossId }))
+        .find(entry => entry.bossId === bossId);
+    const huntWave = Math.max(2, Number(scheduleEntry?.wave) || 2);
+    this.closeModal('antagonist-codex-modal', false);
+    this.closeModal('hq-menu-modal', false);
+    this.startNewGame({
+      campaignId: 'ten_thrones',
+      difficulty: this.difficulty,
+      layoutId: this.selectedLayoutId
+    });
+    this.activeBossHuntId = bossId;
+    // The hunt is a compact practice sortie: keep the starter defenses, discard
+    // the wave-one demonstration horde, then load the authored throne wave.
+    this.enemies = [];
+    this.enemyBullets = [];
+    this.projectiles = [];
+    this.configureWave(huntWave);
+    this.clearRunCheckpoint();
+    this.showFeedback(`Chasse lancée · ${definition.name}`, definition.color || '#ec4899');
+    this.announce(
+      `Chasse de boss lancée contre ${definition.name}, vague ${huntWave}. `
+      + 'Chaque changement de phase est annoncé.'
+    );
+    this.focusBattlefield();
+    return true;
   }
 
   openRosterModal() {
@@ -7072,6 +8326,7 @@ class GameEngine {
   }
 
   updateHeroPresentation() {
+    if (this.hasEnteredAdultExperience) this.ensureHeroSprite(this.selectedHero?.id);
     const avatarImg = document.getElementById('hero-avatar-img');
     if (avatarImg) {
       avatarImg.src = this.selectedHero.activeSkin === 'alt' && this.selectedHero.altAvatar ? this.selectedHero.altAvatar : this.selectedHero.avatar;
@@ -7302,7 +8557,8 @@ class GameEngine {
     const sourceHeight = image.naturalHeight || image.height;
     const frameWidth = sourceWidth / SPRITE_ATLAS_COLUMNS;
     const frameHeight = sourceHeight / SPRITE_ATLAS_ROWS;
-    const row = Math.max(0, Math.min(SPRITE_ATLAS_ROWS - 1, spriteData.row || 0));
+    const requestedRow = Number.isFinite(options.row) ? options.row : (spriteData.row || 0);
+    const row = Math.max(0, Math.min(SPRITE_ATLAS_ROWS - 1, requestedRow));
     const column = Math.max(0, Math.min(SPRITE_ATLAS_COLUMNS - 1, frame || 0));
 
     this.ctx.save();
@@ -7343,6 +8599,11 @@ class GameEngine {
   }
 
   getEnemyAnimationFrame(enemy, spriteData) {
+    if (spriteData.layout === 'state_rows') {
+      return Math.floor(
+        (this.animationClock * (spriteData.fps || 6)) + (enemy.animationPhase || 0)
+      ) % SPRITE_ATLAS_COLUMNS;
+    }
     if (enemy.hitAnimationTimer > 0) return 3;
     if (enemy.attackAnimationTimer > 0) return 2;
     return Math.floor((this.animationClock * (spriteData.fps || 6)) + (enemy.animationPhase || 0)) % 2;
@@ -7544,7 +8805,15 @@ class GameEngine {
     const spriteData = HERO_SPRITE_DATA[heroId];
     const sprite = this.heroSpriteImages[heroId];
     if (!spriteData) return false;
-    const frame = Number.isFinite(options.frame) ? options.frame : this.getHeroAnimationFrame();
+    const usesStateRows = spriteData.layout === 'state_rows';
+    const stateRow = ['ability', 'ultimate'].includes(this.heroAnimationState)
+      ? 3
+      : (this.heroAnimationState === 'attack' ? 2 : 0);
+    const frame = Number.isFinite(options.frame)
+      ? options.frame
+      : (usesStateRows
+        ? Math.floor(this.animationClock * (spriteData.fps || 7)) % SPRITE_ATLAS_COLUMNS
+        : this.getHeroAnimationFrame());
     const facingAngle = Number.isFinite(options.facingAngle) ? options.facingAngle : this.heroFacingAngle;
     return this.drawAtlasFrame(
       sprite,
@@ -7554,6 +8823,7 @@ class GameEngine {
       y,
       this.getReadableWorldSize(options.size || spriteData.size, MIN_HERO_SCREEN_SIZE),
       {
+        row: usesStateRows ? stateRow : undefined,
         flipX: Math.cos(facingAngle || 0) < 0,
         alpha: options.alpha,
         shadowColor: options.shadowColor || '#00f0ff',
@@ -7576,6 +8846,10 @@ class GameEngine {
       // Low-profile creatures follow their target; upright bosses stay billboarded
       // so their readable combat pose never appears to tumble around the canvas.
       const facingAngle = Number.isFinite(enemy.facingAngle) ? enemy.facingAngle : 0;
+      const usesStateRows = spriteData.layout === 'state_rows';
+      const stateRow = enemy.attackAnimationTimer > 0
+        ? (enemy.isBoss && enemy.bossPhase >= 3 ? 3 : 2)
+        : 1;
       this.drawAtlasFrame(
         sprite,
         spriteData,
@@ -7584,8 +8858,10 @@ class GameEngine {
         enemy.y,
         visualSize,
         {
+          row: usesStateRows ? stateRow : undefined,
           rotation: spriteData.rotate ? facingAngle + (spriteData.rotationOffset || 0) : undefined,
           flipX: !spriteData.rotate && Math.cos(facingAngle) < 0,
+          alpha: enemy.stealthTimer > 0 ? 0.2 : 1,
           shadowColor: enemy.color,
           shadowBlur: enemy.isBoss ? 30 : 8
         }
@@ -7593,6 +8869,7 @@ class GameEngine {
     } else {
       // Safe visual fallback while assets load or if an individual file fails.
       this.ctx.save();
+      this.ctx.globalAlpha = enemy.stealthTimer > 0 ? 0.2 : 1;
       this.ctx.beginPath();
       this.ctx.arc(enemy.x, enemy.y, enemy.radius, 0, Math.PI * 2);
       this.ctx.fillStyle = enemy.color;
@@ -7725,6 +9002,18 @@ class GameEngine {
         this.ctx.fillStyle = '#67e8f9';
         this.ctx.fillRect(t.x - hpWidth / 2, t.y + 24, hpWidth * hpRatio, hpHeight);
       }
+      this.ctx.restore();
+    });
+    this.bossHazards.forEach(hazard => {
+      this.ctx.save();
+      this.ctx.beginPath();
+      this.ctx.arc(hazard.x, hazard.y, hazard.radius, 0, Math.PI * 2);
+      this.ctx.fillStyle = `${hazard.color}30`;
+      this.ctx.fill();
+      this.ctx.setLineDash([12, 8]);
+      this.ctx.strokeStyle = `${hazard.color}dd`;
+      this.ctx.lineWidth = 3;
+      this.ctx.stroke();
       this.ctx.restore();
     });
 
@@ -7917,7 +9206,7 @@ class GameEngine {
     }
     if (damage > 0) {
       [...this.enemies].forEach(e => {
-        if (options.groundOnly && e.type === 'flying') return;
+        if (options.groundOnly && this.isEnemyFlying(e)) return;
         if (Math.hypot(e.x - x, e.y - y) <= radius + e.radius) {
           this.damageEnemyFromDefense(options.sourceDefense, e, damage);
         }
@@ -7950,7 +9239,7 @@ class GameEngine {
     if (missionObjective) {
       missionObjective.textContent = this.endlessMode
         ? `Mode infini · survivre à la vague ${this.wave}`
-        : `Objectif · atteindre la vague ${CAMPAIGN_FINAL_WAVE}`;
+        : `Objectif · atteindre la vague ${this.getCampaignFinalWave()}`;
     }
     const missionLevel = document.getElementById('mission-level-txt');
     if (missionLevel) missionLevel.textContent = `Niveau ${this.level} · XP ${this.xp} / ${this.nextLevelXp}`;

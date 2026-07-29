@@ -1,9 +1,9 @@
 /**
  * Infernal City — extension narrative persistante, version 1.
  *
- * Ce module complète les 18 chapitres de `INFERNAL_VN_SCENES` sans modifier
- * leur graphe. Il peut être chargé seul : toutes les références de chapitres
- * et tous les emplacements d'assets prévus sont déclarés ici.
+ * Ce module complète les chapitres de `INFERNAL_VN_SCENES` sans modifier leur
+ * graphe. Il peut être chargé seul et fusionne aussi le registre Characters
+ * lorsqu'il a été chargé avant lui.
  *
  * Les choix de lore sont non sexuels. Ils ne changent ni les ressources,
  * ni les vagues, ni les statistiques de combat. La maturité ne règle que le
@@ -14,9 +14,9 @@
   'use strict';
 
   const STORAGE_KEY = 'infernalCity.vnExpansion.v1';
-  const HERO_IDS = Object.freeze(['aria', 'kira', 'rin', 'selene', 'vespera', 'carmilla']);
+  const LEGACY_HERO_IDS = Object.freeze(['aria', 'kira', 'rin', 'selene', 'vespera', 'carmilla']);
 
-  const HEROINE_BLUEPRINTS = Object.freeze({
+  const LEGACY_HEROINE_BLUEPRINTS = Object.freeze({
     aria: {
       displayName: 'Commandante Aria',
       age: 34,
@@ -151,7 +151,7 @@
     }
   });
 
-  const CHAPTER_BLUEPRINTS = Object.freeze({
+  const LEGACY_CHAPTER_BLUEPRINTS = Object.freeze({
     aria: [
       ['midnight-relief', 'haven-command-deck-night', 'quiet-industrial'],
       ['shield-dance', 'aegis-training-dome', 'slow-synth'],
@@ -184,19 +184,120 @@
     ]
   });
 
+  const CHARACTER_PACK = (
+    typeof window !== 'undefined'
+    && window.INFERNAL_CITY_CHARACTERS?.schema === 'infernal-city.characters/1'
+  )
+    ? window.INFERNAL_CITY_CHARACTERS
+    : null;
+  const CHARACTER_VN = CHARACTER_PACK?.vn?.schema === 'infernal-city.characters.vn/1'
+    ? CHARACTER_PACK.vn
+    : null;
+  const CHARACTER_VN_HEROINES = CHARACTER_VN?.heroines || {};
+  const CHARACTER_PERSISTENT_BLUEPRINT = (
+    CHARACTER_VN?.persistentBlueprint?.schema === 'infernal-city.characters.vn-state/1'
+  )
+    ? CHARACTER_VN.persistentBlueprint
+    : null;
+
+  function normalizeExternalHeroineBlueprint(heroId, source) {
+    const persistentPath = CHARACTER_PERSISTENT_BLUEPRINT?.heroinePaths?.[heroId];
+    const branchThemes = (
+      source?.persistentBranchThemes
+      || persistentPath?.traitIds
+      || source?.loreChoices?.map(choice => choice.persistentTrait)
+      || []
+    ).slice(0, 3);
+    const loreChoices = Array.isArray(source?.loreChoices) ? source.loreChoices.slice(0, 3) : [];
+    const chapterList = Array.isArray(source?.chapters) ? source.chapters.slice(0, 3) : [];
+
+    return {
+      displayName: source?.displayName || source?.name || heroId,
+      age: Math.max(18, Math.floor(Number(source?.age) || 18)),
+      expressionSheetSrc: source?.expressionSheetSrc
+        || `assets/vn/expressions/${heroId}-expressions-v1.webp`,
+      branchThemes,
+      branchLabels: branchThemes.map((theme, index) => (
+        loreChoices[index]?.label || `Parler de ${theme} sans conséquence militaire ni économique.`
+      )),
+      callbacks: branchThemes.map((theme, index) => (
+        loreChoices[index]?.callbackId || `${heroId}.remember.${theme}`
+      )),
+      poses: chapterList.map(chapter => [chapter.id, chapter.title]),
+      ambiences: chapterList.map(chapter => [
+        `${chapter.id}-ambience`,
+        chapter.subtitle || chapter.title
+      ])
+    };
+  }
+
+  const externalHeroineBlueprints = Object.fromEntries(
+    Object.entries(CHARACTER_VN_HEROINES)
+      .filter(([, source]) => source?.isAdult === true && Number(source.age) >= 18)
+      .map(([heroId, source]) => [heroId, normalizeExternalHeroineBlueprint(heroId, source)])
+  );
+  const externalChapterBlueprints = Object.fromEntries(
+    Object.entries(CHARACTER_VN_HEROINES).map(([heroId, source]) => [
+      heroId,
+      (source?.chapters || []).slice(0, 3).map(chapter => [
+        chapter.id,
+        chapter.presentation?.backdrop || chapter.cgSrc,
+        chapter.presentation?.musicMood || 'haven-night'
+      ])
+    ])
+  );
+  const HERO_IDS = Object.freeze([
+    ...new Set([...LEGACY_HERO_IDS, ...Object.keys(externalHeroineBlueprints)])
+  ]);
+  const HEROINE_BLUEPRINTS = Object.freeze({
+    ...LEGACY_HEROINE_BLUEPRINTS,
+    ...externalHeroineBlueprints
+  });
+  const CHAPTER_BLUEPRINTS = Object.freeze({
+    ...LEGACY_CHAPTER_BLUEPRINTS,
+    ...externalChapterBlueprints
+  });
+  const HEROINE_TOTAL = HERO_IDS.length;
+  const CHAPTER_TOTAL = Object.values(CHAPTER_BLUEPRINTS)
+    .reduce((total, chapterList) => total + chapterList.length, 0);
+
+  function getExternalChapter(heroId, chapterId) {
+    return CHARACTER_VN_HEROINES[heroId]?.chapters
+      ?.find(chapter => chapter.id === chapterId) || null;
+  }
+
   function assetSlug(heroId, chapterId) {
     return `${heroId}-${chapterId}`;
   }
 
   function chapterAssetSrc(heroId, index) {
     const chapterId = CHAPTER_BLUEPRINTS[heroId]?.[index]?.[0];
+    const externalChapter = chapterId ? getExternalChapter(heroId, chapterId) : null;
     return chapterId
-      ? `assets/vn/cg/chapters/${assetSlug(heroId, chapterId)}.webp`
+      ? externalChapter?.cgSrc
+        || `assets/vn/cg/chapters/${assetSlug(heroId, chapterId)}.webp`
       : '';
   }
 
   function buildLoreChoices(heroId, chapterId) {
     const heroine = HEROINE_BLUEPRINTS[heroId];
+    const externalChapter = getExternalChapter(heroId, chapterId);
+    if (Array.isArray(externalChapter?.loreChoices) && externalChapter.loreChoices.length > 0) {
+      return externalChapter.loreChoices.slice(0, 3).map(choice => ({
+        id: choice.id,
+        label: choice.label,
+        category: 'personality-lore',
+        sexualContent: false,
+        callbackId: choice.callbackId,
+        persistentTrait: choice.persistentTrait,
+        effects: {
+          relationshipMemoryOnly: true,
+          military: false,
+          economy: false,
+          combat: false
+        }
+      }));
+    }
     return heroine.branchLabels.map((label, index) => ({
       id: `${chapterId}.${heroine.branchThemes[index]}`,
       label,
@@ -214,12 +315,11 @@
   }
 
   function buildCallbacks(heroId, chapterId) {
-    const heroine = HEROINE_BLUEPRINTS[heroId];
-    return heroine.callbacks.map((id, index) => ({
-      id: `${id}.${chapterId}`,
+    return buildLoreChoices(heroId, chapterId).map(choice => ({
+      id: choice.callbackId,
       trigger: 'lore-choice',
-      choiceId: `${chapterId}.${heroine.branchThemes[index]}`,
-      persistentPath: `heroines.${heroId}.traits.${heroine.branchThemes[index]}`,
+      choiceId: choice.id,
+      persistentPath: `heroines.${heroId}.traits.${choice.persistentTrait}`,
       writes: ['traits', 'memories', 'callbackHistory'],
       forbiddenWrites: ['credits', 'resources', 'towerStats', 'enemyStats', 'waveState'],
       militaryEffect: false,
@@ -230,18 +330,22 @@
   const chapters = HERO_IDS.flatMap(heroId => (
     CHAPTER_BLUEPRINTS[heroId].map(([chapterId, backdropId, musicMood]) => {
       const slug = assetSlug(heroId, chapterId);
+      const externalChapter = getExternalChapter(heroId, chapterId);
+      const cgSrc = externalChapter?.cgSrc || `assets/vn/cg/chapters/${slug}.webp`;
+      const loreChoices = buildLoreChoices(heroId, chapterId);
       return {
         heroId,
         chapterId,
-        cgSrc: `assets/vn/cg/chapters/${slug}.webp`,
+        cgSrc,
         // The authored CG also serves as the coherent scene backdrop. This
-        // keeps all 18 branches fully illustrated without loading a second
+        // keeps every branch fully illustrated without loading a second
         // duplicate bitmap on mobile.
-        backdropSrc: `assets/vn/cg/chapters/${slug}.webp`,
-        expressionSheetSrc: HEROINE_BLUEPRINTS[heroId].expressionSheetSrc,
+        backdropSrc: externalChapter?.presentation?.backdrop || cgSrc,
+        expressionSheetSrc: externalChapter?.expressionSheetSrc
+          || HEROINE_BLUEPRINTS[heroId].expressionSheetSrc,
         musicMood,
         callbacks: buildCallbacks(heroId, chapterId),
-        loreChoices: buildLoreChoices(heroId, chapterId)
+        loreChoices
       };
     })
   ));
@@ -272,14 +376,16 @@
   }));
 
   function createHeroineState() {
+    const source = CHARACTER_PERSISTENT_BLUEPRINT?.defaultHeroineState || {};
+    const sourceConsent = source.consent || {};
     return {
-      traits: {},
-      memories: [],
-      callbackHistory: [],
+      traits: { ...(source.traits || {}) },
+      memories: [...(source.memories || [])],
+      callbackHistory: [...(source.callbackHistory || [])],
       consent: {
-        granted: false,
-        revoked: false,
-        updatedAt: null
+        granted: sourceConsent.granted === true && sourceConsent.revoked !== true,
+        revoked: sourceConsent.revoked === true,
+        updatedAt: typeof sourceConsent.updatedAt === 'string' ? sourceConsent.updatedAt : null
       }
     };
   }
@@ -433,6 +539,27 @@
     };
   }
 
+  const PERSISTENCE_SAVED_FIELDS = Object.freeze([
+    ...new Set([
+      'maturity',
+      'traits',
+      'memories',
+      'callbackHistory',
+      'consent',
+      ...(CHARACTER_PERSISTENT_BLUEPRINT?.savedFields || [])
+    ])
+  ]);
+  const PERSISTENCE_EXCLUDED_FIELDS = Object.freeze([
+    ...new Set([
+      'credits',
+      'resources',
+      'towerStats',
+      'enemyStats',
+      'waveState',
+      ...(CHARACTER_PERSISTENT_BLUEPRINT?.excludedFields || [])
+    ])
+  ]);
+
   const data = {
     schema: 'infernal-city.vn-expansion/1',
     version: 1,
@@ -483,7 +610,7 @@
         },
         {
           id: 'six-free-voices',
-          title: 'Six voix libres',
+          title: `${HEROINE_TOTAL} voix libres`,
           cgSrc: 'assets/vn/cg/conclusions/six-free-voices.webp',
           requirement: 'Découvrir un souvenir de lore pour chaque héroïne',
           maturityMode: 'suggestive'
@@ -492,7 +619,7 @@
           id: 'chosen-night',
           title: 'La nuit choisie',
           cgSrc: 'assets/vn/cg/conclusions/chosen-night.webp',
-          requirement: 'Achever les dix-huit chapitres avec consentement actif',
+          requirement: `Achever les ${CHAPTER_TOTAL} chapitres avec consentement actif`,
           maturityMode: 'intense',
           consentRequired: true,
           fadeToBlack: true
@@ -501,8 +628,9 @@
     },
     persistence: {
       scope: 'narrative-only',
-      savedFields: ['maturity', 'traits', 'memories', 'callbackHistory', 'consent'],
-      excludedFields: ['credits', 'resources', 'towerStats', 'enemyStats', 'waveState'],
+      characterBlueprint: CHARACTER_PERSISTENT_BLUEPRINT,
+      savedFields: PERSISTENCE_SAVED_FIELDS,
+      excludedFields: PERSISTENCE_EXCLUDED_FIELDS,
       createDefaultState,
       sanitizeState,
       loadState,

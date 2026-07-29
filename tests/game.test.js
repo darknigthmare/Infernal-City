@@ -9,6 +9,7 @@ const vm = require('node:vm');
 const ROOT = path.resolve(__dirname, '..');
 const GAME_SOURCE = fs.readFileSync(path.join(ROOT, 'game.v9.js'), 'utf8');
 const VN_SOURCE = fs.readFileSync(path.join(ROOT, 'vn-scenes.v1.js'), 'utf8');
+const CHARACTER_SOURCE = fs.readFileSync(path.join(ROOT, 'characters.v1.js'), 'utf8');
 const VN_EXPANSION_SOURCE = fs.readFileSync(path.join(ROOT, 'vn-expansion.v1.js'), 'utf8');
 const EXPANSION_SOURCE = fs.readFileSync(path.join(ROOT, 'expansion.v1.js'), 'utf8');
 
@@ -29,17 +30,23 @@ function createClassList() {
 }
 
 function createElement(tagName = 'div') {
+  const style = {
+    setProperty(name, value) { this[name] = String(value); },
+    removeProperty(name) { delete this[name]; }
+  };
   return {
     tagName: String(tagName).toUpperCase(),
     classList: createClassList(),
     dataset: {},
-    style: {},
+    style,
     children: [],
     textContent: '',
     innerHTML: '',
     disabled: false,
     inert: false,
     appendChild(child) { this.children.push(child); return child; },
+    append(...children) { this.children.push(...children); },
+    replaceChildren(...children) { this.children = [...children]; },
     addEventListener() {},
     setAttribute(name, value) { this[name] = String(value); },
     getAttribute(name) { return this[name] ?? null; },
@@ -112,6 +119,8 @@ function loadGameModule(seed = {}) {
     ;globalThis.__INFERNAL_CITY_TEST__ = {
       GameEngine,
       EXPANSION,
+      CHARACTER_EXPANSION,
+      SAVE_VERSION,
       CAMPAIGN_FINAL_WAVE,
       BATTLEFIELD_APPROACH_MARGIN,
       DEFENSE_MIN_SCREEN_HIT_DIAMETER,
@@ -135,6 +144,7 @@ function loadGameModule(seed = {}) {
   `;
   vm.runInContext(EXPANSION_SOURCE, context, { filename: 'expansion.v1.js' });
   vm.runInContext(VN_SOURCE, context, { filename: 'vn-scenes.v1.js' });
+  vm.runInContext(CHARACTER_SOURCE, context, { filename: 'characters.v1.js' });
   vm.runInContext(VN_EXPANSION_SOURCE, context, { filename: 'vn-expansion.v1.js' });
   vm.runInContext(`${GAME_SOURCE}\n${exportHook}`, context, { filename: 'game.v9.js' });
 
@@ -252,16 +262,20 @@ test('chaque arme possede des donnees completes pour son evolution', () => {
   });
 });
 
-test('les onze archetypes ennemis possedent un sprite OpenAI local', () => {
-  const { ENEMY_SPRITE_DATA } = loadGameModule();
+test('les archetypes ennemis et les dix Trones possedent un sprite OpenAI local', () => {
+  const { ENEMY_SPRITE_DATA, CHARACTER_EXPANSION } = loadGameModule();
   const expectedTypes = [
     'swarmer', 'runner', 'brute', 'flying', 'bulwark', 'artillery',
-    'splitter', 'vespera', 'carmilla', 'hellwarden', 'leviathan'
+    'splitter', 'vespera', 'carmilla', 'hellwarden', 'leviathan',
+    ...CHARACTER_EXPANSION.bossIds
   ];
 
   assert.deepEqual(Object.keys(ENEMY_SPRITE_DATA).sort(), expectedTypes.sort());
   Object.values(ENEMY_SPRITE_DATA).forEach(sprite => {
-    assert.match(sprite.src, /^assets\/animations\/enemies\/enemy-(?:atlas-\d+|specialist-atlas)\.png$/);
+    assert.match(
+      sprite.src,
+      /^(?:assets\/animations\/enemies\/enemy-(?:atlas-\d+|specialist-atlas)|assets\/characters\/villains\/[a-z-]+-atlas-v1)\.png$/
+    );
     assert.ok(Number.isInteger(sprite.row) && sprite.row >= 0 && sprite.row < 4);
     assert.ok(sprite.size >= 34);
     const assetPath = path.join(ROOT, sprite.src);
@@ -445,6 +459,7 @@ test('la sauvegarde restaure metaprogression, heroine choisie et relation', () =
   } = module;
   const first = createEngine(GameEngine);
   const kira = HERO_CLASSES.kira;
+  const maris = HERO_CLASSES.maris;
 
   first.metaCoins = 777;
   first.totalCoinsEarned = 3210;
@@ -456,23 +471,43 @@ test('la sauvegarde restaure metaprogression, heroine choisie et relation', () =
   kira.relationshipXp = 23;
   kira.romanceOptIn = true;
   kira.privateMomentUnlocked = true;
+  maris.unlocked = true;
+  maris.activeSkin = 'alt';
+  maris.affinityLvl = 3;
+  maris.relationshipXp = 17;
+  maris.romanceOptIn = true;
+  maris.privateMomentUnlocked = true;
   first.saveProgress();
 
   const rawSave = JSON.parse(localStorage.getItem('valkyrie_sweeper_save'));
-  assert.equal(rawSave.version, 6);
+  assert.equal(rawSave.version, 7);
   assert.equal(rawSave.metaCoins, 777);
   assert.equal(rawSave.characterProgress.kira.affinityLvl, 4);
+  assert.ok(rawSave.unlockedHeroIds.includes('maris'));
+  assert.equal(rawSave.characterProgress.maris.romanceOptIn, true);
 
   kira.activeSkin = 'default';
   kira.affinityLvl = 1;
   kira.relationshipXp = 0;
   kira.romanceOptIn = false;
   kira.privateMomentUnlocked = false;
+  maris.unlocked = false;
+  maris.activeSkin = 'default';
+  maris.affinityLvl = 1;
+  maris.relationshipXp = 0;
+  maris.romanceOptIn = false;
+  maris.privateMomentUnlocked = false;
 
   const restored = createEngine(GameEngine);
   assert.equal(restored.metaCoins, 777);
   assert.equal(restored.totalCoinsEarned, 3210);
   assert.equal(restored.towerFloor, 42);
+  assert.equal(HERO_CLASSES.maris.unlocked, true);
+  assert.equal(HERO_CLASSES.maris.activeSkin, 'alt');
+  assert.equal(HERO_CLASSES.maris.affinityLvl, 3);
+  assert.equal(HERO_CLASSES.maris.relationshipXp, 17);
+  assert.equal(HERO_CLASSES.maris.romanceOptIn, true);
+  assert.equal(HERO_CLASSES.maris.privateMomentUnlocked, true);
   assert.deepEqual(
     { ...restored.shopUpgrades },
     { hpBonus: 3, fireRateBonus: 4, magnetRange: 2 }
@@ -926,8 +961,8 @@ test('les atlas suivent les etats de tir, impact et competence', () => {
   const engine = createEngine(GameEngine);
 
   assert.equal(Object.keys(TOWER_SPRITE_DATA).length, 20);
-  assert.equal(Object.keys(ENEMY_SPRITE_DATA).length, 11);
-  assert.equal(Object.keys(HERO_SPRITE_DATA).length, 6);
+  assert.equal(Object.keys(ENEMY_SPRITE_DATA).length, 21);
+  assert.equal(Object.keys(HERO_SPRITE_DATA).length, 16);
 
   const tower = { animationTimer: 0.2, animationPhase: 0 };
   assert.equal(engine.getTowerAnimationFrame(tower, {}), 2);
@@ -1440,10 +1475,10 @@ test('la construction reste interdite dans le corridor hors rectangle central', 
   assert.equal(engine.coins, 100000, 'Un placement hors terrain ne doit rien couter');
 });
 
-test('les six heroines disposent de CG narratives et de chapitres VN accessibles sans faux verrou', () => {
+test('les seize heroines disposent de CG narratives et de chapitres VN accessibles sans faux verrou', () => {
   const { GameEngine, HERO_CLASSES, VN_NARRATIVE_CGS, COASTLINE_IMAGE_SRC } = loadGameModule();
   const engine = createEngine(GameEngine);
-  assert.deepEqual(Object.keys(VN_NARRATIVE_CGS).sort(), ['aria', 'carmilla', 'kira', 'rin', 'selene', 'vespera']);
+  assert.deepEqual(Object.keys(VN_NARRATIVE_CGS).sort(), Object.keys(HERO_CLASSES).sort());
   assert.equal(COASTLINE_IMAGE_SRC, 'assets/environment/infernal-city-coastline.png');
 
   const ariaScenes = engine.getVnHeroine('aria');
@@ -1690,6 +1725,277 @@ test('Vespera Carmilla et Leviathan telegraphient trois phases et des patterns d
   assert.ok(bulletCounts.leviathan > bulletCounts.vespera);
 });
 
+test('les dix Trones combattent en trois phases et arrivent toutes les deux vagues', () => {
+  const { GameEngine, CHARACTER_EXPANSION } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  engine.activeCampaignId = 'ten_thrones';
+
+  CHARACTER_EXPANSION.campaigns.ten_thrones.bossSchedule.forEach(entry => {
+    const queue = engine.buildWaveSpawnQueue(entry.wave);
+    assert.ok(
+      queue.some(spec => spec.type === entry.bossId && spec.boss === true),
+      `${entry.bossId}: absent de la vague ${entry.wave}`
+    );
+  });
+
+  CHARACTER_EXPANSION.bossIds.forEach(type => {
+    engine.enemies = [];
+    engine.enemyBullets = [];
+    const boss = engine.spawnEnemy(type, 0, { countForWave: false, isBoss: true });
+    boss.hp = boss.maxHp * 0.6;
+    assert.equal(engine.updateBossPhase(boss), 2, `${type}: phase 2`);
+    boss.hp = boss.maxHp * 0.25;
+    assert.equal(engine.updateBossPhase(boss), 3, `${type}: phase 3`);
+    engine.fireBossPattern(boss);
+    assert.ok(
+      engine.enemyBullets.length > 0,
+      `${type}: la phase finale doit produire une menace esquivable`
+    );
+  });
+});
+
+test('chaque Trone execute une mecanique signature mesurable', () => {
+  const {
+    GameEngine, CHARACTER_EXPANSION, TOWER_TYPES
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  engine.activeCampaignId = 'ten_thrones';
+  engine.placedTowers = [
+    engine.createPlacedDefense(TOWER_TYPES.railgun_pylon, 650, 360),
+    engine.createPlacedDefense(TOWER_TYPES.aegis_barrier, 720, 440),
+    engine.createPlacedDefense(TOWER_TYPES.plasma_mortar, 780, 360)
+  ];
+
+  CHARACTER_EXPANSION.bossIds.forEach(type => {
+    engine.enemies = [];
+    engine.enemyBullets = [];
+    engine.bossHazards = [];
+    const boss = engine.spawnEnemy(type, 0, {
+      x: 860,
+      y: 400,
+      hpMultiplier: 4,
+      countForWave: false,
+      isBoss: true
+    });
+    boss.hp = boss.maxHp * 0.5;
+    const result = engine.applyBossSignature(
+      boss,
+      CHARACTER_EXPANSION.bosses[type],
+      3,
+      'phase'
+    );
+    assert.ok(result?.affected > 0, `${type}: mecanique signature sans effet`);
+  });
+});
+
+test('la premiere chute d un Trone donne sa recompense et debloque son heroine une seule fois', () => {
+  const {
+    GameEngine, HERO_CLASSES, CHARACTER_EXPANSION, GALLERY_ITEMS
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  engine.activeCampaignId = 'ten_thrones';
+  engine.getRunRandom = () => 0.99;
+  engine.unlockAchievement = () => {};
+  const metaBefore = engine.metaCoins;
+  const expectedMeta = CHARACTER_EXPANSION.bosses.xyra.rewards.metaCoins;
+  const first = engine.spawnEnemy('xyra', 0, {
+    x: 780,
+    y: 400,
+    countForWave: false,
+    isBoss: true
+  });
+
+  engine.killEnemy(first);
+
+  assert.ok(engine.defeatedBossIds.includes('xyra'));
+  assert.equal(engine.metaCoins, metaBefore + expectedMeta);
+  assert.equal(HERO_CLASSES.maris.unlocked, true);
+  assert.equal(GALLERY_ITEMS.find(item => item.id === 'maris').unlocked, true);
+
+  const second = engine.spawnEnemy('xyra', 0, {
+    x: 780,
+    y: 400,
+    countForWave: false,
+    isBoss: true
+  });
+  engine.killEnemy(second);
+  assert.equal(engine.metaCoins, metaBefore + expectedMeta);
+});
+
+test('les Trones volants ignorent les sols et les barrieres mais prennent les bonus anti-aeriens', () => {
+  const {
+    GameEngine, TOWER_TYPES
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const flyingBoss = engine.spawnEnemy('nhalzara', 0, {
+    x: 760,
+    y: 400,
+    hpMultiplier: 5,
+    countForWave: false,
+    isBoss: true
+  });
+  const mine = engine.createPlacedDefense(TOWER_TYPES.landmine, 760, 400);
+  const barrier = engine.createPlacedDefense(TOWER_TYPES.aegis_barrier, 740, 400);
+  const antiAir = engine.createPlacedDefense(TOWER_TYPES.tesla_spire, 650, 400);
+  engine.placedTowers = [barrier];
+  const hpBefore = flyingBoss.hp;
+  const barrierBefore = barrier.hp;
+  engine.hazards = [{
+    x: flyingBoss.x,
+    y: flyingBoss.y,
+    radius: 100,
+    damage: 80,
+    life: 2,
+    tickTimer: 0,
+    ground: true,
+    sourceDefense: mine
+  }];
+
+  assert.equal(engine.canDefenseTargetEnemy(mine, flyingBoss), false);
+  engine.updateHazards(0.5);
+  engine.updateEnemies(0.05);
+  assert.equal(flyingBoss.hp, hpBefore);
+  assert.equal(barrier.hp, barrierBefore);
+
+  const specialization = engine.getDefenseSpecializationOptions(antiAir)
+    .find(option => Number(option.modifiers?.flyingDamageMultiplier) > 1);
+  assert.ok(specialization);
+  antiAir.specializationId = specialization.id;
+  engine.damageEnemyFromDefense(antiAir, flyingBoss, 100);
+  assert.ok(hpBefore - flyingBoss.hp > 100);
+});
+
+test('les sept coupes de Hana frappent bien sept fois un boss isole', () => {
+  const {
+    GameEngine, HERO_CLASSES, CHARACTER_EXPANSION
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  engine.selectedHero = HERO_CLASSES.hana;
+  const boss = engine.spawnEnemy('noctis', 0, {
+    x: 760,
+    y: 400,
+    hpMultiplier: 20,
+    countForWave: false,
+    isBoss: true
+  });
+  boss.shield = 0;
+  const before = boss.hp;
+  engine.applySelectedHeroUltimate();
+  const effect = CHARACTER_EXPANSION.heroKits.hana.ultimate.effect;
+  const expected = effect.strikeCount * effect.strikeDamage * effect.bossDamageMultiplier;
+  assert.equal(Math.round(before - boss.hp), Math.round(expected));
+});
+
+test('une chasse de Codex ne donne ni victoire ni recompense de campagne', () => {
+  const {
+    GameEngine
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  engine.activeCampaignId = 'ten_thrones';
+  engine.activeBossHuntId = 'noctis';
+  engine.wave = 20;
+  engine.waveActive = true;
+  engine.waveRewardClaimed = false;
+  engine.metaCoins = 90;
+  engine.runMetaCoinsEarned = 12;
+  engine.bestWave = 7;
+  engine.bestScore = 1234;
+  engine.score = 80;
+  let codexOpened = false;
+  engine.openAntagonistCodex = () => { codexOpened = true; };
+
+  engine.completeWave();
+
+  assert.equal(engine.campaignVictory, false);
+  assert.equal(engine.campaignVictoryClaimed, false);
+  assert.equal(engine.activeBossHuntId, null);
+  assert.equal(engine.metaCoins, 90);
+  assert.equal(engine.runMetaCoinsEarned, 12);
+  assert.equal(engine.bestWave, 7);
+  assert.equal(engine.bestScore, 1234);
+  assert.equal(engine.score, 80);
+  assert.equal(codexOpened, true);
+});
+
+test('le Codex rend les dix portraits et verrouille les chasses non vaincues', () => {
+  const module = loadGameModule();
+  const grid = createElement('div');
+  const elements = new Map([
+    ['antagonist-codex-grid', grid],
+    ['antagonist-codex-modal', createElement('div')],
+    ['hq-menu-modal', createElement('div')]
+  ]);
+  module.document.getElementById = id => elements.get(id) || null;
+  const engine = createEngine(module.GameEngine);
+  let openedModal = '';
+  engine.closeModal = () => {};
+  engine.openModal = modal => {
+    openedModal = typeof modal === 'string' ? modal : modal?.id || '';
+  };
+
+  engine.openAntagonistCodex();
+
+  assert.equal(grid.children.length, 10);
+  assert.equal(openedModal, 'antagonist-codex-modal');
+  grid.children.forEach(card => {
+    assert.equal(card.children.length, 2);
+    const [preview, body] = card.children;
+    assert.match(preview.style.backgroundImage, /assets\/characters\/villains\/.+-portrait-v1\.webp/u);
+    assert.ok(preview.classList.contains('uses-portrait'));
+    assert.ok(body.children.some(child => child.className === 'antagonist-signature'));
+    assert.ok(body.children.some(child => child.className === 'antagonist-phases'));
+    const hunt = body.children.find(child => child.className?.includes('antagonist-hunt-btn'));
+    assert.ok(hunt);
+    assert.equal(hunt.disabled, true);
+    assert.equal(hunt.textContent, 'CHASSE VERROUILLÉE');
+  });
+});
+
+test('une chasse de Trone devient rejouable uniquement apres sa premiere victoire', () => {
+  const module = loadGameModule();
+  const engine = createEngine(module.GameEngine);
+  engine.startNewGame = () => {};
+  engine.closeModal = () => {};
+  engine.configureWave = wave => { engine.wave = wave; };
+  engine.clearRunCheckpoint = () => {};
+  engine.focusBattlefield = () => {};
+
+  assert.equal(engine.startVillainHunt('xyra'), false);
+  assert.equal(engine.activeBossHuntId, null);
+
+  engine.defeatedBossIds.push('xyra');
+  assert.equal(engine.startVillainHunt('xyra'), true);
+  assert.equal(engine.activeBossHuntId, 'xyra');
+  assert.equal(engine.wave, 2);
+});
+
+test('la victoire Dix Trones debloque sa conclusion et Quatre Portes restaure son texte', () => {
+  const elements = new Map([
+    ['victory-title', createElement('h2')],
+    ['victory-description', createElement('p')],
+    ['victory-ending-copy', createElement('p')]
+  ]);
+  const module = loadGameModule();
+  module.document.getElementById = id => elements.get(id) || null;
+  const campaignEngine = createEngine(module.GameEngine);
+  campaignEngine.openModal = () => {};
+  campaignEngine.recordRunHistory = () => {};
+  campaignEngine.unlockAchievement = () => {};
+  campaignEngine.activeCampaignId = 'ten_thrones';
+  campaignEngine.triggerCampaignVictory();
+  const conclusion = module.GALLERY_ITEMS.find(item => item.id === 'ten_thrones_conclusion');
+  assert.equal(conclusion.unlocked, true);
+  assert.equal(campaignEngine.metaCoins, 500);
+  assert.match(elements.get('victory-title').textContent, /Madame Noctis/u);
+
+  campaignEngine.campaignVictory = false;
+  campaignEngine.campaignVictoryClaimed = false;
+  campaignEngine.activeCampaignId = 'four_gates';
+  campaignEngine.triggerCampaignVictory();
+  assert.equal(elements.get('victory-title').textContent, 'LE LÉVIATHAN EST NEUTRALISÉ');
+  assert.match(elements.get('victory-description').textContent, /Quatre Portes/u);
+});
+
 test('le bouton de pouvoir arme un ciblage puis les six kits appliquent un effet au clic', () => {
   const { GameEngine, HERO_CLASSES, TOWER_TYPES } = loadGameModule();
   const engine = createEngine(GameEngine);
@@ -1739,6 +2045,125 @@ test('le bouton de pouvoir arme un ciblage puis les six kits appliquent un effet
   engine.triggerHeroAbility();
   assert.equal(engine.cancelHeroAbilityTargeting(), true);
   assert.equal(engine.activeHeroTargeting, null);
+});
+
+test('les dix nouvelles heroines appliquent leur actif unique sur le champ de bataille', () => {
+  const { GameEngine, HERO_CLASSES, TOWER_TYPES } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const useActive = (heroId, x = 760, y = 400) => {
+    engine.selectedHero = HERO_CLASSES[heroId];
+    engine.abilityCooldownTimer = 0;
+    assert.equal(engine.triggerHeroAbility().ok, true, `${heroId}: ciblage`);
+    assert.equal(engine.executeHeroAbilityAt(x, y).ok, true, `${heroId}: execution`);
+  };
+
+  useActive('nyx');
+  assert.ok(engine.hazards.some(hazard => hazard.heroId === 'nyx' && hazard.damageTakenMultiplier > 1));
+
+  const chronoDefense = engine.createPlacedDefense(TOWER_TYPES.vulcan_turret, 760, 400);
+  engine.placedTowers = [chronoDefense];
+  const chronoRate = chronoDefense.fireRate;
+  useActive('aurelia');
+  assert.ok(chronoDefense.fireRate < chronoRate && chronoDefense.abilityBuffTimer > 0);
+
+  engine.enemies = [];
+  const broadsideTarget = engine.spawnEnemy('brute', 0, { x: 760, y: 400, countForWave: false });
+  const broadsideHp = broadsideTarget.hp;
+  useActive('maris');
+  assert.ok(broadsideTarget.dead || broadsideTarget.hp < broadsideHp);
+
+  useActive('zahra');
+  assert.ok(engine.decoys.some(decoy => decoy.heroId === 'zahra' && decoy.pulseDamage > 0));
+
+  useActive('mircalla');
+  assert.ok(engine.decoys.some(decoy => decoy.heroId === 'mircalla' && decoy.projectileInterceptions > 0));
+
+  engine.enemies = [];
+  const requiemTarget = engine.spawnEnemy('brute', 0, { x: 760, y: 400, countForWave: false });
+  useActive('isolde');
+  assert.ok(requiemTarget.damageDebuffTimer > 0);
+
+  engine.enemies = [];
+  const cutTarget = engine.spawnEnemy('brute', 0, { x: 760, y: 400, countForWave: false });
+  const cutHp = cutTarget.hp;
+  useActive('hana', 950, 400);
+  assert.ok(cutTarget.dead || cutTarget.hp < cutHp);
+
+  useActive('freyja');
+  assert.ok(engine.hazards.some(hazard => hazard.heroId === 'freyja' && hazard.slowMultiplier < 1));
+
+  engine.enemies = [];
+  const solarTarget = engine.spawnEnemy('brute', 0, { x: 760, y: 400, countForWave: false });
+  const solarHp = solarTarget.hp;
+  useActive('vega', 950, 400);
+  assert.ok(solarTarget.dead || solarTarget.hp < solarHp);
+
+  useActive('amara');
+  assert.ok(engine.hazards.some(hazard => hazard.heroId === 'amara' && hazard.armorReduction > 0));
+});
+
+test('les dix nouveaux ultimes modifient reellement hordes defenses ou projectiles', () => {
+  const { GameEngine, HERO_CLASSES, TOWER_TYPES } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const freshTarget = (type = 'brute') => {
+    engine.enemies = [];
+    return engine.spawnEnemy(type, 0, { x: 760, y: 400, hpMultiplier: 12, countForWave: false });
+  };
+  const useUltimate = heroId => {
+    engine.selectedHero = HERO_CLASSES[heroId];
+    engine.applySelectedHeroUltimate();
+  };
+
+  let target = freshTarget();
+  useUltimate('nyx');
+  assert.ok(target.stunTimer > 0);
+
+  engine.placedTowers = [engine.createPlacedDefense(TOWER_TYPES.vulcan_turret, 700, 400)];
+  const baseRate = engine.placedTowers[0].fireRate;
+  useUltimate('aurelia');
+  assert.ok(engine.freezeTimer > 0 && engine.placedTowers[0].fireRate < baseRate);
+
+  target = freshTarget();
+  const marisHp = target.hp;
+  useUltimate('maris');
+  assert.ok(target.hp < marisHp);
+
+  engine.decoys = [];
+  useUltimate('zahra');
+  assert.equal(engine.decoys.length, engine.spawnRoutes.length);
+  assert.ok(engine.decoys.every(decoy => decoy.projectileInterceptions > 0));
+
+  target = freshTarget('artillery');
+  useUltimate('mircalla');
+  assert.ok(target.stunTimer > 0 && target.hp < target.maxHp);
+
+  target = freshTarget();
+  const isoldeHp = target.hp;
+  useUltimate('isolde');
+  assert.ok(target.hp < isoldeHp);
+
+  target = freshTarget();
+  const hanaHp = target.hp;
+  useUltimate('hana');
+  assert.ok(target.hp < hanaHp);
+
+  target = freshTarget();
+  target.slowTimer = 2;
+  const frozenX = target.x;
+  useUltimate('freyja');
+  assert.ok(target.x !== frozenX && target.hp < target.maxHp);
+
+  target = freshTarget();
+  engine.enemyBullets = [{ x: 650, y: 400, vx: 0, vy: 0, damage: 1, radius: 2 }];
+  useUltimate('vega');
+  assert.equal(engine.enemyBullets.length, 0);
+
+  target = freshTarget();
+  engine.hazards = [];
+  engine.citadel.hp = engine.citadel.maxHp / 2;
+  const woundedHp = engine.citadel.hp;
+  useUltimate('amara');
+  assert.ok(engine.hazards.length > 0 && engine.citadel.hp > woundedHp);
 });
 
 test('la specialisation de niveau 2 applique ses modificateurs et sa priorite de cible', () => {
@@ -1908,7 +2333,7 @@ test('les reglages 2.3 persistent son, contraste, texte et la sauvegarde portabl
 
   const portable = engine.createPortableSavePayload();
   assert.equal(portable.schema, 'infernal-city.portable-save/1');
-  assert.equal(portable.campaign.version, 6);
+  assert.equal(portable.campaign.version, 7);
   assert.equal(portable.narrative.dataVersion, 1);
   const original = localStorage.getItem('valkyrie_sweeper_save');
   const settingsStatus = createElement('p');
@@ -2020,6 +2445,98 @@ test('les six passifs de heroine produisent des effets de combat mesurables', ()
   assert.equal(engine.carmillaStoredCharge, 0);
 });
 
+test('les dix nouveaux passifs produisent chacun un effet de combat mesurable', () => {
+  const { GameEngine, HERO_CLASSES, TOWER_TYPES } = loadGameModule();
+  const engine = createEngine(GameEngine);
+
+  engine.selectedHero = HERO_CLASSES.nyx;
+  engine.enemies = [];
+  const firstPacket = engine.spawnEnemy('brute', 0, { x: 850, y: 400, countForWave: false });
+  const secondPacket = engine.spawnEnemy('brute', 0, { x: 870, y: 400, countForWave: false });
+  engine.damageEnemy(firstPacket, 1);
+  engine.damageEnemy(secondPacket, 1);
+  assert.ok(firstPacket.markedDamageTakenMultiplier > 1);
+  assert.equal(secondPacket.markedDamageTakenMultiplier, 1);
+
+  engine.selectedHero = HERO_CLASSES.aurelia;
+  const brassDefense = engine.createPlacedDefense(TOWER_TYPES.vulcan_turret, 680, 400);
+  brassDefense.hp = brassDefense.maxHp / 2;
+  engine.placedTowers = [brassDefense];
+  const brassHp = brassDefense.hp;
+  engine.update(0.25);
+  assert.ok(brassDefense.hp > brassHp);
+
+  engine.selectedHero = HERO_CLASSES.maris;
+  engine.enemies = [];
+  engine.coins = 0;
+  engine.getRunRandom = () => 0.1;
+  const distantPrize = engine.spawnEnemy('runner', 0, { x: 1000, y: 400, countForWave: false });
+  engine.killEnemy(distantPrize);
+  assert.ok(engine.coins >= 14);
+
+  engine.selectedHero = HERO_CLASSES.zahra;
+  engine.enemies = [];
+  engine.decoys = [{ x: 760, y: 400, radius: 100, life: 5, pulseDamage: 0, pulseRadius: 0 }];
+  const redirected = engine.spawnEnemy('brute', 0, { x: 800, y: 400, countForWave: false });
+  engine.updateEnemies(0.05);
+  assert.ok(redirected.slowTimer > 0 && redirected.markedDamageTakenMultiplier > 1);
+
+  engine.selectedHero = HERO_CLASSES.mircalla;
+  engine.enemies = [];
+  const retaliationTarget = engine.spawnEnemy('brute', 0, { x: 760, y: 400, countForWave: false });
+  const retaliationHp = retaliationTarget.hp;
+  engine.mircallaRetaliationCharge = 35;
+  engine.decoys = [{
+    x: 700, y: 400, radius: 80, life: 5, projectileInterceptions: 1,
+    pulseDamage: 0, pulseRadius: 0
+  }];
+  engine.enemyBullets = [{ x: 700, y: 400, vx: 0, vy: 0, damage: 1, radius: 4 }];
+  engine.updateEnemyBullets(0);
+  assert.ok(retaliationTarget.hp < retaliationHp);
+
+  engine.selectedHero = HERO_CLASSES.isolde;
+  engine.enemies = [];
+  const grievingElite = engine.spawnEnemy('artillery', 0, { x: 850, y: 400, countForWave: false });
+  grievingElite.hp = grievingElite.maxHp * 0.4;
+  engine.update(0.05);
+  assert.ok(grievingElite.damageDebuffMultiplier < 1);
+
+  engine.selectedHero = HERO_CLASSES.hana;
+  engine.enemies = [];
+  const chargedCut = engine.spawnEnemy('brute', 0, { x: 800, y: 400, hpMultiplier: 10, countForWave: false });
+  const chargedHp = chargedCut.hp;
+  engine.hanaPassiveReady = true;
+  engine.damageEnemy(chargedCut, 100);
+  assert.equal(Math.round(chargedHp - chargedCut.hp), 145);
+
+  engine.selectedHero = HERO_CLASSES.freyja;
+  const rimedHeavy = engine.spawnEnemy('brute', 0, { x: 820, y: 400, countForWave: false });
+  rimedHeavy.slowTimer = 2;
+  engine.damageEnemy(rimedHeavy, 1);
+  assert.ok(rimedHeavy.armorBreakMultiplier > 1);
+
+  engine.selectedHero = HERO_CLASSES.vega;
+  const solarDefense = engine.createPlacedDefense(TOWER_TYPES.plasma_mortar, 680, 400);
+  const shadowTarget = engine.spawnEnemy('umbrael', 0, {
+    x: 820, y: 400, hpMultiplier: 10, countForWave: false, isBoss: true
+  });
+  const shadowHp = shadowTarget.hp;
+  engine.damageEnemyFromDefense(solarDefense, shadowTarget, 100);
+  assert.ok(shadowHp - shadowTarget.hp > 117);
+
+  engine.selectedHero = HERO_CLASSES.amara;
+  const gardenDefense = engine.createPlacedDefense(TOWER_TYPES.vulcan_turret, 700, 400);
+  gardenDefense.hp = gardenDefense.maxHp / 2;
+  engine.placedTowers = [gardenDefense];
+  engine.hazards = [{
+    x: 700, y: 400, radius: 125, damage: 0, life: 2, tickTimer: 0,
+    color: '#34d399', ground: false
+  }];
+  const gardenHp = gardenDefense.hp;
+  engine.updateHazards(0.5);
+  assert.ok(gardenDefense.hp > gardenHp);
+});
+
 test('la manette pilote camera zoom curseur et pouvoir sans bloquer le clavier', () => {
   const {
     GameEngine, navigator
@@ -2079,6 +2596,76 @@ test('entrer dans le jeu precharge les atlas de combat meme si le terrain est de
   engine.enterAdultExperience();
   assert.equal(preloads, 1);
   assert.equal(gate.classList.contains('active'), false);
+});
+
+test('le prechauffage initial differe les heroines 2.4 non selectionnees et les dix Trones', () => {
+  const {
+    GameEngine, HERO_CLASSES, CHARACTER_EXPANSION
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  engine.selectedHero = HERO_CLASSES.nyx;
+  engine.hasEnteredAdultExperience = true;
+  engine.preloadSpriteAsset = src => ({
+    src,
+    addEventListener() {}
+  });
+
+  engine.preloadBattleSprites();
+
+  Object.keys(CHARACTER_EXPANSION.heroines).forEach(heroId => {
+    assert.equal(
+      Boolean(engine.heroSpriteImages[heroId]),
+      heroId === 'nyx',
+      `${heroId} ne doit être chargé que si elle est sélectionnée`
+    );
+  });
+  Object.keys(CHARACTER_EXPANSION.bossDefinitions).forEach(bossId => {
+    assert.equal(engine.enemySpriteImages[bossId], undefined, `${bossId} doit rester différé`);
+  });
+  ['aria', 'kira', 'rin', 'selene', 'vespera', 'carmilla'].forEach(heroId => {
+    assert.ok(engine.heroSpriteImages[heroId], `${heroId} historique doit être préchauffée`);
+  });
+});
+
+test('une vague et un spawn direct prechauffent seulement le Trone requis', () => {
+  const {
+    GameEngine
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  engine.hasEnteredAdultExperience = true;
+  const ensured = [];
+  engine.ensureEnemySprite = type => {
+    ensured.push(type);
+    return {};
+  };
+
+  const waveBosses = engine.preloadWaveCharacterBosses([
+    { type: 'runner' },
+    { type: 'xyra' },
+    { type: 'xyra' }
+  ]);
+  assert.deepEqual(Array.from(waveBosses), ['xyra']);
+  assert.deepEqual(ensured, ['xyra']);
+
+  engine.spawnEnemy('ossuary', 0, { isBoss: true });
+  assert.deepEqual(ensured, ['xyra', 'ossuary']);
+});
+
+test('changer de commandante charge immediatement son atlas si le portail est franchi', () => {
+  const {
+    GameEngine, HERO_CLASSES
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  engine.hasEnteredAdultExperience = true;
+  engine.selectedHero = HERO_CLASSES.amara;
+  let ensuredHero = null;
+  engine.ensureHeroSprite = heroId => {
+    ensuredHero = heroId;
+    return {};
+  };
+
+  engine.updateHeroPresentation();
+  assert.equal(ensuredHero, 'amara');
 });
 
 test('le runtime ne tente jamais de remplacer la propriete DOM dataset en lecture seule', () => {

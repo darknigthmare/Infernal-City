@@ -403,6 +403,93 @@ body {
   line-height: 1.4;
 }
 
+.antagonist-codex-box {
+  width: min(1120px, 100%);
+  max-width: 1120px;
+}
+
+.antagonist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.antagonist-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--boss-color, #ec4899) 55%, transparent);
+  border-radius: 14px;
+  background: rgba(4, 8, 20, 0.92);
+  box-shadow: inset 0 0 28px color-mix(in srgb, var(--boss-color, #ec4899) 10%, transparent);
+}
+
+.antagonist-preview {
+  /* A 4x4 atlas is made of square cells. Keeping this viewport square avoids
+     stretching the first frame while the card is inspected in the Codex. */
+  aspect-ratio: 1;
+  background-color: #070b14;
+  background-repeat: no-repeat;
+  background-size: 400% 400%;
+  background-position: 0 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--boss-color, #ec4899) 45%, transparent);
+}
+
+.antagonist-preview.uses-portrait {
+  background-position: center top;
+  background-size: cover;
+}
+
+.antagonist-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px;
+}
+
+.antagonist-card h3 {
+  color: var(--boss-color, #ec4899);
+  font-size: 1rem;
+  line-height: 1.15;
+}
+
+.antagonist-title,
+.antagonist-signature,
+.antagonist-counter,
+.antagonist-status {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.antagonist-signature {
+  color: #e9d5ff;
+  border-left: 2px solid var(--boss-color, #ec4899);
+  padding-left: 8px;
+}
+
+.antagonist-status {
+  color: #f8fafc;
+  font-weight: 800;
+}
+
+.antagonist-phases {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding-left: 18px;
+  color: #dbeafe;
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+
+.antagonist-hunt-btn {
+  margin-top: auto;
+}
+
 /* Meters */
 .citadel-hp-box {
   width: 140px;

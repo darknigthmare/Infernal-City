@@ -41,6 +41,7 @@ test('le service worker precache uniquement des fichiers locaux existants', () =
     'assets/cg_carmilla_library.png'
   ];
   assert.ok(urls.includes('index.html'));
+  assert.ok(urls.includes('characters.v1.js'));
   assert.ok(urls.includes('assets/icons/icon-512.png'));
   urls.filter(Boolean).forEach(relativePath => {
     assert.ok(fs.existsSync(path.join(ROOT, relativePath)), `${relativePath}: précache introuvable`);
@@ -48,6 +49,10 @@ test('le service worker precache uniquement des fichiers locaux existants', () =
   narrativeCgs.forEach(relativePath => {
     assert.ok(!urls.includes(relativePath), `${relativePath}: les CG lourdes doivent rester chargées à la demande`);
   });
+  assert.ok(
+    urls.every(relativePath => !relativePath.startsWith('assets/animations/')),
+    'les atlas de combat lourds doivent rester chargés à la demande'
+  );
   const precacheBytes = urls
     .filter(Boolean)
     .reduce((total, relativePath) => total + fs.statSync(path.join(ROOT, relativePath)).size, 0);
@@ -61,7 +66,7 @@ test('le script PWA limite son enregistrement aux contextes surs', () => {
   assert.match(source, /updateViaCache:\s*'none'/);
 });
 
-test('les actifs coeur sont fingerprints et servis network first', () => {
+test('les actifs coeur 2.4 sont fingerprints et servis network first', () => {
   const index = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
   const worker = fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8');
 
@@ -69,12 +74,24 @@ test('les actifs coeur sont fingerprints et servis network first', () => {
   assert.match(index, /audio\.v8\.js/);
   assert.match(index, /game\.v9\.js/);
   assert.match(index, /pwa\.v4\.js/);
-  assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}v7`/);
+  assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}v9`/);
   assert.match(worker, /vn-scenes\.v1\.js/);
+  assert.match(worker, /characters\.v1\.js/);
   assert.match(worker, /infernal-city-coastline\.png/);
   assert.match(worker, /infernal-city-approach-terrain\.png/);
   assert.match(worker, /infernal-city-spawn-gate-atlas\.png/);
   assert.match(worker, /isMutableCoreAsset/);
   assert.match(worker, /if \(isMutableCoreAsset\) \{\s*event\.respondWith\(\s*fetch\(request\)/);
   assert.match(worker, /cache\.put\(request, response\.clone\(\)\)/);
+});
+
+test('les atlas et médias narratifs utilisent un cache media cache-first', () => {
+  const worker = fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8');
+
+  assert.match(worker, /MEDIA_CACHE_NAME = `\$\{CACHE_PREFIX\}media-v2\.4`/);
+  assert.match(worker, /relativePath\.startsWith\('assets\/animations\/'\)/);
+  assert.match(worker, /relativePath\.startsWith\('assets\/characters\/'\)/);
+  assert.match(worker, /relativePath\.startsWith\('assets\/vn\/'\)/);
+  assert.match(worker, /if \(cachedResponse\) \{\s*return cachedResponse;\s*\}/);
+  assert.match(worker, /if \(isRuntimeMedia\) \{/);
 });

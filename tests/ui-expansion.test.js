@@ -15,13 +15,15 @@ function hasId(id) {
   return new RegExp(`id="${id}"`).test(html);
 }
 
-test('the 2.3 scripts load before the game runtime', () => {
+test('the 2.4 character and expansion scripts load before the game runtime', () => {
   const expansionIndex = html.indexOf('<script src="expansion.v1.js"></script>');
+  const characterIndex = html.indexOf('<script src="characters.v1.js"></script>');
   const vnExpansionIndex = html.indexOf('<script src="vn-expansion.v1.js"></script>');
   const gameIndex = html.indexOf('<script src="game.v9.js"></script>');
 
   assert.ok(expansionIndex > 0);
-  assert.ok(vnExpansionIndex > expansionIndex);
+  assert.ok(characterIndex > expansionIndex);
+  assert.ok(vnExpansionIndex > characterIndex);
   assert.ok(gameIndex > vnExpansionIndex);
 });
 
@@ -106,25 +108,31 @@ test('card headings do not skip directly from modal h2 titles to h4', () => {
   assert.match(css, /\.upgrade-text h3/);
 });
 
-test('PWA 2.3 keeps heavy terrains and CG in a separate runtime cache', () => {
-  assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}v8`/);
-  assert.match(worker, /MEDIA_CACHE_NAME = `\$\{CACHE_PREFIX\}media-v2\.3`/);
+test('PWA 2.4 keeps heavy terrains, atlases and CG in a separate runtime cache', () => {
+  assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}v9`/);
+  assert.match(worker, /MEDIA_CACHE_NAME = `\$\{CACHE_PREFIX\}media-v2\.4`/);
   assert.match(worker, /'\.\/expansion\.v1\.js'/);
+  assert.match(worker, /'\.\/characters\.v1\.js'/);
   assert.match(worker, /'\.\/vn-expansion\.v1\.js'/);
-  assert.match(worker, /'\.\/assets\/animations\/enemies\/enemy-specialist-atlas\.png'/);
+  assert.doesNotMatch(worker, /'\.\/assets\/animations\/.+\.(?:png|webp)'/);
   assert.match(worker, /assets\/environment\/map-western-wall\.png/);
   assert.match(worker, /assets\/environment\/map-southern-watch\.png/);
   assert.match(worker, /assets\/environment\/map-twin-rift\.png/);
   assert.match(worker, /isNarrativeCg/);
+  assert.match(worker, /assets\/animations\//);
+  assert.match(worker, /assets\/characters\//);
+  assert.match(worker, /assets\/vn\//);
   assert.match(worker, /serveRuntimeMedia/);
 });
 
-test('package and web manifest expose release 2.3.0', () => {
+test('package and web manifest expose release 2.4.0', () => {
   const packageJson = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
   const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'manifest.webmanifest'), 'utf8'));
 
-  assert.equal(packageJson.version, '2.3.0');
-  assert.equal(manifest.version, '2.3.0');
+  assert.equal(packageJson.version, '2.4.0');
+  assert.equal(manifest.version, '2.4.0');
   assert.match(packageJson.scripts.check, /node --check expansion\.v1\.js/);
+  assert.match(packageJson.scripts.check, /node --check characters\.v1\.js/);
   assert.match(packageJson.scripts.check, /node --check vn-expansion\.v1\.js/);
+  assert.match(packageJson.scripts.check, /node --test tests\/\*\.test\.js/);
 });

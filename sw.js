@@ -1,9 +1,9 @@
 'use strict';
 
 const CACHE_PREFIX = 'infernal-city-';
-const LEGACY_CACHE_NAME = `${CACHE_PREFIX}v7`;
-const CACHE_NAME = `${CACHE_PREFIX}v8`;
-const MEDIA_CACHE_NAME = `${CACHE_PREFIX}media-v2.3`;
+const LEGACY_CACHE_NAME = `${CACHE_PREFIX}v8`;
+const CACHE_NAME = `${CACHE_PREFIX}v9`;
+const MEDIA_CACHE_NAME = `${CACHE_PREFIX}media-v2.4`;
 
 const EXPANSION_TERRAIN_PATHS = new Set([
   'assets/environment/map-western-wall.png',
@@ -18,6 +18,7 @@ const PRECACHE_URLS = [
   './audio.v8.js',
   './vn-scenes.v1.js',
   './expansion.v1.js',
+  './characters.v1.js',
   './vn-expansion.v1.js',
   './game.v9.js',
   './pwa.v4.js',
@@ -28,17 +29,6 @@ const PRECACHE_URLS = [
   './assets/environment/infernal-city-coastline.png',
   './assets/environment/infernal-city-approach-terrain.png',
   './assets/environment/infernal-city-spawn-gate-atlas.png',
-  './assets/animations/towers/tower-atlas-01.png',
-  './assets/animations/towers/tower-atlas-02.png',
-  './assets/animations/towers/tower-atlas-03.png',
-  './assets/animations/towers/tower-atlas-04.png',
-  './assets/animations/towers/tower-atlas-05.png',
-  './assets/animations/enemies/enemy-atlas-01.png',
-  './assets/animations/enemies/enemy-atlas-02.png',
-  './assets/animations/enemies/enemy-specialist-atlas.png',
-  './assets/animations/heroes/hero-atlas-01.png',
-  './assets/animations/heroes/hero-atlas-02.png',
-  './assets/animations/atlas-manifest.json',
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png'
 ];
@@ -73,18 +63,14 @@ self.addEventListener('activate', (event) => {
 async function serveRuntimeMedia(request, event) {
   const cache = await caches.open(MEDIA_CACHE_NAME);
   const cachedResponse = await cache.match(request);
-  const networkResponse = fetch(request).then((response) => {
-    if (response.ok && response.type === 'basic') {
-      event.waitUntil(cache.put(request, response.clone()));
-    }
-    return response;
-  });
-
   if (cachedResponse) {
-    event.waitUntil(networkResponse.catch(() => undefined));
     return cachedResponse;
   }
 
+  const networkResponse = await fetch(request);
+  if (networkResponse.ok && networkResponse.type === 'basic') {
+    event.waitUntil(cache.put(request, networkResponse.clone()));
+  }
   return networkResponse;
 }
 
@@ -108,9 +94,15 @@ self.addEventListener('fetch', (event) => {
   const isNarrativeCg = (
     request.destination === 'image'
     && (
-      relativePath.startsWith('assets/vn/')
-      || /^assets\/cg_.+\.(?:png|jpe?g|webp)$/i.test(relativePath)
+      /^assets\/cg_.+\.(?:png|jpe?g|webp)$/i.test(relativePath)
     )
+  );
+  const isRuntimeMedia = (
+    isExpansionTerrain
+    || isNarrativeCg
+    || relativePath.startsWith('assets/animations/')
+    || relativePath.startsWith('assets/characters/')
+    || relativePath.startsWith('assets/vn/')
   );
 
   if (request.mode === 'navigate') {
@@ -134,7 +126,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  if (isExpansionTerrain || isNarrativeCg) {
+  if (isRuntimeMedia) {
     event.respondWith(
       serveRuntimeMedia(request, event)
         .catch(async () => (

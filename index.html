@@ -46,7 +46,7 @@
 
         <div class="briefing-objective" role="note">
           <strong>OBJECTIF FINAL</strong>
-          <span>Vague 15 · Titan Léviathan</span>
+          <span id="campaign-objective">Vague 15 · Titan Léviathan</span>
         </div>
 
         <label class="difficulty-field" for="difficulty-select">
@@ -59,13 +59,22 @@
           <small id="difficulty-description">L’expérience équilibrée prévue pour une première campagne complète.</small>
         </label>
 
+        <label class="difficulty-field" for="campaign-select">
+          <span>Campagne</span>
+          <select id="campaign-select" aria-describedby="campaign-description">
+            <option value="four_gates">La Guerre des Quatre Portes · 15 vagues</option>
+            <option value="ten_thrones">Les Dix Trônes · 20 vagues et 10 souveraines hostiles</option>
+          </select>
+          <small id="campaign-description">La campagne historique mène au Léviathan. Les Dix Trônes déploient une nouvelle antagoniste toutes les deux vagues.</small>
+        </label>
+
         <section class="deployment-planner" aria-labelledby="deployment-planner-title">
           <div class="planner-heading">
             <div>
               <p class="section-eyebrow">THÉÂTRE D’OPÉRATIONS</p>
               <h3 id="deployment-planner-title">Choisir le terrain</h3>
             </div>
-            <span class="release-chip">MISE À JOUR 2.3</span>
+            <span class="release-chip">MISE À JOUR 2.4</span>
           </div>
 
           <label class="difficulty-field" for="layout-select">
@@ -128,7 +137,7 @@
     <!-- HUD Top Header (Clean Combat Mode) -->
     <header id="hud-header">
       <div class="hud-group">
-        <div class="hud-brand" aria-label="Infernal City">
+        <div class="hud-brand" role="img" aria-label="Infernal City">
           <span>INFERNAL</span>
           <strong>CITY</strong>
         </div>
@@ -297,6 +306,12 @@
             <p>Choisissez la Valkyrie adulte qui mènera la prochaine sortie.</p>
           </button>
 
+          <button class="hq-card" id="btn-antagonist-codex-toggle" type="button">
+            <div class="hq-card-icon" aria-hidden="true">♛</div>
+            <h3>Codex des Dix Trônes</h3>
+            <p>Étudiez leurs trois phases, préparez un contre et lancez une chasse de boss.</p>
+          </button>
+
           <button class="hq-card" id="btn-wardrobe-toggle" type="button">
             <div class="hq-card-icon">👙</div>
             <h3>Garde-Robe & Skins</h3>
@@ -373,6 +388,16 @@
     </div>
 
     <!-- Sub-Modals (Accessible via HQ Hub Modal) -->
+
+    <div class="modal-overlay" id="antagonist-codex-modal" role="dialog" aria-modal="true" aria-labelledby="antagonist-codex-title" aria-describedby="antagonist-codex-description">
+      <div class="modal-box antagonist-codex-box">
+        <button class="btn-close" type="button" aria-label="Fermer le Codex des Dix Trônes">&times;</button>
+        <p class="section-eyebrow">RENSEIGNEMENT · CAMPAGNE 20 VAGUES</p>
+        <h2 class="modal-title" id="antagonist-codex-title">CODEX DES DIX TRÔNES</h2>
+        <p class="modal-subtitle" id="antagonist-codex-description">Dix antagonistes adultes originales, chacune avec trois phases lisibles, des motifs de projectiles distincts et un contre tactique. Après sa première neutralisation en campagne, une chasse permet de rejouer directement le siège du Trône choisi.</p>
+        <div class="antagonist-grid" id="antagonist-codex-grid"></div>
+      </div>
+    </div>
 
     <!-- Bio-Lab Pet Drones Modal -->
     <div class="modal-overlay" id="biolab-modal">
@@ -562,8 +587,8 @@
     <div class="modal-overlay" id="wardrobe-modal">
       <div class="modal-box">
         <button class="btn-close">&times;</button>
-        <h2 class="modal-title" style="color: #ec4899;">👙 GARDE-ROBE & SKINS ALTERNATIFS (+18)</h2>
-        <p class="modal-subtitle">Changez la tenue active de vos Valkyries pour personnaliser votre avatar HUD et votre Codex !</p>
+        <h2 class="modal-title" style="color: #ec4899;">GARDE-ROBE & PORTRAITS ALTERNATIFS (+18)</h2>
+        <p class="modal-subtitle">Choisissez la présentation classique ou le portrait nocturne adulte de chaque Valkyrie pour personnaliser le HUD et le Codex.</p>
 
         <div class="skin-select-grid" id="skin-options-container">
           <!-- Injected dynamically -->
@@ -915,6 +940,7 @@
   <script src="audio.v8.js"></script>
   <script src="vn-scenes.v1.js"></script>
   <script src="expansion.v1.js"></script>
+  <script src="characters.v1.js"></script>
   <script src="vn-expansion.v1.js"></script>
   <script src="game.v9.js"></script>
   <script src="pwa.v4.js"></script>

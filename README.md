@@ -2,7 +2,36 @@
 
 Roguelite de défense cyber-gothique en HTML, CSS et JavaScript natifs.
 
-## Mise à jour 2.3 — La Guerre des Quatre Portes
+## Mise à jour 2.4 — Les Dix Trônes
+
+- Dix nouvelles héroïnes adultes et originales rejoignent les six commandantes
+  historiques : Nyx Circuit, Aurelia Brassheart, Maris Blacktide, Zahra des
+  Mille-Ciels, Mircalla Dollheart, Isolde Mourne, Hana Kurogane, Freyja
+  Rimeborne, Vega Solari et Amara Verdigris. Leur direction va du cyberpunk au
+  steampunk, de la corsaire abyssale à la noblesse gothique, sans reprendre
+  l’apparence d’un personnage sous licence.
+- Chaque nouvelle héroïne possède un kit complet et mesurable : passif,
+  compétence active ciblée, ultime chargé, règle de déblocage, rôle tactique et
+  affinités de défenses.
+- Dix antagonistes adultes et originales occupent les Trônes : Xyra Bioforge,
+  Lady Ossuary, Nhal’Zara, Astarra Infernale, Umbrael Shadow, Pestifera, Vexara
+  Dreadtide, Kali-X, Malika Ash-Djinn et Madame Noctis. Chaque combat de boss
+  comporte trois phases télégraphiées, des motifs distincts, un contre-jeu et
+  des récompenses propres.
+- La campagne « Les Dix Trônes » déroule vingt vagues et introduit un nouveau
+  boss toutes les deux vagues. Elle cohabite avec la Guerre des Quatre Portes
+  et conserve sa progression dans la sauvegarde.
+- Le Codex des antagonistes rassemble profils, phases et conseils ; chaque
+  chasse devient rejouable après la première neutralisation du Trône concerné.
+- Le Salon Nocturne reçoit trente chapitres VN supplémentaires, soit trois
+  longues conversations par nouvelle héroïne, avec embranchements de lore,
+  limites explicites et consentement révocable sans pénalité militaire.
+- Les atlas 4×4, portraits, expressions et CG cohérentes proviennent d’assets
+  OpenAI originaux. Après le portail adulte, seuls les atlas nécessaires à la
+  première sortie sont préchauffés ; héroïnes non sélectionnées, Trônes, portraits
+  et CG sont téléchargés puis mis en cache à leur sélection ou à leur apparition.
+
+## Fondations 2.3 — La Guerre des Quatre Portes
 
 - Quatre théâtres tactiques sur un monde fixe de 1 200 × 800 : Convergence,
   Muraille occidentale, Veille du Sud et Double Faille. La rotation de campagne
@@ -10,7 +39,7 @@ Roguelite de défense cyber-gothique en HTML, CSS et JavaScript natifs.
 - Les terrains asymétriques changent réellement les lignes d’arrivée :
   Citadelle à gauche avec hordes venant de droite, défense nord contre assaut
   du sud, ou double voie parallèle.
-- Quinze vagues déterministes annoncent leur prochaine composition. Les unités
+- Quinze vagues déterministes de la campagne historique annoncent leur prochaine composition. Les unités
   volantes, protectrices, diviseuses et d’artillerie demandent chacune une
   réponse différente.
 - Chaque défense possède deux spécialisations définitives, et les six héroïnes
@@ -25,8 +54,9 @@ Roguelite de défense cyber-gothique en HTML, CSS et JavaScript natifs.
 
 ## Boucles de jeu
 
-- Campagne complète de 15 vagues avec boss aux vagues 5, 10 et 15, écran de
-  victoire, épilogue et mode infini optionnel.
+- Campagne historique complète de 15 vagues avec boss aux vagues 5, 10 et 15,
+  plus Les Dix Trônes en 20 vagues avec dix boss ; chacune possède son écran de
+  victoire, son épilogue et un mode infini optionnel.
 - Trois difficultés qui modifient réellement la Citadelle, les ennemis et les
   récompenses.
 - Tour Infinitum de 100 étages avec mutateur verrouillé par étage et conclusion
@@ -40,15 +70,18 @@ Roguelite de défense cyber-gothique en HTML, CSS et JavaScript natifs.
   La caméra tactique les cadre entre les HUD sur bureau et mobile, sans
   téléporter les hordes lors d’une rotation.
 - Sol, terrain d’approche et quatre portails cyber-infernaux, vingt défenses,
-  sept ennemis et six héros de combat animés à partir d’assets OpenAI.
+  sept archétypes ennemis, six héros historiques et les vingt personnages de
+  l’extension animés à partir d’assets OpenAI.
 - Quartier Général : commandantes, escadrille de familiers améliorable,
   mercenaires en patrouille, boutique, archives, Salon Nocturne et mini-jeu.
-- Visual novel relationnel : 18 chapitres, plus de 10 000 mots, historique,
-  reprise sauvegardée et 126 choix pour six héroïnes adultes.
+- Visual novel relationnel : 18 chapitres historiques et 30 nouveaux chapitres
+  pour les dix héroïnes adultes, historique, reprise sauvegardée et choix
+  persistants.
 
 ## Contenu adulte
 
-Le jeu est réservé aux personnes majeures. Tous les personnages relationnels ont
+Le jeu est réservé aux personnes majeures. Tous les personnages relationnels et
+les antagonistes sont explicitement adultes ; les personnages relationnels ont
 au moins 27 ans. Les romances sont facultatives, séparées des alliances
 militaires et reposent sur un consentement libre et révocable. Les scènes
 intimes restent suggestives et se terminent par un fondu au noir.
@@ -74,14 +107,15 @@ Le projet ne requiert aucune dépendance ni étape de compilation.
 ## Installation et mode hors ligne
 
 Le jeu enregistre un service worker sur `localhost` ou depuis une origine HTTPS.
-Après une première visite en ligne, les scripts essentiels, le terrain
-Convergence, les dix planches historiques et l’atlas des ennemis spécialisés
-sont précachés. Les grands terrains asymétriques, les CG narratives, les
-portraits de galerie et les compositions du Studio 2.0 rejoignent un cache
-média séparé à leur première consultation. Cela conserve une installation
-initiale sous le budget de 20 Mio sans sacrifier leur disponibilité hors ligne
-après découverte. Le manifeste 2.3 et les icônes PNG 192/512 permettent de
-proposer l’installation en application autonome.
+Après une première visite en ligne, le shell, les scripts essentiels — dont le
+registre des personnages —, le terrain Convergence et les icônes sont
+précachés. Tous les atlas de combat, personnages, portraits, expressions, CG
+narratives, grands terrains asymétriques et compositions du Studio 2.0
+rejoignent un cache média séparé à leur première consultation. Le service
+worker les sert ensuite en priorité depuis ce cache. Cela conserve une
+installation initiale sous le budget de 20 Mio sans sacrifier leur disponibilité
+hors ligne après découverte. Le manifeste 2.4 et les icônes PNG 192/512
+permettent de proposer l’installation en application autonome.
 
 Les actifs cœur portent un nom de version et le code utilise le réseau en
 priorité lorsqu’il est disponible, puis le cache hors ligne en secours. Le
@@ -90,9 +124,14 @@ cache actif reste versionné dans `sw.js`.
 ## Direction visuelle OpenAI
 
 La texture raccordable de l’arène, le terrain orthographique d’approche et les
-dix planches 4×4 ont été générés avec l’outil ImageGen intégré d’OpenAI. Les
-neuf planches de combat couvrent les vingt défenses, les sept archétypes ennemis
-et les six héros jouables. Le canvas choisit les frames
+dix planches historiques 4×4 ont été générés avec l’outil ImageGen intégré
+d’OpenAI. Vingt nouvelles planches 4×4 donnent à chacune des dix héroïnes et des
+dix antagonistes ses états de veille, déplacement, attaque et compétence ou
+phase ultime. Les portraits, expressions et trente CG de chapitre conservent
+les mêmes silhouettes, palettes et costumes originaux.
+
+Les neuf planches de combat historiques couvrent les vingt défenses, les sept
+archétypes ennemis et les six héros de départ. Le canvas choisit les frames
 selon les états réels : charge/tir/recul, locomotion/attaque/impact et
 attaque/compétence héroïque. Le héros choisi est rendu physiquement sur la
 Citadelle et ses leurres utilisent aussi sa planche.
