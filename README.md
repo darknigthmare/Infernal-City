@@ -2,6 +2,23 @@
 
 Roguelite de défense cyber-gothique en HTML, CSS et JavaScript natifs.
 
+## Mise à jour 2.5 — Archives Sensuelles
+
+- Les dix Trônes possèdent désormais deux CG cinématiques chacune :
+  introduction lors de leur première apparition de la sortie et retrait après
+  leur neutralisation. Une file dédiée évite toute superposition avec les choix
+  de niveau, le QG ou le Game Over.
+- Une nouvelle surface du QG regroupe dix escales en maillot, cinq romances
+  femme-femme et cinq scènes après-intimité entre adultes consentantes. Les
+  rapprochements restent non nus ; l’acte intime demeure hors champ, au fondu
+  noir, puis la narration reprend dans un moment couvert et calme.
+- Quatre Game Over coquins montrent une antagoniste victorieuse taquinant une
+  héroïne adulte, entièrement vêtue et indemne. Ils ne comportent ni contact
+  sexuel forcé ni violence graphique et ne modifient aucune récompense.
+- Les 44 nouvelles CG OpenAI sont chargées et mises en cache à la demande. Les
+  archives se débloquent avec les mêmes jalons que les héroïnes ou après un
+  premier Game Over, sans coût et sans conséquence militaire.
+
 ## Mise à jour 2.4 — Les Dix Trônes
 
 - Dix nouvelles héroïnes adultes et originales rejoignent les six commandantes
@@ -114,7 +131,7 @@ narratives, grands terrains asymétriques et compositions du Studio 2.0
 rejoignent un cache média séparé à leur première consultation. Le service
 worker les sert ensuite en priorité depuis ce cache. Cela conserve une
 installation initiale sous le budget de 20 Mio sans sacrifier leur disponibilité
-hors ligne après découverte. Le manifeste 2.4 et les icônes PNG 192/512
+hors ligne après découverte. Le manifeste 2.5 et les icônes PNG 192/512
 permettent de proposer l’installation en application autonome.
 
 Les actifs cœur portent un nom de version et le code utilise le réseau en
@@ -128,7 +145,8 @@ dix planches historiques 4×4 ont été générés avec l’outil ImageGen inté
 d’OpenAI. Vingt nouvelles planches 4×4 donnent à chacune des dix héroïnes et des
 dix antagonistes ses états de veille, déplacement, attaque et compétence ou
 phase ultime. Les portraits, expressions et trente CG de chapitre conservent
-les mêmes silhouettes, palettes et costumes originaux.
+les mêmes silhouettes, palettes et costumes originaux. La passe 2.5 ajoute
+vingt cinématiques de Trône et vingt-quatre archives adultes non graphiques.
 
 Les neuf planches de combat historiques couvrent les vingt défenses, les sept
 archétypes ennemis et les six héros de départ. Le canvas choisit les frames

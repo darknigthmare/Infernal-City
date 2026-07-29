@@ -490,6 +490,19 @@ body {
   margin-top: auto;
 }
 
+.antagonist-cinematic-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+
+.antagonist-cinematic-actions .btn-secondary {
+  min-width: 0;
+  min-height: 44px;
+  padding: 7px;
+  font-size: 0.66rem;
+}
+
 /* Meters */
 .citadel-hp-box {
   width: 140px;
@@ -969,6 +982,11 @@ body {
   transition-delay: 0s;
 }
 
+/* The focus-stack modal must also be the visual top layer, regardless of DOM order. */
+.modal-overlay.active[aria-hidden="false"]:not(.adult-gate) {
+  z-index: 140;
+}
+
 /* Modal Box */
 .modal-box {
   background: var(--bg-card);
@@ -1315,6 +1333,170 @@ body {
   font-weight: 800;
   text-align: center;
   color: var(--color-cyan);
+}
+
+/* Adult bonus CGs remain non-graphic and are downloaded only when this
+   dedicated archive or a matching Game Over is opened. */
+.adult-scenes-box {
+  width: min(1120px, 100%);
+  max-width: 1120px;
+}
+
+.adult-scenes-filter {
+  display: grid;
+  grid-template-columns: auto minmax(180px, 300px);
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #e2e8f0;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.adult-scenes-filter select {
+  min-height: 44px;
+  border: 1px solid rgba(0, 240, 255, 0.45);
+  border-radius: 9px;
+  background: #0b1020;
+  color: #f8fafc;
+  padding: 8px 12px;
+}
+
+.adult-scenes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.adult-scene-card {
+  appearance: none;
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(236, 72, 153, 0.38);
+  border-radius: 14px;
+  background: #080d19;
+  color: #f8fafc;
+  text-align: left;
+}
+
+button.adult-scene-card {
+  cursor: pointer;
+}
+
+button.adult-scene-card:hover,
+button.adult-scene-card:focus-visible {
+  border-color: var(--color-cyan);
+  box-shadow: 0 0 18px rgba(0, 240, 255, 0.25);
+}
+
+.adult-scene-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: #040812;
+}
+
+.adult-scene-card.locked img {
+  filter: blur(9px) brightness(0.28);
+}
+
+.adult-scene-card-body {
+  display: grid;
+  gap: 5px;
+  padding: 12px;
+}
+
+.adult-scene-kind {
+  color: var(--color-cyan);
+  font-family: var(--font-tech);
+  font-size: 0.66rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.adult-scene-card h3 {
+  color: #f9a8d4;
+  font-size: 0.92rem;
+  line-height: 1.2;
+}
+
+.adult-scene-card p {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.adult-scene-lock {
+  position: absolute;
+  inset: 0 0 auto;
+  display: flex;
+  min-height: 135px;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(2, 6, 23, 0.72);
+  color: #f8fafc;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.cinematic-box {
+  width: min(900px, 100%);
+  max-width: 900px;
+  align-items: center;
+}
+
+.cinematic-frame {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(236, 72, 153, 0.55);
+  border-radius: 14px;
+  background: #020611;
+  box-shadow: 0 0 28px rgba(236, 72, 153, 0.2);
+}
+
+.cinematic-frame img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.cinematic-box .btn-primary {
+  min-width: min(100%, 280px);
+}
+
+.game-over-box {
+  width: min(760px, 92%);
+  max-width: 760px;
+}
+
+.game-over-tease {
+  width: min(100%, 620px);
+  margin-inline: auto;
+  overflow: hidden;
+  border: 1px solid rgba(236, 72, 153, 0.5);
+  border-radius: 14px;
+  background: #030712;
+}
+
+.game-over-tease img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.game-over-tease figcaption {
+  padding: 9px 12px;
+  color: #fbcfe8;
+  font-size: 0.78rem;
+  line-height: 1.4;
 }
 
 /* CG Story Viewer Layout */
@@ -3516,6 +3698,32 @@ body:is(.text-extra-large, [data-text-size="extra-large"]) {
   .adult-gate-legal {
     margin-top: 3px;
     font-size: 0.64rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .adult-scenes-filter {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .adult-scenes-filter select,
+  .adult-scenes-grid {
+    width: 100%;
+  }
+
+  .adult-scenes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cinematic-box,
+  .game-over-box {
+    width: 100%;
+  }
+
+  .cinematic-frame img,
+  .game-over-tease img {
+    max-height: 42dvh;
   }
 }
 

@@ -11,6 +11,7 @@ const GAME_SOURCE = fs.readFileSync(path.join(ROOT, 'game.v9.js'), 'utf8');
 const VN_SOURCE = fs.readFileSync(path.join(ROOT, 'vn-scenes.v1.js'), 'utf8');
 const CHARACTER_SOURCE = fs.readFileSync(path.join(ROOT, 'characters.v1.js'), 'utf8');
 const VN_EXPANSION_SOURCE = fs.readFileSync(path.join(ROOT, 'vn-expansion.v1.js'), 'utf8');
+const ADULT_SCENES_SOURCE = fs.readFileSync(path.join(ROOT, 'adult-scenes.v1.js'), 'utf8');
 const EXPANSION_SOURCE = fs.readFileSync(path.join(ROOT, 'expansion.v1.js'), 'utf8');
 
 function createClassList() {
@@ -120,6 +121,7 @@ function loadGameModule(seed = {}) {
       GameEngine,
       EXPANSION,
       CHARACTER_EXPANSION,
+      ADULT_SCENES,
       SAVE_VERSION,
       CAMPAIGN_FINAL_WAVE,
       BATTLEFIELD_APPROACH_MARGIN,
@@ -146,6 +148,7 @@ function loadGameModule(seed = {}) {
   vm.runInContext(VN_SOURCE, context, { filename: 'vn-scenes.v1.js' });
   vm.runInContext(CHARACTER_SOURCE, context, { filename: 'characters.v1.js' });
   vm.runInContext(VN_EXPANSION_SOURCE, context, { filename: 'vn-expansion.v1.js' });
+  vm.runInContext(ADULT_SCENES_SOURCE, context, { filename: 'adult-scenes.v1.js' });
   vm.runInContext(`${GAME_SOURCE}\n${exportHook}`, context, { filename: 'game.v9.js' });
 
   return {
@@ -2674,4 +2677,81 @@ test('le runtime ne tente jamais de remplacer la propriete DOM dataset en lectur
 
 test('les libelles dynamiques visibles ne contiennent aucun residu UTF-8 mal decode', () => {
   assert.doesNotMatch(GAME_SOURCE, /camÃ©ra|TRIBUT Ã—|âš¡|RÃ‰SERVE|rÃ©serve|Ã©carlate|prÃªt/u);
+});
+
+test('les cinematiques des Trones sont mises en file une seule fois par sortie', () => {
+  const {
+    GameEngine, document
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  engine.hasEnteredAdultExperience = true;
+  engine.getTopOpenModal = () => null;
+  const ids = [
+    'adult-gate-modal',
+    'cinematic-modal',
+    'cinematic-img',
+    'cinematic-title',
+    'cinematic-eyebrow',
+    'cinematic-description'
+  ];
+  const elements = Object.fromEntries(ids.map(id => [id, createElement(
+    id === 'cinematic-img' ? 'img' : 'div'
+  )]));
+  document.getElementById = id => elements[id] || null;
+  let opened = null;
+  engine.openModal = modal => { opened = modal; };
+
+  assert.equal(engine.queueBossCinematic('xyra', 'intro'), true);
+  assert.equal(engine.queueBossCinematic('xyra', 'intro'), false);
+  assert.equal(engine.activeCinematic.id, 'xyra_intro');
+  assert.equal(elements['cinematic-title'].textContent.includes('Xyra Bioforge'), true);
+  assert.equal(elements['cinematic-img'].src.endsWith('xyra-intro-v1.webp'), true);
+  assert.equal(opened, elements['cinematic-modal']);
+});
+
+test('les bonus adultes suivent les deblocages militaires sans modifier le gameplay', () => {
+  const {
+    GameEngine, ADULT_SCENES, HERO_CLASSES
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const nyxBikini = ADULT_SCENES.bonusScenes.find(scene => scene.id === 'nyx_bikini');
+  const pairedRomance = ADULT_SCENES.bonusScenes.find(
+    scene => scene.id === 'nyx-aurelia_romance'
+  );
+  const gameOver = ADULT_SCENES.bonusScenes.find(scene => scene.id === 'game_over_tease_01');
+
+  assert.equal(engine.isAdultBonusSceneUnlocked(nyxBikini), true);
+  assert.equal(engine.isAdultBonusSceneUnlocked(pairedRomance), false);
+  HERO_CLASSES.aurelia.unlocked = true;
+  assert.equal(engine.isAdultBonusSceneUnlocked(pairedRomance), true);
+  assert.equal(engine.isAdultBonusSceneUnlocked(gameOver), false);
+  engine.bestWave = 8;
+  engine.runHistory = [{ victory: true }];
+  assert.equal(engine.isAdultBonusSceneUnlocked(gameOver), false);
+  engine.runHistory.unshift({ victory: false });
+  assert.equal(engine.isAdultBonusSceneUnlocked(gameOver), true);
+  assert.equal(engine.score, 0);
+  assert.equal(engine.metaCoins, 0);
+});
+
+test('le Game Over choisit la taquinerie liee a l heroine quand elle existe', () => {
+  const {
+    GameEngine, document, HERO_CLASSES
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  engine.selectedHero = HERO_CLASSES.nyx;
+  const figure = createElement('figure');
+  const image = createElement('img');
+  const caption = createElement('figcaption');
+  image.closest = selector => selector === '.game-over-tease' ? figure : null;
+  document.getElementById = id => ({
+    'game-over-tease-img': image,
+    'game-over-tease-caption': caption
+  })[id] || null;
+
+  const scene = engine.applyGameOverTease();
+  assert.equal(scene.id, 'game_over_tease_01');
+  assert.equal(image.src.endsWith('game-over-tease-01-v1.webp'), true);
+  assert.equal(caption.textContent.length > 40, true);
+  assert.equal(figure.hidden, false);
 });

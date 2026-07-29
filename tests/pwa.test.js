@@ -66,7 +66,7 @@ test('le script PWA limite son enregistrement aux contextes surs', () => {
   assert.match(source, /updateViaCache:\s*'none'/);
 });
 
-test('les actifs coeur 2.4 sont fingerprints et servis network first', () => {
+test('les actifs coeur 2.5 sont fingerprints et servis network first', () => {
   const index = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
   const worker = fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8');
 
@@ -74,9 +74,10 @@ test('les actifs coeur 2.4 sont fingerprints et servis network first', () => {
   assert.match(index, /audio\.v8\.js/);
   assert.match(index, /game\.v9\.js/);
   assert.match(index, /pwa\.v4\.js/);
-  assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}v9`/);
+  assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}v10`/);
   assert.match(worker, /vn-scenes\.v1\.js/);
   assert.match(worker, /characters\.v1\.js/);
+  assert.match(worker, /adult-scenes\.v1\.js/);
   assert.match(worker, /infernal-city-coastline\.png/);
   assert.match(worker, /infernal-city-approach-terrain\.png/);
   assert.match(worker, /infernal-city-spawn-gate-atlas\.png/);
@@ -88,7 +89,7 @@ test('les actifs coeur 2.4 sont fingerprints et servis network first', () => {
 test('les atlas et médias narratifs utilisent un cache media cache-first', () => {
   const worker = fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8');
 
-  assert.match(worker, /MEDIA_CACHE_NAME = `\$\{CACHE_PREFIX\}media-v2\.4`/);
+  assert.match(worker, /MEDIA_CACHE_NAME = `\$\{CACHE_PREFIX\}media-v2\.5`/);
   assert.match(worker, /relativePath\.startsWith\('assets\/animations\/'\)/);
   assert.match(worker, /relativePath\.startsWith\('assets\/characters\/'\)/);
   assert.match(worker, /relativePath\.startsWith\('assets\/vn\/'\)/);

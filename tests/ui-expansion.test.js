@@ -15,16 +15,18 @@ function hasId(id) {
   return new RegExp(`id="${id}"`).test(html);
 }
 
-test('the 2.4 character and expansion scripts load before the game runtime', () => {
+test('the 2.5 content scripts load before the game runtime', () => {
   const expansionIndex = html.indexOf('<script src="expansion.v1.js"></script>');
   const characterIndex = html.indexOf('<script src="characters.v1.js"></script>');
   const vnExpansionIndex = html.indexOf('<script src="vn-expansion.v1.js"></script>');
+  const adultScenesIndex = html.indexOf('<script src="adult-scenes.v1.js"></script>');
   const gameIndex = html.indexOf('<script src="game.v9.js"></script>');
 
   assert.ok(expansionIndex > 0);
   assert.ok(characterIndex > expansionIndex);
   assert.ok(vnExpansionIndex > characterIndex);
-  assert.ok(gameIndex > vnExpansionIndex);
+  assert.ok(adultScenesIndex > vnExpansionIndex);
+  assert.ok(gameIndex > adultScenesIndex);
 });
 
 test('the campaign briefing exposes every terrain and the daily contract', () => {
@@ -71,6 +73,35 @@ test('specializations, Infinitum and Studio 2.0 have accessible static surfaces'
   assert.match(css, /\.vn-lore-btn/);
 });
 
+test('cinematics, adult archives and playful Game Over have accessible surfaces', () => {
+  [
+    'btn-adult-scenes-toggle',
+    'adult-scenes-modal',
+    'adult-scenes-filter-select',
+    'adult-scenes-grid',
+    'cinematic-modal',
+    'cinematic-img',
+    'cinematic-title',
+    'cinematic-description',
+    'btn-cinematic-continue',
+    'game-over-tease-img',
+    'game-over-tease-caption'
+  ].forEach(id => assert.ok(hasId(id), `${id}: missing`));
+
+  assert.match(html, /id="adult-scenes-modal" role="dialog" aria-modal="true"/);
+  assert.match(html, /id="cinematic-modal" role="dialog" aria-modal="true"/);
+  assert.match(html, /id="game-over-modal" role="dialog" aria-modal="true"/);
+  assert.match(css, /\.adult-scenes-grid/);
+  assert.match(css, /\.cinematic-frame img/);
+  assert.match(css, /\.game-over-tease img/);
+  assert.match(css, /\.antagonist-cinematic-actions/);
+  assert.match(css, /\.modal-overlay\.active\[aria-hidden="false"\]:not\(\.adult-gate\)/);
+  assert.match(gameSource, /queueBossCinematic\(enemy\.bossDefinitionId, 'intro'\)/);
+  assert.match(gameSource, /queueBossCinematic\(enemy\.bossDefinitionId, 'defeat'\)/);
+  assert.match(gameSource, /openBossCinematicArchive\(definition\.id, moment\)/);
+  assert.match(gameSource, /applyGameOverTease\(\)/);
+});
+
 test('settings and run history cover comfort, gamepad and portable saves', () => {
   [
     'btn-settings-toggle',
@@ -108,12 +139,13 @@ test('card headings do not skip directly from modal h2 titles to h4', () => {
   assert.match(css, /\.upgrade-text h3/);
 });
 
-test('PWA 2.4 keeps heavy terrains, atlases and CG in a separate runtime cache', () => {
-  assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}v9`/);
-  assert.match(worker, /MEDIA_CACHE_NAME = `\$\{CACHE_PREFIX\}media-v2\.4`/);
+test('PWA 2.5 keeps heavy terrains, atlases and CG in a separate runtime cache', () => {
+  assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}v10`/);
+  assert.match(worker, /MEDIA_CACHE_NAME = `\$\{CACHE_PREFIX\}media-v2\.5`/);
   assert.match(worker, /'\.\/expansion\.v1\.js'/);
   assert.match(worker, /'\.\/characters\.v1\.js'/);
   assert.match(worker, /'\.\/vn-expansion\.v1\.js'/);
+  assert.match(worker, /'\.\/adult-scenes\.v1\.js'/);
   assert.doesNotMatch(worker, /'\.\/assets\/animations\/.+\.(?:png|webp)'/);
   assert.match(worker, /assets\/environment\/map-western-wall\.png/);
   assert.match(worker, /assets\/environment\/map-southern-watch\.png/);
@@ -125,14 +157,15 @@ test('PWA 2.4 keeps heavy terrains, atlases and CG in a separate runtime cache',
   assert.match(worker, /serveRuntimeMedia/);
 });
 
-test('package and web manifest expose release 2.4.0', () => {
+test('package and web manifest expose release 2.5.0', () => {
   const packageJson = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
   const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'manifest.webmanifest'), 'utf8'));
 
-  assert.equal(packageJson.version, '2.4.0');
-  assert.equal(manifest.version, '2.4.0');
+  assert.equal(packageJson.version, '2.5.0');
+  assert.equal(manifest.version, '2.5.0');
   assert.match(packageJson.scripts.check, /node --check expansion\.v1\.js/);
   assert.match(packageJson.scripts.check, /node --check characters\.v1\.js/);
   assert.match(packageJson.scripts.check, /node --check vn-expansion\.v1\.js/);
+  assert.match(packageJson.scripts.check, /node --check adult-scenes\.v1\.js/);
   assert.match(packageJson.scripts.check, /node --test tests\/\*\.test\.js/);
 });

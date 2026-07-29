@@ -74,7 +74,7 @@
               <p class="section-eyebrow">THÉÂTRE D’OPÉRATIONS</p>
               <h3 id="deployment-planner-title">Choisir le terrain</h3>
             </div>
-            <span class="release-chip">MISE À JOUR 2.4</span>
+            <span class="release-chip">MISE À JOUR 2.5</span>
           </div>
 
           <label class="difficulty-field" for="layout-select">
@@ -358,6 +358,12 @@
             <div class="hq-card-icon">🔞</div>
             <h3>Archives Secrètes</h3>
             <p>Codex adulte, portraits suggestifs consentis et récits personnels.</p>
+          </button>
+
+          <button class="hq-card" id="btn-adult-scenes-toggle" type="button">
+            <div class="hq-card-icon" aria-hidden="true">💋</div>
+            <h3>Archives Sensuelles</h3>
+            <p>Maillots, romances F/F et après-intimité implicite entre adultes consentantes.</p>
           </button>
 
           <button class="hq-card" id="btn-achieve-toggle" type="button">
@@ -759,7 +765,7 @@
       <div class="cg-viewer-layout">
         <button class="btn-close">&times;</button>
         <div>
-          <img id="cg-viewer-img" src="" alt="Archive illustrée adulte">
+          <img id="cg-viewer-img" alt="Archive illustrée adulte">
         </div>
         <div class="cg-story-box">
           <h3 class="cg-story-title" id="cg-story-title-txt"></h3>
@@ -768,6 +774,35 @@
           <p style="font-size: 0.9rem; color: #cbd5e1; line-height: 1.6;" id="cg-story-desc-txt"></p>
           <div class="cg-stats-grid" id="cg-stats-grid-container"></div>
         </div>
+      </div>
+    </div>
+
+    <!-- Non-graphic adult bonus CG archive -->
+    <div class="modal-overlay" id="adult-scenes-modal" role="dialog" aria-modal="true" aria-labelledby="adult-scenes-title" aria-describedby="adult-scenes-description">
+      <div class="modal-box adult-scenes-box">
+        <button class="btn-close" type="button" aria-label="Fermer les Archives Sensuelles">&times;</button>
+        <p class="section-eyebrow">18+ · PERSONNAGES DE 28 ANS ET PLUS</p>
+        <h2 class="modal-title" id="adult-scenes-title">ARCHIVES SENSUELLES</h2>
+        <p class="modal-subtitle" id="adult-scenes-description">Scènes non nues entre adultes : maillots choisis, romances femme-femme consenties et moments après-intimité. L’acte intime reste hors champ, au fondu noir.</p>
+        <label class="adult-scenes-filter">
+          <span>Filtrer les archives</span>
+          <select id="adult-scenes-filter-select"></select>
+        </label>
+        <div class="adult-scenes-grid" id="adult-scenes-grid"></div>
+      </div>
+    </div>
+
+    <!-- Boss introduction/defeat cinematic -->
+    <div class="modal-overlay" id="cinematic-modal" role="dialog" aria-modal="true" aria-labelledby="cinematic-title" aria-describedby="cinematic-description">
+      <div class="modal-box cinematic-box">
+        <button class="btn-close" type="button" aria-label="Fermer la cinématique">&times;</button>
+        <p class="section-eyebrow" id="cinematic-eyebrow">TRÔNE EN APPROCHE</p>
+        <h2 class="modal-title" id="cinematic-title">Antagoniste</h2>
+        <figure class="cinematic-frame">
+          <img id="cinematic-img" alt="">
+        </figure>
+        <p class="modal-subtitle" id="cinematic-description"></p>
+        <button class="btn-primary" id="btn-cinematic-continue" type="button">REPRENDRE LE SIÈGE</button>
       </div>
     </div>
 
@@ -902,10 +937,15 @@
     </div>
 
     <!-- Game Over Modal -->
-    <div class="modal-overlay" id="game-over-modal">
-      <div class="modal-box" style="text-align: center;">
-        <h2 class="modal-title" style="color: #ef4444;">LA CITADELLE EST TOMBÉE !</h2>
-        <p class="modal-subtitle">Les hordes démoniaques ont submergé vos défenses.</p>
+    <div class="modal-overlay" id="game-over-modal" role="dialog" aria-modal="true" aria-labelledby="game-over-title" aria-describedby="game-over-description">
+      <div class="modal-box game-over-box" style="text-align: center;">
+        <h2 class="modal-title" id="game-over-title" style="color: #ef4444;">LA CITADELLE EST TOMBÉE !</h2>
+        <p class="modal-subtitle" id="game-over-description">Les hordes démoniaques ont submergé vos défenses.</p>
+
+        <figure class="game-over-tease">
+          <img id="game-over-tease-img" alt="">
+          <figcaption id="game-over-tease-caption">Une revanche est déjà promise.</figcaption>
+        </figure>
         
         <div class="game-over-stats">
           <div>Vague atteinte : <strong id="go-wave-txt" style="color:#00f0ff;">1</strong></div>
@@ -942,6 +982,7 @@
   <script src="expansion.v1.js"></script>
   <script src="characters.v1.js"></script>
   <script src="vn-expansion.v1.js"></script>
+  <script src="adult-scenes.v1.js"></script>
   <script src="game.v9.js"></script>
   <script src="pwa.v4.js"></script>
 </body>

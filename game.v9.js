@@ -86,6 +86,17 @@ const CHARACTER_EXPANSION = (
   || (typeof globalThis !== 'undefined' && globalThis.INFERNAL_CITY_CHARACTERS)
   || CHARACTER_EXPANSION_FALLBACK
 );
+const ADULT_SCENES_FALLBACK = Object.freeze({
+  contentVersion: 'fallback',
+  villainCinematics: {},
+  bonusScenes: [],
+  categories: { all: 'Toutes les archives' }
+});
+const ADULT_SCENES = (
+  (typeof window !== 'undefined' && window.INFERNAL_CITY_ADULT_SCENES)
+  || (typeof globalThis !== 'undefined' && globalThis.INFERNAL_CITY_ADULT_SCENES)
+  || ADULT_SCENES_FALLBACK
+);
 
 const DIFFICULTY_DATA = {
   story: {
@@ -435,6 +446,11 @@ class GameEngine {
     this.activeCampaignId = 'four_gates';
     this.defeatedBossIds = [];
     this.activeBossHuntId = null;
+    this.seenBossIntroIds = new Set();
+    this.seenBossDefeatIds = new Set();
+    this.pendingCinematics = [];
+    this.activeCinematic = null;
+    this.activeAdultSceneFilter = 'all';
     this.worldLayout = null;
     this.spawnRoutes = [];
     this.mapRotation = [];
@@ -2060,6 +2076,8 @@ class GameEngine {
     if (restoreFocus && returnTo && typeof returnTo.focus === 'function') {
       requestAnimationFrame(() => returnTo.focus());
     }
+    if (modal.id === 'cinematic-modal') this.activeCinematic = null;
+    if (!this.getTopOpenModal()) this.processCinematicQueue();
   }
 
   closeAllGameplayModals(excludedIds = []) {
@@ -2673,6 +2691,7 @@ class GameEngine {
         else if (targetId === 'btn-slot-toggle') this.openSlotMachineModal();
         else if (targetId === 'btn-shop-toggle') this.openShopModal();
         else if (targetId === 'btn-gallery-toggle') this.openGalleryModal();
+        else if (targetId === 'btn-adult-scenes-toggle') this.openAdultScenesModal();
         else if (targetId === 'btn-achieve-toggle') this.openAchievementsModal();
         else if (targetId === 'btn-run-history-toggle') this.openRunHistoryModal();
         else if (targetId === 'btn-settings-toggle') this.openSettingsModal();
@@ -2680,6 +2699,13 @@ class GameEngine {
     });
 
     document.getElementById('btn-resume-combat')?.addEventListener('click', () => this.closeModal('hq-menu-modal'));
+    document.getElementById('btn-cinematic-continue')?.addEventListener('click', () => {
+      this.closeModal('cinematic-modal');
+    });
+    document.getElementById('adult-scenes-filter-select')?.addEventListener('change', event => {
+      this.activeAdultSceneFilter = event.target.value;
+      this.renderAdultScenes(this.activeAdultSceneFilter);
+    });
 
     document.querySelectorAll('[data-studio-color]').forEach(button => {
       button.setAttribute('aria-pressed', 'false');
@@ -3256,6 +3282,10 @@ class GameEngine {
     this.campaignVictory = false;
     this.campaignVictoryClaimed = false;
     this.activeBossHuntId = null;
+    this.seenBossIntroIds = new Set();
+    this.seenBossDefeatIds = new Set();
+    this.pendingCinematics = [];
+    this.activeCinematic = null;
     this.runtimeError = null;
     this.accessibilityStatusTimer = 0;
     this.threatReadoutTimer = 0;
@@ -4731,6 +4761,9 @@ class GameEngine {
     this.nextSpawnGateIndex = (normalizedRouteIndex + 1) % routes.length;
     this.spawnGatePulses[route.side] = 0.82;
     this.enemies.push(enemy);
+    if (enemy.bossDefinitionId && options.suppressCinematic !== true) {
+      this.queueBossCinematic(enemy.bossDefinitionId, 'intro');
+    }
     this.updateHUD();
     return enemy;
   }
@@ -6061,6 +6094,7 @@ class GameEngine {
         `${definition?.name || enemy.name} neutralisée${firstDefeat ? ' · nouveau Trône consigné' : ''}`,
         enemy.color
       );
+      this.queueBossCinematic(enemy.bossDefinitionId, 'defeat');
       this.saveProgress();
     }
 
@@ -8234,6 +8268,23 @@ class GameEngine {
       const defeated = this.defeatedBossIds.includes(definition.id);
       status.textContent = defeated ? 'TRÔNE NEUTRALISÉ' : 'TRÔNE ACTIF';
 
+      const cinematicActions = document.createElement('div');
+      cinematicActions.className = 'antagonist-cinematic-actions';
+      [
+        ['intro', 'VOIR L’ENTRÉE'],
+        ['defeat', 'VOIR LE RETRAIT']
+      ].forEach(([moment, label]) => {
+        const button = document.createElement('button');
+        button.className = 'btn-secondary';
+        button.type = 'button';
+        button.disabled = !defeated;
+        button.textContent = defeated ? label : 'CG VERROUILLÉE';
+        button.addEventListener('click', () => {
+          this.openBossCinematicArchive(definition.id, moment);
+        });
+        cinematicActions.appendChild(button);
+      });
+
       const huntButton = document.createElement('button');
       huntButton.className = 'btn-secondary antagonist-hunt-btn';
       huntButton.type = 'button';
@@ -8244,7 +8295,16 @@ class GameEngine {
       }
       huntButton.addEventListener('click', () => this.startVillainHunt(definition.id));
 
-      body.append(name, title, signature, phases, counter, status, huntButton);
+      body.append(
+        name,
+        title,
+        signature,
+        phases,
+        counter,
+        status,
+        cinematicActions,
+        huntButton
+      );
       card.append(preview, body);
       grid.appendChild(card);
     });
@@ -8455,6 +8515,255 @@ class GameEngine {
     this.openModal(modal);
   }
 
+  getBossCinematic(bossId, moment = 'intro') {
+    const definition = ADULT_SCENES?.villainCinematics?.[bossId];
+    if (!definition) return null;
+    const isDefeat = moment === 'defeat';
+    return {
+      id: `${bossId}_${isDefeat ? 'defeat' : 'intro'}`,
+      bossId,
+      moment: isDefeat ? 'defeat' : 'intro',
+      name: definition.name,
+      eyebrow: isDefeat ? 'TRÔNE NEUTRALISÉ' : 'TRÔNE EN APPROCHE',
+      title: isDefeat
+        ? `${definition.name} · Retrait tactique`
+        : `${definition.name} · ${definition.title}`,
+      src: isDefeat ? definition.defeatSrc : definition.introSrc,
+      alt: isDefeat ? definition.defeatAlt : definition.introAlt,
+      description: isDefeat ? definition.defeatCopy : definition.introCopy
+    };
+  }
+
+  openBossCinematicArchive(bossId, moment = 'intro') {
+    if (!this.defeatedBossIds.includes(bossId)) return false;
+    const cinematic = this.getBossCinematic(bossId, moment);
+    if (!cinematic) return false;
+    const definition = ADULT_SCENES.villainCinematics[bossId];
+    this.openCgStoryViewer({
+      id: cinematic.id,
+      name: cinematic.title,
+      subtitle: cinematic.eyebrow,
+      img: cinematic.src,
+      alt: cinematic.alt,
+      ageLabel: `${definition.age} ans`,
+      quote: moment === 'defeat'
+        ? '« Mon Trône est tombé. Je retiens ton nom. »'
+        : '« Haven verra venir chaque phase de mon règne. »',
+      story: cinematic.description,
+      stats: {
+        Type: 'Cinématique de Trône',
+        Adulte: `${definition.age} ans`,
+        État: moment === 'defeat' ? 'Neutralisée' : 'Approche'
+      }
+    });
+    return true;
+  }
+
+  queueBossCinematic(bossId, moment = 'intro') {
+    if (!this.hasEnteredAdultExperience) return false;
+    const cinematic = this.getBossCinematic(bossId, moment);
+    if (!cinematic) return false;
+    const seenSet = moment === 'defeat' ? this.seenBossDefeatIds : this.seenBossIntroIds;
+    if (seenSet.has(bossId)) return false;
+    seenSet.add(bossId);
+    return this.queueCinematic(cinematic);
+  }
+
+  queueCinematic(cinematic) {
+    if (!cinematic?.id || !cinematic?.src) return false;
+    if (
+      this.activeCinematic?.id === cinematic.id
+      || this.pendingCinematics.some(item => item.id === cinematic.id)
+    ) return false;
+    this.pendingCinematics.push(cinematic);
+    this.processCinematicQueue();
+    return true;
+  }
+
+  processCinematicQueue() {
+    if (
+      this.activeCinematic
+      || this.isGameOver
+      || !this.hasEnteredAdultExperience
+      || this.pendingCinematics.length === 0
+    ) return false;
+    const adultGate = document.getElementById('adult-gate-modal');
+    if (adultGate?.classList.contains('active')) return false;
+    const topModal = this.getTopOpenModal();
+    if (topModal && topModal.id !== 'cinematic-modal') return false;
+
+    const modal = document.getElementById('cinematic-modal');
+    const image = document.getElementById('cinematic-img');
+    const title = document.getElementById('cinematic-title');
+    const eyebrow = document.getElementById('cinematic-eyebrow');
+    const description = document.getElementById('cinematic-description');
+    if (!modal || !image || !title || !eyebrow || !description) return false;
+
+    const cinematic = this.pendingCinematics.shift();
+    this.activeCinematic = cinematic;
+    image.src = cinematic.src;
+    image.alt = cinematic.alt || '';
+    title.textContent = cinematic.title;
+    eyebrow.textContent = cinematic.eyebrow;
+    description.textContent = cinematic.description;
+    this.openModal(modal);
+    this.announce(`${cinematic.eyebrow}. ${cinematic.title}.`);
+    return true;
+  }
+
+  isAdultBonusSceneUnlocked(scene) {
+    const rule = scene?.unlockRule;
+    if (!rule) return false;
+    if (rule.type === 'first_game_over') {
+      return this.isGameOver || this.runHistory.some(entry => entry?.victory === false);
+    }
+    if (rule.type === 'heroes_unlocked') {
+      return (rule.heroIds || []).every(heroId => {
+        const hero = HERO_CLASSES[heroId];
+        return Boolean(hero && hero.unlocked !== false);
+      });
+    }
+    return false;
+  }
+
+  getAdultBonusUnlockLabel(scene) {
+    if (scene?.unlockRule?.type === 'first_game_over') {
+      return 'Subir un premier Game Over.';
+    }
+    const heroNames = (scene?.unlockRule?.heroIds || [])
+      .map(heroId => HERO_CLASSES[heroId]?.name)
+      .filter(Boolean);
+    return heroNames.length > 1
+      ? `Débloquer ${heroNames.join(' et ')}.`
+      : `Débloquer ${heroNames[0] || 'cette héroïne'}.`;
+  }
+
+  getAdultSceneKindLabel(kind) {
+    return ADULT_SCENES?.categories?.[kind] || kind || 'Archive adulte';
+  }
+
+  formatAdultSceneParticipants(scene) {
+    return (scene?.participants || []).map(participantId => (
+      HERO_CLASSES[participantId]?.name
+      || this.getBossDefinition(participantId)?.name
+      || participantId
+    )).join(' · ');
+  }
+
+  openAdultScenesModal() {
+    const select = document.getElementById('adult-scenes-filter-select');
+    if (select) {
+      select.innerHTML = '';
+      Object.entries(ADULT_SCENES?.categories || {}).forEach(([value, label]) => {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = label;
+        select.appendChild(option);
+      });
+      if ([...select.options].some(option => option.value === this.activeAdultSceneFilter)) {
+        select.value = this.activeAdultSceneFilter;
+      }
+    }
+    this.renderAdultScenes();
+    this.openModal('adult-scenes-modal');
+  }
+
+  renderAdultScenes(filter = this.activeAdultSceneFilter) {
+    const grid = document.getElementById('adult-scenes-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    const scenes = (ADULT_SCENES?.bonusScenes || [])
+      .filter(scene => filter === 'all' || scene.kind === filter);
+
+    scenes.forEach(scene => {
+      const unlocked = this.isAdultBonusSceneUnlocked(scene);
+      const card = document.createElement(unlocked ? 'button' : 'div');
+      if (unlocked) card.type = 'button';
+      card.className = `adult-scene-card ${unlocked ? 'unlocked' : 'locked'}`;
+      const image = document.createElement('img');
+      image.src = unlocked ? scene.src : 'assets/cover.jpg';
+      image.alt = unlocked ? scene.alt : '';
+      image.loading = 'lazy';
+      image.decoding = 'async';
+      card.appendChild(image);
+
+      const body = document.createElement('div');
+      body.className = 'adult-scene-card-body';
+      const kind = document.createElement('span');
+      kind.className = 'adult-scene-kind';
+      kind.textContent = this.getAdultSceneKindLabel(scene.kind);
+      const title = document.createElement('h3');
+      title.textContent = scene.title;
+      const subtitle = document.createElement('p');
+      subtitle.textContent = scene.subtitle;
+      body.append(kind, title, subtitle);
+      card.appendChild(body);
+
+      if (unlocked) {
+        card.setAttribute('aria-label', `Ouvrir ${scene.title}. ${scene.subtitle}`);
+        card.addEventListener('click', () => this.openAdultSceneViewer(scene));
+      } else {
+        card.setAttribute('role', 'img');
+        card.setAttribute('aria-label', `${scene.title}, verrouillée. ${this.getAdultBonusUnlockLabel(scene)}`);
+        const lock = document.createElement('span');
+        lock.className = 'adult-scene-lock';
+        lock.textContent = `🔒 ${this.getAdultBonusUnlockLabel(scene)}`;
+        card.appendChild(lock);
+      }
+      grid.appendChild(card);
+    });
+  }
+
+  openAdultSceneViewer(scene) {
+    if (!scene || !this.isAdultBonusSceneUnlocked(scene)) return false;
+    const participants = this.formatAdultSceneParticipants(scene);
+    this.openCgStoryViewer({
+      id: scene.id,
+      name: scene.title,
+      subtitle: scene.subtitle,
+      img: scene.src,
+      alt: scene.alt,
+      ageLabel: scene.ageLabel,
+      quote: scene.quote,
+      story: scene.story,
+      stats: {
+        Type: this.getAdultSceneKindLabel(scene.kind),
+        Adultes: scene.ageLabel,
+        Personnages: participants
+      }
+    });
+    return true;
+  }
+
+  selectGameOverTease() {
+    const scenes = (ADULT_SCENES?.bonusScenes || [])
+      .filter(scene => scene.kind === 'game_over');
+    if (!scenes.length) return null;
+    const selectedMatch = scenes.find(scene => scene.heroId === this.selectedHero?.id);
+    if (selectedMatch) return selectedMatch;
+    const seed = Math.max(0, this.wave + this.mutantsKilled + this.score);
+    return scenes[seed % scenes.length];
+  }
+
+  applyGameOverTease() {
+    const image = document.getElementById('game-over-tease-img');
+    const caption = document.getElementById('game-over-tease-caption');
+    if (!image || !caption) return null;
+    const scene = this.selectGameOverTease();
+    const figure = image.closest('.game-over-tease');
+    if (!scene) {
+      if (figure) figure.hidden = true;
+      image.removeAttribute('src');
+      image.alt = '';
+      return null;
+    }
+    if (figure) figure.hidden = false;
+    image.src = scene.src;
+    image.alt = scene.alt;
+    caption.textContent = scene.story;
+    return scene;
+  }
+
   openGalleryModal() {
     this.checkGalleryUnlocks();
     this.renderGallery();
@@ -8504,7 +8813,8 @@ class GameEngine {
 
     const imgSrc = (HERO_CLASSES[item.id] && HERO_CLASSES[item.id].activeSkin === 'alt' && item.altImg) ? item.altImg : item.img;
     document.getElementById('cg-viewer-img').src = imgSrc;
-    document.getElementById('cg-viewer-img').alt = `Archive illustrée de ${item.name}, adulte de ${item.age} ans`;
+    document.getElementById('cg-viewer-img').alt = item.alt
+      || `Archive illustrée de ${item.name}, adulte de ${item.ageLabel || `${item.age} ans`}`;
     document.getElementById('cg-story-title-txt').textContent = item.name;
     document.getElementById('cg-story-sub-txt').textContent = item.subtitle;
     document.getElementById('cg-story-quote-txt').textContent = item.quote || '';
@@ -8528,6 +8838,8 @@ class GameEngine {
   triggerGameOver() {
     if (this.isGameOver) return;
     this.isGameOver = true;
+    this.pendingCinematics = [];
+    this.activeCinematic = null;
     this.closeAllGameplayModals();
     this.bestScore = Math.max(this.bestScore, this.score);
     this.bestWave = Math.max(this.bestWave, this.wave);
@@ -8539,6 +8851,7 @@ class GameEngine {
     document.getElementById('go-time-txt').textContent = this.formatRunTime();
     document.getElementById('go-meta-txt').textContent = `${this.runMetaCoinsEarned} ◆`;
     document.getElementById('go-record-txt').textContent = `Records · score ${this.bestScore} · vague ${this.bestWave}`;
+    this.applyGameOverTease();
     this.recordRunHistory({ victory: false });
     this.saveProgress();
     this.openModal('game-over-modal');
