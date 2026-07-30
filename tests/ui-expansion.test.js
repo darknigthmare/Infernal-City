@@ -15,7 +15,7 @@ function hasId(id) {
   return new RegExp(`id="${id}"`).test(html);
 }
 
-test('the 2.8 content scripts load before the game runtime', () => {
+test('the 2.9 content scripts load before the game runtime', () => {
   const expansionIndex = html.indexOf('<script src="expansion.v1.js"></script>');
   const characterIndex = html.indexOf('<script src="characters.v1.js"></script>');
   const vnExpansionIndex = html.indexOf('<script src="vn-expansion.v1.js"></script>');
@@ -45,7 +45,7 @@ test('the campaign briefing exposes every terrain and the daily contract', () =>
     .forEach(value => assert.match(html, new RegExp(`<option value="${value}"`)));
 });
 
-test('specializations, Infinitum and Studio 2.8 have accessible static surfaces', () => {
+test('specializations, Infinitum and Studio 2.9 have accessible static surfaces', () => {
   [
     'defense-specialization-section',
     'defense-specialization-options',
@@ -94,7 +94,7 @@ test('cinematics, adult archives and playful Game Over have accessible surfaces'
 
   assert.match(html, /id="adult-scenes-modal" role="dialog" aria-modal="true"/);
   assert.match(html, /60 CG de parenthèses privées OpenAI/);
-  assert.match(html, /20 parenthèses privées en trois CG indépendantes/);
+  assert.match(html, /60 routes VN indépendantes vers les chronologies chubby, maternité et jeunes années adultes 27\+/);
   assert.match(html, /id="cinematic-modal" role="dialog" aria-modal="true"/);
   assert.match(html, /id="game-over-modal" role="dialog" aria-modal="true"/);
   assert.match(css, /\.adult-scenes-grid/);
@@ -108,6 +108,48 @@ test('cinematics, adult archives and playful Game Over have accessible surfaces'
   assert.match(gameSource, /queueBossCinematic\(enemy\.bossDefinitionId, 'defeat'\)/);
   assert.match(gameSource, /openBossCinematicArchive\(definition\.id, moment\)/);
   assert.match(gameSource, /applyGameOverTease\(\)/);
+});
+
+test('body-route VN exposes an accessible dialog, participant filter and live progress', () => {
+  [
+    'body-route-participant-filter',
+    'body-route-participant-select',
+    'body-route-progress-summary',
+    'body-route-vn-modal',
+    'body-route-vn-title',
+    'body-route-vn-summary',
+    'body-route-vn-img',
+    'body-route-vn-speaker',
+    'body-route-vn-progress',
+    'body-route-vn-dialogue',
+    'body-route-vn-choices',
+    'body-route-vn-choice-prompt',
+    'btn-body-route-pause',
+    'btn-body-route-continue',
+    'body-route-vn-status'
+  ].forEach(id => assert.ok(hasId(id), `${id}: missing`));
+
+  assert.match(
+    html,
+    /<label[^>]+id="body-route-participant-filter"[^>]+hidden[^>]*>[\s\S]*?<select id="body-route-participant-select" aria-describedby="body-route-progress-summary"/
+  );
+  assert.match(
+    html,
+    /id="body-route-progress-summary" role="status" aria-live="polite" hidden/
+  );
+  assert.match(
+    html,
+    /id="body-route-vn-modal" role="dialog" aria-modal="true" aria-labelledby="body-route-vn-title" aria-describedby="body-route-vn-summary"/
+  );
+  assert.match(html, /id="body-route-vn-dialogue" aria-live="polite"/);
+  assert.match(
+    html,
+    /<fieldset[^>]+id="body-route-vn-choices"[^>]+hidden>[\s\S]*?<legend id="body-route-vn-choice-prompt">/
+  );
+  assert.match(
+    html,
+    /id="body-route-vn-status" role="status" aria-live="polite"/
+  );
 });
 
 test('settings and run history cover comfort, gamepad and portable saves', () => {
@@ -140,6 +182,27 @@ test('touch, compact viewport, focus and reduced-motion rules remain explicit', 
   assert.match(css, /\.defense-specialization-options/);
 });
 
+test('body-route VN keeps 44px targets and explicit mobile and landscape layouts', () => {
+  assert.match(css, /\.body-route-vn-choice\s*\{[^}]*min-height:\s*48px/s);
+  assert.match(css, /\.body-route-vn-actions button\s*\{[^}]*min-height:\s*44px/s);
+  assert.match(
+    css,
+    /@media \(max-width:\s*640px\)[\s\S]*?\.body-route-vn-layout\s*\{[^}]*grid-template-columns:\s*1fr/s
+  );
+  assert.match(
+    css,
+    /@media \(max-width:\s*640px\)[\s\S]*?\.body-route-vn-actions button\s*\{[^}]*width:\s*100%/s
+  );
+  assert.match(
+    css,
+    /@media \(orientation:\s*landscape\) and \(max-height:\s*560px\)[\s\S]*?\.body-route-vn-layout\s*\{[^}]*grid-template-columns:\s*minmax\(170px,\s*240px\) minmax\(0,\s*1fr\)/s
+  );
+  assert.match(
+    css,
+    /@media \(orientation:\s*landscape\) and \(max-height:\s*560px\)[\s\S]*?\.body-route-vn-dialogue\s*\{[^}]*min-height:\s*96px/s
+  );
+});
+
 test('card headings do not skip directly from modal h2 titles to h4', () => {
   assert.doesNotMatch(html, /<h4(?:\s|>)/);
   assert.doesNotMatch(gameSource, /<h4(?:\s|>)/);
@@ -147,9 +210,9 @@ test('card headings do not skip directly from modal h2 titles to h4', () => {
   assert.match(css, /\.upgrade-text h3/);
 });
 
-test('PWA 2.8 keeps heavy terrains, atlases and CG in a separate runtime cache', () => {
-  assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}v13`/);
-  assert.match(worker, /MEDIA_CACHE_NAME = `\$\{CACHE_PREFIX\}media-v2\.8`/);
+test('PWA 2.9 keeps heavy terrains, atlases and CG in a separate runtime cache', () => {
+  assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}v14`/);
+  assert.match(worker, /MEDIA_CACHE_NAME = `\$\{CACHE_PREFIX\}media-v2\.9`/);
   assert.match(worker, /'\.\/expansion\.v1\.js'/);
   assert.match(worker, /'\.\/characters\.v1\.js'/);
   assert.match(worker, /'\.\/vn-expansion\.v1\.js'/);
@@ -165,12 +228,12 @@ test('PWA 2.8 keeps heavy terrains, atlases and CG in a separate runtime cache',
   assert.match(worker, /serveRuntimeMedia/);
 });
 
-test('package and web manifest expose release 2.8.0', () => {
+test('package and web manifest expose release 2.9.0', () => {
   const packageJson = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
   const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'manifest.webmanifest'), 'utf8'));
 
-  assert.equal(packageJson.version, '2.8.0');
-  assert.equal(manifest.version, '2.8.0');
+  assert.equal(packageJson.version, '2.9.0');
+  assert.equal(manifest.version, '2.9.0');
   assert.match(packageJson.scripts.check, /node --check expansion\.v1\.js/);
   assert.match(packageJson.scripts.check, /node --check characters\.v1\.js/);
   assert.match(packageJson.scripts.check, /node --check vn-expansion\.v1\.js/);

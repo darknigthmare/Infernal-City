@@ -1,5 +1,29 @@
 # Infernal City: Valkyrie Sweeper
 
+## Mise à jour 2.9 — Routes de vies alternatives
+
+- Les soixante CG corporelles ne sont plus des images ouvertes par un simple
+  jalon militaire. Chacune conclut maintenant une route Visual Novel
+  indépendante : « Se choisir entière » pour la chronologie chubby,
+  « L’avenir protégé » pour la maternité et un flash-back de premières
+  missions ou premier règne.
+- Les dix héroïnes et les dix Trônes disposent de trois routes chacune. Une
+  héroïne devient disponible avec son déblocage normal ; un Trône exige sa
+  première neutralisation. La CG finale reste cachée jusqu’à la conclusion de
+  sa propre route.
+- Chaque parcours contient exactement vingt-neuf répliques, deux décisions et trois
+  branches à chaque carrefour. Réplique, branche et progression sont
+  sauvegardées séparément afin de permettre une reprise précise.
+- Les trois chronologies sont parallèles : chubby n’est jamais une étape vers
+  la grossesse, et aucune apparence n’est présentée comme supérieure. Ces
+  routes individuelles ne requièrent aucun accord romantique et ne modifient
+  ni la confiance, ni la monnaie, ni les statistiques ou l’efficacité militaire.
+- Les flash-backs « jeunes années » sont explicitement datés après 27 ans
+  révolus. Ils montrent des débuts de carrière adultes, non sexuels, et jamais
+  une adolescente ou une version « tout juste majeure ».
+- Le filtre « Routes corporelles VN » possède un sélecteur de participante et
+  un résumé accessible des routes terminées ou à reprendre.
+
 ## Mise à jour 2.8 — Parenthèses privées
 
 - Les dix héroïnes et les dix antagonistes disposent chacune d’une séquence
@@ -111,7 +135,7 @@ Roguelite de défense cyber-gothique en HTML, CSS et JavaScript natifs.
   ont désormais un pouvoir ciblable propre.
 - Défi quotidien déterministe, historique local des runs et Tour Infinitum
   poursuivie par segments de dix étages à mutateurs cumulés.
-- Studio 2.8 : pose, ambiance, intensité artistique suggestive ou intimiste et
+- Studio 2.9 : pose, ambiance, intensité artistique suggestive ou intimiste et
   galerie des conclusions. Tous les modèles sont adultes et chaque séance
   reste facultative, consentie et révocable.
 - Paramètres centralisés pour volumes, contraste, taille du texte, détection de
@@ -140,8 +164,8 @@ Roguelite de défense cyber-gothique en HTML, CSS et JavaScript natifs.
 - Quartier Général : commandantes, escadrille de familiers améliorable,
   mercenaires en patrouille, boutique, archives, Salon Nocturne et mini-jeu.
 - Visual novel relationnel : 18 chapitres historiques et 30 nouveaux chapitres
-  pour les dix héroïnes adultes, historique, reprise sauvegardée et choix
-  persistants.
+  pour les dix héroïnes adultes, plus 60 routes individuelles de vies
+  alternatives pour héroïnes et Trônes, avec reprise et choix persistants.
 
 ## Contenu adulte
 
@@ -175,11 +199,11 @@ Le jeu enregistre un service worker sur `localhost` ou depuis une origine HTTPS.
 Après une première visite en ligne, le shell, les scripts essentiels — dont le
 registre des personnages —, le terrain Convergence et les icônes sont
 précachés. Tous les atlas de combat, personnages, portraits, expressions, CG
-narratives, grands terrains asymétriques et compositions du Studio 2.8
+narratives, grands terrains asymétriques et compositions du Studio 2.9
 rejoignent un cache média séparé à leur première consultation. Le service
 worker les sert ensuite en priorité depuis ce cache. Cela conserve une
 installation initiale sous le budget de 20 Mio sans sacrifier leur disponibilité
-hors ligne après découverte. Le manifeste 2.8 et les icônes PNG 192/512
+hors ligne après découverte. Le manifeste 2.9 et les icônes PNG 192/512
 permettent de proposer l’installation en application autonome.
 
 Les actifs cœur portent un nom de version et le code utilise le réseau en

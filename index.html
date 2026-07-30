@@ -74,7 +74,7 @@
               <p class="section-eyebrow">THÉÂTRE D’OPÉRATIONS</p>
               <h3 id="deployment-planner-title">Choisir le terrain</h3>
             </div>
-            <span class="release-chip">MISE À JOUR 2.8</span>
+            <span class="release-chip">MISE À JOUR 2.9</span>
           </div>
 
           <label class="difficulty-field" for="layout-select">
@@ -363,7 +363,7 @@
           <button class="hq-card" id="btn-adult-scenes-toggle" type="button">
             <div class="hq-card-icon" aria-hidden="true">💋</div>
             <h3>Archives Sensuelles</h3>
-            <p>Maillots, romances, 60 CG corporelles, 20 boudoirs et 20 séquences privées en trois étapes.</p>
+            <p>Maillots, romances, boudoirs, parenthèses privées et 60 routes VN indépendantes menant aux CG chubby, maternité et jeunes années adultes 27+.</p>
           </button>
 
           <button class="hq-card" id="btn-achieve-toggle" type="button">
@@ -490,7 +490,7 @@
     <div class="modal-overlay" id="photo-studio-modal" role="dialog" aria-modal="true" aria-labelledby="studio-title">
       <div class="modal-box studio-2-box">
         <button class="btn-close" type="button" aria-label="Fermer le Studio Boudoir">&times;</button>
-        <p class="section-eyebrow">STUDIO 2.8 · 18+</p>
+        <p class="section-eyebrow">STUDIO 2.9 · 18+</p>
         <h2 class="modal-title" id="studio-title" style="color: #00f0ff;">📸 STUDIO BOUDOIR NÉON</h2>
         <p class="modal-subtitle" id="studio-hero-title">Valkyrie Active</p>
         <p class="consent-note" id="studio-consent-note">Portraits d’adultes réalisés et exposés avec leur accord explicite. La pose et l’ambiance peuvent être interrompues ou modifiées à tout moment.</p>
@@ -788,12 +788,49 @@
         <button class="btn-close" type="button" aria-label="Fermer les Archives Sensuelles">&times;</button>
         <p class="section-eyebrow">18+ · PERSONNAGES DE 27 ANS ET PLUS</p>
         <h2 class="modal-title" id="adult-scenes-title">ARCHIVES SENSUELLES</h2>
-        <p class="modal-subtitle" id="adult-scenes-description">Scènes non nues entre adultes : maillots choisis, romances consenties, 60 CG corporelles, 20 portraits boudoir et 20 parenthèses privées en trois CG indépendantes. Chaque ellipse reste abstraite, vide et hors champ.</p>
+        <p class="modal-subtitle" id="adult-scenes-description">Scènes non nues entre adultes : maillots, boudoirs, parenthèses privées et 60 routes VN indépendantes vers les chronologies chubby, maternité et jeunes années adultes 27+. Chaque choix est sauvegardé, sans effet relationnel ou militaire.</p>
         <label class="adult-scenes-filter">
           <span>Filtrer les archives</span>
           <select id="adult-scenes-filter-select"></select>
         </label>
+        <label class="adult-scenes-filter body-route-participant-filter" id="body-route-participant-filter" hidden>
+          <span>Choisir une participante</span>
+          <select id="body-route-participant-select" aria-describedby="body-route-progress-summary"></select>
+        </label>
+        <p class="body-route-progress-summary" id="body-route-progress-summary" role="status" aria-live="polite" hidden></p>
         <div class="adult-scenes-grid" id="adult-scenes-grid"></div>
+      </div>
+    </div>
+
+    <!-- Independent VN routes that reveal each adult body-variant CG -->
+    <div class="modal-overlay body-route-vn-overlay" id="body-route-vn-modal" role="dialog" aria-modal="true" aria-labelledby="body-route-vn-title" aria-describedby="body-route-vn-summary">
+      <div class="modal-box body-route-vn-box">
+        <button class="btn-close" type="button" aria-label="Mettre la route VN en pause et fermer">&times;</button>
+        <p class="section-eyebrow" id="body-route-vn-eyebrow">ROUTE CORPORELLE · ADULTE 27+</p>
+        <h2 class="modal-title" id="body-route-vn-title">Route VN</h2>
+        <p class="modal-subtitle" id="body-route-vn-subtitle"></p>
+        <p class="body-route-vn-summary" id="body-route-vn-summary"></p>
+        <div class="body-route-vn-layout">
+          <figure class="body-route-vn-portrait">
+            <img id="body-route-vn-img" alt="">
+            <figcaption>Chronologie individuelle, non romantique et sans effet gameplay</figcaption>
+          </figure>
+          <section class="body-route-vn-panel" aria-label="Dialogue de la route">
+            <div class="body-route-vn-meta">
+              <strong id="body-route-vn-speaker">Narration</strong>
+              <span id="body-route-vn-progress">DÉCISIONS 0 / 2</span>
+            </div>
+            <p class="body-route-vn-dialogue" id="body-route-vn-dialogue" aria-live="polite"></p>
+            <fieldset class="body-route-vn-choices" id="body-route-vn-choices" hidden>
+              <legend id="body-route-vn-choice-prompt">Choisir une perspective</legend>
+            </fieldset>
+            <div class="body-route-vn-actions">
+              <button class="btn-secondary" id="btn-body-route-pause" type="button">PAUSE · RETOUR AUX ARCHIVES</button>
+              <button class="btn-primary" id="btn-body-route-continue" type="button">CONTINUER</button>
+            </div>
+            <p class="body-route-vn-status" id="body-route-vn-status" role="status" aria-live="polite"></p>
+          </section>
+        </div>
       </div>
     </div>
 

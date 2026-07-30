@@ -1,6 +1,6 @@
 {
   "name": "infernal-city",
-  "version": "2.8.0",
+  "version": "2.9.0",
   "private": true,
   "description": "Jeu de defense adulte Infernal City, sans dependance de build.",
   "scripts": {

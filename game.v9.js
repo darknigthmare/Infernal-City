@@ -1,7 +1,7 @@
 /* Valkyrie Sweeper: Dark Siege - Comprehensive Game Engine */
 
 const CAMPAIGN_FINAL_WAVE = 15;
-const SAVE_VERSION = 7;
+const SAVE_VERSION = 8;
 const RUN_CHECKPOINT_VERSION = 1;
 // The player explicitly needs a long read on incoming hordes. Keep the compact
 // construction arena intact, but make its traversable approach belt five times
@@ -88,7 +88,9 @@ const CHARACTER_EXPANSION = (
 );
 const ADULT_SCENES_FALLBACK = Object.freeze({
   contentVersion: 'fallback',
+  bodyRouteDataVersion: 'fallback',
   villainCinematics: {},
+  bodyRoutes: [],
   bonusScenes: [],
   categories: { all: 'Toutes les archives' }
 });
@@ -451,6 +453,7 @@ class GameEngine {
     this.pendingCinematics = [];
     this.activeCinematic = null;
     this.activeAdultSceneFilter = 'all';
+    this.activeBodyRouteParticipantFilter = 'all';
     this.worldLayout = null;
     this.spawnRoutes = [];
     this.mapRotation = [];
@@ -605,6 +608,11 @@ class GameEngine {
       active: null
     };
     this.activeVnSession = null;
+    this.bodyRouteProgress = {
+      dataVersion: ADULT_SCENES.bodyRouteDataVersion || ADULT_SCENES.contentVersion,
+      routes: {}
+    };
+    this.activeBodyRouteId = null;
     this.vnExpansionState = this.loadVnExpansionState();
     this.lastVnCallbackMessage = '';
     this.vnPreviousRadioStation = null;
@@ -1509,6 +1517,7 @@ class GameEngine {
         }
         const loadedVnProgress = this.sanitizeLoadedVnProgress(data.vnSceneProgress);
         if (loadedVnProgress) this.vnSceneProgress = loadedVnProgress;
+        this.bodyRouteProgress = this.sanitizeLoadedBodyRouteProgress(data.bodyRouteProgress);
         if (data.selectedHeroId && HERO_CLASSES[data.selectedHeroId] && HERO_CLASSES[data.selectedHeroId].unlocked !== false) {
           this.selectedHero = HERO_CLASSES[data.selectedHeroId];
         }
@@ -1581,7 +1590,8 @@ class GameEngine {
           chapterResults: { ...this.vnSceneProgress.chapterResults },
           appliedEffects: [...this.vnSceneProgress.appliedEffects],
           active: this.vnSceneProgress.active
-        }
+        },
+        bodyRouteProgress: this.sanitizeLoadedBodyRouteProgress(this.bodyRouteProgress)
       };
       localStorage.setItem('valkyrie_sweeper_save', JSON.stringify(data));
     } catch (e) {
@@ -1821,7 +1831,29 @@ class GameEngine {
       return false;
     }
     if (topModal) {
-      if (edge(1) && topModal.querySelector?.('.btn-close')) this.closeModal(topModal);
+      if (topModal.id === 'body-route-vn-modal') {
+        const context = this.getActiveBodyRouteContext();
+        if (edge(1)) {
+          this.pauseBodyRouteToArchives();
+        } else if (context?.node.kind === 'choice' && (edge(12) || edge(13) || edge(14) || edge(15))) {
+          const options = [...topModal.querySelectorAll('.body-route-vn-choice')];
+          const currentIndex = Math.max(0, options.indexOf(document.activeElement));
+          const direction = edge(12) || edge(14) ? -1 : 1;
+          options[(currentIndex + direction + options.length) % options.length]?.focus();
+        } else if (edge(0)) {
+          if (context?.node.kind === 'choice') {
+            const focusedChoice = document.activeElement?.closest?.('.body-route-vn-choice');
+            (focusedChoice || topModal.querySelector('.body-route-vn-choice'))?.click();
+          } else {
+            this.advanceBodyRouteDialogue();
+          }
+        }
+        rememberButtons();
+        return true;
+      }
+      if (edge(1) && topModal.querySelector?.('.btn-close')) {
+        this.closeModal(topModal);
+      }
       rememberButtons();
       return true;
     }
@@ -1957,7 +1989,9 @@ class GameEngine {
     });
     document.querySelectorAll('.btn-close').forEach(button => {
       button.type = 'button';
-      button.setAttribute('aria-label', 'Fermer cette fenêtre');
+      if (!button.hasAttribute('aria-label')) {
+        button.setAttribute('aria-label', 'Fermer cette fenêtre');
+      }
     });
     this.syncModalAccessibility();
   }
@@ -2584,7 +2618,8 @@ class GameEngine {
       }
       if (e.key === 'Escape' && activeModal?.id !== 'adult-gate-modal' && activeModal?.querySelector('.btn-close')) {
         e.preventDefault();
-        this.closeModal(activeModal);
+        if (activeModal.id === 'body-route-vn-modal') this.pauseBodyRouteToArchives();
+        else this.closeModal(activeModal);
         return;
       }
 
@@ -2706,6 +2741,11 @@ class GameEngine {
       this.activeAdultSceneFilter = event.target.value;
       this.renderAdultScenes(this.activeAdultSceneFilter);
     });
+    document.getElementById('body-route-participant-select')?.addEventListener('change', event => {
+      this.activeBodyRouteParticipantFilter = event.target.value;
+      this.renderAdultScenes(this.activeAdultSceneFilter);
+      this.announce(document.getElementById('body-route-progress-summary')?.textContent || 'Filtre des routes mis à jour.');
+    });
 
     document.querySelectorAll('[data-studio-color]').forEach(button => {
       button.setAttribute('aria-pressed', 'false');
@@ -2767,7 +2807,8 @@ class GameEngine {
     document.querySelectorAll('.btn-close').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const modal = e.target.closest('.modal-overlay');
-        if (modal) this.closeModal(modal);
+        if (modal?.id === 'body-route-vn-modal') this.pauseBodyRouteToArchives();
+        else if (modal) this.closeModal(modal);
       });
     });
 
@@ -8634,8 +8675,98 @@ class GameEngine {
     return true;
   }
 
-  isAdultBonusSceneUnlocked(scene) {
-    const rule = scene?.unlockRule;
+  getBodyRoute(routeId) {
+    return (ADULT_SCENES?.bodyRoutes || []).find(route => route.id === routeId) || null;
+  }
+
+  getBodyRouteForScene(scene) {
+    return scene?.bodyRouteId ? this.getBodyRoute(scene.bodyRouteId) : null;
+  }
+
+  getBodyRouteNode(route, nodeId) {
+    return route?.nodes?.find(node => node.id === nodeId) || null;
+  }
+
+  createBodyRouteState(route) {
+    return {
+      status: 'new',
+      nodeId: route?.initialNode || 'opening',
+      lineIndex: 0,
+      choicePath: [],
+      completed: false
+    };
+  }
+
+  sanitizeLoadedBodyRouteProgress(savedProgress) {
+    const routeDataVersion = ADULT_SCENES.bodyRouteDataVersion || ADULT_SCENES.contentVersion;
+    const clean = {
+      dataVersion: routeDataVersion,
+      routes: {}
+    };
+    if (
+      !savedProgress
+      || typeof savedProgress !== 'object'
+      || savedProgress.dataVersion !== routeDataVersion
+      || !savedProgress.routes
+      || typeof savedProgress.routes !== 'object'
+    ) return clean;
+
+    const knownRoutes = new Map((ADULT_SCENES.bodyRoutes || []).map(route => [route.id, route]));
+    Object.entries(savedProgress.routes)
+      .filter(([routeId]) => knownRoutes.has(routeId))
+      .slice(0, 60)
+      .forEach(([routeId, candidate]) => {
+      const route = knownRoutes.get(routeId);
+      if (!route || !candidate || typeof candidate !== 'object') return;
+      const fallback = this.createBodyRouteState(route);
+      const node = this.getBodyRouteNode(route, candidate.nodeId) || this.getBodyRouteNode(route, fallback.nodeId);
+      const knownChoiceIds = new Set(route.nodes
+        .filter(item => item.kind === 'choice')
+        .flatMap(item => item.options.map(option => option.id)));
+      const choicePath = Array.isArray(candidate.choicePath)
+        ? candidate.choicePath
+          .filter(choiceId => typeof choiceId === 'string' && knownChoiceIds.has(choiceId))
+          .slice(0, route.choicesRequired || 2)
+        : [];
+      const maxLineIndex = node?.kind === 'dialogue'
+        ? Math.max(0, node.lines.length - 1)
+        : 0;
+      const completed = Boolean(
+        candidate.completed === true
+        && node?.end === true
+        && choicePath.length >= (route.choicesRequired || 2)
+      );
+      clean.routes[routeId] = {
+        status: completed
+          ? 'completed'
+          : candidate.status === 'in_progress'
+            ? 'in_progress'
+            : 'new',
+        nodeId: node?.id || fallback.nodeId,
+        lineIndex: Math.max(0, Math.min(maxLineIndex, Math.floor(Number(candidate.lineIndex) || 0))),
+        choicePath,
+        completed
+      };
+      });
+    return clean;
+  }
+
+  getOrCreateBodyRouteState(route) {
+    if (!route) return null;
+    const routeDataVersion = ADULT_SCENES.bodyRouteDataVersion || ADULT_SCENES.contentVersion;
+    if (!this.bodyRouteProgress || this.bodyRouteProgress.dataVersion !== routeDataVersion) {
+      this.bodyRouteProgress = {
+        dataVersion: routeDataVersion,
+        routes: {}
+      };
+    }
+    if (!this.bodyRouteProgress.routes[route.id]) {
+      this.bodyRouteProgress.routes[route.id] = this.createBodyRouteState(route);
+    }
+    return this.bodyRouteProgress.routes[route.id];
+  }
+
+  isAdultUnlockRuleSatisfied(rule) {
     if (!rule) return false;
     if (rule.type === 'first_game_over') {
       return this.isGameOver || this.runHistory.some(entry => entry?.victory === false);
@@ -8649,10 +8780,25 @@ class GameEngine {
     if (rule.type === 'boss_defeated') {
       return Boolean(rule.bossId && this.defeatedBossIds.includes(rule.bossId));
     }
+    if (rule.type === 'body_route_completed') {
+      return Boolean(rule.routeId && this.bodyRouteProgress?.routes?.[rule.routeId]?.completed === true);
+    }
     return false;
   }
 
+  isAdultBonusSceneUnlocked(scene) {
+    return this.isAdultUnlockRuleSatisfied(scene?.unlockRule);
+  }
+
+  isBodyRouteAvailable(route) {
+    return Boolean(route && this.isAdultUnlockRuleSatisfied(route.unlockRule));
+  }
+
   getAdultBonusUnlockLabel(scene) {
+    if (scene?.unlockRule?.type === 'body_route_completed') {
+      const route = this.getBodyRoute(scene.unlockRule.routeId);
+      return route ? `Terminer la route VN « ${route.title} ».` : 'Terminer cette route VN.';
+    }
     if (scene?.unlockRule?.type === 'first_game_over') {
       return 'Subir un premier Game Over.';
     }
@@ -8694,8 +8840,65 @@ class GameEngine {
         select.value = this.activeAdultSceneFilter;
       }
     }
+    const participantSelect = document.getElementById('body-route-participant-select');
+    if (participantSelect) {
+      participantSelect.innerHTML = '';
+      const allOption = document.createElement('option');
+      allOption.value = 'all';
+      allOption.textContent = 'Toutes les participantes · 60 routes';
+      participantSelect.appendChild(allOption);
+      [
+        ['heroines', 'Héroïnes'],
+        ['villains', 'Trônes antagonistes']
+      ].forEach(([groupId, groupLabel]) => {
+        const group = document.createElement('optgroup');
+        group.label = groupLabel;
+        (ADULT_SCENES.bodyRoutes || [])
+          .filter(route => route.participantGroup === groupId)
+          .filter((route, index, routes) => routes.findIndex(item => item.participantId === route.participantId) === index)
+          .forEach(route => {
+            const option = document.createElement('option');
+            option.value = route.participantId;
+            option.textContent = `${route.participantName} · 3 routes`;
+            group.appendChild(option);
+          });
+        participantSelect.appendChild(group);
+      });
+      const validParticipantFilter = [...participantSelect.options]
+        .some(option => option.value === this.activeBodyRouteParticipantFilter)
+        ? this.activeBodyRouteParticipantFilter
+        : 'all';
+      this.activeBodyRouteParticipantFilter = validParticipantFilter;
+      participantSelect.value = validParticipantFilter;
+    }
     this.renderAdultScenes();
     this.openModal('adult-scenes-modal');
+  }
+
+  syncBodyRouteParticipantControls(filter = this.activeAdultSceneFilter) {
+    const controls = document.getElementById('body-route-participant-filter');
+    const summary = document.getElementById('body-route-progress-summary');
+    const visible = filter === 'body_variants';
+    if (controls) controls.hidden = !visible;
+    if (summary) summary.hidden = !visible;
+  }
+
+  renderBodyRouteProgressSummary(filter = this.activeAdultSceneFilter) {
+    this.syncBodyRouteParticipantControls(filter);
+    const summary = document.getElementById('body-route-progress-summary');
+    if (!summary || filter !== 'body_variants') return;
+    const routes = (ADULT_SCENES.bodyRoutes || [])
+      .filter(route => (
+        this.activeBodyRouteParticipantFilter === 'all'
+        || route.participantId === this.activeBodyRouteParticipantFilter
+      ));
+    const completed = routes.filter(route => this.bodyRouteProgress?.routes?.[route.id]?.completed === true).length;
+    const inProgress = routes.filter(route => (
+      this.bodyRouteProgress?.routes?.[route.id]?.status === 'in_progress'
+      && this.bodyRouteProgress?.routes?.[route.id]?.completed !== true
+    )).length;
+    const participantName = routes[0]?.participantName;
+    summary.textContent = `${participantName && this.activeBodyRouteParticipantFilter !== 'all' ? `${participantName} · ` : ''}${completed}/${routes.length} routes terminées${inProgress ? ` · ${inProgress} à reprendre` : ''}. Chaque route est indépendante et sans effet gameplay.`;
   }
 
   renderAdultScenes(filter = this.activeAdultSceneFilter) {
@@ -8703,16 +8906,35 @@ class GameEngine {
     if (!grid) return;
     grid.innerHTML = '';
     const scenes = (ADULT_SCENES?.bonusScenes || [])
-      .filter(scene => filter === 'all' || scene.kind === filter);
+      .filter(scene => filter === 'all' || scene.kind === filter)
+      .filter(scene => (
+        filter !== 'body_variants'
+        || this.activeBodyRouteParticipantFilter === 'all'
+        || scene.participants?.includes(this.activeBodyRouteParticipantFilter)
+      ));
+    this.renderBodyRouteProgressSummary(filter);
 
     scenes.forEach(scene => {
       const unlocked = this.isAdultBonusSceneUnlocked(scene);
-      const card = document.createElement(unlocked ? 'button' : 'div');
-      if (unlocked) card.type = 'button';
-      card.className = `adult-scene-card ${unlocked ? 'unlocked' : 'locked'}`;
+      const bodyRoute = this.getBodyRouteForScene(scene);
+      const routeAvailable = !unlocked && this.isBodyRouteAvailable(bodyRoute);
+      const routeState = bodyRoute ? this.getOrCreateBodyRouteState(bodyRoute) : null;
+      const actionable = unlocked || routeAvailable;
+      const card = document.createElement(actionable ? 'button' : 'div');
+      if (actionable) card.type = 'button';
+      if (bodyRoute) card.dataset.bodyRouteId = bodyRoute.id;
+      card.className = `adult-scene-card ${unlocked ? 'unlocked' : 'locked'} ${routeAvailable ? 'route-available' : ''}`;
       const image = document.createElement('img');
-      image.src = unlocked ? scene.src : 'assets/cover.jpg';
-      image.alt = unlocked ? scene.alt : '';
+      image.src = unlocked
+        ? scene.src
+        : routeAvailable
+          ? bodyRoute.portraitSrc
+          : 'assets/cover.jpg';
+      image.alt = unlocked
+        ? scene.alt
+        : routeAvailable
+          ? `${bodyRoute.participantName}, adulte de ${bodyRoute.participantAge} ans, avant la route VN`
+          : '';
       image.loading = 'lazy';
       image.decoding = 'async';
       card.appendChild(image);
@@ -8727,21 +8949,210 @@ class GameEngine {
       const subtitle = document.createElement('p');
       subtitle.textContent = scene.subtitle;
       body.append(kind, title, subtitle);
+      if (routeAvailable && routeState) {
+        const routeStatus = document.createElement('span');
+        routeStatus.className = 'adult-scene-route-status';
+        routeStatus.textContent = routeState.status === 'in_progress'
+          ? `REPRENDRE LA ROUTE VN · ${routeState.choicePath.length}/2 CHOIX`
+          : 'JOUER LA ROUTE VN · 29 RÉPLIQUES · 2 CHOIX';
+        body.appendChild(routeStatus);
+      }
       card.appendChild(body);
 
       if (unlocked) {
         card.setAttribute('aria-label', `Ouvrir ${scene.title}. ${scene.subtitle}`);
         card.addEventListener('click', () => this.openAdultSceneViewer(scene));
+      } else if (routeAvailable) {
+        card.setAttribute(
+          'aria-label',
+          `${routeState?.status === 'in_progress' ? 'Reprendre' : 'Commencer'} la route VN ${bodyRoute.title} de ${bodyRoute.participantName}. La CG ${scene.title} sera révélée à la fin.`
+        );
+        card.addEventListener('click', () => this.openBodyRouteVn(bodyRoute.id));
+        const routeBadge = document.createElement('span');
+        routeBadge.className = 'adult-scene-route-badge';
+        routeBadge.textContent = routeState?.status === 'in_progress' ? 'VN · REPRISE' : 'VN · NOUVELLE ROUTE';
+        card.appendChild(routeBadge);
       } else {
+        const prerequisiteScene = scene.routeUnlockRule
+          ? { unlockRule: scene.routeUnlockRule }
+          : scene;
+        const prerequisiteLabel = this.getAdultBonusUnlockLabel(prerequisiteScene);
         card.setAttribute('role', 'img');
-        card.setAttribute('aria-label', `${scene.title}, verrouillée. ${this.getAdultBonusUnlockLabel(scene)}`);
+        card.setAttribute('aria-label', `${scene.title}, route verrouillée. ${prerequisiteLabel}`);
         const lock = document.createElement('span');
         lock.className = 'adult-scene-lock';
-        lock.textContent = `🔒 ${this.getAdultBonusUnlockLabel(scene)}`;
+        lock.textContent = `🔒 ${prerequisiteLabel}`;
         card.appendChild(lock);
       }
       grid.appendChild(card);
     });
+  }
+
+  openBodyRouteVn(routeId) {
+    const route = this.getBodyRoute(routeId);
+    const modal = document.getElementById('body-route-vn-modal');
+    if (!route || !modal || !this.isBodyRouteAvailable(route)) {
+      this.showFeedback('Cette route VN n’est pas encore disponible.', '#ef4444');
+      return false;
+    }
+    const state = this.getOrCreateBodyRouteState(route);
+    if (state.completed) {
+      const scene = (ADULT_SCENES.bonusScenes || []).find(item => item.id === route.sceneId);
+      return this.openAdultSceneViewer(scene);
+    }
+    state.status = 'in_progress';
+    this.activeBodyRouteId = route.id;
+    document.getElementById('body-route-vn-eyebrow').textContent = `${route.participantName} · ${route.participantAge} ANS`;
+    document.getElementById('body-route-vn-title').textContent = route.title;
+    document.getElementById('body-route-vn-subtitle').textContent = route.subtitle;
+    document.getElementById('body-route-vn-summary').textContent = route.summary;
+    const image = document.getElementById('body-route-vn-img');
+    image.src = route.portraitSrc;
+    image.alt = `${route.participantName}, adulte de ${route.participantAge} ans, dans la route VN ${route.title}`;
+    document.getElementById('btn-body-route-pause').onclick = () => this.pauseBodyRouteToArchives();
+    this.openModal(modal);
+    this.renderActiveBodyRouteNode({ focus: true });
+    return true;
+  }
+
+  getActiveBodyRouteContext() {
+    const route = this.getBodyRoute(this.activeBodyRouteId);
+    const state = route && this.getOrCreateBodyRouteState(route);
+    const node = route && state && this.getBodyRouteNode(route, state.nodeId);
+    return route && state && node ? { route, state, node } : null;
+  }
+
+  renderActiveBodyRouteNode({ focus = false } = {}) {
+    const context = this.getActiveBodyRouteContext();
+    if (!context) return;
+    const { route, state, node } = context;
+    const speaker = document.getElementById('body-route-vn-speaker');
+    const progress = document.getElementById('body-route-vn-progress');
+    const dialogue = document.getElementById('body-route-vn-dialogue');
+    const choices = document.getElementById('body-route-vn-choices');
+    const prompt = document.getElementById('body-route-vn-choice-prompt');
+    const continueButton = document.getElementById('btn-body-route-continue');
+    const status = document.getElementById('body-route-vn-status');
+    if (!speaker || !progress || !dialogue || !choices || !prompt || !continueButton || !status) return;
+
+    choices.querySelectorAll('button').forEach(button => button.remove());
+    progress.textContent = `DÉCISIONS ${state.choicePath.length} / ${route.choicesRequired}`;
+    status.textContent = `Route sauvegardée · ${state.choicePath.length}/${route.choicesRequired} choix · aucun effet gameplay`;
+
+    if (node.kind === 'dialogue') {
+      state.lineIndex = Math.max(0, Math.min(state.lineIndex, node.lines.length - 1));
+      const line = node.lines[state.lineIndex];
+      speaker.textContent = line.speaker === 'hero'
+        ? route.participantName
+        : line.speaker === 'player'
+          ? 'Vous'
+          : 'Narration';
+      progress.textContent += ` · RÉPLIQUE ${state.lineIndex + 1} / ${node.lines.length}`;
+      dialogue.textContent = line.text;
+      dialogue.dataset.mood = line.mood || 'neutral';
+      choices.hidden = true;
+      continueButton.hidden = false;
+      continueButton.textContent = node.end && state.lineIndex === node.lines.length - 1
+        ? 'RÉVÉLER LA CG'
+        : 'CONTINUER';
+      continueButton.onclick = () => this.advanceBodyRouteDialogue();
+      this.saveProgress();
+      if (focus) requestAnimationFrame(() => continueButton.focus());
+      return;
+    }
+
+    speaker.textContent = 'Décision de route';
+    dialogue.textContent = 'Aucune option n’est présélectionnée. Vous pouvez interrompre et reprendre cette route sans pénalité.';
+    prompt.textContent = node.prompt;
+    choices.hidden = false;
+    continueButton.hidden = true;
+    node.options.forEach(option => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'body-route-vn-choice';
+      button.textContent = option.label;
+      button.onclick = () => this.chooseBodyRouteOption(option);
+      choices.appendChild(button);
+    });
+    this.saveProgress();
+    if (focus) requestAnimationFrame(() => choices.querySelector('button')?.focus());
+  }
+
+  transitionBodyRouteNode(nextNodeId) {
+    const context = this.getActiveBodyRouteContext();
+    const nextNode = context && this.getBodyRouteNode(context.route, nextNodeId);
+    if (!context || !nextNode) {
+      this.pauseBodyRouteToArchives('Route interrompue sans perte de progression.');
+      return;
+    }
+    context.state.nodeId = nextNode.id;
+    context.state.lineIndex = 0;
+    this.renderActiveBodyRouteNode({ focus: true });
+  }
+
+  advanceBodyRouteDialogue() {
+    const context = this.getActiveBodyRouteContext();
+    if (!context || context.node.kind !== 'dialogue') return;
+    if (context.state.lineIndex < context.node.lines.length - 1) {
+      context.state.lineIndex++;
+      this.renderActiveBodyRouteNode();
+      return;
+    }
+    if (context.node.end) {
+      this.finishBodyRoute();
+      return;
+    }
+    this.transitionBodyRouteNode(context.node.nextNode);
+  }
+
+  chooseBodyRouteOption(option) {
+    const context = this.getActiveBodyRouteContext();
+    if (!context || context.node.kind !== 'choice' || !context.node.options.includes(option)) return;
+    if (!context.state.choicePath.includes(option.id)) {
+      context.state.choicePath.push(option.id);
+      context.state.choicePath = context.state.choicePath.slice(0, context.route.choicesRequired);
+    }
+    this.transitionBodyRouteNode(option.nextNode);
+  }
+
+  pauseBodyRouteToArchives(message = 'Route VN mise en pause. La réplique actuelle et les choix sont sauvegardés.') {
+    const routeId = this.activeBodyRouteId;
+    this.saveProgress();
+    this.activeBodyRouteId = null;
+    this.closeModal('body-route-vn-modal', false);
+    this.renderAdultScenes(this.activeAdultSceneFilter);
+    this.announce(message);
+    requestAnimationFrame(() => {
+      document.querySelector(`[data-body-route-id="${routeId}"]`)?.focus();
+    });
+  }
+
+  finishBodyRoute() {
+    const context = this.getActiveBodyRouteContext();
+    if (
+      !context
+      || !context.node.end
+      || context.state.choicePath.length < context.route.choicesRequired
+    ) return false;
+    const routeId = context.route.id;
+    context.state.status = 'completed';
+    context.state.completed = true;
+    context.state.lineIndex = context.node.lines.length - 1;
+    const scene = (ADULT_SCENES.bonusScenes || []).find(item => item.id === context.route.sceneId);
+    const message = `Route VN terminée : ${context.route.participantName} · ${context.route.title}. CG déverrouillée.`;
+    this.saveProgress();
+    this.activeBodyRouteId = null;
+    this.closeModal('body-route-vn-modal', false);
+    this.renderAdultScenes(this.activeAdultSceneFilter);
+    this.announce(message);
+    if (scene) {
+      requestAnimationFrame(() => {
+        const returnTarget = document.querySelector(`[data-body-route-id="${routeId}"]`);
+        returnTarget?.focus();
+        this.openAdultSceneViewer(scene);
+      });
+    }
+    return true;
   }
 
   openAdultSceneViewer(scene) {
@@ -8761,6 +9172,7 @@ class GameEngine {
         Type: this.getAdultSceneKindLabel(scene.kind),
         Adultes: scene.ageLabel,
         Personnages: participants,
+        ...(scene.bodyRouteId ? { 'Route VN': 'Terminée · archive révélée' } : {}),
         ...(scene.sequenceId ? { Étape: `${scene.sequenceIndex + 1} / ${scene.sequenceLength} · ${scene.sequenceStageLabel}` } : {})
       }
     });

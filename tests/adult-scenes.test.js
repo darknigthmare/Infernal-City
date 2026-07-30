@@ -39,9 +39,44 @@ function assertRealWebp(relativePath) {
   assert.deepEqual({ width, height }, { width: 960, height: 540 }, `${relativePath}: dimensions`);
 }
 
-test('le contrat 2.8 est gele et limite toutes les scenes aux adultes non explicites', () => {
+function inspectReachableRouteGraph(route) {
+  const nodesById = new Map(route.nodes.map(node => [node.id, node]));
+  assert.equal(nodesById.size, route.nodes.length, `${route.id}: identifiants de noeuds uniques`);
+  assert.ok(nodesById.has(route.initialNode), `${route.id}: noeud initial absent`);
+
+  const reachableIds = new Set();
+  const pendingIds = [route.initialNode];
+  while (pendingIds.length > 0) {
+    const nodeId = pendingIds.pop();
+    if (reachableIds.has(nodeId)) continue;
+    const node = nodesById.get(nodeId);
+    assert.ok(node, `${route.id}: cible ${nodeId} absente`);
+    reachableIds.add(nodeId);
+    if (node.nextNode) pendingIds.push(node.nextNode);
+    if (node.kind === 'choice') {
+      assert.ok(node.options.length >= 2, `${route.id}/${node.id}: moins de deux branches`);
+      node.options.forEach(option => pendingIds.push(option.nextNode));
+    }
+  }
+
+  function branchReachesEnding(nodeId, visitedIds = new Set()) {
+    if (visitedIds.has(nodeId)) return false;
+    const node = nodesById.get(nodeId);
+    if (!node) return false;
+    if (node.end === true) return true;
+    const nextVisitedIds = new Set(visitedIds).add(nodeId);
+    if (node.nextNode && branchReachesEnding(node.nextNode, nextVisitedIds)) return true;
+    return node.kind === 'choice'
+      && node.options.some(option => branchReachesEnding(option.nextNode, nextVisitedIds));
+  }
+
+  return { nodesById, reachableIds, branchReachesEnding };
+}
+
+test('le contrat 2.9 est gele et limite toutes les scenes aux adultes non explicites', () => {
   const contract = loadContract();
-  assert.equal(contract.contentVersion, '2.8.0');
+  assert.equal(contract.contentVersion, '2.9.0');
+  assert.equal(contract.bodyRouteDataVersion, '1.0.0');
   assert.equal(contract.maturity.adultsOnly, true);
   assert.equal(contract.maturity.minimumAge >= 27, true);
   assert.equal(contract.maturity.explicitSexualActs, false);
@@ -168,8 +203,8 @@ test('les vingt boudoirs montrent chaque femme adulte seule et sans effet gamepl
 test('les variantes corporelles separent trois CG par femme sans sexualiser la jeunesse', () => {
   const contract = loadContract();
   const variants = contract.bonusScenes.filter(scene => scene.kind === 'body_variants');
-  const heroineVariants = variants.filter(scene => scene.unlockRule.type === 'heroes_unlocked');
-  const villainVariants = variants.filter(scene => scene.unlockRule.type === 'boss_defeated');
+  const heroineVariants = variants.filter(scene => scene.routeUnlockRule.type === 'heroes_unlocked');
+  const villainVariants = variants.filter(scene => scene.routeUnlockRule.type === 'boss_defeated');
   const stageCounts = variants.reduce((counts, scene) => {
     counts[scene.bodyVariantStage] = (counts[scene.bodyVariantStage] || 0) + 1;
     return counts;
@@ -190,6 +225,9 @@ test('les variantes corporelles separent trois CG par femme sans sexualiser la j
   Object.values(participantCounts).forEach(count => assert.equal(count, 3));
   variants.forEach(scene => {
     assert.equal(scene.participants.length, 1);
+    assert.ok(scene.bodyRouteId);
+    assert.equal(scene.unlockRule.type, 'body_route_completed');
+    assert.equal(scene.unlockRule.routeId, scene.bodyRouteId);
     assert.match(scene.subtitle, /27/u);
     assert.match(scene.ageLabel, /27 ans et plus/u);
     assert.match(scene.alt, /adulte/u);
@@ -198,6 +236,108 @@ test('les variantes corporelles separent trois CG par femme sans sexualiser la j
     assert.equal(Object.hasOwn(scene, 'reward'), false);
     assert.equal(Object.hasOwn(scene, 'gameplayEffect'), false);
   });
+});
+
+test('les soixante routes corporelles 2.9 restent individuelles, adultes et entierement atteignables', () => {
+  const contract = loadContract();
+  const routes = contract.bodyRoutes;
+  const variants = contract.bonusScenes.filter(scene => scene.kind === 'body_variants');
+  const scenesById = new Map(variants.map(scene => [scene.id, scene]));
+  const participantCounts = routes.reduce((counts, route) => {
+    counts[route.participantId] = (counts[route.participantId] || 0) + 1;
+    return counts;
+  }, {});
+  const targetCgPaths = [];
+  const portraitPaths = [];
+  const participantVoices = new Map();
+
+  assert.equal(routes.length, 60);
+  assert.equal(new Set(routes.map(route => route.id)).size, 60);
+  assert.equal(new Set(routes.map(route => route.sceneId)).size, 60);
+  assert.equal(Object.keys(participantCounts).length, 20);
+  Object.values(participantCounts).forEach(count => assert.equal(count, 3));
+
+  routes.forEach(route => {
+    const scene = scenesById.get(route.sceneId);
+    assert.ok(scene, `${route.id}: CG cible absente du contrat`);
+    assert.equal(scene.bodyRouteId, route.id);
+    assert.deepEqual(Array.from(scene.participants), [route.participantId]);
+    targetCgPaths.push(scene.src);
+
+    assert.equal(route.minimumSceneAge >= 27, true);
+    assert.equal(route.participantAge >= 27, true);
+    assert.equal(route.isAdultAtScene, true);
+    assert.equal(route.romanceRequired, false);
+    assert.equal(route.sexualContent, false);
+    assert.equal(Object.hasOwn(route, 'reward'), false);
+    assert.equal(Object.hasOwn(route, 'gameplayEffect'), false);
+    assert.ok(fs.existsSync(path.join(ROOT, route.portraitSrc)), `${route.id}: portrait absent`);
+    portraitPaths.push(route.portraitSrc);
+
+    assert.equal(route.unlockRule, scene.routeUnlockRule);
+    assert.notEqual(scene.unlockRule, scene.routeUnlockRule);
+    assert.equal(scene.unlockRule.type, 'body_route_completed');
+    assert.equal(scene.unlockRule.routeId, route.id);
+    assert.ok(['heroes_unlocked', 'boss_defeated'].includes(route.unlockRule.type));
+    if (route.unlockRule.type === 'heroes_unlocked') {
+      assert.deepEqual(Array.from(route.unlockRule.heroIds), [route.participantId]);
+    } else {
+      assert.equal(route.unlockRule.bossId, route.participantId);
+    }
+
+    const graph = inspectReachableRouteGraph(route);
+    assert.equal(graph.reachableIds.size, route.nodes.length, `${route.id}: noeuds inatteignables`);
+    const choiceNodes = route.nodes.filter(node => (
+      graph.reachableIds.has(node.id) && node.kind === 'choice'
+    ));
+    assert.equal(route.choicesRequired, 2);
+    assert.equal(choiceNodes.length, 2, `${route.id}: deux choix atteignables requis`);
+    choiceNodes.forEach(node => {
+      assert.equal(node.options.length, 3, `${route.id}/${node.id}: trois perspectives requises`);
+      node.options.forEach(option => {
+        assert.ok(graph.nodesById.has(option.nextNode), `${route.id}/${node.id}: branche absente`);
+        assert.equal(
+          graph.branchReachesEnding(option.nextNode),
+          true,
+          `${route.id}/${node.id}/${option.id}: branche sans conclusion`
+        );
+      });
+    });
+
+    const playthroughs = [];
+    function enumeratePlaythroughs(nodeId, lineCount = 0, choiceCount = 0) {
+      const node = graph.nodesById.get(nodeId);
+      assert.ok(node, `${route.id}/${nodeId}: noeud de parcours absent`);
+      if (node.kind === 'dialogue') {
+        const nextLineCount = lineCount + node.lines.length;
+        if (node.end === true) {
+          playthroughs.push({ lineCount: nextLineCount, choiceCount });
+        } else {
+          enumeratePlaythroughs(node.nextNode, nextLineCount, choiceCount);
+        }
+        return;
+      }
+      node.options.forEach(option => {
+        enumeratePlaythroughs(option.nextNode, lineCount, choiceCount + 1);
+      });
+    }
+    enumeratePlaythroughs(route.initialNode);
+    assert.equal(playthroughs.length, 9, `${route.id}: neuf parcours complets attendus`);
+    playthroughs.forEach(playthrough => {
+      assert.deepEqual(playthrough, { lineCount: 29, choiceCount: 2 });
+    });
+
+    const voicedLine = route.nodes
+      .flatMap(node => node.lines || [])
+      .find(line => line.speaker === 'hero' && /mégacorps|horloges|cap libre|palais|création|deuil|discipline|couronne|lumière|transformation|châssis|repos|Vide|Enfers|ombre|soin|équipage|équation|pacte|cauchemar/u.test(line.text));
+    assert.ok(voicedLine, `${route.id}: voix individuelle absente`);
+    participantVoices.set(route.participantId, voicedLine.text);
+  });
+
+  assert.equal(new Set(targetCgPaths).size, 60);
+  assert.equal(new Set(portraitPaths).size, 20);
+  assert.equal(participantVoices.size, 20);
+  assert.equal(new Set(participantVoices.values()).size, 20);
 });
 
 test('les romances et afterglows sont F/F, atteignables et sans recompense gameplay', () => {

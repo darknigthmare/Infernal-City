@@ -483,7 +483,7 @@ test('la sauvegarde restaure metaprogression, heroine choisie et relation', () =
   first.saveProgress();
 
   const rawSave = JSON.parse(localStorage.getItem('valkyrie_sweeper_save'));
-  assert.equal(rawSave.version, 7);
+  assert.equal(rawSave.version, 8);
   assert.equal(rawSave.metaCoins, 777);
   assert.equal(rawSave.characterProgress.kira.affinityLvl, 4);
   assert.ok(rawSave.unlockedHeroIds.includes('maris'));
@@ -2336,7 +2336,7 @@ test('les reglages 2.3 persistent son, contraste, texte et la sauvegarde portabl
 
   const portable = engine.createPortableSavePayload();
   assert.equal(portable.schema, 'infernal-city.portable-save/1');
-  assert.equal(portable.campaign.version, 7);
+  assert.equal(portable.campaign.version, 8);
   assert.equal(portable.narrative.dataVersion, 1);
   const original = localStorage.getItem('valkyrie_sweeper_save');
   const settingsStatus = createElement('p');
@@ -2585,6 +2585,69 @@ test('la manette pilote camera zoom curseur et pouvoir sans bloquer le clavier',
   assert.equal(powerArmed, 1);
 });
 
+test('la manette avance choisit et met en pause une route corporelle VN', () => {
+  const {
+    GameEngine, document, navigator
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const buttons = Array.from({ length: 16 }, () => ({ pressed: false, value: 0 }));
+  navigator.getGamepads = () => [{
+    index: 0,
+    connected: true,
+    id: 'QA VN Pad',
+    axes: [0, 0, 0, 0],
+    buttons
+  }];
+  engine.connectedGamepadIndex = 0;
+
+  let phase = 'dialogue';
+  let advances = 0;
+  let selections = 0;
+  let pauses = 0;
+  const choices = [0, 1, 2].map(() => ({
+    focus() { document.activeElement = this; },
+    closest(selector) { return selector === '.body-route-vn-choice' ? this : null; },
+    click() { selections++; }
+  }));
+  const modal = {
+    id: 'body-route-vn-modal',
+    querySelectorAll(selector) {
+      return selector === '.body-route-vn-choice' ? choices : [];
+    },
+    querySelector(selector) {
+      return selector === '.body-route-vn-choice' ? choices[0] : null;
+    }
+  };
+  engine.getTopOpenModal = () => modal;
+  engine.getActiveBodyRouteContext = () => ({ node: { kind: phase } });
+  engine.advanceBodyRouteDialogue = () => { advances++; };
+  engine.pauseBodyRouteToArchives = () => { pauses++; };
+
+  buttons[0] = { pressed: true, value: 1 };
+  assert.equal(engine.updateGamepadControls(0.016), true);
+  assert.equal(advances, 1);
+
+  buttons[0] = { pressed: false, value: 0 };
+  engine.updateGamepadControls(0.016);
+  phase = 'choice';
+  document.activeElement = choices[0];
+  buttons[13] = { pressed: true, value: 1 };
+  engine.updateGamepadControls(0.016);
+  assert.equal(document.activeElement, choices[1]);
+
+  buttons[13] = { pressed: false, value: 0 };
+  engine.updateGamepadControls(0.016);
+  buttons[0] = { pressed: true, value: 1 };
+  engine.updateGamepadControls(0.016);
+  assert.equal(selections, 1);
+
+  buttons[0] = { pressed: false, value: 0 };
+  engine.updateGamepadControls(0.016);
+  buttons[1] = { pressed: true, value: 1 };
+  engine.updateGamepadControls(0.016);
+  assert.equal(pauses, 1);
+});
+
 test('entrer dans le jeu precharge les atlas de combat meme si le terrain est deja en cache', () => {
   const {
     GameEngine, document
@@ -2716,7 +2779,7 @@ test('les cinematiques des Trones sont mises en file une seule fois par sortie',
   assert.equal(opened, elements['cinematic-modal']);
 });
 
-test('les bonus adultes suivent les deblocages militaires sans modifier le gameplay', () => {
+test('les jalons ouvrent les routes corporelles sans reveler leurs CG avant la fin', () => {
   const {
     GameEngine, ADULT_SCENES, HERO_CLASSES
   } = loadGameModule();
@@ -2732,22 +2795,27 @@ test('les bonus adultes suivent les deblocages militaires sans modifier le gamep
   const xyraBoudoir = ADULT_SCENES.bonusScenes.find(scene => scene.id === 'xyra_boudoir');
   const nyxRitual = ADULT_SCENES.bonusScenes.find(scene => scene.id === 'nyx_private_ritual_before');
   const xyraRitual = ADULT_SCENES.bonusScenes.find(scene => scene.id === 'xyra_private_ritual_before');
+  const nyxBodyRoute = engine.getBodyRouteForScene(nyxVariants);
+  const xyraBodyRoute = engine.getBodyRouteForScene(xyraVariants);
 
   assert.equal(engine.isAdultBonusSceneUnlocked(nyxBikini), true);
-  assert.equal(engine.isAdultBonusSceneUnlocked(nyxVariants), true);
+  assert.equal(engine.isAdultBonusSceneUnlocked(nyxVariants), false);
+  assert.equal(engine.isBodyRouteAvailable(nyxBodyRoute), true);
   assert.equal(engine.isAdultBonusSceneUnlocked(nyxBoudoir), true);
   assert.equal(engine.isAdultBonusSceneUnlocked(nyxRitual), true);
   assert.equal(engine.isAdultBonusSceneUnlocked(pairedRomance), false);
   assert.equal(engine.isAdultBonusSceneUnlocked(xyraVariants), false);
+  assert.equal(engine.isBodyRouteAvailable(xyraBodyRoute), false);
   assert.equal(engine.isAdultBonusSceneUnlocked(xyraBoudoir), false);
   assert.equal(engine.isAdultBonusSceneUnlocked(xyraRitual), false);
   HERO_CLASSES.aurelia.unlocked = true;
   assert.equal(engine.isAdultBonusSceneUnlocked(pairedRomance), true);
   engine.defeatedBossIds.push('xyra');
-  assert.equal(engine.isAdultBonusSceneUnlocked(xyraVariants), true);
+  assert.equal(engine.isBodyRouteAvailable(xyraBodyRoute), true);
+  assert.equal(engine.isAdultBonusSceneUnlocked(xyraVariants), false);
   assert.equal(engine.isAdultBonusSceneUnlocked(xyraBoudoir), true);
   assert.equal(engine.isAdultBonusSceneUnlocked(xyraRitual), true);
-  assert.match(engine.getAdultBonusUnlockLabel(xyraVariants), /Xyra/u);
+  assert.match(engine.getAdultBonusUnlockLabel(xyraVariants), /route VN/u);
   assert.equal(engine.isAdultBonusSceneUnlocked(gameOver), false);
   engine.bestWave = 8;
   engine.runHistory = [{ victory: true }];
@@ -2756,6 +2824,182 @@ test('les bonus adultes suivent les deblocages militaires sans modifier le gamep
   assert.equal(engine.isAdultBonusSceneUnlocked(gameOver), true);
   assert.equal(engine.score, 0);
   assert.equal(engine.metaCoins, 0);
+});
+
+test('les choix et la progression d une route corporelle persistent et sont assainis', () => {
+  const {
+    GameEngine, ADULT_SCENES, localStorage
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const scene = ADULT_SCENES.bonusScenes.find(item => item.id === 'nyx_body_chubby');
+  const route = engine.getBodyRouteForScene(scene);
+  const state = engine.getOrCreateBodyRouteState(route);
+  const perspective = engine.getBodyRouteNode(route, 'perspective-choice');
+  const loreOption = perspective.options.find(option => option.id === 'lore');
+
+  state.status = 'in_progress';
+  state.nodeId = perspective.id;
+  engine.activeBodyRouteId = route.id;
+  engine.renderActiveBodyRouteNode = () => {};
+  engine.chooseBodyRouteOption(loreOption);
+  state.lineIndex = 3;
+  engine.saveProgress();
+
+  const rawSave = JSON.parse(localStorage.getItem('valkyrie_sweeper_save'));
+  assert.equal(rawSave.version, 8);
+  assert.equal(rawSave.bodyRouteProgress.dataVersion, ADULT_SCENES.bodyRouteDataVersion);
+  assert.deepEqual(
+    rawSave.bodyRouteProgress.routes[route.id],
+    {
+      status: 'in_progress',
+      nodeId: 'path-lore',
+      lineIndex: 3,
+      choicePath: ['lore'],
+      completed: false
+    }
+  );
+
+  const restored = createEngine(GameEngine);
+  const restoredState = restored.bodyRouteProgress.routes[route.id];
+  assert.equal(restoredState.status, 'in_progress');
+  assert.equal(restoredState.nodeId, 'path-lore');
+  assert.equal(restoredState.lineIndex, 3);
+  assert.deepEqual(Array.from(restoredState.choicePath), ['lore']);
+  assert.equal(restoredState.completed, false);
+
+  const opening = restored.getBodyRouteNode(route, route.initialNode);
+  const sanitized = restored.sanitizeLoadedBodyRouteProgress({
+    dataVersion: ADULT_SCENES.bodyRouteDataVersion,
+    routes: {
+      [route.id]: {
+        status: 'invalid',
+        nodeId: 'unknown-node',
+        lineIndex: 999,
+        choicePath: ['unknown-choice', 'lore', null],
+        completed: false
+      },
+      unknown_route: {
+        status: 'completed',
+        nodeId: 'ending-private',
+        lineIndex: 0,
+        choicePath: [],
+        completed: true
+      }
+    }
+  });
+  assert.deepEqual(Object.keys(sanitized.routes), [route.id]);
+  assert.equal(sanitized.routes[route.id].status, 'new');
+  assert.equal(sanitized.routes[route.id].nodeId, route.initialNode);
+  assert.equal(sanitized.routes[route.id].lineIndex, opening.lines.length - 1);
+  assert.deepEqual(Array.from(sanitized.routes[route.id].choicePath), ['lore']);
+  assert.equal(sanitized.routes[route.id].completed, false);
+  assert.deepEqual(
+    Object.keys(restored.sanitizeLoadedBodyRouteProgress({
+      dataVersion: 'obsolete',
+      routes: rawSave.bodyRouteProgress.routes
+    }).routes),
+    []
+  );
+
+  const pollutedRoutes = Object.fromEntries(
+    Array.from({ length: 60 }, (_, index) => [`unknown_${index}`, { completed: true }])
+  );
+  pollutedRoutes[route.id] = {
+    status: 'in_progress',
+    nodeId: 'path-lore',
+    lineIndex: 2,
+    choicePath: ['lore'],
+    completed: false
+  };
+  assert.deepEqual(
+    Object.keys(restored.sanitizeLoadedBodyRouteProgress({
+      dataVersion: ADULT_SCENES.bodyRouteDataVersion,
+      routes: pollutedRoutes
+    }).routes),
+    [route.id]
+  );
+
+  const forgedCompletion = restored.sanitizeLoadedBodyRouteProgress({
+    dataVersion: ADULT_SCENES.bodyRouteDataVersion,
+    routes: {
+      [route.id]: {
+        status: 'completed',
+        nodeId: 'ending-private',
+        lineIndex: 6,
+        choicePath: ['private'],
+        completed: true
+      }
+    }
+  });
+  assert.equal(forgedCompletion.routes[route.id].completed, false);
+  assert.equal(forgedCompletion.routes[route.id].status, 'new');
+});
+
+test('terminer une route corporelle ne revele que sa CG et ne modifie pas le gameplay', () => {
+  const {
+    GameEngine, ADULT_SCENES, HERO_CLASSES, localStorage
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const scene = ADULT_SCENES.bonusScenes.find(item => item.id === 'nyx_body_chubby');
+  const siblingScene = ADULT_SCENES.bonusScenes.find(item => item.id === 'nyx_body_maternity');
+  const route = engine.getBodyRouteForScene(scene);
+  const state = engine.getOrCreateBodyRouteState(route);
+  const ending = engine.getBodyRouteNode(route, 'ending-private');
+  const nyx = HERO_CLASSES.nyx;
+  const gameplayBefore = {
+    wave: engine.wave,
+    score: engine.score,
+    coins: engine.coins,
+    metaCoins: engine.metaCoins,
+    totalCoinsEarned: engine.totalCoinsEarned,
+    xp: engine.xp,
+    level: engine.level,
+    citadelHp: engine.citadel.hp,
+    affinityLvl: nyx.affinityLvl,
+    relationshipXp: nyx.relationshipXp,
+    romanceOptIn: nyx.romanceOptIn,
+    privateMomentUnlocked: nyx.privateMomentUnlocked,
+    defeatedBossIds: engine.defeatedBossIds.join(','),
+    runHistoryLength: engine.runHistory.length
+  };
+
+  state.status = 'in_progress';
+  state.nodeId = ending.id;
+  state.lineIndex = ending.lines.length - 1;
+  state.choicePath = ['lore', 'private'];
+  engine.activeBodyRouteId = route.id;
+  engine.closeModal = () => {};
+  engine.renderAdultScenes = () => {};
+
+  assert.equal(engine.isAdultBonusSceneUnlocked(scene), false);
+  assert.equal(engine.isAdultBonusSceneUnlocked(siblingScene), false);
+  assert.equal(engine.finishBodyRoute(), true);
+  assert.equal(engine.isAdultBonusSceneUnlocked(scene), true);
+  assert.equal(engine.isAdultBonusSceneUnlocked(siblingScene), false);
+  assert.deepEqual(
+    {
+      wave: engine.wave,
+      score: engine.score,
+      coins: engine.coins,
+      metaCoins: engine.metaCoins,
+      totalCoinsEarned: engine.totalCoinsEarned,
+      xp: engine.xp,
+      level: engine.level,
+      citadelHp: engine.citadel.hp,
+      affinityLvl: nyx.affinityLvl,
+      relationshipXp: nyx.relationshipXp,
+      romanceOptIn: nyx.romanceOptIn,
+      privateMomentUnlocked: nyx.privateMomentUnlocked,
+      defeatedBossIds: engine.defeatedBossIds.join(','),
+      runHistoryLength: engine.runHistory.length
+    },
+    gameplayBefore
+  );
+
+  const rawSave = JSON.parse(localStorage.getItem('valkyrie_sweeper_save'));
+  assert.equal(rawSave.bodyRouteProgress.routes[route.id].completed, true);
+  assert.equal(rawSave.bodyRouteProgress.routes[route.id].status, 'completed');
+  assert.equal(rawSave.bodyRouteProgress.routes[siblingScene.bodyRouteId], undefined);
 });
 
 test('le lecteur CG navigue chronologiquement dans une parenthese privee', () => {
