@@ -7041,7 +7041,7 @@ class GameEngine {
         select.appendChild(option);
       });
     };
-    fillSelect(poseSelect, studioHeroine?.poses || []);
+    fillSelect(poseSelect, this.getStudioPoseOptions(hero.id));
     fillSelect(ambienceSelect, studioHeroine?.ambiences || []);
     if (maturitySelect) maturitySelect.value = this.vnExpansionState?.maturity || 'suggestive';
     document.getElementById('studio-hero-title').textContent = hero.name;
@@ -7051,11 +7051,33 @@ class GameEngine {
     this.openModal(modal);
   }
 
+  getBoudoirSceneForParticipant(participantId) {
+    return (ADULT_SCENES?.bonusScenes || []).find(scene => (
+      scene.kind === 'boudoir'
+      && scene.participants?.length === 1
+      && scene.participants[0] === participantId
+    )) || null;
+  }
+
+  getStudioPoseOptions(heroId) {
+    const studioHeroine = this.getVnExpansion()?.studio?.heroines?.[heroId];
+    const poses = [...(studioHeroine?.poses || [])];
+    const boudoirScene = this.getBoudoirSceneForParticipant(heroId);
+    if (boudoirScene) {
+      poses.push({
+        id: 'boudoir-signature',
+        label: 'Boudoir signature',
+        previewSrc: boudoirScene.src
+      });
+    }
+    return poses;
+  }
+
   getStudioPreviewSource(heroId, poseId) {
     const expansion = this.getVnExpansion();
-    const studioHeroine = expansion?.studio?.heroines?.[heroId];
-    const poseIndex = Math.max(0, (studioHeroine?.poses || []).findIndex(pose => pose.id === poseId));
-    const pose = studioHeroine?.poses?.[poseIndex];
+    const poses = this.getStudioPoseOptions(heroId);
+    const poseIndex = Math.max(0, poses.findIndex(pose => pose.id === poseId));
+    const pose = poses[poseIndex];
     const candidate = this.resolveVnExpansionAsset(pose?.previewSrc);
     if (candidate && !candidate.includes('/vn/studio/')) return candidate;
     const chapterId = expansion?.heroines?.[heroId]?.chapterIds?.[poseIndex];
@@ -7070,12 +7092,13 @@ class GameEngine {
     const hero = HERO_CLASSES[heroId];
     const expansion = this.getVnExpansion();
     const studioHeroine = expansion?.studio?.heroines?.[heroId];
+    const poseOptions = this.getStudioPoseOptions(heroId);
     const poseSelect = document.getElementById('studio-pose-select');
     const ambienceSelect = document.getElementById('studio-ambience-select');
     const preview = document.getElementById('studio-preview-img');
     if (!hero || !preview) return;
-    const pose = studioHeroine?.poses?.find(item => item.id === poseSelect?.value)
-      || studioHeroine?.poses?.[0];
+    const pose = poseOptions.find(item => item.id === poseSelect?.value)
+      || poseOptions[0];
     const ambience = studioHeroine?.ambiences?.find(item => item.id === ambienceSelect?.value)
       || studioHeroine?.ambiences?.[0];
     const previewSrc = this.getStudioPreviewSource(heroId, pose?.id);

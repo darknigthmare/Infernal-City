@@ -39,9 +39,9 @@ function assertRealWebp(relativePath) {
   assert.deepEqual({ width, height }, { width: 960, height: 540 }, `${relativePath}: dimensions`);
 }
 
-test('le contrat 2.6 est gele et limite toutes les scenes aux adultes non explicites', () => {
+test('le contrat 2.7 est gele et limite toutes les scenes aux adultes non explicites', () => {
   const contract = loadContract();
-  assert.equal(contract.contentVersion, '2.6.0');
+  assert.equal(contract.contentVersion, '2.7.0');
   assert.equal(contract.maturity.adultsOnly, true);
   assert.equal(contract.maturity.minimumAge >= 27, true);
   assert.equal(contract.maturity.explicitSexualActs, false);
@@ -69,7 +69,7 @@ test('les dix Trones ont une vraie introduction et une vraie defaite cinematogra
   paths.forEach(assertRealWebp);
 });
 
-test('les bonus couvrent les archives sensuelles et soixante CG corporelles independantes', () => {
+test('les bonus couvrent les archives sensuelles, corporelles et boudoir independantes', () => {
   const contract = loadContract();
   const counts = contract.bonusScenes.reduce((result, scene) => {
     result[scene.kind] = (result[scene.kind] || 0) + 1;
@@ -82,16 +82,42 @@ test('les bonus couvrent les archives sensuelles et soixante CG corporelles inde
       romance_ff: 5,
       afterglow: 5,
       game_over: 4,
-      body_variants: 60
+      body_variants: 60,
+      boudoir: 20
     }
   );
-  assert.equal(contract.bonusScenes.length, 84);
-  assert.equal(new Set(contract.bonusScenes.map(scene => scene.src)).size, 84);
+  assert.equal(contract.bonusScenes.length, 104);
+  assert.equal(new Set(contract.bonusScenes.map(scene => scene.src)).size, 104);
   contract.bonusScenes.forEach(scene => {
     assert.ok(scene.ageLabel);
     assert.ok(scene.alt.length > 30);
     assert.ok(scene.story.length > 40);
     assertRealWebp(scene.src);
+  });
+});
+
+test('les vingt boudoirs montrent chaque femme adulte seule et sans effet gameplay', () => {
+  const contract = loadContract();
+  const boudoirs = contract.bonusScenes.filter(scene => scene.kind === 'boudoir');
+  const heroineBoudoirs = boudoirs.filter(scene => scene.unlockRule.type === 'heroes_unlocked');
+  const villainBoudoirs = boudoirs.filter(scene => scene.unlockRule.type === 'boss_defeated');
+  const heroineIds = ['amara', 'aurelia', 'freyja', 'hana', 'isolde', 'maris', 'mircalla', 'nyx', 'vega', 'zahra'];
+  const villainIds = ['astarra', 'kalix', 'malika', 'nhalzara', 'noctis', 'ossuary', 'pestifera', 'umbrael', 'vexara', 'xyra'];
+
+  assert.equal(boudoirs.length, 20);
+  assert.equal(heroineBoudoirs.length, 10);
+  assert.equal(villainBoudoirs.length, 10);
+  assert.equal(new Set(boudoirs.flatMap(scene => scene.participants)).size, 20);
+  assert.deepEqual(Array.from(heroineBoudoirs.flatMap(scene => scene.participants)).sort(), heroineIds);
+  assert.deepEqual(Array.from(villainBoudoirs.flatMap(scene => scene.participants)).sort(), villainIds);
+  boudoirs.forEach(scene => {
+    assert.equal(scene.participants.length, 1);
+    assert.match(scene.ageLabel, /ans/u);
+    assert.match(scene.alt, /adulte/u);
+    assert.match(scene.alt, /sans nudité/u);
+    assert.match(scene.src, /assets\/vn\/cg\/boudoir\/(?:heroines|villains)\/.+-boudoir-v1\.webp$/u);
+    assert.equal(Object.hasOwn(scene, 'reward'), false);
+    assert.equal(Object.hasOwn(scene, 'gameplayEffect'), false);
   });
 });
 

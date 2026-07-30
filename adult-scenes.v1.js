@@ -215,15 +215,51 @@
   });
 
   const bodyVariantScenes = [...heroineBodyVariantScenes, ...villainBodyVariantScenes];
+  const heroineBoudoirScenes = heroineSpecs.map(spec => {
+    const [heroId, name, age] = spec;
+    return {
+      id: `${heroId}_boudoir`,
+      kind: 'boudoir',
+      title: `${name} · Boudoir néon`,
+      subtitle: `Portrait boudoir individuel · adulte de ${age} ans`,
+      ageLabel: `${age} ans`,
+      participants: [heroId],
+      src: `assets/vn/cg/boudoir/heroines/${heroId}-boudoir-v1.webp`,
+      alt: `${name}, adulte de ${age} ans, pose seule dans un boudoir élégant, vêtue et sans nudité.`,
+      quote: '« La séance continue seulement tant que je la choisis. »',
+      story: `${name} dirige elle-même cette séance boudoir individuelle. Le portrait reste sensuel, non nu et sans acte ou accessoire sexuel explicite.`,
+      unlockRule: { type: 'heroes_unlocked', heroIds: [heroId] }
+    };
+  });
+
+  const villainBoudoirScenes = villainSpecs.map(spec => {
+    const [villainId, name, title, age] = spec;
+    return {
+      id: `${villainId}_boudoir`,
+      kind: 'boudoir',
+      title: `${name} · Boudoir du Trône`,
+      subtitle: `${title} · portrait individuel adulte`,
+      ageLabel: `${age} ans`,
+      participants: [villainId],
+      src: `assets/vn/cg/boudoir/villains/${villainId}-boudoir-v1.webp`,
+      alt: `${name}, souveraine adulte, pose seule et vêtue dans un boudoir inspiré de son Trône, sans nudité.`,
+      quote: '« Mon image demeure sous mon autorité. »',
+      story: `${name} transforme son sanctuaire en studio boudoir souverain. Cette archive individuelle reste sensuelle, non nue et sans acte ou accessoire sexuel explicite.`,
+      unlockRule: { type: 'boss_defeated', bossId: villainId }
+    };
+  });
+
+  const boudoirScenes = [...heroineBoudoirScenes, ...villainBoudoirScenes];
   const bonusScenes = [
     ...bikiniScenes,
     ...pairedScenes,
     ...gameOverTeases,
-    ...bodyVariantScenes
+    ...bodyVariantScenes,
+    ...boudoirScenes
   ];
   const contract = {
     schemaVersion: '1.0.0',
-    contentVersion: '2.6.0',
+    contentVersion: '2.7.0',
     maturity: {
       minimumAge: 27,
       adultsOnly: true,
@@ -241,7 +277,8 @@
       romance_ff: 'Romances F/F',
       afterglow: 'Après les néons',
       game_over: 'Game Over',
-      body_variants: 'Variantes corporelles'
+      body_variants: 'Variantes corporelles',
+      boudoir: 'Boudoirs individuels'
     })
   };
 

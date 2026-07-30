@@ -142,3 +142,19 @@ livrées dans trois images indépendantes plein cadre, jamais dans un montage.
 > naturelle et autonome, cadrage trois-quarts avec marges sûres. Aucun texte,
 > logo, watermark, maillot, lingerie, nudité, acte sexuel, apparence
 > adolescente, fétichisation ou mise en danger de la grossesse.
+
+## Mise à jour 2.7 — Boudoirs individuels
+
+Générateur : outil ImageGen intégré d’OpenAI, avec un appel indépendant par
+femme. Le portrait local verrouille le visage et la coiffure ; l’atlas local
+sert de référence pour l’espèce, la palette et le langage vestimentaire.
+
+> CG panoramique 16:9 pour un jeu techno-gothique anime, montrant une seule
+> femme clairement adulte à son âge actuel dans un boudoir inspiré de son
+> archétype. Portrait trois-quarts ou plein pied, pose assurée et consentie,
+> tenue opaque couvrante, lumière cinématographique cyan, magenta ou carmin.
+> Préserver strictement identité, coiffure, traits fantasy, palette et détails
+> iconiques des références. Aucun texte, logo, watermark, duplicate, reflet de
+> personnage, montage, triptyque, nudité, acte ou jouet sexuel, masturbation,
+> fluide, transparence, apparence jeune ou cadrage insistant sur la poitrine ou
+> l’entrejambe.

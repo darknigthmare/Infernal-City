@@ -2,6 +2,20 @@
 
 Roguelite de défense cyber-gothique en HTML, CSS et JavaScript natifs.
 
+## Mise à jour 2.7 — Boudoirs individuels
+
+- Les dix héroïnes et les dix antagonistes possèdent chacune une CG boudoir
+  OpenAI indépendante, plein cadre et cohérente avec son visage, sa coiffure,
+  son espèce, sa palette et son archétype.
+- Les vingt portraits montrent une seule femme clairement adulte dans une
+  tenue opaque et couvrante. Ils restent sensuels mais non nus, sans acte,
+  accessoire sexuel explicite, fluide ou cadrage anatomique insistant.
+- Une nouvelle catégorie « Boudoirs individuels » les regroupe dans les
+  Archives Sensuelles. L’héroïne active reçoit aussi une pose « Boudoir
+  signature » dans le Studio, sans remplacer ses trois compositions existantes.
+- Les héroïnes suivent leur déblocage normal et les souveraines exigent la
+  neutralisation de leur Trône. Ces images n’accordent aucun avantage de combat.
+
 ## Mise à jour 2.6 — Trois vies adultes
 
 - Les dix héroïnes et les dix antagonistes disposent chacune de trois nouvelles
@@ -80,7 +94,7 @@ Roguelite de défense cyber-gothique en HTML, CSS et JavaScript natifs.
   ont désormais un pouvoir ciblable propre.
 - Défi quotidien déterministe, historique local des runs et Tour Infinitum
   poursuivie par segments de dix étages à mutateurs cumulés.
-- Studio 2.0 : pose, ambiance, intensité artistique suggestive ou intimiste et
+- Studio 2.7 : pose, ambiance, intensité artistique suggestive ou intimiste et
   galerie des conclusions. Tous les modèles sont adultes et chaque séance
   reste facultative, consentie et révocable.
 - Paramètres centralisés pour volumes, contraste, taille du texte, détection de
@@ -144,11 +158,11 @@ Le jeu enregistre un service worker sur `localhost` ou depuis une origine HTTPS.
 Après une première visite en ligne, le shell, les scripts essentiels — dont le
 registre des personnages —, le terrain Convergence et les icônes sont
 précachés. Tous les atlas de combat, personnages, portraits, expressions, CG
-narratives, grands terrains asymétriques et compositions du Studio 2.0
+narratives, grands terrains asymétriques et compositions du Studio 2.7
 rejoignent un cache média séparé à leur première consultation. Le service
 worker les sert ensuite en priorité depuis ce cache. Cela conserve une
 installation initiale sous le budget de 20 Mio sans sacrifier leur disponibilité
-hors ligne après découverte. Le manifeste 2.6 et les icônes PNG 192/512
+hors ligne après découverte. Le manifeste 2.7 et les icônes PNG 192/512
 permettent de proposer l’installation en application autonome.
 
 Les actifs cœur portent un nom de version et le code utilise le réseau en
@@ -165,7 +179,7 @@ phase ultime. Les portraits, expressions et trente CG de chapitre conservent
 les mêmes silhouettes, palettes et costumes originaux. La passe 2.5 ajoute
 vingt cinématiques de Trône et vingt-quatre archives adultes non graphiques ;
 la passe 2.6 ajoute soixante CG indépendantes de diversité corporelle et
-chronologique.
+chronologique ; la passe 2.7 complète le roster avec vingt boudoirs individuels.
 
 Les neuf planches de combat historiques couvrent les vingt défenses, les sept
 archétypes ennemis et les six héros de départ. Le canvas choisit les frames

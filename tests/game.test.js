@@ -2350,7 +2350,7 @@ test('les reglages 2.3 persistent son, contraste, texte et la sauvegarde portabl
   assert.match(settingsStatus.textContent, /Import refus/u);
 });
 
-test('Studio 2 utilise trois images reelles par heroine et calcule les conclusions sans debloquer par erreur', () => {
+test('Studio 2 conserve trois poses et ajoute le boudoir signature du nouveau roster', () => {
   const {
     GameEngine, window
   } = loadGameModule();
@@ -2361,6 +2361,13 @@ test('Studio 2 utilise trois images reelles par heroine et calcule les conclusio
   studio.poses.forEach(pose => {
     assert.match(engine.getStudioPreviewSource('aria', pose.id), /^assets\/vn\/cg\/chapters\/.+\.webp$/u);
   });
+  const nyxPoses = engine.getStudioPoseOptions('nyx');
+  assert.equal(nyxPoses.length, 4);
+  assert.equal(nyxPoses.at(-1).id, 'boudoir-signature');
+  assert.equal(
+    engine.getStudioPreviewSource('nyx', 'boudoir-signature'),
+    'assets/vn/cg/boudoir/heroines/nyx-boudoir-v1.webp'
+  );
   window.INFERNAL_VN_EXPANSION.studio.conclusionCgs.forEach(conclusion => {
     assert.equal(engine.getStudioConclusionUnlockState(conclusion), false);
   });
@@ -2721,15 +2728,20 @@ test('les bonus adultes suivent les deblocages militaires sans modifier le gamep
   const gameOver = ADULT_SCENES.bonusScenes.find(scene => scene.id === 'game_over_tease_01');
   const nyxVariants = ADULT_SCENES.bonusScenes.find(scene => scene.id === 'nyx_body_chubby');
   const xyraVariants = ADULT_SCENES.bonusScenes.find(scene => scene.id === 'xyra_body_maternity');
+  const nyxBoudoir = ADULT_SCENES.bonusScenes.find(scene => scene.id === 'nyx_boudoir');
+  const xyraBoudoir = ADULT_SCENES.bonusScenes.find(scene => scene.id === 'xyra_boudoir');
 
   assert.equal(engine.isAdultBonusSceneUnlocked(nyxBikini), true);
   assert.equal(engine.isAdultBonusSceneUnlocked(nyxVariants), true);
+  assert.equal(engine.isAdultBonusSceneUnlocked(nyxBoudoir), true);
   assert.equal(engine.isAdultBonusSceneUnlocked(pairedRomance), false);
   assert.equal(engine.isAdultBonusSceneUnlocked(xyraVariants), false);
+  assert.equal(engine.isAdultBonusSceneUnlocked(xyraBoudoir), false);
   HERO_CLASSES.aurelia.unlocked = true;
   assert.equal(engine.isAdultBonusSceneUnlocked(pairedRomance), true);
   engine.defeatedBossIds.push('xyra');
   assert.equal(engine.isAdultBonusSceneUnlocked(xyraVariants), true);
+  assert.equal(engine.isAdultBonusSceneUnlocked(xyraBoudoir), true);
   assert.match(engine.getAdultBonusUnlockLabel(xyraVariants), /Xyra/u);
   assert.equal(engine.isAdultBonusSceneUnlocked(gameOver), false);
   engine.bestWave = 8;
