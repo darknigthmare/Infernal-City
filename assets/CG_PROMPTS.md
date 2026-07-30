@@ -158,3 +158,39 @@ sert de référence pour l’espèce, la palette et le langage vestimentaire.
 > personnage, montage, triptyque, nudité, acte ou jouet sexuel, masturbation,
 > fluide, transparence, apparence jeune ou cadrage insistant sur la poitrine ou
 > l’entrejambe.
+
+## Mise à jour 2.8 — Parenthèses privées en trois CG
+
+Générateur : outil ImageGen intégré d’OpenAI, avec un appel indépendant pour
+chaque étape et chaque femme. La CG boudoir individuelle sert d’ancre stricte
+pour le visage, la coiffure, l’espèce, la palette et le décor. Chaque final est
+recadré en WebP RGB 960 × 540.
+
+### Étape I — anticipation
+
+> CG panoramique 16:9 montrant une seule femme clairement adulte de 27 ans ou
+> plus dans son boudoir, vêtue d’une tenue lounge en satin opaque, fermée et
+> entièrement couvrante. Elle prépare avec assurance une pause personnelle et
+> tient un petit objet de lore clairement non sexuel : parfum, médaillon, clé,
+> lettre ou tasse. Pose élégante, regard complice, cadrage trois-quarts.
+
+### Étape II — ellipse
+
+> Même boudoir entièrement vide, sans personne, corps, silhouette, ombre
+> humaine ou reflet. Rideaux presque fermés, fondu quasi noir et trois
+> impulsions de néon abstraites indiquant uniquement une ellipse temporelle.
+> Aucun texte, symbole anatomique ou onomatopée sexuelle.
+
+### Étape III — retour
+
+> Même femme adulte, seule, sereine et reposée dans le même boudoir, toujours
+> entièrement vêtue de sa tenue opaque et fermée. L’objet personnel non sexuel
+> est rangé sur une table. Expression satisfaite d’avoir pris du temps pour
+> elle, pose naturelle et jambes non écartées.
+
+Contraintes communes : préserver strictement l’identité de la référence ; une
+seule femme au maximum ; aucun duplicate, reflet-personnage, texte, logo ou
+watermark. Aucun jouet sexuel, dispositif de massage, objet phallique,
+masturbation, acte sexuel implicite ou explicite, nudité, transparence, toucher
+de la poitrine ou de l’entrejambe, fluide, sueur, humidité, focus anatomique ou
+apparence jeune.

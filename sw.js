@@ -2,8 +2,8 @@
 
 const CACHE_PREFIX = 'infernal-city-';
 const LEGACY_CACHE_NAME = `${CACHE_PREFIX}v8`;
-const CACHE_NAME = `${CACHE_PREFIX}v12`;
-const MEDIA_CACHE_NAME = `${CACHE_PREFIX}media-v2.7`;
+const CACHE_NAME = `${CACHE_PREFIX}v13`;
+const MEDIA_CACHE_NAME = `${CACHE_PREFIX}media-v2.8`;
 
 const EXPANSION_TERRAIN_PATHS = new Set([
   'assets/environment/map-western-wall.png',

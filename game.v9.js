@@ -8749,6 +8749,7 @@ class GameEngine {
     const participants = this.formatAdultSceneParticipants(scene);
     this.openCgStoryViewer({
       id: scene.id,
+      adultSceneId: scene.id,
       name: scene.title,
       subtitle: scene.subtitle,
       img: scene.src,
@@ -8759,7 +8760,8 @@ class GameEngine {
       stats: {
         Type: this.getAdultSceneKindLabel(scene.kind),
         Adultes: scene.ageLabel,
-        Personnages: participants
+        Personnages: participants,
+        ...(scene.sequenceId ? { Étape: `${scene.sequenceIndex + 1} / ${scene.sequenceLength} · ${scene.sequenceStageLabel}` } : {})
       }
     });
     return true;
@@ -8838,6 +8840,46 @@ class GameEngine {
     });
   }
 
+  configureCgSequenceNavigation(item) {
+    const navigation = document.getElementById('cg-sequence-nav');
+    const previousButton = document.getElementById('btn-cg-sequence-prev');
+    const nextButton = document.getElementById('btn-cg-sequence-next');
+    const status = document.getElementById('cg-sequence-status');
+    if (!navigation || !previousButton || !nextButton || !status) return;
+
+    const currentScene = item?.adultSceneId
+      ? (ADULT_SCENES?.bonusScenes || []).find(scene => scene.id === item.adultSceneId)
+      : null;
+    const sequence = currentScene?.sequenceId
+      ? (ADULT_SCENES?.bonusScenes || [])
+        .filter(scene => (
+          scene.sequenceId === currentScene.sequenceId
+          && this.isAdultBonusSceneUnlocked(scene)
+        ))
+        .sort((left, right) => left.sequenceIndex - right.sequenceIndex)
+      : [];
+
+    if (!currentScene || sequence.length < 2) {
+      navigation.hidden = true;
+      previousButton.onclick = null;
+      nextButton.onclick = null;
+      status.textContent = '';
+      return;
+    }
+
+    const currentIndex = sequence.findIndex(scene => scene.id === currentScene.id);
+    navigation.hidden = false;
+    status.textContent = `${currentIndex + 1} / ${sequence.length} · ${currentScene.sequenceStageLabel}`;
+    previousButton.disabled = currentIndex <= 0;
+    nextButton.disabled = currentIndex < 0 || currentIndex >= sequence.length - 1;
+    previousButton.onclick = currentIndex > 0
+      ? () => this.openAdultSceneViewer(sequence[currentIndex - 1])
+      : null;
+    nextButton.onclick = currentIndex >= 0 && currentIndex < sequence.length - 1
+      ? () => this.openAdultSceneViewer(sequence[currentIndex + 1])
+      : null;
+  }
+
   openCgStoryViewer(item) {
     const modal = document.getElementById('cg-viewer-modal'); if (!modal) return;
 
@@ -8862,6 +8904,7 @@ class GameEngine {
         });
       }
     }
+    this.configureCgSequenceNavigation(item);
     this.openModal(modal);
   }
 

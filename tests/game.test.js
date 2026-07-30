@@ -2730,18 +2730,23 @@ test('les bonus adultes suivent les deblocages militaires sans modifier le gamep
   const xyraVariants = ADULT_SCENES.bonusScenes.find(scene => scene.id === 'xyra_body_maternity');
   const nyxBoudoir = ADULT_SCENES.bonusScenes.find(scene => scene.id === 'nyx_boudoir');
   const xyraBoudoir = ADULT_SCENES.bonusScenes.find(scene => scene.id === 'xyra_boudoir');
+  const nyxRitual = ADULT_SCENES.bonusScenes.find(scene => scene.id === 'nyx_private_ritual_before');
+  const xyraRitual = ADULT_SCENES.bonusScenes.find(scene => scene.id === 'xyra_private_ritual_before');
 
   assert.equal(engine.isAdultBonusSceneUnlocked(nyxBikini), true);
   assert.equal(engine.isAdultBonusSceneUnlocked(nyxVariants), true);
   assert.equal(engine.isAdultBonusSceneUnlocked(nyxBoudoir), true);
+  assert.equal(engine.isAdultBonusSceneUnlocked(nyxRitual), true);
   assert.equal(engine.isAdultBonusSceneUnlocked(pairedRomance), false);
   assert.equal(engine.isAdultBonusSceneUnlocked(xyraVariants), false);
   assert.equal(engine.isAdultBonusSceneUnlocked(xyraBoudoir), false);
+  assert.equal(engine.isAdultBonusSceneUnlocked(xyraRitual), false);
   HERO_CLASSES.aurelia.unlocked = true;
   assert.equal(engine.isAdultBonusSceneUnlocked(pairedRomance), true);
   engine.defeatedBossIds.push('xyra');
   assert.equal(engine.isAdultBonusSceneUnlocked(xyraVariants), true);
   assert.equal(engine.isAdultBonusSceneUnlocked(xyraBoudoir), true);
+  assert.equal(engine.isAdultBonusSceneUnlocked(xyraRitual), true);
   assert.match(engine.getAdultBonusUnlockLabel(xyraVariants), /Xyra/u);
   assert.equal(engine.isAdultBonusSceneUnlocked(gameOver), false);
   engine.bestWave = 8;
@@ -2751,6 +2756,56 @@ test('les bonus adultes suivent les deblocages militaires sans modifier le gamep
   assert.equal(engine.isAdultBonusSceneUnlocked(gameOver), true);
   assert.equal(engine.score, 0);
   assert.equal(engine.metaCoins, 0);
+});
+
+test('le lecteur CG navigue chronologiquement dans une parenthese privee', () => {
+  const {
+    GameEngine, document, ADULT_SCENES
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const ids = [
+    'cg-viewer-modal',
+    'cg-viewer-img',
+    'cg-story-title-txt',
+    'cg-story-sub-txt',
+    'cg-story-quote-txt',
+    'cg-story-desc-txt',
+    'cg-stats-grid-container',
+    'cg-sequence-nav',
+    'btn-cg-sequence-prev',
+    'cg-sequence-status',
+    'btn-cg-sequence-next'
+  ];
+  const elements = Object.fromEntries(ids.map(id => [
+    id,
+    createElement(id === 'cg-viewer-img' ? 'img' : 'div')
+  ]));
+  document.getElementById = id => elements[id] || null;
+  engine.openModal = () => {};
+
+  const sequence = ADULT_SCENES.bonusScenes
+    .filter(scene => scene.sequenceId === 'nyx_private_ritual')
+    .sort((left, right) => left.sequenceIndex - right.sequenceIndex);
+  assert.equal(sequence.length, 3);
+  assert.equal(engine.openAdultSceneViewer(sequence[1]), true);
+  assert.equal(elements['cg-sequence-nav'].hidden, false);
+  assert.match(elements['cg-sequence-status'].textContent, /2 \/ 3/u);
+  assert.equal(elements['btn-cg-sequence-prev'].disabled, false);
+  assert.equal(elements['btn-cg-sequence-next'].disabled, false);
+
+  let openedSceneId = null;
+  engine.openAdultSceneViewer = scene => {
+    openedSceneId = scene.id;
+    return true;
+  };
+  elements['btn-cg-sequence-prev'].onclick();
+  assert.equal(openedSceneId, sequence[0].id);
+  elements['btn-cg-sequence-next'].onclick();
+  assert.equal(openedSceneId, sequence[2].id);
+
+  engine.configureCgSequenceNavigation({ id: 'archive_sans_sequence' });
+  assert.equal(elements['cg-sequence-nav'].hidden, true);
+  assert.equal(elements['cg-sequence-status'].textContent, '');
 });
 
 test('le Game Over choisit la taquinerie liee a l heroine quand elle existe', () => {

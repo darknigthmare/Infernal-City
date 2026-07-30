@@ -1,5 +1,22 @@
 # Infernal City: Valkyrie Sweeper
 
+## Mise à jour 2.8 — Parenthèses privées
+
+- Les dix héroïnes et les dix antagonistes disposent chacune d’une séquence
+  narrative en trois CG OpenAI indépendantes : anticipation, ellipse abstraite
+  dans une pièce entièrement vide, puis retour au calme.
+- Les soixante images conservent l’identité et la palette des portraits boudoir.
+  Elles montrent au plus une femme clairement adulte, toujours vêtue d’une
+  tenue opaque et couvrante, sans nudité, acte, jouet sexuel ou fluide.
+- Le nouveau filtre « Parenthèses privées » les range par personnage et par
+  étape. Le lecteur CG possède des commandes précédente/suivante, un indicateur
+  1/3 à 3/3 et désactive les directions impossibles.
+- L’ellipse ne raconte aucun acte sexuel : le personnage quitte le cadre et les
+  rideaux, le quasi-noir et les impulsions lumineuses indiquent seulement que
+  du temps passe. Le retour montre une détente personnelle réussie.
+- Les règles de déblocage existantes restent inchangées et ces archives
+  n’accordent aucune monnaie, statistique ou récompense de combat.
+
 Roguelite de défense cyber-gothique en HTML, CSS et JavaScript natifs.
 
 ## Mise à jour 2.7 — Boudoirs individuels
@@ -94,7 +111,7 @@ Roguelite de défense cyber-gothique en HTML, CSS et JavaScript natifs.
   ont désormais un pouvoir ciblable propre.
 - Défi quotidien déterministe, historique local des runs et Tour Infinitum
   poursuivie par segments de dix étages à mutateurs cumulés.
-- Studio 2.7 : pose, ambiance, intensité artistique suggestive ou intimiste et
+- Studio 2.8 : pose, ambiance, intensité artistique suggestive ou intimiste et
   galerie des conclusions. Tous les modèles sont adultes et chaque séance
   reste facultative, consentie et révocable.
 - Paramètres centralisés pour volumes, contraste, taille du texte, détection de
@@ -158,11 +175,11 @@ Le jeu enregistre un service worker sur `localhost` ou depuis une origine HTTPS.
 Après une première visite en ligne, le shell, les scripts essentiels — dont le
 registre des personnages —, le terrain Convergence et les icônes sont
 précachés. Tous les atlas de combat, personnages, portraits, expressions, CG
-narratives, grands terrains asymétriques et compositions du Studio 2.7
+narratives, grands terrains asymétriques et compositions du Studio 2.8
 rejoignent un cache média séparé à leur première consultation. Le service
 worker les sert ensuite en priorité depuis ce cache. Cela conserve une
 installation initiale sous le budget de 20 Mio sans sacrifier leur disponibilité
-hors ligne après découverte. Le manifeste 2.7 et les icônes PNG 192/512
+hors ligne après découverte. Le manifeste 2.8 et les icônes PNG 192/512
 permettent de proposer l’installation en application autonome.
 
 Les actifs cœur portent un nom de version et le code utilise le réseau en

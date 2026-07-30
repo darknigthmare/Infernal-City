@@ -74,7 +74,7 @@
               <p class="section-eyebrow">THÉÂTRE D’OPÉRATIONS</p>
               <h3 id="deployment-planner-title">Choisir le terrain</h3>
             </div>
-            <span class="release-chip">MISE À JOUR 2.7</span>
+            <span class="release-chip">MISE À JOUR 2.8</span>
           </div>
 
           <label class="difficulty-field" for="layout-select">
@@ -339,7 +339,7 @@
           <button class="hq-card" id="btn-studio-toggle" type="button">
             <div class="hq-card-icon">📸</div>
             <h3>Studio Boudoir Néon</h3>
-            <p>Portraits sensuels non nus, dont 20 CG boudoir individuelles OpenAI.</p>
+            <p>Portraits sensuels non nus, dont 20 boudoirs et 60 CG de parenthèses privées OpenAI.</p>
           </button>
 
           <button class="hq-card" id="btn-slot-toggle" type="button">
@@ -363,7 +363,7 @@
           <button class="hq-card" id="btn-adult-scenes-toggle" type="button">
             <div class="hq-card-icon" aria-hidden="true">💋</div>
             <h3>Archives Sensuelles</h3>
-            <p>Maillots, romances, 60 CG corporelles et 20 boudoirs individuels.</p>
+            <p>Maillots, romances, 60 CG corporelles, 20 boudoirs et 20 séquences privées en trois étapes.</p>
           </button>
 
           <button class="hq-card" id="btn-achieve-toggle" type="button">
@@ -490,7 +490,7 @@
     <div class="modal-overlay" id="photo-studio-modal" role="dialog" aria-modal="true" aria-labelledby="studio-title">
       <div class="modal-box studio-2-box">
         <button class="btn-close" type="button" aria-label="Fermer le Studio Boudoir">&times;</button>
-        <p class="section-eyebrow">STUDIO 2.7 · 18+</p>
+        <p class="section-eyebrow">STUDIO 2.8 · 18+</p>
         <h2 class="modal-title" id="studio-title" style="color: #00f0ff;">📸 STUDIO BOUDOIR NÉON</h2>
         <p class="modal-subtitle" id="studio-hero-title">Valkyrie Active</p>
         <p class="consent-note" id="studio-consent-note">Portraits d’adultes réalisés et exposés avec leur accord explicite. La pose et l’ambiance peuvent être interrompues ou modifiées à tout moment.</p>
@@ -772,6 +772,11 @@
           <p class="cg-story-sub" id="cg-story-sub-txt"></p>
           <div class="cg-story-quote" id="cg-story-quote-txt"></div>
           <p style="font-size: 0.9rem; color: #cbd5e1; line-height: 1.6;" id="cg-story-desc-txt"></p>
+          <nav class="cg-sequence-nav" id="cg-sequence-nav" aria-label="Navigation dans la séquence de CG" hidden>
+            <button type="button" id="btn-cg-sequence-prev">← CG précédente</button>
+            <span id="cg-sequence-status" aria-live="polite"></span>
+            <button type="button" id="btn-cg-sequence-next">CG suivante →</button>
+          </nav>
           <div class="cg-stats-grid" id="cg-stats-grid-container"></div>
         </div>
       </div>
@@ -783,7 +788,7 @@
         <button class="btn-close" type="button" aria-label="Fermer les Archives Sensuelles">&times;</button>
         <p class="section-eyebrow">18+ · PERSONNAGES DE 27 ANS ET PLUS</p>
         <h2 class="modal-title" id="adult-scenes-title">ARCHIVES SENSUELLES</h2>
-        <p class="modal-subtitle" id="adult-scenes-description">Scènes non nues entre adultes : maillots choisis, romances femme-femme consenties, moments après-intimité, 60 CG corporelles séparées et 20 portraits boudoir individuels. L’acte intime reste hors champ, au fondu noir.</p>
+        <p class="modal-subtitle" id="adult-scenes-description">Scènes non nues entre adultes : maillots choisis, romances consenties, 60 CG corporelles, 20 portraits boudoir et 20 parenthèses privées en trois CG indépendantes. Chaque ellipse reste abstraite, vide et hors champ.</p>
         <label class="adult-scenes-filter">
           <span>Filtrer les archives</span>
           <select id="adult-scenes-filter-select"></select>

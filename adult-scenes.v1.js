@@ -250,21 +250,88 @@
   });
 
   const boudoirScenes = [...heroineBoudoirScenes, ...villainBoudoirScenes];
+  const privateRitualStageSpecs = [
+    {
+      stage: 'before',
+      numeral: 'I',
+      stageLabel: 'Avant · anticipation',
+      subtitle: ageLabel => `Anticipation boudoir · adulte de ${ageLabel}`,
+      alt: (name, ageLabel) => `${name}, adulte de ${ageLabel}, prépare seule une parenthèse de détente dans une tenue opaque et couvrante, avec un objet personnel non sexuel.`,
+      quote: '« Je ferme la porte, je choisis la lumière et je garde la maîtrise du moment. »',
+      story: name => `${name} prépare elle-même une pause privée : lumière tamisée, objet personnel et tenue de détente entièrement couvrante. Aucun acte ni accessoire sexuel n’est représenté ou suggéré.`
+    },
+    {
+      stage: 'ellipsis',
+      numeral: 'II',
+      stageLabel: 'Ellipse · pause hors champ',
+      subtitle: () => 'Fondu abstrait · pièce vide et temps suspendu',
+      alt: name => `Le boudoir de ${name} demeure vide dans un fondu presque noir, traversé uniquement par des impulsions de lumière abstraites.`,
+      quote: '« Le temps privé reste privé. »',
+      story: () => 'La personne quitte entièrement le cadre. Le fondu presque noir et les pulsations de néon indiquent seulement une ellipse temporelle, sans corps, son sexuel ou activité intime.'
+    },
+    {
+      stage: 'after',
+      numeral: 'III',
+      stageLabel: 'Après · retour au calme',
+      subtitle: ageLabel => `Retour au calme · adulte de ${ageLabel}`,
+      alt: (name, ageLabel) => `${name}, adulte de ${ageLabel}, revient seule, sereine et entièrement vêtue après une pause personnelle hors champ.`,
+      quote: '« Cette pause m’appartenait ; je reviens quand je le décide. »',
+      story: name => `${name} apparaît reposée et satisfaite de ce temps de détente. Sa tenue reste opaque et fermée, son objet personnel est rangé et aucun détail sexuel ou fluide n’est montré.`
+    }
+  ];
+
+  function buildPrivateRitualScenes(specs, group) {
+    return specs.flatMap(spec => {
+      const [participantId, name, third, fourth] = spec;
+      const age = group === 'heroines' ? third : fourth;
+      const ageLabel = `${age} ans`;
+      const sequenceId = `${participantId}_private_ritual`;
+      const unlockRule = group === 'heroines'
+        ? { type: 'heroes_unlocked', heroIds: [participantId] }
+        : { type: 'boss_defeated', bossId: participantId };
+
+      return privateRitualStageSpecs.map((stageSpec, sequenceIndex) => ({
+        id: `${participantId}_private_ritual_${stageSpec.stage}`,
+        kind: 'private_ritual',
+        title: `${name} · Parenthèse privée ${stageSpec.numeral}`,
+        subtitle: stageSpec.subtitle(ageLabel),
+        ageLabel,
+        participants: [participantId],
+        src: `assets/vn/cg/private-ritual/${group}/${participantId}-ritual-${stageSpec.stage}-v1.webp`,
+        alt: stageSpec.alt(name, ageLabel),
+        quote: stageSpec.quote,
+        story: stageSpec.story(name),
+        sequenceId,
+        sequenceIndex,
+        sequenceLength: privateRitualStageSpecs.length,
+        sequenceStage: stageSpec.stage,
+        sequenceStageLabel: stageSpec.stageLabel,
+        unlockRule
+      }));
+    });
+  }
+
+  const privateRitualScenes = [
+    ...buildPrivateRitualScenes(heroineSpecs, 'heroines'),
+    ...buildPrivateRitualScenes(villainSpecs, 'villains')
+  ];
   const bonusScenes = [
     ...bikiniScenes,
     ...pairedScenes,
     ...gameOverTeases,
     ...bodyVariantScenes,
-    ...boudoirScenes
+    ...boudoirScenes,
+    ...privateRitualScenes
   ];
   const contract = {
     schemaVersion: '1.0.0',
-    contentVersion: '2.7.0',
+    contentVersion: '2.8.0',
     maturity: {
       minimumAge: 27,
       adultsOnly: true,
       explicitSexualActs: false,
       nudity: false,
+      sexualDevices: false,
       consentRequired: true,
       intimacyPresentation: 'before_after_fade_to_black',
       gameplayConsequencesForRefusal: false
@@ -278,7 +345,8 @@
       afterglow: 'Après les néons',
       game_over: 'Game Over',
       body_variants: 'Variantes corporelles',
-      boudoir: 'Boudoirs individuels'
+      boudoir: 'Boudoirs individuels',
+      private_ritual: 'Parenthèses privées'
     })
   };
 
