@@ -2795,6 +2795,8 @@ test('les jalons ouvrent les routes corporelles sans reveler leurs CG avant la f
   const xyraBoudoir = ADULT_SCENES.bonusScenes.find(scene => scene.id === 'xyra_boudoir');
   const nyxRitual = ADULT_SCENES.bonusScenes.find(scene => scene.id === 'nyx_private_ritual_before');
   const xyraRitual = ADULT_SCENES.bonusScenes.find(scene => scene.id === 'xyra_private_ritual_before');
+  const nyxEros = ADULT_SCENES.bonusScenes.find(scene => scene.id === 'nyx_eros_time_prelude');
+  const xyraEros = ADULT_SCENES.bonusScenes.find(scene => scene.id === 'xyra_eros_time_prelude');
   const nyxBodyRoute = engine.getBodyRouteForScene(nyxVariants);
   const xyraBodyRoute = engine.getBodyRouteForScene(xyraVariants);
 
@@ -2803,11 +2805,13 @@ test('les jalons ouvrent les routes corporelles sans reveler leurs CG avant la f
   assert.equal(engine.isBodyRouteAvailable(nyxBodyRoute), true);
   assert.equal(engine.isAdultBonusSceneUnlocked(nyxBoudoir), true);
   assert.equal(engine.isAdultBonusSceneUnlocked(nyxRitual), true);
+  assert.equal(engine.isAdultBonusSceneUnlocked(nyxEros), true);
   assert.equal(engine.isAdultBonusSceneUnlocked(pairedRomance), false);
   assert.equal(engine.isAdultBonusSceneUnlocked(xyraVariants), false);
   assert.equal(engine.isBodyRouteAvailable(xyraBodyRoute), false);
   assert.equal(engine.isAdultBonusSceneUnlocked(xyraBoudoir), false);
   assert.equal(engine.isAdultBonusSceneUnlocked(xyraRitual), false);
+  assert.equal(engine.isAdultBonusSceneUnlocked(xyraEros), false);
   HERO_CLASSES.aurelia.unlocked = true;
   assert.equal(engine.isAdultBonusSceneUnlocked(pairedRomance), true);
   engine.defeatedBossIds.push('xyra');
@@ -2815,6 +2819,7 @@ test('les jalons ouvrent les routes corporelles sans reveler leurs CG avant la f
   assert.equal(engine.isAdultBonusSceneUnlocked(xyraVariants), false);
   assert.equal(engine.isAdultBonusSceneUnlocked(xyraBoudoir), true);
   assert.equal(engine.isAdultBonusSceneUnlocked(xyraRitual), true);
+  assert.equal(engine.isAdultBonusSceneUnlocked(xyraEros), true);
   assert.match(engine.getAdultBonusUnlockLabel(xyraVariants), /route VN/u);
   assert.equal(engine.isAdultBonusSceneUnlocked(gameOver), false);
   engine.bestWave = 8;
@@ -3033,9 +3038,11 @@ test('le lecteur CG navigue chronologiquement dans une parenthese privee', () =>
   assert.equal(sequence.length, 3);
   assert.equal(engine.openAdultSceneViewer(sequence[1]), true);
   assert.equal(elements['cg-sequence-nav'].hidden, false);
-  assert.match(elements['cg-sequence-status'].textContent, /2 \/ 3/u);
+  assert.match(elements['cg-sequence-status'].textContent, /CG 2 sur 3/u);
   assert.equal(elements['btn-cg-sequence-prev'].disabled, false);
   assert.equal(elements['btn-cg-sequence-next'].disabled, false);
+  assert.match(elements['btn-cg-sequence-prev'].getAttribute('aria-label'), /CG 1 sur 3/u);
+  assert.match(elements['btn-cg-sequence-next'].getAttribute('aria-label'), /CG 3 sur 3/u);
 
   let openedSceneId = null;
   engine.openAdultSceneViewer = scene => {
@@ -3050,6 +3057,94 @@ test('le lecteur CG navigue chronologiquement dans une parenthese privee', () =>
   engine.configureCgSequenceNavigation({ id: 'archive_sans_sequence' });
   assert.equal(elements['cg-sequence-nav'].hidden, true);
   assert.equal(elements['cg-sequence-status'].textContent, '');
+});
+
+test('la categorie Eros Time liste vingt sequences et filtre une entree par personnage', () => {
+  const {
+    GameEngine, document
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const elements = {
+    'adult-scenes-grid': createElement('div'),
+    'body-route-participant-filter': createElement('label'),
+    'body-route-progress-summary': createElement('p')
+  };
+  document.getElementById = id => elements[id] || null;
+
+  engine.activeBodyRouteParticipantFilter = 'all';
+  engine.renderAdultScenes('eros_time');
+  assert.equal(elements['body-route-participant-filter'].hidden, false);
+  assert.equal(elements['body-route-progress-summary'].hidden, false);
+  assert.equal(elements['adult-scenes-grid'].children.length, 20);
+  assert.equal(
+    new Set(elements['adult-scenes-grid'].children.map(card => card.dataset.sequenceId)).size,
+    20
+  );
+  assert.match(elements['body-route-progress-summary'].textContent, /20 séquences \/ 60 CG/u);
+  assert.match(elements['body-route-progress-summary'].textContent, /2 à 6 hommes adultes/u);
+  assert.match(elements['body-route-progress-summary'].textContent, /hors champ/u);
+
+  elements['adult-scenes-grid'].children = [];
+  engine.activeBodyRouteParticipantFilter = 'nyx';
+  engine.renderAdultScenes('eros_time');
+  assert.equal(elements['adult-scenes-grid'].children.length, 1);
+  assert.equal(elements['adult-scenes-grid'].children[0].dataset.sequenceId, 'nyx_eros_time');
+  assert.match(elements['body-route-progress-summary'].textContent, /Nyx Circuit/u);
+  assert.match(elements['body-route-progress-summary'].textContent, /3 hommes adultes/u);
+});
+
+test('le lecteur Eros Time annonce le hors champ et le consentement sans modifier le jeu', () => {
+  const {
+    GameEngine, document, ADULT_SCENES
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const ids = [
+    'cg-viewer-modal',
+    'cg-viewer-img',
+    'cg-story-title-txt',
+    'cg-story-sub-txt',
+    'cg-story-quote-txt',
+    'cg-story-desc-txt',
+    'cg-stats-grid-container',
+    'cg-sequence-nav',
+    'btn-cg-sequence-prev',
+    'cg-sequence-status',
+    'btn-cg-sequence-next'
+  ];
+  const elements = Object.fromEntries(ids.map(id => [
+    id,
+    createElement(id === 'cg-viewer-img' ? 'img' : 'div')
+  ]));
+  document.getElementById = id => elements[id] || null;
+  engine.openModal = () => {};
+  const sequence = ADULT_SCENES.bonusScenes
+    .filter(scene => scene.sequenceId === 'nyx_eros_time')
+    .sort((left, right) => left.sequenceIndex - right.sequenceIndex);
+  const before = {
+    score: engine.score,
+    coins: engine.coins,
+    metaCoins: engine.metaCoins,
+    defeatedBossIds: engine.defeatedBossIds.join(',')
+  };
+
+  assert.equal(engine.openAdultSceneViewer(sequence[1]), true);
+  assert.match(elements['cg-sequence-status'].textContent, /CG 2 sur 3 · Ellipse · intimité hors champ/u);
+  assert.equal(elements['cg-viewer-img'].src, sequence[1].src);
+  assert.match(elements['cg-viewer-img'].alt, /entièrement vide/u);
+  const stats = elements['cg-stats-grid-container'].children.map(item => item.innerHTML).join(' ');
+  assert.match(stats, /Partenaires: <strong>3 hommes adultes indépendants/u);
+  assert.match(stats, /Âge minimum: <strong>28 ans/u);
+  assert.match(stats, /Consentement: <strong>affirmé, révocable · sortie libre/u);
+  assert.match(stats, /Intimité: <strong>hors champ · aucun acte montré/u);
+  assert.deepEqual(
+    {
+      score: engine.score,
+      coins: engine.coins,
+      metaCoins: engine.metaCoins,
+      defeatedBossIds: engine.defeatedBossIds.join(',')
+    },
+    before
+  );
 });
 
 test('le Game Over choisit la taquinerie liee a l heroine quand elle existe', () => {

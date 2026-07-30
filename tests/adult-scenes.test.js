@@ -1,6 +1,7 @@
 'use strict';
 
 const assert = require('node:assert/strict');
+const crypto = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
 const test = require('node:test');
@@ -73,9 +74,9 @@ function inspectReachableRouteGraph(route) {
   return { nodesById, reachableIds, branchReachesEnding };
 }
 
-test('le contrat 2.9 est gele et limite toutes les scenes aux adultes non explicites', () => {
+test('le contrat 2.10 est gele et limite toutes les scenes aux adultes non explicites', () => {
   const contract = loadContract();
-  assert.equal(contract.contentVersion, '2.9.0');
+  assert.equal(contract.contentVersion, '2.10.0');
   assert.equal(contract.bodyRouteDataVersion, '1.0.0');
   assert.equal(contract.maturity.adultsOnly, true);
   assert.equal(contract.maturity.minimumAge >= 27, true);
@@ -83,6 +84,8 @@ test('le contrat 2.9 est gele et limite toutes les scenes aux adultes non explic
   assert.equal(contract.maturity.nudity, false);
   assert.equal(contract.maturity.consentRequired, true);
   assert.equal(contract.maturity.intimacyPresentation, 'before_after_fade_to_black');
+  assert.equal(contract.maturity.multiPartnerPresentation, 'consensual_offscreen_only');
+  assert.equal(contract.maturity.minimumPartnerAge, 28);
   assert.equal(contract.maturity.gameplayConsequencesForRefusal, false);
   assert.equal(contract.maturity.sexualDevices, false);
   assert.equal(Object.isFrozen(contract), true);
@@ -120,16 +123,125 @@ test('les bonus couvrent les archives sensuelles, corporelles, boudoir et parent
       game_over: 4,
       body_variants: 60,
       boudoir: 20,
-      private_ritual: 60
+      private_ritual: 60,
+      eros_time: 60
     }
   );
-  assert.equal(contract.bonusScenes.length, 164);
-  assert.equal(new Set(contract.bonusScenes.map(scene => scene.src)).size, 164);
+  assert.equal(contract.bonusScenes.length, 224);
+  assert.equal(new Set(contract.bonusScenes.map(scene => scene.src)).size, 224);
   contract.bonusScenes.forEach(scene => {
     assert.ok(scene.ageLabel);
     assert.ok(scene.alt.length > 30);
     assert.ok(scene.story.length > 40);
     assertRealWebp(scene.src);
+  });
+});
+
+test('Eros Time separe vingt sequences consenties en soixante CG hors champ', () => {
+  const contract = loadContract();
+  const scenes = contract.bonusScenes.filter(scene => scene.kind === 'eros_time');
+  const heroineScenes = scenes.filter(scene => scene.unlockRule.type === 'heroes_unlocked');
+  const villainScenes = scenes.filter(scene => scene.unlockRule.type === 'boss_defeated');
+  const sequences = scenes.reduce((result, scene) => {
+    result[scene.sequenceId] = result[scene.sequenceId] || [];
+    result[scene.sequenceId].push(scene);
+    return result;
+  }, {});
+  const stageCounts = scenes.reduce((result, scene) => {
+    result[scene.sequenceStage] = (result[scene.sequenceStage] || 0) + 1;
+    return result;
+  }, {});
+
+  assert.equal(scenes.length, 60);
+  assert.equal(heroineScenes.length, 30);
+  assert.equal(villainScenes.length, 30);
+  assert.equal(Object.keys(sequences).length, 20);
+  assert.deepEqual({ ...stageCounts }, { prelude: 20, ellipsis: 20, return: 20 });
+  assert.equal(scenes.filter(scene => scene.listedInArchive === true).length, 20);
+  assert.deepEqual(
+    Object.fromEntries(
+      scenes
+        .filter(scene => scene.sequenceStage === 'prelude')
+        .map(scene => [scene.participants[0], scene.partnerGroup.count])
+        .sort(([left], [right]) => left.localeCompare(right))
+    ),
+    {
+      amara: 4,
+      astarra: 5,
+      aurelia: 4,
+      freyja: 6,
+      hana: 3,
+      isolde: 4,
+      kalix: 3,
+      malika: 5,
+      maris: 5,
+      mircalla: 2,
+      nhalzara: 6,
+      noctis: 4,
+      nyx: 3,
+      ossuary: 3,
+      pestifera: 4,
+      umbrael: 2,
+      vega: 2,
+      vexara: 6,
+      xyra: 4,
+      zahra: 3
+    }
+  );
+
+  Object.values(sequences).forEach(sequence => {
+    const ordered = sequence.sort((left, right) => left.sequenceIndex - right.sequenceIndex);
+    assert.equal(ordered.length, 3);
+    assert.deepEqual(ordered.map(scene => scene.sequenceStage), ['prelude', 'ellipsis', 'return']);
+    assert.deepEqual(ordered.map(scene => scene.sequenceIndex), [0, 1, 2]);
+    assert.equal(ordered.filter(scene => scene.listedInArchive).length, 1);
+    ordered.forEach(scene => {
+      assert.equal(scene.partnerGroup, ordered[0].partnerGroup);
+      assert.equal(scene.unlockRule, ordered[0].unlockRule);
+    });
+  });
+
+  const contentHashes = scenes.map(scene => (
+    crypto.createHash('sha256')
+      .update(fs.readFileSync(path.join(ROOT, scene.src)))
+      .digest('hex')
+  ));
+  assert.equal(new Set(contentHashes).size, 60, 'les 60 CG doivent être des images réellement indépendantes');
+
+  scenes.forEach(scene => {
+    assert.equal(scene.archiveScope, 'adult_only');
+    assert.equal(scene.sequenceLength, 3);
+    assert.equal(scene.participants.length, 1);
+    assert.equal(scene.partnerGroup.count >= 2 && scene.partnerGroup.count <= 6, true);
+    assert.equal(scene.partnerGroup.members.length, scene.partnerGroup.count);
+    assert.equal(scene.partnerGroup.minimumAge, 28);
+    assert.equal(scene.partnerGroup.relationship, 'independent_peers');
+    assert.equal(scene.partnerGroup.consent, 'affirmed_revocable');
+    assert.equal(scene.partnerGroup.canLeaveFreely, true);
+    scene.partnerGroup.members.forEach(member => {
+      assert.equal(member.gender, 'man');
+      assert.equal(member.isAdult, true);
+      assert.equal(member.autonomous, true);
+      assert.equal(member.age >= 28, true);
+    });
+    assert.equal(scene.eroticTone, true);
+    assert.equal(scene.intimacy, 'implied_offscreen');
+    assert.equal(scene.sexualActsShown, false);
+    assert.equal(scene.nudity, false);
+    assert.equal(scene.playerInvolved, false);
+    assert.equal(scene.rewardEffects, false);
+    assert.equal(scene.gameplayEffects, false);
+    assert.equal(scene.romanceEffects, false);
+    assert.match(scene.src, /assets\/vn\/cg\/eros-time\/(?:heroines|villains)\/.+-eros-(?:prelude|ellipsis|return)-v1\.webp$/u);
+    if (scene.sequenceStage === 'ellipsis') {
+      assert.equal(scene.peopleVisible, false);
+      assert.equal(scene.visiblePeople, 0);
+      assert.match(scene.alt, /entièrement vide/u);
+      assert.match(scene.alt, /aucune personne, silhouette ou réflexion/u);
+    } else {
+      assert.equal(scene.peopleVisible, true);
+      assert.equal(scene.visiblePeople, scene.partnerGroup.count + 1);
+    }
   });
 });
 

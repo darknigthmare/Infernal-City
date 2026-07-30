@@ -551,17 +551,335 @@
     ...buildPrivateRitualScenes(heroineSpecs, 'heroines'),
     ...buildPrivateRitualScenes(villainSpecs, 'villains')
   ];
+
+  function createErosPartnerGroup(members) {
+    return {
+      count: members.length,
+      minimumAge: 28,
+      members: members.map(member => ({
+        id: member[0],
+        title: member[1],
+        age: member[2],
+        gender: 'man',
+        isAdult: true,
+        autonomous: true
+      })),
+      relationship: 'independent_peers',
+      consent: 'affirmed_revocable',
+      canLeaveFreely: true
+    };
+  }
+
+  const erosTimeProfiles = [
+    {
+      id: 'nyx', group: 'heroines', name: 'Nyx Circuit', age: 30,
+      setting: 'relais privé sous la pluie néon',
+      palette: 'noir, cyan, magenta et chrome',
+      partnerGroup: createErosPartnerGroup([
+        ['data-courier', 'coursier de données indépendant', 31],
+        ['ethical-neurotech', 'neurotechnicien éthique', 38],
+        ['corp-whistleblower', 'lanceur d’alerte ex-corporatiste', 34]
+      ])
+    },
+    {
+      id: 'aurelia', group: 'heroines', name: 'Aurelia Brassheart', age: 36,
+      setting: 'serre mécanique de cuivre',
+      palette: 'cuivre, laiton, vert-de-gris et crème',
+      partnerGroup: createErosPartnerGroup([
+        ['airship-captain', 'capitaine d’aérostat indépendant', 42],
+        ['clockmaker', 'maître horloger indépendant', 39],
+        ['cooperative-boilermaker', 'chaudronnier coopératif', 45],
+        ['botanical-automata-designer', 'créateur d’automates botaniques', 36]
+      ])
+    },
+    {
+      id: 'maris', group: 'heroines', name: 'Capitaine Maris Blacktide', age: 33,
+      setting: 'salon neutre d’un port franc stellaire',
+      palette: 'bleu nuit, bordeaux, or terni et violet',
+      partnerGroup: createErosPartnerGroup([
+        ['rival-corsair-captain', 'capitaine corsaire rival', 44],
+        ['abyssal-archaeologist', 'archéologue abyssal', 37],
+        ['void-diver', 'plongeur du vide indépendant', 35],
+        ['stellar-tide-navigator', 'navigateur des marées stellaires', 41],
+        ['free-port-mediator', 'médiateur du port franc', 39]
+      ])
+    },
+    {
+      id: 'zahra', group: 'heroines', name: 'Zahra des Mille-Ciels', age: 28,
+      setting: 'jardin suspendu sous trois lunes',
+      palette: 'ambre, indigo, turquoise et or',
+      partnerGroup: createErosPartnerGroup([
+        ['caravan-astronomer', 'astronome caravanier', 34],
+        ['windship-pilot', 'pilote de nef des vents', 32],
+        ['free-cartographer', 'conteur-cartographe libre', 36]
+      ])
+    },
+    {
+      id: 'mircalla', group: 'heroines', name: 'Mircalla Dollheart', age: 29,
+      setting: 'salon de porcelaine noire',
+      palette: 'noir, ivoire, lie-de-vin et mauve',
+      partnerGroup: createErosPartnerGroup([
+        ['egl-photographer', 'photographe EGL adulte indépendant', 33],
+        ['porcelain-artisan', 'artisan de porcelaine mécanique', 40]
+      ])
+    },
+    {
+      id: 'isolde', group: 'heroines', name: 'Isolde Mourne', age: 35,
+      setting: 'loge d’opéra restaurée avant l’aube',
+      palette: 'noir, prune, argent et or de bougie',
+      partnerGroup: createErosPartnerGroup([
+        ['guest-conductor', 'chef d’orchestre invité', 48],
+        ['independent-baritone', 'baryton indépendant', 39],
+        ['opera-restorer', 'architecte-restaurateur', 43],
+        ['music-archivist', 'archiviste musical', 36]
+      ])
+    },
+    {
+      id: 'hana', group: 'heroines', name: 'Hana Kurogane', age: 32,
+      setting: 'pavillon lunaire au cœur d’un jardin de chrome',
+      palette: 'pourpre chromé, noir d’encre, blanc lunaire et rouge',
+      partnerGroup: createErosPartnerGroup([
+        ['peer-ronin', 'ronin de rang égal', 37],
+        ['free-tea-master', 'maître de thé indépendant', 44],
+        ['pacifist-envoy', 'pacifiste d’ambassade', 33]
+      ])
+    },
+    {
+      id: 'freyja', group: 'heroines', name: 'Freyja Rimeborne', age: 38,
+      setting: 'refuge chaleureux au cœur du blizzard',
+      palette: 'cyan glacé, acier, ambre et charbon',
+      partnerGroup: createErosPartnerGroup([
+        ['rival-jarl', 'jarl rival', 46],
+        ['cryoforge-engineer', 'ingénieur cryoforge', 40],
+        ['polar-pilot', 'pilote polaire indépendant', 35],
+        ['steelworkers-delegate', 'délégué sidérurgiste', 42],
+        ['free-skald', 'skald libre', 38],
+        ['glacial-doctor', 'médecin glaciaire', 50]
+      ])
+    },
+    {
+      id: 'vega', group: 'heroines', name: 'Vega Solari', age: 31,
+      setting: 'observatoire privé pendant une éclipse',
+      palette: 'blanc-or, orange solaire, cobalt et noir spatial',
+      partnerGroup: createErosPartnerGroup([
+        ['peer-solar-knight', 'chevalier solaire de rang égal', 34],
+        ['civil-heliophysicist', 'héliophysicien civil', 37]
+      ])
+    },
+    {
+      id: 'amara', group: 'heroines', name: 'Amara Verdigris', age: 34,
+      setting: 'jardin bioluminescent sécurisé',
+      palette: 'vert-de-gris, émeraude, chartreuse et bronze',
+      partnerGroup: createErosPartnerGroup([
+        ['botany-ethicist', 'éthicien botanique', 41],
+        ['biodesign-engineer', 'ingénieur biodesign indépendant', 36],
+        ['clinic-herbalist', 'herboriste de clinique', 45],
+        ['ecotectural-sculptor', 'sculpteur écotectural', 32]
+      ])
+    },
+    {
+      id: 'xyra', group: 'villains', name: 'Xyra Bioforge', age: 214,
+      setting: 'sanctuaire bioforgé autonome',
+      palette: 'rose incandescent, métal noir, cyan et rouge',
+      partnerGroup: createErosPartnerGroup([
+        ['emancipated-cyborg', 'vétéran cyborg émancipé', 42],
+        ['neural-architect', 'architecte neural indépendant', 49],
+        ['chassis-artist', 'artiste de châssis autonome', 57],
+        ['synth-rights-envoy', 'envoyé des droits synthétiques', 61]
+      ])
+    },
+    {
+      id: 'ossuary', group: 'villains', name: 'Lady Ossuary', age: 487,
+      setting: 'galerie paisible d’ossements sculptés',
+      palette: 'ivoire, blanc os, sang-de-bœuf et noir',
+      partnerGroup: createErosPartnerGroup([
+        ['autonomous-revenant', 'chevalier revenant autonome', 310],
+        ['funerary-anatomist', 'anatomiste funéraire', 52],
+        ['ethical-ivory-conservator', 'conservateur d’ivoire éthique', 47]
+      ])
+    },
+    {
+      id: 'nhalzara', group: 'villains', name: 'Nhal’Zara', age: 1200,
+      setting: 'observatoire au bord du Vide',
+      palette: 'violet, noir absolu, cyan stellaire et argent',
+      partnerGroup: createErosPartnerGroup([
+        ['space-observer', 'observateur spatial', 55],
+        ['void-pilot', 'pilote du Vide indépendant', 38],
+        ['boundary-physicist', 'physicien des frontières', 47],
+        ['cosmic-monk', 'moine cosmique libre', 60],
+        ['singularity-historian', 'historien des singularités', 41],
+        ['time-traveler', 'voyageur temporel autonome', 44]
+      ])
+    },
+    {
+      id: 'astarra', group: 'villains', name: 'Astarra Infernale', age: 666,
+      setting: 'palais de braises calmes',
+      palette: 'orange braise, cramoisi, obsidienne et or',
+      partnerGroup: createErosPartnerGroup([
+        ['rival-archduke', 'archiduc infernal rival', 700],
+        ['free-hellsmith', 'forgeron infernal libre', 180],
+        ['pact-jurist', 'juriste indépendant des pactes', 94],
+        ['obsidian-harpist', 'harpiste d’obsidienne', 79],
+        ['volcanic-explorer', 'explorateur volcanique', 126]
+      ])
+    },
+    {
+      id: 'umbrael', group: 'villains', name: 'Umbrael Shadow', age: 308,
+      setting: 'bibliothèque sans soleil',
+      palette: 'indigo, noir, violet fumé et argent',
+      partnerGroup: createErosPartnerGroup([
+        ['night-watcher', 'veilleur nocturne indépendant', 35],
+        ['occult-archivist', 'archiviste occultiste', 46]
+      ])
+    },
+    {
+      id: 'pestifera', group: 'villains', name: 'Pestifera', age: 531,
+      setting: 'orangerie de quarantaine purifiée',
+      palette: 'vert acide, ambre, bronze sombre et crème',
+      partnerGroup: createErosPartnerGroup([
+        ['quarantine-doctor', 'médecin de quarantaine', 52],
+        ['epidemic-ecologist', 'écologue épidémique', 45],
+        ['antidote-alchemist', 'alchimiste d’antidotes', 39],
+        ['mask-maker', 'créateur de masques indépendant', 48]
+      ])
+    },
+    {
+      id: 'vexara', group: 'villains', name: 'Vexara Dreadtide', age: 402,
+      setting: 'salon d’un port franc abyssal',
+      palette: 'cyan abyssal, bleu marine, or rouillé et violet',
+      partnerGroup: createErosPartnerGroup([
+        ['rival-abyssal-captain', 'capitaine abyssal rival', 423],
+        ['wreck-salvager', 'récupérateur d’épaves indépendant', 38],
+        ['trench-hydrographer', 'hydrographe des fosses', 44],
+        ['free-corsair', 'corsaire indépendant', 36],
+        ['ocean-magic-theorist', 'théoricien des magies océanes', 52],
+        ['free-port-negotiator', 'négociateur de port libre', 47]
+      ])
+    },
+    {
+      id: 'kalix', group: 'villains', name: 'Kali-X', age: 289,
+      setting: 'chambre de calcul silencieuse',
+      palette: 'rose électrique, bleu photon, noir et blanc',
+      partnerGroup: createErosPartnerGroup([
+        ['quantum-logician', 'logicien quantique', 41],
+        ['chrono-racer', 'pilote chrono-racer indépendant', 35],
+        ['synth-personhood-jurist', 'juriste de la personne synthétique', 48]
+      ])
+    },
+    {
+      id: 'malika', group: 'villains', name: 'Malika Ash-Djinn', age: 904,
+      setting: 'cour des vents de cendre',
+      palette: 'ambre, gris fumée, turquoise et rubis',
+      partnerGroup: createErosPartnerGroup([
+        ['free-djinn', 'djinn libre', 330],
+        ['volcanic-glassblower', 'souffleur de verre volcanique', 42],
+        ['storm-guide', 'guide des tempêtes indépendant', 58],
+        ['airship-envoy', 'émissaire de nef aérienne', 47],
+        ['ember-poet', 'poète des braises', 36]
+      ])
+    },
+    {
+      id: 'noctis', group: 'villains', name: 'Madame Noctis', age: 777,
+      setting: 'salon des rêves lucides aux sorties visibles',
+      palette: 'violet profond, bleu minuit, argent et rose sombre',
+      partnerGroup: createErosPartnerGroup([
+        ['lucid-dreamer', 'rêveur lucide autonome', 38],
+        ['sleep-neurologist', 'neurologue du sommeil', 45],
+        ['oneiric-artist', 'artiste onirique indépendant', 34],
+        ['dream-cartographer', 'cartographe des songes', 51]
+      ])
+    }
+  ];
+
+  const erosTimeStageSpecs = [
+    {
+      stage: 'prelude',
+      numeral: 'I',
+      stageLabel: 'Prélude · tension consentie',
+      subtitle: count => `Éros Time · prélude avec ${count} hommes adultes`,
+      alt: (profile, count) => `${profile.name}, adulte de ${profile.age} ans, échange des regards complices avec exactement ${count} hommes adultes et indépendants dans le décor « ${profile.setting} »; tous restent entièrement vêtus.`,
+      quote: '« Les limites sont dites, le oui reste révocable et chaque porte demeure ouverte. »',
+      story: (profile, count) => `${profile.name} accueille ${count} pairs autonomes dans le décor « ${profile.setting} ». Tous confirment leurs limites et leur liberté de partir avant que la conversation ne devienne plus intime hors champ.`,
+      visiblePeople: profile => profile.partnerGroup.count + 1,
+      peopleVisible: true
+    },
+    {
+      stage: 'ellipsis',
+      numeral: 'II',
+      stageLabel: 'Ellipse · intimité hors champ',
+      subtitle: () => 'Éros Time · pièce vide et intimité non montrée',
+      alt: profile => `Le décor « ${profile.setting} » de ${profile.name} est entièrement vide; aucune personne, silhouette ou réflexion n’apparaît pendant l’ellipse.`,
+      quote: '« Ce qui devient intime reste entièrement hors cadre. »',
+      story: profile => `Le décor « ${profile.setting} » demeure vide derrière une porte opaque tandis que les lumières baissent. Cette ellipse temporelle suggère seulement une intimité privée, sans montrer de personne, de corps, de son sexuel ou d’activité.`,
+      visiblePeople: () => 0,
+      peopleVisible: false
+    },
+    {
+      stage: 'return',
+      numeral: 'III',
+      stageLabel: 'Retour · complicité apaisée',
+      subtitle: count => `Éros Time · retour couvert avec ${count} hommes adultes`,
+      alt: (profile, count) => `${profile.name}, adulte de ${profile.age} ans, retrouve exactement ${count} hommes adultes autour d’eau ou de thé; tous portent des tenues opaques et fermées.`,
+      quote: '« On se retrouve, on vérifie que chacun va bien, puis chacun choisit la suite. »',
+      story: (profile, count) => `${profile.name} et ses ${count} partenaires réapparaissent entièrement couverts dans le décor « ${profile.setting} ». Ils partagent de l’eau, du thé et une conversation calme; aucun détail intime n’est montré.`,
+      visiblePeople: profile => profile.partnerGroup.count + 1,
+      peopleVisible: true
+    }
+  ];
+
+  const erosTimeScenes = erosTimeProfiles.flatMap(profile => {
+    const sequenceId = `${profile.id}_eros_time`;
+    const unlockRule = profile.group === 'heroines'
+      ? { type: 'heroes_unlocked', heroIds: [profile.id] }
+      : { type: 'boss_defeated', bossId: profile.id };
+
+    return erosTimeStageSpecs.map((stageSpec, sequenceIndex) => ({
+      id: `${profile.id}_eros_time_${stageSpec.stage}`,
+      kind: 'eros_time',
+      archiveScope: 'adult_only',
+      listedInArchive: sequenceIndex === 0,
+      title: `${profile.name} · Éros Time ${stageSpec.numeral}`,
+      subtitle: stageSpec.subtitle(profile.partnerGroup.count),
+      ageLabel: `${profile.age} ans · partenaires 28 ans et plus`,
+      participants: [profile.id],
+      src: `assets/vn/cg/eros-time/${profile.group}/${profile.id}-eros-${stageSpec.stage}-v1.webp`,
+      alt: stageSpec.alt(profile, profile.partnerGroup.count),
+      quote: stageSpec.quote,
+      story: stageSpec.story(profile, profile.partnerGroup.count),
+      setting: profile.setting,
+      palette: profile.palette,
+      partnerGroup: profile.partnerGroup,
+      visiblePeople: stageSpec.visiblePeople(profile),
+      peopleVisible: stageSpec.peopleVisible,
+      eroticTone: true,
+      intimacy: 'implied_offscreen',
+      sexualActsShown: false,
+      nudity: false,
+      playerInvolved: false,
+      rewardEffects: false,
+      gameplayEffects: false,
+      romanceEffects: false,
+      sequenceId,
+      sequenceIndex,
+      sequenceLength: erosTimeStageSpecs.length,
+      sequenceStage: stageSpec.stage,
+      sequenceStageLabel: stageSpec.stageLabel,
+      unlockRule
+    }));
+  });
+
   const bonusScenes = [
     ...bikiniScenes,
     ...pairedScenes,
     ...gameOverTeases,
     ...bodyVariantScenes,
     ...boudoirScenes,
-    ...privateRitualScenes
+    ...privateRitualScenes,
+    ...erosTimeScenes
   ];
   const contract = {
     schemaVersion: '1.0.0',
-    contentVersion: '2.9.0',
+    contentVersion: '2.10.0',
     bodyRouteDataVersion: '1.0.0',
     maturity: {
       minimumAge: 27,
@@ -571,6 +889,8 @@
       sexualDevices: false,
       consentRequired: true,
       intimacyPresentation: 'before_after_fade_to_black',
+      multiPartnerPresentation: 'consensual_offscreen_only',
+      minimumPartnerAge: 28,
       gameplayConsequencesForRefusal: false
     },
     villainCinematics,
@@ -584,7 +904,8 @@
       game_over: 'Game Over',
       body_variants: 'Routes corporelles VN',
       boudoir: 'Boudoirs individuels',
-      private_ritual: 'Parenthèses privées'
+      private_ritual: 'Parenthèses privées',
+      eros_time: 'Éros Time · intimité hors champ'
     })
   };
 

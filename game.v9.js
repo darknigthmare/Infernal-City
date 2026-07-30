@@ -2744,7 +2744,7 @@ class GameEngine {
     document.getElementById('body-route-participant-select')?.addEventListener('change', event => {
       this.activeBodyRouteParticipantFilter = event.target.value;
       this.renderAdultScenes(this.activeAdultSceneFilter);
-      this.announce(document.getElementById('body-route-progress-summary')?.textContent || 'Filtre des routes mis à jour.');
+      this.announce(document.getElementById('body-route-progress-summary')?.textContent || 'Filtre des archives mis à jour.');
     });
 
     document.querySelectorAll('[data-studio-color]').forEach(button => {
@@ -8845,7 +8845,7 @@ class GameEngine {
       participantSelect.innerHTML = '';
       const allOption = document.createElement('option');
       allOption.value = 'all';
-      allOption.textContent = 'Toutes les participantes · 60 routes';
+      allOption.textContent = 'Tous les personnages · 60 routes / 20 séquences Éros';
       participantSelect.appendChild(allOption);
       [
         ['heroines', 'Héroïnes'],
@@ -8859,7 +8859,7 @@ class GameEngine {
           .forEach(route => {
             const option = document.createElement('option');
             option.value = route.participantId;
-            option.textContent = `${route.participantName} · 3 routes`;
+            option.textContent = `${route.participantName} · 3 routes / 1 séquence Éros`;
             group.appendChild(option);
           });
         participantSelect.appendChild(group);
@@ -8878,7 +8878,7 @@ class GameEngine {
   syncBodyRouteParticipantControls(filter = this.activeAdultSceneFilter) {
     const controls = document.getElementById('body-route-participant-filter');
     const summary = document.getElementById('body-route-progress-summary');
-    const visible = filter === 'body_variants';
+    const visible = filter === 'body_variants' || filter === 'eros_time';
     if (controls) controls.hidden = !visible;
     if (summary) summary.hidden = !visible;
   }
@@ -8886,7 +8886,23 @@ class GameEngine {
   renderBodyRouteProgressSummary(filter = this.activeAdultSceneFilter) {
     this.syncBodyRouteParticipantControls(filter);
     const summary = document.getElementById('body-route-progress-summary');
-    if (!summary || filter !== 'body_variants') return;
+    if (!summary) return;
+    if (filter === 'eros_time') {
+      const entries = (ADULT_SCENES.bonusScenes || [])
+        .filter(scene => scene.kind === 'eros_time' && scene.listedInArchive === true)
+        .filter(scene => (
+          this.activeBodyRouteParticipantFilter === 'all'
+          || scene.participants?.includes(this.activeBodyRouteParticipantFilter)
+        ));
+      const totalCg = entries.reduce((total, scene) => total + (scene.sequenceLength || 1), 0);
+      const unlocked = entries.filter(scene => this.isAdultBonusSceneUnlocked(scene)).length;
+      const selected = entries[0];
+      summary.textContent = selected && this.activeBodyRouteParticipantFilter !== 'all'
+        ? `${this.formatAdultSceneParticipants(selected)} · 1 séquence / ${totalCg} CG · ${selected.partnerGroup.count} hommes adultes de 28 ans et plus · consentement révocable · intimité hors champ.`
+        : `${entries.length} séquences / ${totalCg} CG · 2 à 6 hommes adultes de 28 ans et plus · ${unlocked}/${entries.length} séquences accessibles · toute intimité reste hors champ.`;
+      return;
+    }
+    if (filter !== 'body_variants') return;
     const routes = (ADULT_SCENES.bodyRoutes || [])
       .filter(route => (
         this.activeBodyRouteParticipantFilter === 'all'
@@ -8907,8 +8923,9 @@ class GameEngine {
     grid.innerHTML = '';
     const scenes = (ADULT_SCENES?.bonusScenes || [])
       .filter(scene => filter === 'all' || scene.kind === filter)
+      .filter(scene => scene.kind !== 'eros_time' || scene.listedInArchive === true)
       .filter(scene => (
-        filter !== 'body_variants'
+        (filter !== 'body_variants' && filter !== 'eros_time')
         || this.activeBodyRouteParticipantFilter === 'all'
         || scene.participants?.includes(this.activeBodyRouteParticipantFilter)
       ));
@@ -8922,8 +8939,10 @@ class GameEngine {
       const actionable = unlocked || routeAvailable;
       const card = document.createElement(actionable ? 'button' : 'div');
       if (actionable) card.type = 'button';
+      card.dataset.adultSceneId = scene.id;
       if (bodyRoute) card.dataset.bodyRouteId = bodyRoute.id;
-      card.className = `adult-scene-card ${unlocked ? 'unlocked' : 'locked'} ${routeAvailable ? 'route-available' : ''}`;
+      if (scene.sequenceId) card.dataset.sequenceId = scene.sequenceId;
+      card.className = `adult-scene-card ${scene.kind === 'eros_time' ? 'eros-time-card' : ''} ${unlocked ? 'unlocked' : 'locked'} ${routeAvailable ? 'route-available' : ''}`;
       const image = document.createElement('img');
       image.src = unlocked
         ? scene.src
@@ -8949,6 +8968,12 @@ class GameEngine {
       const subtitle = document.createElement('p');
       subtitle.textContent = scene.subtitle;
       body.append(kind, title, subtitle);
+      if (scene.kind === 'eros_time') {
+        const sequenceStatus = document.createElement('span');
+        sequenceStatus.className = 'adult-scene-route-status';
+        sequenceStatus.textContent = `SÉQUENCE · ${scene.sequenceLength} CG · ${scene.partnerGroup.count} HOMMES ADULTES · HORS CHAMP`;
+        body.appendChild(sequenceStatus);
+      }
       if (routeAvailable && routeState) {
         const routeStatus = document.createElement('span');
         routeStatus.className = 'adult-scene-route-status';
@@ -9172,6 +9197,12 @@ class GameEngine {
         Type: this.getAdultSceneKindLabel(scene.kind),
         Adultes: scene.ageLabel,
         Personnages: participants,
+        ...(scene.partnerGroup ? {
+          Partenaires: `${scene.partnerGroup.count} hommes adultes indépendants`,
+          'Âge minimum': `${scene.partnerGroup.minimumAge} ans`,
+          Consentement: 'affirmé, révocable · sortie libre',
+          Intimité: 'hors champ · aucun acte montré'
+        } : {}),
         ...(scene.bodyRouteId ? { 'Route VN': 'Terminée · archive révélée' } : {}),
         ...(scene.sequenceId ? { Étape: `${scene.sequenceIndex + 1} / ${scene.sequenceLength} · ${scene.sequenceStageLabel}` } : {})
       }
@@ -9275,15 +9306,29 @@ class GameEngine {
       navigation.hidden = true;
       previousButton.onclick = null;
       nextButton.onclick = null;
+      previousButton.setAttribute('aria-label', 'Aucune CG précédente');
+      nextButton.setAttribute('aria-label', 'Aucune CG suivante');
       status.textContent = '';
       return;
     }
 
     const currentIndex = sequence.findIndex(scene => scene.id === currentScene.id);
     navigation.hidden = false;
-    status.textContent = `${currentIndex + 1} / ${sequence.length} · ${currentScene.sequenceStageLabel}`;
+    status.textContent = `CG ${currentIndex + 1} sur ${sequence.length} · ${currentScene.sequenceStageLabel}`;
     previousButton.disabled = currentIndex <= 0;
     nextButton.disabled = currentIndex < 0 || currentIndex >= sequence.length - 1;
+    previousButton.setAttribute(
+      'aria-label',
+      currentIndex > 0
+        ? `Afficher la CG ${currentIndex} sur ${sequence.length} · ${sequence[currentIndex - 1].sequenceStageLabel}`
+        : 'Aucune CG précédente'
+    );
+    nextButton.setAttribute(
+      'aria-label',
+      currentIndex >= 0 && currentIndex < sequence.length - 1
+        ? `Afficher la CG ${currentIndex + 2} sur ${sequence.length} · ${sequence[currentIndex + 1].sequenceStageLabel}`
+        : 'Aucune CG suivante'
+    );
     previousButton.onclick = currentIndex > 0
       ? () => this.openAdultSceneViewer(sequence[currentIndex - 1])
       : null;

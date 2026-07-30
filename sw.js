@@ -2,7 +2,7 @@
 
 const CACHE_PREFIX = 'infernal-city-';
 const LEGACY_CACHE_NAME = `${CACHE_PREFIX}v8`;
-const CACHE_NAME = `${CACHE_PREFIX}v14`;
+const CACHE_NAME = `${CACHE_PREFIX}v15`;
 const MEDIA_CACHE_NAME = `${CACHE_PREFIX}media-v2.9`;
 
 const EXPANSION_TERRAIN_PATHS = new Set([

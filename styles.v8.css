@@ -1697,10 +1697,10 @@ button.adult-scene-card:focus-visible {
 /* CG Story Viewer Layout */
 .cg-viewer-layout {
   display: grid;
-  grid-template-columns: minmax(260px, 420px) minmax(280px, 1fr);
+  grid-template-columns: minmax(360px, 720px) minmax(260px, 1fr);
   gap: 20px;
-  width: min(950px, calc(100% - 32px));
-  max-width: 950px;
+  width: min(1280px, calc(100% - 32px));
+  max-width: 1280px;
   max-height: calc(100dvh - 32px);
   overflow-y: auto;
   background: var(--bg-card);
@@ -1713,9 +1713,11 @@ button.adult-scene-card:focus-visible {
 .cg-viewer-layout img {
   display: block;
   width: 100%;
-  max-width: 420px;
-  height: min(380px, 60dvh);
-  object-fit: cover;
+  max-width: none;
+  height: auto;
+  max-height: min(640px, 72dvh);
+  object-fit: contain;
+  background: #02050c;
   border-radius: 14px;
   border: 2px solid var(--color-cyan);
 }
@@ -1728,7 +1730,7 @@ button.adult-scene-card:focus-visible {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-width: 450px;
+  max-width: none;
   min-width: 0;
 }
 
@@ -3416,7 +3418,9 @@ body:is(.text-extra-large, [data-text-size="extra-large"]) {
 
   .cg-viewer-layout img {
     width: 100%;
-    height: min(52dvh, 380px);
+    height: auto;
+    max-height: min(52dvh, 380px);
+    object-fit: contain;
   }
 
   .hq-nav-grid,
@@ -3661,7 +3665,9 @@ body:is(.text-extra-large, [data-text-size="extra-large"]) {
 
   .cg-viewer-layout img {
     width: 100%;
-    height: min(52dvh, 380px);
+    height: auto;
+    max-height: min(52dvh, 380px);
+    object-fit: contain;
   }
 
   .game-over-stats {
@@ -3939,6 +3945,17 @@ body:is(.text-extra-large, [data-text-size="extra-large"]) {
   .adult-gate-legal {
     margin-top: 3px;
     font-size: 0.64rem;
+  }
+}
+
+@media (min-width: 821px) and (max-width: 980px) {
+  .cg-sequence-nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  #cg-sequence-status {
+    grid-column: 1 / -1;
+    grid-row: 1;
   }
 }
 

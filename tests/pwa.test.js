@@ -18,7 +18,7 @@ function readPngSize(filePath) {
 
 test('le manifeste PWA reference deux icones PNG carrees valides', () => {
   const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'manifest.webmanifest'), 'utf8'));
-  assert.equal(manifest.version, '2.9.0');
+  assert.equal(manifest.version, '2.10.0');
   assert.equal(manifest.display, 'standalone');
   assert.equal(manifest.start_url, './');
   assert.deepEqual(manifest.icons.map(icon => icon.sizes), ['192x192', '512x512']);
@@ -54,6 +54,10 @@ test('le service worker precache uniquement des fichiers locaux existants', () =
     urls.every(relativePath => !relativePath.startsWith('assets/animations/')),
     'les atlas de combat lourds doivent rester chargés à la demande'
   );
+  assert.ok(
+    urls.every(relativePath => !relativePath.startsWith('assets/vn/cg/eros-time/')),
+    'les 60 CG Eros Time doivent rester chargées à la demande'
+  );
   const precacheBytes = urls
     .filter(Boolean)
     .reduce((total, relativePath) => total + fs.statSync(path.join(ROOT, relativePath)).size, 0);
@@ -67,7 +71,7 @@ test('le script PWA limite son enregistrement aux contextes surs', () => {
   assert.match(source, /updateViaCache:\s*'none'/);
 });
 
-test('les actifs coeur 2.9 sont fingerprints et servis network first', () => {
+test('les actifs coeur 2.10 sont fingerprints et servis network first', () => {
   const index = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
   const worker = fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8');
 
@@ -75,7 +79,7 @@ test('les actifs coeur 2.9 sont fingerprints et servis network first', () => {
   assert.match(index, /audio\.v8\.js/);
   assert.match(index, /game\.v9\.js/);
   assert.match(index, /pwa\.v4\.js/);
-  assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}v14`/);
+  assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}v15`/);
   assert.match(worker, /vn-scenes\.v1\.js/);
   assert.match(worker, /characters\.v1\.js/);
   assert.match(worker, /adult-scenes\.v1\.js/);

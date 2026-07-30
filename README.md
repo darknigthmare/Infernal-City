@@ -1,5 +1,23 @@
 # Infernal City: Valkyrie Sweeper
 
+## Mise à jour 2.10 — Éros Time hors champ
+
+- Les dix héroïnes et les dix Trônes possèdent maintenant une séquence Éros
+  Time de trois CG OpenAI indépendantes : prélude sensuel, ellipse dans une
+  pièce entièrement vide, puis retour au calme couvert.
+- Chaque prélude réunit la femme et un groupe cohérent de deux à six hommes,
+  tous adultes de 28 ans ou plus, autonomes et hors de sa chaîne de
+  commandement. Le consentement est affirmé, révocable et chacun conserve une
+  sortie libre.
+- Toute relation intime reste hors champ. Les images ne montrent ni nudité,
+  acte sexuel, fluide, contrainte ou accessoire explicite ; l’ellipse ne
+  contient aucune personne, silhouette ou réflexion.
+- La grille affiche une carte par personnage, soit vingt entrées, puis le
+  lecteur navigue entre les trois fichiers 16:9 sans les recadrer. Un filtre
+  permet d’isoler chaque séquence et rappelle le nombre de partenaires.
+- Ces archives suivent les déblocages existants et ne modifient ni romance,
+  confiance, sauvegarde, monnaie, statistiques ou progression militaire.
+
 ## Mise à jour 2.9 — Routes de vies alternatives
 
 - Les soixante CG corporelles ne sont plus des images ouvertes par un simple
@@ -135,7 +153,7 @@ Roguelite de défense cyber-gothique en HTML, CSS et JavaScript natifs.
   ont désormais un pouvoir ciblable propre.
 - Défi quotidien déterministe, historique local des runs et Tour Infinitum
   poursuivie par segments de dix étages à mutateurs cumulés.
-- Studio 2.9 : pose, ambiance, intensité artistique suggestive ou intimiste et
+- Studio 2.10 : pose, ambiance, intensité artistique suggestive ou intimiste et
   galerie des conclusions. Tous les modèles sont adultes et chaque séance
   reste facultative, consentie et révocable.
 - Paramètres centralisés pour volumes, contraste, taille du texte, détection de
@@ -199,11 +217,11 @@ Le jeu enregistre un service worker sur `localhost` ou depuis une origine HTTPS.
 Après une première visite en ligne, le shell, les scripts essentiels — dont le
 registre des personnages —, le terrain Convergence et les icônes sont
 précachés. Tous les atlas de combat, personnages, portraits, expressions, CG
-narratives, grands terrains asymétriques et compositions du Studio 2.9
+narratives, grands terrains asymétriques et compositions du Studio 2.10
 rejoignent un cache média séparé à leur première consultation. Le service
 worker les sert ensuite en priorité depuis ce cache. Cela conserve une
 installation initiale sous le budget de 20 Mio sans sacrifier leur disponibilité
-hors ligne après découverte. Le manifeste 2.9 et les icônes PNG 192/512
+hors ligne après découverte. Le manifeste 2.10 et les icônes PNG 192/512
 permettent de proposer l’installation en application autonome.
 
 Les actifs cœur portent un nom de version et le code utilise le réseau en
@@ -220,7 +238,10 @@ phase ultime. Les portraits, expressions et trente CG de chapitre conservent
 les mêmes silhouettes, palettes et costumes originaux. La passe 2.5 ajoute
 vingt cinématiques de Trône et vingt-quatre archives adultes non graphiques ;
 la passe 2.6 ajoute soixante CG indépendantes de diversité corporelle et
-chronologique ; la passe 2.7 complète le roster avec vingt boudoirs individuels.
+chronologique ; la passe 2.7 complète le roster avec vingt boudoirs
+individuels ; les passes 2.8 et 2.9 ajoutent soixante parenthèses privées puis
+soixante routes VN ; la passe 2.10 apporte soixante CG Éros Time entièrement
+hors champ pour les vingt femmes du roster.
 
 Les neuf planches de combat historiques couvrent les vingt défenses, les sept
 archétypes ennemis et les six héros de départ. Le canvas choisit les frames

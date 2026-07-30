@@ -15,7 +15,7 @@ function hasId(id) {
   return new RegExp(`id="${id}"`).test(html);
 }
 
-test('the 2.9 content scripts load before the game runtime', () => {
+test('the 2.10 content scripts load before the game runtime', () => {
   const expansionIndex = html.indexOf('<script src="expansion.v1.js"></script>');
   const characterIndex = html.indexOf('<script src="characters.v1.js"></script>');
   const vnExpansionIndex = html.indexOf('<script src="vn-expansion.v1.js"></script>');
@@ -45,7 +45,7 @@ test('the campaign briefing exposes every terrain and the daily contract', () =>
     .forEach(value => assert.match(html, new RegExp(`<option value="${value}"`)));
 });
 
-test('specializations, Infinitum and Studio 2.9 have accessible static surfaces', () => {
+test('specializations, Infinitum and Studio 2.10 have accessible static surfaces', () => {
   [
     'defense-specialization-section',
     'defense-specialization-options',
@@ -93,13 +93,33 @@ test('cinematics, adult archives and playful Game Over have accessible surfaces'
   ].forEach(id => assert.ok(hasId(id), `${id}: missing`));
 
   assert.match(html, /id="adult-scenes-modal" role="dialog" aria-modal="true"/);
-  assert.match(html, /60 CG de parenthèses privées OpenAI/);
-  assert.match(html, /60 routes VN indépendantes vers les chronologies chubby, maternité et jeunes années adultes 27\+/);
+  assert.match(html, /60 parenthèses privées et 60 CG Éros Time OpenAI/);
+  assert.match(html, /20 séquences Éros Time, 60 CG avec 2 à 6 hommes adultes et toute intimité hors champ/);
+  assert.match(html, /id="cg-viewer-modal" role="dialog" aria-modal="true" aria-labelledby="cg-story-title-txt" aria-describedby="cg-story-desc-txt"/);
+  assert.match(html, /id="cg-sequence-status" role="status" aria-live="polite"/);
   assert.match(html, /id="cinematic-modal" role="dialog" aria-modal="true"/);
   assert.match(html, /id="game-over-modal" role="dialog" aria-modal="true"/);
   assert.match(css, /\.adult-scenes-grid/);
   assert.match(css, /\.cg-sequence-nav/);
   assert.match(css, /#cg-sequence-status/);
+  assert.match(
+    css,
+    /grid-template-columns:\s*minmax\(360px,\s*720px\)\s+minmax\(260px,\s*1fr\)/,
+    'le lecteur doit pouvoir se contracter sans dÃ©bordement sur tablette'
+  );
+  assert.match(
+    css,
+    /@media \(min-width:\s*821px\) and \(max-width:\s*980px\)[\s\S]*?\.cg-sequence-nav\s*\{[^}]*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)/,
+    'la navigation doit conserver deux boutons lisibles sur tablette'
+  );
+  assert.match(
+    css,
+    /@media \(max-width:\s*520px\)[\s\S]*?\.cg-viewer-layout img\s*\{[^}]*height:\s*auto;[^}]*max-height:\s*min\(52dvh,\s*380px\)/,
+    'la CG mobile doit garder son ratio sans boÃ®te verticale fixe'
+  );
+  assert.match(css, /\.cg-viewer-layout img\s*\{[^}]*object-fit:\s*contain/s);
+  assert.match(gameSource, /filter === 'body_variants' \|\| filter === 'eros_time'/);
+  assert.match(gameSource, /CG \$\{currentIndex \+ 1\} sur \$\{sequence\.length\}/);
   assert.match(css, /\.cinematic-frame img/);
   assert.match(css, /\.game-over-tease img/);
   assert.match(css, /\.antagonist-cinematic-actions/);
@@ -210,8 +230,8 @@ test('card headings do not skip directly from modal h2 titles to h4', () => {
   assert.match(css, /\.upgrade-text h3/);
 });
 
-test('PWA 2.9 keeps heavy terrains, atlases and CG in a separate runtime cache', () => {
-  assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}v14`/);
+test('PWA 2.10 keeps heavy terrains, atlases and CG in a separate runtime cache', () => {
+  assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}v15`/);
   assert.match(worker, /MEDIA_CACHE_NAME = `\$\{CACHE_PREFIX\}media-v2\.9`/);
   assert.match(worker, /'\.\/expansion\.v1\.js'/);
   assert.match(worker, /'\.\/characters\.v1\.js'/);
@@ -226,14 +246,15 @@ test('PWA 2.9 keeps heavy terrains, atlases and CG in a separate runtime cache',
   assert.match(worker, /assets\/characters\//);
   assert.match(worker, /assets\/vn\//);
   assert.match(worker, /serveRuntimeMedia/);
+  assert.doesNotMatch(worker, /assets\/vn\/cg\/eros-time\//);
 });
 
-test('package and web manifest expose release 2.9.0', () => {
+test('package and web manifest expose release 2.10.0', () => {
   const packageJson = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
   const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'manifest.webmanifest'), 'utf8'));
 
-  assert.equal(packageJson.version, '2.9.0');
-  assert.equal(manifest.version, '2.9.0');
+  assert.equal(packageJson.version, '2.10.0');
+  assert.equal(manifest.version, '2.10.0');
   assert.match(packageJson.scripts.check, /node --check expansion\.v1\.js/);
   assert.match(packageJson.scripts.check, /node --check characters\.v1\.js/);
   assert.match(packageJson.scripts.check, /node --check vn-expansion\.v1\.js/);

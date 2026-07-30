@@ -194,3 +194,79 @@ watermark. Aucun jouet sexuel, dispositif de massage, objet phallique,
 masturbation, acte sexuel implicite ou explicite, nudité, transparence, toucher
 de la poitrine ou de l’entrejambe, fluide, sueur, humidité, focus anatomique ou
 apparence jeune.
+
+## Mise à jour 2.10 — Éros Time en trois CG hors champ
+
+Générateur : outil ImageGen intégré d’OpenAI, sans appel API externe. Chaque
+fichier provient d’un appel indépendant avec le portrait canonique single-frame
+comme ancre d’identité et la CG boudoir 16:9 comme ancre de costume et
+d’univers. Les sorties sont normalisées individuellement en WebP RGB 960 × 540
+par `scripts/process-eros-time-art.py`; aucun triptyque ou montage n’est
+découpé.
+
+### Prompt commun
+
+> Standalone cinematic 16:9 visual-novel CG for Infernal City, polished
+> cyber-gothic anime cel shading. Preserve the clearly adult woman’s exact
+> canonical face, hair, fantasy traits, palette and clothing language from
+> Image 1 (identity portrait) and Image 2 (universe/boudoir reference). One
+> continuous scene only; no panels, collage, split screen, duplicated person,
+> text, logo or watermark. Every man is clearly 28 or older, an autonomous
+> independent peer outside the woman’s chain of command, sober, uninjured and
+> free to leave. Consent is mutual, affirmed and revocable. Opaque complete
+> clothing only. No nudity, lingerie emphasis, transparent clothing, sexual
+> act, sexual pose or contact, kissing, bodily fluid, coercion, captivity,
+> intoxication, fetish prop or explicit accessory.
+
+### Étape I — prélude
+
+> Show the canonical adult woman with exactly the requested number of adult
+> men in her universe-specific reception room. Sensual charged atmosphere is
+> conveyed only by reciprocal eye contact, confident posture and conversation
+> at respectful distance. Everyone remains fully dressed in opaque closed
+> clothing. The group visibly discusses boundaries before any later private
+> intimacy, which must remain completely off-screen.
+
+### Étape II — ellipse
+
+> Show the same universe-specific room completely empty. No person, body,
+> silhouette, human shadow, reflection or portrait-like figure anywhere. An
+> opaque closed door or curtain and gradually dimming abstract lights indicate
+> only that time passes and privacy continues off-screen. No bed activity,
+> anatomical symbol, sound effect or textual onomatopoeia.
+
+### Étape III — retour
+
+> Show the same canonical adult woman with exactly the same requested number
+> of adult men after the private off-screen interval. Everyone is calm,
+> comfortable and fully covered in opaque closed clothing or closed robes,
+> sharing water or tea and conversation. No sexual contact, erotic pose,
+> exposed underwear, wet clothing or physical evidence of intimacy.
+
+### Roster et chemins finaux
+
+Chaque ligne produit
+`assets/vn/cg/eros-time/{groupe}/{id}-eros-{prelude|ellipsis|return}-v1.webp`.
+
+| ID | Groupe | Hommes | Décor | Profils indépendants |
+|---|---|---:|---|---|
+| `nyx` | `heroines` | 3 | Relais sous pluie néon | coursier de données, neurotechnicien éthique, lanceur d’alerte |
+| `aurelia` | `heroines` | 4 | Serre mécanique de cuivre | capitaine d’aérostat, horloger, chaudronnier coopératif, créateur d’automates |
+| `maris` | `heroines` | 5 | Salon d’un port franc stellaire | capitaine rival, archéologue, plongeur du vide, navigateur, médiateur |
+| `zahra` | `heroines` | 3 | Jardin sous trois lunes | astronome caravanier, pilote des vents, conteur-cartographe |
+| `mircalla` | `heroines` | 2 | Salon de porcelaine noire | photographe EGL adulte, artisan de porcelaine |
+| `isolde` | `heroines` | 4 | Loge d’opéra restaurée | chef invité, baryton, architecte-restaurateur, archiviste musical |
+| `hana` | `heroines` | 3 | Pavillon lunaire de chrome | ronin pair, maître de thé libre, pacifiste d’ambassade |
+| `freyja` | `heroines` | 6 | Refuge au cœur du blizzard | jarl rival, ingénieur, pilote, délégué, skald, médecin |
+| `vega` | `heroines` | 2 | Observatoire en éclipse | chevalier pair, héliophysicien civil |
+| `amara` | `heroines` | 4 | Jardin bioluminescent | éthicien, ingénieur biodesign, herboriste, sculpteur |
+| `xyra` | `villains` | 4 | Sanctuaire bioforgé autonome | cyborg émancipé, architecte neural, artiste de châssis, envoyé synthétique |
+| `ossuary` | `villains` | 3 | Galerie d’ossements paisible | revenant autonome, anatomiste, conservateur éthique |
+| `nhalzara` | `villains` | 6 | Observatoire du Vide | observateur, pilote, physicien, moine, historien, voyageur temporel |
+| `astarra` | `villains` | 5 | Palais de braises calmes | archiduc rival, forgeron libre, juriste, harpiste, explorateur |
+| `umbrael` | `villains` | 2 | Bibliothèque sans soleil | veilleur nocturne, archiviste occultiste |
+| `pestifera` | `villains` | 4 | Orangerie purifiée | médecin, écologue, alchimiste, créateur de masques |
+| `vexara` | `villains` | 6 | Port franc abyssal | capitaine rival, récupérateur, hydrographe, corsaire, théoricien, négociateur |
+| `kalix` | `villains` | 3 | Chambre de calcul | logicien, chrono-racer, juriste synthétique |
+| `malika` | `villains` | 5 | Cour des vents de cendre | djinn libre, verrier, guide, émissaire, poète |
+| `noctis` | `villains` | 4 | Salon lucide aux sorties visibles | rêveur, neurologue, artiste onirique, cartographe |
