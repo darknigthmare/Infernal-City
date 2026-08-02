@@ -384,7 +384,8 @@ test('les 20 tours sont couvertes par un comportement actif, declenche ou passif
   }];
   passiveEngine.createExplosion = () => {};
   passiveEngine.updateEnemies(0.016);
-  assert.equal(passiveEngine.enemies.length, 0, 'La barriere ne bloque pas l’ennemi');
+  assert.equal(passiveEngine.enemies.length, 1, 'La barriere ne doit plus supprimer gratuitement un ennemi');
+  assert.ok(passiveEngine.enemies[0].contactTimer > 0, 'L’ennemi doit marquer une pause avant sa prochaine attaque');
   assert.equal(barrier.hp, 76, 'La barriere n’absorbe pas les degats attendus');
 });
 
@@ -561,10 +562,10 @@ test('quotas, recompenses de vague et boss restent deterministes et uniques', ()
   const initialMetaCoins = rewardEngine.metaCoins;
   rewardEngine.completeWave();
   rewardEngine.completeWave();
-  assert.equal(rewardEngine.coins, initialCoins + 50);
+  assert.equal(rewardEngine.coins, initialCoins + 74, 'La récompense authored de la vague 5 doit être appliquée');
   assert.equal(rewardEngine.metaCoins, initialMetaCoins + 18);
   assert.equal(rewardEngine.waveActive, false);
-  rewardEngine.updateSpawns(4);
+  rewardEngine.updateSpawns(rewardEngine.waveIntermissionTimer + 0.1);
   assert.equal(rewardEngine.wave, 6);
   assert.equal(rewardEngine.waveSpawnTarget, 23);
 
@@ -864,6 +865,14 @@ test('un point de controle reprend au debut de la vague suivante sans dupliquer 
   engine.coins = 275;
   engine.citadel.hp = 321;
   engine.runElapsedSeconds = 95;
+  engine.mercenaries = [
+    { name: 'Ray', damage: 999999, fireRate: 1, range: 999999 },
+    { name: '<img src=x onerror=alert(1)>', damage: 999999, fireRate: 1, range: 999999 }
+  ];
+  engine.petDrones = [
+    { name: '<script>', level: 3, damage: 999999, fireRate: 1 },
+    { level: 99, damage: 999999, fireRate: 1 }
+  ];
   engine.enemies = [];
   engine.enemiesSpawnedThisWave = engine.waveSpawnTarget;
 
@@ -883,6 +892,11 @@ test('un point de controle reprend au debut de la vague suivante sans dupliquer 
   assert.equal(resumed.coins, checkpoint.coins);
   assert.equal(Math.round(resumed.citadel.hp), checkpoint.citadelHp);
   assert.equal(resumed.enemies.length, 0);
+  assert.deepEqual(Array.from(resumed.mercenaries, mercenary => mercenary.name), ['Ray', 'Spécialiste ralliée']);
+  assert.deepEqual(Array.from(resumed.mercenaries, mercenary => mercenary.damage), [20, 30]);
+  assert.deepEqual(Array.from(resumed.petDrones, drone => drone.name), ['Chiroptère IA', 'Chiroptère IA']);
+  assert.deepEqual(Array.from(resumed.petDrones, drone => drone.level), [3, 3]);
+  assert.deepEqual(Array.from(resumed.petDrones, drone => drone.damage), [52.5, 52.5]);
 });
 
 test('les difficultes modifient reellement la citadelle et les recompenses', () => {
@@ -1087,7 +1101,7 @@ test('la camera couvre toute la largeur puis cadre les quatre approches sur dema
   assert.ok(landscapeSouthSpawn < landscapeView.safeBottom, 'Le spawn sud paysage doit rester visible');
   const indexSource = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
   assert.match(indexSource, /id="short-landscape-notice"/);
-  assert.match(GAME_SOURCE, /newWidth > newHeight && newHeight <= 500/);
+  assert.match(GAME_SOURCE, /this\.requiresPortraitOrientation = false/);
   assert.match(GAME_SOURCE, /!this\.requiresPortraitOrientation/);
 });
 
@@ -1482,7 +1496,7 @@ test('les seize heroines disposent de CG narratives et de chapitres VN accessibl
   const { GameEngine, HERO_CLASSES, VN_NARRATIVE_CGS, COASTLINE_IMAGE_SRC } = loadGameModule();
   const engine = createEngine(GameEngine);
   assert.deepEqual(Object.keys(VN_NARRATIVE_CGS).sort(), Object.keys(HERO_CLASSES).sort());
-  assert.equal(COASTLINE_IMAGE_SRC, 'assets/environment/infernal-city-coastline.png');
+  assert.equal(COASTLINE_IMAGE_SRC, 'assets/environment/infernal-city-coastline.webp');
 
   const ariaScenes = engine.getVnHeroine('aria');
   assert.equal(ariaScenes.chapters.length, 3);
@@ -2350,6 +2364,85 @@ test('les reglages 2.3 persistent son, contraste, texte et la sauvegarde portabl
   assert.match(settingsStatus.textContent, /Import refus/u);
 });
 
+test('les sauvegardes campagne et VN futures restent bloquees et exportables sans reecriture', () => {
+  const campaignRaw = '{"version":999,"metaCoins":777,"futureField":{"keep":true}}';
+  const narrativeRaw = '{"dataVersion":99,"futureMemory":["keep-verbatim"]}';
+  const {
+    GameEngine, localStorage
+  } = loadGameModule({
+    valkyrie_sweeper_save: campaignRaw,
+    'infernalCity.vnExpansion.v1': narrativeRaw
+  });
+  const engine = createEngine(GameEngine);
+
+  assert.equal(engine.storageWriteBlocked, true);
+  assert.equal(engine.narrativeStorageWriteBlocked, true);
+  assert.equal(engine.futureCampaignSaveRaw, campaignRaw);
+  assert.equal(engine.futureNarrativeSaveRaw, narrativeRaw);
+  assert.equal(engine.saveProgress(), false);
+  engine.syncVnExpansionConsent('aria', true);
+  assert.equal(localStorage.getItem('valkyrie_sweeper_save'), campaignRaw);
+  assert.equal(localStorage.getItem('infernalCity.vnExpansion.v1'), narrativeRaw);
+
+  const backup = engine.createPortableSavePayload();
+  assert.equal(backup.schema, 'infernal-city.raw-backup/1');
+  assert.equal(backup.campaignRaw, campaignRaw);
+  assert.equal(backup.narrativeRaw, narrativeRaw);
+});
+
+test('un refus de stockage VN reste en memoire et n annonce jamais un faux succes', () => {
+  const {
+    GameEngine, localStorage, document
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const settingsStatus = createElement('p');
+  const studioNote = createElement('p');
+  document.getElementById = id => ({
+    'settings-status': settingsStatus,
+    'studio-consent-note': studioNote
+  })[id] || null;
+  const originalSetItem = localStorage.setItem.bind(localStorage);
+  localStorage.setItem = (key, value) => {
+    if (key === 'infernalCity.vnExpansion.v1') throw new Error('quota exceeded');
+    originalSetItem(key, value);
+  };
+
+  assert.equal(engine.syncVnExpansionConsent('aria', true), false);
+  assert.equal(engine.vnExpansionState.heroines.aria.consent.granted, true);
+  assert.equal(engine.narrativeStorageWriteBlocked, false);
+  assert.equal(engine.narrativeStorageWriteFailed, true);
+  assert.match(settingsStatus.textContent, /active pour cette session, mais non persist.e/u);
+  assert.doesNotMatch(settingsStatus.textContent, /souvenir conserv.|progression sauvegard.e/u);
+
+  const portable = engine.createPortableSavePayload();
+  assert.equal(portable.schema, 'infernal-city.portable-save/1');
+  assert.equal(portable.narrative.heroines.aria.consent.granted, true);
+  assert.equal(engine.syncVnExpansionConsent('aria', false), false);
+  assert.equal(engine.vnExpansionState.heroines.aria.consent.revoked, true);
+  engine.setStudioMaturity('suggestive');
+  assert.match(studioNote.textContent, /active pour cette session, mais non persist.e/u);
+});
+
+test('un import portable rejette atomiquement une progression narrative future', async () => {
+  const {
+    GameEngine, localStorage
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  engine.saveProgress();
+  const originalCampaign = localStorage.getItem('valkyrie_sweeper_save');
+  const originalNarrative = localStorage.getItem('infernalCity.vnExpansion.v1');
+  const payload = engine.createPortableSavePayload();
+  payload.narrative.dataVersion = 999;
+
+  const accepted = await engine.importPortableSaveFile({
+    size: 1024,
+    text: async () => JSON.stringify(payload)
+  });
+  assert.equal(accepted, false);
+  assert.equal(localStorage.getItem('valkyrie_sweeper_save'), originalCampaign);
+  assert.equal(localStorage.getItem('infernalCity.vnExpansion.v1'), originalNarrative);
+});
+
 test('Studio 2 conserve trois poses et ajoute le boudoir signature du nouveau roster', () => {
   const {
     GameEngine, window
@@ -2437,7 +2530,7 @@ test('les six passifs de heroine produisent des effets de combat mesurables', ()
   engine.getRunRandom = () => 0.1;
   const elite = engine.spawnEnemy('brute', 0, { x: 680, y: 400, countForWave: false });
   engine.killEnemy(elite);
-  assert.equal(engine.coins, 13);
+  assert.equal(engine.coins, 23, 'Vespera multiplie la récompense authored de la Brute');
   assert.ok(tributeDefense.imperialBuffTimer > 0);
   assert.ok(tributeDefense.imperialDamageMultiplier > 1);
 
@@ -2482,7 +2575,7 @@ test('les dix nouveaux passifs produisent chacun un effet de combat mesurable', 
   engine.getRunRandom = () => 0.1;
   const distantPrize = engine.spawnEnemy('runner', 0, { x: 1000, y: 400, countForWave: false });
   engine.killEnemy(distantPrize);
-  assert.ok(engine.coins >= 14);
+  assert.ok(engine.coins >= 9, 'Maris ajoute sa part à la récompense authored du Runner');
 
   engine.selectedHero = HERO_CLASSES.zahra;
   engine.enemies = [];
@@ -2648,7 +2741,7 @@ test('la manette avance choisit et met en pause une route corporelle VN', () => 
   assert.equal(pauses, 1);
 });
 
-test('entrer dans le jeu precharge les atlas de combat meme si le terrain est deja en cache', () => {
+test('entrer dans le jeu initialise le runtime puis conserve le chargement des atlas a la demande', () => {
   const {
     GameEngine, document
   } = loadGameModule();
@@ -2656,7 +2749,7 @@ test('entrer dans le jeu precharge les atlas de combat meme si le terrain est de
   const gate = createElement('div');
   gate.classList.add('active');
   document.getElementById = id => id === 'adult-gate-modal' ? gate : null;
-  engine.spriteAtlasImages = { 'assets/environment/map-western-wall.png': {} };
+  engine.spriteAtlasImages = { 'assets/environment/map-western-wall.webp': {} };
   engine.enemySpriteImages = {};
   engine.towerSpriteImages = {};
   engine.heroSpriteImages = {};
@@ -2667,7 +2760,8 @@ test('entrer dans le jeu precharge les atlas de combat meme si le terrain est de
   engine.preloadBattleSprites = () => { preloads++; };
 
   engine.enterAdultExperience();
-  assert.equal(preloads, 1);
+  assert.equal(preloads, 1, 'Le terrain et la cité doivent être préchauffés après le consentement');
+  assert.equal(engine.playableExperienceInitialized, true);
   assert.equal(gate.classList.contains('active'), false);
 });
 
@@ -2696,7 +2790,7 @@ test('le prechauffage initial differe les heroines 2.4 non selectionnees et les 
     assert.equal(engine.enemySpriteImages[bossId], undefined, `${bossId} doit rester différé`);
   });
   ['aria', 'kira', 'rin', 'selene', 'vespera', 'carmilla'].forEach(heroId => {
-    assert.ok(engine.heroSpriteImages[heroId], `${heroId} historique doit être préchauffée`);
+    assert.equal(engine.heroSpriteImages[heroId], undefined, `${heroId} historique non sélectionnée doit rester différée`);
   });
 });
 
@@ -3167,4 +3261,468 @@ test('le Game Over choisit la taquinerie liee a l heroine quand elle existe', ()
   assert.equal(image.src.endsWith('game-over-tease-01-v1.webp'), true);
   assert.equal(caption.textContent.length > 40, true);
   assert.equal(figure.hidden, false);
+});
+
+function normalizeRegressionState(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+
+function captureCampaignRegressionState(engine) {
+  return normalizeRegressionState({
+    wave: engine.wave,
+    waveActive: engine.waveActive,
+    waveIntermissionTimer: engine.waveIntermissionTimer,
+    selectedLayoutId: engine.selectedLayoutId,
+    activeCampaignId: engine.activeCampaignId,
+    difficulty: engine.difficulty,
+    runMode: engine.runMode,
+    selectedHeroId: engine.selectedHero.id,
+    selectedHeroProgress: {
+      affinityLvl: engine.selectedHero.affinityLvl,
+      relationshipXp: engine.selectedHero.relationshipXp,
+      romanceOptIn: engine.selectedHero.romanceOptIn,
+      privateMomentUnlocked: engine.selectedHero.privateMomentUnlocked
+    },
+    coins: engine.coins,
+    score: engine.score,
+    xp: engine.xp,
+    level: engine.level,
+    nextLevelXp: engine.nextLevelXp,
+    metaCoins: engine.metaCoins,
+    runMetaCoinsEarned: engine.runMetaCoinsEarned,
+    totalCoinsEarned: engine.totalCoinsEarned,
+    bestScore: engine.bestScore,
+    bestWave: engine.bestWave,
+    shopUpgrades: engine.shopUpgrades,
+    affinityXp: engine.affinityXp,
+    nextAffinityXp: engine.nextAffinityXp,
+    hostileProjectileFreezeTimer: engine.hostileProjectileFreezeTimer,
+    heroUltimateDefenseDamageTimer: engine.heroUltimateDefenseDamageTimer,
+    seenBossIntroIds: [...engine.seenBossIntroIds].sort(),
+    seenBossDefeatIds: [...engine.seenBossDefeatIds].sort(),
+    kiraMarkedRoutes: [...engine.kiraMarkedRoutes].sort(),
+    nyxExposedRoutes: [...engine.nyxExposedRoutes].sort(),
+    citadel: engine.citadel,
+    placedTowers: engine.placedTowers,
+    activeRunCheckpoint: engine.activeRunCheckpoint,
+    savedRunCheckpoint: engine.savedRunCheckpoint,
+    campaignVictory: engine.campaignVictory,
+    campaignVictoryClaimed: engine.campaignVictoryClaimed,
+    isGameOver: engine.isGameOver
+  });
+}
+
+function prepareCampaignRegressionState(engine, TOWER_TYPES) {
+  engine.activeCampaignId = 'four_gates';
+  engine.difficulty = 'nightmare';
+  engine.applyWorldLayout('western_wall', { force: true, repositionUnits: false });
+  engine.initWeapons();
+  engine.wave = 7;
+  engine.waveActive = true;
+  engine.waveIntermissionTimer = 1.75;
+  engine.coins = 287;
+  engine.score = 4321;
+  engine.xp = 64;
+  engine.level = 3;
+  engine.nextLevelXp = 90;
+  engine.metaCoins = 91;
+  engine.runMetaCoinsEarned = 19;
+  engine.totalCoinsEarned = 777;
+  engine.bestScore = 3141;
+  engine.bestWave = 11;
+  engine.shopUpgrades = { hpBonus: 2, fireRateBonus: 1, magnetRange: 3 };
+  engine.selectedHero.affinityLvl = 2;
+  engine.selectedHero.relationshipXp = 17;
+  engine.selectedHero.romanceOptIn = true;
+  engine.selectedHero.privateMomentUnlocked = true;
+  engine.affinityXp = 17;
+  engine.nextAffinityXp = engine.getAffinityThreshold(engine.selectedHero);
+  engine.hostileProjectileFreezeTimer = 2.25;
+  engine.heroUltimateDefenseDamageTimer = 3.5;
+  engine.seenBossIntroIds = new Set(['vespera']);
+  engine.seenBossDefeatIds = new Set(['vespera']);
+  engine.kiraMarkedRoutes = new Set(['western_wall_east_center']);
+  engine.nyxExposedRoutes = new Set(['western_wall_east_north']);
+  engine.citadel.hp = 377;
+  const vulcan = engine.createPlacedDefense(TOWER_TYPES.vulcan_turret, 420, 320);
+  vulcan.level = 2;
+  vulcan.hp = 123;
+  const cryo = engine.createPlacedDefense(TOWER_TYPES.cryo_cannon, 510, 470);
+  cryo.level = 3;
+  cryo.hp = 156;
+  engine.placedTowers = [vulcan, cryo];
+  engine.saveRunCheckpoint();
+  engine.runMode = 'campaign';
+  engine.isGameOver = false;
+  engine.campaignVictory = false;
+  engine.campaignVictoryClaimed = false;
+  return captureCampaignRegressionState(engine);
+}
+
+function installInfinitumRegressionHarness(engine, document) {
+  const ids = [
+    'tower-infinitum-modal',
+    'tower-floor-txt',
+    'tower-mutator-txt',
+    'btn-start-floor',
+    'infinitum-segment-progress',
+    'infinitum-segment-txt',
+    'infinitum-floor-list',
+    'infinitum-cumulative-mutators',
+    'hq-menu-modal'
+  ];
+  const elements = Object.fromEntries(ids.map(id => [id, createElement('div')]));
+  document.getElementById = id => elements[id] || null;
+  engine.openModal = () => {};
+  engine.closeModal = () => {};
+  engine.closeAllGameplayModals = () => {};
+  engine.focusBattlefield = () => {};
+  engine.openTowerInfinitumModal();
+  assert.equal(typeof elements['btn-start-floor'].onclick, 'function');
+  return elements;
+}
+
+test('le defi quotidien rejoue exactement le meme contrat sans dupliquer sa prime permanente', () => {
+  const {
+    GameEngine, EXPANSION, HERO_CLASSES, TOWER_TYPES
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const date = '2026-07-29T12:00:00Z';
+  const salt = 'daily-regression';
+  const expected = EXPANSION.utils.createDailyChallenge(date, salt);
+  HERO_CLASSES[expected.heroId].unlocked = false;
+  engine.openModal = () => {};
+  const suspendedCampaign = prepareCampaignRegressionState(engine, TOWER_TYPES);
+
+  const challenge = engine.startDailyChallenge(date, salt);
+  const captureContract = () => normalizeRegressionState({
+    id: engine.dailyChallenge.id,
+    heroId: engine.selectedHero.id,
+    layoutId: engine.selectedLayoutId,
+    campaignId: engine.activeCampaignId,
+    difficulty: engine.difficulty,
+    deck: engine.dailyChallenge.startingDefenseIds,
+    starterDefenses: engine.placedTowers.map(defense => defense.id),
+    mutatorIds: engine.dailyChallenge.mutatorIds,
+    rules: engine.dailyChallenge.rules,
+    mapRotation: engine.mapRotation
+  });
+  const firstContract = captureContract();
+
+  assert.equal(challenge.id, expected.id);
+  assert.equal(firstContract.heroId, expected.heroId, 'le heros quotidien doit etre prete meme verrouille');
+  assert.deepEqual(firstContract.deck, normalizeRegressionState(expected.startingDefenseIds));
+  assert.deepEqual(firstContract.starterDefenses, firstContract.deck);
+
+  const metaBeforeFirstClear = engine.metaCoins;
+  const lifetimeCoinsBefore = engine.totalCoinsEarned;
+  const campaignRecordsBefore = { bestScore: engine.bestScore, bestWave: engine.bestWave };
+  engine.completeWave();
+  engine.advanceWave();
+  engine.completeWave();
+  assert.equal(engine.metaCoins, metaBeforeFirstClear, 'les vagues quotidiennes ne donnent aucun credit meta');
+  assert.equal(engine.totalCoinsEarned, lifetimeCoinsBefore, 'les gains temporaires ne gonflent pas le cumul campagne');
+  assert.deepEqual(
+    { bestScore: engine.bestScore, bestWave: engine.bestWave },
+    campaignRecordsBefore,
+    'un score quotidien ne remplace jamais les records campagne'
+  );
+  engine.triggerDailyVictory();
+  const metaAfterFirstClear = engine.metaCoins;
+  assert.equal(metaAfterFirstClear, metaBeforeFirstClear + 150, 'la premiere victoire attribue uniquement sa prime');
+  assert.equal(engine.completedDailyChallengeIds.filter(id => id === challenge.id).length, 1);
+  assert.deepEqual(captureCampaignRegressionState(engine), {
+    ...suspendedCampaign,
+    metaCoins: suspendedCampaign.metaCoins + 150
+  }, 'la campagne et son checkpoint sont restaures avant application de la prime');
+  assert.equal(engine.dailyChallenge, null);
+  assert.equal(engine.campaignStateBeforeDaily, null);
+
+  assert.equal(engine.retryDailyChallenge(), true);
+  assert.deepEqual(captureContract(), firstContract);
+  engine.triggerDailyVictory();
+
+  assert.equal(engine.metaCoins, metaAfterFirstClear, 'la prime quotidienne permanente doit rester unique');
+  assert.equal(engine.completedDailyChallengeIds.filter(id => id === challenge.id).length, 1);
+  assert.deepEqual(captureCampaignRegressionState(engine), {
+    ...suspendedCampaign,
+    metaCoins: suspendedCampaign.metaCoins + 150
+  });
+});
+
+test('une defaite quotidienne restaure la campagne et son checkpoint sans toucher aux records', () => {
+  const {
+    GameEngine, TOWER_TYPES
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  engine.openModal = () => {};
+  engine.closeAllGameplayModals = () => {};
+  const suspendedCampaign = prepareCampaignRegressionState(engine, TOWER_TYPES);
+
+  const challenge = engine.startDailyChallenge('2026-07-30T12:00:00Z', 'daily-defeat');
+  engine.metaCoins += 999;
+  engine.totalCoinsEarned += 888;
+  engine.bestScore = 999999;
+  engine.bestWave = 99;
+  engine.selectedHero.relationshipXp = 777;
+  engine.selectedHero.affinityLvl = 5;
+  engine.shopUpgrades.hpBonus = 100;
+  engine.activeRunCheckpoint = null;
+  engine.savedRunCheckpoint = null;
+  engine.triggerGameOver();
+
+  assert.deepEqual(captureCampaignRegressionState(engine), suspendedCampaign);
+  assert.equal(engine.completedDailyChallengeIds.includes(challenge.id), false);
+  assert.equal(engine.dailyChallenge, null);
+  assert.equal(engine.campaignStateBeforeDaily, null);
+  assert.equal(engine.retryDailyChallenge(), true, 'la revanche conserve exactement le contrat echoue');
+  assert.equal(engine.dailyChallenge.id, challenge.id);
+});
+
+test('le deck quotidien limite a la fois la barre et la construction effective', () => {
+  const {
+    GameEngine, TOWER_TYPES, document
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const buildBar = createElement('div');
+  document.getElementById = id => id === 'hud-build-bar' ? buildBar : null;
+
+  const challenge = engine.startDailyChallenge('2026-07-31T12:00:00Z', 'daily-deck');
+  const deckIds = normalizeRegressionState(challenge.startingDefenseIds);
+  assert.deepEqual(buildBar.children.map(card => card.dataset.towerId), deckIds);
+
+  const forbiddenTower = Object.values(TOWER_TYPES).find(tower => !deckIds.includes(tower.id));
+  assert.ok(forbiddenTower, 'le catalogue doit contenir au moins une defense hors deck');
+  const towersBefore = engine.placedTowers.length;
+  const coinsBefore = engine.coins;
+  engine.selectedTowerToBuild = forbiddenTower;
+  engine.buildSelectedTowerAt(engine.citadel.x + 250, engine.citadel.y + 180);
+  assert.equal(engine.placedTowers.length, towersBefore);
+  assert.equal(engine.coins, coinsBefore, 'une defense hors deck ne doit jamais etre facturee');
+});
+
+test('l armurerie meta reste inaccessible dans Daily, les chasses et Infinitum', () => {
+  const {
+    GameEngine, document
+  } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  const initialShop = normalizeRegressionState(engine.shopUpgrades);
+  const initialMeta = engine.metaCoins;
+  document.getElementById = () => {
+    throw new Error('la modale boutique ne doit pas etre consultee dans un mode secondaire');
+  };
+
+  [
+    { dailyChallenge: { id: 'daily-qa' }, runMode: 'daily', isTowerMode: false },
+    { dailyChallenge: null, runMode: 'hunt', isTowerMode: false },
+    { dailyChallenge: null, runMode: 'tower', isTowerMode: true }
+  ].forEach(mode => {
+    Object.assign(engine, mode);
+    assert.doesNotThrow(() => engine.openShopModal());
+    assert.deepEqual(normalizeRegressionState(engine.shopUpgrades), initialShop);
+    assert.equal(engine.metaCoins, initialMeta);
+  });
+});
+
+test('victoire et defaite de chasse restaurent exactement la campagne sans victoire parasite', () => {
+  const {
+    GameEngine, TOWER_TYPES
+  } = loadGameModule();
+
+  ['victory', 'defeat'].forEach(outcome => {
+    const engine = createEngine(GameEngine);
+    const expectedCampaign = prepareCampaignRegressionState(engine, TOWER_TYPES);
+    engine.defeatedBossIds = ['xyra'];
+    engine.openAntagonistCodex = () => {};
+    let campaignVictories = 0;
+    engine.triggerCampaignVictory = () => { campaignVictories += 1; };
+
+    assert.equal(engine.startVillainHunt('xyra'), true, outcome);
+    engine.coins = 1;
+    engine.score = 999999;
+    engine.xp = 0;
+    engine.placedTowers = [];
+    engine.selectedHero.relationshipXp = 999;
+    engine.selectedHero.affinityLvl = 5;
+    engine.shopUpgrades.hpBonus = 99;
+    engine.hostileProjectileFreezeTimer = 0;
+    engine.seenBossIntroIds.clear();
+    if (outcome === 'victory') {
+      engine.waveActive = true;
+      engine.waveRewardClaimed = false;
+      engine.completeWave();
+    } else {
+      engine.triggerGameOver();
+    }
+
+    assert.deepEqual(captureCampaignRegressionState(engine), expectedCampaign, outcome);
+    assert.equal(campaignVictories, 0, `${outcome}: aucune victoire campagne`);
+    assert.equal(engine.activeBossHuntId, null);
+    assert.equal(engine.campaignStateBeforeBossHunt, null);
+  });
+});
+
+test('defaite et palier Infinitum restaurent exactement la campagne suspendue', () => {
+  const {
+    GameEngine, TOWER_TYPES, document
+  } = loadGameModule();
+
+  [
+    { outcome: 'defeat', floor: 6 },
+    { outcome: 'checkpoint', floor: 10 }
+  ].forEach(({ outcome, floor }) => {
+    const engine = createEngine(GameEngine);
+    const expectedCampaign = prepareCampaignRegressionState(engine, TOWER_TYPES);
+    engine.towerFloor = floor;
+    engine.getRunRandom = () => 0;
+    const elements = installInfinitumRegressionHarness(engine, document);
+    elements['btn-start-floor'].onclick();
+
+    assert.equal(engine.isTowerMode, true, outcome);
+    assert.equal(engine.enemies.length, 0, `${outcome}: aucune larve tutorielle ne doit contaminer l'etage`);
+    engine.coins = 2;
+    engine.score = 888888;
+    engine.xp = 0;
+    engine.placedTowers = [];
+    engine.selectedHero.relationshipXp = 888;
+    engine.selectedHero.affinityLvl = 5;
+    engine.shopUpgrades.fireRateBonus = 9;
+    engine.heroUltimateDefenseDamageTimer = 0;
+    engine.kiraMarkedRoutes.clear();
+    if (outcome === 'defeat') {
+      engine.triggerGameOver();
+    } else {
+      const permanentLedgerBeforeFloor = {
+        metaCoins: engine.metaCoins,
+        totalCoinsEarned: engine.totalCoinsEarned
+      };
+      engine.waveActive = true;
+      engine.waveRewardClaimed = false;
+      engine.completeWave();
+      assert.deepEqual({
+        metaCoins: engine.metaCoins,
+        totalCoinsEarned: engine.totalCoinsEarned
+      }, permanentLedgerBeforeFloor, 'une vague Tour ne credite jamais le registre permanent');
+      engine.advanceWave();
+    }
+
+    assert.deepEqual(captureCampaignRegressionState(engine), expectedCampaign, outcome);
+    assert.equal(engine.isTowerMode, false);
+    assert.equal(engine.campaignStateBeforeTower, null);
+  });
+});
+
+test('gravite impulsion de controle et Tesla respectent immunite et resistance des lourds et boss', () => {
+  const { GameEngine, TOWER_TYPES } = loadGameModule();
+  const engine = createEngine(GameEngine);
+  engine.enemies = [];
+  engine.enemyBullets = [];
+  engine.particles = [];
+
+  const normal = engine.spawnEnemy('swarmer', 0, {
+    x: 760, y: 330, countForWave: false
+  });
+  const heavy = engine.spawnEnemy('brute', 0, {
+    x: 760, y: 400, countForWave: false
+  });
+  const immuneBoss = engine.spawnEnemy('hellwarden', 0, {
+    x: 760, y: 470, countForWave: false, isBoss: true, suppressCinematic: true
+  });
+  immuneBoss.ccImmunityTimer = 1;
+  const gravity = engine.createPlacedDefense(TOWER_TYPES.gravity_well, 700, 400);
+  const starts = new Map([
+    [normal, { x: normal.x, y: normal.y }],
+    [heavy, { x: heavy.x, y: heavy.y }],
+    [immuneBoss, { x: immuneBoss.x, y: immuneBoss.y }]
+  ]);
+
+  engine.fireTower(gravity, normal);
+  const moved = enemy => Math.hypot(enemy.x - starts.get(enemy).x, enemy.y - starts.get(enemy).y);
+  assert.ok(Math.abs(moved(normal) - 32) < 0.001);
+  assert.ok(Math.abs(moved(heavy) - 9.6) < 0.001);
+  assert.equal(moved(immuneBoss), 0);
+
+  normal.x = 760;
+  normal.y = 330;
+  heavy.x = 760;
+  heavy.y = 400;
+  immuneBoss.x = 760;
+  immuneBoss.y = 470;
+  const pulse = engine.createPlacedDefense(TOWER_TYPES.magnet_drone, 700, 400);
+  pulse.specializationId = 'magnet_polarizer';
+  pulse.controlPulseTimer = 0;
+  engine.placedTowers = [pulse];
+  starts.set(normal, { x: normal.x, y: normal.y });
+  starts.set(heavy, { x: heavy.x, y: heavy.y });
+  starts.set(immuneBoss, { x: immuneBoss.x, y: immuneBoss.y });
+
+  engine.updatePlacedTowers(0.001);
+  assert.ok(Math.abs(moved(normal) - 70) < 0.001);
+  assert.ok(Math.abs(moved(heavy) - 21) < 0.001);
+  assert.equal(moved(immuneBoss), 0);
+
+  const tesla = engine.createPlacedDefense(TOWER_TYPES.tesla_spire, 700, 400);
+  tesla.specializationId = 'tesla_tempest';
+  heavy.x = 760;
+  heavy.y = 400;
+  heavy.stunTimer = 0;
+  heavy.ccImmunityTimer = 0;
+  engine.enemies = [heavy];
+  engine.fireTower(tesla, heavy);
+  assert.ok(Math.abs(heavy.stunTimer - (0.65 * 0.55)) < 0.001);
+
+  immuneBoss.x = 760;
+  immuneBoss.y = 400;
+  immuneBoss.stunTimer = 0;
+  immuneBoss.ccImmunityTimer = 0;
+  engine.enemies = [immuneBoss];
+  engine.fireTower(tesla, immuneBoss);
+  assert.ok(Math.abs(immuneBoss.stunTimer - (0.65 * 0.25)) < 0.001);
+  assert.ok(immuneBoss.ccImmunityTimer >= 2.4);
+  immuneBoss.stunTimer = 0;
+  engine.fireTower(tesla, immuneBoss);
+  assert.equal(immuneBoss.stunTimer, 0);
+});
+
+test('checkpoint et rotation replacent chaque tour dans une position tactique valide', () => {
+  const { GameEngine, TOWER_TYPES } = loadGameModule();
+  const source = createEngine(GameEngine);
+  ['citadel', 'route', 'occupied', 'bounds'].forEach(reason => {
+    assert.doesNotMatch(source.getDefensePlacementFailureMessage(reason), /Ã|â€|Â /u);
+  });
+  source.saveProgress = () => {};
+  source.configureWave(5);
+  source.placedTowers = [
+    source.createPlacedDefense(TOWER_TYPES.vulcan_turret, 600, 400),
+    source.createPlacedDefense(TOWER_TYPES.plasma_mortar, 600, 250),
+    source.createPlacedDefense(TOWER_TYPES.tesla_spire, 600, 250),
+    source.createPlacedDefense(TOWER_TYPES.gravity_well, 50, 50)
+  ];
+  const checkpoint = source.createRunCheckpoint();
+  const resumed = createEngine(GameEngine);
+  resumed.savedRunCheckpoint = checkpoint;
+  resumed.activeRunCheckpoint = checkpoint;
+
+  assert.equal(resumed.restoreRunCheckpoint(), true);
+  assert.equal(resumed.placedTowers.length, 4);
+  resumed.placedTowers.forEach(defense => {
+    const validation = resumed.validateDefensePlacement(defense.x, defense.y, {
+      radius: defense.radius,
+      ignoreDefense: defense
+    });
+    assert.equal(validation.ok, true, `checkpoint: ${validation.reason}`);
+  });
+
+  resumed.setMapRotation(['convergence', 'western_wall']);
+  resumed.waveActive = false;
+  resumed.enemies = [];
+  assert.equal(resumed.rotateWorldLayoutBetweenWaves(), true);
+  assert.equal(resumed.placedTowers.length, 4);
+  resumed.placedTowers.forEach(defense => {
+    const validation = resumed.validateDefensePlacement(defense.x, defense.y, {
+      radius: defense.radius,
+      ignoreDefense: defense
+    });
+    assert.equal(validation.ok, true, `rotation: ${validation.reason}`);
+  });
 });

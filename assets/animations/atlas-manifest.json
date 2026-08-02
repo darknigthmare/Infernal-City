@@ -16,11 +16,13 @@
   },
   "floor": {
     "src": "assets/environment/infernal-city-floor.png",
+    "runtimeSrc": "assets/environment/infernal-city-floor.webp",
     "opaque": true,
     "tileable": true
   },
   "approachTerrain": {
     "src": "assets/environment/infernal-city-approach-terrain.png",
+    "runtimeSrc": "assets/environment/infernal-city-approach-terrain.webp",
     "opaque": true,
     "view": "orthographic top-down 90 degrees",
     "routes": ["north", "east", "south", "west"]
@@ -73,6 +75,7 @@
     },
     {
       "src": "assets/environment/infernal-city-spawn-gate-atlas.png",
+      "runtimeSrc": "assets/environment/infernal-city-spawn-gate-atlas.webp",
       "category": "gates",
       "rows": ["north", "east", "south", "west"]
     }

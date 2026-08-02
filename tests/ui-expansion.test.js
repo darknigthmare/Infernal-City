@@ -183,6 +183,7 @@ test('settings and run history cover comfort, gamepad and portable saves', () =>
     'gamepad-status',
     'btn-export-save',
     'import-save-input',
+    'project-info',
     'settings-status',
     'btn-run-history-toggle',
     'run-history-modal',
@@ -191,6 +192,7 @@ test('settings and run history cover comfort, gamepad and portable saves', () =>
 
   assert.match(html, /id="settings-modal" role="dialog" aria-modal="true"/);
   assert.match(html, /id="import-save-input" type="file" accept="application\/json,.json"/);
+  assert.match(html, /le jeu n.intègre ni compte ni télémétrie/i);
 });
 
 test('touch, compact viewport, focus and reduced-motion rules remain explicit', () => {
@@ -200,6 +202,26 @@ test('touch, compact viewport, focus and reduced-motion rules remain explicit', 
   assert.match(css, /@media \(prefers-reduced-motion:\s*reduce\)/);
   assert.match(css, /\.settings-grid/);
   assert.match(css, /\.defense-specialization-options/);
+});
+
+test('small landscape keeps a tactical viewport and visible primary actions', () => {
+  const landscapeStart = css.indexOf(
+    '@media (orientation: landscape) and (max-width: 950px) and (max-height: 500px) {'
+  );
+  const landscapeEnd = css.indexOf('\n@media (max-width: 520px)', landscapeStart);
+  assert.ok(landscapeStart >= 0 && landscapeEnd > landscapeStart);
+  const landscape = css.slice(landscapeStart, landscapeEnd);
+  assert.match(landscape, /#hud-header\s*\{[\s\S]*?height:\s*52px/);
+  assert.match(landscape, /#mission-status-panel\s*\{[\s\S]*?min-height:\s*32px/);
+  assert.match(landscape, /#hud-build-bar\s*\{[\s\S]*?height:\s*52px/);
+  assert.match(landscape, /#hud-deck\s*\{[\s\S]*?height:\s*52px/);
+  assert.match(landscape, /#btn-music-toggle,[\s\S]*?#btn-crt-toggle\s*\{\s*display:\s*none/);
+  assert.match(landscape, /\.mission-briefing-box[\s\S]*?\.briefing-actions button\s*\{[\s\S]*?min-height:\s*44px/);
+  assert.match(landscape, /\.adult-gate-box,[\s\S]*?grid-template-columns:\s*minmax\(180px,\s*0\.72fr\)/);
+  assert.match(
+    css,
+    /@media \(max-width:\s*520px\)[\s\S]*?\.mission-briefing-box \.briefing-actions\s*\{[\s\S]*?position:\s*sticky[\s\S]*?bottom:\s*-1px/
+  );
 });
 
 test('body-route VN keeps 44px targets and explicit mobile and landscape layouts', () => {
@@ -230,17 +252,19 @@ test('card headings do not skip directly from modal h2 titles to h4', () => {
   assert.match(css, /\.upgrade-text h3/);
 });
 
-test('PWA 2.10 keeps heavy terrains, atlases and CG in a separate runtime cache', () => {
-  assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}v15`/);
-  assert.match(worker, /MEDIA_CACHE_NAME = `\$\{CACHE_PREFIX\}media-v2\.9`/);
+test('PWA 2.11 keeps heavy terrains, atlases and CG in a separate runtime cache', () => {
+  assert.match(worker, /RELEASE_VERSION = '2\.11\.0'/);
+  assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}core-\$\{RELEASE_VERSION\}`/);
+  assert.match(worker, /MEDIA_CACHE_NAME = `\$\{CACHE_PREFIX\}media-\$\{RELEASE_VERSION\}`/);
+  assert.match(worker, /MAX_MEDIA_CACHE_ENTRIES = 320/);
   assert.match(worker, /'\.\/expansion\.v1\.js'/);
   assert.match(worker, /'\.\/characters\.v1\.js'/);
   assert.match(worker, /'\.\/vn-expansion\.v1\.js'/);
   assert.match(worker, /'\.\/adult-scenes\.v1\.js'/);
   assert.doesNotMatch(worker, /'\.\/assets\/animations\/.+\.(?:png|webp)'/);
-  assert.match(worker, /assets\/environment\/map-western-wall\.png/);
-  assert.match(worker, /assets\/environment\/map-southern-watch\.png/);
-  assert.match(worker, /assets\/environment\/map-twin-rift\.png/);
+  assert.match(worker, /assets\/environment\/map-western-wall\.webp/);
+  assert.match(worker, /assets\/environment\/map-southern-watch\.webp/);
+  assert.match(worker, /assets\/environment\/map-twin-rift\.webp/);
   assert.match(worker, /isNarrativeCg/);
   assert.match(worker, /assets\/animations\//);
   assert.match(worker, /assets\/characters\//);
@@ -249,12 +273,12 @@ test('PWA 2.10 keeps heavy terrains, atlases and CG in a separate runtime cache'
   assert.doesNotMatch(worker, /assets\/vn\/cg\/eros-time\//);
 });
 
-test('package and web manifest expose release 2.10.0', () => {
+test('package and web manifest expose release 2.11.0', () => {
   const packageJson = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
   const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'manifest.webmanifest'), 'utf8'));
 
-  assert.equal(packageJson.version, '2.10.0');
-  assert.equal(manifest.version, '2.10.0');
+  assert.equal(packageJson.version, '2.11.0');
+  assert.equal(manifest.version, '2.11.0');
   assert.match(packageJson.scripts.check, /node --check expansion\.v1\.js/);
   assert.match(packageJson.scripts.check, /node --check characters\.v1\.js/);
   assert.match(packageJson.scripts.check, /node --check vn-expansion\.v1\.js/);

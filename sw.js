@@ -1,18 +1,18 @@
 'use strict';
 
 const CACHE_PREFIX = 'infernal-city-';
-const LEGACY_CACHE_NAME = `${CACHE_PREFIX}v8`;
-const CACHE_NAME = `${CACHE_PREFIX}v15`;
-const MEDIA_CACHE_NAME = `${CACHE_PREFIX}media-v2.9`;
+const RELEASE_VERSION = '2.11.0';
+const CACHE_NAME = `${CACHE_PREFIX}core-${RELEASE_VERSION}`;
+const MEDIA_CACHE_NAME = `${CACHE_PREFIX}media-${RELEASE_VERSION}`;
+const MAX_MEDIA_CACHE_ENTRIES = 320;
 
 const EXPANSION_TERRAIN_PATHS = new Set([
-  'assets/environment/map-western-wall.png',
-  'assets/environment/map-southern-watch.png',
-  'assets/environment/map-twin-rift.png'
+  'assets/environment/map-western-wall.webp',
+  'assets/environment/map-southern-watch.webp',
+  'assets/environment/map-twin-rift.webp'
 ]);
 
-const PRECACHE_URLS = [
-  './',
+const ESSENTIAL_PRECACHE_URLS = [
   './index.html',
   './styles.v8.css',
   './audio.v8.js',
@@ -22,22 +22,36 @@ const PRECACHE_URLS = [
   './vn-expansion.v1.js',
   './adult-scenes.v1.js',
   './game.v9.js',
-  './pwa.v4.js',
+  './pwa.v4.js'
+];
+
+const OPTIONAL_PRECACHE_URLS = [
+  './',
   './manifest.webmanifest',
-  './assets/cover.jpg',
-  './assets/cg_aria.jpg',
-  './assets/environment/infernal-city-floor.png',
-  './assets/environment/infernal-city-coastline.png',
-  './assets/environment/infernal-city-approach-terrain.png',
-  './assets/environment/infernal-city-spawn-gate-atlas.png',
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png'
 ];
 
+async function precacheRelease() {
+  const cache = await caches.open(CACHE_NAME);
+  await cache.addAll(ESSENTIAL_PRECACHE_URLS);
+
+  const optionalResults = await Promise.allSettled(
+    OPTIONAL_PRECACHE_URLS.map(async (url) => {
+      await cache.add(url);
+      return url;
+    })
+  );
+  optionalResults.forEach((result, index) => {
+    if (result.status === 'rejected') {
+      console.warn(`Précache optionnel ignoré : ${OPTIONAL_PRECACHE_URLS[index]}`, result.reason);
+    }
+  });
+}
+
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(PRECACHE_URLS))
+    precacheRelease()
       .then(() => self.skipWaiting())
   );
 });
@@ -48,12 +62,9 @@ self.addEventListener('activate', (event) => {
       .then((cacheNames) => Promise.all(
         cacheNames
           .filter((cacheName) => (
-            cacheName === LEGACY_CACHE_NAME
-            || (
-              cacheName.startsWith(CACHE_PREFIX)
-              && cacheName !== CACHE_NAME
-              && cacheName !== MEDIA_CACHE_NAME
-            )
+            cacheName.startsWith(CACHE_PREFIX)
+            && cacheName !== CACHE_NAME
+            && cacheName !== MEDIA_CACHE_NAME
           ))
           .map((cacheName) => caches.delete(cacheName))
       ))
@@ -61,16 +72,44 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+async function trimMediaCache(cache, maximumEntries = MAX_MEDIA_CACHE_ENTRIES) {
+  const keys = await cache.keys();
+  const excess = Math.max(0, keys.length - maximumEntries);
+  if (!excess) return 0;
+
+  // Cache.keys() preserves insertion order. Cache hits are reinserted below,
+  // therefore the first entries are the least recently used ones.
+  await Promise.all(keys.slice(0, excess).map((key) => cache.delete(key)));
+  return excess;
+}
+
+async function storeRuntimeMedia(cache, request, response) {
+  await cache.put(request, response);
+  await trimMediaCache(cache);
+}
+
+async function touchRuntimeMedia(cache, request, response) {
+  await cache.delete(request);
+  await storeRuntimeMedia(cache, request, response);
+}
+
 async function serveRuntimeMedia(request, event) {
   const cache = await caches.open(MEDIA_CACHE_NAME);
   const cachedResponse = await cache.match(request);
   if (cachedResponse) {
+    event.waitUntil(
+      touchRuntimeMedia(cache, request, cachedResponse.clone())
+        .catch((error) => console.warn('Actualisation LRU média impossible.', error))
+    );
     return cachedResponse;
   }
 
   const networkResponse = await fetch(request);
   if (networkResponse.ok && networkResponse.type === 'basic') {
-    event.waitUntil(cache.put(request, networkResponse.clone()));
+    event.waitUntil(
+      storeRuntimeMedia(cache, request, networkResponse.clone())
+        .catch((error) => console.warn('Mise en cache média impossible.', error))
+    );
   }
   return networkResponse;
 }
@@ -101,6 +140,7 @@ self.addEventListener('fetch', (event) => {
   const isRuntimeMedia = (
     isExpansionTerrain
     || isNarrativeCg
+    || relativePath.startsWith('assets/environment/')
     || relativePath.startsWith('assets/animations/')
     || relativePath.startsWith('assets/characters/')
     || relativePath.startsWith('assets/vn/')

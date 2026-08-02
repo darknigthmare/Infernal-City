@@ -5,3 +5,6 @@ audit-evidence/
 tmp/
 tests/
 scripts/
+assets/environment/*.png
+AUDIT_COMPLET.md
+README.md

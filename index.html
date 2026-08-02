@@ -6,15 +6,32 @@
   <title>Infernal City: Valkyrie Sweeper</title>
   <meta name="description" content="Défendez Haven dans un roguelite cyber-gothique réservé aux adultes, avec 20 défenses, des alliances libres et des relations sensuelles consensuelles.">
   <meta name="theme-color" content="#07090e">
+  <meta name="color-scheme" content="dark">
+  <meta name="rating" content="adult">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:title" content="Infernal City: Valkyrie Sweeper">
+  <meta property="og:description" content="Défendez Haven dans un roguelite tactique cyber-gothique réservé aux adultes.">
+  <meta property="og:url" content="https://infernal-city-five.vercel.app/">
+  <meta property="og:image" content="https://infernal-city-five.vercel.app/assets/cover.jpg">
+  <meta property="og:image:alt" content="Citadelle cyber-gothique Haven assiégée">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Infernal City: Valkyrie Sweeper">
+  <meta name="twitter:description" content="Roguelite tactique cyber-gothique 18+ avec relations entre adultes consentants.">
+  <meta name="twitter:image" content="https://infernal-city-five.vercel.app/assets/cover.jpg">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Infernal City">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
   <link rel="icon" href="assets/icons/icon-192.png" type="image/png">
+  <link rel="canonical" href="https://infernal-city-five.vercel.app/">
   <link rel="stylesheet" href="styles.v8.css">
 </head>
 <body>
+
+  <a class="skip-link" href="#game-canvas">Aller au champ de bataille</a>
 
   <div id="app-container">
     <div class="modal-overlay active adult-gate" id="adult-gate-modal" role="dialog" aria-modal="true" aria-labelledby="adult-gate-title" aria-describedby="adult-gate-description">
@@ -49,6 +66,14 @@
           <span id="campaign-objective">Vague 15 · Titan Léviathan</span>
         </div>
 
+        <div class="save-warning" id="save-warning" role="alert" hidden>
+          <span id="save-warning-message">La sauvegarde locale est illisible ou indisponible. Exportez un backup si celui-ci est proposé, ou réinitialisez les données d’Infernal City.</span>
+          <div class="save-warning-actions">
+            <button class="btn-secondary" id="btn-backup-save" type="button" hidden>EXPORTER LE BACKUP BRUT</button>
+            <button class="btn-secondary" id="btn-reset-save" type="button">RÉINITIALISER LA SAUVEGARDE</button>
+          </div>
+        </div>
+
         <label class="difficulty-field" for="difficulty-select">
           <span>Difficulté</span>
           <select id="difficulty-select">
@@ -74,7 +99,7 @@
               <p class="section-eyebrow">THÉÂTRE D’OPÉRATIONS</p>
               <h3 id="deployment-planner-title">Choisir le terrain</h3>
             </div>
-            <span class="release-chip">MISE À JOUR 2.10</span>
+            <span class="release-chip">MISE À JOUR 2.11</span>
           </div>
 
           <label class="difficulty-field" for="layout-select">
@@ -88,6 +113,11 @@
             </select>
             <small id="layout-description">Convergence conserve les quatre portes historiques. Les autres terrains imposent des angles de défense asymétriques.</small>
           </label>
+
+          <div class="briefing-actions">
+            <button class="btn-secondary" id="btn-continue-run" type="button" hidden>CONTINUER LA CAMPAGNE</button>
+            <button class="btn-primary" id="btn-start-campaign" type="button">NOUVELLE CAMPAGNE</button>
+          </div>
 
           <div class="daily-challenge-card" id="daily-challenge-summary" role="region" aria-labelledby="daily-challenge-title">
             <div>
@@ -111,20 +141,11 @@
           <li><strong>Déchaîner</strong><span>Remplissez la Frénésie et activez l’Overdrive avec le bouton ou la touche F.</span></li>
         </ol>
 
-        <div class="save-warning" id="save-warning" role="alert" hidden>
-          <span>La sauvegarde locale est illisible ou indisponible. Vous pouvez jouer sans sauvegarde ou réinitialiser uniquement les données d’Infernal City.</span>
-          <button class="btn-secondary" id="btn-reset-save" type="button">RÉINITIALISER LA SAUVEGARDE</button>
-        </div>
-
         <div class="checkpoint-card" id="checkpoint-card" hidden>
           <strong>POINT DE CONTRÔLE DISPONIBLE</strong>
           <span id="checkpoint-summary">Vague 1 · Citadelle intacte</span>
         </div>
 
-        <div class="briefing-actions">
-          <button class="btn-secondary" id="btn-continue-run" type="button" hidden>CONTINUER LA CAMPAGNE</button>
-          <button class="btn-primary" id="btn-start-campaign" type="button">NOUVELLE CAMPAGNE</button>
-        </div>
       </div>
     </div>
 
@@ -207,6 +228,7 @@
       </div>
     </header>
 
+    <main id="gameplay-surface">
     <!-- Main Game Canvas -->
     <canvas
       id="game-canvas"
@@ -267,7 +289,7 @@
     <!-- HUD Bottom Control Deck -->
     <footer id="hud-deck">
       <div class="hero-portrait-box">
-        <img src="assets/cg_aria.jpg" alt="Valkyrie" class="hero-avatar" id="hero-avatar-img" title="Valkyrie Active">
+        <img alt="Valkyrie" class="hero-avatar" id="hero-avatar-img" title="Valkyrie Active" decoding="async">
         <div class="hero-info">
           <span class="hero-name" id="hero-name-txt">Commandante Aria</span>
           <div style="display: flex; gap: 8px;">
@@ -285,6 +307,7 @@
         <!-- Injected dynamically -->
       </div>
     </footer>
+    </main>
 
     <!-- CENTRAL QUARTIER GÉNÉRAL (HQ HUB MODAL) -->
     <div class="modal-overlay" id="hq-menu-modal">
@@ -497,7 +520,7 @@
 
         <div class="studio-workspace">
           <div class="studio-preview-frame">
-            <img id="studio-preview-img" src="assets/cg_aria.jpg" alt="Portrait boudoir non nu de Commandante Aria, 34 ans">
+            <img id="studio-preview-img" alt="Portrait boudoir non nu de Commandante Aria, 34 ans" loading="lazy" decoding="async">
           </div>
           <div class="studio-controls">
             <label for="studio-pose-select">
@@ -624,7 +647,7 @@
       <div class="vn-shell">
         <button class="btn-close" type="button">&times;</button>
         <section class="vn-stage" aria-describedby="vn-status">
-          <img id="vn-scene-img" src="assets/cover.jpg" alt="Citadelle Haven au-dessus de la côte infernale">
+          <img id="vn-scene-img" alt="Citadelle Haven au-dessus de la côte infernale" loading="lazy" decoding="async">
           <div class="vn-stage-shade" aria-hidden="true"></div>
           <div class="vn-expression-portrait" id="vn-expression-portrait" role="img" aria-label="Expression actuelle de l’héroïne" hidden></div>
 
@@ -933,6 +956,16 @@
             <input class="sr-only" id="import-save-input" type="file" accept="application/json,.json">
           </div>
           <p id="settings-status" class="system-status" role="status" aria-live="polite">Aucune opération de sauvegarde en cours.</p>
+        </section>
+
+        <section class="project-info" id="project-info" aria-labelledby="project-info-title">
+          <h3 id="project-info-title">À propos & données</h3>
+          <ul>
+            <li><strong>Version 2.11.0.</strong> Jeu cyber-gothique indépendant réservé aux adultes.</li>
+            <li>Progression, historique et préférences restent dans le stockage local du navigateur ; le jeu n’intègre ni compte ni télémétrie.</li>
+            <li>Les polices peuvent être demandées à Google Fonts. Les autres requêtes servent uniquement le jeu et ses médias depuis ce site.</li>
+            <li>Les visuels du projet ont été créés avec OpenAI puis préparés et intégrés pour Infernal City ; les masters PNG sont conservés avec leurs dérivés WebP.</li>
+          </ul>
         </section>
       </div>
     </div>

@@ -10,6 +10,7 @@ class SoundEngine {
     this.isMuted = false;
     this.isPlayingMusic = false;
     this.musicTimer = null;
+    this.resumeMusicAfterVisibility = false;
     this.currentStation = 'synthwave'; // 'synthwave', 'gothic', 'industrial', 'chillwave', 'heavy'
 
     // Cached procedural buffers avoid rebuilding thousands of random samples for
@@ -481,7 +482,11 @@ class SoundEngine {
   }
 
   startMusic() {
-    if (this.isPlayingMusic) return;
+    if (this.isPlayingMusic) return true;
+    if (!this.ensureAudio()) {
+      this.isPlayingMusic = false;
+      return false;
+    }
     this.isPlayingMusic = true;
 
     let step = 0;
@@ -555,6 +560,7 @@ class SoundEngine {
     };
 
     playBeat();
+    return true;
   }
 
   stopMusic() {
@@ -563,6 +569,22 @@ class SoundEngine {
       clearTimeout(this.musicTimer);
       this.musicTimer = null;
     }
+  }
+
+  suspendForVisibility() {
+    this.resumeMusicAfterVisibility = this.isPlayingMusic;
+    if (this.musicTimer) {
+      clearTimeout(this.musicTimer);
+      this.musicTimer = null;
+    }
+    this.isPlayingMusic = false;
+    this.ctx?.suspend?.().catch?.(() => {});
+  }
+
+  resumeFromVisibility() {
+    if (!this.resumeMusicAfterVisibility) return false;
+    this.resumeMusicAfterVisibility = false;
+    return this.startMusic();
   }
 }
 

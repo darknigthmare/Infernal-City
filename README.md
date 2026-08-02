@@ -1,5 +1,32 @@
 # Infernal City: Valkyrie Sweeper
 
+## Mise à jour 2.11 — Passe professionnelle
+
+- Campagne, chasses du Codex et Tour Infinitum utilisent désormais des états
+  de partie isolés. Une victoire ou une défaite secondaire restaure la vague,
+  les défenses, l'économie et le checkpoint de campagne sans les altérer.
+- Le défi quotidien impose son héroïne, son terrain, ses trois défenses, ses
+  mutateurs et sa graine. Une nouvelle tentative reconstruit le même contrat
+  et la récompense permanente n'est accordée qu'une fois par jour.
+- Les vagues 16 à 20 des Dix Trônes sont entièrement composées et progressives.
+  Le runtime applique les récompenses, temps d'intermission, traits et escorts
+  définis dans les scripts de campagne.
+- Les checkpoints importés sont canonisés et bornés, l'import portable est
+  transactionnel, la remise à zéro couvre campagne et VN, et une sauvegarde
+  provenant d'une version future est préservée plutôt qu'écrasée.
+- Le portail 18+ ne déclenche plus le téléchargement des terrains, atlas et CG.
+  Après consentement, seuls le terrain et les sprites utiles sont préchauffés ;
+  le reste est chargé à la demande dans un cache média LRU.
+- Les sept décors OpenAI conservent leurs masters PNG et utilisent des dérivés
+  WebP déterministes en jeu, réduisant leur poids cumulé d'environ 18,5 à
+  2,7 Mio sans modifier la direction artistique.
+- Le briefing garde son action principale dans la zone visible, le champ de
+  bataille accepte portrait et paysage, les entrées clavier/manette respectent
+  toutes les modales, et le canvas suit la préférence système de mouvement
+  réduit.
+- La livraison ajoute audit statique et tests sous GitHub Actions, en-têtes de
+  sécurité Vercel, métadonnées sociales, `robots.txt` et `sitemap.xml`.
+
 ## Mise à jour 2.10 — Éros Time hors champ
 
 - Les dix héroïnes et les dix Trônes possèdent maintenant une séquence Éros
@@ -215,13 +242,13 @@ Le projet ne requiert aucune dépendance ni étape de compilation.
 
 Le jeu enregistre un service worker sur `localhost` ou depuis une origine HTTPS.
 Après une première visite en ligne, le shell, les scripts essentiels — dont le
-registre des personnages —, le terrain Convergence et les icônes sont
-précachés. Tous les atlas de combat, personnages, portraits, expressions, CG
+registre des personnages — et les icônes sont précachés. Les terrains, atlas
+de combat, personnages, portraits, expressions et CG
 narratives, grands terrains asymétriques et compositions du Studio 2.10
 rejoignent un cache média séparé à leur première consultation. Le service
 worker les sert ensuite en priorité depuis ce cache. Cela conserve une
 installation initiale sous le budget de 20 Mio sans sacrifier leur disponibilité
-hors ligne après découverte. Le manifeste 2.10 et les icônes PNG 192/512
+hors ligne après découverte. Le manifeste 2.11 et les icônes PNG 192/512
 permettent de proposer l’installation en application autonome.
 
 Les actifs cœur portent un nom de version et le code utilise le réseau en

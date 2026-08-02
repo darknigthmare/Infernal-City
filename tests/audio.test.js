@@ -43,6 +43,8 @@ class FakeAudioContext {
     this.bufferCreateCount = 0;
     this.oscillators = [];
     this.bufferSources = [];
+    this.suspendCalls = 0;
+    this.resumeCalls = 0;
   }
 
   createGain() {
@@ -74,6 +76,14 @@ class FakeAudioContext {
   }
 
   resume() {
+    this.resumeCalls++;
+    this.state = 'running';
+    return Promise.resolve();
+  }
+
+  suspend() {
+    this.suspendCalls++;
+    this.state = 'suspended';
     return Promise.resolve();
   }
 }
@@ -158,4 +168,41 @@ test('les volumes musique et effets sont independants, bornes et appliques au mi
   assert.ok(Math.abs(engine.sfxGain.gain.value - 0.4375) < Number.EPSILON);
   assert.equal(engine.setMusicVolume(-1), 0);
   assert.equal(engine.musicGain.gain.value, 0);
+});
+
+test('la radio ne se declare active qu apres initialisation audio et evite un second timer', () => {
+  const engine = createSoundEngine();
+
+  assert.equal(engine.startMusic(), true);
+  const firstTimer = engine.musicTimer;
+  assert.ok(firstTimer);
+  assert.equal(engine.startMusic(), true);
+  assert.equal(engine.musicTimer, firstTimer);
+
+  engine.stopMusic();
+  engine.ctx = null;
+  engine.init = () => false;
+  assert.equal(engine.startMusic(), false);
+  assert.equal(engine.isPlayingMusic, false);
+  assert.equal(engine.musicTimer, null);
+});
+
+test('masquer puis restaurer la page suspend et reprend exactement la radio active', () => {
+  const engine = createSoundEngine();
+  engine.startMusic();
+
+  engine.suspendForVisibility();
+  assert.equal(engine.isPlayingMusic, false);
+  assert.equal(engine.resumeMusicAfterVisibility, true);
+  assert.equal(engine.musicTimer, null);
+  assert.equal(engine.ctx.suspendCalls, 1);
+
+  assert.equal(engine.resumeFromVisibility(), true);
+  assert.equal(engine.isPlayingMusic, true);
+  assert.equal(engine.resumeMusicAfterVisibility, false);
+  assert.ok(engine.musicTimer);
+  engine.stopMusic();
+
+  engine.suspendForVisibility();
+  assert.equal(engine.resumeFromVisibility(), false, 'une radio deja arretee ne doit pas demarrer seule');
 });

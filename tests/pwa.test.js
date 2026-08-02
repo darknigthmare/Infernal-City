@@ -4,6 +4,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const test = require('node:test');
+const vm = require('node:vm');
 
 const ROOT = path.resolve(__dirname, '..');
 
@@ -18,7 +19,7 @@ function readPngSize(filePath) {
 
 test('le manifeste PWA reference deux icones PNG carrees valides', () => {
   const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'manifest.webmanifest'), 'utf8'));
-  assert.equal(manifest.version, '2.10.0');
+  assert.equal(manifest.version, '2.11.0');
   assert.equal(manifest.display, 'standalone');
   assert.equal(manifest.start_url, './');
   assert.deepEqual(manifest.icons.map(icon => icon.sizes), ['192x192', '512x512']);
@@ -71,7 +72,7 @@ test('le script PWA limite son enregistrement aux contextes surs', () => {
   assert.match(source, /updateViaCache:\s*'none'/);
 });
 
-test('les actifs coeur 2.10 sont fingerprints et servis network first', () => {
+test('les actifs coeur 2.11 sont servis network first sans precacher les medias lourds', () => {
   const index = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
   const worker = fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8');
 
@@ -79,13 +80,13 @@ test('les actifs coeur 2.10 sont fingerprints et servis network first', () => {
   assert.match(index, /audio\.v8\.js/);
   assert.match(index, /game\.v9\.js/);
   assert.match(index, /pwa\.v4\.js/);
-  assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}v15`/);
+  assert.match(worker, /RELEASE_VERSION = '2\.11\.0'/);
+  assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}core-\$\{RELEASE_VERSION\}`/);
   assert.match(worker, /vn-scenes\.v1\.js/);
   assert.match(worker, /characters\.v1\.js/);
   assert.match(worker, /adult-scenes\.v1\.js/);
-  assert.match(worker, /infernal-city-coastline\.png/);
-  assert.match(worker, /infernal-city-approach-terrain\.png/);
-  assert.match(worker, /infernal-city-spawn-gate-atlas\.png/);
+  assert.match(worker, /relativePath\.startsWith\('assets\/environment\/'\)/);
+  assert.doesNotMatch(worker.match(/const OPTIONAL_PRECACHE_URLS = \[[\s\S]*?\];/)?.[0] || '', /cover\.jpg|approach-terrain|spawn-gate-atlas/);
   assert.match(worker, /isMutableCoreAsset/);
   assert.match(worker, /if \(isMutableCoreAsset\) \{\s*event\.respondWith\(\s*fetch\(request\)/);
   assert.match(worker, /cache\.put\(request, response\.clone\(\)\)/);
@@ -94,10 +95,139 @@ test('les actifs coeur 2.10 sont fingerprints et servis network first', () => {
 test('les atlas et médias narratifs utilisent un cache media cache-first', () => {
   const worker = fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8');
 
-  assert.match(worker, /MEDIA_CACHE_NAME = `\$\{CACHE_PREFIX\}media-v2\.9`/);
+  assert.match(worker, /MEDIA_CACHE_NAME = `\$\{CACHE_PREFIX\}media-\$\{RELEASE_VERSION\}`/);
+  assert.match(worker, /MAX_MEDIA_CACHE_ENTRIES = 320/);
   assert.match(worker, /relativePath\.startsWith\('assets\/animations\/'\)/);
   assert.match(worker, /relativePath\.startsWith\('assets\/characters\/'\)/);
   assert.match(worker, /relativePath\.startsWith\('assets\/vn\/'\)/);
-  assert.match(worker, /if \(cachedResponse\) \{\s*return cachedResponse;\s*\}/);
+  assert.match(
+    worker,
+    /if \(cachedResponse\) \{[\s\S]*?touchRuntimeMedia\(cache, request, cachedResponse\.clone\(\)\)[\s\S]*?return cachedResponse;\s*\}/
+  );
   assert.match(worker, /if \(isRuntimeMedia\) \{/);
+});
+
+function loadWorkerForTests(cache) {
+  const source = fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8');
+  const listeners = {};
+  const warnings = [];
+  let skipWaitingCalls = 0;
+  const sandbox = {
+    URL,
+    Promise,
+    console: {
+      warn(...args) { warnings.push(args); },
+      error: console.error,
+      log: console.log
+    },
+    caches: {
+      open: async () => cache,
+      keys: async () => [],
+      delete: async () => true,
+      match: async () => null
+    },
+    fetch: async () => { throw new Error('network disabled in unit test'); },
+    self: {
+      registration: { scope: 'https://example.test/' },
+      location: { origin: 'https://example.test' },
+      clients: { claim: async () => {} },
+      addEventListener(type, listener) { listeners[type] = listener; },
+      skipWaiting: async () => { skipWaitingCalls++; }
+    }
+  };
+  sandbox.globalThis = sandbox;
+  const context = vm.createContext(sandbox);
+  vm.runInContext(
+    `${source}\n;globalThis.__SW_TEST__ = { precacheRelease, trimMediaCache, ESSENTIAL_PRECACHE_URLS, OPTIONAL_PRECACHE_URLS };`,
+    context,
+    { filename: 'sw.js' }
+  );
+  return {
+    listeners,
+    warnings,
+    getSkipWaitingCalls: () => skipWaitingCalls,
+    hook: context.__SW_TEST__
+  };
+}
+
+test('l installation exige le coeur mais tolere un actif optionnel indisponible', async () => {
+  let essentialUrls = [];
+  const optionalUrls = [];
+  const cache = {
+    async addAll(urls) { essentialUrls = Array.from(urls); },
+    async add(url) {
+      optionalUrls.push(url);
+      if (url === './manifest.webmanifest') throw new Error('optional asset unavailable');
+    }
+  };
+  const worker = loadWorkerForTests(cache);
+  let installPromise;
+  worker.listeners.install({ waitUntil(promise) { installPromise = promise; } });
+
+  await assert.doesNotReject(installPromise);
+  assert.ok(essentialUrls.includes('./index.html'));
+  assert.ok(essentialUrls.includes('./game.v9.js'));
+  assert.ok(optionalUrls.includes('./manifest.webmanifest'));
+  assert.equal(worker.warnings.length, 1);
+  assert.equal(worker.getSkipWaitingCalls(), 1);
+});
+
+test('le plafond media supprime les entrees les moins recentes', async () => {
+  const deleted = [];
+  const cache = {
+    async keys() { return ['oldest', 'older', 'recent', 'newest']; },
+    async delete(key) { deleted.push(key); return true; }
+  };
+  const worker = loadWorkerForTests(cache);
+
+  assert.equal(await worker.hook.trimMediaCache(cache, 2), 2);
+  assert.deepEqual(deleted, ['oldest', 'older']);
+});
+
+test('vercel applique des headers de securite et de cache compatibles avec le jeu statique', () => {
+  const config = JSON.parse(fs.readFileSync(path.join(ROOT, 'vercel.json'), 'utf8'));
+  assert.equal(config.headers.length, 3);
+  assert.equal(config.headers[0].source, '/(.*)');
+  const headers = Object.fromEntries(
+    config.headers[0].headers.map(header => [header.key.toLowerCase(), header.value])
+  );
+  assert.match(headers['content-security-policy'], /script-src 'self'/);
+  assert.doesNotMatch(headers['content-security-policy'], /script-src[^;]*'unsafe-inline'/);
+  assert.match(headers['content-security-policy'], /frame-ancestors 'none'/);
+  assert.equal(headers['x-content-type-options'], 'nosniff');
+  assert.equal(headers['x-frame-options'], 'DENY');
+  assert.equal(headers['referrer-policy'], 'no-referrer');
+  assert.match(headers['permissions-policy'], /camera=\(\)/);
+  const assetHeaders = Object.fromEntries(
+    config.headers.find(rule => rule.source === '/assets/(.*)').headers
+      .map(header => [header.key.toLowerCase(), header.value])
+  );
+  assert.match(assetHeaders['cache-control'], /max-age=0/);
+  assert.match(assetHeaders['cache-control'], /must-revalidate/);
+  assert.doesNotMatch(assetHeaders['cache-control'], /immutable/);
+  const workerHeaders = Object.fromEntries(
+    config.headers.find(rule => rule.source === '/sw.js').headers
+      .map(header => [header.key.toLowerCase(), header.value])
+  );
+  assert.match(workerHeaders['cache-control'], /max-age=0/);
+  assert.equal(workerHeaders['service-worker-allowed'], '/');
+});
+
+test('github actions execute le controle complet avec des permissions minimales', () => {
+  const workflow = fs.readFileSync(path.join(ROOT, '.github', 'workflows', 'ci.yml'), 'utf8');
+  assert.match(workflow, /permissions:\s*\n\s*contents: read/);
+  assert.match(workflow, /uses: actions\/checkout@v4/);
+  assert.match(workflow, /uses: actions\/setup-node@v4/);
+  assert.match(workflow, /node-version: 22/);
+  assert.match(workflow, /run: npm run check/);
+  assert.doesNotMatch(workflow, /VERCEL_TOKEN|secrets\./);
+});
+
+test('vercel exclut les masters PNG remplaces par les decors WebP', () => {
+  const ignore = fs.readFileSync(path.join(ROOT, '.vercelignore'), 'utf8');
+  assert.match(ignore, /^assets\/environment\/\*\.png$/m);
+  const game = fs.readFileSync(path.join(ROOT, 'game.v9.js'), 'utf8');
+  const expansion = fs.readFileSync(path.join(ROOT, 'expansion.v1.js'), 'utf8');
+  assert.doesNotMatch(game, /assets\/environment\/.+\.png/);
+  assert.doesNotMatch(expansion, /assets\/environment\/.+\.png/);
 });

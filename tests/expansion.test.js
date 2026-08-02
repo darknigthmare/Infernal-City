@@ -81,7 +81,7 @@ test('four fixed-size layouts provide valid bounds, citadels and polylines', () 
     assert.equal(layout.world.height, 800, `${layout.id} height`);
     assert.match(layout.name, /\S/);
     assert.match(layout.description, /\S/);
-    assert.match(layout.terrainSrc, /^assets\/environment\/.+\.png$/);
+    assert.match(layout.terrainSrc, /^assets\/environment\/.+\.webp$/);
     assert.equal(fs.existsSync(path.join(ROOT, layout.terrainSrc)), true, `${layout.id} terrain`);
     assert.equal(fs.existsSync(path.join(ROOT, layout.previewSrc)), true, `${layout.id} preview`);
     assert.ok(layout.citadel.x >= 0 && layout.citadel.x <= 1200);

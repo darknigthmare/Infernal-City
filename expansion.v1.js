@@ -45,8 +45,8 @@
       description: 'La Citadelle centrale subit une convergence classique depuis les quatre portes cardinales.',
       tacticalNote: 'Le front le plus polyvalent : les défenses doivent couvrir plusieurs axes et pivoter rapidement.',
       world: { ...WORLD },
-      terrainSrc: 'assets/environment/infernal-city-approach-terrain.png',
-      previewSrc: 'assets/environment/infernal-city-approach-terrain.png',
+      terrainSrc: 'assets/environment/infernal-city-approach-terrain.webp',
+      previewSrc: 'assets/environment/infernal-city-approach-terrain.webp',
       citadel: { x: 600, y: 400, radius: 76, facing: 'south' },
       approachBounds: bounds(-320, -320, 1520, 1120),
       buildBounds: bounds(240, 140, 960, 660),
@@ -72,8 +72,8 @@
       description: 'La Citadelle est adossée au bord gauche ; trois colonnes ennemies traversent la longue plaine depuis l’est.',
       tacticalNote: 'Un front lisible et profond, idéal pour anticiper les hordes, créer des couloirs et superposer l’artillerie.',
       world: { ...WORLD },
-      terrainSrc: 'assets/environment/map-western-wall.png',
-      previewSrc: 'assets/environment/map-western-wall.png',
+      terrainSrc: 'assets/environment/map-western-wall.webp',
+      previewSrc: 'assets/environment/map-western-wall.webp',
       citadel: { x: 140, y: 400, radius: 78, facing: 'east' },
       approachBounds: bounds(-120, -160, 1520, 960),
       buildBounds: bounds(235, 92, 1080, 708),
@@ -99,8 +99,8 @@
       description: 'La Citadelle domine le nord tandis que les hordes remontent trois vallées depuis la bordure sud.',
       tacticalNote: 'Les portées verticales et les zones de ralentissement contrôlent les lacets avant leur convergence finale.',
       world: { ...WORLD },
-      terrainSrc: 'assets/environment/map-southern-watch.png',
-      previewSrc: 'assets/environment/map-southern-watch.png',
+      terrainSrc: 'assets/environment/map-southern-watch.webp',
+      previewSrc: 'assets/environment/map-southern-watch.webp',
       citadel: { x: 600, y: 125, radius: 76, facing: 'south' },
       approachBounds: bounds(-180, -140, 1380, 1120),
       buildBounds: bounds(185, 215, 1015, 690),
@@ -126,8 +126,8 @@
       description: 'Deux portes abyssales, au nord-est et au sud-est, encerclent la Citadelle retranchée à l’ouest.',
       tacticalNote: 'Deux fronts éloignés partagent un étranglement tardif : spécialisez chaque aile avant la jonction.',
       world: { ...WORLD },
-      terrainSrc: 'assets/environment/map-twin-rift.png',
-      previewSrc: 'assets/environment/map-twin-rift.png',
+      terrainSrc: 'assets/environment/map-twin-rift.webp',
+      previewSrc: 'assets/environment/map-twin-rift.webp',
       citadel: { x: 165, y: 400, radius: 80, facing: 'east' },
       approachBounds: bounds(-120, -240, 1520, 1040),
       buildBounds: bounds(245, 105, 1060, 695),
@@ -370,6 +370,84 @@
     }
   ];
 
+  const tenThronesFinalWaves = [
+    {
+      number: 16,
+      name: 'Paradoxe de Kali-X',
+      intermissionMs: 5800,
+      reward: 280,
+      bossEscortFor: 'kalix',
+      groups: [
+        { type: 'flying', count: 24, intervalMs: 330, delayMs: 0, routePattern: [0, 2, 1, 3] },
+        { type: 'runner', count: 28, intervalMs: 250, delayMs: 500, routePattern: [3, 1, 2, 0] },
+        { type: 'artillery', count: 10, intervalMs: 1750, delayMs: 900, routePattern: [0, 1, 2, 3] },
+        { type: 'bulwark', count: 10, intervalMs: 2000, delayMs: 1500, routePattern: [0, 2, 1, 3] },
+        { type: 'splitter', count: 18, intervalMs: 500, delayMs: 2300, routePattern: [1, 3, 0, 2] },
+        { type: 'brute', count: 14, intervalMs: 1150, delayMs: 3200, routePattern: [2, 0, 3, 1] }
+      ]
+    },
+    {
+      number: 17,
+      name: 'L\u2019Apr\u00e8s-Image Quantique',
+      intermissionMs: 5400,
+      reward: 320,
+      bossEscortFor: null,
+      groups: [
+        { type: 'bulwark', count: 14, intervalMs: 1600, delayMs: 0, routePattern: [0, 1, 2, 3] },
+        { type: 'artillery', count: 12, intervalMs: 1450, delayMs: 500, routePattern: [3, 2, 1, 0] },
+        { type: 'brute', count: 18, intervalMs: 900, delayMs: 900, routePattern: [0, 2, 1, 3] },
+        { type: 'splitter', count: 24, intervalMs: 410, delayMs: 1300, routePattern: [1, 3, 0, 2] },
+        { type: 'flying', count: 24, intervalMs: 290, delayMs: 1800, routePattern: [2, 0, 3, 1] },
+        { type: 'runner', count: 28, intervalMs: 225, delayMs: 2600, routePattern: [3, 1, 0, 2] }
+      ]
+    },
+    {
+      number: 18,
+      name: 'Palais de Cendre de Malika',
+      intermissionMs: 5000,
+      reward: 365,
+      bossEscortFor: 'malika',
+      groups: [
+        { type: 'flying', count: 28, intervalMs: 280, delayMs: 0, routePattern: [0, 1, 3, 2] },
+        { type: 'splitter', count: 24, intervalMs: 390, delayMs: 500, routePattern: [3, 1, 2, 0] },
+        { type: 'artillery', count: 14, intervalMs: 1300, delayMs: 1000, routePattern: [1, 3, 0, 2] },
+        { type: 'bulwark', count: 16, intervalMs: 1450, delayMs: 1400, routePattern: [0, 2, 1, 3] },
+        { type: 'runner', count: 28, intervalMs: 215, delayMs: 2100, routePattern: [2, 3, 1, 0] },
+        { type: 'brute', count: 20, intervalMs: 800, delayMs: 2800, routePattern: [0, 1, 2, 3] }
+      ]
+    },
+    {
+      number: 19,
+      name: 'Le Dernier R\u00e9veil',
+      intermissionMs: 4600,
+      reward: 415,
+      bossEscortFor: null,
+      groups: [
+        { type: 'bulwark', count: 20, intervalMs: 1250, delayMs: 0, routePattern: [0, 1, 2, 3] },
+        { type: 'artillery', count: 18, intervalMs: 1150, delayMs: 500, routePattern: [3, 1, 2, 0] },
+        { type: 'brute', count: 24, intervalMs: 700, delayMs: 900, routePattern: [0, 2, 3, 1] },
+        { type: 'splitter', count: 28, intervalMs: 350, delayMs: 1400, routePattern: [1, 3, 0, 2] },
+        { type: 'flying', count: 30, intervalMs: 250, delayMs: 1900, routePattern: [2, 0, 1, 3] },
+        { type: 'runner', count: 30, intervalMs: 190, delayMs: 2500, routePattern: [3, 2, 1, 0] }
+      ]
+    },
+    {
+      number: 20,
+      name: 'Nuit \u00c9ternelle de Noctis',
+      intermissionMs: 0,
+      reward: 500,
+      bossEscortFor: 'noctis',
+      groups: [
+        { type: 'bulwark', count: 22, intervalMs: 1100, delayMs: 0, routePattern: [0, 1, 2, 3] },
+        { type: 'artillery', count: 20, intervalMs: 1000, delayMs: 400, routePattern: [3, 2, 1, 0] },
+        { type: 'brute', count: 26, intervalMs: 620, delayMs: 800, routePattern: [0, 2, 1, 3] },
+        { type: 'splitter', count: 32, intervalMs: 320, delayMs: 1200, routePattern: [1, 3, 0, 2] },
+        { type: 'flying', count: 34, intervalMs: 230, delayMs: 1700, routePattern: [2, 0, 3, 1] },
+        { type: 'runner', count: 34, intervalMs: 175, delayMs: 2300, routePattern: [3, 1, 2, 0] }
+      ]
+    }
+  ];
+
   const waveScripts = {
     siege_15: {
       id: 'siege_15',
@@ -378,6 +456,21 @@
       finalWave: 15,
       deterministic: true,
       waves: campaignWaves
+    },
+    ten_thrones_20: {
+      id: 'ten_thrones_20',
+      name: 'Les Dix Tr\u00f4nes',
+      description: 'Vingt vagues d\u00e9terministes dont cinq assauts finaux uniques, con\u00e7us pour les escortes de Kali-X, Malika et Noctis.',
+      finalWave: 20,
+      deterministic: true,
+      waves: [
+        ...campaignWaves.map(wave => (
+          wave.number === 15
+            ? { ...wave, intermissionMs: 6800 }
+            : wave
+        )),
+        ...tenThronesFinalWaves
+      ]
     }
   };
 

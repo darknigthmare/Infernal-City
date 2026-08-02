@@ -14,6 +14,8 @@
   'use strict';
 
   const STORAGE_KEY = 'infernalCity.vnExpansion.v1';
+  const DATA_VERSION = 1;
+  const MAX_MEMORY_LENGTH = 240;
   const LEGACY_HERO_IDS = Object.freeze(['aria', 'kira', 'rin', 'selene', 'vespera', 'carmilla']);
 
   const LEGACY_HEROINE_BLUEPRINTS = Object.freeze({
@@ -416,11 +418,13 @@
     if (Array.isArray(candidate.memories)) {
       clean.memories = candidate.memories
         .filter(memory => typeof memory === 'string')
+        .map(memory => memory.slice(0, MAX_MEMORY_LENGTH))
         .slice(-90);
     }
     if (Array.isArray(candidate.callbackHistory)) {
       clean.callbackHistory = candidate.callbackHistory
         .filter(callback => typeof callback === 'string')
+        .map(callback => callback.slice(0, MAX_MEMORY_LENGTH))
         .slice(-90);
     }
     const consent = candidate.consent;
@@ -432,9 +436,17 @@
     return clean;
   }
 
-  function sanitizeState(candidate) {
+  function sanitizeState(candidate, options = {}) {
     const clean = createDefaultState();
     if (!candidate || typeof candidate !== 'object') return clean;
+    if (Number(candidate.dataVersion) > DATA_VERSION) {
+      const error = new Error(
+        `Progression narrative plus récente détectée (v${candidate.dataVersion}).`
+      );
+      error.code = 'NARRATIVE_VERSION_INCOMPATIBLE';
+      if (options.throwOnIncompatible === true) throw error;
+      return clean;
+    }
     clean.maturity = sanitizeMaturity(candidate.maturity);
     clean.updatedAt = typeof candidate.updatedAt === 'string' ? candidate.updatedAt : null;
     HERO_IDS.forEach(heroId => {
@@ -461,22 +473,33 @@
     if (!target) return createDefaultState();
     try {
       const serialized = target.getItem(STORAGE_KEY);
-      return serialized ? sanitizeState(JSON.parse(serialized)) : createDefaultState();
-    } catch (_error) {
-      return createDefaultState();
+      return serialized
+        ? sanitizeState(JSON.parse(serialized), { throwOnIncompatible: true })
+        : createDefaultState();
+    } catch (error) {
+      throw error;
     }
   }
 
-  function saveState(state, storage) {
-    const clean = sanitizeState(state);
+  function saveState(state, storage, options = {}) {
+    const clean = sanitizeState(state, { throwOnIncompatible: true });
     clean.updatedAt = new Date().toISOString();
     const target = resolveStorage(storage);
-    if (target) {
-      try {
-        target.setItem(STORAGE_KEY, JSON.stringify(clean));
-      } catch (_error) {
-        // La progression reste utilisable en mémoire même si le quota est plein.
+    const serialized = JSON.stringify(clean);
+    try {
+      if (!target) throw new Error('Stockage narratif indisponible.');
+      target.setItem(STORAGE_KEY, serialized);
+      if (typeof target.getItem === 'function' && target.getItem(STORAGE_KEY) !== serialized) {
+        throw new Error('Le stockage narratif n’a pas confirmé l’écriture.');
       }
+    } catch (cause) {
+      // The sanitized mutation remains usable for the current session, but an
+      // explicit error prevents the UI from claiming that it was persisted.
+      const error = new Error('Progression narrative non persistée : stockage indisponible.');
+      error.code = 'NARRATIVE_STORAGE_WRITE_FAILED';
+      error.state = clean;
+      error.cause = cause;
+      if (options.throwOnError !== false) throw error;
     }
     return clean;
   }
@@ -486,7 +509,7 @@
   }
 
   function grantConsent(state, heroId, storage) {
-    const clean = sanitizeState(state);
+    const clean = sanitizeState(state, { throwOnIncompatible: true });
     if (!HERO_IDS.includes(heroId)) return clean;
     clean.heroines[heroId].consent = {
       granted: true,
@@ -497,7 +520,7 @@
   }
 
   function revokeConsent(state, heroId, storage) {
-    const clean = sanitizeState(state);
+    const clean = sanitizeState(state, { throwOnIncompatible: true });
     if (!HERO_IDS.includes(heroId)) return clean;
     clean.heroines[heroId].consent = {
       granted: false,
@@ -508,13 +531,13 @@
   }
 
   function setMaturity(state, mode, storage) {
-    const clean = sanitizeState(state);
+    const clean = sanitizeState(state, { throwOnIncompatible: true });
     clean.maturity = sanitizeMaturity(mode);
     return saveState(clean, storage);
   }
 
   function recordLoreChoice(state, heroId, chapterId, choiceId, storage) {
-    const clean = sanitizeState(state);
+    const clean = sanitizeState(state, { throwOnIncompatible: true });
     const chapter = findChapter(heroId, chapterId);
     if (!chapter) return { state: clean, applied: false, reason: 'unknown-chapter' };
     const heroineState = clean.heroines[heroId];

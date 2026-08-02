@@ -117,6 +117,23 @@ body {
   overscroll-behavior: contain;
 }
 
+.skip-link {
+  position: fixed;
+  z-index: 10000;
+  top: 8px;
+  left: 8px;
+  padding: 10px 14px;
+  color: #fff;
+  background: #111827;
+  border: 2px solid var(--color-cyan);
+  border-radius: 6px;
+  transform: translateY(-160%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
 #game-canvas:is(.is-panning, .is-dragging),
 #game-canvas[data-camera-dragging="true"] {
   cursor: grabbing;
@@ -2701,6 +2718,17 @@ button[aria-disabled="true"]:not(.build-tower-card) {
   display: none;
 }
 
+.save-warning-actions {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.save-warning-actions button[hidden] {
+  display: none;
+}
+
 .briefing-actions,
 .summary-actions {
   display: flex;
@@ -2945,6 +2973,29 @@ button[aria-disabled="true"]:not(.build-tower-card) {
   border: 1px solid rgba(168, 85, 247, 0.34);
   border-radius: 12px;
   background: rgba(168, 85, 247, 0.07);
+}
+
+.project-info {
+  margin-top: 14px;
+  padding: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.58);
+}
+
+.project-info h3 {
+  color: #f8fafc;
+  font-size: 0.92rem;
+}
+
+.project-info ul {
+  display: grid;
+  gap: 6px;
+  margin-top: 9px;
+  padding-left: 18px;
+  color: #cbd5e1;
+  font-size: 0.74rem;
+  line-height: 1.4;
 }
 
 #infinitum-segment-progress {
@@ -4057,6 +4108,315 @@ body:is(.text-extra-large, [data-text-size="extra-large"]) {
 
   .body-route-vn-dialogue {
     min-height: 96px;
+  }
+}
+
+/* Compact combat shell for phones and small tablets held in landscape.
+   The battlefield keeps a real tactical viewport instead of being squeezed
+   between desktop-sized HUD bands. Primary combat actions remain 44px high. */
+@media (orientation: landscape) and (max-width: 950px) and (max-height: 500px) {
+  #hud-header {
+    top: max(4px, env(safe-area-inset-top));
+    width: calc(100% - 8px);
+    min-height: 52px;
+    height: 52px;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 6px;
+    border-radius: 9px;
+  }
+
+  #hud-header > .hud-group,
+  #hud-header > .hud-group:first-child,
+  #hud-header > .hud-group:nth-child(2),
+  #hud-header > .hud-group:last-child {
+    display: flex;
+    width: auto;
+    min-width: 0;
+    max-width: none;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 6px;
+  }
+
+  #hud-header > .hud-group:last-child {
+    margin-left: auto;
+  }
+
+  #frenzy-hud-stat,
+  #affinity-hud-stat,
+  #hud-header > .hud-group:nth-child(2) > .hud-stat:nth-child(n + 2),
+  #radio-station-select,
+  #btn-music-toggle,
+  #btn-sfx-toggle,
+  #btn-crt-toggle {
+    display: none;
+  }
+
+  #hud-header .hud-stat .label {
+    font-size: 0.56rem;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  #hud-header .hud-stat .value {
+    font-size: 0.82rem;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  #hud-header .citadel-hp-box {
+    width: 108px !important;
+  }
+
+  #hud-header .meter-bar {
+    margin-top: 1px;
+  }
+
+  #hud-header .btn-primary-hq {
+    width: auto;
+    max-width: 190px;
+    min-height: 44px;
+    padding: 5px 8px;
+    font-size: 0.61rem;
+    line-height: 1.05;
+  }
+
+  #mission-status-panel {
+    top: calc(max(4px, env(safe-area-inset-top)) + 57px);
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: calc(100% - 8px);
+    min-height: 32px;
+    padding: 3px 6px;
+    gap: 4px;
+    border-radius: 7px;
+    font-size: 0.56rem;
+  }
+
+  #mission-level-txt,
+  #mission-difficulty-txt,
+  #mission-next-wave-txt {
+    display: none;
+  }
+
+  #mission-status-panel #mission-threat-txt {
+    display: block;
+    grid-column: auto;
+    padding-top: 0;
+    border-top: 0;
+    border-left: 0;
+  }
+
+  #hud-build-bar {
+    bottom: calc(60px + env(safe-area-inset-bottom));
+    width: calc(100% - 8px);
+    height: 52px;
+    padding: 3px 5px;
+    gap: 5px;
+    border-radius: 9px;
+  }
+
+  .build-tower-card {
+    min-width: 98px;
+    height: 44px;
+    grid-template-columns: 24px 1fr;
+    padding: 3px 6px;
+  }
+
+  .build-tower-card .icon {
+    font-size: 1rem;
+  }
+
+  #hud-deck {
+    bottom: max(4px, env(safe-area-inset-bottom));
+    width: calc(100% - 8px);
+    min-height: 52px;
+    height: 52px;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 6px;
+    border-radius: 9px;
+  }
+
+  #hud-deck .hero-avatar,
+  #hud-deck .hero-name,
+  #hud-deck .weapons-display {
+    display: none;
+  }
+
+  #hud-deck .hero-portrait-box,
+  #hud-deck .hero-info {
+    width: 100%;
+    min-width: 0;
+  }
+
+  #hud-deck .hero-info > div {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 5px !important;
+  }
+
+  #hud-deck .hero-skill-btn,
+  #hud-deck .btn-overdrive {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    margin: 0;
+    padding: 4px 7px;
+    justify-content: center;
+    font-size: 0.62rem;
+    line-height: 1.05;
+    white-space: normal;
+  }
+
+  .camera-controls {
+    top: 50%;
+    right: max(4px, env(safe-area-inset-right));
+    bottom: auto;
+    grid-template-columns: 44px;
+    width: 52px;
+    gap: 3px;
+    padding: 3px;
+    transform: translateY(-50%);
+  }
+
+  .camera-zoom-output {
+    display: none;
+  }
+
+  .mission-briefing-box {
+    padding: 10px 12px;
+  }
+
+  .mission-briefing-box > .modal-subtitle,
+  .mission-briefing-box > .briefing-objective,
+  .mission-briefing-box .difficulty-field small,
+  .mission-briefing-box .planner-heading,
+  .mission-briefing-box .daily-challenge-card,
+  .mission-briefing-box .briefing-steps,
+  .mission-briefing-box .checkpoint-card {
+    display: none;
+  }
+
+  .mission-briefing-box > .difficulty-field,
+  .mission-briefing-box .deployment-planner .difficulty-field {
+    display: grid;
+    grid-template-columns: minmax(82px, 0.32fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 6px;
+    margin: 0 0 6px;
+  }
+
+  .mission-briefing-box .difficulty-field select {
+    min-height: 44px;
+    padding: 6px 8px;
+  }
+
+  .mission-briefing-box .deployment-planner {
+    gap: 4px;
+    margin: 0;
+    padding: 7px;
+  }
+
+  .mission-briefing-box .briefing-actions {
+    margin-top: 2px;
+  }
+
+  .mission-briefing-box .briefing-actions button {
+    min-height: 44px;
+  }
+
+  .adult-gate {
+    padding: 4px;
+  }
+
+  .adult-gate-box,
+  .adult-gate.declined .adult-gate-box {
+    grid-template-columns: minmax(180px, 0.72fr) minmax(0, 1.28fr);
+    width: 100%;
+    min-height: 0;
+    height: calc(100dvh - 8px);
+    max-height: calc(100dvh - 8px);
+    overflow: hidden;
+    border-radius: 10px;
+  }
+
+  .adult-gate-art {
+    display: block;
+    min-height: 0;
+    background:
+      linear-gradient(90deg, transparent 55%, #0d1220 100%),
+      linear-gradient(0deg, rgba(7, 9, 14, 0.72), transparent 50%),
+      url('assets/cover.jpg') center 22% / cover no-repeat;
+  }
+
+  .adult-gate-content {
+    padding: 8px 14px;
+    overflow-y: auto;
+  }
+
+  .mature-badge {
+    padding: 3px 7px;
+    font-size: 0.56rem;
+  }
+
+  .adult-gate-kicker {
+    margin-top: 3px;
+    font-size: 0.62rem;
+  }
+
+  .adult-gate h1 {
+    margin: 1px 0 4px;
+    font-size: clamp(1.55rem, 8dvh, 2rem);
+    line-height: 0.95;
+  }
+
+  .adult-gate-content > p {
+    margin-block: 3px;
+    font-size: 0.68rem;
+    line-height: 1.22;
+  }
+
+  .content-notice-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2px 12px;
+    margin: 5px 0;
+    padding-left: 16px;
+    font-size: 0.61rem;
+    line-height: 1.18;
+  }
+
+  .adult-enter-btn,
+  .btn-text {
+    min-height: 44px;
+  }
+
+  .btn-text {
+    margin-top: 1px;
+    padding: 4px;
+    font-size: 0.66rem;
+  }
+
+  .adult-gate-legal {
+    margin-top: 1px;
+    font-size: 0.56rem !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .mission-briefing-box .briefing-actions {
+    position: sticky;
+    z-index: 8;
+    bottom: -1px;
+    margin: 12px -4px -2px;
+    padding: 8px 4px calc(8px + env(safe-area-inset-bottom));
+    border-top: 1px solid rgba(0, 240, 255, 0.35);
+    background: linear-gradient(0deg, #07090e 72%, rgba(7, 9, 14, 0.94));
+    box-shadow: 0 -12px 24px rgba(7, 9, 14, 0.82);
   }
 }
 

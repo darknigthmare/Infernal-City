@@ -67,13 +67,14 @@ test('le runtime et le mode hors ligne referencent les nouveaux assets', () => {
   assert.match(game, /preloadBattleSprites\(\)/);
   assert.match(game, /drawInfernalFloor\(w, h\)/);
   assert.match(game, /drawAtlasFrame\(/);
-  manifest.atlases.map(atlas => atlas.src).forEach(src => {
+  manifest.atlases.map(atlas => atlas.runtimeSrc || atlas.src).forEach(src => {
     assert.ok(game.includes(src), `${src}: absent du runtime`);
   });
-  [manifest.floor.src, manifest.approachTerrain.src].forEach(src => {
+  [manifest.floor.runtimeSrc, manifest.approachTerrain.runtimeSrc].forEach(src => {
     assert.ok(game.includes(src), `${src}: absent du runtime`);
-    assert.ok(worker.includes(src), `${src}: absent du precache coeur`);
+    assert.ok(fs.existsSync(path.join(ROOT, src)), `${src}: derive WebP absent`);
   });
+  assert.match(worker, /relativePath\.startsWith\('assets\/environment\/'\)/);
   assert.match(worker, /relativePath\.startsWith\('assets\/animations\/'\)/);
   assert.match(worker, /serveRuntimeMedia\(request, event\)/);
 });

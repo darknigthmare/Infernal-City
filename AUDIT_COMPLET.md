@@ -1,122 +1,175 @@
-# Audit complet — Infernal City
+# Audit complet — Infernal City 2.11.0
 
-Date : 29 juillet 2026
+Date : 1er août 2026
 
 ## Verdict
 
-Le dépôt est passé d’un prototype avancé à une version complète jouable :
-une campagne possède désormais un objectif, une fin victorieuse et une défaite,
-les systèmes de progression sont compréhensibles et persistants, les défenses
-peuvent être gérées, et les modes de longévité ont une conclusion ou une boucle
-claire.
+Infernal City possède désormais le parcours, les règles de progression et la
+robustesse attendus d’un jeu statique complet : deux campagnes finissables,
+des modes secondaires qui ne corrompent pas la partie principale, une reprise
+sûre, un contrat quotidien déterministe, un endgame, un visual novel adulte
+consensuel et une livraison web installable.
 
-## Parcours critique
+La version 2.11 corrige les défauts bloquants et majeurs prouvés pendant
+l’audit. Les éléments encore listés en fin de document relèvent d’une phase de
+production commerciale, de contenu additionnel ou de tests utilisateurs ; ils
+ne rendent pas la boucle actuelle incomplète.
 
-1. Portail 18+ : sain, responsive et impossible à fermer accidentellement.
-2. Briefing : objectif, commandes, monnaies et difficulté expliqués.
-3. Nouvelle campagne : trois difficultés réellement appliquées.
-4. Combat : construction souris, tactile et clavier.
-5. Gestion tactique : amélioration niveau 1–3 et revente des défenses.
-6. Progression de run : XP visible, arsenal, Frénésie et Overdrive.
-7. Boss : Vespera, Carmilla puis Léviathan, avec trêve libre pour les boss
-   relationnels.
-8. Reprise : checkpoint sûr au début de la vague suivante.
-9. Défaite : résumé, records, nouveau run ou retour au briefing.
-10. Victoire : conclusion vague 15, épilogue, nouvelle campagne ou mode infini.
-11. Tour Infinitum : 100 étages, mutateur verrouillé et conclusion dédiée.
-12. Salon Nocturne : 18 chapitres VN, historique, reprise et choix de
-    consentement sans pénalité.
+## Périmètre contrôlé
 
-## P0 résolus
+- Parcours critique : portail 18+, briefing, campagne, victoire, défaite,
+  checkpoint, reprise et nouvelle partie.
+- Gameplay : vingt défenses, spécialisations, héroïnes, quatre terrains,
+  caméra, hordes, boss, économie, difficulté et récompenses.
+- Modes : Quatre Portes, Dix Trônes, chasses du Codex, défi quotidien, Tour
+  Infinitum 100 étages et mode infini.
+- Narration : seize héroïnes adultes, routes VN, consentement, révocation,
+  archives CG et séparation stricte entre romance et avantage militaire.
+- Données : migrations, import/export, sauvegardes de version future,
+  corruption, reset, bornes et contenu injecté.
+- Qualité web : clavier, tactile, manette, mobile, paysage, mouvement réduit,
+  audio, chargement, cache PWA, sécurité HTTP, SEO et CI.
 
-- Crash de première frame dû aux méthodes de particules manquantes.
-- Ancien script servi par le cache PWA après une mise à jour : actifs cœur
-  fingerprintés et stratégie réseau prioritaire pour le code.
-- Absence de victoire et lancement automatique d’une vague 16.
-- Récompenses/boss susceptibles d’être rejoués ou dupliqués.
-- Tours dont les comportements annoncés n’étaient pas tous actifs.
+## Corrections bloquantes et majeures
 
-## P1 résolus
+### État de partie et modes
 
-- Tutoriel et objectif final absents.
-- Partie active non reprenable.
-- Niveaux de tours factices, sans amélioration ni vente.
-- Loot permanent et non borné.
-- Familiers/mercenaires achetables sans limite et superposés.
-- Familier annoncé comme améliorable et mercenaire annoncé comme patrouilleur
-  sans mécanique correspondante.
-- Tour lancée derrière le QG encore en pause et mutateur reroulable gratuitement.
-- Niveau/XP et résultats de run incomplets.
-- Boutique HP sans plafond runtime.
-- Focus perdu après plusieurs décisions obligatoires.
-- Modales de niveau/alliance pouvant rester empilées sous un Game Over.
-- Prime unique de la Tour 100 présentée à tort lors d’un replay.
-- État du bouton musique désynchronisé après le portail 18+.
-- État de mission recouvrant le HUD sur petits écrans.
-- Promesses du Studio et de la machine à sous supérieures à leurs fonctions.
-- Barre de vingt défenses laborieuse au clavier.
-- SFX procéduraux recréés dans les chemins chauds.
-- Absence d’installation et de cache hors ligne.
-- Terrain trop proche : monde logique fixe 1200 × 800, indépendant du viewport,
-  ceinturé de quatre corridors de 320 unités (64 × 5). Les hordes apparaissent
-  aux portes lointaines en rotation nord/est/sud/ouest ; tailles écran, cibles
-  tactiles, projectiles, ETA et tirs de boss sont adaptés à ce recul.
-- Côte absente et CG narratives trop rares : panorama, terrain d’approche,
-  atlas de portails et six scènes cohérentes générés avec OpenAI puis intégrés
-  au combat et au visual novel.
-- Conversations relationnelles réduites à une phrase : corpus porté à 801
-  répliques et 126 choix sur 18 chapitres.
+- Les chasses et la Tour utilisent un snapshot isolé de la campagne. Vague,
+  Citadelle, économie, défenses, compagnons et checkpoint sont restaurés après
+  victoire, défaite ou palier.
+- Les gains permanents légitimes restent acquis sans laisser fuir les compteurs
+  temporaires. La récompense unique de l’étage 100 ne peut pas être dupliquée.
+- Une chasse ne déclenche plus une victoire de campagne, ne supprime plus son
+  checkpoint et ne distribue plus une récompense de campagne parasite.
+- Le contrat quotidien fixe date, graine, héroïne, terrain, mutateurs,
+  difficulté et trois défenses initiales. Un retry reconstruit exactement le
+  même run et la prime permanente n’est accordée qu’une fois. Ses vagues ne
+  modifient ni crédits permanents, ni cumul économique, ni records de campagne.
+- Les vagues 16 à 20 des Dix Trônes sont maintenant composées manuellement,
+  progressives et cohérentes avec l’arrivée des trois dernières souveraines.
+  Récompenses, escorts, traits et intermissions du registre sont appliqués.
 
-## Cohérence adulte
+### Combat et lisibilité tactique
 
-- Tous les personnages relationnels sont explicitement adultes, âgés de 27 ans
-  ou plus.
-- Alliance militaire, relation romantique et récompense économique sont
-  séparées.
-- L’accord relationnel est facultatif, explicite et révocable sans pénalité.
-- Un cadeau ne modifie plus la confiance.
-- Les moments privés restent suggestifs et utilisent un fondu au noir.
-- Chaque chapitre VN possède deux checkpoints explicites ; aucun choix n’est
-  chronométré ou présélectionné.
-- Une relecture ne peut pas redonner d’XP relationnelle.
+- La construction respecte le vrai rectangle jouable et non le corridor
+  d’approche. Les variantes asymétriques conservent leurs directions de horde.
+- Les barrières Aegis n’effacent plus instantanément une cible et les tours
+  récupèrent un cooldown valide après un cas limite.
+- Boss et unités lourdes résistent au contrôle de foule ; acide et dangers au
+  sol sont plafonnés afin d’éviter les verrouillages permanents. Tesla,
+  gravité, impulsion, EMP et Sonic passent par les mêmes helpers de résistance
+  et d’immunité temporaire.
+- Checkpoints et rotations replacent les défenses dans une position valide :
+  bornes de construction, dégagement de la Citadelle, routes de horde et
+  espacement entre tours sont contrôlés par un validateur central.
+- Le monde d’approche reste cinq fois plus profond que le terrain central. La
+  caméra couvre toute la largeur, se déplace, cadre et zoome sans déplacer les
+  entités logiques.
+- En paysage compact, les bandes HUD sont réduites et les contrôles secondaires
+  masqués : la zone tactique n’est plus écrasée par le HUD desktop.
 
-## Longévité
+### Sauvegarde et sécurité des données
 
-- Campagne finie : 15 vagues et trois combats de boss.
-- Rejouabilité : trois difficultés, choix de commandante et arsenal roguelite.
-- Endgame : Tour Infinitum de 100 étages.
-- Après la victoire : mode infini sans plafond de vague.
-- Métaprogression : boutique, relations, archives, skins, succès et records.
+- Les checkpoints importés sont canonisés et bornés : tours, armes, monnaies,
+  compteurs, mercenaires et drones ne peuvent pas injecter de statistiques ou
+  de HTML arbitraires.
+- Mercenaires et drones sont reconstruits avec leurs statistiques canoniques,
+  leurs niveaux autorisés et une limite de trois par famille.
+- L’import campagne + VN est transactionnel. Toute version incompatible ou
+  donnée invalide annule l’ensemble et restaure les deux sauvegardes originales.
+- Une sauvegarde campagne ou narrative provenant d’une version future est
+  conservée brute, bloque les écritures et peut être exportée sans être
+  silencieusement remplacée par un état vierge.
+- Un refus d’écriture narratif conserve la mutation pour la session, affiche
+  explicitement « non persistée », laisse la révocation possible et inclut cet
+  état mémoire dans l’export portable.
+- Le reset confirmé efface ensemble campagne et progression narrative.
+- Les mémoires, callbacks, tableaux et chaînes du VN sont limités pour éviter
+  croissance infinie et données hostiles.
 
-## P2 non bloquants
+### UX, accessibilité et entrées
 
-- OpenAI P1 : ajouter 12 CG pour donner une image propre à chacun des 18
-  chapitres, puis six planches d’expressions VN.
-- OpenAI P1 : produire les sprites de la Citadelle, du mercenaire Ray, du
-  Chiroptère, des caisses, ainsi que trois CG de conclusion.
-- OpenAI P2 : regrouper power-ups, projectiles, zones et particules dans un
-  atlas FX ; remplacer les emojis du QG par un atlas UI.
-- OpenAI P2 : ajouter les costumes combat alternatifs, évolutions visuelles des
-  tours niveaux 2–3 et biomes propres à la campagne, l’Infinitum et l’infini.
-- Ajouter d’autres événements et archétypes ennemis à distance.
-- Ajouter RNG seedé, historique détaillé des runs et simulations d’équilibrage.
-- Ajouter une vraie suite E2E navigateur/CI et des tests de lecteur d’écran.
-- Ajouter des voix, expressions faciales et décors alternatifs aux 18 chapitres
-  sans rendre les scènes graphiques.
+- Le portail adulte n’est pas contournable par une modalité d’entrée. Clavier
+  et manette suivent le même bloqueur central que souris et tactile.
+- Le jeu accepte portrait et paysage ; une faible hauteur ne met plus la
+  simulation en pause. Les actions principales du portail et du briefing restent
+  visibles sur les petits écrans.
+- Le canvas possède un accès direct, un statut ARIA de menace peu bavard et des
+  annonces seulement lors de changements significatifs.
+- La préférence système de mouvement réduit fige les animations décoratives,
+  cache les explosions purement visuelles et désactive le CRT sans modifier les
+  dégâts ni la préférence enregistrée.
+- L’audio crée son contexte avant de déclarer la radio active et suspend/reprend
+  exactement la piste lors d’un changement de visibilité.
+- Les paramètres expliquent maintenant version, données locales, absence de
+  télémétrie, requête de polices et provenance des visuels.
 
-## Vérifications
+### Performance, PWA et livraison
 
-- `npm.cmd run check`
-- 47 tests automatisés réussis
-- `node --check` sur les cinq scripts runtime et PWA
-- unicité des IDs HTML
-- références JS/HTML et assets locaux
-- routes HTTP locales
-- inspection visuelle bureau et 390 × 844, portail franchi et bataille jouée
+- Avant consentement, aucun terrain, atlas de combat ou CG n’est téléchargé.
+  Le runtime jouable n’est initialisé qu’après franchissement du portail.
+- Après consentement, seuls terrain, Citadelle, héroïne, défense initiale et
+  première horde sont préchauffés ; les autres médias sont chargés à la demande.
+- Les sept décors OpenAI utilisent des dérivés WebP d’environ 2,7 Mio au total
+  au lieu d’environ 18,5 Mio de PNG. Les PNG restent les masters du projet et
+  sont exclus du paquet Vercel.
+- Le service worker 2.11 ne précache que le shell indispensable, tolère les
+  actifs optionnels indisponibles et limite son cache média LRU à 320 entrées.
+- Les médias non fingerprintés sont revalidés au lieu d’être déclarés
+  immuables pendant un an, évitant les graphismes périmés après déploiement.
+- La livraison ajoute CSP, protections de frame/MIME/référent, politique de
+  permissions, métadonnées sociales, canonical, sitemap, robots et manifeste
+  PWA stable.
+- GitHub Actions exécute l’audit complet sous Node 22 avec permissions minimales.
 
-## Portée de l’audit visuel
+## Contrat adulte
 
-Le portail 18+ et le briefing ont été franchis dans une session QA éphémère.
-Une campagne standard a été lancée et inspectée sur bureau puis en portrait
-390 × 844. Terrain, quatre portes, hordes, ETA, choix de niveau, console et
-absence de débordement ont été contrôlés sans erreur.
+- Tous les personnages relationnels ont au moins 27 ans.
+- Les relations sont facultatives, consenties, révocables et sans pénalité.
+- Cadeaux, romance, alliance militaire et récompenses économiques restent
+  indépendants.
+- Les scènes intimes restent suggestives, non graphiques et hors champ.
+- Les variantes dites « jeunes années » sont des flashbacks adultes non
+  sexualisés ; aucune adolescente ni ambiguïté d’âge n’est admise.
+- Une relecture narrative ne peut ni redonner une récompense ni modifier le
+  gameplay.
+
+## Validation de sortie
+
+- `npm.cmd run check` : 175 tests réussis, 0 échec.
+- Syntaxe contrôlée sur tous les scripts runtime et le service worker.
+- Audit statique : 293 IDs uniques, 223 références DOM valides, aucun asset
+  local référencé manquant.
+- Tests de régression dédiés aux états chasse/Tour/quotidien, sauvegardes
+  futures, import transactionnel, PWA, audio, caméra et paysage compact.
+- Inspection des décors WebP face à leurs PNG : composition, transparence et
+  direction artistique conservées.
+- QA navigateur fraîche en 1440×1000, 390×844 et 844×390 : portail sans
+  auto-scroll, CTA sans scroll, aucun overflow ni erreur console, simulation
+  active et caméra réellement déplaçable/zoomable.
+- En paysage 844×390, la zone tactique libre passe de 52 à 154 px. Les médias
+  post-consentement passent d’environ 12,8 à 5,0 Mo et aucun PNG de décor n’est
+  demandé par le runtime.
+
+## Risques résiduels et suite de production
+
+### P2 — recommandé avant une commercialisation payante
+
+- Organiser une bêta multi-appareils avec données d’équilibrage réelles, puis
+  ajuster courbes de dégâts, économie et difficulté sur des taux de victoire.
+- Ajouter une suite E2E automatisée sur navigateurs réels et des sessions de
+  lecteur d’écran avec personnes utilisatrices.
+- Faire relire mentions légales, classification d’âge, droits de marque et
+  politique de confidentialité selon les pays de distribution visés.
+- Ajouter crash reporting et télémétrie uniquement avec opt-in explicite si le
+  projet a besoin de données de production.
+
+### P3 — enrichissement, non dette bloquante
+
+- Ajouter localisation, voix, sous-titres avancés et mixage audio final.
+- Produire davantage de biomes, variations visuelles des tours niveau 2–3,
+  ennemis à distance et événements de campagne.
+- Remplacer les pictogrammes texte historiques du QG par une famille d’icônes
+  illustrées cohérente et livrée comme vrais assets.
+- Ajouter sauvegarde cloud, succès plateforme et classement quotidien seulement
+  si une infrastructure et des comptes deviennent des objectifs du produit.

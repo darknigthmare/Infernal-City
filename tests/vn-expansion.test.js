@@ -115,6 +115,42 @@ test('la branche de personnalite est sauvegardee par heroine et exige le consent
   assert.equal(loaded.heroines.kira.memories.length, 0);
 });
 
+test('une progression narrative future est refusee sans etre remplacee', () => {
+  const store = memoryStorage();
+  const raw = JSON.stringify({ dataVersion: 999, futureMemory: ['keep'] });
+  store.setItem(expansion.storageKey, raw);
+
+  assert.throws(
+    () => expansion.persistence.loadState(store),
+    /plus r.cente d.tect.e/u
+  );
+  assert.equal(store.getItem(expansion.storageKey), raw);
+  assert.throws(
+    () => expansion.persistence.saveState({ dataVersion: 999 }, store),
+    /plus r.cente d.tect.e/u
+  );
+  assert.equal(store.getItem(expansion.storageKey), raw);
+});
+
+test('un echec de stockage remonte sans perdre la mutation en memoire', () => {
+  const persistence = expansion.persistence;
+  const failingStore = {
+    getItem() { return null; },
+    setItem() { throw new Error('quota exceeded'); }
+  };
+  const state = persistence.createDefaultState();
+  assert.throws(
+    () => persistence.grantConsent(state, 'aria', failingStore),
+    error => {
+      assert.equal(error.code, 'NARRATIVE_STORAGE_WRITE_FAILED');
+      assert.equal(error.state.heroines.aria.consent.granted, true);
+      assert.match(error.message, /non persist.e/u);
+      return true;
+    }
+  );
+  assert.equal(failingStore.getItem(expansion.storageKey), null);
+});
+
 test('le contrat de maturite est facultatif, revocable et sans impact gameplay', () => {
   const maturity = expansion.maturity;
   assert.deepEqual(Array.from(maturity.modes), ['suggestive', 'intense']);

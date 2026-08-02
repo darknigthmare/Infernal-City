@@ -3,6 +3,9 @@
 const CAMPAIGN_FINAL_WAVE = 15;
 const SAVE_VERSION = 8;
 const RUN_CHECKPOINT_VERSION = 1;
+const CAMPAIGN_STORAGE_KEY = 'valkyrie_sweeper_save';
+const NARRATIVE_STORAGE_KEY = 'infernalCity.vnExpansion.v1';
+const DAILY_FIRST_CLEAR_META_REWARD = 150;
 // The player explicitly needs a long read on incoming hordes. Keep the compact
 // construction arena intact, but make its traversable approach belt five times
 // deeper than the previous 64-unit framing on every side.
@@ -25,10 +28,10 @@ const GAMEPAD_CURSOR_SPEED = 280;
 const SPECIALIST_ENEMY_TYPES = ['flying', 'bulwark', 'artillery', 'splitter'];
 const BOSS_PHASE_THRESHOLDS = [0.66, 0.33];
 const LAYOUT_TERRAIN_SOURCES = {
-  convergence: 'assets/environment/infernal-city-approach-terrain.png',
-  western_wall: 'assets/environment/map-western-wall.png',
-  southern_watch: 'assets/environment/map-southern-watch.png',
-  twin_rift: 'assets/environment/map-twin-rift.png'
+  convergence: 'assets/environment/infernal-city-approach-terrain.webp',
+  western_wall: 'assets/environment/map-western-wall.webp',
+  southern_watch: 'assets/environment/map-southern-watch.webp',
+  twin_rift: 'assets/environment/map-twin-rift.webp'
 };
 
 // The expansion normally arrives from expansion.v1.js. This deliberately small
@@ -166,6 +169,12 @@ const POWERUP_TYPES = [
 
 const DEFENSE_MAX_LEVEL = 3;
 const DEFENSE_SELL_RATIO = 0.6;
+const DEFENSE_PLACEMENT_CLEARANCE = 8;
+const CITADEL_DEFENSE_CLEARANCE = 10;
+const HORDE_ROUTE_CLEARANCE = 22;
+const DEFENSE_PLACEMENT_SEARCH_STEP = 24;
+const MAX_VISUAL_PARTICLES = 900;
+const MAX_FLOATING_TEXTS = 240;
 const DEFENSE_LEVEL_STATS = {
   1: { damage: 1, range: 1, fireRate: 1, hp: 1, effect: 1 },
   2: { damage: 1.55, range: 1.1, fireRate: 0.88, hp: 1.45, effect: 1.5 },
@@ -175,10 +184,10 @@ const DEFENSE_UPGRADE_COST_MULTIPLIERS = { 1: 1.25, 2: 1.75 };
 const LOOT_CONFIG = { maxCrates: 32, maxPowerups: 32, lifetime: 20 };
 const SPRITE_ATLAS_COLUMNS = 4;
 const SPRITE_ATLAS_ROWS = 4;
-const FLOOR_TEXTURE_SRC = 'assets/environment/infernal-city-floor.png';
-const COASTLINE_IMAGE_SRC = 'assets/environment/infernal-city-coastline.png';
-const APPROACH_TERRAIN_IMAGE_SRC = 'assets/environment/infernal-city-approach-terrain.png';
-const SPAWN_GATE_ATLAS_SRC = 'assets/environment/infernal-city-spawn-gate-atlas.png';
+const FLOOR_TEXTURE_SRC = 'assets/environment/infernal-city-floor.webp';
+const COASTLINE_IMAGE_SRC = 'assets/environment/infernal-city-coastline.webp';
+const APPROACH_TERRAIN_IMAGE_SRC = 'assets/environment/infernal-city-approach-terrain.webp';
+const SPAWN_GATE_ATLAS_SRC = 'assets/environment/infernal-city-spawn-gate-atlas.webp';
 
 // Narrative CGs generated with OpenAI and anchored to each adult heroine's
 // established portrait. They are loaded only when the player opens the VN.
@@ -448,6 +457,11 @@ class GameEngine {
     this.activeCampaignId = 'four_gates';
     this.defeatedBossIds = [];
     this.activeBossHuntId = null;
+    this.runMode = 'campaign';
+    this.campaignStateBeforeBossHunt = null;
+    this.campaignStateBeforeDaily = null;
+    this.lastDailyChallenge = null;
+    this.dailyRetryAvailable = false;
     this.seenBossIntroIds = new Set();
     this.seenBossDefeatIds = new Set();
     this.pendingCinematics = [];
@@ -500,13 +514,25 @@ class GameEngine {
     this.campaignCompletions = 0;
     this.resumeWasOffered = false;
     this.hasEnteredAdultExperience = false;
+    this.playableExperienceInitialized = false;
     this.saveLoadError = null;
+    this.storageWriteBlocked = false;
+    this.futureCampaignSaveRaw = null;
+    this.futureCampaignSaveVersion = null;
+    this.narrativeStorageWriteBlocked = false;
+    this.narrativeStorageWriteFailed = false;
+    this.futureNarrativeSaveRaw = null;
+    this.narrativeSaveLoadError = null;
     this.preferredMusicEnabled = false;
     this.preferredCrtEnabled = true;
     this.musicVolume = 0.7;
     this.sfxVolume = 0.8;
     this.contrastMode = 'default';
     this.textSize = 'default';
+    this.reducedMotionQuery = typeof window.matchMedia === 'function'
+      ? window.matchMedia('(prefers-reduced-motion: reduce)')
+      : null;
+    this.prefersReducedMotion = Boolean(this.reducedMotionQuery?.matches);
     this.score = 0;
     this.coins = 400;
     this.metaCoins = 0;
@@ -518,6 +544,9 @@ class GameEngine {
     this.overdriveCount = 0;
     this.dailyChallenge = null;
     this.dailyRng = null;
+    this.completedDailyChallengeIds = [];
+    this.citadelUntouchedThisRun = true;
+    this.defensesSoldThisRun = 0;
     this.runHistory = [];
     this.connectedGamepadIndex = null;
     this.lastGamepadStatusPoll = 0;
@@ -629,6 +658,22 @@ class GameEngine {
     this.setupModalAccessibility();
     this.resizeCanvas();
     window.addEventListener('resize', () => this.resizeCanvas());
+    this.reducedMotionQuery?.addEventListener?.('change', event => {
+      this.prefersReducedMotion = Boolean(event.matches);
+      const crt = document.querySelector?.('.crt-overlay');
+      crt?.classList.toggle('disabled', this.prefersReducedMotion || !this.preferredCrtEnabled);
+      const crtButton = document.getElementById('btn-crt-toggle');
+      if (crtButton) {
+        crtButton.disabled = this.prefersReducedMotion;
+        crtButton.setAttribute('aria-pressed', String(!this.prefersReducedMotion && this.preferredCrtEnabled));
+        crtButton.setAttribute(
+          'aria-label',
+          this.prefersReducedMotion
+            ? 'Effet CRT désactivé par la préférence système de mouvement réduit'
+            : (this.preferredCrtEnabled ? 'Désactiver l’effet CRT' : 'Activer l’effet CRT')
+        );
+      }
+    });
     const hudHeader = document.getElementById('hud-header');
     if (hudHeader && typeof ResizeObserver === 'function') {
       this.hudResizeObserver = new ResizeObserver(() => this.syncMissionStatusPosition());
@@ -640,20 +685,18 @@ class GameEngine {
         this.wasPausedBeforeHidden = this.isPaused;
         this.isPaused = true;
         this.saveProgress();
-      } else if (!this.wasPausedBeforeHidden && !this.getTopOpenModal() && !this.isGameOver && !this.campaignVictory) {
-        this.isPaused = false;
+        audio.suspendForVisibility?.();
+      } else {
+        audio.resumeFromVisibility?.();
+        if (!this.wasPausedBeforeHidden && !this.getTopOpenModal() && !this.isGameOver && !this.campaignVictory) {
+          this.isPaused = false;
+        }
       }
     });
     window.addEventListener('pagehide', () => this.saveProgress());
 
     this.bindEvents();
-    this.initWeapons();
-    this.renderBuildBar();
     this.updateHUD();
-    this.renderGallery();
-
-    // Prepare the arena behind the mandatory adult-content notice.
-    this.startNewGame({ preserveCheckpoint: true, silent: true });
     const adultGate = document.getElementById('adult-gate-modal');
     if (adultGate && adultGate.classList.contains('active')) {
       this.isPaused = true;
@@ -686,6 +729,119 @@ class GameEngine {
     };
   }
 
+  getDefensePlacementBounds(radius = 18) {
+    const footprint = Math.max(1, Number(radius) || 18);
+    const source = this.worldLayout?.buildBounds || {
+      minX: 24,
+      minY: 24,
+      maxX: (this.worldWidth || BATTLEFIELD_WORLD_WIDTH) - 24,
+      maxY: (this.worldHeight || BATTLEFIELD_WORLD_HEIGHT) - 24
+    };
+    return {
+      minX: (Number(source.minX) || 24) + footprint,
+      minY: (Number(source.minY) || 24) + footprint,
+      maxX: (Number(source.maxX) || ((this.worldWidth || BATTLEFIELD_WORLD_WIDTH) - 24)) - footprint,
+      maxY: (Number(source.maxY) || ((this.worldHeight || BATTLEFIELD_WORLD_HEIGHT) - 24)) - footprint
+    };
+  }
+
+  validateDefensePlacement(x, y, options = {}) {
+    const point = { x: Number(x), y: Number(y) };
+    const radius = Math.max(1, Number(options.radius) || 18);
+    if (!Number.isFinite(point.x) || !Number.isFinite(point.y)) {
+      return { ok: false, reason: 'bounds' };
+    }
+    const bounds = this.getDefensePlacementBounds(radius);
+    if (
+      point.x < bounds.minX
+      || point.x > bounds.maxX
+      || point.y < bounds.minY
+      || point.y > bounds.maxY
+    ) return { ok: false, reason: 'bounds' };
+
+    const citadelRadius = Math.max(1, Number(this.citadel?.radius) || 45);
+    if (
+      Math.hypot((Number(this.citadel?.x) || 0) - point.x, (Number(this.citadel?.y) || 0) - point.y)
+      < citadelRadius + radius + CITADEL_DEFENSE_CLEARANCE
+    ) return { ok: false, reason: 'citadel' };
+
+    const routeClearance = Math.max(0, Number(options.routeClearance) || HORDE_ROUTE_CLEARANCE);
+    for (const route of this.spawnRoutes || []) {
+      const polyline = Array.isArray(route?.polyline) ? route.polyline : [];
+      for (let index = 1; index < polyline.length; index++) {
+        if (
+          this.distToSegment(point, polyline[index - 1], polyline[index])
+          < radius + routeClearance
+        ) return { ok: false, reason: 'route' };
+      }
+    }
+
+    const defenses = Array.isArray(options.defenses) ? options.defenses : (this.placedTowers || []);
+    const occupied = defenses.some(defense => {
+      if (!defense || defense === options.ignoreDefense) return false;
+      const otherRadius = Math.max(1, Number(defense.radius) || 18);
+      return Math.hypot((Number(defense.x) || 0) - point.x, (Number(defense.y) || 0) - point.y)
+        < radius + otherRadius + DEFENSE_PLACEMENT_CLEARANCE;
+    });
+    return occupied ? { ok: false, reason: 'occupied' } : { ok: true, reason: '' };
+  }
+
+  getDefensePlacementFailureMessage(reason) {
+    if (reason === 'citadel') return 'Zone de Citadelle protégée.';
+    if (reason === 'route') return 'La route de la horde doit rester dégagée.';
+    if (reason === 'occupied') return 'Espace déjà occupé par une défense.';
+    return 'Cette zone d’approche ne peut pas être fortifiée.';
+  }
+
+  findValidDefensePlacement(x, y, options = {}) {
+    const radius = Math.max(1, Number(options.radius) || 18);
+    const bounds = this.getDefensePlacementBounds(radius);
+    if (bounds.minX > bounds.maxX || bounds.minY > bounds.maxY) return null;
+    const clamp = (value, min, max) => Math.max(min, Math.min(max, Number(value) || min));
+    const origin = {
+      x: clamp(x, bounds.minX, bounds.maxX),
+      y: clamp(y, bounds.minY, bounds.maxY)
+    };
+    const validate = candidate => this.validateDefensePlacement(candidate.x, candidate.y, {
+      ...options,
+      radius
+    }).ok;
+    if (validate(origin)) return origin;
+
+    const step = Math.max(DEFENSE_PLACEMENT_SEARCH_STEP, radius + DEFENSE_PLACEMENT_CLEARANCE);
+    const maxRing = Math.ceil(Math.max(bounds.maxX - bounds.minX, bounds.maxY - bounds.minY) / step) + 1;
+    for (let ring = 1; ring <= maxRing; ring++) {
+      for (let offsetY = -ring; offsetY <= ring; offsetY++) {
+        for (let offsetX = -ring; offsetX <= ring; offsetX++) {
+          if (Math.abs(offsetX) !== ring && Math.abs(offsetY) !== ring) continue;
+          const candidate = {
+            x: clamp(origin.x + (offsetX * step), bounds.minX, bounds.maxX),
+            y: clamp(origin.y + (offsetY * step), bounds.minY, bounds.maxY)
+          };
+          if (validate(candidate)) return candidate;
+        }
+      }
+    }
+    return null;
+  }
+
+  repositionDefensesForCurrentLayout(defenses = this.placedTowers, options = {}) {
+    const positioned = [];
+    (Array.isArray(defenses) ? defenses : []).forEach(defense => {
+      if (!defense) return;
+      const position = this.findValidDefensePlacement(
+        (Number(defense.x) || 0) + (Number(options.offsetX) || 0),
+        (Number(defense.y) || 0) + (Number(options.offsetY) || 0),
+        { radius: defense.radius, defenses: positioned }
+      );
+      if (!position) return;
+      defense.x = position.x;
+      defense.y = position.y;
+      positioned.push(defense);
+    });
+    return positioned;
+  }
+
   applyWorldLayout(layoutId = this.selectedLayoutId, options = {}) {
     const layout = this.getWorldLayout(layoutId);
     const requestedAsRotation = options.rotation === true;
@@ -716,13 +872,17 @@ class GameEngine {
         .map((route, index) => this.normalizeSpawnRoute(route, index));
     }
 
-    if (options.repositionUnits !== false && (dx !== 0 || dy !== 0)) {
+    if (options.repositionUnits !== false) {
       const buildBounds = layout.buildBounds || {
         minX: 24,
         minY: 24,
         maxX: this.worldWidth - 24,
         maxY: this.worldHeight - 24
       };
+      this.placedTowers = this.repositionDefensesForCurrentLayout(this.placedTowers, {
+        offsetX: dx,
+        offsetY: dy
+      });
       const translateAndClamp = entity => {
         if (!entity) return;
         entity.x = Math.max(
@@ -734,13 +894,14 @@ class GameEngine {
           Math.min(Number(buildBounds.maxY) || (this.worldHeight - 24), (Number(entity.y) || 0) + dy)
         );
       };
-      [
-        ...(this.placedTowers || []),
-        ...(this.mercenaries || []),
-        ...(this.petDrones || []),
-        ...(this.decoys || [])
-      ].forEach(translateAndClamp);
-      translateAndClamp(this.buildCursor);
+      if (dx !== 0 || dy !== 0) {
+        [
+          ...(this.mercenaries || []),
+          ...(this.petDrones || []),
+          ...(this.decoys || [])
+        ].forEach(translateAndClamp);
+        translateAndClamp(this.buildCursor);
+      }
     }
 
     if (this.camera) {
@@ -749,7 +910,7 @@ class GameEngine {
       this.constrainBattlefieldCamera();
     }
     const terrainSrc = LAYOUT_TERRAIN_SOURCES[this.selectedLayoutId] || layout.terrainSrc;
-    if (terrainSrc && this.spriteAtlasImages) {
+    if (terrainSrc && this.spriteAtlasImages && this.hasEnteredAdultExperience) {
       this.approachTerrainImage = this.preloadSpriteAsset(terrainSrc, 'Terrain tactique');
     }
     return { ok: true, layout };
@@ -808,6 +969,7 @@ class GameEngine {
   }
 
   startDailyChallenge(value = new Date(), playerSalt = '') {
+    const suspendedCampaignState = this.campaignStateBeforeDaily || this.captureGameplayState();
     const createChallenge = EXPANSION?.utils?.createDailyChallenge;
     let challenge;
     if (typeof createChallenge === 'function') {
@@ -825,11 +987,14 @@ class GameEngine {
         seed: seed >>> 0,
         layoutId: 'convergence',
         heroId: 'aria',
+        startingDefenseIds: ['vulcan_turret', 'flame_trap', 'tesla_spire'],
         mutatorIds: [],
         rules: { startingCoins: 145, scoreMultiplier: 1 }
       };
     }
     this.dailyChallenge = challenge;
+    this.lastDailyChallenge = challenge;
+    this.dailyRetryAvailable = false;
     const createRng = EXPANSION?.utils?.createSeededRng;
     this.dailyRng = typeof createRng === 'function'
       ? createRng(challenge.seed)
@@ -837,26 +1002,76 @@ class GameEngine {
     this.selectedLayoutId = EXPANSION?.worldLayouts?.[challenge.layoutId]
       ? challenge.layoutId
       : 'convergence';
+    this.setMapRotation([]);
     const dailyHero = HERO_CLASSES[challenge.heroId];
-    if (dailyHero && dailyHero.unlocked !== false) this.selectedHero = dailyHero;
+    if (dailyHero) this.selectedHero = dailyHero;
     this.activeRunMutators = (challenge.mutatorIds || [])
       .map(id => (EXPANSION.infinitumMutators || []).find(mutator => mutator.id === id))
       .filter(Boolean);
     this.startNewGame({
       layoutId: this.selectedLayoutId,
+      campaignId: 'four_gates',
+      difficulty: 'standard',
       dailyChallenge: challenge,
       preserveCheckpoint: true
     });
-    this.coins = Math.max(0, Number(challenge.rules?.startingCoins) || this.coins);
+    this.campaignStateBeforeDaily = suspendedCampaignState;
+    this.coins = Math.max(0, Number(challenge.rules?.startingCoins) || 0);
+    const firstDailyDefenseId = this.getDailyDefenseDeckIds(challenge)[0];
+    if (firstDailyDefenseId) this.selectedTowerToBuild = TOWER_TYPES[firstDailyDefenseId];
+    this.renderBuildBar();
     this.updateHUD();
     return challenge;
+  }
+
+  retryDailyChallenge() {
+    const challenge = this.dailyChallenge
+      || (this.dailyRetryAvailable ? this.lastDailyChallenge : null);
+    if (!challenge) return false;
+    const suspendedCampaignState = this.campaignStateBeforeDaily || this.captureGameplayState();
+    const createRng = EXPANSION?.utils?.createSeededRng;
+    this.dailyRng = typeof createRng === 'function'
+      ? createRng(challenge.seed)
+      : this.createFallbackSeededRng(challenge.seed);
+    if (HERO_CLASSES[challenge.heroId]) this.selectedHero = HERO_CLASSES[challenge.heroId];
+    this.activeRunMutators = (challenge.mutatorIds || [])
+      .map(id => (EXPANSION.infinitumMutators || []).find(mutator => mutator.id === id))
+      .filter(Boolean);
+    this.setMapRotation([]);
+    this.dailyRetryAvailable = false;
+    this.lastDailyChallenge = challenge;
+    this.startNewGame({
+      layoutId: challenge.layoutId,
+      campaignId: 'four_gates',
+      difficulty: 'standard',
+      dailyChallenge: challenge,
+      preserveCheckpoint: true
+    });
+    this.campaignStateBeforeDaily = suspendedCampaignState;
+    this.coins = Math.max(0, Number(challenge.rules?.startingCoins) || 0);
+    const firstDailyDefenseId = this.getDailyDefenseDeckIds(challenge)[0];
+    if (firstDailyDefenseId) this.selectedTowerToBuild = TOWER_TYPES[firstDailyDefenseId];
+    this.renderBuildBar();
+    this.updateHUD();
+    return true;
+  }
+
+  getDailyDefenseDeckIds(challenge = this.dailyChallenge) {
+    if (!challenge || !Array.isArray(challenge.startingDefenseIds)) return [];
+    return [...new Set(challenge.startingDefenseIds)]
+      .filter(id => Boolean(TOWER_TYPES[id]))
+      .slice(0, 3);
   }
 
   recordRunHistory(result = {}) {
     const entry = {
       id: String(result.id || `${Date.now()}-${this.runHistory.length}`),
-      mode: result.mode || (this.dailyChallenge ? 'daily' : (this.isTowerMode ? 'infinitum' : (this.endlessMode ? 'endless' : 'campaign'))),
+      mode: result.mode || (this.dailyChallenge ? 'daily' : (this.isTowerMode ? 'infinitum' : (this.endlessMode ? 'endless' : this.runMode))),
       dailyId: this.dailyChallenge?.id || null,
+      campaignId: this.activeCampaignId,
+      difficulty: this.difficulty,
+      seed: this.dailyChallenge?.seed ?? null,
+      mutatorIds: this.getActiveRunMutators().map(mutator => mutator.id).slice(0, 16),
       date: result.date || new Date().toISOString(),
       layoutId: this.selectedLayoutId,
       heroId: this.selectedHero?.id || 'aria',
@@ -867,7 +1082,7 @@ class GameEngine {
     };
     this.runHistory.unshift(entry);
     this.runHistory = this.runHistory.slice(0, 10);
-    this.saveProgress();
+    if (result.deferSave !== true) this.saveProgress();
     return entry;
   }
 
@@ -875,15 +1090,14 @@ class GameEngine {
     if (!this.canvas) return;
     const newWidth = window.innerWidth || 1200;
     const newHeight = window.innerHeight || 800;
-    const shortLandscape = newWidth > newHeight && newHeight <= 500;
     const orientationNotice = document.getElementById('short-landscape-notice');
-    this.requiresPortraitOrientation = shortLandscape;
+    // The battlefield supports both orientations. Compact landscape keeps the
+    // same logical world and receives the responsive HUD instead of a blocker.
+    this.requiresPortraitOrientation = false;
     if (orientationNotice) {
-      const gateIsActive = document.getElementById('adult-gate-modal')?.classList.contains('active') === true;
-      const exposeToAssistiveTech = shortLandscape && !gateIsActive;
-      orientationNotice.hidden = !shortLandscape;
-      orientationNotice.inert = !exposeToAssistiveTech;
-      orientationNotice.setAttribute('aria-hidden', exposeToAssistiveTech ? 'false' : 'true');
+      orientationNotice.hidden = true;
+      orientationNotice.inert = true;
+      orientationNotice.setAttribute('aria-hidden', 'true');
     }
     // Canvas pixels are only a viewport. Gameplay always stays in a fixed
     // 1200×800 logical arena, so rotating/resizing cannot teleport a distant
@@ -1246,10 +1460,16 @@ class GameEngine {
     return image || null;
   }
 
+  ensureTowerSprite(towerId) {
+    const spriteData = TOWER_SPRITE_DATA[towerId];
+    if (!spriteData) return null;
+    const image = this.preloadSpriteAsset(spriteData.src, 'Planche défense');
+    if (image) this.towerSpriteImages[towerId] = image;
+    return image || null;
+  }
+
   preloadEnemySprites() {
-    Object.keys(ENEMY_SPRITE_DATA)
-      .filter(type => !this.getBossDefinition(type))
-      .forEach(type => this.ensureEnemySprite(type));
+    ['swarmer'].forEach(type => this.ensureEnemySprite(type));
   }
 
   preloadWaveCharacterBosses(queue = this.waveSpawnQueue) {
@@ -1262,10 +1482,11 @@ class GameEngine {
 
   preloadBattleSprites() {
     this.preloadEnemySprites();
-    Object.entries(TOWER_SPRITE_DATA).forEach(([id, spriteData]) => {
+    const starterIds = this.dailyChallenge?.startingDefenseIds || ['vulcan_turret', 'flame_trap'];
+    Object.entries(TOWER_SPRITE_DATA).filter(([id]) => starterIds.includes(id)).forEach(([id, spriteData]) => {
       this.towerSpriteImages[id] = this.preloadSpriteAsset(spriteData.src, 'Planche de défense');
     });
-    Object.keys(HERO_SPRITE_DATA).forEach(heroId => {
+    Object.keys(HERO_SPRITE_DATA).filter(heroId => heroId === this.selectedHero?.id).forEach(heroId => {
       const isCharacterExpansionHero = Boolean(CHARACTER_EXPANSION?.heroines?.[heroId]);
       if (!isCharacterExpansionHero || heroId === this.selectedHero?.id) {
         this.ensureHeroSprite(heroId);
@@ -1283,18 +1504,288 @@ class GameEngine {
     }, { once: true });
   }
 
-  isValidRunCheckpoint(checkpoint) {
-    if (!checkpoint || typeof checkpoint !== 'object') return false;
-    if (Number(checkpoint.version) !== RUN_CHECKPOINT_VERSION) return false;
-    if (!DIFFICULTY_DATA[checkpoint.difficulty]) return false;
+  getEffectiveShopUpgrade(key) {
+    if (this.dailyChallenge) return 0;
+    return Math.max(0, Number(this.shopUpgrades?.[key]) || 0);
+  }
+
+  isSideModeForPermanentProgression() {
+    return Boolean(
+      this.dailyChallenge
+      || this.isTowerMode
+      || this.runMode === 'daily'
+      || this.runMode === 'hunt'
+      || this.runMode === 'hunt_complete'
+    );
+  }
+
+  captureCharacterRuntimeProgress() {
+    return Object.fromEntries(Object.values(HERO_CLASSES).map(hero => [hero.id, {
+      activeSkin: hero.activeSkin,
+      affinityLvl: hero.affinityLvl,
+      relationshipXp: hero.relationshipXp,
+      romanceOptIn: hero.romanceOptIn,
+      privateMomentUnlocked: hero.privateMomentUnlocked,
+      unlocked: hero.unlocked,
+      allied: hero.allied
+    }]));
+  }
+
+  restoreCharacterRuntimeProgress(progressByHero = {}) {
+    Object.values(HERO_CLASSES).forEach(hero => {
+      const progress = progressByHero[hero.id];
+      if (!progress || typeof progress !== 'object') return;
+      hero.activeSkin = progress.activeSkin;
+      hero.affinityLvl = progress.affinityLvl;
+      hero.relationshipXp = progress.relationshipXp;
+      hero.romanceOptIn = progress.romanceOptIn;
+      hero.privateMomentUnlocked = progress.privateMomentUnlocked;
+      hero.unlocked = progress.unlocked;
+      hero.allied = progress.allied;
+    });
+  }
+
+  isGameplayInputBlocked() {
+    return this.isPaused
+      || this.isGameOver
+      || this.requiresPortraitOrientation
+      || this.campaignVictory
+      || Boolean(this.getTopOpenModal?.());
+  }
+
+  captureGameplayState() {
+    return {
+      selectedHero: this.selectedHero,
+      selectedHeroId: this.selectedHero?.id || 'aria',
+      characterRuntimeProgress: this.captureCharacterRuntimeProgress(),
+      selectedTowerToBuild: this.selectedTowerToBuild,
+      selectedLayoutId: this.selectedLayoutId,
+      activeCampaignId: this.activeCampaignId,
+      worldLayout: this.worldLayout,
+      spawnRoutes: this.spawnRoutes,
+      worldWidth: this.worldWidth,
+      worldHeight: this.worldHeight,
+      mapRotation: this.mapRotation,
+      mapRotationIndex: this.mapRotationIndex,
+      rotationEnabled: this.rotationEnabled,
+      citadel: { ...this.citadel },
+      camera: { ...this.camera },
+      wave: this.wave,
+      waveActive: this.waveActive,
+      waveIntermissionTimer: this.waveIntermissionTimer,
+      enemiesSpawnedThisWave: this.enemiesSpawnedThisWave,
+      waveSpawnTarget: this.waveSpawnTarget,
+      bossSpawnedThisWave: this.bossSpawnedThisWave,
+      waveRewardClaimed: this.waveRewardClaimed,
+      spawnTimer: this.spawnTimer,
+      waveSpawnQueue: this.waveSpawnQueue,
+      waveSpawnElapsedMs: this.waveSpawnElapsedMs,
+      activeWaveDefinition: this.activeWaveDefinition,
+      lastWaveStatusSecond: this.lastWaveStatusSecond,
+      difficulty: this.difficulty,
+      runMode: this.runMode,
+      endlessMode: this.endlessMode,
+      campaignVictory: this.campaignVictory,
+      campaignVictoryClaimed: this.campaignVictoryClaimed,
+      score: this.score,
+      coins: this.coins,
+      metaCoins: this.metaCoins,
+      totalCoinsEarned: this.totalCoinsEarned,
+      bestScore: this.bestScore,
+      bestWave: this.bestWave,
+      shopUpgrades: { ...this.shopUpgrades },
+      xp: this.xp,
+      level: this.level,
+      nextLevelXp: this.nextLevelXp,
+      pendingLevelChoices: this.pendingLevelChoices,
+      affinityXp: this.affinityXp,
+      nextAffinityXp: this.nextAffinityXp,
+      frenzyMeter: this.frenzyMeter,
+      isOverdriveActive: this.isOverdriveActive,
+      overdriveTimer: this.overdriveTimer,
+      freezeTimer: this.freezeTimer,
+      quadDamageTimer: this.quadDamageTimer,
+      invincibleTimer: this.invincibleTimer,
+      abilityCooldownTimer: this.abilityCooldownTimer,
+      activeHeroTargeting: this.activeHeroTargeting,
+      hostileProjectileFreezeTimer: this.hostileProjectileFreezeTimer,
+      heroUltimateDefenseDamageTimer: this.heroUltimateDefenseDamageTimer,
+      runElapsedSeconds: this.runElapsedSeconds,
+      runMetaCoinsEarned: this.runMetaCoinsEarned,
+      decoysDeployedCount: this.decoysDeployedCount,
+      towersBuiltThisRun: this.towersBuiltThisRun,
+      evolvedWeaponsCount: this.evolvedWeaponsCount,
+      mutantsKilled: this.mutantsKilled,
+      overdriveCount: this.overdriveCount,
+      carmillaStoredCharge: this.carmillaStoredCharge,
+      mircallaRetaliationCharge: this.mircallaRetaliationCharge,
+      hanaPassiveChargeTimer: this.hanaPassiveChargeTimer,
+      hanaPassiveReady: this.hanaPassiveReady,
+      seenBossIntroIds: new Set(this.seenBossIntroIds || []),
+      seenBossDefeatIds: new Set(this.seenBossDefeatIds || []),
+      kiraMarkedRoutes: new Set(this.kiraMarkedRoutes || []),
+      nyxExposedRoutes: new Set(this.nyxExposedRoutes || []),
+      weapons: this.weapons,
+      weaponTimers: this.weaponTimers,
+      placedTowers: this.placedTowers,
+      towerAnimationGhosts: this.towerAnimationGhosts,
+      mercenaries: this.mercenaries,
+      petDrones: this.petDrones,
+      enemies: this.enemies,
+      enemyBullets: this.enemyBullets,
+      projectiles: this.projectiles,
+      particles: this.particles,
+      floatingTexts: this.floatingTexts,
+      decoys: this.decoys,
+      crates: this.crates,
+      powerups: this.powerups,
+      hazards: this.hazards,
+      bossHazards: this.bossHazards,
+      pendingCinematics: this.pendingCinematics,
+      activeCinematic: this.activeCinematic,
+      activeRunCheckpoint: this.activeRunCheckpoint,
+      savedRunCheckpoint: this.savedRunCheckpoint,
+      dailyChallenge: this.dailyChallenge,
+      dailyRng: this.dailyRng,
+      activeRunMutators: this.activeRunMutators,
+      citadelUntouchedThisRun: this.citadelUntouchedThisRun,
+      defensesSoldThisRun: this.defensesSoldThisRun,
+      isPaused: this.isPaused,
+      isGameOver: this.isGameOver
+    };
+  }
+
+  restoreGameplayState(state) {
+    if (!state || typeof state !== 'object') return false;
+    const {
+      selectedHeroId,
+      characterRuntimeProgress,
+      ...gameplayState
+    } = state;
+    Object.assign(this, gameplayState);
+    this.citadel = { ...state.citadel };
+    this.camera = { ...state.camera };
+    this.shopUpgrades = { ...state.shopUpgrades };
+    this.seenBossIntroIds = new Set(state.seenBossIntroIds || []);
+    this.seenBossDefeatIds = new Set(state.seenBossDefeatIds || []);
+    this.kiraMarkedRoutes = new Set(state.kiraMarkedRoutes || []);
+    this.nyxExposedRoutes = new Set(state.nyxExposedRoutes || []);
+    this.restoreCharacterRuntimeProgress(characterRuntimeProgress);
+    this.selectedHero = HERO_CLASSES[selectedHeroId] || state.selectedHero || HERO_CLASSES.aria;
+    this.selectedPlacedDefense = null;
+    this.activeBossHuntId = null;
+    this.campaignStateBeforeBossHunt = null;
+    this.campaignStateBeforeDaily = null;
+    this.campaignStateBeforeTower = null;
+    this.isTowerMode = false;
+    this.towerMutator = null;
+    this.infinitumCanReturn = true;
+    this.updateWeaponsHUD();
+    this.renderBuildBar();
+    this.updateHeroPresentation();
+    this.updateBattlefieldCameraControls?.();
+    this.updateHUD();
+    return true;
+  }
+
+  sanitizeRunCheckpoint(checkpoint) {
+    if (!checkpoint || typeof checkpoint !== 'object') return null;
+    if (Number(checkpoint.version) !== RUN_CHECKPOINT_VERSION) return null;
+    if (!DIFFICULTY_DATA[checkpoint.difficulty]) return null;
     const nextWave = Math.floor(Number(checkpoint.nextWave));
     const checkpointCampaign = CHARACTER_EXPANSION?.campaigns?.[checkpoint.activeCampaignId];
     const checkpointFinalWave = Number(checkpointCampaign?.finalWave) || CAMPAIGN_FINAL_WAVE;
-    if (!Number.isFinite(nextWave) || nextWave < 2 || nextWave > checkpointFinalWave) return false;
-    if (!Array.isArray(checkpoint.placedTowers) || !checkpoint.weapons || typeof checkpoint.weapons !== 'object') return false;
-    return Number.isFinite(checkpoint.citadelHp)
-      && Number.isFinite(checkpoint.coins)
-      && Number.isFinite(checkpoint.score);
+    if (!Number.isFinite(nextWave) || nextWave < 2 || nextWave > checkpointFinalWave) return null;
+    if (!Array.isArray(checkpoint.placedTowers) || !checkpoint.weapons || typeof checkpoint.weapons !== 'object') return null;
+    if (![checkpoint.citadelHp, checkpoint.coins, checkpoint.score].every(Number.isFinite)) return null;
+
+    const clean = {
+      ...checkpoint,
+      nextWave,
+      activeCampaignId: checkpointCampaign ? checkpoint.activeCampaignId : 'four_gates',
+      selectedHeroId: HERO_CLASSES[checkpoint.selectedHeroId] ? checkpoint.selectedHeroId : 'aria',
+      selectedLayoutId: EXPANSION?.worldLayouts?.[checkpoint.selectedLayoutId]
+        ? checkpoint.selectedLayoutId
+        : 'convergence',
+      worldWidth: Math.max(320, Math.min(4000, Number(checkpoint.worldWidth) || 1200)),
+      worldHeight: Math.max(320, Math.min(3000, Number(checkpoint.worldHeight) || 800)),
+      citadelHp: Math.max(1, Math.min(100000, Number(checkpoint.citadelHp) || 1)),
+      citadelMaxHp: Math.max(1, Math.min(100000, Number(checkpoint.citadelMaxHp) || 500)),
+      coins: Math.max(0, Math.min(10000000, Math.floor(Number(checkpoint.coins) || 0))),
+      score: Math.max(0, Math.min(1000000000, Math.floor(Number(checkpoint.score) || 0)))
+    };
+
+    clean.weapons = JSON.parse(JSON.stringify(WEAPONS_DATA));
+    Object.entries(clean.weapons).forEach(([id, weapon]) => {
+      const candidate = checkpoint.weapons[id];
+      if (!candidate || typeof candidate !== 'object') return;
+      weapon.level = Math.max(0, Math.min(weapon.maxLevel, Math.floor(Number(candidate.level) || 0)));
+      weapon.isEvolved = candidate.isEvolved === true && weapon.level >= weapon.maxLevel;
+      if (weapon.isEvolved) {
+        weapon.name = weapon.evolutionName;
+        weapon.damage *= 2.5;
+      }
+    });
+
+    clean.placedTowers = checkpoint.placedTowers.slice(0, 120).flatMap(candidate => {
+      const towerType = TOWER_TYPES[candidate?.id];
+      if (!towerType) return [];
+      const x = Math.max(24, Math.min(clean.worldWidth - 24, Number(candidate.x) || 24));
+      const y = Math.max(24, Math.min(clean.worldHeight - 24, Number(candidate.y) || 24));
+      const defense = this.createPlacedDefense(towerType, x, y, { starter: candidate.isStarter === true });
+      const level = Math.max(1, Math.min(DEFENSE_MAX_LEVEL, Math.floor(Number(candidate.level) || 1)));
+      const specialization = this.getDefenseSpecializationOptions(defense)
+        .find(option => option.id === candidate.specializationId);
+      if (specialization && level >= 2) defense.specializationId = specialization.id;
+      this.applyDefenseLevelStats(defense, level);
+      defense.investedCost = Math.max(defense.baseCost, Math.min(1000000, Math.floor(Number(candidate.investedCost) || defense.baseCost)));
+      defense.hp = Math.max(1, Math.min(defense.maxHp, Number(candidate.hp) || defense.maxHp));
+      return [defense];
+    });
+    clean.mercenaries = (Array.isArray(checkpoint.mercenaries) ? checkpoint.mercenaries : [])
+      .filter(candidate => candidate && typeof candidate === 'object')
+      .slice(0, 3)
+      .map((candidate, index) => {
+        const isRalliedSpecialist = candidate?.name !== 'Ray';
+        return {
+          x: clean.worldWidth / 2,
+          y: clean.worldHeight / 2,
+          angle: index * ((Math.PI * 2) / 3),
+          damage: isRalliedSpecialist ? 30 : 20,
+          fireRate: isRalliedSpecialist ? 520 : 430,
+          range: isRalliedSpecialist ? 330 : 300,
+          timer: 0,
+          name: isRalliedSpecialist ? 'Spécialiste ralliée' : 'Ray'
+        };
+      });
+    clean.petDrones = (Array.isArray(checkpoint.petDrones) ? checkpoint.petDrones : [])
+      .filter(candidate => candidate && typeof candidate === 'object')
+      .slice(0, 3)
+      .map((candidate, index) => {
+        const level = Math.max(1, Math.min(3, Math.floor(Number(candidate?.level) || 1)));
+        return {
+          x: clean.worldWidth / 2,
+          y: clean.worldHeight / 2,
+          angle: index * ((Math.PI * 2) / 3),
+          timer: 0,
+          level,
+          damage: 25 * (1 + ((level - 1) * 0.55)),
+          fireRate: 400 * (1 - ((level - 1) * 0.12)),
+          name: 'Chiroptère IA'
+        };
+      });
+    clean.counters = {
+      decoysDeployedCount: Math.max(0, Math.min(100000, Math.floor(Number(checkpoint.counters?.decoysDeployedCount) || 0))),
+      towersBuiltThisRun: Math.max(0, Math.min(100000, Math.floor(Number(checkpoint.counters?.towersBuiltThisRun) || 0))),
+      evolvedWeaponsCount: Math.max(0, Math.min(WEAPONS_DATA.length || 20, Math.floor(Number(checkpoint.counters?.evolvedWeaponsCount) || 0))),
+      mutantsKilled: Math.max(0, Math.min(10000000, Math.floor(Number(checkpoint.counters?.mutantsKilled) || 0))),
+      overdriveCount: Math.max(0, Math.min(100000, Math.floor(Number(checkpoint.counters?.overdriveCount) || 0)))
+    };
+    return clean;
+  }
+
+  isValidRunCheckpoint(checkpoint) {
+    return Boolean(this.sanitizeRunCheckpoint(checkpoint));
   }
 
   createRunCheckpoint() {
@@ -1353,7 +1844,8 @@ class GameEngine {
   }
 
   restoreRunCheckpoint(checkpoint = this.savedRunCheckpoint) {
-    if (!this.isValidRunCheckpoint(checkpoint)) return false;
+    checkpoint = this.sanitizeRunCheckpoint(checkpoint);
+    if (!checkpoint) return false;
     const hero = HERO_CLASSES[checkpoint.selectedHeroId];
     if (hero && hero.unlocked !== false) this.selectedHero = hero;
     if (EXPANSION?.worldLayouts?.[checkpoint.selectedLayoutId]) {
@@ -1387,7 +1879,9 @@ class GameEngine {
     this.runElapsedSeconds = Math.max(0, Number(checkpoint.runElapsedSeconds) || 0);
     this.runMetaCoinsEarned = Math.max(0, Math.floor(Number(checkpoint.runMetaCoinsEarned) || 0));
     this.weapons = JSON.parse(JSON.stringify(checkpoint.weapons));
-    this.placedTowers = scaleEntities(JSON.parse(JSON.stringify(checkpoint.placedTowers)));
+    this.placedTowers = this.repositionDefensesForCurrentLayout(
+      scaleEntities(JSON.parse(JSON.stringify(checkpoint.placedTowers)))
+    );
     this.mercenaries = scaleEntities(JSON.parse(JSON.stringify(checkpoint.mercenaries || [])));
     this.petDrones = JSON.parse(JSON.stringify(checkpoint.petDrones || []));
     this.decoysDeployedCount = Math.max(0, Math.floor(Number(checkpoint.counters?.decoysDeployedCount) || 0));
@@ -1417,11 +1911,18 @@ class GameEngine {
   }
 
   loadProgress() {
+    let saved = null;
     try {
-      const saved = localStorage.getItem('valkyrie_sweeper_save');
+      saved = localStorage.getItem(CAMPAIGN_STORAGE_KEY);
       if (saved) {
         const data = JSON.parse(saved);
         const saveVersion = Math.max(1, Math.floor(Number(data.version) || 1));
+        if (saveVersion > SAVE_VERSION) {
+          this.storageWriteBlocked = true;
+          this.futureCampaignSaveRaw = saved;
+          this.futureCampaignSaveVersion = saveVersion;
+          throw new Error(`Sauvegarde plus récente détectée (v${saveVersion}). Elle a été conservée sans modification.`);
+        }
         const legacyMetaCoins = Number.isFinite(data.coins) ? data.coins : 0;
         this.metaCoins = Number.isFinite(data.metaCoins)
           ? Math.max(0, Math.floor(data.metaCoins))
@@ -1452,6 +1953,9 @@ class GameEngine {
         this.bestScore = Math.max(0, Math.floor(Number(data.bestScore) || 0));
         this.bestWave = Math.max(0, Math.floor(Number(data.bestWave) || 0));
         this.campaignCompletions = Math.max(0, Math.floor(Number(data.campaignCompletions) || 0));
+        this.completedDailyChallengeIds = Array.isArray(data.completedDailyChallengeIds)
+          ? [...new Set(data.completedDailyChallengeIds.filter(id => /^daily-\d{4}-\d{2}-\d{2}-[a-f0-9]+$/i.test(id)))].slice(-30)
+          : [];
         this.preferredMusicEnabled = data.musicEnabled === true;
         this.preferredCrtEnabled = data.crtEnabled !== false;
         this.musicVolume = Number.isFinite(Number(data.musicVolume))
@@ -1466,9 +1970,10 @@ class GameEngine {
         this.textSize = ['default', 'large', 'extra-large'].includes(data.textSize)
           ? data.textSize
           : this.textSize;
-        if (this.isValidRunCheckpoint(data.activeRun)) {
-          this.activeRunCheckpoint = data.activeRun;
-          this.savedRunCheckpoint = data.activeRun;
+        const cleanCheckpoint = this.sanitizeRunCheckpoint(data.activeRun);
+        if (cleanCheckpoint) {
+          this.activeRunCheckpoint = cleanCheckpoint;
+          this.savedRunCheckpoint = cleanCheckpoint;
         } else if (data.activeRun != null) {
           this.saveLoadError = new Error('Point de contrôle de campagne invalide.');
         }
@@ -1531,12 +2036,15 @@ class GameEngine {
       this.applyVisualPreferences();
     } catch (e) {
       this.saveLoadError = e;
+      if (saved != null && !this.futureCampaignSaveRaw) {
+        this.storageWriteBlocked = true;
+        this.futureCampaignSaveRaw = saved;
+      }
       console.warn('Failed to load save data:', e);
     }
   }
 
-  saveProgress() {
-    try {
+  createCampaignSaveData() {
       const unlockedIds = GALLERY_ITEMS.filter(i => i.unlocked).map(i => i.id);
       const recruitedBosses = Object.values(HERO_CLASSES).filter(h => h.allied).map(h => h.id);
       const achievements = ACHIEVEMENTS.filter(a => a.unlocked).map(a => a.id);
@@ -1569,6 +2077,7 @@ class GameEngine {
         bestScore: this.bestScore,
         bestWave: this.bestWave,
         campaignCompletions: this.campaignCompletions,
+        completedDailyChallengeIds: this.completedDailyChallengeIds.slice(-30),
         activeRun: this.activeRunCheckpoint,
         selectedHeroId: this.selectedHero.id,
         radioStation: audio.currentStation,
@@ -1578,7 +2087,7 @@ class GameEngine {
         sfxVolume: this.sfxVolume,
         contrastMode: this.contrastMode,
         textSize: this.textSize,
-        crtEnabled: !document.querySelector?.('.crt-overlay')?.classList.contains('disabled'),
+        crtEnabled: this.preferredCrtEnabled,
         unlockedGallery: unlockedIds,
         recruitedBosses,
         achievements,
@@ -1593,10 +2102,21 @@ class GameEngine {
         },
         bodyRouteProgress: this.sanitizeLoadedBodyRouteProgress(this.bodyRouteProgress)
       };
-      localStorage.setItem('valkyrie_sweeper_save', JSON.stringify(data));
+      return data;
+  }
+
+  saveProgress() {
+    if (this.storageWriteBlocked) return false;
+    try {
+      const data = this.createCampaignSaveData();
+      localStorage.setItem(CAMPAIGN_STORAGE_KEY, JSON.stringify(data));
+      this.saveLoadError = null;
+      return true;
     } catch (e) {
       this.saveLoadError = e;
       console.warn('Failed to save data:', e);
+      this.setSettingsStatus?.('Progression non persistée : stockage indisponible.', true);
+      return false;
     }
   }
 
@@ -1685,13 +2205,16 @@ class GameEngine {
   }
 
   createPortableSavePayload() {
-    this.saveProgress();
-    let campaignSave = {};
-    try {
-      campaignSave = JSON.parse(localStorage.getItem('valkyrie_sweeper_save') || '{}');
-    } catch (_error) {
-      campaignSave = {};
+    if (this.futureCampaignSaveRaw || this.futureNarrativeSaveRaw) {
+      return {
+        schema: 'infernal-city.raw-backup/1',
+        exportedAt: new Date().toISOString(),
+        reason: 'Données incompatibles conservées sans modification par une version antérieure du jeu.',
+        campaignRaw: this.futureCampaignSaveRaw || localStorage.getItem(CAMPAIGN_STORAGE_KEY),
+        narrativeRaw: this.futureNarrativeSaveRaw || localStorage.getItem(NARRATIVE_STORAGE_KEY)
+      };
     }
+    const campaignSave = this.createCampaignSaveData();
     const expansion = this.getVnExpansion();
     const narrativeState = expansion?.persistence?.sanitizeState
       ? expansion.persistence.sanitizeState(this.vnExpansionState)
@@ -1711,12 +2234,17 @@ class GameEngine {
       const objectUrl = URL.createObjectURL(blob);
       const anchor = document.createElement('a');
       anchor.href = objectUrl;
-      anchor.download = `infernal-city-save-${new Date().toISOString().slice(0, 10)}.json`;
+      const isRawBackup = payload.schema === 'infernal-city.raw-backup/1';
+      anchor.download = `infernal-city-${isRawBackup ? 'raw-backup' : 'save'}-${new Date().toISOString().slice(0, 10)}.json`;
       document.body.appendChild(anchor);
       anchor.click();
       anchor.remove?.();
       URL.revokeObjectURL(objectUrl);
-      this.setSettingsStatus('Sauvegarde exportée. Conservez ce fichier dans un emplacement privé.');
+      this.setSettingsStatus(
+        isRawBackup
+          ? 'Backup brut exporté sans altérer les données incompatibles.'
+          : 'Sauvegarde exportée. Conservez ce fichier dans un emplacement privé.'
+      );
     } catch (error) {
       console.warn('Export de sauvegarde impossible :', error);
       this.setSettingsStatus('Échec de l’export. Vérifiez les autorisations de téléchargement.', true);
@@ -1745,15 +2273,44 @@ class GameEngine {
       const narrative = parsed?.schema === 'infernal-city.portable-save/1'
         ? parsed.narrative
         : null;
+      if (narrative != null) {
+        if (!narrative || typeof narrative !== 'object' || Array.isArray(narrative)) {
+          throw new Error('Progression narrative invalide.');
+        }
+        const narrativeVersion = Math.floor(Number(narrative.dataVersion));
+        if (!Number.isFinite(narrativeVersion) || narrativeVersion < 1 || narrativeVersion > 1) {
+          throw new Error('Version de progression narrative incompatible.');
+        }
+      }
       const cleanNarrative = narrative && expansion?.persistence?.sanitizeState
-        ? expansion.persistence.sanitizeState(narrative)
+        ? expansion.persistence.sanitizeState(narrative, { throwOnIncompatible: true })
         : null;
 
-      // Validation is complete before either key is replaced, so a malformed
-      // file can never leave the two progression stores half-imported.
-      localStorage.setItem('valkyrie_sweeper_save', JSON.stringify(campaign));
-      if (cleanNarrative && expansion?.persistence?.saveState) {
-        this.vnExpansionState = expansion.persistence.saveState(cleanNarrative, localStorage);
+      const narrativeKey = expansion?.storageKey || NARRATIVE_STORAGE_KEY;
+      const previousCampaign = localStorage.getItem(CAMPAIGN_STORAGE_KEY);
+      const previousNarrative = localStorage.getItem(narrativeKey);
+      try {
+        const serializedCampaign = JSON.stringify(campaign);
+        localStorage.setItem(CAMPAIGN_STORAGE_KEY, serializedCampaign);
+        if (localStorage.getItem(CAMPAIGN_STORAGE_KEY) !== serializedCampaign) {
+          throw new Error('Le stockage de campagne n’a pas confirmé l’écriture.');
+        }
+        if (cleanNarrative && expansion?.persistence?.saveState) {
+          this.vnExpansionState = expansion.persistence.saveState(
+            cleanNarrative,
+            localStorage,
+            { throwOnError: true }
+          );
+          if (!localStorage.getItem(narrativeKey)) {
+            throw new Error('Le stockage narratif n’a pas confirmé l’écriture.');
+          }
+        }
+      } catch (error) {
+        if (previousCampaign == null) localStorage.removeItem(CAMPAIGN_STORAGE_KEY);
+        else localStorage.setItem(CAMPAIGN_STORAGE_KEY, previousCampaign);
+        if (previousNarrative == null) localStorage.removeItem(narrativeKey);
+        else localStorage.setItem(narrativeKey, previousNarrative);
+        throw error;
       }
       this.setSettingsStatus('Progression importée et validée. Rechargement du jeu…');
       setTimeout(() => window.location?.reload?.(), 450);
@@ -1827,8 +2384,17 @@ class GameEngine {
     const adultGate = document.getElementById('adult-gate-modal');
     const topModal = this.getTopOpenModal();
     if (adultGate?.classList.contains('active')) {
+      const choices = [...adultGate.querySelectorAll('button:not([disabled])')];
+      if ((edge(12) || edge(13) || edge(14) || edge(15)) && choices.length > 0) {
+        const currentIndex = Math.max(0, choices.indexOf(document.activeElement));
+        const direction = edge(12) || edge(14) ? -1 : 1;
+        choices[(currentIndex + direction + choices.length) % choices.length]?.focus();
+      } else if (edge(0)) {
+        const focused = choices.find(choice => choice === document.activeElement);
+        (focused || document.getElementById('btn-enter-adult'))?.click();
+      }
       rememberButtons();
-      return false;
+      return true;
     }
     if (topModal) {
       if (topModal.id === 'body-route-vn-modal') {
@@ -1851,9 +2417,22 @@ class GameEngine {
         rememberButtons();
         return true;
       }
-      if (edge(1) && topModal.querySelector?.('.btn-close')) {
+      const controls = [...topModal.querySelectorAll('button:not([disabled]), select:not([disabled]), [href]')];
+      if ((edge(12) || edge(13) || edge(14) || edge(15)) && controls.length > 0) {
+        const currentIndex = Math.max(0, controls.indexOf(document.activeElement));
+        const direction = edge(12) || edge(14) ? -1 : 1;
+        controls[(currentIndex + direction + controls.length) % controls.length]?.focus();
+      } else if (edge(0)) {
+        const focused = controls.find(control => control === document.activeElement);
+        (focused || controls[0])?.click?.();
+      } else if (edge(1) && topModal.querySelector?.('.btn-close')) {
         this.closeModal(topModal);
       }
+      rememberButtons();
+      return true;
+    }
+
+    if (this.requiresPortraitOrientation) {
       rememberButtons();
       return true;
     }
@@ -2190,6 +2769,8 @@ class GameEngine {
     const campaignSelect = document.getElementById('campaign-select');
     const layoutSelect = document.getElementById('layout-select');
     const saveWarning = document.getElementById('save-warning');
+    const saveWarningMessage = document.getElementById('save-warning-message');
+    const backupButton = document.getElementById('btn-backup-save');
     const selectedDifficulty = checkpoint?.difficulty || this.difficulty || 'standard';
     if (difficultySelect) difficultySelect.value = selectedDifficulty;
     if (campaignSelect) campaignSelect.value = checkpoint?.activeCampaignId
@@ -2198,7 +2779,20 @@ class GameEngine {
     if (layoutSelect) layoutSelect.value = this.rotationEnabled
       ? 'rotation'
       : (checkpoint?.selectedLayoutId || this.selectedLayoutId);
-    if (saveWarning) saveWarning.hidden = !this.saveLoadError;
+    const hasProtectedRawData = Boolean(this.futureCampaignSaveRaw || this.futureNarrativeSaveRaw);
+    if (saveWarning) saveWarning.hidden = !(this.saveLoadError || this.narrativeSaveLoadError);
+    if (backupButton) backupButton.hidden = !hasProtectedRawData;
+    if (saveWarningMessage) {
+      if (hasProtectedRawData) {
+        const protectedAreas = [
+          this.futureCampaignSaveRaw ? `campagne v${this.futureCampaignSaveVersion || 'inconnue'}` : null,
+          this.futureNarrativeSaveRaw ? 'progression narrative incompatible' : null
+        ].filter(Boolean).join(' et ');
+        saveWarningMessage.textContent = `${protectedAreas} conservée sans modification. Exportez le backup brut avant toute réinitialisation.`;
+      } else {
+        saveWarningMessage.textContent = 'La sauvegarde locale est partiellement invalide ou indisponible. Vous pouvez continuer sans checkpoint ou la réinitialiser explicitement.';
+      }
+    }
     this.updateDifficultyDescription(selectedDifficulty);
     this.updateCampaignDescription(campaignSelect?.value || this.activeCampaignId);
     this.updateLayoutDescription(layoutSelect?.value || this.selectedLayoutId);
@@ -2313,12 +2907,15 @@ class GameEngine {
     if (!gate) return;
     gate.classList.remove('active');
     this.hasEnteredAdultExperience = true;
-    const battleAtlasesMissing = (
-      !Object.keys(this.enemySpriteImages).length
-      || !Object.keys(this.towerSpriteImages).length
-      || !Object.keys(this.heroSpriteImages).length
-    );
-    if (battleAtlasesMissing) this.preloadBattleSprites();
+    if (!this.playableExperienceInitialized) {
+      this.startNewGame({ preserveCheckpoint: true, silent: true });
+      this.renderBuildBar();
+      this.playableExperienceInitialized = true;
+    }
+    // Le préchauffage post-consentement reste volontairement ciblé, mais il
+    // doit toujours inclure le terrain et la cité même si les starters ont
+    // déjà demandé leurs propres atlas pendant l'initialisation de la partie.
+    this.preloadBattleSprites();
     if (this.preferredMusicEnabled && !audio.isPlayingMusic) audio.startMusic();
     this.syncMusicButtonState();
     this.syncModalAccessibility();
@@ -2501,7 +3098,7 @@ class GameEngine {
           this.suppressNextBattlefieldClick = false;
           return;
         }
-        if (this.isPaused || this.isGameOver) return;
+        if (this.isGameplayInputBlocked()) return;
         const { x: screenX, y: screenY } = toCanvasPoint(e.clientX, e.clientY);
         const { x, y } = this.screenToBattlefieldPoint(screenX, screenY);
         this.buildCursor.x = x;
@@ -2576,11 +3173,15 @@ class GameEngine {
       this.focusBattlefield();
     });
     document.getElementById('btn-continue-run')?.addEventListener('click', () => this.continueSavedCampaign());
+    document.getElementById('btn-backup-save')?.addEventListener('click', () => this.exportPortableSave());
     document.getElementById('btn-reset-save')?.addEventListener('click', () => {
-      localStorage.removeItem('valkyrie_sweeper_save');
+      if (!window.confirm?.('Effacer toute la progression de campagne et toutes les routes narratives ? Cette action est définitive.')) return;
+      localStorage.removeItem(CAMPAIGN_STORAGE_KEY);
+      localStorage.removeItem(NARRATIVE_STORAGE_KEY);
       window.location.reload();
     });
     document.getElementById('btn-new-campaign')?.addEventListener('click', () => {
+      this.dailyRetryAvailable = false;
       this.closeModal('victory-modal', false);
       this.openMissionBriefing();
     });
@@ -2764,13 +3365,21 @@ class GameEngine {
     const btnCrt = document.getElementById('btn-crt-toggle');
     if (btnCrt) {
       const crt = document.querySelector('.crt-overlay');
-      crt?.classList.toggle('disabled', !this.preferredCrtEnabled);
-      btnCrt.setAttribute('aria-pressed', String(this.preferredCrtEnabled));
-      btnCrt.setAttribute('aria-label', this.preferredCrtEnabled ? 'Désactiver l’effet CRT' : 'Activer l’effet CRT');
+      const crtEnabled = this.preferredCrtEnabled && !this.prefersReducedMotion;
+      crt?.classList.toggle('disabled', !crtEnabled);
+      btnCrt.disabled = this.prefersReducedMotion;
+      btnCrt.setAttribute('aria-pressed', String(crtEnabled));
+      btnCrt.setAttribute(
+        'aria-label',
+        this.prefersReducedMotion
+          ? 'Effet CRT désactivé par la préférence système de mouvement réduit'
+          : (crtEnabled ? 'Désactiver l’effet CRT' : 'Activer l’effet CRT')
+      );
       btnCrt.addEventListener('click', () => {
-        if (crt) {
+        if (crt && !this.prefersReducedMotion) {
           crt.classList.toggle('disabled');
           const enabled = !crt.classList.contains('disabled');
+          this.preferredCrtEnabled = enabled;
           btnCrt.setAttribute('aria-pressed', String(enabled));
           btnCrt.setAttribute('aria-label', enabled ? 'Désactiver l’effet CRT' : 'Activer l’effet CRT');
           this.saveProgress();
@@ -2807,6 +3416,12 @@ class GameEngine {
     document.querySelectorAll('.btn-close').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const modal = e.target.closest('.modal-overlay');
+        if (
+          this.dailyRetryAvailable
+          && (modal?.id === 'game-over-modal' || modal?.id === 'victory-modal')
+        ) {
+          this.dailyRetryAvailable = false;
+        }
         if (modal?.id === 'body-route-vn-modal') this.pauseBodyRouteToArchives();
         else if (modal) this.closeModal(modal);
       });
@@ -2823,7 +3438,7 @@ class GameEngine {
     if (btnRestart) {
       btnRestart.addEventListener('click', () => {
         this.closeAllGameplayModals();
-        this.startNewGame({ difficulty: this.difficulty });
+        if (!this.retryDailyChallenge()) this.startNewGame({ difficulty: this.difficulty });
         this.focusBattlefield();
       });
     }
@@ -2843,7 +3458,12 @@ class GameEngine {
     bar.setAttribute('aria-label', 'Défenses à construire. Flèches gauche et droite pour parcourir, Échap pour retourner au champ de bataille.');
     bar.setAttribute('aria-orientation', 'horizontal');
 
-    Object.values(TOWER_TYPES).forEach(t => {
+    const dailyDeckIds = this.getDailyDefenseDeckIds();
+    const buildableTowerTypes = dailyDeckIds.length > 0
+      ? dailyDeckIds.map(id => TOWER_TYPES[id])
+      : Object.values(TOWER_TYPES);
+
+    buildableTowerTypes.forEach(t => {
       const card = document.createElement('button');
       const isSelected = this.selectedTowerToBuild.id === t.id;
       card.type = 'button';
@@ -2913,6 +3533,7 @@ class GameEngine {
   }
 
   createPlacedDefense(towerType, x, y, options = {}) {
+    if (this.hasEnteredAdultExperience) this.ensureTowerSprite(towerType?.id);
     const ariaPassive = this.selectedHero?.id === 'aria'
       ? this.getHeroKit('aria')?.passive
       : null;
@@ -3244,6 +3865,7 @@ class GameEngine {
     }
 
     audio.playPickup();
+    this.defensesSoldThisRun++;
     this.showFeedback(`${defenseName} vendue : +${result.refund} 🪙`, '#f59e0b');
     this.updateHUD();
     this.closeModal('defense-management-modal', false);
@@ -3251,24 +3873,19 @@ class GameEngine {
   }
 
   buildSelectedTowerAt(x, y) {
-    if (this.isPaused || this.isGameOver) return;
-    // The camera already maps the logical arena between the two HUD panels.
-    // Reject only its actual world-space perimeter so mouse, touch and keyboard
-    // placement all target the same collision coordinates at every zoom level.
-    if (x < 24 || x > this.worldWidth - 24 || y < 24 || y > this.worldHeight - 24) {
-      this.showFeedback('Placement impossible sous le HUD.', '#ef4444');
-      return;
-    }
-    if (Math.hypot(this.citadel.x - x, this.citadel.y - y) < this.citadel.radius + 20) {
-      this.showFeedback('Zone de Citadelle protégée.', '#ef4444');
-      return;
-    }
-    if (this.placedTowers.some(tower => Math.hypot(tower.x - x, tower.y - y) < tower.radius + 24)) {
-      this.showFeedback('Espace déjà occupé par une défense.', '#ef4444');
-      return;
-    }
-
+    if (this.isGameplayInputBlocked()) return;
     const towerType = this.selectedTowerToBuild;
+    const dailyDeckIds = this.getDailyDefenseDeckIds();
+    if (!towerType || (dailyDeckIds.length > 0 && !dailyDeckIds.includes(towerType.id))) {
+      this.showFeedback('Cette défense ne fait pas partie du deck quotidien imposé.', '#ef4444');
+      this.announce('Construction refusée : utilisez une défense du deck quotidien.');
+      return;
+    }
+    const placement = this.validateDefensePlacement(x, y);
+    if (!placement.ok) {
+      this.showFeedback(this.getDefensePlacementFailureMessage(placement.reason), '#ef4444');
+      return;
+    }
     if (this.coins < towerType.cost) {
       audio.playHurtVoice();
       this.showFeedback(`Bio-Coins insuffisants : ${towerType.cost} requis.`, '#ef4444');
@@ -3296,6 +3913,31 @@ class GameEngine {
     this.updateWeaponsHUD();
   }
 
+  placeStarterDefenses() {
+    const requestedIds = this.dailyChallenge?.startingDefenseIds;
+    const defenseIds = Array.isArray(requestedIds) && requestedIds.length > 0
+      ? requestedIds.slice(0, 3)
+      : ['vulcan_turret', 'flame_trap'];
+    const facingAngles = { east: 0, south: Math.PI / 2, west: Math.PI, north: -Math.PI / 2 };
+    const baseAngle = facingAngles[this.worldLayout?.citadel?.facing] ?? 0;
+    const offsets = defenseIds.length === 3 ? [-0.58, 0, 0.58] : [-0.48, 0.48];
+    const distance = Math.max(135, (Number(this.citadel.radius) || 45) + 78);
+    const bounds = this.worldLayout?.buildBounds || {
+      minX: 35,
+      minY: 35,
+      maxX: this.worldWidth - 35,
+      maxY: this.worldHeight - 35
+    };
+    defenseIds.forEach((id, index) => {
+      const towerType = TOWER_TYPES[id];
+      if (!towerType) return;
+      const angle = baseAngle + (offsets[index] || 0);
+      const x = Math.max(bounds.minX + 20, Math.min(bounds.maxX - 20, this.citadel.x + Math.cos(angle) * distance));
+      const y = Math.max(bounds.minY + 20, Math.min(bounds.maxY - 20, this.citadel.y + Math.sin(angle) * distance));
+      this.placedTowers.push(this.createPlacedDefense(towerType, x, y, { starter: true }));
+    });
+  }
+
   startNewGame(options = {}) {
     const requestedDifficulty = options.difficulty || this.difficulty || 'standard';
     this.difficulty = DIFFICULTY_DATA[requestedDifficulty] ? requestedDifficulty : 'standard';
@@ -3310,19 +3952,22 @@ class GameEngine {
       : 'convergence';
     this.applyWorldLayout(this.selectedLayoutId, { force: true, repositionUnits: false });
     if (Array.isArray(options.rotation)) this.setMapRotation(options.rotation);
+    if (options.dailyChallenge) this.dailyChallenge = options.dailyChallenge;
     if (!options.dailyChallenge && options.keepDaily !== true) {
       this.dailyChallenge = null;
       this.dailyRng = null;
       this.activeRunMutators = [];
+      this.dailyRetryAvailable = false;
     }
     this.resizeCanvas();
-    this.citadel.maxHp = Math.round((500 + (this.shopUpgrades.hpBonus * 50)) * DIFFICULTY_DATA[this.difficulty].citadelHp);
+    this.citadel.maxHp = Math.round((500 + (this.getEffectiveShopUpgrade('hpBonus') * 50)) * DIFFICULTY_DATA[this.difficulty].citadelHp);
     this.citadel.hp = this.citadel.maxHp;
 
     this.endlessMode = false;
     this.campaignVictory = false;
     this.campaignVictoryClaimed = false;
     this.activeBossHuntId = null;
+    this.runMode = this.dailyChallenge ? 'daily' : 'campaign';
     this.seenBossIntroIds = new Set();
     this.seenBossDefeatIds = new Set();
     this.pendingCinematics = [];
@@ -3357,6 +4002,8 @@ class GameEngine {
     this.evolvedWeaponsCount = 0;
     this.mutantsKilled = 0;
     this.overdriveCount = 0;
+    this.citadelUntouchedThisRun = true;
+    this.defensesSoldThisRun = 0;
     this.kiraMarkedRoutes = new Set();
     this.nyxExposedRoutes = new Set();
     this.carmillaStoredCharge = 0;
@@ -3396,14 +4043,9 @@ class GameEngine {
 
     this.configureWave(1);
 
-    // Pre-spawn starter defenses and enemies so the arena immediately communicates
-    // the core loop after the adult-content notice is accepted.
-    const cx = this.citadel.x || (window.innerWidth / 2);
-    const cy = this.citadel.y || (window.innerHeight / 2);
-    const placeX = Math.max(35, Math.min(this.worldWidth - 35, cx + (cx < this.worldWidth / 2 ? 125 : -90)));
-
-    this.placedTowers.push(this.createPlacedDefense(TOWER_TYPES.vulcan_turret, placeX, Math.max(35, cy - 90), { starter: true }));
-    this.placedTowers.push(this.createPlacedDefense(TOWER_TYPES.flame_trap, placeX, Math.min(this.worldHeight - 35, cy + 90), { starter: true }));
+    // A campaign starts with a compact pair; the daily contract lends its exact
+    // three-defense deck, even if those defenses are not part of the player's meta build.
+    this.placeStarterDefenses();
 
     for (let i = 0; i < 4; i++) {
       this.spawnMutant();
@@ -3454,6 +4096,7 @@ class GameEngine {
       );
     });
     this.isTowerMode = options.towerMode === true;
+    if (this.isTowerMode) this.runMode = 'tower';
     this.towerMutator = options.mutator || null;
     if (this.isTowerMode) {
       this.towerMutators = Array.isArray(options.mutators)
@@ -3487,11 +4130,10 @@ class GameEngine {
       this.activeWaveDefinition = null;
       return [];
     }
-    const waveScript = EXPANSION?.waveScripts?.siege_15;
-    const authoredWaveNumber = this.activeCampaignId === 'ten_thrones'
-      ? (((Math.max(1, waveNumber) - 1) % CAMPAIGN_FINAL_WAVE) + 1)
-      : waveNumber;
-    const waveDefinition = waveScript?.waves?.find(candidate => candidate.number === authoredWaveNumber);
+    const waveScriptId = this.dailyChallenge?.waveScriptId
+      || (this.activeCampaignId === 'ten_thrones' ? 'ten_thrones_20' : 'siege_15');
+    const waveScript = EXPANSION?.waveScripts?.[waveScriptId] || EXPANSION?.waveScripts?.siege_15;
+    const waveDefinition = waveScript?.waves?.find(candidate => candidate.number === waveNumber);
     this.activeWaveDefinition = waveDefinition || null;
     if (!waveDefinition?.groups) return [];
     const routeCount = Math.max(1, this.spawnRoutes.length);
@@ -3539,33 +4181,44 @@ class GameEngine {
     if (this.waveRewardClaimed || !this.waveActive) return;
     this.waveRewardClaimed = true;
     this.waveActive = false;
-    this.waveIntermissionTimer = 3.5;
+    const authoredIntermissionMs = Number(this.activeWaveDefinition?.intermissionMs);
+    this.waveIntermissionTimer = Number.isFinite(authoredIntermissionMs)
+      ? Math.max(0, authoredIntermissionMs) / 1000
+      : 3.5;
     const rewardMultiplier = DIFFICULTY_DATA[this.difficulty]?.reward || 1;
     const isBossHunt = !this.isTowerMode && Boolean(this.activeBossHuntId);
+    const isDailyRun = !this.isTowerMode && Boolean(this.dailyChallenge);
+    const grantsPermanentWaveProgress = !this.isTowerMode && !isBossHunt && !isDailyRun;
+    const authoredReward = Number(this.activeWaveDefinition?.reward);
     const runReward = isBossHunt
       ? 0
-      : Math.round((25 + (this.wave * 5)) * rewardMultiplier);
-    const metaReward = isBossHunt
-      ? 0
-      : Math.round((8 + (this.wave * 2)) * rewardMultiplier);
+      : Math.round(
+        (Number.isFinite(authoredReward) ? Math.max(0, authoredReward) : (25 + (this.wave * 5)))
+        * rewardMultiplier
+      );
+    const metaReward = grantsPermanentWaveProgress
+      ? Math.round((8 + (this.wave * 2)) * rewardMultiplier)
+      : 0;
     this.coins += runReward;
     this.metaCoins += metaReward;
     this.runMetaCoinsEarned += metaReward;
-    this.totalCoinsEarned += runReward;
+    if (grantsPermanentWaveProgress) this.totalCoinsEarned += runReward;
     if (!isBossHunt) this.score += this.wave * 100;
-    if (!this.isTowerMode && !isBossHunt) {
+    if (grantsPermanentWaveProgress) {
       this.bestWave = Math.max(this.bestWave, this.wave);
       this.bestScore = Math.max(this.bestScore, this.score);
     }
     this.showFeedback(
       isBossHunt
         ? `Chasse de la vague ${this.wave} sécurisée · seules les récompenses propres au Trône sont conservées`
-        : `Vague ${this.wave} sécurisée : +${runReward} 🪙 et +${metaReward} ◆`,
+        : (grantsPermanentWaveProgress
+          ? `Vague ${this.wave} sécurisée : +${runReward} 🪙 et +${metaReward} ◆`
+          : `Vague ${this.wave} sécurisée : +${runReward} 🪙 · économie permanente inchangée`),
       '#10b981'
     );
-    if (!this.isTowerMode && !isBossHunt && this.wave >= 5) this.unlockAchievement('wave_5');
-    if (!this.isTowerMode && !isBossHunt && this.wave >= 10) this.unlockAchievement('wave_10');
-    if (!this.isTowerMode && !isBossHunt && this.activeCampaignId === 'ten_thrones') {
+    if (grantsPermanentWaveProgress && this.wave >= 5) this.unlockAchievement('wave_5');
+    if (grantsPermanentWaveProgress && this.wave >= 10) this.unlockAchievement('wave_10');
+    if (grantsPermanentWaveProgress && this.activeCampaignId === 'ten_thrones') {
       Object.values(HERO_CLASSES).forEach(hero => {
         if (
           hero.unlocked === false
@@ -3580,9 +4233,11 @@ class GameEngine {
     }
     if (isBossHunt) {
       const huntedBoss = this.getBossDefinition(this.activeBossHuntId);
+      const returnState = this.campaignStateBeforeBossHunt;
       this.activeBossHuntId = null;
       this.waveIntermissionTimer = 0;
-      this.clearRunCheckpoint();
+      this.runMode = 'hunt_complete';
+      if (returnState) this.restoreGameplayState(returnState);
       this.saveProgress();
       this.updateHUD();
       this.openAntagonistCodex();
@@ -3605,6 +4260,10 @@ class GameEngine {
       } else {
         this.towerFloor++;
       }
+    }
+    if (!this.isTowerMode && this.dailyChallenge && this.wave >= CAMPAIGN_FINAL_WAVE) {
+      this.triggerDailyVictory();
+      return;
     }
     if (!this.isTowerMode && !this.endlessMode && this.wave >= this.getCampaignFinalWave()) {
       this.triggerCampaignVictory();
@@ -3633,43 +4292,26 @@ class GameEngine {
 
       const state = this.campaignStateBeforeTower;
       const returnWave = Math.max(1, state?.wave || 1);
+      const towerCompletionPending = this.towerCompletionPending;
+      const towerCompletionEarnedReward = this.towerCompletionEarnedReward;
       this.infinitumCanReturn = true;
       if (state) {
-        this.wave = state.wave;
-        this.waveActive = state.waveActive;
-        this.waveIntermissionTimer = state.waveIntermissionTimer;
-        this.enemiesSpawnedThisWave = state.enemiesSpawnedThisWave;
-        this.waveSpawnTarget = state.waveSpawnTarget;
-        this.bossSpawnedThisWave = state.bossSpawnedThisWave;
-        this.waveRewardClaimed = state.waveRewardClaimed;
-        this.spawnTimer = state.spawnTimer;
-        this.waveSpawnQueue = state.waveSpawnQueue || [];
-        this.waveSpawnElapsedMs = state.waveSpawnElapsedMs || 0;
-        this.activeWaveDefinition = state.activeWaveDefinition || null;
-        this.enemies = state.enemies;
-        this.enemyBullets = state.enemyBullets;
-        this.projectiles = state.projectiles;
-        this.particles = state.particles;
-        this.floatingTexts = state.floatingTexts;
-        this.decoys = state.decoys;
-        this.crates = state.crates;
-        this.powerups = state.powerups;
-        this.hazards = state.hazards;
-        this.bossHazards = state.bossHazards || [];
-        this.isTowerMode = false;
-        this.towerMutator = null;
-        this.lastWaveStatusSecond = null;
-        this.updateHUD();
+        this.restoreGameplayState(state);
       } else {
         this.configureWave(returnWave);
       }
       this.campaignStateBeforeTower = null;
       this.showFeedback(`Palier ${completedFloor} sécurisé. Retour au QG autorisé.`, '#a855f7');
       this.updateInfinitumProgress();
-      if (this.towerCompletionPending) {
+      if (towerCompletionPending) {
         this.towerCompletionPending = false;
+        this.towerCompletionEarnedReward = towerCompletionEarnedReward;
+        if (towerCompletionEarnedReward > 0 && state) {
+          this.metaCoins += towerCompletionEarnedReward;
+        }
         this.triggerTowerCompletion();
       }
+      this.saveProgress();
       return;
     }
     const nextWave = this.wave + 1;
@@ -3729,6 +4371,11 @@ class GameEngine {
         ? `${campaignDefinition.name} est achevée. Les dix assauts ont été lus, contrés et consignés dans le Codex de Haven.`
         : 'La guerre des Quatre Portes est achevée. Haven survit au Titan Léviathan et reprend le contrôle de ses remparts.';
     }
+    const endlessButton = document.getElementById('btn-continue-endless');
+    if (endlessButton) {
+      endlessButton.hidden = false;
+      endlessButton.disabled = false;
+    }
     const ending = document.getElementById('victory-ending-copy');
     if (ending) {
       ending.textContent = this.selectedHero.romanceOptIn && this.selectedHero.privateMomentUnlocked
@@ -3742,9 +4389,94 @@ class GameEngine {
     this.announce(`Campagne ${this.getCampaignDisplayName()} terminée. Haven est sauvée et ${finalBossName} neutralisée.`);
   }
 
+  triggerDailyVictory() {
+    if (this.campaignVictoryClaimed || !this.dailyChallenge) return;
+    const challenge = this.dailyChallenge;
+    const suspendedCampaignState = this.campaignStateBeforeDaily;
+    this.campaignVictoryClaimed = true;
+    this.campaignVictory = true;
+    this.waveIntermissionTimer = 0;
+
+    const scoreBonuses = challenge.rules?.scoreBonuses || {};
+    const earnedBonuses = [];
+    if (this.citadelUntouchedThisRun) {
+      const value = Math.max(0, Math.floor(Number(scoreBonuses.citadelUntouched) || 0));
+      this.score += value;
+      if (value > 0) earnedBonuses.push(`Citadelle intacte +${value}`);
+    }
+    if (this.defensesSoldThisRun === 0) {
+      const value = Math.max(0, Math.floor(Number(scoreBonuses.noDefenseSold) || 0));
+      this.score += value;
+      if (value > 0) earnedBonuses.push(`Aucune vente +${value}`);
+    }
+    const completionBonus = Math.max(0, Math.floor(Number(scoreBonuses.allWavesCleared) || 0));
+    this.score += completionBonus;
+    if (completionBonus > 0) earnedBonuses.push(`Contrat achevé +${completionBonus}`);
+    const multiplier = (Number(challenge.rules?.scoreMultiplier) || 1)
+      * this.getRunModifierProduct('completionScoreMultiplier');
+    this.score = Math.max(0, Math.round(this.score * multiplier));
+
+    const firstClear = !this.completedDailyChallengeIds.includes(challenge.id);
+    if (firstClear) {
+      this.completedDailyChallengeIds.push(challenge.id);
+      this.completedDailyChallengeIds = this.completedDailyChallengeIds.slice(-30);
+    }
+
+    const dailySummary = {
+      kills: this.mutantsKilled,
+      score: this.score,
+      time: this.formatRunTime(),
+      permanentMetaReward: firstClear ? DAILY_FIRST_CLEAR_META_REWARD : 0
+    };
+    this.recordRunHistory({
+      victory: true,
+      mode: 'daily',
+      id: `${challenge.id}-${Date.now()}`,
+      deferSave: true
+    });
+    if (suspendedCampaignState) this.restoreGameplayState(suspendedCampaignState);
+    this.campaignStateBeforeDaily = null;
+    this.lastDailyChallenge = challenge;
+    this.dailyRetryAvailable = true;
+    if (dailySummary.permanentMetaReward > 0) {
+      this.metaCoins += dailySummary.permanentMetaReward;
+    }
+
+    const setSummaryText = (id, value) => {
+      const element = document.getElementById(id);
+      if (element) element.textContent = value;
+    };
+    setSummaryText('victory-wave-txt', `${CAMPAIGN_FINAL_WAVE} / ${CAMPAIGN_FINAL_WAVE}`);
+    setSummaryText('victory-kills-txt', dailySummary.kills);
+    setSummaryText('victory-score-txt', dailySummary.score);
+    setSummaryText('victory-time-txt', dailySummary.time);
+    setSummaryText('victory-meta-txt', `${dailySummary.permanentMetaReward} ◆`);
+    setSummaryText('victory-difficulty-txt', 'Contrat quotidien standard');
+    setSummaryText('victory-title', 'DÉFI QUOTIDIEN ACCOMPLI');
+    setSummaryText(
+      'victory-description',
+      `${challenge.date} · score final ${dailySummary.score}. ${earnedBonuses.join(' · ') || 'Contrat sécurisé.'}`
+    );
+    setSummaryText(
+      'victory-ending-copy',
+      firstClear
+        ? `Première réussite du jour : +${DAILY_FIRST_CLEAR_META_REWARD} ◆. Les règles, le héros, le terrain et le deck étaient identiques pour ce contrat.`
+        : 'Contrat rejoué : le score est enregistré, sans dupliquer la récompense permanente du jour.'
+    );
+    const endlessButton = document.getElementById('btn-continue-endless');
+    if (endlessButton) {
+      endlessButton.hidden = true;
+      endlessButton.disabled = true;
+    }
+    this.saveProgress();
+    this.openModal('victory-modal');
+    this.announce(`Défi quotidien ${challenge.date} accompli. Score ${dailySummary.score}. Campagne suspendue restaurée.`);
+  }
+
   continueEndlessMode() {
-    if (!this.campaignVictory) return;
+    if (!this.campaignVictory || this.dailyChallenge) return;
     this.endlessMode = true;
+    this.runMode = 'endless';
     this.campaignVictory = false;
     this.closeModal('victory-modal', false);
     this.configureWave(this.getCampaignFinalWave() + 1);
@@ -3836,10 +4568,10 @@ class GameEngine {
 
   update(dt) {
     this.runElapsedSeconds += dt;
-    this.animationClock += dt;
+    if (!this.prefersReducedMotion) this.animationClock += dt;
     const citadelDrain = this.getRunModifierMaximum('citadelHpDrainPerSecond');
     if (citadelDrain > 0 && this.invincibleTimer <= 0 && !this.isOverdriveActive) {
-      this.citadel.hp -= citadelDrain * dt;
+      this.damageCitadel(citadelDrain * dt);
     }
     if (this.heroAnimationTimer > 0) {
       this.heroAnimationTimer -= dt;
@@ -3944,6 +4676,9 @@ class GameEngine {
     const status = document.getElementById('battlefield-status');
     if (!status) return;
     if (!this.enemies.length) {
+      const signature = `${this.wave}:${this.waveActive ? 'active-empty' : 'secured'}`;
+      if (signature === this.lastAccessibleThreatSignature) return;
+      this.lastAccessibleThreatSignature = signature;
       status.textContent = this.waveActive
         ? `Vague ${this.wave}. Aucune menace actuellement sur le champ.`
         : `Vague ${this.wave} sécurisée.`;
@@ -3961,6 +4696,12 @@ class GameEngine {
       * (nearest.enemy.slowTimer > 0 ? (nearest.enemy.slowSpeedMultiplier || 0.45) : 1);
     const remainingDistance = Math.max(0, nearest.distance - this.citadel.radius - nearest.enemy.radius);
     const eta = Math.ceil(remainingDistance / Math.max(1, effectiveSpeed));
+    const etaBand = eta <= 5 ? 'imminent' : (eta <= 12 ? 'near' : (eta <= 25 ? 'approaching' : 'far'));
+    const countBand = this.enemies.length <= 4 ? this.enemies.length : (this.enemies.length <= 12 ? '5-12' : '13+');
+    const citadelBand = Math.max(0, Math.ceil((this.citadel.hp / Math.max(1, this.citadel.maxHp)) * 4));
+    const signature = `${this.wave}:${countBand}:${sectorIndex}:${etaBand}:${nearest.enemy.isBoss ? nearest.enemy.type : 'mob'}:${citadelBand}`;
+    if (signature === this.lastAccessibleThreatSignature) return;
+    this.lastAccessibleThreatSignature = signature;
     status.textContent = `Vague ${this.wave}. ${this.enemies.length} menaces.${bossWarning} Contact estimé dans ${eta} secondes, secteur ${sectors[sectorIndex]}. Citadelle ${Math.max(0, Math.round(this.citadel.hp))} points de vie.`;
   }
 
@@ -4047,7 +4788,7 @@ class GameEngine {
       const fireMultiplier = (this.isOverdriveActive ? 3.0 : 1.0) * (this.quadDamageTimer > 0 ? 1.5 : 1.0);
       this.weaponTimers[wp.id] += dt * 1000 * fireMultiplier;
 
-      const rateBonus = Math.min(0.65, this.shopUpgrades.fireRateBonus * 0.05);
+      const rateBonus = Math.min(0.65, this.getEffectiveShopUpgrade('fireRateBonus') * 0.05);
       const rate = Math.max(60, wp.fireRate * (1 - rateBonus));
 
       if (this.weaponTimers[wp.id] >= rate) {
@@ -4058,6 +4799,44 @@ class GameEngine {
         }
       }
     });
+  }
+
+  isHeavyEnemy(enemy) {
+    return enemy?.traits?.includes('heavy')
+      || enemy?.traits?.includes('knockback_resistant')
+      || ['brute', 'bulwark'].includes(enemy?.type);
+  }
+
+  getEnemyControlResistance(enemy, controlType = 'stun') {
+    if (!enemy || enemy.dead) return 0;
+    if (enemy.isBoss) return controlType === 'displacement' ? 0.15 : 0.25;
+    if (this.isHeavyEnemy(enemy)) return controlType === 'displacement' ? 0.3 : 0.55;
+    return 1;
+  }
+
+  canApplyEnemyControl(enemy) {
+    return Boolean(enemy && !enemy.dead && (Number(enemy.ccImmunityTimer) || 0) <= 0);
+  }
+
+  applyEnemyStun(enemy, baseDurationSeconds) {
+    if (!this.canApplyEnemyControl(enemy)) return 0;
+    const duration = Math.max(0, Number(baseDurationSeconds) || 0)
+      * this.getEnemyControlResistance(enemy, 'stun');
+    if (duration <= 0) return 0;
+    enemy.stunTimer = Math.max(Number(enemy.stunTimer) || 0, duration);
+    if (enemy.isBoss) enemy.ccImmunityTimer = Math.max(2.4, duration + 1.5);
+    return duration;
+  }
+
+  displaceEnemy(enemy, sourceX, sourceY, baseDistance, direction = 1) {
+    if (!this.canApplyEnemyControl(enemy)) return 0;
+    const distance = Math.max(0, Number(baseDistance) || 0)
+      * this.getEnemyControlResistance(enemy, 'displacement');
+    if (distance <= 0) return 0;
+    const angle = Math.atan2((Number(enemy.y) || 0) - sourceY, (Number(enemy.x) || 0) - sourceX);
+    enemy.x += Math.cos(angle) * distance * direction;
+    enemy.y += Math.sin(angle) * distance * direction;
+    return distance;
   }
 
   updatePlacedTowers(dt) {
@@ -4100,9 +4879,7 @@ class GameEngine {
           t.controlPulseTimer = pulseCooldownMs;
           const pushDistance = Number(specialization?.modifiers?.enemyPushDistance) || 0;
           this.getEnemiesInRange(t.x, t.y, t.range, t).forEach(enemy => {
-            const pushAngle = Math.atan2(enemy.y - t.y, enemy.x - t.x);
-            enemy.x += Math.cos(pushAngle) * pushDistance;
-            enemy.y += Math.sin(pushAngle) * pushDistance;
+            this.displaceEnemy(enemy, t.x, t.y, pushDistance);
           });
           const deflectChance = Number(specialization?.modifiers?.projectileDeflectChance) || 0;
           for (let bulletIndex = this.enemyBullets.length - 1; bulletIndex >= 0; bulletIndex--) {
@@ -4156,7 +4933,7 @@ class GameEngine {
               this.showFeedback(`${allyTarget.name} détruite sous l’emprise de Noctis.`, '#a855f7');
             }
           } else if (!this.isOverdriveActive && this.invincibleTimer <= 0) {
-            this.citadel.hp -= 8;
+            this.damageCitadel(8);
             this.addFloatingText('EMPRISE -8', this.citadel.x, this.citadel.y - 30, '#a855f7');
           }
         }
@@ -4213,7 +4990,7 @@ class GameEngine {
       if (t.type === 'barrier' || t.type === 'magnet' || t.type === 'shrine') continue;
 
       t.timer += dt * 1000 * (this.quadDamageTimer > 0 ? 1.5 : 1);
-      const rateBonus = Math.min(0.65, this.shopUpgrades.fireRateBonus * 0.05);
+      const rateBonus = Math.min(0.65, this.getEffectiveShopUpgrade('fireRateBonus') * 0.05);
       const effectiveRate = Math.max(
         70,
         t.fireRate
@@ -4366,7 +5143,7 @@ class GameEngine {
         this.damageEnemyFromDefense(t, enemy, chainDamage);
         applyDirectLifesteal(chainDamage);
         if (index === chainTargets.length - 1 && Number(modifiers.stunDurationMs) > 0) {
-          enemy.stunTimer = Math.max(enemy.stunTimer || 0, Number(modifiers.stunDurationMs) / 1000);
+          this.applyEnemyStun(enemy, Number(modifiers.stunDurationMs) / 1000);
         }
         previous = enemy;
       });
@@ -4395,10 +5172,8 @@ class GameEngine {
     } else if (t.type === 'gravity') {
       audio.playAbility();
       this.getEnemiesInRange(t.x, t.y, t.range, t).forEach(enemy => {
-        const pullAngle = Math.atan2(t.y - enemy.y, t.x - enemy.x);
         const pullDistance = 32 * (Number(modifiers.pullStrengthMultiplier) || 1);
-        enemy.x += Math.cos(pullAngle) * pullDistance;
-        enemy.y += Math.sin(pullAngle) * pullDistance;
+        this.displaceEnemy(enemy, t.x, t.y, pullDistance, -1);
         this.damageEnemyFromDefense(t, enemy, t.damage * mult);
         applyDirectLifesteal(t.damage * mult);
       });
@@ -4425,10 +5200,7 @@ class GameEngine {
     } else if (t.type === 'emp') {
       audio.playAbility();
       this.getEnemiesInRange(t.x, t.y, t.range, t).forEach(enemy => {
-        enemy.stunTimer = Math.max(
-          enemy.stunTimer || 0,
-          2 * (Number(modifiers.disableDurationMultiplier) || 1)
-        );
+        this.applyEnemyStun(enemy, 2 * (Number(modifiers.disableDurationMultiplier) || 1));
         this.damageEnemyFromDefense(t, enemy, t.damage * mult);
         applyDirectLifesteal(t.damage * mult);
       });
@@ -4436,11 +5208,9 @@ class GameEngine {
     } else if (t.type === 'sonic') {
       audio.playAbility();
       this.getEnemiesInRange(t.x, t.y, t.range, t).forEach(enemy => {
-        const pushAngle = Math.atan2(enemy.y - t.y, enemy.x - t.x);
         const pushDistance = Number(modifiers.knockbackDistance)
           || 38 * (Number(modifiers.knockbackMultiplier) || 1);
-        enemy.x += Math.cos(pushAngle) * pushDistance;
-        enemy.y += Math.sin(pushAngle) * pushDistance;
+        this.displaceEnemy(enemy, t.x, t.y, pushDistance);
         this.damageEnemyFromDefense(t, enemy, t.damage * mult);
         applyDirectLifesteal(t.damage * mult);
       });
@@ -4594,7 +5364,7 @@ class GameEngine {
     SPAWN_GATE_SECTORS.forEach(side => {
       this.spawnGatePulses[side] = Math.max(0, (this.spawnGatePulses[side] || 0) - dt);
     });
-    if (this.campaignVictory) return;
+    if (this.campaignVictory || this.runMode === 'hunt_complete') return;
     if (!this.waveActive) {
       this.waveIntermissionTimer -= dt;
       const statusSecond = Math.max(0, Math.ceil(this.waveIntermissionTimer));
@@ -4684,7 +5454,7 @@ class GameEngine {
       y: Number.isFinite(options.y) ? options.y : route.polyline[0].y
     };
     const bossDefinition = this.getBossDefinition(type);
-    if (bossDefinition && this.hasEnteredAdultExperience) this.ensureEnemySprite(type);
+    if (this.hasEnteredAdultExperience) this.ensureEnemySprite(type);
     const definition = bossDefinition || EXPANSION?.enemyDefinitions?.[type];
     const stats = definition?.stats || {};
     const scale = 1 + (Math.max(0, this.wave - 1) * 0.1);
@@ -4754,12 +5524,14 @@ class GameEngine {
       speed,
       baseSpeed: speed,
       damage,
+      authoredReward: Math.max(0, Math.floor(Number(stats.reward) || 0)),
       radius,
       color,
       name,
       isBoss,
       isLeviathan: type === 'leviathan',
       type,
+      traits: Array.isArray(definition?.traits) ? [...definition.traits] : [],
       bossDefinitionId: bossDefinition?.id || null,
       bossRewards: bossDefinition?.rewards ? { ...bossDefinition.rewards } : null,
       recruitableBossId,
@@ -4774,7 +5546,9 @@ class GameEngine {
       hitAnimationTimer: 0,
       bulletTimer: 0,
       contactTimer: 0,
+      attackCooldown: Math.max(0.25, (Number(stats.attackCooldownMs) || 900) / 1000),
       stunTimer: 0,
+      ccImmunityTimer: 0,
       slowTimer: 0,
       slowSpeedMultiplier: 1,
       markedTimer: 0,
@@ -4871,6 +5645,14 @@ class GameEngine {
             this.projectiles.splice(i, 1);
             break;
           } else if (p.type === 'acid') {
+            const matchingHazards = this.hazards
+              .map((hazard, index) => ({ hazard, index }))
+              .filter(entry => entry.hazard.sourceDefense === p.sourceDefense && entry.hazard.sourceDefense?.type === 'acid');
+            while (matchingHazards.length >= 3) {
+              const oldest = matchingHazards.shift();
+              this.hazards.splice(oldest.index, 1);
+              matchingHazards.forEach(entry => { if (entry.index > oldest.index) entry.index--; });
+            }
             this.hazards.push({ x: p.x, y: p.y, radius: p.aoe, initialRadius: p.aoe, damage: Math.max(2, p.damage * 0.22), life: Number(p.hazardDuration) || 3.2, tickTimer: 0, color: '#84cc16', sourceDefense: p.sourceDefense });
             this.createExplosion(p.x, p.y, p.aoe, p.damage * 0.35, {
               sourceDefense: p.sourceDefense
@@ -4996,7 +5778,7 @@ class GameEngine {
           && !this.isOverdriveActive
           && this.invincibleTimer <= 0
         ) {
-          this.citadel.hp -= Math.round(b.damage * 0.65);
+          this.damageCitadel(Math.round(b.damage * 0.65));
           this.updateHUD();
         }
         this.enemyBullets.splice(i, 1);
@@ -5005,7 +5787,7 @@ class GameEngine {
 
       if (Math.hypot(this.citadel.x - b.x, this.citadel.y - b.y) < this.citadel.radius + b.radius) {
         if (!this.isOverdriveActive && this.invincibleTimer <= 0) {
-          this.citadel.hp -= b.damage;
+          this.damageCitadel(b.damage);
           audio.playHurtVoice();
           this.addFloatingText(`-${b.damage}`, this.citadel.x, this.citadel.y - 30, '#ff2a5f');
           this.updateHUD();
@@ -5277,6 +6059,7 @@ class GameEngine {
       if (e.stealthTimer > 0) {
         e.stealthTimer = Math.max(0, e.stealthTimer - dt);
       }
+      if (e.ccImmunityTimer > 0) e.ccImmunityTimer = Math.max(0, e.ccImmunityTimer - dt);
       if (e.stunTimer > 0) {
         e.stunTimer -= dt;
         continue;
@@ -5381,7 +6164,7 @@ class GameEngine {
       if (targetBarrier && Math.hypot(targetBarrier.x - e.x, targetBarrier.y - e.y) < targetBarrier.radius + e.radius) {
         e.attackAnimationTimer = 0.28;
         e.contactTimer = Math.max(0, (e.contactTimer || 0) - dt);
-        if (e.isBoss && e.contactTimer > 0) {
+        if (e.contactTimer > 0) {
           e.x -= Math.cos(angle) * 18;
           e.y -= Math.sin(angle) * 18;
           continue;
@@ -5400,14 +6183,10 @@ class GameEngine {
           '#67e8f9'
         );
         this.createExplosion(e.x, e.y, 22, 0);
-        if (e.isBoss) {
-          e.contactTimer = 0.8;
-          e.x -= Math.cos(angle) * 70;
-          e.y -= Math.sin(angle) * 70;
-        } else {
-          e.dead = true;
-          this.enemies.splice(i, 1);
-        }
+        e.contactTimer = e.isBoss ? 0.8 : (Number(e.attackCooldown) || 0.9);
+        const reboundDistance = e.isBoss ? 70 : 30;
+        e.x -= Math.cos(angle) * reboundDistance;
+        e.y -= Math.sin(angle) * reboundDistance;
         if (targetBarrier.hp <= 0) {
           const barrierIndex = this.placedTowers.indexOf(targetBarrier);
           if (barrierIndex >= 0) this.placedTowers.splice(barrierIndex, 1);
@@ -5426,7 +6205,7 @@ class GameEngine {
                 (e.damage || (e.isLeviathan ? 80 : 40))
                 * (e.damageDebuffTimer > 0 ? (e.damageDebuffMultiplier || 1) : 1)
               );
-              this.citadel.hp -= dmg;
+              this.damageCitadel(dmg);
               audio.playHurtVoice();
               this.addFloatingText(`-${dmg}`, this.citadel.x, this.citadel.y - 30, '#ff2a5f');
               this.updateHUD();
@@ -5442,7 +6221,7 @@ class GameEngine {
             (e.damage || (e.type === 'brute' ? 20 : 8))
             * (e.damageDebuffTimer > 0 ? (e.damageDebuffMultiplier || 1) : 1)
           );
-          this.citadel.hp -= dmg;
+          this.damageCitadel(dmg);
           audio.playHurtVoice();
           this.addFloatingText(`-${dmg}`, this.citadel.x, this.citadel.y - 30, '#ff2a5f');
           this.updateHUD();
@@ -5576,7 +6355,7 @@ class GameEngine {
       } else {
         this.fireBossBulletRing(boss, { count: 18, speed: 265, offset: boss.patternIndex * 0.12, damage: 25 });
         this.fireAimedBossVolley(boss, 7, 0.11, 315, 26);
-        this.citadel.hp = Math.max(1, this.citadel.hp - 4);
+        this.damageCitadel(4, { minimumHp: 1 });
       }
     } else if (boss.type === 'leviathan') {
       const count = phase === 1 ? 16 : (phase === 2 ? 20 : 28);
@@ -5713,6 +6492,9 @@ class GameEngine {
   }
 
   updateParticles(dt) {
+    if (this.particles.length > MAX_VISUAL_PARTICLES) {
+      this.particles.splice(0, this.particles.length - MAX_VISUAL_PARTICLES);
+    }
     for (let i = this.particles.length - 1; i >= 0; i--) {
       const particle = this.particles[i];
       particle.life -= dt;
@@ -5723,12 +6505,25 @@ class GameEngine {
   }
 
   updateFloatingTexts(dt) {
+    if (this.floatingTexts.length > MAX_FLOATING_TEXTS) {
+      this.floatingTexts.splice(0, this.floatingTexts.length - MAX_FLOATING_TEXTS);
+    }
     for (let i = this.floatingTexts.length - 1; i >= 0; i--) {
       const text = this.floatingTexts[i];
       text.y -= 45 * dt;
       text.life -= dt;
       if (text.life <= 0) this.floatingTexts.splice(i, 1);
     }
+  }
+
+  damageCitadel(amount, options = {}) {
+    if (!this.citadel || !Number.isFinite(amount) || amount <= 0) return 0;
+    const before = Math.max(0, Number(this.citadel.hp) || 0);
+    const minimumHp = Number.isFinite(options.minimumHp) ? Math.max(0, options.minimumHp) : 0;
+    this.citadel.hp = Math.max(minimumHp, before - amount);
+    const damage = Math.max(0, before - this.citadel.hp);
+    if (damage > 0) this.citadelUntouchedThisRun = false;
+    return damage;
   }
 
   healCitadel(amount) {
@@ -5785,6 +6580,7 @@ class GameEngine {
       .find(option => option.id === defense.specializationId);
     const modifiers = specialization?.modifiers || {};
     let adjustedDamage = amount;
+    if (defense.type === 'acid' && enemy.traits?.includes('acid_resistant')) adjustedDamage *= 0.55;
     if (this.isEnemyFlying(enemy)) adjustedDamage *= Number(modifiers.flyingDamageMultiplier) || 1;
     if (enemy.isBoss) adjustedDamage *= Number(modifiers.eliteDamageMultiplier) || 1;
     if (['brute', 'bulwark'].includes(enemy.type)) {
@@ -5965,6 +6761,7 @@ class GameEngine {
 
   killEnemy(enemy) {
     if (!enemy || enemy.dead) return;
+    const grantsPermanentProgress = !this.isSideModeForPermanentProgression();
     enemy.dead = true;
     const idx = this.enemies.indexOf(enemy);
     if (idx !== -1) {
@@ -6020,11 +6817,14 @@ class GameEngine {
 
     this.mutantsKilled++;
     const bossRewards = enemy.bossRewards || null;
+    const authoredEnemyReward = Math.max(0, Math.floor(Number(enemy.authoredReward) || 0));
     this.score += bossRewards?.score
-      || (enemy.isLeviathan ? 2000 : (enemy.isBoss ? 600 : 50));
+      ?? (enemy.isLeviathan
+        ? 2000
+        : (enemy.isBoss ? 600 : (authoredEnemyReward > 0 ? Math.max(20, authoredEnemyReward * 6) : 50)));
 
-    if (this.mutantsKilled >= 1) this.unlockAchievement('first_blood');
-    if (enemy.isLeviathan) this.unlockAchievement('wave_15');
+    if (grantsPermanentProgress && this.mutantsKilled >= 1) this.unlockAchievement('first_blood');
+    if (grantsPermanentProgress && enemy.isLeviathan) this.unlockAchievement('wave_15');
 
     const isHeavy = ['brute', 'bulwark'].includes(enemy.type);
     const isElite = enemy.isBoss || isHeavy || SPECIALIST_ENEMY_TYPES.includes(enemy.type);
@@ -6036,14 +6836,14 @@ class GameEngine {
       * (isHeavy ? this.getRunModifierProduct('heavyRewardMultiplier') : 1)
       * (isElite ? (Number(vesperaModifiers.eliteRewardMultiplier) || 1) : 1)
       * this.getCoinValueMultiplier();
-    const coinValue = Math.round(
-      (bossRewards?.coins
-        || (enemy.isBoss ? 100 : (this.getRunRandom() < 0.45 ? 10 : 0)))
-      * rewardMultiplier
-    );
+    const baseCoinReward = bossRewards?.coins
+      ?? (enemy.isBoss
+        ? 100
+        : (authoredEnemyReward > 0 ? authoredEnemyReward : (this.getRunRandom() < 0.45 ? 10 : 0)));
+    const coinValue = Math.round(baseCoinReward * rewardMultiplier);
     if (coinValue > 0) {
       this.coins += coinValue;
-      this.totalCoinsEarned += coinValue;
+      if (grantsPermanentProgress) this.totalCoinsEarned += coinValue;
       this.addFloatingText(`+${coinValue} 🪙`, enemy.x, enemy.y, '#f59e0b');
     }
     if (this.selectedHero?.id === 'maris') {
@@ -6055,7 +6855,7 @@ class GameEngine {
       ) {
         const corsairShare = Number(modifiers.coinReward) || 4;
         this.coins += corsairShare;
-        this.totalCoinsEarned += corsairShare;
+        if (grantsPermanentProgress) this.totalCoinsEarned += corsairShare;
         this.addFloatingText(`PART +${corsairShare}`, enemy.x, enemy.y - 25, '#38bdf8');
       }
     }
@@ -6087,7 +6887,7 @@ class GameEngine {
     }
 
     this.gainFrenzy(enemy.isBoss ? 24 : 7);
-    this.gainAffinity(enemy.isBoss ? 14 : 2);
+    if (grantsPermanentProgress) this.gainAffinity(enemy.isBoss ? 14 : 2);
 
     if (this.getRunRandom() < 0.08) {
       const pType = POWERUP_TYPES[Math.floor(this.getRunRandom() * POWERUP_TYPES.length)];
@@ -6109,10 +6909,14 @@ class GameEngine {
       this.particles.push({ x: enemy.x, y: enemy.y, vx: (Math.random() - 0.5) * 200, vy: (Math.random() - 0.5) * 200, radius: 3 + Math.random() * 4, color: enemy.color, life: 0.4 });
     }
 
-    this.addXp(bossRewards?.xp || (enemy.isBoss ? 160 : 20));
+    this.addXp(
+      bossRewards?.xp
+      ?? (enemy.isBoss ? 160 : (authoredEnemyReward > 0 ? Math.max(8, authoredEnemyReward * 2) : 20))
+    );
 
     if (enemy.bossDefinitionId) {
-      const firstDefeat = !this.defeatedBossIds.includes(enemy.bossDefinitionId);
+      const firstDefeat = grantsPermanentProgress
+        && !this.defeatedBossIds.includes(enemy.bossDefinitionId);
       if (firstDefeat) {
         this.defeatedBossIds.push(enemy.bossDefinitionId);
         const permanentReward = Math.max(0, Math.floor(Number(bossRewards?.metaCoins) || 0));
@@ -6139,11 +6943,11 @@ class GameEngine {
       this.saveProgress();
     }
 
-    if (enemy.recruitableBossId) {
+    if (grantsPermanentProgress && enemy.recruitableBossId) {
       this.triggerBossRecruitModal(enemy.recruitableBossId);
     }
 
-    this.checkGalleryUnlocks();
+    if (grantsPermanentProgress) this.checkGalleryUnlocks();
     this.updateHUD();
   }
 
@@ -6170,7 +6974,7 @@ class GameEngine {
         this.powerups.splice(i, 1);
         continue;
       }
-      if (Math.hypot(this.citadel.x - p.x, this.citadel.y - p.y) < this.citadel.radius + p.radius + (this.shopUpgrades.magnetRange * 20) || this.isInsideMagnetField(p)) {
+      if (Math.hypot(this.citadel.x - p.x, this.citadel.y - p.y) < this.citadel.radius + p.radius + (this.getEffectiveShopUpgrade('magnetRange') * 20) || this.isInsideMagnetField(p)) {
         this.activatePowerup(p.type);
         this.powerups.splice(i, 1);
       }
@@ -6222,7 +7026,7 @@ class GameEngine {
         this.crates.splice(i, 1);
         continue;
       }
-      if (Math.hypot(this.citadel.x - c.x, this.citadel.y - c.y) < this.citadel.radius + c.radius + (this.shopUpgrades.magnetRange * 20) || this.isInsideMagnetField(c)) {
+      if (Math.hypot(this.citadel.x - c.x, this.citadel.y - c.y) < this.citadel.radius + c.radius + (this.getEffectiveShopUpgrade('magnetRange') * 20) || this.isInsideMagnetField(c)) {
         audio.playPickup();
         if (c.type === 'red') this.triggerEvolutionModal();
         else this.triggerLevelUpModal();
@@ -6252,7 +7056,7 @@ class GameEngine {
   }
 
   armHeroAbilityTargeting() {
-    if (this.abilityCooldownTimer > 0 || this.isPaused || this.isGameOver) {
+    if (this.abilityCooldownTimer > 0 || this.isGameplayInputBlocked()) {
       return { ok: false, reason: 'unavailable' };
     }
     const kit = this.getHeroKit(this.selectedHero.id);
@@ -6278,6 +7082,7 @@ class GameEngine {
   }
 
   executeHeroAbilityAt(x, y) {
+    if (this.isGameplayInputBlocked()) return false;
     const targeting = this.activeHeroTargeting;
     if (!targeting || targeting.heroId !== this.selectedHero.id) {
       return { ok: false, reason: 'not-armed' };
@@ -6838,7 +7643,7 @@ class GameEngine {
   }
 
   triggerOverdrive() {
-    if (this.isPaused || this.isGameOver || this.isOverdriveActive) return;
+    if (this.isGameplayInputBlocked() || this.isOverdriveActive) return;
     if (this.frenzyMeter < this.maxFrenzyMeter) {
       this.announce(`Overdrive indisponible. Charge à ${Math.round(this.frenzyMeter)} pour cent.`);
       return;
@@ -6912,6 +7717,11 @@ class GameEngine {
   }
 
   openTowerInfinitumModal() {
+    if (this.dailyChallenge) {
+      this.showFeedback('La Tour est fermée pendant le contrat quotidien standardisé.', '#f59e0b');
+      this.announce('Tour indisponible pendant le défi quotidien.');
+      return;
+    }
     if (this.isTowerMode) {
       this.showFeedback('Un étage de la Tour est déjà en cours.', '#a855f7');
       return;
@@ -6944,40 +7754,22 @@ class GameEngine {
       if (!this.towerMutators.some(mutator => mutator.id === floorMutator.id)) {
         this.towerMutators.push(floorMutator);
       }
-      this.campaignStateBeforeTower = {
-        wave: this.wave,
-        waveActive: this.waveActive,
-        waveIntermissionTimer: this.waveIntermissionTimer,
-        enemiesSpawnedThisWave: this.enemiesSpawnedThisWave,
-        waveSpawnTarget: this.waveSpawnTarget,
-        bossSpawnedThisWave: this.bossSpawnedThisWave,
-        waveRewardClaimed: this.waveRewardClaimed,
-        spawnTimer: this.spawnTimer,
-        waveSpawnQueue: this.waveSpawnQueue,
-        waveSpawnElapsedMs: this.waveSpawnElapsedMs,
-        activeWaveDefinition: this.activeWaveDefinition,
-        enemies: this.enemies,
-        enemyBullets: this.enemyBullets,
-        projectiles: this.projectiles,
-        particles: this.particles,
-        floatingTexts: this.floatingTexts,
-        decoys: this.decoys,
-        crates: this.crates,
-        powerups: this.powerups,
-        hazards: this.hazards,
-        bossHazards: this.bossHazards
-      };
+      const campaignState = this.captureGameplayState();
+      this.startNewGame({
+        difficulty: campaignState.difficulty,
+        campaignId: campaignState.activeCampaignId,
+        layoutId: campaignState.selectedLayoutId,
+        preserveCheckpoint: true,
+        silent: true
+      });
+      this.campaignStateBeforeTower = campaignState;
+      this.runMode = 'tower';
+      this.infinitumCanReturn = false;
+      // startNewGame seeds four tutorial larvae for a normal campaign. They do
+      // not belong to the authored Infinitum floor and must never leak into it.
       this.enemies = [];
       this.enemyBullets = [];
       this.projectiles = [];
-      this.particles = [];
-      this.floatingTexts = [];
-      this.decoys = [];
-      this.crates = [];
-      this.powerups = [];
-      this.hazards = [];
-      this.bossHazards = [];
-      this.infinitumCanReturn = false;
       this.configureWave(this.towerFloor, {
         towerMode: true,
         mutator: floorMutator,
@@ -6985,6 +7777,7 @@ class GameEngine {
       });
       this.pendingTowerMutator = null;
       this.pendingTowerMutatorFloor = null;
+      this.isPaused = false;
       this.closeModal(modal, false);
       if (document.getElementById('hq-menu-modal')?.classList.contains('active')) {
         this.closeModal('hq-menu-modal', false);
@@ -7167,6 +7960,7 @@ class GameEngine {
   }
 
   setStudioMaturity(mode) {
+    if (!this.canWriteNarrativeProgress()) return;
     const modal = document.getElementById('photo-studio-modal');
     const heroId = modal?.dataset.heroId || this.selectedHero?.id;
     const consent = this.getVnExpansionHeroineState(heroId)?.consent;
@@ -7180,11 +7974,20 @@ class GameEngine {
     }
     const expansion = this.getVnExpansion();
     if (expansion?.persistence?.setMaturity) {
-      this.vnExpansionState = expansion.persistence.setMaturity(
-        this.vnExpansionState,
-        requested,
-        localStorage
-      );
+      try {
+        this.vnExpansionState = expansion.persistence.setMaturity(
+          this.vnExpansionState,
+          requested,
+          localStorage
+        );
+        this.narrativeStorageWriteFailed = false;
+        this.narrativeSaveLoadError = null;
+      } catch (error) {
+        this.updatePhotoStudioPreview();
+        this.renderStudioConclusionGallery();
+        this.handleNarrativePersistenceFailure(error, note);
+        return;
+      }
     }
     if (note) {
       note.textContent = requested === 'intense'
@@ -7425,23 +8228,63 @@ class GameEngine {
 
   loadVnExpansionState() {
     const expansion = this.getVnExpansion();
+    const storageKey = expansion?.storageKey || NARRATIVE_STORAGE_KEY;
+    let serialized = null;
     try {
+      serialized = typeof localStorage !== 'undefined'
+        ? localStorage.getItem(storageKey)
+        : null;
       return expansion?.persistence?.loadState
         ? expansion.persistence.loadState(typeof localStorage !== 'undefined' ? localStorage : null)
         : null;
     } catch (error) {
       console.warn('Progression narrative étendue indisponible :', error);
+      const isFutureVersion = error?.code === 'NARRATIVE_VERSION_INCOMPATIBLE';
+      this.narrativeStorageWriteBlocked = isFutureVersion;
+      this.narrativeStorageWriteFailed = !isFutureVersion;
+      this.futureNarrativeSaveRaw = isFutureVersion ? serialized : null;
+      this.narrativeSaveLoadError = error;
       return expansion?.persistence?.createDefaultState?.() || null;
     }
   }
 
+  handleNarrativePersistenceFailure(error, target = null) {
+    if (error?.state) this.vnExpansionState = error.state;
+    this.narrativeStorageWriteFailed = true;
+    this.narrativeSaveLoadError = error;
+    const message = 'Progression active pour cette session, mais non persistée. Exportez votre sauvegarde depuis les paramètres avant de quitter.';
+    this.setSettingsStatus?.(message, true);
+    if (target) target.textContent = message;
+    this.announce(message);
+    return message;
+  }
+
+  canWriteNarrativeProgress() {
+    if (!this.narrativeStorageWriteBlocked) return true;
+    this.setSettingsStatus?.(
+      'Progression narrative protégée : exportez le backup brut puis réinitialisez-la explicitement.',
+      true
+    );
+    this.announce('Progression narrative incompatible conservée sans modification.');
+    return false;
+  }
+
   syncVnExpansionConsent(heroId, granted) {
+    if (!this.canWriteNarrativeProgress()) return false;
     const expansion = this.getVnExpansion();
     const action = granted
       ? expansion?.persistence?.grantConsent
       : expansion?.persistence?.revokeConsent;
-    if (!action) return;
-    this.vnExpansionState = action(this.vnExpansionState, heroId, localStorage);
+    if (!action) return false;
+    try {
+      this.vnExpansionState = action(this.vnExpansionState, heroId, localStorage);
+      this.narrativeStorageWriteFailed = false;
+      this.narrativeSaveLoadError = null;
+      return true;
+    } catch (error) {
+      this.handleNarrativePersistenceFailure(error);
+      return false;
+    }
   }
 
   getVnExpansionChapter(heroId, chapterId) {
@@ -7873,17 +8716,31 @@ class GameEngine {
   }
 
   chooseVnLoreOption(choice) {
+    if (!this.canWriteNarrativeProgress()) return;
     const context = this.getActiveVnContext();
     const expansion = this.getVnExpansion();
     if (!context || !choice || !expansion?.persistence?.recordLoreChoice) return;
-    const result = expansion.persistence.recordLoreChoice(
-      this.vnExpansionState,
-      context.session.heroId,
-      context.session.chapterId,
-      choice.id,
-      localStorage
-    );
     const status = document.getElementById('vn-status');
+    let result;
+    try {
+      result = expansion.persistence.recordLoreChoice(
+        this.vnExpansionState,
+        context.session.heroId,
+        context.session.chapterId,
+        choice.id,
+        localStorage
+      );
+      this.narrativeStorageWriteFailed = false;
+      this.narrativeSaveLoadError = null;
+    } catch (error) {
+      this.handleNarrativePersistenceFailure(error, status);
+      result = {
+        state: error?.state || this.vnExpansionState,
+        applied: true,
+        persisted: false,
+        narrativeOnly: true
+      };
+    }
     if (!result.applied) {
       if (status) {
         status.textContent = result.reason === 'consent-required'
@@ -7893,7 +8750,9 @@ class GameEngine {
       return;
     }
     this.vnExpansionState = result.state;
-    this.lastVnCallbackMessage = `Souvenir conservé : ${choice.persistentTrait}. Il sera rappelé dans les prochains échanges.`;
+    this.lastVnCallbackMessage = result.persisted === false
+      ? `Souvenir actif pour cette session, mais non persisté : ${choice.persistentTrait}. Exportez votre sauvegarde avant de quitter.`
+      : `Souvenir conservé : ${choice.persistentTrait}. Il sera rappelé dans les prochains échanges.`;
     this.recordVnHistory(
       `lore.${context.session.chapterId}.${choice.id}`,
       'Mémoire partagée',
@@ -8113,6 +8972,11 @@ class GameEngine {
   }
 
   openSlotMachineModal() {
+    if (this.dailyChallenge) {
+      this.showFeedback('La machine à sous est désactivée pour préserver le classement quotidien.', '#f59e0b');
+      this.announce('Machine à sous indisponible pendant le défi quotidien.');
+      return;
+    }
     const modal = document.getElementById('slot-machine-modal');
     if (!modal) return;
     document.getElementById('slot-coins-txt').textContent = `${this.coins} 🪙`;
@@ -8173,6 +9037,8 @@ class GameEngine {
   }
 
   unlockAchievement(id) {
+    const isLegitimateTowerCompletion = this.isTowerMode && id === 'tower_100';
+    if (this.isSideModeForPermanentProgression() && !isLegitimateTowerCompletion) return false;
     const a = ACHIEVEMENTS.find(item => item.id === id);
     if (a && !a.unlocked) {
       a.unlocked = true;
@@ -8182,7 +9048,9 @@ class GameEngine {
       this.showFeedback(`Succès : ${a.name} (+${a.reward} ◆)`, '#f59e0b');
       this.saveProgress();
       this.updateHUD();
+      return true;
     }
+    return false;
   }
 
   triggerBossRecruitModal(bossId) {
@@ -8377,6 +9245,10 @@ class GameEngine {
   }
 
   startVillainHunt(bossId) {
+    if (this.dailyChallenge || this.isTowerMode || this.endlessMode || this.campaignVictory) {
+      this.announce('Terminez ou quittez le mode actuel avant de lancer une chasse du Codex.');
+      return false;
+    }
     const definition = this.getBossDefinition(bossId);
     const campaign = CHARACTER_EXPANSION?.campaigns?.ten_thrones;
     if (
@@ -8395,19 +9267,24 @@ class GameEngine {
     const huntWave = Math.max(2, Number(scheduleEntry?.wave) || 2);
     this.closeModal('antagonist-codex-modal', false);
     this.closeModal('hq-menu-modal', false);
+    const campaignState = this.captureGameplayState();
     this.startNewGame({
       campaignId: 'ten_thrones',
       difficulty: this.difficulty,
-      layoutId: this.selectedLayoutId
+      layoutId: this.selectedLayoutId,
+      preserveCheckpoint: true,
+      silent: true
     });
+    this.campaignStateBeforeBossHunt = campaignState;
     this.activeBossHuntId = bossId;
+    this.runMode = 'hunt';
     // The hunt is a compact practice sortie: keep the starter defenses, discard
     // the wave-one demonstration horde, then load the authored throne wave.
     this.enemies = [];
     this.enemyBullets = [];
     this.projectiles = [];
     this.configureWave(huntWave);
-    this.clearRunCheckpoint();
+    this.isPaused = false;
     this.showFeedback(`Chasse lancée · ${definition.name}`, definition.color || '#ec4899');
     this.announce(
       `Chasse de boss lancée contre ${definition.name}, vague ${huntWave}. `
@@ -8427,15 +9304,21 @@ class GameEngine {
     grid.innerHTML = '';
 
     Object.values(HERO_CLASSES).forEach(hero => {
-      if (hero.unlocked === false) return;
+      if (this.dailyChallenge && hero.id !== this.dailyChallenge.heroId) return;
+      if (!this.dailyChallenge && hero.unlocked === false) return;
       const card = document.createElement('button');
       card.type = 'button';
       card.className = `class-card ${hero.id === this.selectedHero.id ? 'selected' : ''}`;
       card.dataset.hero = hero.id;
+      card.disabled = Boolean(this.dailyChallenge);
       card.setAttribute('aria-pressed', String(hero.id === this.selectedHero.id));
       const avatarSrc = hero.activeSkin === 'alt' && hero.altAvatar ? hero.altAvatar : hero.avatar;
       card.innerHTML = `<img src="${avatarSrc}" alt="${hero.name}, adulte de ${hero.age} ans"><h3>${hero.name}</h3><p>${hero.title} · ${hero.age} ans</p><p>${hero.abilityDesc}</p>`;
       card.addEventListener('click', () => {
+        if (this.dailyChallenge) {
+          this.announce('Le commandement est imposé par le contrat quotidien.');
+          return;
+        }
         this.selectedHero = hero;
         this.syncSelectedHeroAffinity();
         this.updateWeaponsHUD();
@@ -8532,6 +9415,11 @@ class GameEngine {
   }
 
   openShopModal() {
+    if (this.isSideModeForPermanentProgression()) {
+      this.showFeedback('Les achats permanents sont verrouillés pendant les modes secondaires.', '#f59e0b');
+      this.announce('Armurerie méta indisponible pendant un défi, une chasse ou la Tour Infinitum.');
+      return;
+    }
     const modal = document.getElementById('shop-modal'); if (!modal) return;
     document.getElementById('shop-coins-txt').textContent = `${this.metaCoins} ◆`;
     const hpCost = 75 + (this.shopUpgrades.hpBonus * 50);
@@ -9246,6 +10134,7 @@ class GameEngine {
   }
 
   checkGalleryUnlocks() {
+    if (this.isSideModeForPermanentProgression()) return;
     if (!this.isTowerMode && this.wave >= 3) this.unlockGalleryItem('aria');
     if (this.decoysDeployedCount >= 3) this.unlockGalleryItem('kira');
     if (this.evolvedWeaponsCount >= 1) this.unlockGalleryItem('rin');
@@ -9253,13 +10142,16 @@ class GameEngine {
   }
 
   unlockGalleryItem(id) {
+    if (this.isSideModeForPermanentProgression()) return false;
     const item = GALLERY_ITEMS.find(i => i.id === id);
     if (item && !item.unlocked) {
       item.unlocked = true;
       audio.playPickup();
       this.showFeedback(`Archive débloquée : ${item.name}`, '#f59e0b');
       this.saveProgress();
+      return true;
     }
+    return false;
   }
 
   renderGallery() {
@@ -9367,6 +10259,66 @@ class GameEngine {
 
   triggerGameOver() {
     if (this.isGameOver) return;
+    if (this.dailyChallenge && this.runMode === 'daily') {
+      const challenge = this.dailyChallenge;
+      const suspendedCampaignState = this.campaignStateBeforeDaily;
+      const dailySummary = {
+        wave: this.wave,
+        kills: this.mutantsKilled,
+        coins: this.coins,
+        score: this.score,
+        time: this.formatRunTime()
+      };
+      this.closeAllGameplayModals();
+      this.recordRunHistory({
+        victory: false,
+        mode: 'daily',
+        id: `${challenge.id}-defeat-${Date.now()}`,
+        deferSave: true
+      });
+      if (suspendedCampaignState) this.restoreGameplayState(suspendedCampaignState);
+      this.campaignStateBeforeDaily = null;
+      this.lastDailyChallenge = challenge;
+      this.dailyRetryAvailable = true;
+      const setGameOverText = (id, value) => {
+        const element = document.getElementById(id);
+        if (element) element.textContent = value;
+      };
+      setGameOverText('go-wave-txt', dailySummary.wave);
+      setGameOverText('go-kills-txt', dailySummary.kills);
+      setGameOverText('go-coins-txt', dailySummary.coins);
+      setGameOverText('go-score-txt', dailySummary.score);
+      setGameOverText('go-time-txt', dailySummary.time);
+      setGameOverText('go-meta-txt', '0 ◆');
+      setGameOverText('go-record-txt', `Défi quotidien · records campagne inchangés (${this.bestScore} / vague ${this.bestWave})`);
+      this.applyGameOverTease();
+      this.saveProgress();
+      this.openModal('game-over-modal');
+      this.announce(`Défi quotidien échoué à la vague ${dailySummary.wave}. Campagne suspendue restaurée.`);
+      return;
+    }
+    if (this.runMode === 'hunt' && this.campaignStateBeforeBossHunt) {
+      const huntedBoss = this.getBossDefinition(this.activeBossHuntId);
+      const returnState = this.campaignStateBeforeBossHunt;
+      this.closeAllGameplayModals();
+      this.restoreGameplayState(returnState);
+      this.showFeedback(`Chasse interrompue contre ${huntedBoss?.name || 'le Trône'} · campagne restaurée`, '#ef4444');
+      this.saveProgress();
+      this.openAntagonistCodex();
+      this.announce('Chasse échouée. La campagne suspendue et son point de contrôle ont été restaurés sans perte.');
+      return;
+    }
+    if (this.isTowerMode && this.campaignStateBeforeTower) {
+      const failedFloor = this.wave;
+      const returnState = this.campaignStateBeforeTower;
+      this.closeAllGameplayModals();
+      this.restoreGameplayState(returnState);
+      this.showFeedback(`Étage ${failedFloor} échoué · campagne restaurée sans perte`, '#ef4444');
+      this.saveProgress();
+      this.openTowerInfinitumModal();
+      this.announce(`Étage ${failedFloor} échoué. Retour à la campagne suspendue.`);
+      return;
+    }
     this.isGameOver = true;
     this.pendingCinematics = [];
     this.activeCinematic = null;
@@ -9770,7 +10722,7 @@ class GameEngine {
     this.drawBattlefieldFloor(w, h, view);
 
     // Retain a restrained tactical grid above the authored floor.
-    this.gridOffset = (this.gridOffset + 0.4) % 40;
+    if (!this.prefersReducedMotion) this.gridOffset = (this.gridOffset + 0.4) % 40;
     this.ctx.strokeStyle = 'rgba(0, 240, 255, 0.055)';
     this.ctx.lineWidth = 1;
 
@@ -9792,7 +10744,8 @@ class GameEngine {
     this.drawSpawnGates(w, h);
 
     if (this.isOverdriveActive) {
-      this.ctx.fillStyle = `rgba(245, 158, 11, ${0.08 + Math.sin(Date.now() * 0.01) * 0.04})`;
+      const overdriveAlpha = this.prefersReducedMotion ? 0.08 : (0.08 + Math.sin(Date.now() * 0.01) * 0.04);
+      this.ctx.fillStyle = `rgba(245, 158, 11, ${overdriveAlpha})`;
       this.ctx.fillRect(view.left, view.top, viewWidth, viewHeight);
     }
 
@@ -9872,7 +10825,8 @@ class GameEngine {
     this.decoys.forEach(d => {
       this.ctx.save();
       this.ctx.beginPath();
-      this.ctx.arc(d.x, d.y, d.radius + Math.sin(Date.now() * 0.01) * 4, 0, Math.PI * 2);
+      const decoyPulse = this.prefersReducedMotion ? 0 : Math.sin(Date.now() * 0.01) * 4;
+      this.ctx.arc(d.x, d.y, d.radius + decoyPulse, 0, Math.PI * 2);
       this.ctx.fillStyle = `${d.color || '#00f0ff'}33`;
       this.ctx.fill();
       this.ctx.strokeStyle = d.color || '#00f0ff';
@@ -9986,7 +10940,7 @@ class GameEngine {
     });
 
     // Render Particles
-    this.particles.forEach(p => {
+    (this.prefersReducedMotion ? [] : this.particles).forEach(p => {
       if (p.type === 'rail_beam') {
         this.ctx.save();
         this.ctx.beginPath();
@@ -10043,8 +10997,9 @@ class GameEngine {
   }
 
   createExplosion(x, y, radius, damage, options = {}) {
-    for (let i = 0; i < 16; i++) {
-      const angle = (Math.PI * 2 / 16) * i;
+    const visualParticleCount = this.prefersReducedMotion ? 0 : 16;
+    for (let i = 0; i < visualParticleCount; i++) {
+      const angle = (Math.PI * 2 / visualParticleCount) * i;
       this.particles.push({ x, y, vx: Math.cos(angle) * radius * 3, vy: Math.sin(angle) * radius * 3, radius: 4, color: '#a855f7', life: 0.3 });
     }
     if (damage > 0) {
@@ -10057,7 +11012,10 @@ class GameEngine {
     }
   }
 
-  addFloatingText(text, x, y, color) { this.floatingTexts.push({ text, x, y, color, life: 0.8 }); }
+  addFloatingText(text, x, y, color) {
+    if (this.floatingTexts.length >= MAX_FLOATING_TEXTS) this.floatingTexts.shift();
+    this.floatingTexts.push({ text, x, y, color, life: 0.8 });
+  }
 
   distToSegment(p, v, w) {
     const l2 = (v.x - w.x) ** 2 + (v.y - w.y) ** 2;
@@ -10156,7 +11114,13 @@ class GameEngine {
         card.className = `weapon-card active ${wp.isEvolved ? 'evolved' : ''}`;
         card.setAttribute('role', 'listitem');
         card.setAttribute('aria-label', `${wp.name}, ${wp.isEvolved ? 'évolution maximale' : `niveau ${wp.level}`}`);
-        card.innerHTML = `<div class="icon">${wp.icon}</div><div class="lvl">${wp.isEvolved ? 'MAX' : `L${wp.level}`}</div>`;
+        const icon = document.createElement('div');
+        icon.className = 'icon';
+        icon.textContent = String(wp.icon || '');
+        const level = document.createElement('div');
+        level.className = 'lvl';
+        level.textContent = wp.isEvolved ? 'MAX' : `L${wp.level}`;
+        card.append(icon, level);
         container.appendChild(card);
       }
     });
