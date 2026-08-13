@@ -252,8 +252,8 @@ test('card headings do not skip directly from modal h2 titles to h4', () => {
   assert.match(css, /\.upgrade-text h3/);
 });
 
-test('PWA 2.11 keeps heavy terrains, atlases and CG in a separate runtime cache', () => {
-  assert.match(worker, /RELEASE_VERSION = '2\.11\.0'/);
+test('PWA 3.0 keeps atlases and CG in a separate runtime cache', () => {
+  assert.match(worker, /RELEASE_VERSION = '3\.0\.0'/);
   assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}core-\$\{RELEASE_VERSION\}`/);
   assert.match(worker, /MEDIA_CACHE_NAME = `\$\{CACHE_PREFIX\}media-\$\{RELEASE_VERSION\}`/);
   assert.match(worker, /MAX_MEDIA_CACHE_ENTRIES = 320/);
@@ -273,12 +273,12 @@ test('PWA 2.11 keeps heavy terrains, atlases and CG in a separate runtime cache'
   assert.doesNotMatch(worker, /assets\/vn\/cg\/eros-time\//);
 });
 
-test('package and web manifest expose release 2.11.0', () => {
+test('package and web manifest expose release 3.0.0', () => {
   const packageJson = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
   const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'manifest.webmanifest'), 'utf8'));
 
-  assert.equal(packageJson.version, '2.11.0');
-  assert.equal(manifest.version, '2.11.0');
+  assert.equal(packageJson.version, '3.0.0');
+  assert.equal(manifest.version, '3.0.0');
   assert.match(packageJson.scripts.check, /node --check expansion\.v1\.js/);
   assert.match(packageJson.scripts.check, /node --check characters\.v1\.js/);
   assert.match(packageJson.scripts.check, /node --check vn-expansion\.v1\.js/);

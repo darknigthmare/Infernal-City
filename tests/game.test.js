@@ -2138,7 +2138,7 @@ test('les dix nouveaux ultimes modifient reellement hordes defenses ou projectil
   engine.placedTowers = [engine.createPlacedDefense(TOWER_TYPES.vulcan_turret, 700, 400)];
   const baseRate = engine.placedTowers[0].fireRate;
   useUltimate('aurelia');
-  assert.ok(engine.freezeTimer > 0 && engine.placedTowers[0].fireRate < baseRate);
+  assert.ok(target.stunTimer > 0 && engine.placedTowers[0].fireRate < baseRate);
 
   target = freshTarget();
   const marisHp = target.hp;

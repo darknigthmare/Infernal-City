@@ -28,6 +28,7 @@
   <link rel="icon" href="assets/icons/icon-192.png" type="image/png">
   <link rel="canonical" href="https://infernal-city-five.vercel.app/">
   <link rel="stylesheet" href="styles.v8.css">
+  <link rel="stylesheet" href="gameplay-pro.v1.css">
 </head>
 <body>
 
@@ -72,6 +73,14 @@
             <button class="btn-secondary" id="btn-backup-save" type="button" hidden>EXPORTER LE BACKUP BRUT</button>
             <button class="btn-secondary" id="btn-reset-save" type="button">RÉINITIALISER LA SAUVEGARDE</button>
           </div>
+        </div>
+
+        <div class="briefing-preferences" role="group" aria-label="Options de prise en main">
+          <label class="briefing-toggle" for="guided-tutorial-toggle">
+            <input id="guided-tutorial-toggle" type="checkbox" checked>
+            <span><strong>Tutoriel tactique guidé</strong><small>Un parcours progressif et désactivable accompagne votre première sortie.</small></span>
+          </label>
+          <p id="progression-lock-summary" class="progression-lock-summary" role="status">Progression de commandement en cours de chargement.</p>
         </div>
 
         <label class="difficulty-field" for="difficulty-select">
@@ -154,6 +163,22 @@
 
     <div class="sr-only" id="game-announcer" aria-live="polite" aria-atomic="true"></div>
     <div class="sr-only" id="battlefield-status" role="status" aria-live="polite" aria-atomic="true">Aucune menace immédiate.</div>
+
+    <div class="save-failure-banner" id="save-failure-banner" role="alert" hidden>
+      <div>
+        <strong>PROGRESSION NON SAUVEGARDÉE</strong>
+        <span id="save-failure-banner-message">Le stockage local est indisponible. La partie continue, mais cette session peut être perdue.</span>
+      </div>
+      <button class="btn-secondary" id="btn-emergency-export" type="button">EXPORTER MAINTENANT</button>
+    </div>
+
+    <div class="pwa-status-banner" id="pwa-status-banner" role="status" aria-live="polite" hidden>
+      <div>
+        <strong id="pwa-status-title">MISE À JOUR DU JEU</strong>
+        <span id="pwa-status-message">Une nouvelle version peut être installée sans interrompre la partie en cours.</span>
+      </div>
+      <button class="btn-secondary" id="btn-install-update" type="button" hidden>INSTALLER</button>
+    </div>
 
     <!-- HUD Top Header (Clean Combat Mode) -->
     <header id="hud-header">
@@ -264,6 +289,12 @@
       >+</button>
       <output id="camera-zoom-txt" class="camera-zoom-output" for="btn-camera-zoom-out btn-camera-fit btn-camera-zoom-in" aria-live="off">100 %</output>
     </div>
+    <div id="tactical-controls" class="tactical-controls" role="group" aria-label="Commandes tactiques">
+      <output id="tactical-phase-txt" class="tactical-phase" aria-live="polite">DÉPLOIEMENT</output>
+      <button class="tactical-control-btn launch-wave-btn" id="btn-launch-wave" type="button">LANCER LA VAGUE</button>
+      <button class="tactical-control-btn" id="btn-game-speed" type="button" aria-label="Vitesse du jeu : normale" aria-pressed="false">×1</button>
+      <button class="tactical-control-btn" id="btn-combat-pause" type="button" aria-label="Mettre le combat en pause" aria-pressed="false">PAUSE</button>
+    </div>
     <p class="sr-only" id="camera-controls-help">Faites glisser le champ de bataille ou utilisez W A S D pour déplacer la caméra. Utilisez la molette de la souris, un pincement à deux doigts, plus, moins, zéro ou les boutons de caméra pour zoomer, dézoomer et cadrer tout le terrain. Un toucher ou clic bref sert à construire et à sélectionner les tours.</p>
 
     <div id="short-landscape-notice" class="orientation-notice" role="alert" aria-hidden="true" hidden>
@@ -278,7 +309,17 @@
       <span id="mission-level-txt">Niveau 1 · XP 0 / 100</span>
       <span id="mission-difficulty-txt">Siège standard</span>
       <span id="mission-next-wave-txt">Prochaine composition · reconnaissance</span>
+      <span id="mission-secondary-objective-txt">Objectif secondaire · reconnaissance</span>
       <span id="mission-threat-txt" data-state="calm">Approches · aucune menace</span>
+    </aside>
+
+    <aside id="tutorial-coach" class="tutorial-coach" role="region" aria-labelledby="tutorial-coach-title" hidden>
+      <div>
+        <span class="tutorial-step" id="tutorial-step-txt">ÉTAPE 1 / 8</span>
+        <h2 id="tutorial-coach-title">Préparer la défense</h2>
+        <p id="tutorial-coach-copy">Choisissez une défense dans la barre, puis placez-la sur une zone constructible.</p>
+      </div>
+      <button class="btn-text" id="btn-skip-tutorial" type="button">IGNORER LE TUTORIEL</button>
     </aside>
 
     <!-- 20 Deployable Defense Tower & Trap Deck Bar -->
@@ -710,7 +751,7 @@
       <div class="modal-box">
         <button class="btn-close">&times;</button>
         <h2 class="modal-title" id="roster-modal-title">⚔️ SALLE DE COMMANDEMENT</h2>
-        <p class="modal-subtitle">Chaque Valkyrie est une adulte autonome. Changer de commandante conserve l’arsenal actif et la progression permanente.</p>
+        <p class="modal-subtitle">Chaque Valkyrie est une adulte autonome. La commandante choisie au briefing reste verrouillée jusqu’à la fin de la sortie.</p>
         <div class="hero-select-grid" id="hero-select-grid"></div>
       </div>
     </div>
@@ -739,7 +780,7 @@
               <div class="upgrade-icon">❤️</div>
               <div class="upgrade-text">
                 <h3>Renforcement de Citadelle</h3>
-                <p>Augmente la santé maximale de la Citadelle de +50 HP.</p>
+                <p>Augmente la santé maximale de la Citadelle de +10 HP, jusqu’au rang 10.</p>
               </div>
             </div>
             <button class="btn-primary" id="buy-hp-btn">50 🪙</button>
@@ -750,7 +791,7 @@
               <div class="upgrade-icon">⚡</div>
               <div class="upgrade-text">
                 <h3>Cadence de Tir Accélérée</h3>
-                <p>Augmente la vitesse de tir de toutes les tourelles de +5%.</p>
+                <p>Augmente la vitesse de tir de toutes les tourelles de +2 %, jusqu’au rang 10.</p>
               </div>
             </div>
             <button class="btn-primary" id="buy-rate-btn">50 🪙</button>
@@ -761,7 +802,7 @@
               <div class="upgrade-icon">🧲</div>
               <div class="upgrade-text">
                 <h3>Collecteur Magnétique</h3>
-                <p>Augmente de 20 px la portée de collecte des caisses et power-ups.</p>
+                <p>Augmente de 20 px la portée de collecte des caisses et power-ups, jusqu’au rang 10.</p>
               </div>
             </div>
             <button class="btn-primary" id="buy-magnet-btn" type="button">75 ◆</button>
@@ -880,6 +921,18 @@
         <p class="modal-subtitle" id="defense-management-level">Niveau 1 / 3</p>
         <dl class="defense-management-stats" id="defense-management-stats"></dl>
         <p class="defense-management-investment" id="defense-management-investment"></p>
+        <label class="defense-targeting-field" for="defense-targeting-policy">
+          <span>Priorité de ciblage</span>
+          <select id="defense-targeting-policy">
+            <option value="first">Premier sur la route</option>
+            <option value="last">Dernier sur la route</option>
+            <option value="strong">Plus résistant</option>
+            <option value="weak">Plus faible</option>
+            <option value="flying">Volant prioritaire</option>
+            <option value="elite">Élite / Boss prioritaire</option>
+          </select>
+          <small>La priorité manuelle complète les contres automatiques de la spécialisation.</small>
+        </label>
         <section class="defense-specialization" id="defense-specialization-section" aria-labelledby="defense-specialization-title" hidden>
           <p class="section-eyebrow">ÉVOLUTION DÉFINITIVE</p>
           <h3 id="defense-specialization-title">Choisir une spécialisation</h3>
@@ -936,6 +989,29 @@
               <option value="extra-large">Très grande</option>
             </select>
           </label>
+          <label for="keyboard-preset">
+            <span>Déplacement caméra</span>
+            <select id="keyboard-preset">
+              <option value="zqsd">ZQSD · clavier français</option>
+              <option value="wasd">WASD · clavier international</option>
+              <option value="arrows">Flèches uniquement</option>
+            </select>
+          </label>
+          <label for="pause-on-blur">
+            <span>Perte de focus</span>
+            <select id="pause-on-blur">
+              <option value="pause">Mettre automatiquement en pause</option>
+              <option value="continue">Continuer la simulation</option>
+            </select>
+          </label>
+          <label class="range-setting" for="gamepad-deadzone">
+            <span>Zone morte manette <output id="gamepad-deadzone-output" for="gamepad-deadzone">18 %</output></span>
+            <input id="gamepad-deadzone" type="range" min="5" max="45" step="1" value="18">
+          </label>
+          <label class="range-setting" for="gamepad-sensitivity">
+            <span>Sensibilité manette <output id="gamepad-sensitivity-output" for="gamepad-sensitivity">100 %</output></span>
+            <input id="gamepad-sensitivity" type="range" min="50" max="180" step="5" value="100">
+          </label>
         </div>
 
         <section class="gamepad-card" aria-labelledby="gamepad-title">
@@ -961,7 +1037,7 @@
         <section class="project-info" id="project-info" aria-labelledby="project-info-title">
           <h3 id="project-info-title">À propos & données</h3>
           <ul>
-            <li><strong>Version 2.11.0.</strong> Jeu cyber-gothique indépendant réservé aux adultes.</li>
+            <li><strong>Version 3.0.0.</strong> Jeu cyber-gothique indépendant réservé aux adultes.</li>
             <li>Progression, historique et préférences restent dans le stockage local du navigateur ; le jeu n’intègre ni compte ni télémétrie.</li>
             <li>Les polices peuvent être demandées à Google Fonts. Les autres requêtes servent uniquement le jeu et ses médias depuis ce site.</li>
             <li>Les visuels du projet ont été créés avec OpenAI puis préparés et intégrés pour Infernal City ; les masters PNG sont conservés avec leurs dérivés WebP.</li>
@@ -1058,7 +1134,11 @@
   <script src="characters.v1.js"></script>
   <script src="vn-expansion.v1.js"></script>
   <script src="adult-scenes.v1.js"></script>
+  <script src="specialization-runtime.v1.js"></script>
+  <script src="campaign-content.v1.js"></script>
   <script src="game.v9.js"></script>
+  <script src="gameplay-professional.v1.js"></script>
+  <script src="infinitum-runtime.v1.js"></script>
   <script src="pwa.v4.js"></script>
 </body>
 </html>

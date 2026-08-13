@@ -1,7 +1,7 @@
 'use strict';
 
 const CACHE_PREFIX = 'infernal-city-';
-const RELEASE_VERSION = '2.11.0';
+const RELEASE_VERSION = '3.0.0';
 const CACHE_NAME = `${CACHE_PREFIX}core-${RELEASE_VERSION}`;
 const MEDIA_CACHE_NAME = `${CACHE_PREFIX}media-${RELEASE_VERSION}`;
 const MAX_MEDIA_CACHE_ENTRIES = 320;
@@ -15,14 +15,26 @@ const EXPANSION_TERRAIN_PATHS = new Set([
 const ESSENTIAL_PRECACHE_URLS = [
   './index.html',
   './styles.v8.css',
+  './gameplay-pro.v1.css',
   './audio.v8.js',
   './vn-scenes.v1.js',
   './expansion.v1.js',
   './characters.v1.js',
   './vn-expansion.v1.js',
   './adult-scenes.v1.js',
+  './campaign-content.v1.js',
+  './specialization-runtime.v1.js',
   './game.v9.js',
-  './pwa.v4.js'
+  './gameplay-professional.v1.js',
+  './infinitum-runtime.v1.js',
+  './pwa.v4.js',
+  './assets/environment/infernal-city-approach-terrain.webp',
+  './assets/environment/infernal-city-coastline.webp',
+  './assets/environment/infernal-city-floor.webp',
+  './assets/environment/infernal-city-spawn-gate-atlas.webp',
+  './assets/environment/map-western-wall.webp',
+  './assets/environment/map-southern-watch.webp',
+  './assets/environment/map-twin-rift.webp'
 ];
 
 const OPTIONAL_PRECACHE_URLS = [
@@ -52,8 +64,11 @@ async function precacheRelease() {
 self.addEventListener('install', (event) => {
   event.waitUntil(
     precacheRelease()
-      .then(() => self.skipWaiting())
   );
+});
+
+self.addEventListener('message', (event) => {
+  if (event.data?.type === 'SKIP_WAITING') self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {

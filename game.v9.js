@@ -402,7 +402,7 @@ const ACHIEVEMENTS = [
   { id: 'builder', name: 'Architecte de Citadelle', desc: 'Construire 10 tourelles de défense.', unlocked: false, reward: 150 },
   { id: 'recruiter', name: 'Alliance Souveraine', desc: 'Conclure une trêve libre avec une ancienne adversaire.', unlocked: false, reward: 300 },
   { id: 'harem_lover', name: 'Confiance Nocturne', desc: 'Atteindre une affinité mutuelle de rang 2.', unlocked: false, reward: 200 },
-  { id: 'campaign_clear', name: 'Aube sur Haven', desc: 'Terminer la campagne de 15 vagues.', unlocked: false, reward: 350 },
+  { id: 'campaign_clear', name: 'Aube sur Haven', desc: 'Terminer une campagne complète.', unlocked: false, reward: 350 },
   { id: 'tower_100', name: 'Maîtresse de l’Infinitum', desc: 'Sécuriser les 100 étages de la Tour Infinitum.', unlocked: false, reward: 750 }
 ];
 
@@ -1812,7 +1812,9 @@ class GameEngine {
       xp: this.xp,
       level: this.level,
       nextLevelXp: this.nextLevelXp,
+      pendingLevelChoices: this.pendingLevelChoices,
       frenzyMeter: this.frenzyMeter,
+      abilityCooldownTimer: this.abilityCooldownTimer,
       carmillaStoredCharge: this.carmillaStoredCharge,
       runElapsedSeconds: this.runElapsedSeconds,
       runMetaCoinsEarned: this.runMetaCoinsEarned,
@@ -1874,7 +1876,9 @@ class GameEngine {
     this.xp = Math.max(0, Math.floor(Number(checkpoint.xp) || 0));
     this.level = Math.max(1, Math.floor(Number(checkpoint.level) || 1));
     this.nextLevelXp = Math.max(1, Math.floor(Number(checkpoint.nextLevelXp) || 100));
+    this.pendingLevelChoices = Math.max(0, Math.min(20, Math.floor(Number(checkpoint.pendingLevelChoices) || 0)));
     this.frenzyMeter = Math.max(0, Math.min(this.maxFrenzyMeter, Number(checkpoint.frenzyMeter) || 0));
+    this.abilityCooldownTimer = Math.max(0, Math.min(3600, Number(checkpoint.abilityCooldownTimer) || 0));
     this.carmillaStoredCharge = Math.max(0, Math.min(35, Number(checkpoint.carmillaStoredCharge) || 0));
     this.runElapsedSeconds = Math.max(0, Number(checkpoint.runElapsedSeconds) || 0);
     this.runMetaCoinsEarned = Math.max(0, Math.floor(Number(checkpoint.runMetaCoinsEarned) || 0));
@@ -4094,6 +4098,16 @@ class GameEngine {
         0,
         Math.floor(Number(defense.stunIgnoresPerWave) || 0)
       );
+      const specialization = this.getDefenseSpecializationOptions(defense)
+        .find(option => option.id === defense.specializationId);
+      if (Number(specialization?.modifiers?.rearmBetweenWaves) > 0) {
+        defense.remainingCharges = Math.max(
+          1,
+          Math.floor(Number(specialization.modifiers.mineCount) || 1)
+        );
+        defense.rearmTimer = 0;
+        defense.exhaustedUntilNextWave = false;
+      }
     });
     this.isTowerMode = options.towerMode === true;
     if (this.isTowerMode) this.runMode = 'tower';
@@ -4311,6 +4325,7 @@ class GameEngine {
         }
         this.triggerTowerCompletion();
       }
+      this.towerMutatorsBeforeAttempt = null;
       this.saveProgress();
       return;
     }
@@ -4795,7 +4810,9 @@ class GameEngine {
         const target = this.findTarget(this.citadel.x, this.citadel.y, wp.range);
         if (target) {
           this.fireWeapon(wp, target);
-          this.weaponTimers[wp.id] = 0;
+          this.weaponTimers[wp.id] = Math.max(0, this.weaponTimers[wp.id] - rate);
+        } else {
+          this.weaponTimers[wp.id] = rate;
         }
       }
     });
@@ -4947,6 +4964,7 @@ class GameEngine {
       }
       if (t.animationTimer > 0) t.animationTimer = Math.max(0, t.animationTimer - dt);
       if (t.type === 'mine' || t.type === 'napalm') {
+        if (t.exhaustedUntilNextWave) continue;
         if (t.rearmTimer > 0) {
           t.rearmTimer = Math.max(0, t.rearmTimer - dt);
           continue;
@@ -4982,7 +5000,11 @@ class GameEngine {
             sourceDefense: t
           });
           t.remainingCharges--;
-          if (t.remainingCharges <= 0) this.placedTowers.splice(i, 1);
+          if (t.remainingCharges <= 0 && Number(specialization?.modifiers?.rearmBetweenWaves) > 0) {
+            t.remainingCharges = 0;
+            t.exhaustedUntilNextWave = true;
+            t.rearmTimer = 0;
+          } else if (t.remainingCharges <= 0) this.placedTowers.splice(i, 1);
           else t.rearmTimer = 0.9;
         }
         continue;
@@ -5002,7 +5024,9 @@ class GameEngine {
         const target = this.findTarget(t.x, t.y, t.range, t);
         if (target) {
           this.fireTower(t, target);
-          t.timer = 0;
+          t.timer = Math.max(0, t.timer - effectiveRate);
+        } else {
+          t.timer = effectiveRate;
         }
       }
     }
@@ -5051,6 +5075,10 @@ class GameEngine {
       audio.playShoot();
       const pierce = Math.max(
         t.type === 'saw' ? 1 : 0,
+        specialization?.id === 'vulcan_cerberus'
+          && Number(t.specializationHeat) >= 85 * (Number(modifiers.heatCapacityMultiplier) || 1)
+          ? 1
+          : 0,
         Math.floor(Number(modifiers.ricochetCount) || 0)
       );
       this.projectiles.push({
@@ -5063,6 +5091,10 @@ class GameEngine {
         radius: t.type === 'saw' ? 7 : 4,
         type: 'bullet',
         pierce,
+        ricochetRemaining: Math.max(0, Math.floor(Number(modifiers.ricochetCount) || 0)),
+        ricochetDamageMultiplier: Number(modifiers.ricochetDamageMultiplier) || 1,
+        returnToSource: Number(modifiers.returnDamageMultiplier) > 0,
+        returnDamageMultiplier: Number(modifiers.returnDamageMultiplier) || 1,
         slow: Number(modifiers.slowMultiplier) > 0 ? 1.5 : 0,
         slowSpeedMultiplier: Number(modifiers.slowMultiplier) || undefined,
         heal: projectileHeal,
@@ -5304,6 +5336,10 @@ class GameEngine {
       }, 1);
   }
 
+  getSpatialEnemyCandidates() {
+    return this.enemies;
+  }
+
   findTarget(x, y, range, defense = null) {
     let nearest = null;
     const seleneRangeMultiplier = (
@@ -5397,7 +5433,7 @@ class GameEngine {
     const spawnInterval = Math.max(0.32, (2.0 - (this.wave * 0.09)) * mutatorRate);
 
     if (this.spawnTimer >= spawnInterval) {
-      this.spawnTimer = 0;
+      this.spawnTimer = Math.max(0, this.spawnTimer - spawnInterval);
       this.spawnMutant();
     }
   }
@@ -5601,10 +5637,18 @@ class GameEngine {
         continue;
       }
 
-      for (let j = this.enemies.length - 1; j >= 0; j--) {
-        const e = this.enemies[j];
+      const collisionCandidates = typeof this.getSpatialEnemyCandidates === 'function'
+        ? this.getSpatialEnemyCandidates(
+          p.x,
+          p.y,
+          Math.max(160, Number(p.radius) || 0)
+        )
+        : this.enemies;
+      for (let j = collisionCandidates.length - 1; j >= 0; j--) {
+        const e = collisionCandidates[j];
         if (e.dead) continue;
         if (p.type === 'flame' && p.hitEnemies.has(e)) continue;
+        if (p.hitEnemies instanceof Set && p.hitEnemies.has(e)) continue;
         if (Math.hypot(e.x - p.x, e.y - p.y) < e.radius + p.radius) {
           if (p.type === 'flame') p.hitEnemies.add(e);
           this.damageEnemyFromDefense(p.sourceDefense, e, p.damage);
@@ -5642,6 +5686,21 @@ class GameEngine {
             this.createExplosion(p.x, p.y, p.aoe, p.damage * 0.7, {
               sourceDefense: p.sourceDefense
             });
+            const plasmaSpec = this.getDefenseSpecializationOptions(p.sourceDefense)
+              .find(option => option.id === p.sourceDefense?.specializationId);
+            if (plasmaSpec?.id === 'plasma_nova') {
+              this.hazards.push({
+                x: p.x,
+                y: p.y,
+                radius: p.aoe * 0.82,
+                initialRadius: p.aoe * 0.82,
+                damage: Math.max(2, p.damage * 0.16 * (Number(plasmaSpec.modifiers?.burnDamageMultiplier) || 1)),
+                life: 3.5,
+                tickTimer: 0,
+                color: '#c026d3',
+                sourceDefense: p.sourceDefense
+              });
+            }
             this.projectiles.splice(i, 1);
             break;
           } else if (p.type === 'acid') {
@@ -5660,6 +5719,35 @@ class GameEngine {
             this.projectiles.splice(i, 1);
             break;
           } else if (p.type === 'bullet') {
+            if (p.ricochetRemaining > 0 && p.sourceDefense?.type === 'saw') {
+              if (!(p.hitEnemies instanceof Set)) p.hitEnemies = new Set();
+              p.hitEnemies.add(e);
+              const nextTarget = this.enemies
+                .filter(candidate => !candidate.dead && !p.hitEnemies.has(candidate))
+                .sort((left, right) => (
+                  Math.hypot(left.x - p.x, left.y - p.y)
+                  - Math.hypot(right.x - p.x, right.y - p.y)
+                ))[0];
+              if (nextTarget) {
+                const ricochetAngle = Math.atan2(nextTarget.y - p.y, nextTarget.x - p.x);
+                const speed = Math.max(1, Math.hypot(p.vx, p.vy));
+                p.vx = Math.cos(ricochetAngle) * speed;
+                p.vy = Math.sin(ricochetAngle) * speed;
+                p.damage *= Number(p.ricochetDamageMultiplier) || 1;
+                p.ricochetRemaining--;
+                break;
+              }
+            }
+            if (p.returnToSource && !p.returning && p.sourceDefense) {
+              const returnAngle = Math.atan2(p.sourceDefense.y - p.y, p.sourceDefense.x - p.x);
+              const speed = Math.max(1, Math.hypot(p.vx, p.vy));
+              p.vx = Math.cos(returnAngle) * speed;
+              p.vy = Math.sin(returnAngle) * speed;
+              p.damage *= Number(p.returnDamageMultiplier) || 1;
+              p.returning = true;
+              p.pierce = Math.max(1, Number(p.pierce) || 0);
+              break;
+            }
             if (p.pierce && p.pierce > 0) { p.pierce--; }
             else { this.projectiles.splice(i, 1); break; }
           }
@@ -6013,7 +6101,7 @@ class GameEngine {
     enemy.siegeTimer += dt;
     const cooldown = (Number(definition?.stats?.attackCooldownMs) || 2400) / 1000;
     if (enemy.siegeTimer >= cooldown) {
-      enemy.siegeTimer = 0;
+      enemy.siegeTimer = Math.max(0, enemy.siegeTimer - cooldown);
       const velocity = 230;
       this.enemyBullets.push({
         x: enemy.x,
@@ -6109,6 +6197,9 @@ class GameEngine {
       this.placedTowers.forEach(tower => {
         if (tower.type !== 'barrier' || this.isEnemyFlying(e)) return;
         const dist = Math.hypot(tower.x - e.x, tower.y - e.y);
+        // A barrier only intercepts its local lane. Distant barriers must not
+        // pull enemies away from another route across the whole battlefield.
+        if (dist > Math.max(140, (Number(tower.range) || 60) + 90)) return;
         if (dist < closestDecoyDist) {
           closestDecoyDist = dist;
           targetBarrier = tower;
@@ -6156,7 +6247,7 @@ class GameEngine {
           ? authoredCooldown
           : ((e.isLeviathan ? 0.8 : 1.2) * phaseRate);
         if (e.bulletTimer >= attackInterval) {
-          e.bulletTimer = 0;
+          e.bulletTimer = Math.max(0, e.bulletTimer - attackInterval);
           this.fireBossPattern(e);
         }
       }
@@ -6580,6 +6671,27 @@ class GameEngine {
       .find(option => option.id === defense.specializationId);
     const modifiers = specialization?.modifiers || {};
     let adjustedDamage = amount;
+    adjustedDamage *= 1 + Math.max(0, Number(defense.specializationRamp) || 0);
+    if (
+      specialization?.id === 'vulcan_cerberus'
+      && Number(defense.specializationHeat) >= 85 * (Number(modifiers.heatCapacityMultiplier) || 1)
+    ) {
+      adjustedDamage *= 1.2;
+    }
+    if (specialization?.id === 'cryo_absolute_zero') {
+      const threshold = Math.max(
+        2,
+        Math.ceil(4 * (Number(modifiers.freezeThresholdMultiplier) || 1))
+      );
+      enemy.cryoFreezeStacks = (Number(enemy.cryoFreezeStacks) || 0) + 1;
+      if (enemy.cryoFreezeStacks >= threshold) {
+        enemy.cryoFreezeStacks = 0;
+        const frozenDuration = this.applyEnemyStun(enemy, 1.35);
+        if (frozenDuration > 0 || Number(enemy.stunTimer) > 0) {
+          adjustedDamage *= Number(modifiers.frozenDamageMultiplier) || 1;
+        }
+      }
+    }
     if (defense.type === 'acid' && enemy.traits?.includes('acid_resistant')) adjustedDamage *= 0.55;
     if (this.isEnemyFlying(enemy)) adjustedDamage *= Number(modifiers.flyingDamageMultiplier) || 1;
     if (enemy.isBoss) adjustedDamage *= Number(modifiers.eliteDamageMultiplier) || 1;
@@ -6641,6 +6753,13 @@ class GameEngine {
     }
 
     this.damageEnemy(enemy, adjustedDamage, { ignoreShield });
+    const defenseLifesteal = Math.max(0, Number(modifiers.defenseLifesteal) || 0);
+    if (defenseLifesteal > 0 && Number(defense.maxHp) > 0 && Number(defense.hp) > 0) {
+      defense.hp = Math.min(
+        defense.maxHp,
+        defense.hp + (adjustedDamage * defenseLifesteal)
+      );
+    }
 
     const resonanceThreshold = Math.floor(Number(modifiers.resonanceThreshold) || 0);
     if (resonanceThreshold > 0 && !enemy.dead) {
@@ -6774,6 +6893,25 @@ class GameEngine {
       ) return;
       const specialization = this.getDefenseSpecializationOptions(hazard.sourceDefense)
         .find(option => option.id === hazard.sourceDefense.specializationId);
+      const spreadChance = Number(specialization?.modifiers?.spreadBurnChance) || 0;
+      if (
+        spreadChance > 0
+        && this.getRunRandom() < spreadChance
+        && this.hazards.filter(candidate => candidate.spreadGeneration > 0).length < 18
+      ) {
+        this.hazards.push({
+          x: enemy.x,
+          y: enemy.y,
+          radius: Math.max(36, hazard.radius * 0.58),
+          initialRadius: Math.max(36, hazard.radius * 0.58),
+          damage: Math.max(2, hazard.damage * 0.72),
+          life: Math.min(4, hazard.life + 1),
+          tickTimer: 0,
+          color: hazard.color,
+          sourceDefense: hazard.sourceDefense,
+          spreadGeneration: (Number(hazard.spreadGeneration) || 0) + 1
+        });
+      }
       const growth = Number(specialization?.modifiers?.growthPerKill) || 0;
       const maximumMultiplier = Number(specialization?.modifiers?.maximumRadiusMultiplier) || 1;
       if (growth <= 0) return;
@@ -7440,7 +7578,9 @@ class GameEngine {
       });
     } else if (heroId === 'selene') {
       const duration = (Number(effect.enemyTimeStopMs) || 5000) / 1000;
-      this.freezeTimer = Math.max(this.freezeTimer, duration);
+      this.enemies.forEach(enemy => {
+        this.applyEnemyStun(enemy, duration);
+      });
       this.hostileProjectileFreezeTimer = Math.max(
         this.hostileProjectileFreezeTimer,
         (Number(effect.hostileProjectileTimeStopMs) || 5000) / 1000
@@ -7494,7 +7634,7 @@ class GameEngine {
       if (mechanic === 'nyx_city_blackout') {
         const duration = (Number(effect.stunDurationMs) || 4200) / 1000;
         this.enemies.forEach(enemy => {
-          enemy.stunTimer = Math.max(Number(enemy.stunTimer) || 0, duration);
+          this.applyEnemyStun(enemy, duration);
         });
         this.placedTowers
           .filter(defense => defense.id === 'railgun_pylon')
@@ -7506,10 +7646,10 @@ class GameEngine {
             );
           });
       } else if (mechanic === 'aurelia_golden_minute') {
-        this.freezeTimer = Math.max(
-          this.freezeTimer,
-          (Number(effect.enemyFreezeMs) || 4500) / 1000
-        );
+        const freezeDuration = (Number(effect.enemyFreezeMs) || 4500) / 1000;
+        this.enemies.forEach(enemy => {
+          this.applyEnemyStun(enemy, freezeDuration);
+        });
         this.placedTowers.forEach(defense => {
           if (defense.fireRate > 0) {
             defense.fireRate *= Number(effect.defenseFireRateMultiplier) || 0.62;
@@ -7587,10 +7727,7 @@ class GameEngine {
         }
       } else if (mechanic === 'freyja_fimbul_countercharge') {
         [...this.enemies].forEach(enemy => {
-          const angle = Math.atan2(enemy.y - this.citadel.y, enemy.x - this.citadel.x);
-          const pushDistance = Number(effect.pushDistance) || 150;
-          enemy.x += Math.cos(angle) * pushDistance;
-          enemy.y += Math.sin(angle) * pushDistance;
+          this.displaceEnemy(enemy, this.citadel.x, this.citadel.y, Number(effect.pushDistance) || 150);
           if (enemy.slowTimer > 0) {
             this.damageEnemy(enemy, Number(effect.frozenDamage) || 420);
             if (!enemy.dead) {
@@ -7750,6 +7887,7 @@ class GameEngine {
     const startButton = document.getElementById('btn-start-floor');
     startButton.textContent = this.towerCompleted ? 'Rejouer l’Étage 100' : `Gravir l’Étage ${this.towerFloor}`;
     startButton.onclick = () => {
+      this.towerMutatorsBeforeAttempt = this.towerMutators.slice();
       const floorMutator = this.pendingTowerMutator;
       if (!this.towerMutators.some(mutator => mutator.id === floorMutator.id)) {
         this.towerMutators.push(floorMutator);
@@ -10311,8 +10449,13 @@ class GameEngine {
     if (this.isTowerMode && this.campaignStateBeforeTower) {
       const failedFloor = this.wave;
       const returnState = this.campaignStateBeforeTower;
+      const towerMutatorsBeforeAttempt = Array.isArray(this.towerMutatorsBeforeAttempt)
+        ? this.towerMutatorsBeforeAttempt.slice()
+        : this.towerMutators.slice(0, -1);
       this.closeAllGameplayModals();
       this.restoreGameplayState(returnState);
+      this.towerMutators = towerMutatorsBeforeAttempt;
+      this.towerMutatorsBeforeAttempt = null;
       this.showFeedback(`Étage ${failedFloor} échoué · campagne restaurée sans perte`, '#ef4444');
       this.saveProgress();
       this.openTowerInfinitumModal();
@@ -11195,6 +11338,10 @@ function bootGame() {
       game = new GameEngine();
       window.game = game;
       game.init();
+      // Exposed only as a diagnostic handle for automated release gates and
+      // in-browser accessibility smoke tests; gameplay state remains private.
+      window.__INFERNAL_CITY_GAME__ = game;
+
     }
   } catch (error) {
     console.error('Impossible de démarrer Infernal City.', error);

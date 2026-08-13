@@ -19,7 +19,7 @@ function readPngSize(filePath) {
 
 test('le manifeste PWA reference deux icones PNG carrees valides', () => {
   const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'manifest.webmanifest'), 'utf8'));
-  assert.equal(manifest.version, '2.11.0');
+  assert.equal(manifest.version, '3.0.0');
   assert.equal(manifest.display, 'standalone');
   assert.equal(manifest.start_url, './');
   assert.deepEqual(manifest.icons.map(icon => icon.sizes), ['192x192', '512x512']);
@@ -67,12 +67,18 @@ test('le service worker precache uniquement des fichiers locaux existants', () =
 
 test('le script PWA limite son enregistrement aux contextes surs', () => {
   const source = fs.readFileSync(path.join(ROOT, 'pwa.v4.js'), 'utf8');
+  const index = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
   assert.match(source, /window\.isSecureContext/);
   assert.match(source, /serviceWorker\.register\('\.\/sw\.js'/);
   assert.match(source, /updateViaCache:\s*'none'/);
+  assert.match(source, /SKIP_WAITING/);
+  assert.match(index, /id="pwa-status-banner"[^>]*role="status"/);
+  assert.match(index, /id="pwa-status-title"/);
+  assert.match(index, /id="pwa-status-message"/);
+  assert.match(index, /id="btn-install-update"/);
 });
 
-test('les actifs coeur 2.11 sont servis network first sans precacher les medias lourds', () => {
+test('les actifs coeur 3.0 sont servis network first et le pack terrain reste hors ligne', () => {
   const index = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
   const worker = fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8');
 
@@ -80,7 +86,7 @@ test('les actifs coeur 2.11 sont servis network first sans precacher les medias 
   assert.match(index, /audio\.v8\.js/);
   assert.match(index, /game\.v9\.js/);
   assert.match(index, /pwa\.v4\.js/);
-  assert.match(worker, /RELEASE_VERSION = '2\.11\.0'/);
+  assert.match(worker, /RELEASE_VERSION = '3\.0\.0'/);
   assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}core-\$\{RELEASE_VERSION\}`/);
   assert.match(worker, /vn-scenes\.v1\.js/);
   assert.match(worker, /characters\.v1\.js/);
@@ -169,6 +175,9 @@ test('l installation exige le coeur mais tolere un actif optionnel indisponible'
   assert.ok(essentialUrls.includes('./game.v9.js'));
   assert.ok(optionalUrls.includes('./manifest.webmanifest'));
   assert.equal(worker.warnings.length, 1);
+  assert.equal(worker.getSkipWaitingCalls(), 0);
+  worker.listeners.message({ data: { type: 'SKIP_WAITING' } });
+  await Promise.resolve();
   assert.equal(worker.getSkipWaitingCalls(), 1);
 });
 
@@ -219,7 +228,10 @@ test('github actions execute le controle complet avec des permissions minimales'
   assert.match(workflow, /uses: actions\/checkout@v4/);
   assert.match(workflow, /uses: actions\/setup-node@v4/);
   assert.match(workflow, /node-version: 22/);
+  assert.match(workflow, /run: npm ci/);
   assert.match(workflow, /run: npm run check/);
+  assert.match(workflow, /run: npx playwright install --with-deps chromium/);
+  assert.match(workflow, /run: npm run test:e2e/);
   assert.doesNotMatch(workflow, /VERCEL_TOKEN|secrets\./);
 });
 

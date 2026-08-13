@@ -4296,7 +4296,6 @@ body:is(.text-extra-large, [data-text-size="extra-large"]) {
   .mission-briefing-box > .briefing-objective,
   .mission-briefing-box .difficulty-field small,
   .mission-briefing-box .planner-heading,
-  .mission-briefing-box .daily-challenge-card,
   .mission-briefing-box .briefing-steps,
   .mission-briefing-box .checkpoint-card {
     display: none;
@@ -4328,6 +4327,35 @@ body:is(.text-extra-large, [data-text-size="extra-large"]) {
 
   .mission-briefing-box .briefing-actions button {
     min-height: 44px;
+  }
+
+  .mission-briefing-box .daily-challenge-card {
+    display: grid;
+    grid-template-columns: minmax(110px, 0.7fr) minmax(220px, 1.2fr) minmax(180px, 0.8fr);
+    gap: 6px;
+    margin-top: 6px;
+    padding: 6px;
+  }
+
+  .mission-briefing-box .daily-challenge-card .section-eyebrow,
+  .mission-briefing-box .daily-challenge-card > small {
+    display: none;
+  }
+
+  .mission-briefing-box .daily-challenge-card h3 {
+    margin: 0;
+    font-size: 0.78rem;
+  }
+
+  .mission-briefing-box .daily-challenge-facts {
+    gap: 3px;
+    font-size: 0.58rem;
+  }
+
+  .mission-briefing-box #btn-daily-challenge {
+    min-height: 44px;
+    padding: 5px 8px;
+    font-size: 0.65rem;
   }
 
   .adult-gate {
