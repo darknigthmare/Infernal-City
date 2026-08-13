@@ -1,7 +1,8 @@
 const { defineConfig } = require('@playwright/test');
 
 const port = Number(process.env.PLAYWRIGHT_PORT || 48733);
-const baseURL = `http://127.0.0.1:${port}`;
+const externalBaseURL = process.env.PLAYWRIGHT_BASE_URL;
+const baseURL = externalBaseURL || `http://127.0.0.1:${port}`;
 
 module.exports = defineConfig({
   testDir: './tests/e2e',
@@ -19,6 +20,7 @@ module.exports = defineConfig({
   use: {
     baseURL,
     browserName: 'chromium',
+    serviceWorkers: 'block',
     colorScheme: 'dark',
     locale: 'fr-FR',
     screenshot: 'only-on-failure',
@@ -30,7 +32,7 @@ module.exports = defineConfig({
     { name: 'portrait-chromium', use: { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true } },
     { name: 'landscape-chromium', use: { viewport: { width: 844, height: 390 }, isMobile: true, hasTouch: true } }
   ],
-  webServer: {
+  webServer: externalBaseURL ? undefined : {
     command: 'node tests/e2e/server.cjs',
     url: baseURL,
     reuseExistingServer: !process.env.CI,

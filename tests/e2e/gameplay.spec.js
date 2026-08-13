@@ -22,6 +22,7 @@ async function openBriefing(page) {
   await expect(gate).toBeVisible();
   await expect(gate).toHaveClass(/active/);
   await page.locator('#btn-enter-adult').click();
+  await expect(gate).not.toHaveClass(/active/);
   const briefing = page.locator('#mission-briefing-modal');
   await expect(briefing).toBeVisible();
   await expect(briefing).toHaveClass(/active/);
@@ -133,6 +134,15 @@ test('portail adulte → briefing → déploiement → combat, contrôles tactiq
   await expect(zoomText).not.toHaveText(initialZoom);
 
   await placeDefenses(page, 1);
+
+  const pwaBanner = page.locator('#pwa-status-banner');
+  await expect(pwaBanner).toBeVisible();
+  await expect(pwaBanner).toHaveAttribute('data-actionable', 'false');
+  await page.locator('#btn-open-hq').click();
+  await expect(page.locator('#hq-menu-modal')).toHaveClass(/active/);
+  await page.locator('#btn-resume-combat').click();
+  await expect(page.locator('#hq-menu-modal')).not.toHaveClass(/active/);
+
   await page.locator('#btn-launch-wave').click();
   await expect(page.locator('#tactical-phase-txt')).toContainText('COMBAT');
 
@@ -146,11 +156,6 @@ test('portail adulte → briefing → déploiement → combat, contrôles tactiq
   await expect(page.locator('#btn-combat-pause')).toHaveAttribute('aria-pressed', 'true');
   await page.locator('#btn-combat-pause').click();
   await expect(page.locator('#btn-combat-pause')).toHaveText('PAUSE');
-
-  await page.locator('#btn-open-hq').click();
-  await expect(page.locator('#hq-menu-modal')).toHaveClass(/active/);
-  await page.locator('#btn-resume-combat').click();
-  await expect(page.locator('#hq-menu-modal')).not.toHaveClass(/active/);
 
   const layout = await page.evaluate(() => ({
     viewport: document.documentElement.clientWidth,
@@ -219,6 +224,7 @@ test('une panne de stockage déclenche une alerte persistante et actionnable', a
   });
   await page.goto('/');
   await page.locator('#btn-enter-adult').click();
+  await page.evaluate(() => window.__INFERNAL_CITY_GAME__.saveProgress());
   const banner = page.locator('#save-failure-banner');
   await expect(banner).toBeVisible();
   await expect(banner).toContainText(/stockage local|sauvegarde/i);

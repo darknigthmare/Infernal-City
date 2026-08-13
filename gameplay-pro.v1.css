@@ -84,6 +84,7 @@
 
 .pwa-status-banner {
   position: fixed;
+  pointer-events: none;
   z-index: 89;
   top: 84px;
   right: max(10px, env(safe-area-inset-right));
@@ -126,6 +127,10 @@
 .pwa-status-banner button {
   flex: 0 0 auto;
   min-height: 40px;
+}
+
+.pwa-status-banner[data-actionable="true"] #btn-install-update {
+  pointer-events: auto;
 }
 
 .pwa-status-banner[data-state="error"] {

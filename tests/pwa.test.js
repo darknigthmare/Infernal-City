@@ -68,14 +68,18 @@ test('le service worker precache uniquement des fichiers locaux existants', () =
 test('le script PWA limite son enregistrement aux contextes surs', () => {
   const source = fs.readFileSync(path.join(ROOT, 'pwa.v4.js'), 'utf8');
   const index = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  const styles = fs.readFileSync(path.join(ROOT, 'gameplay-pro.v1.css'), 'utf8');
   assert.match(source, /window\.isSecureContext/);
   assert.match(source, /serviceWorker\.register\('\.\/sw\.js'/);
   assert.match(source, /updateViaCache:\s*'none'/);
   assert.match(source, /SKIP_WAITING/);
+  assert.match(source, /banner\.dataset\.actionable\s*=\s*String\(actionable\)/);
   assert.match(index, /id="pwa-status-banner"[^>]*role="status"/);
   assert.match(index, /id="pwa-status-title"/);
   assert.match(index, /id="pwa-status-message"/);
   assert.match(index, /id="btn-install-update"/);
+  assert.match(styles, /\.pwa-status-banner\s*\{[\s\S]*?pointer-events:\s*none/);
+  assert.match(styles, /\.pwa-status-banner\[data-actionable="true"\] #btn-install-update\s*\{[\s\S]*?pointer-events:\s*auto/);
 });
 
 test('les actifs coeur 3.0 sont servis network first et le pack terrain reste hors ligne', () => {
@@ -225,8 +229,8 @@ test('vercel applique des headers de securite et de cache compatibles avec le je
 test('github actions execute le controle complet avec des permissions minimales', () => {
   const workflow = fs.readFileSync(path.join(ROOT, '.github', 'workflows', 'ci.yml'), 'utf8');
   assert.match(workflow, /permissions:\s*\n\s*contents: read/);
-  assert.match(workflow, /uses: actions\/checkout@v4/);
-  assert.match(workflow, /uses: actions\/setup-node@v4/);
+  assert.match(workflow, /uses: actions\/checkout@v5/);
+  assert.match(workflow, /uses: actions\/setup-node@v5/);
   assert.match(workflow, /node-version: 22/);
   assert.match(workflow, /run: npm ci/);
   assert.match(workflow, /run: npm run check/);
