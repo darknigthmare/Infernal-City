@@ -1,10 +1,11 @@
 'use strict';
 
 const CACHE_PREFIX = 'infernal-city-';
-const RELEASE_VERSION = '3.0.0';
+const RELEASE_VERSION = '3.1.0';
 const CACHE_NAME = `${CACHE_PREFIX}core-${RELEASE_VERSION}`;
 const MEDIA_CACHE_NAME = `${CACHE_PREFIX}media-${RELEASE_VERSION}`;
 const MAX_MEDIA_CACHE_ENTRIES = 320;
+const LEGION_MEDIA_MANIFEST_URL = './assets/animations/enemy-legions/manifest.json';
 
 const EXPANSION_TERRAIN_PATHS = new Set([
   'assets/environment/map-western-wall.webp',
@@ -22,11 +23,14 @@ const ESSENTIAL_PRECACHE_URLS = [
   './characters.v1.js',
   './vn-expansion.v1.js',
   './adult-scenes.v1.js',
+  './enemy-legions.v1.js',
   './campaign-content.v1.js',
   './specialization-runtime.v1.js',
   './game.v9.js',
   './gameplay-professional.v1.js',
   './infinitum-runtime.v1.js',
+  './enemy-legions-runtime.v1.js',
+  './enemy-legions-professional.v1.js',
   './pwa.v4.js',
   './assets/environment/infernal-city-approach-terrain.webp',
   './assets/environment/infernal-city-coastline.webp',
@@ -44,6 +48,23 @@ const OPTIONAL_PRECACHE_URLS = [
   './assets/icons/icon-512.png'
 ];
 
+async function precacheLegionMedia() {
+  try {
+    const response = await fetch(LEGION_MEDIA_MANIFEST_URL, { cache: 'no-store' });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const manifest = await response.json();
+    const urls = Array.isArray(manifest.runtimePrecache) ? manifest.runtimePrecache : [];
+    const mediaCache = await caches.open(MEDIA_CACHE_NAME);
+    const results = await Promise.allSettled(urls.map(url => mediaCache.add(`./${url}`)));
+    results.forEach((result, index) => {
+      if (result.status === 'rejected') console.warn(`Planche de légion hors ligne ignorée : ${urls[index]}`, result.reason);
+    });
+    await trimMediaCache(mediaCache);
+  } catch (error) {
+    console.warn('Pack de légions hors ligne indisponible pendant l’installation.', error);
+  }
+}
+
 async function precacheRelease() {
   const cache = await caches.open(CACHE_NAME);
   await cache.addAll(ESSENTIAL_PRECACHE_URLS);
@@ -54,6 +75,7 @@ async function precacheRelease() {
       return url;
     })
   );
+  await precacheLegionMedia();
   optionalResults.forEach((result, index) => {
     if (result.status === 'rejected') {
       console.warn(`Précache optionnel ignoré : ${OPTIONAL_PRECACHE_URLS[index]}`, result.reason);

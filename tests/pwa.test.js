@@ -19,7 +19,7 @@ function readPngSize(filePath) {
 
 test('le manifeste PWA reference deux icones PNG carrees valides', () => {
   const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'manifest.webmanifest'), 'utf8'));
-  assert.equal(manifest.version, '3.0.0');
+  assert.equal(manifest.version, '3.1.0');
   assert.equal(manifest.display, 'standalone');
   assert.equal(manifest.start_url, './');
   assert.deepEqual(manifest.icons.map(icon => icon.sizes), ['192x192', '512x512']);
@@ -73,7 +73,7 @@ test('le script PWA limite son enregistrement aux contextes surs', () => {
   assert.match(source, /serviceWorker\.register\('\.\/sw\.js'/);
   assert.match(source, /updateViaCache:\s*'none'/);
   assert.match(source, /SKIP_WAITING/);
-  assert.match(source, /banner\.dataset\.actionable\s*=\s*String\(actionable\)/);
+  assert.match(source, /banner\.dataset\.actionable\s*=\s*String\((?:Boolean\()?actionable\)?\)/);
   assert.match(index, /id="pwa-status-banner"[^>]*role="status"/);
   assert.match(index, /id="pwa-status-title"/);
   assert.match(index, /id="pwa-status-message"/);
@@ -82,7 +82,7 @@ test('le script PWA limite son enregistrement aux contextes surs', () => {
   assert.match(styles, /\.pwa-status-banner\[data-actionable="true"\] #btn-install-update\s*\{[\s\S]*?pointer-events:\s*auto/);
 });
 
-test('les actifs coeur 3.0 sont servis network first et le pack terrain reste hors ligne', () => {
+test('les actifs coeur 3.1 sont servis network first et le pack terrain reste hors ligne', () => {
   const index = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
   const worker = fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8');
 
@@ -90,7 +90,7 @@ test('les actifs coeur 3.0 sont servis network first et le pack terrain reste ho
   assert.match(index, /audio\.v8\.js/);
   assert.match(index, /game\.v9\.js/);
   assert.match(index, /pwa\.v4\.js/);
-  assert.match(worker, /RELEASE_VERSION = '3\.0\.0'/);
+  assert.match(worker, /RELEASE_VERSION = '3\.1\.0'/);
   assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}core-\$\{RELEASE_VERSION\}`/);
   assert.match(worker, /vn-scenes\.v1\.js/);
   assert.match(worker, /characters\.v1\.js/);
@@ -178,7 +178,8 @@ test('l installation exige le coeur mais tolere un actif optionnel indisponible'
   assert.ok(essentialUrls.includes('./index.html'));
   assert.ok(essentialUrls.includes('./game.v9.js'));
   assert.ok(optionalUrls.includes('./manifest.webmanifest'));
-  assert.equal(worker.warnings.length, 1);
+  assert.equal(worker.warnings.length, 2);
+  assert.ok(worker.warnings.every(args => args[1] instanceof Error));
   assert.equal(worker.getSkipWaitingCalls(), 0);
   worker.listeners.message({ data: { type: 'SKIP_WAITING' } });
   await Promise.resolve();

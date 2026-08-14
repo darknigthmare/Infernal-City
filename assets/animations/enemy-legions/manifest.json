@@ -1,0 +1,2069 @@
+{
+  "schemaVersion": 1,
+  "provenance": {
+    "provider": "OpenAI",
+    "generator": "built-in image_gen",
+    "generationSession": "019fa90f-4247-7f51-b39b-8ed3d7e560d5",
+    "pipeline": "Pillow 1024x1024 normalization + 4 row crops + OpenAI remove_chroma_key.py",
+    "keyColor": "#00ff00",
+    "softMatte": true,
+    "despill": true
+  },
+  "counts": {
+    "enemies": 50,
+    "effects": 30,
+    "total": 80,
+    "generatedEnemies": 50,
+    "generatedEffects": 30,
+    "runtimeEffectAliases": 24,
+    "deployedWebp": 104
+  },
+  "sources": [
+    {
+      "sheet": 1,
+      "file": "exec-d046fbfa-db3c-4eb5-bf0e-e1e67846922e.png",
+      "sha256": "687c06e56735cde8d9ee65e282a7e03416de0cf96ce8946163375e991f6794d5",
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "normalizedWidth": 1024,
+      "normalizedHeight": 1024
+    },
+    {
+      "sheet": 2,
+      "file": "exec-69c8ed56-071e-4f68-9d83-1056a7462170.png",
+      "sha256": "368fff56ba440ff3477cf6c1c8aa90865efa2023050bf05c86269b419bbe6c1c",
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "normalizedWidth": 1024,
+      "normalizedHeight": 1024
+    },
+    {
+      "sheet": 3,
+      "file": "exec-f597aa36-226f-4942-817a-ecfc7102e20e.png",
+      "sha256": "8181f818fe676b7254bb7c119da4ee0d592df171e1df4ea61679b098ce7d43c0",
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "normalizedWidth": 1024,
+      "normalizedHeight": 1024
+    },
+    {
+      "sheet": 4,
+      "file": "exec-214fc421-21b7-42e2-91dd-4879e515e332.png",
+      "sha256": "3e7911c92de28f5a3b120c9d37e8e82d26bdb57ac1b93395d5a9ff204f673f8f",
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "normalizedWidth": 1024,
+      "normalizedHeight": 1024
+    },
+    {
+      "sheet": 5,
+      "file": "exec-990901c0-6aaa-4942-a63c-e9e3ff3624a5.png",
+      "sha256": "10789cef1e15d3ae3f3d1d0bcbd42ed06e05ee4202425149dd146ef8c5aae3eb",
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "normalizedWidth": 1024,
+      "normalizedHeight": 1024
+    },
+    {
+      "sheet": 6,
+      "file": "exec-8fcc388e-c350-4a54-959c-714952296e59.png",
+      "sha256": "ec62766966a3cce7a3ce3d73287f931ab431343cc105fa74c35aa44d0d0771c4",
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "normalizedWidth": 1024,
+      "normalizedHeight": 1024
+    },
+    {
+      "sheet": 7,
+      "file": "exec-d657a75f-958f-4cb3-bbce-759c2919953b.png",
+      "sha256": "0af3b6b05bfffd8ace46652c8f3a14c00d038ffe7bc1790a386fa37ab0798297",
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "normalizedWidth": 1024,
+      "normalizedHeight": 1024
+    },
+    {
+      "sheet": 8,
+      "file": "exec-e265340b-8503-4ad4-86ab-54cb10f32638.png",
+      "sha256": "c8bf5e3ff90a7d632371b79eb51bd25a2ef0815c2418fd4f9889616b98ac6d4f",
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "normalizedWidth": 1024,
+      "normalizedHeight": 1024
+    },
+    {
+      "sheet": 9,
+      "file": "exec-30524590-948d-43e1-bc06-309751181e74.png",
+      "sha256": "fdf7e92b28a0f33671e5c564d62c62651a3d8ba692592c7f0418118fdd954a43",
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "normalizedWidth": 1024,
+      "normalizedHeight": 1024
+    },
+    {
+      "sheet": 10,
+      "file": "exec-d101247c-cd71-4e86-9486-66c29e04a780.png",
+      "sha256": "85ca4bc641561f0a2f98213f0d5df929f51680f491ff6f75adfadbe4b37dbf80",
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "normalizedWidth": 1024,
+      "normalizedHeight": 1024
+    },
+    {
+      "sheet": 11,
+      "file": "exec-27437335-786d-44cd-8d32-9325c95edf53.png",
+      "sha256": "202dd4bebe19d9e00eba4ec0b1c630975ba7e3f2dd2ef7d7b79201123e308052",
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "normalizedWidth": 1024,
+      "normalizedHeight": 1024
+    },
+    {
+      "sheet": 12,
+      "file": "exec-b41134f6-53d5-4052-a73f-252b04a6d0ed.png",
+      "sha256": "4760b7d8d38d6bb5a1eb99d1c1a791d211f1d353c687b8cf0ea21a3a5c540abf",
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "normalizedWidth": 1024,
+      "normalizedHeight": 1024
+    },
+    {
+      "sheet": 13,
+      "file": "exec-243ac3f1-13c5-4035-87a8-394de0c91391.png",
+      "sha256": "1bde06b8a654b6daa42e83d5e024ff58c68bf19295a0092ce2e228af8e98a0f8",
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "normalizedWidth": 1024,
+      "normalizedHeight": 1024
+    },
+    {
+      "sheet": 14,
+      "file": "exec-cbb7856d-64d4-4702-8a0b-a2316a3d277b.png",
+      "sha256": "b2e14fba4a8530cad05963e830ec51d59e492866ee6cf0f8d6c1f4a8a6f7585f",
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "normalizedWidth": 1024,
+      "normalizedHeight": 1024
+    },
+    {
+      "sheet": 15,
+      "file": "exec-95584037-82e0-4faf-9a37-5e745072ac8e.png",
+      "sha256": "89ae16fe508bce0420de6978f33953b0a424ee691c473b6e2f1463821b8e0310",
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "normalizedWidth": 1024,
+      "normalizedHeight": 1024
+    },
+    {
+      "sheet": 16,
+      "file": "exec-788dacaf-fae7-464e-a02f-099836095b4d.png",
+      "sha256": "60fd696e7729e397ab830aeeb2a443584dd2ae505b41036fe3cbbf557313cb5e",
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "normalizedWidth": 1024,
+      "normalizedHeight": 1024
+    },
+    {
+      "sheet": 17,
+      "file": "exec-92bbda08-eab3-4c6e-a765-ca8245c08236.png",
+      "sha256": "6839a3502d69648a1c8ad29c9238bc2ea9d1ebba292fc825d287862d84677c2c",
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "normalizedWidth": 1024,
+      "normalizedHeight": 1024
+    },
+    {
+      "sheet": 18,
+      "file": "exec-76d0eaf2-e458-4619-95ec-fd1110f7dff4.png",
+      "sha256": "92af79ccc13b68917471162d94e99d1d003acbb7af0cf2d98d3db9d2ef2e43f7",
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "normalizedWidth": 1024,
+      "normalizedHeight": 1024
+    },
+    {
+      "sheet": 19,
+      "file": "exec-daf53a62-0c31-44cb-956d-4de70f24cb03.png",
+      "sha256": "dd8286fad92a2c594cd7384fe6e55c55a63c0755cbcc194ec163abf6bb65dd56",
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "normalizedWidth": 1024,
+      "normalizedHeight": 1024
+    },
+    {
+      "sheet": 20,
+      "file": "exec-12ae5015-bb16-44bd-9e76-a8ffbcd1e6d3.png",
+      "sha256": "0d1e573c0eb45d87981c95ebd3a26353b45e7ee0259b0ac923ced635bdd6d1ff",
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "normalizedWidth": 1024,
+      "normalizedHeight": 1024
+    }
+  ],
+  "assets": [
+    {
+      "id": "bioforge_scarab",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/bioforge_scarab.webp",
+      "sourceSheet": 1,
+      "sourceRow": 0,
+      "sourceSha256": "687c06e56735cde8d9ee65e282a7e03416de0cf96ce8946163375e991f6794d5",
+      "sha256": "d2cc792c9e02d94a3f11fda54d73866b0cb55f2af54159be2e3270b0a098b788",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 186894,
+        "partialPixels": 13716,
+        "opaquePixels": 61534
+      }
+    },
+    {
+      "id": "bioforge_hound",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/bioforge_hound.webp",
+      "sourceSheet": 1,
+      "sourceRow": 1,
+      "sourceSha256": "687c06e56735cde8d9ee65e282a7e03416de0cf96ce8946163375e991f6794d5",
+      "sha256": "f4b8c3b10ada9f3ad51138d7b7d1b98017b65558d948ead9546854023369086c",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 189729,
+        "partialPixels": 17801,
+        "opaquePixels": 54614
+      }
+    },
+    {
+      "id": "bioforge_stitcher",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/bioforge_stitcher.webp",
+      "sourceSheet": 1,
+      "sourceRow": 2,
+      "sourceSha256": "687c06e56735cde8d9ee65e282a7e03416de0cf96ce8946163375e991f6794d5",
+      "sha256": "705615d8afb9339c903b14eff2bab95335458a3c1816f35e6b3be7abc22b38c5",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 194870,
+        "partialPixels": 11539,
+        "opaquePixels": 55735
+      }
+    },
+    {
+      "id": "bioforge_carapace",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/bioforge_carapace.webp",
+      "sourceSheet": 1,
+      "sourceRow": 3,
+      "sourceSha256": "687c06e56735cde8d9ee65e282a7e03416de0cf96ce8946163375e991f6794d5",
+      "sha256": "d2453747881f1c50a516a252e7e1565d814089c32b4e0cf4cbd0fdf2b4e4ca4b",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 134270,
+        "partialPixels": 16558,
+        "opaquePixels": 111316
+      }
+    },
+    {
+      "id": "ossuary_bone_thrall",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/ossuary_bone_thrall.webp",
+      "sourceSheet": 2,
+      "sourceRow": 0,
+      "sourceSha256": "368fff56ba440ff3477cf6c1c8aa90865efa2023050bf05c86269b419bbe6c1c",
+      "sha256": "076a222c3b71c31665c55a3e5f87a6d7f5db1f80664004bd0f389ea0167120b5",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 183513,
+        "partialPixels": 22194,
+        "opaquePixels": 56437
+      }
+    },
+    {
+      "id": "ossuary_spine_archer",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/ossuary_spine_archer.webp",
+      "sourceSheet": 2,
+      "sourceRow": 1,
+      "sourceSha256": "368fff56ba440ff3477cf6c1c8aa90865efa2023050bf05c86269b419bbe6c1c",
+      "sha256": "2ceebb06219928c3b7848783cc80c62121d4ce1226cf368aca9819800c9eb9a6",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 203158,
+        "partialPixels": 17636,
+        "opaquePixels": 41350
+      }
+    },
+    {
+      "id": "ossuary_funeral_chantress",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/ossuary_funeral_chantress.webp",
+      "sourceSheet": 2,
+      "sourceRow": 2,
+      "sourceSha256": "368fff56ba440ff3477cf6c1c8aa90865efa2023050bf05c86269b419bbe6c1c",
+      "sha256": "49a8b1eb81bb644370e21ae9d1eaa71180d1206aeb396b14bac2c5a4a8f47cf1",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 152704,
+        "partialPixels": 38240,
+        "opaquePixels": 71200
+      }
+    },
+    {
+      "id": "ossuary_sarcophagus_knight",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/ossuary_sarcophagus_knight.webp",
+      "sourceSheet": 2,
+      "sourceRow": 3,
+      "sourceSha256": "368fff56ba440ff3477cf6c1c8aa90865efa2023050bf05c86269b419bbe6c1c",
+      "sha256": "711f9ba321f3e4d329cb84c440327dbe08b8b2b7f05ae411c363238f8b99bb72",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 115911,
+        "partialPixels": 27857,
+        "opaquePixels": 118376
+      }
+    },
+    {
+      "id": "void_mote",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/void_mote.webp",
+      "sourceSheet": 3,
+      "sourceRow": 0,
+      "sourceSha256": "8181f818fe676b7254bb7c119da4ee0d592df171e1df4ea61679b098ce7d43c0",
+      "sha256": "c00f639b206a1f630c6d714da0945c2229c906b111b46d24b699b2678616a54d",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 208440,
+        "partialPixels": 17747,
+        "opaquePixels": 35957
+      }
+    },
+    {
+      "id": "void_phasewalker",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/void_phasewalker.webp",
+      "sourceSheet": 3,
+      "sourceRow": 1,
+      "sourceSha256": "8181f818fe676b7254bb7c119da4ee0d592df171e1df4ea61679b098ce7d43c0",
+      "sha256": "c255208e60deaae35738ada46c93f1afdbfe37b15e765ea771d507ac5c29b4f3",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 195745,
+        "partialPixels": 19497,
+        "opaquePixels": 46902
+      }
+    },
+    {
+      "id": "void_nullifier",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/void_nullifier.webp",
+      "sourceSheet": 3,
+      "sourceRow": 2,
+      "sourceSha256": "8181f818fe676b7254bb7c119da4ee0d592df171e1df4ea61679b098ce7d43c0",
+      "sha256": "ddab561018c898a55b9ca9113486bd4c7ccd2c19472bb6cd78df9196b230db05",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 186218,
+        "partialPixels": 28875,
+        "opaquePixels": 47051
+      }
+    },
+    {
+      "id": "void_gravity_maw",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/void_gravity_maw.webp",
+      "sourceSheet": 3,
+      "sourceRow": 3,
+      "sourceSha256": "8181f818fe676b7254bb7c119da4ee0d592df171e1df4ea61679b098ce7d43c0",
+      "sha256": "28c5a2c1f1f7e99f1ae626f9b298071ea3169537fcf08b2b6bdcab89cecbfac0",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 140838,
+        "partialPixels": 24392,
+        "opaquePixels": 96914
+      }
+    },
+    {
+      "id": "infernal_ember_imp",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/infernal_ember_imp.webp",
+      "sourceSheet": 4,
+      "sourceRow": 0,
+      "sourceSha256": "3e7911c92de28f5a3b120c9d37e8e82d26bdb57ac1b93395d5a9ff204f673f8f",
+      "sha256": "318a125356a0d27475ba9085a65d01f074f14a27c154cd5a80b53903334882a2",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 187491,
+        "partialPixels": 8890,
+        "opaquePixels": 65763
+      }
+    },
+    {
+      "id": "infernal_cinder_hound",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/infernal_cinder_hound.webp",
+      "sourceSheet": 4,
+      "sourceRow": 1,
+      "sourceSha256": "3e7911c92de28f5a3b120c9d37e8e82d26bdb57ac1b93395d5a9ff204f673f8f",
+      "sha256": "f068b48d629c459a6b634feac65e79312d3389e292f5c880be90822688e564c3",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 180830,
+        "partialPixels": 16256,
+        "opaquePixels": 65058
+      }
+    },
+    {
+      "id": "infernal_brazier_flagellant",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/infernal_brazier_flagellant.webp",
+      "sourceSheet": 4,
+      "sourceRow": 2,
+      "sourceSha256": "3e7911c92de28f5a3b120c9d37e8e82d26bdb57ac1b93395d5a9ff204f673f8f",
+      "sha256": "76008587c29ea3853a8856a37693ec4f511e36883d2a6d36ba8f7ac96d5d98ad",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 162799,
+        "partialPixels": 16149,
+        "opaquePixels": 83196
+      }
+    },
+    {
+      "id": "infernal_gehenna_guard",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/infernal_gehenna_guard.webp",
+      "sourceSheet": 4,
+      "sourceRow": 3,
+      "sourceSha256": "3e7911c92de28f5a3b120c9d37e8e82d26bdb57ac1b93395d5a9ff204f673f8f",
+      "sha256": "c542d1b71086db0985519eb4dc8ec7c2ded80c931d1ded19c1392394f7fcbd0c",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 135185,
+        "partialPixels": 13822,
+        "opaquePixels": 113137
+      }
+    },
+    {
+      "id": "shadow_shardling",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/shadow_shardling.webp",
+      "sourceSheet": 5,
+      "sourceRow": 0,
+      "sourceSha256": "10789cef1e15d3ae3f3d1d0bcbd42ed06e05ee4202425149dd146ef8c5aae3eb",
+      "sha256": "54ceedb65cff7276dc98c6e0d2a0d868c4ccee977916e6a3cc64bfc2ca1852c0",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 207265,
+        "partialPixels": 12924,
+        "opaquePixels": 41955
+      }
+    },
+    {
+      "id": "shadow_blinkblade",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/shadow_blinkblade.webp",
+      "sourceSheet": 5,
+      "sourceRow": 1,
+      "sourceSha256": "10789cef1e15d3ae3f3d1d0bcbd42ed06e05ee4202425149dd146ef8c5aae3eb",
+      "sha256": "f4942aa057debafdb6d35f41571e0ea469d0e6c3ad465060cb06f39528a3d748",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 183742,
+        "partialPixels": 14579,
+        "opaquePixels": 63823
+      }
+    },
+    {
+      "id": "shadow_veil_specter",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/shadow_veil_specter.webp",
+      "sourceSheet": 5,
+      "sourceRow": 2,
+      "sourceSha256": "10789cef1e15d3ae3f3d1d0bcbd42ed06e05ee4202425149dd146ef8c5aae3eb",
+      "sha256": "c0e258a7bf181d9a46e1a13fce70a4f72042f6444159a682d1417fc29d75c3c6",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 199918,
+        "partialPixels": 13778,
+        "opaquePixels": 48448
+      }
+    },
+    {
+      "id": "shadow_black_lamplighter",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/shadow_black_lamplighter.webp",
+      "sourceSheet": 5,
+      "sourceRow": 3,
+      "sourceSha256": "10789cef1e15d3ae3f3d1d0bcbd42ed06e05ee4202425149dd146ef8c5aae3eb",
+      "sha256": "95d07b0c31df62aac7ff2fc441c6d7bdc8d96b5873b2fc6c8ea9e48039dbc94a",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 167463,
+        "partialPixels": 16886,
+        "opaquePixels": 77795
+      }
+    },
+    {
+      "id": "plague_miasma_rat",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/plague_miasma_rat.webp",
+      "sourceSheet": 6,
+      "sourceRow": 0,
+      "sourceSha256": "ec62766966a3cce7a3ce3d73287f931ab431343cc105fa74c35aa44d0d0771c4",
+      "sha256": "fbed2ba419e00774afb7c50b987c28c9e1ff4e1bdbd7f876ba9b1b24fe4f46c4",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 191825,
+        "partialPixels": 16480,
+        "opaquePixels": 53839
+      }
+    },
+    {
+      "id": "plague_pustule_bearer",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/plague_pustule_bearer.webp",
+      "sourceSheet": 6,
+      "sourceRow": 1,
+      "sourceSha256": "ec62766966a3cce7a3ce3d73287f931ab431343cc105fa74c35aa44d0d0771c4",
+      "sha256": "2e7da24df195571dea421d23cb03779cfa9ee594282e5f64e94b1040c71e6887",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 154821,
+        "partialPixels": 16909,
+        "opaquePixels": 90414
+      }
+    },
+    {
+      "id": "plague_septic_surgeon",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/plague_septic_surgeon.webp",
+      "sourceSheet": 6,
+      "sourceRow": 2,
+      "sourceSha256": "ec62766966a3cce7a3ce3d73287f931ab431343cc105fa74c35aa44d0d0771c4",
+      "sha256": "8229575d2d4a111c5782316a15bdbb2f50d93b6007ec496606b7a8bae8f670e6",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 164826,
+        "partialPixels": 24626,
+        "opaquePixels": 72692
+      }
+    },
+    {
+      "id": "plague_fungal_colossus",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/plague_fungal_colossus.webp",
+      "sourceSheet": 6,
+      "sourceRow": 3,
+      "sourceSha256": "ec62766966a3cce7a3ce3d73287f931ab431343cc105fa74c35aa44d0d0771c4",
+      "sha256": "39a840683cff6bcda4e0f690431c61d56c05f0010fb82ec413f15398b6962cfd",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 106369,
+        "partialPixels": 17517,
+        "opaquePixels": 138258
+      }
+    },
+    {
+      "id": "dreadtide_drowned_deckhand",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/dreadtide_drowned_deckhand.webp",
+      "sourceSheet": 7,
+      "sourceRow": 0,
+      "sourceSha256": "0af3b6b05bfffd8ace46652c8f3a14c00d038ffe7bc1790a386fa37ab0798297",
+      "sha256": "04e484ad2463469c8c09e1344a6dc0c0029f5a0bf71012b237c235a2ba8f4b8b",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 189800,
+        "partialPixels": 9618,
+        "opaquePixels": 62726
+      }
+    },
+    {
+      "id": "dreadtide_reef_cutlass",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/dreadtide_reef_cutlass.webp",
+      "sourceSheet": 7,
+      "sourceRow": 1,
+      "sourceSha256": "0af3b6b05bfffd8ace46652c8f3a14c00d038ffe7bc1790a386fa37ab0798297",
+      "sha256": "b3fe10d8f7fdda816688738d3e00c628623b227bdb6d9cdd69c83b906cda60b5",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 190640,
+        "partialPixels": 14586,
+        "opaquePixels": 56918
+      }
+    },
+    {
+      "id": "dreadtide_abyss_harpooner",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/dreadtide_abyss_harpooner.webp",
+      "sourceSheet": 7,
+      "sourceRow": 2,
+      "sourceSha256": "0af3b6b05bfffd8ace46652c8f3a14c00d038ffe7bc1790a386fa37ab0798297",
+      "sha256": "b22d1bf317fe889ce8632f34f280b8c42fefdb45f2f625ae9619c66243187bc8",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 192265,
+        "partialPixels": 14920,
+        "opaquePixels": 54959
+      }
+    },
+    {
+      "id": "dreadtide_coral_bulwark",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/dreadtide_coral_bulwark.webp",
+      "sourceSheet": 7,
+      "sourceRow": 3,
+      "sourceSha256": "0af3b6b05bfffd8ace46652c8f3a14c00d038ffe7bc1790a386fa37ab0798297",
+      "sha256": "94f74466d30aab930af0707efe60bb19541c29598e5e38f48b52e1bd4f5e027c",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 138431,
+        "partialPixels": 23992,
+        "opaquePixels": 99721
+      }
+    },
+    {
+      "id": "quantum_qubit_drone",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/quantum_qubit_drone.webp",
+      "sourceSheet": 8,
+      "sourceRow": 0,
+      "sourceSha256": "c8bf5e3ff90a7d632371b79eb51bd25a2ef0815c2418fd4f9889616b98ac6d4f",
+      "sha256": "2ec66821b74ac7afe4b40b65c198c8c585112302f0ca5c7b96b7872d9a1bd36f",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 210399,
+        "partialPixels": 13301,
+        "opaquePixels": 38444
+      }
+    },
+    {
+      "id": "quantum_lag_runner",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/quantum_lag_runner.webp",
+      "sourceSheet": 8,
+      "sourceRow": 1,
+      "sourceSha256": "c8bf5e3ff90a7d632371b79eb51bd25a2ef0815c2418fd4f9889616b98ac6d4f",
+      "sha256": "aba2ca39ab067721891dc986d4287a59174c6a80bde96c31fcbc8f41870af5fb",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 197677,
+        "partialPixels": 17336,
+        "opaquePixels": 47131
+      }
+    },
+    {
+      "id": "quantum_chronal_jammer",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/quantum_chronal_jammer.webp",
+      "sourceSheet": 8,
+      "sourceRow": 2,
+      "sourceSha256": "c8bf5e3ff90a7d632371b79eb51bd25a2ef0815c2418fd4f9889616b98ac6d4f",
+      "sha256": "d1cebe8b75632dd54b64912ae24f0e46f91e9c2e7c7b482402b8bbfe13f527e2",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 205184,
+        "partialPixels": 13985,
+        "opaquePixels": 42975
+      }
+    },
+    {
+      "id": "quantum_entangled_sentinel",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/quantum_entangled_sentinel.webp",
+      "sourceSheet": 8,
+      "sourceRow": 3,
+      "sourceSha256": "c8bf5e3ff90a7d632371b79eb51bd25a2ef0815c2418fd4f9889616b98ac6d4f",
+      "sha256": "704bff0389bb2d5bf597d804e32b5b8e2115693b9dde6a2c4b639f114bfa8bfb",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 158211,
+        "partialPixels": 16113,
+        "opaquePixels": 87820
+      }
+    },
+    {
+      "id": "ash_ember_wisp",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/ash_ember_wisp.webp",
+      "sourceSheet": 9,
+      "sourceRow": 0,
+      "sourceSha256": "fdf7e92b28a0f33671e5c564d62c62651a3d8ba692592c7f0418118fdd954a43",
+      "sha256": "f88fa1bc367ae4441ba766e236787141e052d28e4d7638295ace948f2234bc35",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 204886,
+        "partialPixels": 12059,
+        "opaquePixels": 45199
+      }
+    },
+    {
+      "id": "ash_cinder_dervish",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/ash_cinder_dervish.webp",
+      "sourceSheet": 9,
+      "sourceRow": 1,
+      "sourceSha256": "fdf7e92b28a0f33671e5c564d62c62651a3d8ba692592c7f0418118fdd954a43",
+      "sha256": "d63a7605e43321e497beb226c90011aac6d2a620841d003172d8e4d345e84150",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 185411,
+        "partialPixels": 17853,
+        "opaquePixels": 58880
+      }
+    },
+    {
+      "id": "ash_mirage_weaver",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/ash_mirage_weaver.webp",
+      "sourceSheet": 9,
+      "sourceRow": 2,
+      "sourceSha256": "fdf7e92b28a0f33671e5c564d62c62651a3d8ba692592c7f0418118fdd954a43",
+      "sha256": "8038a0094fd47debb6b28be0536b43dd693e2667a7d3668b989c17cb45c8e8e9",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 161847,
+        "partialPixels": 21318,
+        "opaquePixels": 78979
+      }
+    },
+    {
+      "id": "ash_censer_ifrit",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/ash_censer_ifrit.webp",
+      "sourceSheet": 9,
+      "sourceRow": 3,
+      "sourceSha256": "fdf7e92b28a0f33671e5c564d62c62651a3d8ba692592c7f0418118fdd954a43",
+      "sha256": "35087c7ad39c3ef13bc53a373c4bb70dc2ee8e491792985faa0d949daab8f4e2",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 108517,
+        "partialPixels": 13080,
+        "opaquePixels": 140547
+      }
+    },
+    {
+      "id": "nightmare_dream_claw",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/nightmare_dream_claw.webp",
+      "sourceSheet": 10,
+      "sourceRow": 0,
+      "sourceSha256": "85ca4bc641561f0a2f98213f0d5df929f51680f491ff6f75adfadbe4b37dbf80",
+      "sha256": "5583fc995a54bbdfe19c0115a22608ad4fbc4fef8523d75533309eb9bc84d3ae",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 200680,
+        "partialPixels": 15981,
+        "opaquePixels": 45483
+      }
+    },
+    {
+      "id": "nightmare_screaming_sleepwalker",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/nightmare_screaming_sleepwalker.webp",
+      "sourceSheet": 10,
+      "sourceRow": 1,
+      "sourceSha256": "85ca4bc641561f0a2f98213f0d5df929f51680f491ff6f75adfadbe4b37dbf80",
+      "sha256": "dd68319c0a0fb928cf67f243ee6da27ca7d5a5e19c3ed3ac444216d7d6a48fdd",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 178445,
+        "partialPixels": 22614,
+        "opaquePixels": 61085
+      }
+    },
+    {
+      "id": "nightmare_hypnosis_weaver",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/nightmare_hypnosis_weaver.webp",
+      "sourceSheet": 10,
+      "sourceRow": 2,
+      "sourceSha256": "85ca4bc641561f0a2f98213f0d5df929f51680f491ff6f75adfadbe4b37dbf80",
+      "sha256": "cbb20ed09449b6cbc0b94e21ba34f82fc77e5f59ff5f41ea1033e2716ce21833",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 188512,
+        "partialPixels": 17865,
+        "opaquePixels": 55767
+      }
+    },
+    {
+      "id": "nightmare_dream_eater",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/nightmare_dream_eater.webp",
+      "sourceSheet": 10,
+      "sourceRow": 3,
+      "sourceSha256": "85ca4bc641561f0a2f98213f0d5df929f51680f491ff6f75adfadbe4b37dbf80",
+      "sha256": "7669a1e72b56be5d53273dc8f12f7037ff93ef1d25f33129d671e2b54148e3f3",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 108110,
+        "partialPixels": 20718,
+        "opaquePixels": 133316
+      }
+    },
+    {
+      "id": "bioforge_broodmother",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/bioforge_broodmother.webp",
+      "sourceSheet": 11,
+      "sourceRow": 0,
+      "sourceSha256": "202dd4bebe19d9e00eba4ec0b1c630975ba7e3f2dd2ef7d7b79201123e308052",
+      "sha256": "477db264f891c28b985c20f61705a5c54649a689e9f056f1af23632679698f67",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 143634,
+        "partialPixels": 28265,
+        "opaquePixels": 90245
+      }
+    },
+    {
+      "id": "ossuary_grave_architect",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/ossuary_grave_architect.webp",
+      "sourceSheet": 11,
+      "sourceRow": 1,
+      "sourceSha256": "202dd4bebe19d9e00eba4ec0b1c630975ba7e3f2dd2ef7d7b79201123e308052",
+      "sha256": "df632afa569f62727ed04c58500b697345766499d9ad1fab9aca4672ffcd21d9",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 162761,
+        "partialPixels": 25986,
+        "opaquePixels": 73397
+      }
+    },
+    {
+      "id": "void_horizon_oracle",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/void_horizon_oracle.webp",
+      "sourceSheet": 11,
+      "sourceRow": 2,
+      "sourceSha256": "202dd4bebe19d9e00eba4ec0b1c630975ba7e3f2dd2ef7d7b79201123e308052",
+      "sha256": "ef37ad0e908e1f6d4c9497eec2b866a591796e275f0bf079819e77c8fba9b71f",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 159340,
+        "partialPixels": 18477,
+        "opaquePixels": 84327
+      }
+    },
+    {
+      "id": "infernal_brimstone_magus",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/infernal_brimstone_magus.webp",
+      "sourceSheet": 11,
+      "sourceRow": 3,
+      "sourceSha256": "202dd4bebe19d9e00eba4ec0b1c630975ba7e3f2dd2ef7d7b79201123e308052",
+      "sha256": "9b9f2f8b4b9f9d10c16687719e785f5ae0258b31b9fc5d1007c59abb7616df18",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 145535,
+        "partialPixels": 20282,
+        "opaquePixels": 96327
+      }
+    },
+    {
+      "id": "shadow_eclipse_sniper",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/shadow_eclipse_sniper.webp",
+      "sourceSheet": 12,
+      "sourceRow": 0,
+      "sourceSha256": "4760b7d8d38d6bb5a1eb99d1c1a791d211f1d353c687b8cf0ea21a3a5c540abf",
+      "sha256": "1f19899e632c9a58b5ebf81eb23983d7a1d2aa078331b5ddefb7fe72fa5c08b3",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 156971,
+        "partialPixels": 22623,
+        "opaquePixels": 82550
+      }
+    },
+    {
+      "id": "plague_canker_sower",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/plague_canker_sower.webp",
+      "sourceSheet": 12,
+      "sourceRow": 1,
+      "sourceSha256": "4760b7d8d38d6bb5a1eb99d1c1a791d211f1d353c687b8cf0ea21a3a5c540abf",
+      "sha256": "61d8cb8147e6e6390939fc68946615cab2de4c2de6cbbc6f15a4baae1025a038",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 148147,
+        "partialPixels": 17183,
+        "opaquePixels": 96814
+      }
+    },
+    {
+      "id": "dreadtide_ghost_cannoneer",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/dreadtide_ghost_cannoneer.webp",
+      "sourceSheet": 12,
+      "sourceRow": 2,
+      "sourceSha256": "4760b7d8d38d6bb5a1eb99d1c1a791d211f1d353c687b8cf0ea21a3a5c540abf",
+      "sha256": "72ffcf06ee0919aae3a1bdff79f8fe48312d51d93089a1bce3bbc3ae8199125b",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 130467,
+        "partialPixels": 35526,
+        "opaquePixels": 96151
+      }
+    },
+    {
+      "id": "quantum_paradox_markswoman",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/quantum_paradox_markswoman.webp",
+      "sourceSheet": 12,
+      "sourceRow": 3,
+      "sourceSha256": "4760b7d8d38d6bb5a1eb99d1c1a791d211f1d353c687b8cf0ea21a3a5c540abf",
+      "sha256": "8c74cb8191b4a647397b66b6a5868a936ba3900e17c387499b368bd1bce785b2",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 165909,
+        "partialPixels": 27892,
+        "opaquePixels": 68343
+      }
+    },
+    {
+      "id": "ash_wish_artillerist",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/ash_wish_artillerist.webp",
+      "sourceSheet": 13,
+      "sourceRow": 0,
+      "sourceSha256": "1bde06b8a654b6daa42e83d5e024ff58c68bf19295a0092ce2e228af8e98a0f8",
+      "sha256": "7c721b3b3987776d83db7504ab9a70ca1ec41de90bf47d12375282f02fb51aeb",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 153671,
+        "partialPixels": 9058,
+        "opaquePixels": 99415
+      }
+    },
+    {
+      "id": "nightmare_bell_toll",
+      "kind": "enemy",
+      "path": "assets/animations/enemy-legions/enemies/nightmare_bell_toll.webp",
+      "sourceSheet": 13,
+      "sourceRow": 1,
+      "sourceSha256": "1bde06b8a654b6daa42e83d5e024ff58c68bf19295a0092ce2e228af8e98a0f8",
+      "sha256": "5cd4bef31430ec38264750189d0c212177081dd089c79c180ad5975bb2fd6170",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 167409,
+        "partialPixels": 14120,
+        "opaquePixels": 80615
+      }
+    },
+    {
+      "id": "ash_wish_comet",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/ash_wish_comet.webp",
+      "sourceSheet": 13,
+      "sourceRow": 2,
+      "sourceSha256": "1bde06b8a654b6daa42e83d5e024ff58c68bf19295a0092ce2e228af8e98a0f8",
+      "sha256": "6a540035a96fdb2b506fcd4e2e847a1c70f876df95c674e56578bf2d48aed764",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 214087,
+        "partialPixels": 16095,
+        "opaquePixels": 31962
+      }
+    },
+    {
+      "id": "nightmare_sigil",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/nightmare_sigil.webp",
+      "sourceSheet": 13,
+      "sourceRow": 3,
+      "sourceSha256": "1bde06b8a654b6daa42e83d5e024ff58c68bf19295a0092ce2e228af8e98a0f8",
+      "sha256": "0e08cd4dfff434921df20395123645181ed954fd004c456fc431e7324c066283",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 171179,
+        "partialPixels": 26040,
+        "opaquePixels": 64925
+      }
+    },
+    {
+      "id": "bioforge_nanite_needle",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/bioforge_nanite_needle.webp",
+      "sourceSheet": 14,
+      "sourceRow": 0,
+      "sourceSha256": "b2e14fba4a8530cad05963e830ec51d59e492866ee6cf0f8d6c1f4a8a6f7585f",
+      "sha256": "afdc2b8305f28c1f4f7ef2b1edcbf2b6c78de92df9c2e6e47c50fd7a6ed4840a",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 227021,
+        "partialPixels": 11593,
+        "opaquePixels": 23530
+      }
+    },
+    {
+      "id": "bioforge_incubator_pod",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/bioforge_incubator_pod.webp",
+      "sourceSheet": 14,
+      "sourceRow": 1,
+      "sourceSha256": "b2e14fba4a8530cad05963e830ec51d59e492866ee6cf0f8d6c1f4a8a6f7585f",
+      "sha256": "21f8282847f69e4a34c29862c148e93ce58522346425cf565a71e6e3923640d8",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 192084,
+        "partialPixels": 12244,
+        "opaquePixels": 57816
+      }
+    },
+    {
+      "id": "ossuary_bone_bolt",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/ossuary_bone_bolt.webp",
+      "sourceSheet": 14,
+      "sourceRow": 2,
+      "sourceSha256": "b2e14fba4a8530cad05963e830ec51d59e492866ee6cf0f8d6c1f4a8a6f7585f",
+      "sha256": "c2c7fe54e9e7ab61b0dd80beecbd47c7fa01dccfc4fdf652e58708034efa0227",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 204949,
+        "partialPixels": 19106,
+        "opaquePixels": 38089
+      }
+    },
+    {
+      "id": "ossuary_reliquary_altar",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/ossuary_reliquary_altar.webp",
+      "sourceSheet": 14,
+      "sourceRow": 3,
+      "sourceSha256": "b2e14fba4a8530cad05963e830ec51d59e492866ee6cf0f8d6c1f4a8a6f7585f",
+      "sha256": "412c92136143c95e18fedc6d82fb04219124b091ac03e41fd16064601e0eca40",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 171157,
+        "partialPixels": 21792,
+        "opaquePixels": 69195
+      }
+    },
+    {
+      "id": "ossuary_bone_pile",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/ossuary_bone_pile.webp",
+      "sourceSheet": 15,
+      "sourceRow": 0,
+      "sourceSha256": "89ae16fe508bce0420de6978f33953b0a424ee691c473b6e2f1463821b8e0310",
+      "sha256": "fb85e986af767fcf9b8e3a458e210daf3c68e18e2470d6e809471af8e6114020",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 186582,
+        "partialPixels": 20374,
+        "opaquePixels": 55188
+      }
+    },
+    {
+      "id": "void_null_shard",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/void_null_shard.webp",
+      "sourceSheet": 15,
+      "sourceRow": 1,
+      "sourceSha256": "89ae16fe508bce0420de6978f33953b0a424ee691c473b6e2f1463821b8e0310",
+      "sha256": "15d201ca2afe543ecd073a4fe759122b8054f446498fe2d4cfa8b2e10d8c10b5",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 208829,
+        "partialPixels": 13308,
+        "opaquePixels": 40007
+      }
+    },
+    {
+      "id": "void_gravity_screen",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/void_gravity_screen.webp",
+      "sourceSheet": 15,
+      "sourceRow": 2,
+      "sourceSha256": "89ae16fe508bce0420de6978f33953b0a424ee691c473b6e2f1463821b8e0310",
+      "sha256": "ebd2c30c991d56610f90c9b4b78fd320cfe1e23272a2dbeeb0f656ecf18bb97e",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 188082,
+        "partialPixels": 12719,
+        "opaquePixels": 61343
+      }
+    },
+    {
+      "id": "void_horizon_rift",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/void_horizon_rift.webp",
+      "sourceSheet": 15,
+      "sourceRow": 3,
+      "sourceSha256": "89ae16fe508bce0420de6978f33953b0a424ee691c473b6e2f1463821b8e0310",
+      "sha256": "2aace538c91e923a0f2c2705967cb7850cbf33d9aa0d55bca16aefef321d6dd1",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 203820,
+        "partialPixels": 7055,
+        "opaquePixels": 51269
+      }
+    },
+    {
+      "id": "infernal_ember_trail",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/infernal_ember_trail.webp",
+      "sourceSheet": 16,
+      "sourceRow": 0,
+      "sourceSha256": "60fd696e7729e397ab830aeeb2a443584dd2ae505b41036fe3cbbf557313cb5e",
+      "sha256": "19d2972aa4e5c4879ec3bc4112cc35d539e2caf6a4c6baa2f71dd94db3915b2a",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 212742,
+        "partialPixels": 17284,
+        "opaquePixels": 32118
+      }
+    },
+    {
+      "id": "infernal_hellfire_orb_pool",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/infernal_hellfire_orb_pool.webp",
+      "sourceSheet": 16,
+      "sourceRow": 1,
+      "sourceSha256": "60fd696e7729e397ab830aeeb2a443584dd2ae505b41036fe3cbbf557313cb5e",
+      "sha256": "98108c28bb16d2a0ccc8f5019ca56f02bb54ba493166000819342d60b3bab6b6",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 195752,
+        "partialPixels": 10142,
+        "opaquePixels": 56250
+      }
+    },
+    {
+      "id": "shadow_needle",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/shadow_needle.webp",
+      "sourceSheet": 16,
+      "sourceRow": 2,
+      "sourceSha256": "60fd696e7729e397ab830aeeb2a443584dd2ae505b41036fe3cbbf557313cb5e",
+      "sha256": "e7dd221e76d93c510750ec28540bde4f685ac624d3a51a542185839ed5eea5d4",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 219157,
+        "partialPixels": 11954,
+        "opaquePixels": 31033
+      }
+    },
+    {
+      "id": "shadow_black_lantern",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/shadow_black_lantern.webp",
+      "sourceSheet": 16,
+      "sourceRow": 3,
+      "sourceSha256": "60fd696e7729e397ab830aeeb2a443584dd2ae505b41036fe3cbbf557313cb5e",
+      "sha256": "945ae09ee7b1c347b6e46ca95e8df5082b472f2228cd201c44a531ffa6660d7a",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 192832,
+        "partialPixels": 17066,
+        "opaquePixels": 52246
+      }
+    },
+    {
+      "id": "plague_miasma_pool",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/plague_miasma_pool.webp",
+      "sourceSheet": 17,
+      "sourceRow": 0,
+      "sourceSha256": "6839a3502d69648a1c8ad29c9238bc2ea9d1ebba292fc825d287862d84677c2c",
+      "sha256": "083d7c758c22f6a2ceb82eb8ea182656ee44014f34337e3a66aa0d32c6703c50",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 172960,
+        "partialPixels": 11116,
+        "opaquePixels": 78068
+      }
+    },
+    {
+      "id": "plague_septic_sac",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/plague_septic_sac.webp",
+      "sourceSheet": 17,
+      "sourceRow": 1,
+      "sourceSha256": "6839a3502d69648a1c8ad29c9238bc2ea9d1ebba292fc825d287862d84677c2c",
+      "sha256": "a64b3e3c1d04522193051e369388e50e497bde5c21a9e73404f17f400042a27a",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 195430,
+        "partialPixels": 10016,
+        "opaquePixels": 56698
+      }
+    },
+    {
+      "id": "plague_spore_bloom",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/plague_spore_bloom.webp",
+      "sourceSheet": 17,
+      "sourceRow": 2,
+      "sourceSha256": "6839a3502d69648a1c8ad29c9238bc2ea9d1ebba292fc825d287862d84677c2c",
+      "sha256": "69f2638184ea12f6bdaff3d98cb350c28bef3f0b9511a1431664f3cfdc045540",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 181265,
+        "partialPixels": 18558,
+        "opaquePixels": 62321
+      }
+    },
+    {
+      "id": "dreadtide_powder_keg",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/dreadtide_powder_keg.webp",
+      "sourceSheet": 17,
+      "sourceRow": 3,
+      "sourceSha256": "6839a3502d69648a1c8ad29c9238bc2ea9d1ebba292fc825d287862d84677c2c",
+      "sha256": "b7229b82ec48d373104e1375de52c8d8a1be131cea45cffa64d33e1fc7c15fd1",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 159403,
+        "partialPixels": 13837,
+        "opaquePixels": 88904
+      }
+    },
+    {
+      "id": "dreadtide_harpoon",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/dreadtide_harpoon.webp",
+      "sourceSheet": 18,
+      "sourceRow": 0,
+      "sourceSha256": "92af79ccc13b68917471162d94e99d1d003acbb7af0cf2d98d3db9d2ef2e43f7",
+      "sha256": "0074d52043bc97ed705735d115586b04f1eb9477033a8ff394f701fbde6e4dea",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 212572,
+        "partialPixels": 13865,
+        "opaquePixels": 35707
+      }
+    },
+    {
+      "id": "dreadtide_cannonball",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/dreadtide_cannonball.webp",
+      "sourceSheet": 18,
+      "sourceRow": 1,
+      "sourceSha256": "92af79ccc13b68917471162d94e99d1d003acbb7af0cf2d98d3db9d2ef2e43f7",
+      "sha256": "5fc69a64b0a5dab68184602248a7424b9180ce1548ce7c2c1f84289a74aa0fee",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 190863,
+        "partialPixels": 20924,
+        "opaquePixels": 50357
+      }
+    },
+    {
+      "id": "quantum_qubit_pulse",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/quantum_qubit_pulse.webp",
+      "sourceSheet": 18,
+      "sourceRow": 2,
+      "sourceSha256": "92af79ccc13b68917471162d94e99d1d003acbb7af0cf2d98d3db9d2ef2e43f7",
+      "sha256": "e1d3672ef97278ceda753d070199af4502e349b007227eed8724ce1cc6a5e261",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 200562,
+        "partialPixels": 24795,
+        "opaquePixels": 36787
+      }
+    },
+    {
+      "id": "quantum_time_anchor",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/quantum_time_anchor.webp",
+      "sourceSheet": 18,
+      "sourceRow": 3,
+      "sourceSha256": "92af79ccc13b68917471162d94e99d1d003acbb7af0cf2d98d3db9d2ef2e43f7",
+      "sha256": "67107aa9482bbc912a8bd526dac8b674420c2bb3f358818b05a78c21235421b2",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 181300,
+        "partialPixels": 29391,
+        "opaquePixels": 51453
+      }
+    },
+    {
+      "id": "quantum_chrono_disc",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/quantum_chrono_disc.webp",
+      "sourceSheet": 19,
+      "sourceRow": 0,
+      "sourceSha256": "dd8286fad92a2c594cd7384fe6e55c55a63c0755cbcc194ec163abf6bb65dd56",
+      "sha256": "13cc6b944acc43e4a1fc31b3c3f6951f04977a8eb13f0cf322ede60e40c74059",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 179962,
+        "partialPixels": 15966,
+        "opaquePixels": 66216
+      }
+    },
+    {
+      "id": "ash_spark",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/ash_spark.webp",
+      "sourceSheet": 19,
+      "sourceRow": 1,
+      "sourceSha256": "dd8286fad92a2c594cd7384fe6e55c55a63c0755cbcc194ec163abf6bb65dd56",
+      "sha256": "78353071d7d152ae54ac4c2919c73d62c3fc014c401145250f3ba08aa5037020",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 208559,
+        "partialPixels": 20236,
+        "opaquePixels": 33349
+      }
+    },
+    {
+      "id": "ash_mirage",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/ash_mirage.webp",
+      "sourceSheet": 19,
+      "sourceRow": 2,
+      "sourceSha256": "dd8286fad92a2c594cd7384fe6e55c55a63c0755cbcc194ec163abf6bb65dd56",
+      "sha256": "23d797256b690c8107557df8097c949c4a183427fd283e91c0b5bdba51940abb",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 181478,
+        "partialPixels": 29773,
+        "opaquePixels": 50893
+      }
+    },
+    {
+      "id": "ash_incense_cloud",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/ash_incense_cloud.webp",
+      "sourceSheet": 19,
+      "sourceRow": 3,
+      "sourceSha256": "dd8286fad92a2c594cd7384fe6e55c55a63c0755cbcc194ec163abf6bb65dd56",
+      "sha256": "e40600d3dd63fc0fdd0261d3992de25ffe382a00ad1b70125238bb5aa3575e7a",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 148008,
+        "partialPixels": 24813,
+        "opaquePixels": 89323
+      }
+    },
+    {
+      "id": "nightmare_hypnosis_mote",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/nightmare_hypnosis_mote.webp",
+      "sourceSheet": 20,
+      "sourceRow": 0,
+      "sourceSha256": "0d1e573c0eb45d87981c95ebd3a26353b45e7ee0259b0ac923ced635bdd6d1ff",
+      "sha256": "2719d6ceee73d796597e9ef792ef1ecf894e6bf66fa0df83257c83ee2ed154a1",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 203223,
+        "partialPixels": 16148,
+        "opaquePixels": 42773
+      }
+    },
+    {
+      "id": "nightmare_dread_rune",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/nightmare_dread_rune.webp",
+      "sourceSheet": 20,
+      "sourceRow": 1,
+      "sourceSha256": "0d1e573c0eb45d87981c95ebd3a26353b45e7ee0259b0ac923ced635bdd6d1ff",
+      "sha256": "7393b333a24d5c7c7d7c815e9c253c345e1a18bbc561dfe6b4029d1d1124854d",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 204479,
+        "partialPixels": 22456,
+        "opaquePixels": 35209
+      }
+    },
+    {
+      "id": "bioforge_acid_splash",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/bioforge_acid_splash.webp",
+      "sourceSheet": 20,
+      "sourceRow": 2,
+      "sourceSha256": "0d1e573c0eb45d87981c95ebd3a26353b45e7ee0259b0ac923ced635bdd6d1ff",
+      "sha256": "1df5b272ef84ef68d3f4d87f86975e7021adfa276b179fa9a7cadaa0152a7a3a",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 214170,
+        "partialPixels": 36744,
+        "opaquePixels": 11230
+      }
+    },
+    {
+      "id": "plague_infection_marker",
+      "kind": "effect",
+      "path": "assets/animations/enemy-legions/effects/plague_infection_marker.webp",
+      "sourceSheet": 20,
+      "sourceRow": 3,
+      "sourceSha256": "0d1e573c0eb45d87981c95ebd3a26353b45e7ee0259b0ac923ced635bdd6d1ff",
+      "sha256": "471a79b2b69c396b30f96a1997b5b6fcc397e73a2393507bf3a1d0e1a3e4f32f",
+      "width": 1024,
+      "height": 256,
+      "grid": {
+        "columns": 4,
+        "rows": 1,
+        "cellWidth": 256,
+        "cellHeight": 256
+      },
+      "alpha": {
+        "transparentPixels": 204403,
+        "partialPixels": 16369,
+        "opaquePixels": 41372
+      }
+    }
+  ],
+  "runtimeAliases": {
+    "ash_mirage_orb": "ash_mirage",
+    "ash_wish_shell": "ash_wish_comet",
+    "bio_acid_spore": "bioforge_acid_splash",
+    "bio_brood_egg": "bioforge_incubator_pod",
+    "bio_suture_beam": "bioforge_nanite_needle",
+    "bone_arrow": "ossuary_bone_bolt",
+    "bone_grave_rune": "ossuary_bone_pile",
+    "bone_tomb_wall": "ossuary_reliquary_altar",
+    "dreadtide_coral_barricade": "dreadtide_powder_keg",
+    "dreadtide_ghost_cannonball": "dreadtide_cannonball",
+    "infernal_brazier_standard": "infernal_ember_trail",
+    "infernal_brimstone_meteor": "infernal_hellfire_orb_pool",
+    "infernal_ember_bolt": "infernal_ember_trail",
+    "nightmare_bell_wave": "nightmare_sigil",
+    "plague_canker_pod": "plague_spore_bloom",
+    "plague_miasma_cloud": "plague_miasma_pool",
+    "plague_septic_bomb": "plague_septic_sac",
+    "quantum_chronal_anchor": "quantum_time_anchor",
+    "quantum_qubit_bolt": "quantum_qubit_pulse",
+    "shadow_eclipse_round": "shadow_needle",
+    "shadow_shard": "shadow_needle",
+    "void_gravity_maw": "void_gravity_screen",
+    "void_horizon_ray": "void_horizon_rift",
+    "void_null_orb": "void_null_shard"
+  },
+  "runtimePrecache": [
+    "assets/animations/enemy-legions/effects/ash_mirage_orb.webp",
+    "assets/animations/enemy-legions/effects/ash_wish_shell.webp",
+    "assets/animations/enemy-legions/effects/bio_acid_spore.webp",
+    "assets/animations/enemy-legions/effects/bio_brood_egg.webp",
+    "assets/animations/enemy-legions/effects/bio_suture_beam.webp",
+    "assets/animations/enemy-legions/effects/bone_arrow.webp",
+    "assets/animations/enemy-legions/effects/bone_grave_rune.webp",
+    "assets/animations/enemy-legions/effects/bone_tomb_wall.webp",
+    "assets/animations/enemy-legions/effects/dreadtide_coral_barricade.webp",
+    "assets/animations/enemy-legions/effects/dreadtide_ghost_cannonball.webp",
+    "assets/animations/enemy-legions/effects/dreadtide_harpoon.webp",
+    "assets/animations/enemy-legions/effects/infernal_brazier_standard.webp",
+    "assets/animations/enemy-legions/effects/infernal_brimstone_meteor.webp",
+    "assets/animations/enemy-legions/effects/infernal_ember_bolt.webp",
+    "assets/animations/enemy-legions/effects/nightmare_bell_wave.webp",
+    "assets/animations/enemy-legions/effects/plague_canker_pod.webp",
+    "assets/animations/enemy-legions/effects/plague_miasma_cloud.webp",
+    "assets/animations/enemy-legions/effects/plague_septic_bomb.webp",
+    "assets/animations/enemy-legions/effects/quantum_chronal_anchor.webp",
+    "assets/animations/enemy-legions/effects/quantum_qubit_bolt.webp",
+    "assets/animations/enemy-legions/effects/shadow_black_lantern.webp",
+    "assets/animations/enemy-legions/effects/shadow_eclipse_round.webp",
+    "assets/animations/enemy-legions/effects/shadow_shard.webp",
+    "assets/animations/enemy-legions/effects/void_gravity_maw.webp",
+    "assets/animations/enemy-legions/effects/void_horizon_ray.webp",
+    "assets/animations/enemy-legions/effects/void_null_orb.webp",
+    "assets/animations/enemy-legions/enemies/ash_censer_ifrit.webp",
+    "assets/animations/enemy-legions/enemies/ash_cinder_dervish.webp",
+    "assets/animations/enemy-legions/enemies/ash_ember_wisp.webp",
+    "assets/animations/enemy-legions/enemies/ash_mirage_weaver.webp",
+    "assets/animations/enemy-legions/enemies/ash_wish_artillerist.webp",
+    "assets/animations/enemy-legions/enemies/bioforge_broodmother.webp",
+    "assets/animations/enemy-legions/enemies/bioforge_carapace.webp",
+    "assets/animations/enemy-legions/enemies/bioforge_hound.webp",
+    "assets/animations/enemy-legions/enemies/bioforge_scarab.webp",
+    "assets/animations/enemy-legions/enemies/bioforge_stitcher.webp",
+    "assets/animations/enemy-legions/enemies/dreadtide_abyss_harpooner.webp",
+    "assets/animations/enemy-legions/enemies/dreadtide_coral_bulwark.webp",
+    "assets/animations/enemy-legions/enemies/dreadtide_drowned_deckhand.webp",
+    "assets/animations/enemy-legions/enemies/dreadtide_ghost_cannoneer.webp",
+    "assets/animations/enemy-legions/enemies/dreadtide_reef_cutlass.webp",
+    "assets/animations/enemy-legions/enemies/infernal_brazier_flagellant.webp",
+    "assets/animations/enemy-legions/enemies/infernal_brimstone_magus.webp",
+    "assets/animations/enemy-legions/enemies/infernal_cinder_hound.webp",
+    "assets/animations/enemy-legions/enemies/infernal_ember_imp.webp",
+    "assets/animations/enemy-legions/enemies/infernal_gehenna_guard.webp",
+    "assets/animations/enemy-legions/enemies/nightmare_bell_toll.webp",
+    "assets/animations/enemy-legions/enemies/nightmare_dream_claw.webp",
+    "assets/animations/enemy-legions/enemies/nightmare_dream_eater.webp",
+    "assets/animations/enemy-legions/enemies/nightmare_hypnosis_weaver.webp",
+    "assets/animations/enemy-legions/enemies/nightmare_screaming_sleepwalker.webp",
+    "assets/animations/enemy-legions/enemies/ossuary_bone_thrall.webp",
+    "assets/animations/enemy-legions/enemies/ossuary_funeral_chantress.webp",
+    "assets/animations/enemy-legions/enemies/ossuary_grave_architect.webp",
+    "assets/animations/enemy-legions/enemies/ossuary_sarcophagus_knight.webp",
+    "assets/animations/enemy-legions/enemies/ossuary_spine_archer.webp",
+    "assets/animations/enemy-legions/enemies/plague_canker_sower.webp",
+    "assets/animations/enemy-legions/enemies/plague_fungal_colossus.webp",
+    "assets/animations/enemy-legions/enemies/plague_miasma_rat.webp",
+    "assets/animations/enemy-legions/enemies/plague_pustule_bearer.webp",
+    "assets/animations/enemy-legions/enemies/plague_septic_surgeon.webp",
+    "assets/animations/enemy-legions/enemies/quantum_chronal_jammer.webp",
+    "assets/animations/enemy-legions/enemies/quantum_entangled_sentinel.webp",
+    "assets/animations/enemy-legions/enemies/quantum_lag_runner.webp",
+    "assets/animations/enemy-legions/enemies/quantum_paradox_markswoman.webp",
+    "assets/animations/enemy-legions/enemies/quantum_qubit_drone.webp",
+    "assets/animations/enemy-legions/enemies/shadow_black_lamplighter.webp",
+    "assets/animations/enemy-legions/enemies/shadow_blinkblade.webp",
+    "assets/animations/enemy-legions/enemies/shadow_eclipse_sniper.webp",
+    "assets/animations/enemy-legions/enemies/shadow_shardling.webp",
+    "assets/animations/enemy-legions/enemies/shadow_veil_specter.webp",
+    "assets/animations/enemy-legions/enemies/void_gravity_maw.webp",
+    "assets/animations/enemy-legions/enemies/void_horizon_oracle.webp",
+    "assets/animations/enemy-legions/enemies/void_mote.webp",
+    "assets/animations/enemy-legions/enemies/void_nullifier.webp",
+    "assets/animations/enemy-legions/enemies/void_phasewalker.webp"
+  ]
+}

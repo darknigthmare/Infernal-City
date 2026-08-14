@@ -16,7 +16,7 @@
     'Le Jardin de Lilith', 'L’Éden de Lilith',
     'Les Ombres de Noctis', 'La Nuit de Noctis'
   ];
-  const enemyCycles = [
+  const legacyEnemyCycles = [
     ['runner', 'swarmer', 'flying'],
     ['brute', 'runner', 'bulwark'],
     ['artillery', 'swarmer', 'splitter'],
@@ -28,12 +28,85 @@
     ['swarmer', 'flying', 'runner'],
     ['bulwark', 'artillery', 'splitter']
   ];
+  const legionFactionOrder = [
+    'bioforge', 'ossuary', 'void', 'infernal', 'shadow',
+    'plague', 'dreadtide', 'quantum', 'ash', 'nightmare'
+  ];
+  const legions = global.INFERNAL_CITY_ENEMY_LEGIONS;
+  const hasCompleteLegions = Boolean(legions && legionFactionOrder.every(factionId => (
+    Array.isArray(legions.factions?.[factionId]?.enemyIds)
+    && legions.factions[factionId].enemyIds.length === 5
+  )));
+  const enemyCycles = hasCompleteLegions
+    ? legionFactionOrder.map(factionId => [...legions.factions[factionId].enemyIds])
+    : legacyEnemyCycles;
+
+  function getEnemyThreatRating(type) {
+    const definition = legions?.enemies?.[type] || base.enemyDefinitions?.[type] || {};
+    const authored = Number(definition.balance?.threatRating);
+    if (Number.isFinite(authored) && authored > 0) return authored;
+    const stats = definition.stats || definition;
+    const hp = Math.max(1, Number(stats.hp) || 100);
+    const damage = Math.max(0, Number(stats.damage) || 10);
+    const cooldownSeconds = Math.max(0.35, (Number(stats.attackCooldownMs) || 1500) / 1000);
+    const armor = Math.max(0, Math.min(0.7, Number(stats.armor) || 0));
+    const tier = Math.max(1, Number(definition.tier) || 1);
+    return Math.max(5, Math.min(80, Math.round(
+      (hp / (120 * Math.max(0.3, 1 - armor))) + ((damage / cooldownSeconds) * 0.5) + (tier * 1.5)
+    )));
+  }
+
+  function getEnemyCountScale(type) {
+    return Number(Math.max(0.12, Math.min(1.35, 9 / getEnemyThreatRating(type))).toFixed(4));
+  }
+
+  function createThreatGroup(type, allocatedBudget, intervalMs, delayMs, routePattern, maxCount) {
+    const threatRating = getEnemyThreatRating(type);
+    const count = Math.max(1, Math.min(maxCount, Math.round(allocatedBudget / threatRating)));
+    const scheduledThreat = count * threatRating;
+    return {
+      type,
+      count,
+      intervalMs: Math.min(1800, Math.max(intervalMs, Math.round(340 + threatRating * 14))),
+      delayMs,
+      routePattern,
+      countScale: getEnemyCountScale(type),
+      threatRating,
+      allocatedThreatBudget: Math.round(allocatedBudget),
+      scheduledThreat
+    };
+  }
+
   const tenThronesWaves = waveNames.map((name, index) => {
     const wave = index + 1;
     const contract = Math.floor(index / 2);
     const isBoss = wave % 2 === 0;
-    const types = enemyCycles[contract];
-    const baseCount = 7 + wave;
+    const factionTypes = enemyCycles[contract];
+    const types = hasCompleteLegions
+      ? (isBoss
+        ? [factionTypes[3], factionTypes[4], factionTypes[0]]
+        : [factionTypes[0], factionTypes[1], factionTypes[2]])
+      : factionTypes;
+    const reconnaissanceBudget = 145 + contract * 28;
+    const threatBudget = Math.round(reconnaissanceBudget * (isBoss ? 1.18 : 1));
+    const shares = isBoss ? [0.3, 0.28, 0.42] : [0.46, 0.33, 0.21];
+    const intervals = isBoss ? [900, 1250, 480] : [620, 780, 960];
+    const delays = [0, 850, 1800];
+    const maxCounts = isBoss ? [5, 4, 22] : [22, 14, 10];
+    const routes = [
+      [contract % 4, (contract + 2) % 4],
+      [(contract + 1) % 4, (contract + 3) % 4],
+      [contract % 4, (contract + 1) % 4, (contract + 2) % 4, (contract + 3) % 4]
+    ];
+    const groups = types.map((type, groupIndex) => createThreatGroup(
+      type,
+      threatBudget * shares[groupIndex],
+      intervals[groupIndex],
+      delays[groupIndex],
+      routes[groupIndex],
+      maxCounts[groupIndex]
+    ));
+    const scheduledThreat = groups.reduce((total, group) => total + group.scheduledThreat, 0);
     return {
       number: wave,
       name,
@@ -42,11 +115,10 @@
       layoutPolicy: ['western_wall', 'southern_watch', 'twin_rift', 'convergence'][contract % 4],
       intermissionMs: isBoss ? 7200 : 5200,
       reward: 42 + (wave * 12),
-      groups: [
-        { type: types[0], count: baseCount + (isBoss ? 5 : 0), intervalMs: Math.max(260, 720 - wave * 16), delayMs: 0, routePattern: [contract % 4, (contract + 2) % 4] },
-        { type: types[1], count: baseCount + 3, intervalMs: Math.max(220, 620 - wave * 14), delayMs: 850, routePattern: [(contract + 1) % 4, (contract + 3) % 4] },
-        { type: types[2], count: Math.max(4, Math.round(baseCount * 0.62)), intervalMs: Math.max(360, 920 - wave * 15), delayMs: 1800, routePattern: [contract % 4, (contract + 1) % 4, (contract + 2) % 4, (contract + 3) % 4] }
-      ]
+      threatBudget,
+      scheduledThreat,
+      threatUtilization: Number((scheduledThreat / threatBudget).toFixed(3)),
+      groups
     };
   });
 
@@ -102,8 +174,12 @@
   }
 
   global.INFERNAL_CITY_CAMPAIGN_CONTENT = Object.freeze({
-    version: '3.0.0',
+    version: '3.1.0',
     tenThronesWaves,
+    enemyCycles: Object.freeze(enemyCycles.map(types => Object.freeze([...types]))),
+    legionCampaignEnabled: hasCompleteLegions,
+    getEnemyCountScale,
+    getEnemyThreatRating,
     infinitumMutators: Object.freeze([...base.infinitumMutators, ...extraMutators]),
     createDailyChallenge: createProfessionalDaily,
     defenseRoles: Object.freeze(defenseRoles)

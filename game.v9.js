@@ -10493,11 +10493,16 @@ class GameEngine {
     if (!this.isSpriteReady(image)) return false;
     const sourceWidth = image.naturalWidth || image.width;
     const sourceHeight = image.naturalHeight || image.height;
-    const frameWidth = sourceWidth / SPRITE_ATLAS_COLUMNS;
-    const frameHeight = sourceHeight / SPRITE_ATLAS_ROWS;
+    // Legacy character atlases are 4x4, while the OpenAI legion and effect
+    // plates are authored as a single 4-frame strip. Honour per-asset layout
+    // metadata so a 4x1 sheet is never cropped to its top quarter.
+    const columns = Math.max(1, Math.round(Number(spriteData?.columns) || SPRITE_ATLAS_COLUMNS));
+    const rows = Math.max(1, Math.round(Number(spriteData?.rows) || SPRITE_ATLAS_ROWS));
+    const frameWidth = sourceWidth / columns;
+    const frameHeight = sourceHeight / rows;
     const requestedRow = Number.isFinite(options.row) ? options.row : (spriteData.row || 0);
-    const row = Math.max(0, Math.min(SPRITE_ATLAS_ROWS - 1, requestedRow));
-    const column = Math.max(0, Math.min(SPRITE_ATLAS_COLUMNS - 1, frame || 0));
+    const row = Math.max(0, Math.min(rows - 1, requestedRow));
+    const column = Math.max(0, Math.min(columns - 1, frame || 0));
 
     this.ctx.save();
     this.ctx.translate(x, y);

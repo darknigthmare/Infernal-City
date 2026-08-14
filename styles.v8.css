@@ -4469,3 +4469,110 @@ body:is(.text-extra-large, [data-text-size="extra-large"]) {
     display: none;
   }
 }
+
+/* Codex des dix légions : chaque entrée montre une vraie cellule de la
+   planche OpenAI 4x1 et garde les détails tactiques lisibles au clavier. */
+.legion-unit-grid {
+  display: grid;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.legion-unit-entry {
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.72);
+}
+
+.legion-unit-entry summary {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  min-height: 60px;
+  padding: 5px 8px 5px 5px;
+  color: #f8fafc;
+  cursor: pointer;
+  list-style: none;
+}
+
+.legion-unit-entry summary::-webkit-details-marker {
+  display: none;
+}
+
+.legion-unit-entry summary:focus-visible {
+  outline: 2px solid #67e8f9;
+  outline-offset: -2px;
+}
+
+.legion-unit-entry[open] summary {
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(30, 41, 59, 0.72);
+}
+
+.legion-unit-sprite {
+  width: 54px;
+  aspect-ratio: 1;
+  border: 1px solid rgba(103, 232, 249, 0.28);
+  border-radius: 8px;
+  background-color: #020617;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: 400% 100%;
+  filter: drop-shadow(0 0 8px rgba(236, 72, 153, 0.28));
+  animation: legion-codex-frames 1.1s steps(3, end) infinite;
+}
+
+.legion-unit-label {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.legion-unit-label strong {
+  overflow: hidden;
+  font-size: 0.78rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.legion-unit-label small,
+.legion-unit-body {
+  color: #cbd5e1;
+  font-size: 0.68rem;
+  line-height: 1.42;
+}
+
+.legion-unit-body {
+  display: grid;
+  gap: 6px;
+  padding: 9px;
+}
+
+.legion-unit-body p {
+  margin: 0;
+}
+
+.legion-unit-stats {
+  color: #a5f3fc;
+  font-weight: 800;
+}
+
+.legion-unit-counter {
+  color: #fde68a;
+}
+
+@keyframes legion-codex-frames {
+  from { background-position: 0 0; }
+  to { background-position: 100% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .legion-unit-sprite { animation: none; }
+}
+
+@media (max-width: 520px) {
+  .legion-unit-entry summary { grid-template-columns: 50px minmax(0, 1fr); }
+  .legion-unit-sprite { width: 46px; }
+}

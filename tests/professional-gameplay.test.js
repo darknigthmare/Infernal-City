@@ -77,7 +77,7 @@ test('professional campaign owns twenty authored waves grouped into ten throne c
   const legacyNames = new Set(EXPANSION.waveScripts.ten_thrones_20.waves.map(wave => wave.name));
 
   assert.ok(content);
-  assert.equal(content.version, '3.0.0');
+  assert.equal(content.version, '3.1.0');
   assert.equal(Object.isFrozen(content), true);
   assert.equal(waves.length, 20);
   assert.deepEqual(waves.map(wave => wave.number), Array.from({ length: 20 }, (_, index) => index + 1));

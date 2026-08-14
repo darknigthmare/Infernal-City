@@ -17,7 +17,7 @@
     if (!banner) return;
     banner.hidden = false;
     banner.dataset.state = state;
-    banner.dataset.actionable = String(actionable);
+    banner.dataset.actionable = String(Boolean(actionable));
     if (title) title.textContent = heading;
     if (message) message.textContent = copy;
     if (installButton) installButton.hidden = !actionable;
