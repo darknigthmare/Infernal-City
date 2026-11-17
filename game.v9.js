@@ -4030,6 +4030,16 @@ class GameEngine {
 
     audio.playPickup();
     this.defensesSoldThisRun++;
+    if (!this.prefersReducedMotion && defense) {
+      this.particles.push({
+        type: 'gravity_ring',
+        x: defense.x,
+        y: defense.y,
+        radius: Math.min(85, (Number(defense.range) || 120) * 0.45),
+        life: 0.34,
+        color: '#f59e0b'
+      });
+    }
     this.showFeedback(`${defenseName} vendue : +${result.refund} 🪙`, '#f59e0b');
     this.updateHUD();
     this.closeModal('defense-management-modal', false);
@@ -7381,6 +7391,21 @@ class GameEngine {
 
     for (let i = 0; i < 8; i++) {
       this.particles.push({ x: enemy.x, y: enemy.y, vx: (Math.random() - 0.5) * 200, vy: (Math.random() - 0.5) * 200, radius: 3 + Math.random() * 4, color: enemy.color, life: 0.4 });
+    }
+    if (enemy.isBoss && !this.prefersReducedMotion) {
+      if (this.particles.length < 220) {
+        this.particles.push({
+          type: 'sprite_fx',
+          row: 1,
+          x: enemy.x,
+          y: enemy.y,
+          size: 140,
+          life: 0.45,
+          maxLife: 0.45,
+          color: enemy.color || '#ff2a5f'
+        });
+      }
+      this.addCameraShake(11);
     }
 
     this.addXp(
@@ -11723,6 +11748,31 @@ class GameEngine {
     this.ctx.beginPath();
     this.ctx.arc(citX, citY, citadelVisualRadius + 10, ringSpin + Math.PI, ringSpin + Math.PI * 1.72);
     this.ctx.stroke();
+
+    if (!this.waveActive && this.waveIntermissionTimer > 0 && !this.isPaused) {
+      const authoredIntermissionMs = Number(this.activeWaveDefinition?.intermissionMs);
+      const intermissionTotal = Number.isFinite(authoredIntermissionMs)
+        ? Math.max(0.1, authoredIntermissionMs / 1000)
+        : 3.5;
+      const progress = Math.max(0, Math.min(1, this.waveIntermissionTimer / intermissionTotal));
+      const arcRadius = citadelVisualRadius + 20;
+      const startAngle = -Math.PI / 2;
+      this.ctx.beginPath();
+      this.ctx.arc(citX, citY, arcRadius, 0, Math.PI * 2);
+      this.ctx.strokeStyle = 'rgba(0, 240, 255, 0.16)';
+      this.ctx.lineWidth = 2.5;
+      this.ctx.shadowBlur = 0;
+      this.ctx.stroke();
+
+      this.ctx.beginPath();
+      this.ctx.arc(citX, citY, arcRadius, startAngle, startAngle + (Math.PI * 2 * progress));
+      this.ctx.strokeStyle = 'rgba(0, 240, 255, 0.88)';
+      this.ctx.lineWidth = 3;
+      this.ctx.lineCap = 'round';
+      this.ctx.shadowColor = '#00f0ff';
+      this.ctx.shadowBlur = 12;
+      this.ctx.stroke();
+    }
 
     if (this.citadelShieldFlash > 0) {
       this.ctx.beginPath();

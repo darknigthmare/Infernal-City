@@ -1101,6 +1101,342 @@ button.adult-scene-card:focus-visible {
     background 0.32s ease;
 }
 
+/* Tactical & Outcome Modals: Cyber-Gothic Glassmorphism & Interactive Polish */
+#defense-management-modal .defense-management-box,
+#settings-modal .settings-box,
+#victory-modal .run-summary-box,
+#game-over-modal .game-over-box,
+#antagonist-codex-modal .antagonist-codex-box,
+#tower-infinitum-modal .infinitum-box {
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+
+#defense-management-modal .defense-management-box {
+  box-shadow:
+    0 24px 72px rgba(0, 0, 0, 0.78),
+    0 0 34px rgba(0, 240, 255, 0.16),
+    inset 0 1px 0 rgba(125, 211, 252, 0.22);
+}
+
+#settings-modal .settings-box {
+  border-color: rgba(0, 240, 255, 0.42);
+  box-shadow:
+    0 24px 72px rgba(0, 0, 0, 0.78),
+    0 0 30px rgba(0, 240, 255, 0.14),
+    inset 0 1px 0 rgba(125, 211, 252, 0.2);
+}
+
+#victory-modal .run-summary-box {
+  border-color: rgba(16, 185, 129, 0.5);
+  box-shadow:
+    0 24px 72px rgba(0, 0, 0, 0.78),
+    0 0 36px rgba(16, 185, 129, 0.2),
+    inset 0 1px 0 rgba(110, 231, 183, 0.22);
+}
+
+#game-over-modal .game-over-box {
+  border-color: rgba(255, 42, 95, 0.56);
+  box-shadow:
+    0 24px 72px rgba(0, 0, 0, 0.82),
+    0 0 38px rgba(255, 42, 95, 0.24),
+    inset 0 1px 0 rgba(251, 113, 133, 0.22);
+}
+
+#antagonist-codex-modal .antagonist-codex-box {
+  border-color: rgba(236, 72, 153, 0.45);
+  box-shadow:
+    0 24px 72px rgba(0, 0, 0, 0.8),
+    0 0 34px rgba(236, 72, 153, 0.16),
+    inset 0 1px 0 rgba(249, 168, 212, 0.2);
+}
+
+#tower-infinitum-modal .infinitum-box {
+  border-color: rgba(168, 85, 247, 0.52);
+  box-shadow:
+    0 24px 72px rgba(0, 0, 0, 0.8),
+    0 0 36px rgba(168, 85, 247, 0.22),
+    inset 0 1px 0 rgba(216, 180, 254, 0.22);
+}
+
+.codex-card,
+#antagonist-codex-modal .antagonist-card {
+  background: linear-gradient(155deg, rgba(16, 14, 30, 0.9), rgba(6, 10, 22, 0.96));
+  backdrop-filter: blur(10px) saturate(135%);
+  -webkit-backdrop-filter: blur(10px) saturate(135%);
+  border-color: color-mix(in srgb, var(--boss-color, #ec4899) 52%, transparent);
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.6),
+    0 0 16px color-mix(in srgb, var(--boss-color, #ec4899) 14%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 0 22px color-mix(in srgb, var(--boss-color, #ec4899) 10%, transparent);
+  transition:
+    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.codex-card:hover,
+.codex-card:focus-visible,
+.codex-card:focus-within,
+#antagonist-codex-modal .antagonist-card:hover,
+#antagonist-codex-modal .antagonist-card:focus-within {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--boss-color, #ec4899) 85%, #ffffff 15%);
+  box-shadow:
+    0 16px 34px rgba(0, 0, 0, 0.7),
+    0 0 24px color-mix(in srgb, var(--boss-color, #ec4899) 34%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 0 24px color-mix(in srgb, var(--boss-color, #ec4899) 16%, transparent);
+}
+
+.codex-card:focus-visible {
+  outline: 2px solid rgba(0, 240, 255, 0.9);
+  outline-offset: 2px;
+}
+
+.infinitum-floor-card,
+#tower-infinitum-modal .infinitum-floor-list li {
+  background: linear-gradient(155deg, rgba(24, 14, 42, 0.88), rgba(9, 11, 24, 0.95));
+  backdrop-filter: blur(8px) saturate(130%);
+  -webkit-backdrop-filter: blur(8px) saturate(130%);
+  border-color: rgba(216, 180, 254, 0.3);
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.5),
+    0 0 10px rgba(168, 85, 247, 0.1),
+    inset 0 1px 0 rgba(216, 180, 254, 0.16);
+  transition:
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.infinitum-floor-card:hover,
+.infinitum-floor-card:focus-visible,
+#tower-infinitum-modal .infinitum-floor-list li:hover,
+#tower-infinitum-modal .infinitum-floor-list li:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(216, 180, 254, 0.78);
+  box-shadow:
+    0 10px 22px rgba(0, 0, 0, 0.62),
+    0 0 18px rgba(168, 85, 247, 0.32),
+    inset 0 1px 0 rgba(233, 213, 255, 0.26);
+}
+
+.infinitum-floor-card:focus-visible,
+#tower-infinitum-modal .infinitum-floor-list li:focus-visible {
+  outline: 2px solid rgba(0, 240, 255, 0.9);
+  outline-offset: 2px;
+}
+
+#tower-infinitum-modal .infinitum-floor-list li[data-floor-state="current"] {
+  background: linear-gradient(155deg, rgba(88, 28, 135, 0.72), rgba(30, 14, 58, 0.94));
+  border-color: rgba(233, 213, 255, 0.92);
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.62),
+    0 0 18px rgba(168, 85, 247, 0.48),
+    inset 0 1px 0 rgba(255, 255, 255, 0.26);
+}
+
+#tower-infinitum-modal .infinitum-floor-list li[data-floor-state="boss"] {
+  background: linear-gradient(155deg, rgba(58, 12, 30, 0.88), rgba(16, 8, 18, 0.95));
+  border-color: rgba(255, 42, 95, 0.72);
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.6),
+    0 0 16px rgba(255, 42, 95, 0.28),
+    inset 0 1px 0 rgba(251, 113, 133, 0.24);
+}
+
+#tower-infinitum-modal .infinitum-segment,
+#tower-infinitum-modal .infinitum-mutators {
+  background: linear-gradient(155deg, rgba(20, 14, 38, 0.86), rgba(8, 10, 22, 0.94));
+  backdrop-filter: blur(10px) saturate(130%);
+  -webkit-backdrop-filter: blur(10px) saturate(130%);
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.52),
+    inset 0 1px 0 rgba(216, 180, 254, 0.16);
+}
+
+#tower-infinitum-modal #infinitum-cumulative-mutators li {
+  background: rgba(168, 85, 247, 0.12);
+  box-shadow: inset 0 1px 0 rgba(216, 180, 254, 0.14);
+}
+
+.run-history-card,
+.run-history-list > li:not(.empty-state) {
+  background: linear-gradient(155deg, rgba(15, 23, 42, 0.86), rgba(6, 10, 22, 0.94));
+  backdrop-filter: blur(10px) saturate(135%);
+  -webkit-backdrop-filter: blur(10px) saturate(135%);
+  border-color: rgba(0, 240, 255, 0.26);
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.52),
+    0 0 12px rgba(0, 240, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition:
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.run-history-card:hover,
+.run-history-card:focus-visible,
+.run-history-list > li:not(.empty-state):hover,
+.run-history-list > li:not(.empty-state):focus-within {
+  transform: translateY(-2px);
+  border-color: rgba(0, 240, 255, 0.72);
+  background: linear-gradient(155deg, rgba(16, 30, 52, 0.92), rgba(8, 14, 30, 0.96));
+  box-shadow:
+    0 12px 26px rgba(0, 0, 0, 0.64),
+    0 0 18px rgba(0, 240, 255, 0.24),
+    inset 0 1px 0 rgba(125, 211, 252, 0.24);
+}
+
+.run-history-card:focus-visible {
+  outline: 2px solid rgba(0, 240, 255, 0.9);
+  outline-offset: 2px;
+}
+
+.defense-spec-btn,
+#defense-management-modal .specialization-choice {
+  background: linear-gradient(155deg, rgba(18, 16, 38, 0.88), rgba(7, 10, 22, 0.95));
+  backdrop-filter: blur(10px) saturate(135%);
+  -webkit-backdrop-filter: blur(10px) saturate(135%);
+  border-color: rgba(216, 180, 254, 0.38);
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.54),
+    0 0 12px rgba(168, 85, 247, 0.1),
+    inset 0 1px 0 rgba(216, 180, 254, 0.16);
+  transition:
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.defense-spec-btn:hover,
+.defense-spec-btn:focus-visible,
+#defense-management-modal .specialization-choice:hover,
+#defense-management-modal .specialization-choice:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(0, 240, 255, 0.84);
+  background: linear-gradient(155deg, rgba(16, 28, 52, 0.92), rgba(10, 12, 28, 0.96));
+  box-shadow:
+    0 12px 26px rgba(0, 0, 0, 0.64),
+    0 0 20px rgba(0, 240, 255, 0.26),
+    inset 0 1px 0 rgba(125, 211, 252, 0.26);
+}
+
+.defense-spec-btn:focus-visible,
+#defense-management-modal .specialization-choice:focus-visible {
+  outline: 2px solid rgba(0, 240, 255, 0.9);
+  outline-offset: 2px;
+}
+
+.defense-spec-btn[aria-checked="true"],
+.defense-spec-btn.active,
+.defense-spec-btn.selected,
+#defense-management-modal .specialization-choice[aria-checked="true"] {
+  border-color: rgba(233, 213, 255, 0.95);
+  background: linear-gradient(155deg, rgba(88, 28, 135, 0.65), rgba(22, 12, 42, 0.94));
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.62),
+    0 0 22px rgba(168, 85, 247, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+#defense-management-modal .defense-management-stats > div,
+#settings-modal .settings-grid > label,
+#settings-modal .gamepad-card,
+#settings-modal .save-portability {
+  background: linear-gradient(155deg, rgba(13, 23, 42, 0.86), rgba(6, 10, 22, 0.94));
+  backdrop-filter: blur(10px) saturate(135%);
+  -webkit-backdrop-filter: blur(10px) saturate(135%);
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.5),
+    0 0 12px rgba(0, 240, 255, 0.08),
+    inset 0 1px 0 rgba(125, 211, 252, 0.14);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+#settings-modal .settings-grid > label:hover,
+#settings-modal .settings-grid > label:focus-within,
+#settings-modal .gamepad-card:hover,
+#settings-modal .gamepad-card:focus-within {
+  border-color: rgba(0, 240, 255, 0.64);
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.6),
+    0 0 18px rgba(0, 240, 255, 0.2),
+    inset 0 1px 0 rgba(125, 211, 252, 0.22);
+}
+
+#settings-modal .save-portability {
+  background: linear-gradient(155deg, rgba(10, 30, 28, 0.86), rgba(6, 12, 18, 0.94));
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.52),
+    0 0 14px rgba(16, 185, 129, 0.12),
+    inset 0 1px 0 rgba(110, 231, 183, 0.16);
+}
+
+#settings-modal .save-portability:hover,
+#settings-modal .save-portability:focus-within {
+  border-color: rgba(16, 185, 129, 0.76);
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.6),
+    0 0 20px rgba(16, 185, 129, 0.24),
+    inset 0 1px 0 rgba(110, 231, 183, 0.24);
+}
+
+.run-summary-grid > div,
+#game-over-modal .game-over-stats > div {
+  background: linear-gradient(155deg, rgba(14, 24, 44, 0.88), rgba(6, 10, 22, 0.95));
+  backdrop-filter: blur(10px) saturate(135%);
+  -webkit-backdrop-filter: blur(10px) saturate(135%);
+  border-color: rgba(0, 240, 255, 0.3);
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.54),
+    0 0 14px rgba(0, 240, 255, 0.1),
+    inset 0 1px 0 rgba(125, 211, 252, 0.16),
+    inset 0 0 14px rgba(0, 240, 255, 0.05);
+  transition:
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.run-summary-grid > div:hover,
+.run-summary-grid > div:focus-within {
+  transform: translateY(-2px);
+  border-color: rgba(0, 240, 255, 0.76);
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.64),
+    0 0 20px rgba(0, 240, 255, 0.26),
+    inset 0 1px 0 rgba(125, 211, 252, 0.26);
+}
+
+#game-over-modal .game-over-stats > div {
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 42, 95, 0.32);
+  border-radius: 10px;
+  background: linear-gradient(155deg, rgba(32, 12, 24, 0.88), rgba(10, 8, 18, 0.95));
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.56),
+    0 0 14px rgba(255, 42, 95, 0.12),
+    inset 0 1px 0 rgba(251, 113, 133, 0.16);
+}
+
+#game-over-modal .game-over-tease {
+  box-shadow:
+    0 14px 32px rgba(0, 0, 0, 0.68),
+    0 0 24px rgba(236, 72, 153, 0.2),
+    inset 0 1px 0 rgba(249, 168, 212, 0.18);
+}
+
 @keyframes cg-ken-burns {
   0% { transform: scale(1) translate3d(0, 0, 0); }
   100% { transform: scale(1.035) translate3d(0, -4px, 0); }
@@ -1147,7 +1483,40 @@ button.adult-scene-card:focus-visible {
   button.adult-scene-card:hover,
   button.adult-scene-card:focus-visible,
   .studio-conclusion-card:hover,
-  .studio-conclusion-card:focus-within {
+  .studio-conclusion-card:focus-within,
+  .codex-card,
+  #antagonist-codex-modal .antagonist-card,
+  .codex-card:hover,
+  .codex-card:focus-visible,
+  .codex-card:focus-within,
+  #antagonist-codex-modal .antagonist-card:hover,
+  #antagonist-codex-modal .antagonist-card:focus-within,
+  .infinitum-floor-card,
+  #tower-infinitum-modal .infinitum-floor-list li,
+  .infinitum-floor-card:hover,
+  .infinitum-floor-card:focus-visible,
+  #tower-infinitum-modal .infinitum-floor-list li:hover,
+  #tower-infinitum-modal .infinitum-floor-list li:focus-visible,
+  .run-history-card,
+  .run-history-list > li:not(.empty-state),
+  .run-history-card:hover,
+  .run-history-card:focus-visible,
+  .run-history-list > li:not(.empty-state):hover,
+  .run-history-list > li:not(.empty-state):focus-within,
+  .defense-spec-btn,
+  #defense-management-modal .specialization-choice,
+  .defense-spec-btn:hover,
+  .defense-spec-btn:focus-visible,
+  #defense-management-modal .specialization-choice:hover,
+  #defense-management-modal .specialization-choice:focus-visible,
+  #defense-management-modal .defense-management-stats > div,
+  #settings-modal .settings-grid > label,
+  #settings-modal .gamepad-card,
+  #settings-modal .save-portability,
+  .run-summary-grid > div,
+  #game-over-modal .game-over-stats > div,
+  .run-summary-grid > div:hover,
+  .run-summary-grid > div:focus-within {
     transition: none;
     transform: none;
   }
