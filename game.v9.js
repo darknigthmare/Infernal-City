@@ -6984,7 +6984,10 @@ class GameEngine {
     if (damage > 0) {
       this.citadelUntouchedThisRun = false;
       this.citadelShieldFlash = 1;
-      if (damage >= 2) this.addCameraShake(Math.min(10, 2.5 + (damage * 0.12)));
+      if (damage >= 2) {
+        this.addCameraShake(Math.min(10, 2.5 + (damage * 0.12)));
+        audio.playShieldImpact?.();
+      }
       const vignette = document.getElementById('citadel-danger-vignette');
       if (vignette && damage >= 3) {
         vignette.dataset.hit = 'true';
@@ -11226,15 +11229,47 @@ class GameEngine {
       this.drawInfernalFloor(w, h);
     }
     this.ctx.save();
-    this.ctx.strokeStyle = 'rgba(0, 240, 255, 0.42)';
-    this.ctx.lineWidth = 3;
+    // Segmented Armored Haven Perimeter Rampart
+    this.ctx.strokeStyle = 'rgba(15, 23, 42, 0.85)';
+    this.ctx.lineWidth = 10;
+    this.ctx.strokeRect(0, 0, w, h);
+
+    this.ctx.strokeStyle = 'rgba(0, 240, 255, 0.48)';
+    this.ctx.lineWidth = 2.6;
     this.ctx.shadowColor = '#00f0ff';
     this.ctx.shadowBlur = 12;
     this.ctx.strokeRect(0, 0, w, h);
 
-    // 4 Corner Perimeter Tactical Beacons
+    // Tactical distance ticks along perimeter wall
+    this.ctx.shadowBlur = 0;
+    this.ctx.strokeStyle = 'rgba(0, 240, 255, 0.25)';
+    this.ctx.lineWidth = 1.5;
+    for (let tx = 120; tx < w; tx += 120) {
+      this.ctx.beginPath();
+      this.ctx.moveTo(tx, -6);
+      this.ctx.lineTo(tx, 6);
+      this.ctx.moveTo(tx, h - 6);
+      this.ctx.lineTo(tx, h + 6);
+      this.ctx.stroke();
+    }
+    for (let ty = 120; ty < h; ty += 120) {
+      this.ctx.beginPath();
+      this.ctx.moveTo(-6, ty);
+      this.ctx.lineTo(6, ty);
+      this.ctx.moveTo(w - 6, ty);
+      this.ctx.lineTo(w + 6, ty);
+      this.ctx.stroke();
+    }
+
+    // 4 Corner Perimeter Tactical Bastion Pads & Beacons
     const beaconPulse = this.prefersReducedMotion ? 0.65 : (0.45 + 0.45 * Math.sin(this.animationClock * 3.2));
-    [[14, 14], [w - 14, 14], [14, h - 14], [w - 14, h - 14]].forEach(([bx, by]) => {
+    [[0, 0, 14, 14], [w, 0, w - 14, 14], [0, h, 14, h - 14], [w, h, w - 14, h - 14]].forEach(([cx, cy, bx, by]) => {
+      this.ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
+      this.ctx.fillRect(cx - 12, cy - 12, 24, 24);
+      this.ctx.strokeStyle = 'rgba(0, 240, 255, 0.65)';
+      this.ctx.lineWidth = 1.6;
+      this.ctx.strokeRect(cx - 12, cy - 12, 24, 24);
+
       this.ctx.beginPath();
       this.ctx.arc(bx, by, 5, 0, Math.PI * 2);
       this.ctx.fillStyle = `rgba(0, 240, 255, ${beaconPulse})`;
@@ -11245,6 +11280,22 @@ class GameEngine {
       this.ctx.lineWidth = 1.5;
       this.ctx.stroke();
     });
+
+    // Ambient drifting city embers / atmospheric motes
+    if (!this.prefersReducedMotion) {
+      const layoutId = this.selectedLayoutId || 'convergence';
+      const moteColor = layoutId === 'twin_rift'
+        ? 'rgba(255, 72, 110, 0.34)'
+        : (layoutId === 'southern_watch' ? 'rgba(186, 230, 253, 0.32)' : 'rgba(0, 240, 255, 0.28)');
+      this.ctx.fillStyle = moteColor;
+      for (let i = 0; i < 18; i++) {
+        const mx = ((i * 197 + this.animationClock * (14 + (i % 4) * 6)) % (w + 320)) - 160;
+        const my = ((i * 131 + Math.sin(this.animationClock * 0.8 + i) * 28) % (h + 240)) - 120;
+        this.ctx.beginPath();
+        this.ctx.arc(mx, my, 1.5 + (i % 3) * 0.6, 0, Math.PI * 2);
+        this.ctx.fill();
+      }
+    }
     this.ctx.restore();
 
     // Approach Lane Continuity Lines connecting outer gates into Haven's perimeter
@@ -12437,15 +12488,68 @@ class GameEngine {
         this.ctx.lineWidth = 2;
         this.ctx.stroke();
 
-        this.ctx.font = `${this.getReadableWorldSize(16, 14)}px sans-serif`;
-        this.ctx.textAlign = 'center';
-        this.ctx.textBaseline = 'middle';
-        this.ctx.fillText(selectedTower.icon || '🔫', this.buildCursor.x, this.buildCursor.y);
+        const spriteData = TOWER_SPRITE_DATA[selectedTower.id];
+        const sprite = this.towerSpriteImages?.[selectedTower.id];
+        const previewSize = this.getReadableWorldSize(spriteData?.size || 46, MIN_TOWER_SCREEN_SIZE);
+        const holoDrawn = spriteData && this.drawAtlasFrame(
+          sprite,
+          spriteData,
+          0,
+          this.buildCursor.x,
+          this.buildCursor.y,
+          previewSize,
+          {
+            alpha: canPlace ? 0.68 : 0.36,
+            shadowColor: previewColor,
+            shadowBlur: 14
+          }
+        );
+        if (!holoDrawn) {
+          this.ctx.font = `${this.getReadableWorldSize(16, 14)}px sans-serif`;
+          this.ctx.textAlign = 'center';
+          this.ctx.textBaseline = 'middle';
+          this.ctx.fillText(selectedTower.icon || '🔫', this.buildCursor.x, this.buildCursor.y);
+        }
 
         this.ctx.font = `bold ${this.getReadableWorldSize(10, 10)}px Rajdhani, sans-serif`;
+        this.ctx.textAlign = 'center';
+        this.ctx.textBaseline = 'middle';
         this.ctx.fillStyle = previewColor;
         const statusLabel = !placement?.ok ? 'ZONE BLOQUÉE' : (!affordable ? `${selectedTower.cost} 🪙 REQUIS` : `${selectedTower.cost} 🪙`);
-        this.ctx.fillText(statusLabel, this.buildCursor.x, this.buildCursor.y + 30);
+        this.ctx.fillText(statusLabel, this.buildCursor.x, this.buildCursor.y + 32);
+      } else if (existingAtCursor && !this.activeHeroTargeting) {
+        const hoverRange = Math.max(36, Number(existingAtCursor.range) || 120);
+        this.ctx.beginPath();
+        this.ctx.arc(existingAtCursor.x, existingAtCursor.y, hoverRange, 0, Math.PI * 2);
+        this.ctx.fillStyle = 'rgba(0, 240, 255, 0.05)';
+        this.ctx.fill();
+        this.ctx.setLineDash([6, 5]);
+        this.ctx.strokeStyle = 'rgba(0, 240, 255, 0.45)';
+        this.ctx.lineWidth = 1.5;
+        this.ctx.stroke();
+        this.ctx.setLineDash([]);
+
+        const distToCit = Math.hypot(existingAtCursor.x - (this.citadel?.x || 0), existingAtCursor.y - (this.citadel?.y || 0));
+        if (distToCit <= 210) {
+          this.ctx.beginPath();
+          this.ctx.moveTo(this.citadel.x, this.citadel.y);
+          this.ctx.lineTo(existingAtCursor.x, existingAtCursor.y);
+          this.ctx.strokeStyle = 'rgba(0, 240, 255, 0.35)';
+          this.ctx.lineWidth = 1.6;
+          this.ctx.stroke();
+        }
+
+        this.ctx.strokeStyle = '#67e8f9';
+        this.ctx.lineWidth = 2;
+        this.ctx.beginPath();
+        this.ctx.arc(existingAtCursor.x, existingAtCursor.y, (existingAtCursor.radius || 18) + 8, 0, Math.PI * 2);
+        this.ctx.stroke();
+
+        this.ctx.font = `bold ${this.getReadableWorldSize(10, 10)}px Rajdhani, sans-serif`;
+        this.ctx.textAlign = 'center';
+        this.ctx.textBaseline = 'middle';
+        this.ctx.fillStyle = '#67e8f9';
+        this.ctx.fillText(`NIV ${existingAtCursor.level || 1} · [CLIC] GÉRER · [U] · [X]`, existingAtCursor.x, existingAtCursor.y + 34);
       } else {
         this.ctx.strokeStyle = '#fff';
         this.ctx.lineWidth = 2;

@@ -771,6 +771,24 @@ class SoundEngine {
     sub.stop(now + 0.78);
   }
 
+  playShieldImpact() {
+    if (this.isMuted || !this.ensureAudio()) return;
+    if (!this.canPlayHotSfx('shield_impact', 0.14)) return;
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(520, now);
+    osc.frequency.exponentialRampToValueAtTime(160, now + 0.16);
+    gain.gain.setValueAtTime(0.11, now);
+    gain.gain.exponentialRampToValueAtTime(0.004, now + 0.17);
+    osc.connect(gain);
+    gain.connect(this.sfxGain);
+    this.trackHotSfxSource(osc);
+    osc.start(now);
+    osc.stop(now + 0.17);
+  }
+
   // --- 5-Station Procedural Synthesizer Radio --- //
 
   toggleMusic() {
