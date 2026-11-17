@@ -7425,6 +7425,19 @@ class GameEngine {
       }
     }
 
+    if (isElite && !this.prefersReducedMotion && this.particles.length < 220) {
+      this.particles.push({
+        type: 'gravity_ring',
+        x: enemy.x,
+        y: enemy.y,
+        radius: 10,
+        maxRadius: enemy.isBoss ? 110 : 62,
+        life: 0.42,
+        maxLife: 0.42,
+        color: enemy.isBoss ? '#ff3366' : '#f59e0b'
+      });
+    }
+
     this.gainFrenzy(enemy.isBoss ? 24 : 7);
     if (grantsPermanentProgress) this.gainAffinity(enemy.isBoss ? 14 : 2);
 
@@ -9563,9 +9576,23 @@ class GameEngine {
       const s2 = symbols[Math.floor(Math.random() * symbols.length)];
       const s3 = symbols[Math.floor(Math.random() * symbols.length)];
 
-      document.getElementById('wheel-1').textContent = s1;
-      document.getElementById('wheel-2').textContent = s2;
-      document.getElementById('wheel-3').textContent = s3;
+      const w1 = document.getElementById('wheel-1');
+      const w2 = document.getElementById('wheel-2');
+      const w3 = document.getElementById('wheel-3');
+      if (w1) w1.textContent = s1;
+      if (w2) w2.textContent = s2;
+      if (w3) w3.textContent = s3;
+      if (!this.prefersReducedMotion) {
+        [w1, w2, w3].forEach((wheel, idx) => {
+          if (!wheel) return;
+          wheel.classList.remove('is-rolling');
+          void wheel.offsetWidth;
+          setTimeout(() => {
+            wheel.classList.add('is-rolling');
+            setTimeout(() => wheel.classList.remove('is-rolling'), 260);
+          }, idx * 75);
+        });
+      }
 
       if (s1 === s2 && s2 === s3) {
         this.coins += 350;

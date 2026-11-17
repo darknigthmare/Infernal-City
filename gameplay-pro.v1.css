@@ -1720,6 +1720,48 @@ button.adult-scene-card:focus-visible {
     0 0 18px rgba(0, 240, 255, 0.1);
 }
 
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(8, 12, 22, 0.85);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.32);
+  border-radius: 999px;
+  border: 1px solid rgba(0, 240, 255, 0.25);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 240, 255, 0.58);
+}
+
+#tactical-phase-txt {
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.45);
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.slot-wheel {
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+.slot-wheel.is-rolling {
+  transform: scale(1.14) translateY(-2px);
+  border-color: rgba(245, 158, 11, 0.88);
+  box-shadow: 0 0 18px rgba(245, 158, 11, 0.55), inset 0 0 10px rgba(245, 158, 11, 0.28);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slot-wheel,
+  .slot-wheel.is-rolling {
+    transition: none;
+    transform: none;
+  }
+}
+
   .citadel-danger-vignette,
   .comms-signal i,
   #btn-overdrive:not(:disabled),
