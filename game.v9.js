@@ -3416,6 +3416,27 @@ class GameEngine {
         return;
       }
 
+      if (!activeModal && document.activeElement === this.canvas) {
+        if (e.key === 'u' || e.key === 'U') {
+          const defense = this.findPlacedDefenseAt(this.buildCursor.x, this.buildCursor.y);
+          if (defense) {
+            e.preventDefault();
+            this.selectedPlacedDefense = defense;
+            this.handleDefenseUpgrade();
+          }
+          return;
+        }
+        if (e.key === 'x' || e.key === 'X') {
+          const defense = this.findPlacedDefenseAt(this.buildCursor.x, this.buildCursor.y);
+          if (defense) {
+            e.preventDefault();
+            this.selectedPlacedDefense = defense;
+            this.handleDefenseSale();
+          }
+          return;
+        }
+      }
+
       if (document.activeElement === this.canvas) {
         const view = this.getBattlefieldView();
         const cameraStep = e.shiftKey ? 140 : 70;
@@ -11192,6 +11213,68 @@ class GameEngine {
         });
       });
     }
+
+    if (!this.prefersReducedMotion) {
+      this.ctx.save();
+      const layoutId = this.selectedLayoutId || 'convergence';
+      if (layoutId === 'western_wall') {
+        const sweepAngle = Math.sin(this.animationClock * 0.45) * 0.42;
+        const coneHalf = 0.18;
+        const beamLength = w * 1.15;
+        const originX = 0;
+        const originY = h * 0.5;
+        this.ctx.fillStyle = 'rgba(0, 240, 255, 0.045)';
+        this.ctx.beginPath();
+        this.ctx.moveTo(originX, originY);
+        this.ctx.lineTo(
+          originX + Math.cos(sweepAngle - coneHalf) * beamLength,
+          originY + Math.sin(sweepAngle - coneHalf) * beamLength
+        );
+        this.ctx.lineTo(
+          originX + Math.cos(sweepAngle + coneHalf) * beamLength,
+          originY + Math.sin(sweepAngle + coneHalf) * beamLength
+        );
+        this.ctx.closePath();
+        this.ctx.fill();
+      } else if (layoutId === 'southern_watch') {
+        const radarAngle = (Math.PI * 0.5) + Math.sin(this.animationClock * 0.55) * 0.85;
+        const radarRadius = Math.max(w, h) * 0.9;
+        const originX = w * 0.5;
+        const originY = 0;
+        this.ctx.fillStyle = 'rgba(56, 189, 248, 0.04)';
+        this.ctx.beginPath();
+        this.ctx.moveTo(originX, originY);
+        this.ctx.arc(originX, originY, radarRadius, radarAngle - 0.24, radarAngle + 0.24);
+        this.ctx.closePath();
+        this.ctx.fill();
+      } else if (layoutId === 'twin_rift') {
+        const riftPulse = 0.5 + 0.5 * Math.sin(this.animationClock * 2.4);
+        this.ctx.strokeStyle = 'rgba(255, 42, 95, 0.14)';
+        this.ctx.lineWidth = 2 + riftPulse * 1.6;
+        [h * 0.3, h * 0.7].forEach(ry => {
+          this.ctx.beginPath();
+          this.ctx.moveTo(0, ry);
+          this.ctx.lineTo(w, ry);
+          this.ctx.stroke();
+        });
+      } else {
+        const nexusPulse = 0.5 + 0.5 * Math.sin(this.animationClock * 2.1);
+        const cx = w * 0.5;
+        const cy = h * 0.5;
+        this.ctx.strokeStyle = 'rgba(0, 240, 255, 0.06)';
+        this.ctx.lineWidth = 1.5 + nexusPulse * 1.2;
+        this.ctx.beginPath();
+        this.ctx.moveTo(cx, 0);
+        this.ctx.lineTo(cx, h);
+        this.ctx.moveTo(0, cy);
+        this.ctx.lineTo(w, cy);
+        this.ctx.stroke();
+        this.ctx.beginPath();
+        this.ctx.arc(cx, cy, 70 + nexusPulse * 35, 0, Math.PI * 2);
+        this.ctx.stroke();
+      }
+      this.ctx.restore();
+    }
   }
 
   drawSpawnGates(w, h) {
@@ -11493,6 +11576,37 @@ class GameEngine {
       this.ctx.arc(enemy.x, enemy.y, Math.max(enemy.radius + 3, visualSize * 0.4), 0, Math.PI * 2);
       this.ctx.strokeStyle = enemy.stunTimer > 0 ? '#fef08a' : '#67e8f9';
       this.ctx.lineWidth = 3;
+      this.ctx.stroke();
+    }
+    if (enemy.shield > 0) {
+      const hexRadius = Math.max(enemy.radius + 5, visualRadius * 0.85);
+      this.ctx.beginPath();
+      for (let i = 0; i < 6; i++) {
+        const angle = (Math.PI / 3) * i - (Math.PI / 6);
+        const hx = enemy.x + Math.cos(angle) * hexRadius;
+        const hy = enemy.y + Math.sin(angle) * hexRadius;
+        if (i === 0) this.ctx.moveTo(hx, hy);
+        else this.ctx.lineTo(hx, hy);
+      }
+      this.ctx.closePath();
+      this.ctx.strokeStyle = 'rgba(34, 211, 238, 0.85)';
+      this.ctx.lineWidth = 2;
+      this.ctx.stroke();
+    }
+    if (enemy.siegeDeployTimer > 0 || enemy.type === 'artillery') {
+      const tickInner = Math.max(enemy.radius + 4, visualRadius * 0.72);
+      const tickOuter = tickInner + 6;
+      this.ctx.strokeStyle = 'rgba(245, 158, 11, 0.78)';
+      this.ctx.lineWidth = 1.6;
+      this.ctx.beginPath();
+      this.ctx.moveTo(enemy.x, enemy.y - tickOuter);
+      this.ctx.lineTo(enemy.x, enemy.y - tickInner);
+      this.ctx.moveTo(enemy.x + tickInner, enemy.y);
+      this.ctx.lineTo(enemy.x + tickOuter, enemy.y);
+      this.ctx.moveTo(enemy.x, enemy.y + tickInner);
+      this.ctx.lineTo(enemy.x, enemy.y + tickOuter);
+      this.ctx.moveTo(enemy.x - tickOuter, enemy.y);
+      this.ctx.lineTo(enemy.x - tickInner, enemy.y);
       this.ctx.stroke();
     }
 
