@@ -300,9 +300,13 @@ const COMPANION_FX_SPRITE_DATA = {
   loot_crate: { src: 'assets/animations/fx/loot-crates-atlas.png', columns: 8, rows: 2, size: 36, fps: 10 },
   combat_fx: { src: 'assets/animations/fx/combat-fx-atlas.png', columns: 8, rows: 4, size: 64, fps: 16 },
   citadel_core: { src: 'assets/animations/citadel/citadel-core-atlas.png', columns: 8, rows: 2, size: 104, fps: 10 },
+  citadel_bastion: { src: 'assets/animations/citadel/citadel-bastion-atlas.png', columns: 8, rows: 2, size: 230, fps: 8 },
+  citadel_shield: { src: 'assets/animations/citadel/citadel-shield-atlas.png', columns: 8, rows: 2, size: 264, fps: 10 },
   powerups: { src: 'assets/animations/fx/powerups-atlas.png', columns: 8, rows: 6, size: 38, fps: 12 },
   projectiles: { src: 'assets/animations/fx/projectiles-atlas.png', columns: 8, rows: 4, size: 22, fps: 16 },
   env_props: { src: 'assets/animations/environment/props-atlas.png', columns: 4, rows: 1, size: 54, fps: 1 },
+  env_props_anim: { src: 'assets/animations/environment/props-animated-atlas.png', columns: 8, rows: 4, size: 68, fps: 10 },
+  outer_structures: { src: 'assets/animations/environment/outer-city-structures-atlas.png', columns: 4, rows: 2, size: 175, fps: 1 },
   state_poses: { src: 'assets/animations/smooth/character-states-fx-atlas.png', columns: 8, rows: 6, size: 120, fps: 12 }
 };
 
@@ -8232,6 +8236,27 @@ class GameEngine {
     this.showCommanderComms('overdrive');
     this.applySelectedHeroUltimate();
 
+    // Citadel Aegis Shockwave pulse on Overdrive
+    if (!this.prefersReducedMotion && this.particles.length < 220) {
+      this.particles.push({
+        type: 'gravity_ring',
+        x: this.citadel.x,
+        y: this.citadel.y,
+        radius: 36,
+        maxRadius: 270,
+        life: 0.55,
+        maxLife: 0.55,
+        color: '#f59e0b'
+      });
+    }
+    this.enemies.forEach(enemy => {
+      if (!enemy || enemy.hp <= 0) return;
+      const dist = Math.hypot(enemy.x - this.citadel.x, enemy.y - this.citadel.y);
+      if (dist <= 220) {
+        enemy.slowTimer = Math.max(enemy.slowTimer || 0, 2.0);
+      }
+    });
+
     if (this.overdriveCount >= 3) this.unlockAchievement('frenzy_master');
 
     this.addFloatingText('🔥 OVERDRIVE FRÉNÉSIE ACTIVÉ !', this.citadel.x, this.citadel.y - 70, '#f59e0b');
@@ -11126,6 +11151,33 @@ class GameEngine {
     this.ctx.fillStyle = '#030710';
     this.ctx.fillRect(view.left, view.top, viewWidth, viewHeight);
 
+    // Continuous outer-arena ("hors arène") coastline horizon across the entire viewport
+    if (this.isSpriteReady(this.coastlineImage)) {
+      const sourceWidth = this.coastlineImage.naturalWidth || this.coastlineImage.width;
+      const sourceHeight = this.coastlineImage.naturalHeight || this.coastlineImage.height;
+      const coverScale = Math.max(viewWidth / sourceWidth, viewHeight / sourceHeight);
+      const cropWidth = viewWidth / coverScale;
+      const cropHeight = viewHeight / coverScale;
+      const sourceX = (sourceWidth - cropWidth) / 2;
+      const sourceY = (sourceHeight - cropHeight) / 2;
+      this.ctx.save();
+      this.ctx.globalAlpha = 0.54;
+      this.ctx.drawImage(
+        this.coastlineImage,
+        sourceX,
+        sourceY,
+        cropWidth,
+        cropHeight,
+        view.left,
+        view.top,
+        viewWidth,
+        viewHeight
+      );
+      this.ctx.fillStyle = 'rgba(2, 6, 16, 0.52)';
+      this.ctx.fillRect(view.left, view.top, viewWidth, viewHeight);
+      this.ctx.restore();
+    }
+
     const bounds = this.worldLayout?.approachBounds;
     const approachLeft = Number.isFinite(bounds?.minX) ? bounds.minX : -BATTLEFIELD_APPROACH_MARGIN;
     const approachTop = Number.isFinite(bounds?.minY) ? bounds.minY : -BATTLEFIELD_APPROACH_MARGIN;
@@ -11148,29 +11200,8 @@ class GameEngine {
         approachWidth,
         approachHeight
       );
-      this.ctx.fillStyle = 'rgba(1, 4, 12, 0.34)';
+      this.ctx.fillStyle = 'rgba(1, 4, 12, 0.28)';
       this.ctx.fillRect(approachLeft, approachTop, approachWidth, approachHeight);
-    } else if (this.isSpriteReady(this.coastlineImage)) {
-      const sourceWidth = this.coastlineImage.naturalWidth || this.coastlineImage.width;
-      const sourceHeight = this.coastlineImage.naturalHeight || this.coastlineImage.height;
-      const coverScale = Math.max(viewWidth / sourceWidth, viewHeight / sourceHeight);
-      const cropWidth = viewWidth / coverScale;
-      const cropHeight = viewHeight / coverScale;
-      const sourceX = (sourceWidth - cropWidth) / 2;
-      const sourceY = (sourceHeight - cropHeight) / 2;
-      this.ctx.drawImage(
-        this.coastlineImage,
-        sourceX,
-        sourceY,
-        cropWidth,
-        cropHeight,
-        view.left,
-        view.top,
-        viewWidth,
-        viewHeight
-      );
-      this.ctx.fillStyle = 'rgba(1, 4, 12, 0.44)';
-      this.ctx.fillRect(view.left, view.top, viewWidth, viewHeight);
     }
 
     // Keep the authored layout visible inside the build rectangle. The former
@@ -11235,28 +11266,106 @@ class GameEngine {
       this.ctx.restore();
     }
 
-    // Perimeter Architectural Props (Cyber Relay Pylons, Gothic Braziers, Bastion Pillars, Obelisks)
-    const propsData = COMPANION_FX_SPRITE_DATA.env_props;
-    const propsImg = this.companionFxImages?.env_props;
-    if (this.isSpriteReady(propsImg)) {
-      const propSpots = [
-        { x: -38, y: -38, col: 0 },
-        { x: w + 38, y: -38, col: 2 },
-        { x: -38, y: h + 38, col: 2 },
-        { x: w + 38, y: h + 38, col: 0 },
-        { x: w * 0.25, y: -42, col: 1 },
-        { x: w * 0.75, y: h + 42, col: 1 },
-        { x: -42, y: h * 0.75, col: 3 },
-        { x: w + 42, y: h * 0.25, col: 3 }
-      ];
-      const propSize = this.getReadableWorldSize(propsData.size, 34);
-      propSpots.forEach(spot => {
-        this.drawAtlasFrame(propsImg, propsData, spot.col, spot.x, spot.y, propSize, {
+    // Outer-Arena ("Hors Arène") Skyline Bastions & Infernal Monoliths
+    const outerData = COMPANION_FX_SPRITE_DATA.outer_structures;
+    const outerImg = this.companionFxImages?.outer_structures;
+    if (this.isSpriteReady(outerImg)) {
+      const layoutId = this.selectedLayoutId || 'convergence';
+      const outerSpots = layoutId === 'western_wall'
+        ? [
+          { x: -240, y: 120, col: 0, row: 0 },
+          { x: -240, y: 680, col: 2, row: 0 },
+          { x: w + 250, y: 140, col: 1, row: 1 },
+          { x: w + 250, y: 660, col: 3, row: 1 },
+          { x: w * 0.5, y: -230, col: 0, row: 1 },
+          { x: w * 0.5, y: h + 230, col: 2, row: 1 }
+        ]
+        : layoutId === 'southern_watch'
+          ? [
+            { x: 180, y: -240, col: 1, row: 0 },
+            { x: w - 180, y: -240, col: 3, row: 0 },
+            { x: -230, y: h * 0.5, col: 0, row: 0 },
+            { x: w + 230, y: h * 0.5, col: 2, row: 0 },
+            { x: 200, y: h + 250, col: 0, row: 1 },
+            { x: w - 200, y: h + 250, col: 2, row: 1 }
+          ]
+          : [
+            { x: -230, y: -210, col: 0, row: 0 },
+            { x: w + 230, y: -210, col: 1, row: 1 },
+            { x: -230, y: h + 210, col: 2, row: 0 },
+            { x: w + 230, y: h + 210, col: 3, row: 1 },
+            { x: -250, y: h * 0.5, col: 3, row: 0 },
+            { x: w + 250, y: h * 0.5, col: 2, row: 1 }
+          ];
+      const outerSize = this.getReadableWorldSize(outerData.size, 84);
+      outerSpots.forEach(spot => {
+        this.drawAtlasFrame(outerImg, outerData, spot.col, spot.x, spot.y, outerSize, {
+          row: spot.row,
           allowSmooth: false,
-          shadowColor: spot.col === 1 ? '#ff552a' : '#00f0ff',
-          shadowBlur: 10
+          alpha: 0.84,
+          shadowColor: spot.row === 1 ? '#ff2a5f' : '#00f0ff',
+          shadowBlur: 14
         });
       });
+    }
+
+    // Animated Perimeter & Plaza Architectural Props (Braziers, Radars, Shield Obelisks, Searchlights)
+    const animPropsData = COMPANION_FX_SPRITE_DATA.env_props_anim;
+    const animPropsImg = this.companionFxImages?.env_props_anim;
+    if (this.isSpriteReady(animPropsImg)) {
+      const citX = this.citadel?.x || (w * 0.5);
+      const citY = this.citadel?.y || (h * 0.5);
+      const propSpots = [
+        { x: -38, y: -38, row: 1 },
+        { x: w + 38, y: -38, row: 1 },
+        { x: -38, y: h + 38, row: 1 },
+        { x: w + 38, y: h + 38, row: 1 },
+        { x: w * 0.25, y: -42, row: 0 },
+        { x: w * 0.75, y: -42, row: 3 },
+        { x: w * 0.25, y: h + 42, row: 3 },
+        { x: w * 0.75, y: h + 42, row: 0 },
+        { x: -42, y: h * 0.25, row: 3 },
+        { x: -42, y: h * 0.75, row: 0 },
+        { x: w + 42, y: h * 0.25, row: 0 },
+        { x: w + 42, y: h * 0.75, row: 3 },
+        { x: citX - 102, y: citY - 102, row: 2 },
+        { x: citX + 102, y: citY + 102, row: 2 }
+      ];
+      const propSize = this.getReadableWorldSize(animPropsData.size, 36);
+      propSpots.forEach((spot, idx) => {
+        const frame = this.prefersReducedMotion
+          ? 0
+          : Math.floor((this.animationClock * animPropsData.fps) + idx) % animPropsData.columns;
+        this.drawAtlasFrame(animPropsImg, animPropsData, frame, spot.x, spot.y, propSize, {
+          row: spot.row,
+          allowSmooth: false,
+          shadowColor: spot.row === 0 ? '#ff552a' : (spot.row === 2 ? '#38bdf8' : '#00f0ff'),
+          shadowBlur: 12
+        });
+      });
+    } else {
+      const propsData = COMPANION_FX_SPRITE_DATA.env_props;
+      const propsImg = this.companionFxImages?.env_props;
+      if (this.isSpriteReady(propsImg)) {
+        const propSpots = [
+          { x: -38, y: -38, col: 0 },
+          { x: w + 38, y: -38, col: 2 },
+          { x: -38, y: h + 38, col: 2 },
+          { x: w + 38, y: h + 38, col: 0 },
+          { x: w * 0.25, y: -42, col: 1 },
+          { x: w * 0.75, y: h + 42, col: 1 },
+          { x: -42, y: h * 0.75, col: 3 },
+          { x: w + 42, y: h * 0.25, col: 3 }
+        ];
+        const propSize = this.getReadableWorldSize(propsData.size, 34);
+        propSpots.forEach(spot => {
+          this.drawAtlasFrame(propsImg, propsData, spot.col, spot.x, spot.y, propSize, {
+            allowSmooth: false,
+            shadowColor: spot.col === 1 ? '#ff552a' : '#00f0ff',
+            shadowBlur: 10
+          });
+        });
+      }
     }
 
     if (!this.prefersReducedMotion) {
@@ -11871,13 +11980,39 @@ class GameEngine {
       });
     });
 
-    // Render Citadel (8-frame animated Haven Bastion Core)
+    // Render Enlarged Citadel Bastion, Core, Diegetic HP Arc & Animated Aegis Shield
     const citX = this.citadel.x || (w / 2);
     const citY = this.citadel.y || (h / 2);
     const citadelVisualRadius = this.getReadableWorldSize(this.citadel.radius, 24);
+    const citadelHpRatio = Math.max(0, Math.min(1, (this.citadel.hp || 0) / Math.max(1, this.citadel.maxHp || 1)));
+
+    const bastionData = COMPANION_FX_SPRITE_DATA.citadel_bastion;
+    const bastionImg = this.companionFxImages?.citadel_bastion;
+    const bastionSize = Math.max(citadelVisualRadius * 4.8, this.getReadableWorldSize(bastionData.size, 128));
+    if (this.isSpriteReady(bastionImg)) {
+      const bastionFrame = this.prefersReducedMotion
+        ? 0
+        : Math.floor(this.animationClock * bastionData.fps) % bastionData.columns;
+      this.drawAtlasFrame(
+        bastionImg,
+        bastionData,
+        bastionFrame,
+        citX,
+        citY,
+        bastionSize,
+        {
+          row: this.isOverdriveActive ? 1 : 0,
+          shadowColor: this.isOverdriveActive ? '#f59e0b' : '#00f0ff',
+          shadowBlur: 22
+        }
+      );
+    }
+
     const citadelCoreData = COMPANION_FX_SPRITE_DATA.citadel_core;
     const citadelCoreImg = this.companionFxImages?.citadel_core;
-    const citadelCoreFrame = Math.floor(this.animationClock * citadelCoreData.fps) % citadelCoreData.columns;
+    const citadelCoreFrame = this.prefersReducedMotion
+      ? 0
+      : Math.floor(this.animationClock * citadelCoreData.fps) % citadelCoreData.columns;
     const citadelDrawn = this.drawAtlasFrame(
       citadelCoreImg,
       citadelCoreData,
@@ -11912,17 +12047,37 @@ class GameEngine {
       this.ctx.fill();
     }
 
-    // Diegetic rotating orbital tactical rings & shield impact pulse
+    // Diegetic orbital tactical rings & world-space Citadel HP integrity arc
+    const bastionRadius = bastionSize * 0.48;
     const ringSpin = this.prefersReducedMotion ? 0 : (this.animationClock * 0.85);
     this.ctx.strokeStyle = this.isOverdriveActive ? 'rgba(245, 158, 11, 0.55)' : 'rgba(0, 240, 255, 0.42)';
     this.ctx.lineWidth = 2;
     this.ctx.shadowBlur = 8;
     this.ctx.beginPath();
-    this.ctx.arc(citX, citY, citadelVisualRadius + 10, ringSpin, ringSpin + Math.PI * 0.72);
+    this.ctx.arc(citX, citY, citadelVisualRadius + 14, ringSpin, ringSpin + Math.PI * 0.72);
     this.ctx.stroke();
     this.ctx.beginPath();
-    this.ctx.arc(citX, citY, citadelVisualRadius + 10, ringSpin + Math.PI, ringSpin + Math.PI * 1.72);
+    this.ctx.arc(citX, citY, citadelVisualRadius + 14, ringSpin + Math.PI, ringSpin + Math.PI * 1.72);
     this.ctx.stroke();
+
+    const hpArcRadius = Math.max(citadelVisualRadius + 24, bastionRadius + 6);
+    const hpColor = citadelHpRatio > 0.6 ? 'rgba(0, 240, 255, 0.82)' : (citadelHpRatio > 0.3 ? 'rgba(245, 158, 11, 0.88)' : 'rgba(255, 42, 95, 0.94)');
+    this.ctx.beginPath();
+    this.ctx.arc(citX, citY, hpArcRadius, 0, Math.PI * 2);
+    this.ctx.strokeStyle = 'rgba(15, 23, 42, 0.55)';
+    this.ctx.lineWidth = 3.5;
+    this.ctx.shadowBlur = 0;
+    this.ctx.stroke();
+    if (citadelHpRatio > 0) {
+      this.ctx.beginPath();
+      this.ctx.arc(citX, citY, hpArcRadius, -Math.PI / 2, (-Math.PI / 2) + (Math.PI * 2 * citadelHpRatio));
+      this.ctx.strokeStyle = hpColor;
+      this.ctx.lineWidth = 3.5;
+      this.ctx.lineCap = 'round';
+      this.ctx.shadowColor = hpColor;
+      this.ctx.shadowBlur = 10;
+      this.ctx.stroke();
+    }
 
     if (!this.waveActive && this.waveIntermissionTimer > 0 && !this.isPaused) {
       const authoredIntermissionMs = Number(this.activeWaveDefinition?.intermissionMs);
@@ -11930,7 +12085,7 @@ class GameEngine {
         ? Math.max(0.1, authoredIntermissionMs / 1000)
         : 3.5;
       const progress = Math.max(0, Math.min(1, this.waveIntermissionTimer / intermissionTotal));
-      const arcRadius = citadelVisualRadius + 20;
+      const arcRadius = hpArcRadius + 8;
       const startAngle = -Math.PI / 2;
       this.ctx.beginPath();
       this.ctx.arc(citX, citY, arcRadius, 0, Math.PI * 2);
@@ -11951,15 +12106,45 @@ class GameEngine {
 
     if (this.citadelShieldFlash > 0) {
       this.ctx.beginPath();
-      this.ctx.arc(citX, citY, citadelVisualRadius + 15, 0, Math.PI * 2);
-      this.ctx.strokeStyle = `rgba(255, 42, 95, ${Math.min(0.9, this.citadelShieldFlash)})`;
-      this.ctx.lineWidth = 3.5;
+      this.ctx.arc(citX, citY, hpArcRadius + 12, 0, Math.PI * 2);
+      this.ctx.strokeStyle = `rgba(255, 42, 95, ${Math.min(0.92, this.citadelShieldFlash)})`;
+      this.ctx.lineWidth = 4;
       this.ctx.shadowColor = '#ff2a5f';
-      this.ctx.shadowBlur = 22;
+      this.ctx.shadowBlur = 24;
       this.ctx.stroke();
     }
     this.ctx.restore();
-    this.drawHero(citX, citY - 7);
+
+    // Defending Valkyrie scaled coherently on the Citadel Spire Command Deck
+    this.drawHero(citX, citY - 6, { size: 62 });
+
+    // Animated Haven Aegis Energy Shield Dome enclosing the Citadel & Heroine
+    const shieldData = COMPANION_FX_SPRITE_DATA.citadel_shield;
+    const shieldImg = this.companionFxImages?.citadel_shield;
+    if (this.isSpriteReady(shieldImg) && citadelHpRatio > 0) {
+      const shieldFrame = this.prefersReducedMotion
+        ? 0
+        : Math.floor(this.animationClock * shieldData.fps) % shieldData.columns;
+      const shieldSize = Math.max(citadelVisualRadius * 5.4, this.getReadableWorldSize(shieldData.size, 148));
+      const shieldAlert = this.citadelShieldFlash > 0 || this.isOverdriveActive || citadelHpRatio < 0.35;
+      const shieldAlpha = this.citadelShieldFlash > 0
+        ? Math.min(0.95, 0.55 + this.citadelShieldFlash * 0.4)
+        : (0.42 + (citadelHpRatio * 0.42));
+      this.drawAtlasFrame(
+        shieldImg,
+        shieldData,
+        shieldFrame,
+        citX,
+        citY,
+        shieldSize,
+        {
+          row: shieldAlert ? 1 : 0,
+          alpha: shieldAlpha,
+          shadowColor: shieldAlert ? '#ff2a5f' : '#00f0ff',
+          shadowBlur: shieldAlert ? 22 : 14
+        }
+      );
+    }
 
     // Render Crates (8-frame holographic supply pods)
     this.crates.forEach(c => {
