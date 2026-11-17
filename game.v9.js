@@ -2829,13 +2829,31 @@ class GameEngine {
     const panel = document.getElementById('comms-transmission');
     if (!panel) return;
     const hero = this.selectedHero || HERO_CLASSES.aria;
+    const heroVoices = {
+      aria: { deploy: 'Boucliers Aegis synchronisés. Aucune brèche ne passera.', overdrive: 'Formation serrée ! Puissance maximale sur Haven !', wave_clear: 'Périmètre intact. Consolidons nos lignes.' },
+      kira: { deploy: 'Capteurs furtifs actifs. Je couvre les angles morts.', overdrive: 'Dans l’ombre, la lame frappe deux fois plus vite.', wave_clear: 'Cibles neutralisées sans bavure.' },
+      rin: { deploy: 'Le feu sacré d’Haven est prêt à purifier les approches.', overdrive: 'Que tout brûle dans les flammes de la Citadelle !', wave_clear: 'Il ne reste que des cendres sur le bitume.' },
+      selene: { deploy: 'Télémétrie lunaire calibrée. Prête pour l’appui orbital.', overdrive: 'Alignement stellaire complet. Feu orbital !', wave_clear: 'Secteur apaisé sous la lueur lunaire.' },
+      vespera: { deploy: 'Mon ancien Trône est derrière moi. Haven est ma cité.', overdrive: 'Goûtez à la fureur d’une Souveraine ralliée !', wave_clear: 'Un spectacle digne de notre alliance.' },
+      carmilla: { deploy: 'Le sang écarlate veille sur ces remparts ce soir.', overdrive: 'Dévorez leurs rangs jusqu’à la dernière étincelle !', wave_clear: 'La nuit nous appartient encore.' },
+      nyx: { deploy: 'Circuits ouverts. Je pirate leurs vecteurs d’approche.', overdrive: 'Surcharge du réseau tactique !', wave_clear: 'Flux hostiles coupés.' },
+      aurelia: { deploy: 'Chaudières à pression nominale. Les tourelles tiendront.', overdrive: 'Plein régime sur tous les pistons du Bastion !', wave_clear: 'Réparations automatiques en cours.' },
+      maris: { deploy: 'Marée montante sur le secteur. Prête à briser l’assaut.', overdrive: 'Que le raz-de-marée abyssal les emporte !', wave_clear: 'Les eaux se retirent, Haven tient bon.' },
+      zahra: { deploy: 'Les Mille-Ciels guident nos tirs depuis la haute tour.', overdrive: 'Tempête solaire sur tout le périmètre !', wave_clear: 'L’horizon est dégagé.' },
+      mircalla: { deploy: 'Fils de soie tendus. Chaque intrus sera piégé.', overdrive: 'Danse macabre activée !', wave_clear: 'Le théâtre est silencieux.' },
+      isolde: { deploy: 'Lame froide, esprit clair. En position.', overdrive: 'Exécution implacable sur les cibles lourdes !', wave_clear: 'Menace écartée.' },
+      hana: { deploy: 'Lame Kurogane prête. J’attends l’ouverture.', overdrive: 'Frappe éclair sans retenue !', wave_clear: 'Travail propre.' },
+      freyja: { deploy: 'Givre du Nord déployé sur les chaussées.', overdrive: 'Blizzard absolu sur Haven !', wave_clear: 'Le froid retombe sur le secteur.' },
+      vega: { deploy: 'Balises solaires actives. Aucune ombre ne m’échappe.', overdrive: 'Supernova tactique déclenchée !', wave_clear: 'Visibilité totale rétablie.' },
+      amara: { deploy: 'Racines bio-mécaniques ancrées dans le sol d’Haven.', overdrive: 'Floraison toxique sur les hordes !', wave_clear: 'Le jardin du Bastion respire.' }
+    };
     const linesByEvent = {
-      deploy: 'Systèmes de Haven synchronisés. Périmètre prêt pour vos ordres, Commandant.',
+      deploy: heroVoices[hero.id]?.deploy || 'Systèmes de Haven synchronisés. Périmètre prêt pour vos ordres, Commandant.',
       wave_start: 'Contacts multiples sur les approches. Verrouillage des tourelles actif !',
-      wave_clear: 'Secteur dégagé. Profitons de cette accalmie pour consolider nos lignes.',
+      wave_clear: heroVoices[hero.id]?.wave_clear || 'Secteur dégagé. Profitons de cette accalmie pour consolider nos lignes.',
       boss: 'Signature Souveraine détectée ! Concentrez la puissance de feu sur la menace.',
       low_hp: 'Boucliers de la Citadelle critiques ! Renforcez le périmètre central !',
-      overdrive: 'Limiteurs désactivés. Toute la puissance d’Haven sur l’ennemi !'
+      overdrive: heroVoices[hero.id]?.overdrive || 'Limiteurs désactivés. Toute la puissance d’Haven sur l’ennemi !'
     };
     const toneByEvent = {
       boss: 'danger',
