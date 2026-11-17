@@ -998,6 +998,109 @@
   animation: cg-ken-burns 14s ease-in-out infinite alternate;
 }
 
+/* VN, Body-Route VN, Adult Scenes & Studio modal cyber-gothic framing */
+.vn-expression-portrait {
+  border-color: rgba(249, 168, 212, 0.72);
+  box-shadow:
+    0 16px 42px rgba(0, 0, 0, 0.62),
+    0 0 28px rgba(236, 72, 153, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 0 18px rgba(236, 72, 153, 0.14);
+  transition:
+    border-color 0.24s ease,
+    box-shadow 0.24s ease,
+    opacity 0.24s ease;
+}
+
+.adult-scene-card,
+.studio-conclusion-card {
+  background: linear-gradient(155deg, rgba(24, 14, 34, 0.88), rgba(8, 12, 24, 0.95));
+  backdrop-filter: blur(10px) saturate(135%);
+  -webkit-backdrop-filter: blur(10px) saturate(135%);
+  border-color: rgba(236, 72, 153, 0.42);
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.58),
+    0 0 14px rgba(236, 72, 153, 0.12),
+    inset 0 1px 0 rgba(249, 168, 212, 0.18),
+    inset 0 0 14px rgba(236, 72, 153, 0.06);
+  transition:
+    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.22s ease,
+    box-shadow 0.22s ease,
+    background 0.22s ease;
+}
+
+.adult-scene-card.route-available {
+  border-color: rgba(0, 240, 255, 0.62);
+  background: linear-gradient(155deg, rgba(12, 26, 44, 0.9), rgba(20, 10, 30, 0.95));
+  box-shadow:
+    0 12px 26px rgba(0, 0, 0, 0.62),
+    0 0 18px rgba(0, 240, 255, 0.2),
+    inset 0 1px 0 rgba(125, 211, 252, 0.22),
+    inset 0 0 16px rgba(236, 72, 153, 0.1);
+}
+
+button.adult-scene-card:hover,
+button.adult-scene-card:focus-visible {
+  transform: translateY(-3px);
+  border-color: rgba(0, 240, 255, 0.84);
+  box-shadow:
+    0 14px 30px rgba(0, 0, 0, 0.68),
+    0 0 22px rgba(0, 240, 255, 0.32),
+    inset 0 1px 0 rgba(125, 211, 252, 0.28),
+    inset 0 0 18px rgba(0, 240, 255, 0.12);
+}
+
+button.adult-scene-card:focus-visible {
+  outline: 2px solid rgba(0, 240, 255, 0.9);
+  outline-offset: 2px;
+}
+
+.studio-conclusion-card:hover,
+.studio-conclusion-card:focus-within {
+  transform: translateY(-2px);
+  border-color: rgba(244, 114, 182, 0.78);
+  box-shadow:
+    0 12px 26px rgba(0, 0, 0, 0.66),
+    0 0 20px rgba(236, 72, 153, 0.3),
+    inset 0 1px 0 rgba(249, 168, 212, 0.26),
+    inset 0 0 16px rgba(236, 72, 153, 0.12);
+}
+
+#vn-cg-img,
+#body-route-cg-img,
+#studio-preview-img {
+  border: 1px solid rgba(0, 240, 255, 0.45);
+  border-radius: 14px;
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.64),
+    0 0 20px rgba(0, 240, 255, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  transition:
+    border-color 0.26s ease,
+    box-shadow 0.26s ease,
+    filter 0.26s ease,
+    transform 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#cg-viewer-modal[data-pose-aura="intimate"] .cg-viewer-layout {
+  border-color: rgba(251, 182, 166, 0.68);
+  background:
+    radial-gradient(circle at 82% 16%, rgba(251, 146, 120, 0.14), transparent 52%),
+    radial-gradient(circle at 18% 86%, rgba(244, 114, 182, 0.12), transparent 56%),
+    linear-gradient(160deg, rgba(24, 13, 24, 0.94), rgba(10, 8, 18, 0.97));
+  box-shadow:
+    0 24px 56px rgba(0, 0, 0, 0.78),
+    0 0 36px rgba(244, 143, 135, 0.28),
+    0 0 72px rgba(236, 72, 153, 0.14),
+    inset 0 1px 0 rgba(254, 215, 170, 0.26),
+    inset 0 0 28px rgba(251, 146, 120, 0.1);
+  transition:
+    border-color 0.32s ease,
+    box-shadow 0.32s ease,
+    background 0.32s ease;
+}
+
 @keyframes cg-ken-burns {
   0% { transform: scale(1) translate3d(0, 0, 0); }
   100% { transform: scale(1.035) translate3d(0, -4px, 0); }
@@ -1012,6 +1115,7 @@
   .modal-overlay .modal-box,
   .modal-overlay .adult-gate-box,
   .modal-overlay .cg-viewer-layout,
+  #cg-viewer-modal[data-pose-aura="intimate"] .cg-viewer-layout,
   .tactical-banner,
   .comms-transmission,
   .class-card,
@@ -1021,6 +1125,12 @@
   .achieve-card,
   .upgrade-card,
   .slot-wheel,
+  .vn-expression-portrait,
+  .adult-scene-card,
+  .studio-conclusion-card,
+  #vn-cg-img,
+  #body-route-cg-img,
+  #studio-preview-img,
   .class-card:hover,
   .class-card:focus-visible,
   .skin-card:hover,
@@ -1033,7 +1143,11 @@
   .upgrade-card:is(button):hover,
   .upgrade-card:is(button):focus-visible,
   .slot-wheel:hover,
-  .slot-wheel:focus-visible {
+  .slot-wheel:focus-visible,
+  button.adult-scene-card:hover,
+  button.adult-scene-card:focus-visible,
+  .studio-conclusion-card:hover,
+  .studio-conclusion-card:focus-within {
     transition: none;
     transform: none;
   }

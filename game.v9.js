@@ -3993,6 +3993,18 @@ class GameEngine {
     }
 
     audio.playTowerUpgrade?.();
+    if (!this.prefersReducedMotion && this.particles.length < 220) {
+      this.particles.push({
+        type: 'sprite_fx',
+        row: 3,
+        x: defense.x,
+        y: defense.y,
+        size: 78,
+        life: 0.35,
+        maxLife: 0.35,
+        color: result.level >= 3 ? '#f59e0b' : '#10b981'
+      });
+    }
     this.showFeedback(`${defense.name} améliorée au niveau ${result.level}`, '#10b981');
     this.updateHUD();
     if (result.requiresSpecialization) {
@@ -10707,6 +10719,9 @@ class GameEngine {
 
   openCgStoryViewer(item) {
     const modal = document.getElementById('cg-viewer-modal'); if (!modal) return;
+    modal.dataset.poseAura = (item?.category && ['erotique', 'eros_time', 'afterglow', 'boudoir', 'romance', 'private_interlude'].includes(item.category))
+      ? 'intimate'
+      : 'default';
 
     const imgSrc = (HERO_CLASSES[item.id] && HERO_CLASSES[item.id].activeSkin === 'alt' && item.altImg) ? item.altImg : item.img;
     document.getElementById('cg-viewer-img').src = imgSrc;
@@ -11157,6 +11172,20 @@ class GameEngine {
       const pulse = this.spawnGatePulses[side] || 0;
       const frame = pulse > 0.5 ? 2 : (pulse > 0 ? 3 : (routeIndex === warningRouteIndex ? 1 : 0));
       const position = route.polyline[0] || route.spawn || this.getSpawnGatePosition(side, w, h);
+      if (!this.prefersReducedMotion && (routeIndex === warningRouteIndex || pulse > 0)) {
+        const ringRadius = gateSize * 0.58;
+        const rot = this.animationClock * (pulse > 0 ? 3.2 : 1.6);
+        this.ctx.save();
+        this.ctx.translate(position.x, position.y);
+        this.ctx.rotate(rot);
+        this.ctx.strokeStyle = pulse > 0 ? 'rgba(255, 42, 175, 0.72)' : 'rgba(0, 240, 255, 0.55)';
+        this.ctx.lineWidth = pulse > 0 ? 2.6 : 1.8;
+        this.ctx.setLineDash([8, 6]);
+        this.ctx.beginPath();
+        this.ctx.arc(0, 0, ringRadius, 0, Math.PI * 2);
+        this.ctx.stroke();
+        this.ctx.restore();
+      }
       if ((this.gameplayPhase === 'preparation' || routeIndex === warningRouteIndex || pulse > 0) && route.polyline.length >= 2) {
         const nextPt = route.polyline[1];
         const dir = Math.atan2(nextPt.y - position.y, nextPt.x - position.x);
