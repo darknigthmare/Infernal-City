@@ -34,6 +34,19 @@ const LAYOUT_TERRAIN_SOURCES = {
   twin_rift: 'assets/environment/map-twin-rift.webp'
 };
 
+const CAMPAIGN_STORY_DISPATCHES = Object.freeze({
+  1: 'Quatre Portes · Secteur 01 : les avant-gardes infernales sondent le périmètre d’Haven. Verrouillez les approches.',
+  3: 'Relais de la Muraille : les meutes rapides contournent nos premiers bastions. Croisez les tirs de couverture.',
+  5: 'Première brèche contenue : nos batteries tiennent, mais l’ennemi déploie déjà ses unités blindées sur les axes.',
+  8: 'Alerte tactique Quatre Portes : signatures d’artillerie lourde repérées. Surveillez les tirs de siège longue portée.',
+  10: 'Cœur du siège d’Haven : les lignes extérieures ploient sous la pression. Maintenez le réseau énergétique intact.',
+  12: 'Assaut coordonné sur les quatre quadrants : aucune porte ne doit céder avant la relève de la garde.',
+  15: 'Climax des Quatre Portes : l’état-major infernal engage sa réserve souveraine. Toute la puissance d’Haven sur la brèche !',
+  16: 'Ouverture des Dix Trônes : au-delà des portes brisées, les seigneurs de guerre prennent personnellement le commandement.',
+  18: 'Protocole Dix Trônes : les régiments d’élite convergent vers la Citadelle. Optimisez chaque tourelle et chaque relais.',
+  20: 'Assaut final des Dix Trônes : le dernier sceau vacille. Tenez Haven jusqu’à l’aube, Commandant.'
+});
+
 // The expansion normally arrives from expansion.v1.js. This deliberately small
 // contract keeps the engine bootable when that optional data pack is blocked,
 // loaded late or omitted by an older cached HTML shell.
@@ -2839,8 +2852,11 @@ class GameEngine {
       const src = hero.activeSkin === 'alt' && hero.altAvatar ? hero.altAvatar : hero.avatar;
       if (src) avatar.src = src;
     }
+    const dispatchLine = (!customLine && eventKey === 'wave_start' && CAMPAIGN_STORY_DISPATCHES[this.wave])
+      ? CAMPAIGN_STORY_DISPATCHES[this.wave]
+      : '';
     if (callsign) callsign.textContent = `${String(hero.name || 'VALKYRIE').toUpperCase()} // CANAL HAVEN`;
-    if (lineNode) lineNode.textContent = customLine || linesByEvent[eventKey] || linesByEvent.deploy;
+    if (lineNode) lineNode.textContent = customLine || dispatchLine || linesByEvent[eventKey] || linesByEvent.deploy;
     panel.dataset.tone = toneByEvent[eventKey] || 'cyan';
     panel.hidden = false;
     panel.classList.remove('is-visible');
