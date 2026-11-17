@@ -289,7 +289,8 @@ const COMPANION_FX_SPRITE_DATA = {
   citadel_core: { src: 'assets/animations/citadel/citadel-core-atlas.png', columns: 8, rows: 2, size: 104, fps: 10 },
   powerups: { src: 'assets/animations/fx/powerups-atlas.png', columns: 8, rows: 6, size: 38, fps: 12 },
   projectiles: { src: 'assets/animations/fx/projectiles-atlas.png', columns: 8, rows: 4, size: 22, fps: 16 },
-  env_props: { src: 'assets/animations/environment/props-atlas.png', columns: 4, rows: 1, size: 54, fps: 1 }
+  env_props: { src: 'assets/animations/environment/props-atlas.png', columns: 4, rows: 1, size: 54, fps: 1 },
+  state_poses: { src: 'assets/animations/smooth/character-states-fx-atlas.png', columns: 8, rows: 6, size: 120, fps: 12 }
 };
 
 const SMOOTH_ATLAS_OVERRIDES = {
@@ -2986,6 +2987,8 @@ class GameEngine {
       rotation
     });
     this.focusBattlefield();
+    this.heroAnimationState = 'intro';
+    this.heroAnimationTimer = 1.6;
     const layoutName = this.getWorldLayout(this.selectedLayoutId)?.name || 'Convergence';
     this.showTacticalBanner(
       'INSERTION TACTIQUE // HAVEN',
@@ -4388,6 +4391,8 @@ class GameEngine {
       '#10b981'
     );
     audio.playWaveClear?.();
+    this.heroAnimationState = 'victory';
+    this.heroAnimationTimer = 2.2;
     this.showTacticalBanner(
       'SECTEUR SÉCURISÉ',
       `VAGUE ${String(this.wave).padStart(2, '0')} REPOUSSÉE`,
@@ -4515,6 +4520,8 @@ class GameEngine {
     this.campaignVictoryClaimed = true;
     this.campaignVictory = true;
     this.waveIntermissionTimer = 0;
+    this.heroAnimationState = 'outro';
+    this.heroAnimationTimer = 4.0;
     audio.playVictoryFanfare?.();
     this.clearRunCheckpoint();
     const campaignDefinition = this.getCampaignDefinition();
@@ -4769,6 +4776,10 @@ class GameEngine {
     for (let i = 0; i < this.enemies.length; i++) {
       if (this.enemies[i].hitFlashTimer > 0) {
         this.enemies[i].hitFlashTimer = Math.max(0, this.enemies[i].hitFlashTimer - dt);
+      }
+      if (this.enemies[i].poseTimer > 0) {
+        this.enemies[i].poseTimer = Math.max(0, this.enemies[i].poseTimer - dt);
+        if (this.enemies[i].poseTimer <= 0) this.enemies[i].poseState = null;
       }
     }
     const citadelDrain = this.getRunModifierMaximum('citadelHpDrainPerSecond');
@@ -5847,6 +5858,8 @@ class GameEngine {
     if (options.countForWave !== false) this.enemiesSpawnedThisWave++;
     if (isBoss) {
       this.bossSpawnedThisWave = true;
+      enemy.poseState = 'intro';
+      enemy.poseTimer = 1.6;
       audio.playBossAlert?.();
       this.addCameraShake(9);
       this.showTacticalBanner(
@@ -6181,6 +6194,8 @@ class GameEngine {
         : (hpRatio <= BOSS_PHASE_THRESHOLDS[0] ? 2 : 1));
     if (nextPhase > (boss.bossPhase || 1)) {
       boss.bossPhase = nextPhase;
+      boss.poseState = 'phase_shift';
+      boss.poseTimer = 1.5;
       boss.telegraphTimer = boss.type === 'leviathan' ? 1.35 : 0.9;
       boss.patternIndex = 0;
       const patternNames = {
@@ -10786,6 +10801,8 @@ class GameEngine {
       return;
     }
     this.isGameOver = true;
+    this.heroAnimationState = 'defeat';
+    this.heroAnimationTimer = 3.0;
     audio.playDefeatStinger?.();
     this.pendingCinematics = [];
     this.activeCinematic = null;
@@ -11284,12 +11301,29 @@ class GameEngine {
     this.ctx.fillStyle = 'rgba(0, 0, 0, 0.42)';
     this.ctx.fill();
     this.ctx.restore();
+    const statePoseRowMap = { intro: 0, ability: 1, ultimate: 1, victory: 3, outro: 3, defeat: 4 };
+    const activePoseRow = !options.heroId && statePoseRowMap[this.heroAnimationState];
+    const poseData = COMPANION_FX_SPRITE_DATA.state_poses;
+    const poseImg = this.companionFxImages?.state_poses;
+    if (Number.isInteger(activePoseRow) && this.isSpriteReady(poseImg)) {
+      const poseFrame = Math.floor(this.animationClock * poseData.fps) % poseData.columns;
+      this.drawAtlasFrame(poseImg, poseData, poseFrame, x, y, heroSize * 1.45, {
+        row: activePoseRow,
+        allowSmooth: false,
+        alpha: 0.85,
+        shadowColor: activePoseRow === 4 ? '#ef4444' : (activePoseRow === 0 ? '#00f0ff' : '#f59e0b'),
+        shadowBlur: 18
+      });
+    }
+    const poseYOffset = !options.heroId && !this.prefersReducedMotion
+      ? (this.heroAnimationState === 'victory' || this.heroAnimationState === 'outro' ? -4 : (this.heroAnimationState === 'defeat' ? 5 : 0))
+      : 0;
     return this.drawAtlasFrame(
       sprite,
       spriteData,
       frame,
       x,
-      y + breathBob,
+      y + breathBob + poseYOffset,
       heroSize,
       {
         row: usesStateRows ? stateRow : undefined,
@@ -11323,6 +11357,23 @@ class GameEngine {
     this.ctx.fillStyle = 'rgba(0, 0, 0, 0.42)';
     this.ctx.fill();
     this.ctx.restore();
+
+    if (enemy.isBoss && enemy.poseState) {
+      const bossPoseRowMap = { intro: 0, phase_shift: 2, defeat: 4 };
+      const bPoseRow = bossPoseRowMap[enemy.poseState];
+      const poseData = COMPANION_FX_SPRITE_DATA.state_poses;
+      const poseImg = this.companionFxImages?.state_poses;
+      if (Number.isInteger(bPoseRow) && this.isSpriteReady(poseImg)) {
+        const poseFrame = Math.floor(this.animationClock * poseData.fps) % poseData.columns;
+        this.drawAtlasFrame(poseImg, poseData, poseFrame, enemy.x, enemy.y, visualSize * 1.45, {
+          row: bPoseRow,
+          allowSmooth: false,
+          alpha: 0.9,
+          shadowColor: enemy.color,
+          shadowBlur: 20
+        });
+      }
+    }
 
     if (spriteReady) {
       // Low-profile creatures follow their target; upright bosses stay billboarded
