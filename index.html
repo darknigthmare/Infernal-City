@@ -265,6 +265,16 @@
     <!-- Diegetic Hull Warning Vignette & Sector Tactical Banner -->
     <div id="citadel-danger-vignette" class="citadel-danger-vignette" aria-hidden="true"></div>
 
+    <div id="boss-hud-bar" class="boss-hud-bar" aria-hidden="true" hidden>
+      <div class="boss-hud-header">
+        <span class="boss-hud-eyebrow" id="boss-hud-phase">PHASE I</span>
+        <strong class="boss-hud-name" id="boss-hud-name">TRÔNE SOUVERAIN</strong>
+      </div>
+      <div class="boss-hud-track">
+        <div class="boss-hud-fill" id="boss-hud-fill"></div>
+      </div>
+    </div>
+
     <div id="tactical-banner" class="tactical-banner" aria-hidden="true" hidden>
       <span class="tactical-banner-eyebrow" id="tactical-banner-eyebrow">LIAISON TACTIQUE HAVEN</span>
       <strong class="tactical-banner-title" id="tactical-banner-title">SECTEUR EN ALERTE</strong>
@@ -798,7 +808,7 @@
         <div class="upgrade-options-grid">
           <div class="upgrade-card">
             <div class="upgrade-info">
-              <div class="upgrade-icon">❤️</div>
+              <div class="upgrade-icon"><img src="assets/icons/towers/aegis_barrier.png" alt="" style="width:36px;height:36px;object-fit:contain;" decoding="async"></div>
               <div class="upgrade-text">
                 <h3>Renforcement de Citadelle</h3>
                 <p>Augmente la santé maximale de la Citadelle de +10 HP, jusqu’au rang 10.</p>
@@ -809,7 +819,7 @@
 
           <div class="upgrade-card">
             <div class="upgrade-info">
-              <div class="upgrade-icon">⚡</div>
+              <div class="upgrade-icon"><img src="assets/icons/towers/emp_tower.png" alt="" style="width:36px;height:36px;object-fit:contain;" decoding="async"></div>
               <div class="upgrade-text">
                 <h3>Cadence de Tir Accélérée</h3>
                 <p>Augmente la vitesse de tir de toutes les tourelles de +2 %, jusqu’au rang 10.</p>
@@ -820,7 +830,7 @@
 
           <div class="upgrade-card">
             <div class="upgrade-info">
-              <div class="upgrade-icon">🧲</div>
+              <div class="upgrade-icon"><img src="assets/icons/towers/magnet_drone.png" alt="" style="width:36px;height:36px;object-fit:contain;" decoding="async"></div>
               <div class="upgrade-text">
                 <h3>Collecteur Magnétique</h3>
                 <p>Augmente de 20 px la portée de collecte des caisses et power-ups, jusqu’au rang 10.</p>

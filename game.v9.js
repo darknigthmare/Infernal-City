@@ -5368,7 +5368,7 @@ class GameEngine {
         .slice(0, 4 + Math.floor(Number(modifiers.chainCountBonus) || 0));
       let previous = { x: t.x, y: t.y };
       chainTargets.forEach((enemy, index) => {
-        this.particles.push({ type: 'rail_beam', x1: previous.x, y1: previous.y, x2: enemy.x, y2: enemy.y, life: 0.14, color: '#38bdf8' });
+        this.particles.push({ type: 'lightning_arc', x1: previous.x, y1: previous.y, x2: enemy.x, y2: enemy.y, life: 0.16, color: '#38bdf8' });
         const chainDamage = t.damage * mult * (1 - index * 0.14);
         this.damageEnemyFromDefense(t, enemy, chainDamage);
         applyDirectLifesteal(chainDamage);
@@ -9799,7 +9799,8 @@ class GameEngine {
     const card = document.createElement('button');
     card.type = 'button';
     card.className = 'upgrade-card evolution';
-    card.innerHTML = `<div class="upgrade-info"><div class="upgrade-icon">🔥</div><div class="upgrade-text"><h3 style="color: #f59e0b;">ÉVOLUTION SUPER-ARME : ${targetWp.evolutionName}</h3><p>${targetWp.evolutionDesc}</p></div></div>`;
+    const evoIconPath = ['assets', 'icons', 'weapons', `${targetWp.id}.png`].join('/');
+    card.innerHTML = `<div class="upgrade-info"><div class="upgrade-icon"><img src="${evoIconPath}" alt="" style="width:40px;height:40px;object-fit:contain;filter:drop-shadow(0 0 10px #f59e0b);" decoding="async"></div><div class="upgrade-text"><h3 style="color: #f59e0b;">ÉVOLUTION SUPER-ARME : ${targetWp.evolutionName}</h3><p>${targetWp.evolutionDesc}</p></div></div>`;
     card.addEventListener('click', () => {
       targetWp.isEvolved = true; targetWp.name = targetWp.evolutionName; targetWp.damage *= 2.5;
       this.evolvedWeaponsCount++; this.unlockAchievement('super_weapon'); this.updateWeaponsHUD(); this.checkGalleryUnlocks();
@@ -11790,15 +11791,36 @@ class GameEngine {
           shadowColor: p.color || '#a855f7',
           shadowBlur: 14
         });
+      } else if (p.type === 'lightning_arc') {
+        this.ctx.save();
+        const midX = ((p.x1 + p.x2) / 2) + ((Math.random() - 0.5) * 18);
+        const midY = ((p.y1 + p.y2) / 2) + ((Math.random() - 0.5) * 18);
+        this.ctx.beginPath();
+        this.ctx.moveTo(p.x1, p.y1);
+        this.ctx.lineTo(midX, midY);
+        this.ctx.lineTo(p.x2, p.y2);
+        this.ctx.strokeStyle = p.color || '#38bdf8';
+        this.ctx.lineWidth = Math.max(2, p.life * 26);
+        this.ctx.shadowColor = p.color || '#38bdf8';
+        this.ctx.shadowBlur = 16;
+        this.ctx.stroke();
+        this.ctx.strokeStyle = '#ffffff';
+        this.ctx.lineWidth = Math.max(1, p.life * 10);
+        this.ctx.stroke();
+        this.ctx.restore();
       } else if (p.type === 'rail_beam') {
         this.ctx.save();
         this.ctx.beginPath();
         this.ctx.moveTo(p.x1, p.y1);
         this.ctx.lineTo(p.x2, p.y2);
         this.ctx.strokeStyle = p.color;
-        this.ctx.lineWidth = p.life * 20;
+        this.ctx.lineWidth = p.life * 24;
         this.ctx.shadowColor = p.color;
-        this.ctx.shadowBlur = 20;
+        this.ctx.shadowBlur = 22;
+        this.ctx.stroke();
+        this.ctx.strokeStyle = '#ffffff';
+        this.ctx.lineWidth = Math.max(1.5, p.life * 8);
+        this.ctx.shadowBlur = 0;
         this.ctx.stroke();
         this.ctx.restore();
       } else if (p.type === 'gravity_ring') {
@@ -11964,6 +11986,22 @@ class GameEngine {
     const dangerVignette = document.getElementById('citadel-danger-vignette');
     if (dangerVignette) {
       dangerVignette.dataset.level = hpPct <= 20 ? 'critical' : (hpPct <= 35 ? 'warning' : 'safe');
+    }
+    const bossHudBar = document.getElementById('boss-hud-bar');
+    if (bossHudBar) {
+      const activeBoss = this.enemies?.find(e => e.isBoss && !e.dead);
+      if (activeBoss) {
+        bossHudBar.hidden = false;
+        const bossPhaseNode = document.getElementById('boss-hud-phase');
+        const bossNameNode = document.getElementById('boss-hud-name');
+        const bossFillNode = document.getElementById('boss-hud-fill');
+        const phaseLabel = activeBoss.bossPhase >= 3 ? 'PHASE III' : (activeBoss.bossPhase === 2 ? 'PHASE II' : 'PHASE I');
+        if (bossPhaseNode) bossPhaseNode.textContent = phaseLabel;
+        if (bossNameNode) bossNameNode.textContent = activeBoss.name || 'MENACE SOUVERAINE';
+        if (bossFillNode) bossFillNode.style.width = `${Math.max(0, Math.min(100, (activeBoss.hp / Math.max(1, activeBoss.maxHp)) * 100))}%`;
+      } else {
+        bossHudBar.hidden = true;
+      }
     }
 
     const affinityPct = this.selectedHero.affinityLvl >= 5 ? 100 : Math.min(100, (this.affinityXp / Math.max(1, this.nextAffinityXp)) * 100);

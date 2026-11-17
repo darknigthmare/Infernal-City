@@ -711,6 +711,76 @@
   filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.75));
 }
 
+.boss-hud-bar {
+  position: absolute;
+  top: 74px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 11;
+  width: min(460px, calc(100% - 36px));
+  padding: 7px 14px 9px;
+  pointer-events: none;
+  border: 1px solid rgba(255, 42, 95, 0.62);
+  border-radius: 10px;
+  background: rgba(12, 8, 20, 0.88);
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.72), 0 0 18px rgba(255, 42, 95, 0.25);
+  backdrop-filter: blur(8px);
+}
+
+.boss-hud-bar[hidden] {
+  display: none;
+}
+
+.boss-hud-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.boss-hud-eyebrow {
+  font-family: var(--font-tech);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: #fbbf24;
+  text-transform: uppercase;
+}
+
+.boss-hud-name {
+  font-family: var(--font-tech);
+  font-size: 0.85rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: #f8fafc;
+  text-transform: uppercase;
+}
+
+.boss-hud-track {
+  width: 100%;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+
+.boss-hud-fill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #ff2a5f, #f59e0b);
+  box-shadow: 0 0 12px rgba(255, 42, 95, 0.75);
+  transition: width 0.16s ease-out;
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .boss-hud-bar {
+    top: 56px;
+    width: min(320px, calc(100% - 20px));
+    padding: 4px 10px 6px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .modal-overlay .modal-box,
   .modal-overlay .adult-gate-box,
