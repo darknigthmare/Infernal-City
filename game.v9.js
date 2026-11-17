@@ -288,7 +288,8 @@ const COMPANION_FX_SPRITE_DATA = {
   combat_fx: { src: 'assets/animations/fx/combat-fx-atlas.png', columns: 8, rows: 4, size: 64, fps: 16 },
   citadel_core: { src: 'assets/animations/citadel/citadel-core-atlas.png', columns: 8, rows: 2, size: 104, fps: 10 },
   powerups: { src: 'assets/animations/fx/powerups-atlas.png', columns: 8, rows: 6, size: 38, fps: 12 },
-  projectiles: { src: 'assets/animations/fx/projectiles-atlas.png', columns: 8, rows: 4, size: 22, fps: 16 }
+  projectiles: { src: 'assets/animations/fx/projectiles-atlas.png', columns: 8, rows: 4, size: 22, fps: 16 },
+  env_props: { src: 'assets/animations/environment/props-atlas.png', columns: 4, rows: 1, size: 54, fps: 1 }
 };
 
 const SMOOTH_ATLAS_OVERRIDES = {
@@ -9763,7 +9764,10 @@ class GameEngine {
       const card = document.createElement('button');
       card.type = 'button';
       card.className = 'upgrade-card';
-      card.innerHTML = `<div class="upgrade-info"><div class="upgrade-icon">${opt.icon}</div><div class="upgrade-text"><h3>${opt.title}</h3><p>${opt.desc}</p></div></div>`;
+      const upgradeIconPath = opt.type === 'weapon'
+        ? ['assets', 'icons', 'weapons', `${opt.wp.id}.png`].join('/')
+        : ['assets', 'icons', 'hq', 'shop.png'].join('/');
+      card.innerHTML = `<div class="upgrade-info"><div class="upgrade-icon"><img src="${upgradeIconPath}" alt="" style="width:36px;height:36px;object-fit:contain;" decoding="async"></div><div class="upgrade-text"><h3>${opt.title}</h3><p>${opt.desc}</p></div></div>`;
       card.addEventListener('click', () => {
         if (opt.type === 'weapon') { opt.wp.level++; this.updateWeaponsHUD(); }
         else if (opt.type === 'heal') { this.healCitadel(200); }
@@ -11007,6 +11011,49 @@ class GameEngine {
       this.ctx.stroke();
     });
     this.ctx.restore();
+
+    // Approach Lane Continuity Lines connecting outer gates into Haven's perimeter
+    if (Array.isArray(this.spawnRoutes) && this.spawnRoutes.length > 0) {
+      this.ctx.save();
+      this.ctx.strokeStyle = 'rgba(0, 240, 255, 0.12)';
+      this.ctx.lineWidth = 2;
+      this.ctx.setLineDash([14, 18]);
+      this.spawnRoutes.forEach(route => {
+        if (!Array.isArray(route.polyline) || route.polyline.length < 2) return;
+        this.ctx.beginPath();
+        this.ctx.moveTo(route.polyline[0].x, route.polyline[0].y);
+        for (let idx = 1; idx < route.polyline.length; idx++) {
+          this.ctx.lineTo(route.polyline[idx].x, route.polyline[idx].y);
+        }
+        this.ctx.stroke();
+      });
+      this.ctx.setLineDash([]);
+      this.ctx.restore();
+    }
+
+    // Perimeter Architectural Props (Cyber Relay Pylons, Gothic Braziers, Bastion Pillars, Obelisks)
+    const propsData = COMPANION_FX_SPRITE_DATA.env_props;
+    const propsImg = this.companionFxImages?.env_props;
+    if (this.isSpriteReady(propsImg)) {
+      const propSpots = [
+        { x: -38, y: -38, col: 0 },
+        { x: w + 38, y: -38, col: 2 },
+        { x: -38, y: h + 38, col: 2 },
+        { x: w + 38, y: h + 38, col: 0 },
+        { x: w * 0.25, y: -42, col: 1 },
+        { x: w * 0.75, y: h + 42, col: 1 },
+        { x: -42, y: h * 0.75, col: 3 },
+        { x: w + 42, y: h * 0.25, col: 3 }
+      ];
+      const propSize = this.getReadableWorldSize(propsData.size, 34);
+      propSpots.forEach(spot => {
+        this.drawAtlasFrame(propsImg, propsData, spot.col, spot.x, spot.y, propSize, {
+          allowSmooth: false,
+          shadowColor: spot.col === 1 ? '#ff552a' : '#00f0ff',
+          shadowBlur: 10
+        });
+      });
+    }
   }
 
   drawSpawnGates(w, h) {
@@ -11069,6 +11116,18 @@ class GameEngine {
     const rotation = spriteData?.rotate ? (tower.facingAngle || 0) : undefined;
     const visualSize = this.getReadableWorldSize(spriteData?.size || tower.radius * 2, MIN_TOWER_SCREEN_SIZE);
     const tierRadius = Math.max(tower.radius + 4, visualSize * 0.44);
+    const recoilDist = (!this.prefersReducedMotion && tower.animationTimer > 0.16 && spriteData?.rotate)
+      ? Math.sin(((tower.animationTimer - 0.16) / 0.18) * Math.PI) * 3.5
+      : 0;
+    const drawX = tower.x - (Math.cos(rotation || 0) * recoilDist);
+    const drawY = tower.y - (Math.sin(rotation || 0) * recoilDist);
+
+    this.ctx.save();
+    this.ctx.beginPath();
+    this.ctx.ellipse(tower.x, tower.y + (visualSize * 0.28), visualSize * 0.34, visualSize * 0.16, 0, 0, Math.PI * 2);
+    this.ctx.fillStyle = 'rgba(0, 0, 0, 0.42)';
+    this.ctx.fill();
+    this.ctx.restore();
 
     if (!options.suppressLevel && ((tower.level || 1) >= 2 || tower.specializationId)) {
       this.ctx.save();
@@ -11103,8 +11162,8 @@ class GameEngine {
       sprite,
       spriteData,
       frame,
-      tower.x,
-      tower.y,
+      drawX,
+      drawY,
       visualSize,
       {
         rotation,
@@ -11152,13 +11211,21 @@ class GameEngine {
         ? Math.floor(this.animationClock * (spriteData.fps || 7)) % SPRITE_ATLAS_COLUMNS
         : this.getHeroAnimationFrame());
     const facingAngle = Number.isFinite(options.facingAngle) ? options.facingAngle : this.heroFacingAngle;
+    const breathBob = this.prefersReducedMotion ? 0 : (Math.sin(this.animationClock * 3.1) * 2.4);
+    const heroSize = this.getReadableWorldSize(options.size || spriteData.size, MIN_HERO_SCREEN_SIZE);
+    this.ctx.save();
+    this.ctx.beginPath();
+    this.ctx.ellipse(x, y + (heroSize * 0.32), heroSize * 0.28, heroSize * 0.12, 0, 0, Math.PI * 2);
+    this.ctx.fillStyle = 'rgba(0, 0, 0, 0.42)';
+    this.ctx.fill();
+    this.ctx.restore();
     return this.drawAtlasFrame(
       sprite,
       spriteData,
       frame,
       x,
-      y,
-      this.getReadableWorldSize(options.size || spriteData.size, MIN_HERO_SCREEN_SIZE),
+      y + breathBob,
+      heroSize,
       {
         row: usesStateRows ? stateRow : undefined,
         smoothFrame: Number.isFinite(options.frame)
@@ -11183,6 +11250,14 @@ class GameEngine {
       enemy.isBoss ? MIN_BOSS_SCREEN_SIZE : MIN_ENEMY_SCREEN_SIZE
     );
     const visualRadius = spriteReady ? visualSize / 2 : enemy.radius;
+    const walkBob = this.prefersReducedMotion ? 0 : (-Math.abs(Math.sin((this.animationClock * 8) + (enemy.animationPhase || 0))) * 2.5);
+
+    this.ctx.save();
+    this.ctx.beginPath();
+    this.ctx.ellipse(enemy.x, enemy.y + (visualRadius * 0.62), visualRadius * 0.68, visualRadius * 0.28, 0, 0, Math.PI * 2);
+    this.ctx.fillStyle = 'rgba(0, 0, 0, 0.42)';
+    this.ctx.fill();
+    this.ctx.restore();
 
     if (spriteReady) {
       // Low-profile creatures follow their target; upright bosses stay billboarded
@@ -11197,7 +11272,7 @@ class GameEngine {
         spriteData,
         this.getEnemyAnimationFrame(enemy, spriteData),
         enemy.x,
-        enemy.y,
+        enemy.y + walkBob,
         visualSize,
         {
           row: usesStateRows ? stateRow : undefined,
@@ -11623,6 +11698,24 @@ class GameEngine {
 
     // Render Projectiles with glowing motion trails & 8-frame animated energy bolts
     this.projectiles.forEach((p, idx) => {
+      if (p.type === 'flame') {
+        const lifeRatio = Math.max(0.15, Math.min(1, (p.life || 0.3) / 0.5));
+        const flameRadius = this.getReadableWorldSize((p.radius || 6) * (0.7 + lifeRatio * 0.8), 4);
+        this.ctx.save();
+        this.ctx.globalAlpha = Math.min(0.85, lifeRatio * 1.1);
+        this.ctx.beginPath();
+        this.ctx.arc(p.x, p.y, flameRadius, 0, Math.PI * 2);
+        this.ctx.fillStyle = p.color === '#38bdf8' ? '#38bdf8' : '#ff6b35';
+        this.ctx.shadowColor = p.color;
+        this.ctx.shadowBlur = 14;
+        this.ctx.fill();
+        this.ctx.beginPath();
+        this.ctx.arc(p.x, p.y, flameRadius * 0.45, 0, Math.PI * 2);
+        this.ctx.fillStyle = '#fef08a';
+        this.ctx.fill();
+        this.ctx.restore();
+        return;
+      }
       if (p.type === 'saw' || p.visualType === 'saw') {
         const fxData = COMPANION_FX_SPRITE_DATA.combat_fx;
         const fxImg = this.companionFxImages?.combat_fx;
