@@ -861,12 +861,164 @@
   }
 }
 
+/* Sub-modal cyber-gothic card glassmorphism & border-glow polish */
+.class-card,
+.skin-card,
+.harem-card,
+.gallery-card,
+.achieve-card,
+.upgrade-card,
+.slot-wheel {
+  background: linear-gradient(155deg, rgba(15, 23, 42, 0.88), rgba(6, 10, 22, 0.94));
+  backdrop-filter: blur(10px) saturate(135%);
+  -webkit-backdrop-filter: blur(10px) saturate(135%);
+  border-color: rgba(0, 240, 255, 0.3);
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.56),
+    0 0 12px rgba(0, 240, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 0 14px rgba(0, 240, 255, 0.05);
+  transition:
+    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.22s ease,
+    box-shadow 0.22s ease,
+    background 0.22s ease;
+}
+
+.harem-card {
+  background: linear-gradient(155deg, rgba(28, 14, 34, 0.88), rgba(10, 12, 24, 0.94));
+  border-color: rgba(236, 72, 153, 0.38);
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.58),
+    0 0 14px rgba(236, 72, 153, 0.12),
+    inset 0 1px 0 rgba(249, 168, 212, 0.16),
+    inset 0 0 14px rgba(236, 72, 153, 0.06);
+}
+
+.slot-wheel {
+  background: linear-gradient(160deg, rgba(26, 19, 12, 0.9), rgba(10, 12, 24, 0.96));
+  border-color: rgba(245, 158, 11, 0.76);
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.62),
+    0 0 18px rgba(245, 158, 11, 0.3),
+    inset 0 1px 0 rgba(253, 224, 71, 0.28),
+    inset 0 0 16px rgba(245, 158, 11, 0.14);
+}
+
+.class-card:hover,
+.class-card:focus-visible,
+.skin-card:hover,
+.skin-card:focus-visible,
+.upgrade-card:is(button):hover,
+.upgrade-card:is(button):focus-visible,
+.gallery-card.unlocked:hover,
+.gallery-card.unlocked:focus-visible {
+  transform: translateY(-3px);
+  background: linear-gradient(155deg, rgba(16, 30, 52, 0.92), rgba(8, 14, 30, 0.96));
+  border-color: rgba(0, 240, 255, 0.82);
+  box-shadow:
+    0 14px 30px rgba(0, 0, 0, 0.68),
+    0 0 22px rgba(0, 240, 255, 0.28),
+    inset 0 1px 0 rgba(125, 211, 252, 0.28),
+    inset 0 0 18px rgba(0, 240, 255, 0.12);
+}
+
+.achieve-card:hover {
+  border-color: rgba(0, 240, 255, 0.56);
+  box-shadow:
+    0 12px 26px rgba(0, 0, 0, 0.62),
+    0 0 16px rgba(0, 240, 255, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 0 14px rgba(0, 240, 255, 0.08);
+}
+
+.harem-card:hover,
+.harem-card:focus-within {
+  transform: translateY(-4px);
+  border-color: rgba(244, 114, 182, 0.88);
+  box-shadow:
+    0 16px 32px rgba(0, 0, 0, 0.7),
+    0 0 24px rgba(236, 72, 153, 0.42),
+    inset 0 1px 0 rgba(249, 168, 212, 0.28),
+    inset 0 0 18px rgba(236, 72, 153, 0.14);
+}
+
+.slot-wheel:hover,
+.slot-wheel:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(253, 224, 71, 0.92);
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.68),
+    0 0 24px rgba(245, 158, 11, 0.52),
+    inset 0 1px 0 rgba(253, 224, 71, 0.36),
+    inset 0 0 18px rgba(245, 158, 11, 0.2);
+}
+
+.class-card:focus-visible,
+.skin-card:focus-visible,
+.gallery-card:focus-visible,
+.upgrade-card:focus-visible,
+.slot-wheel:focus-visible {
+  outline: 2px solid rgba(0, 240, 255, 0.9);
+  outline-offset: 2px;
+}
+
+.class-card.selected {
+  border-color: var(--color-primary);
+  background: linear-gradient(155deg, rgba(54, 14, 28, 0.9), rgba(18, 8, 16, 0.95));
+  box-shadow:
+    0 12px 26px rgba(0, 0, 0, 0.64),
+    0 0 20px var(--color-primary-glow),
+    inset 0 1px 0 rgba(251, 113, 133, 0.28),
+    inset 0 0 16px rgba(255, 42, 95, 0.14);
+}
+
+.skin-card.active {
+  border-color: var(--color-pink);
+  background: linear-gradient(155deg, rgba(44, 14, 36, 0.9), rgba(14, 10, 24, 0.95));
+  box-shadow:
+    0 12px 26px rgba(0, 0, 0, 0.64),
+    0 0 20px rgba(236, 72, 153, 0.45),
+    inset 0 1px 0 rgba(249, 168, 212, 0.26),
+    inset 0 0 16px rgba(236, 72, 153, 0.14);
+}
+
+.achieve-card.unlocked {
+  border-color: var(--color-amber);
+  background: linear-gradient(155deg, rgba(40, 28, 12, 0.9), rgba(14, 12, 18, 0.95));
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.6),
+    0 0 18px rgba(245, 158, 11, 0.28),
+    inset 0 1px 0 rgba(253, 224, 71, 0.26),
+    inset 0 0 14px rgba(245, 158, 11, 0.12);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .modal-overlay .modal-box,
   .modal-overlay .adult-gate-box,
   .modal-overlay .cg-viewer-layout,
   .tactical-banner,
-  .comms-transmission {
+  .comms-transmission,
+  .class-card,
+  .skin-card,
+  .harem-card,
+  .gallery-card,
+  .achieve-card,
+  .upgrade-card,
+  .slot-wheel,
+  .class-card:hover,
+  .class-card:focus-visible,
+  .skin-card:hover,
+  .skin-card:focus-visible,
+  .harem-card:hover,
+  .harem-card:focus-within,
+  .gallery-card.unlocked:hover,
+  .gallery-card.unlocked:focus-visible,
+  .achieve-card:hover,
+  .upgrade-card:is(button):hover,
+  .upgrade-card:is(button):focus-visible,
+  .slot-wheel:hover,
+  .slot-wheel:focus-visible {
     transition: none;
     transform: none;
   }

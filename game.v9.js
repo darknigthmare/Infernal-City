@@ -563,6 +563,8 @@ class GameEngine {
       : null;
     this.prefersReducedMotion = Boolean(this.reducedMotionQuery?.matches);
     this.score = 0;
+    this.combatCombo = 0;
+    this.combatComboTimer = 0;
     this.coins = 400;
     this.metaCoins = 0;
     this.totalCoinsEarned = 0;
@@ -4135,6 +4137,8 @@ class GameEngine {
     this.runElapsedSeconds = 0;
     this.runMetaCoinsEarned = 0;
     this.score = 0;
+    this.combatCombo = 0;
+    this.combatComboTimer = 0;
     this.coins = 400;
     this.xp = 0;
     this.level = 1;
@@ -4758,6 +4762,10 @@ class GameEngine {
     if (!this.prefersReducedMotion) this.animationClock += dt;
     if (this.cameraShake > 0) this.cameraShake = Math.max(0, this.cameraShake - (dt * 28));
     if (this.citadelShieldFlash > 0) this.citadelShieldFlash = Math.max(0, this.citadelShieldFlash - (dt * 2.8));
+    if (this.combatComboTimer > 0) {
+      this.combatComboTimer = Math.max(0, this.combatComboTimer - dt);
+      if (this.combatComboTimer <= 0) this.combatCombo = 0;
+    }
     for (let i = 0; i < this.enemies.length; i++) {
       if (this.enemies[i].hitFlashTimer > 0) {
         this.enemies[i].hitFlashTimer = Math.max(0, this.enemies[i].hitFlashTimer - dt);
@@ -4949,6 +4957,18 @@ class GameEngine {
               damage: m.damage, color: '#f59e0b', radius: 4, type: 'bullet'
             });
           });
+          if (!this.prefersReducedMotion && this.particles.length < 220) {
+            this.particles.push({
+              type: 'sprite_fx',
+              row: 0,
+              x: m.x,
+              y: m.y,
+              size: 20,
+              life: 0.14,
+              maxLife: 0.14,
+              color: '#f59e0b'
+            });
+          }
           m.timer -= m.fireRate;
         }
       }
@@ -4975,6 +4995,18 @@ class GameEngine {
             vx: Math.cos(angle) * 550, vy: Math.sin(angle) * 550,
             damage: Number(d.damage) || 25, color: '#ec4899', radius: 5, type: 'bullet'
           });
+          if (!this.prefersReducedMotion && this.particles.length < 220) {
+            this.particles.push({
+              type: 'sprite_fx',
+              row: 0,
+              x: d.x,
+              y: d.y,
+              size: 20,
+              life: 0.14,
+              maxLife: 0.14,
+              color: '#ec4899'
+            });
+          }
           d.timer -= fireRate;
         }
       }
@@ -6168,6 +6200,29 @@ class GameEngine {
         life: boss.telegraphTimer,
         color: boss.color
       });
+      if (nextPhase === 2 || nextPhase === 3) {
+        this.addCameraShake(8);
+        audio.playBossAlert?.();
+        if (!this.prefersReducedMotion && this.particles.length < 220) {
+          this.particles.push({
+            type: 'sprite_fx',
+            row: 3,
+            x: boss.x,
+            y: boss.y,
+            size: Math.min(200, boss.radius * (2.2 + nextPhase * 0.4)),
+            life: 0.36,
+            maxLife: 0.36,
+            color: boss.color
+          });
+        }
+        this.showTacticalBanner(
+          'ESCALADE SOUVERAINE',
+          `${boss.name} · PHASE ${boss.bossPhase}`,
+          'Intensification des motifs d’attaque',
+          'danger',
+          2400
+        );
+      }
       this.applyBossSignature(boss, bossDefinition, nextPhase, 'phase');
     }
     return boss.bossPhase;
@@ -7202,6 +7257,12 @@ class GameEngine {
     });
 
     this.mutantsKilled++;
+    this.combatCombo++;
+    this.combatComboTimer = 2.4;
+    if ([10, 25, 50, 100].includes(this.combatCombo)) {
+      this.addFloatingText(`×${this.combatCombo} FUREUR D'HAVEN !`, this.citadel.x, this.citadel.y - 95, '#f59e0b');
+      this.score += this.combatCombo * 2;
+    }
     const bossRewards = enemy.bossRewards || null;
     const authoredEnemyReward = Math.max(0, Math.floor(Number(enemy.authoredReward) || 0));
     this.score += bossRewards?.score
