@@ -281,6 +281,16 @@ const HERO_SPRITE_DATA = {
   )
 };
 
+const COMPANION_FX_SPRITE_DATA = {
+  merc_hunter: { src: 'assets/animations/companions/merc-hunter-atlas.png', columns: 8, rows: 2, size: 46, fps: 12 },
+  pet_drone: { src: 'assets/animations/companions/pet-drone-atlas.png', columns: 8, rows: 2, size: 38, fps: 14 },
+  loot_crate: { src: 'assets/animations/fx/loot-crates-atlas.png', columns: 8, rows: 2, size: 36, fps: 10 },
+  combat_fx: { src: 'assets/animations/fx/combat-fx-atlas.png', columns: 8, rows: 4, size: 64, fps: 16 },
+  citadel_core: { src: 'assets/animations/citadel/citadel-core-atlas.png', columns: 8, rows: 2, size: 104, fps: 10 },
+  powerups: { src: 'assets/animations/fx/powerups-atlas.png', columns: 8, rows: 6, size: 38, fps: 12 },
+  projectiles: { src: 'assets/animations/fx/projectiles-atlas.png', columns: 8, rows: 4, size: 22, fps: 16 }
+};
+
 // Weapon Base Definitions
 const WEAPONS_DATA = {
   vulcan: { id: 'vulcan', name: 'Vulcan Minigun', icon: '🔫', level: 0, maxLevel: 5, damage: 18, fireRate: 200, range: 280, type: 'ballistic', desc: 'Tirs cinétiques à haute cadence.', evolutionName: 'Vulcan Cerberus', evolutionDesc: 'Munitions surchargées capables de traverser trois cibles.' },
@@ -523,6 +533,11 @@ class GameEngine {
     this.narrativeStorageWriteFailed = false;
     this.futureNarrativeSaveRaw = null;
     this.narrativeSaveLoadError = null;
+    this.cameraShake = 0;
+    this.citadelShieldFlash = 0;
+    this.lastLowHpAlertTime = 0;
+    this.tacticalBannerTimeout = null;
+    this.commsTimeout = null;
     this.preferredMusicEnabled = false;
     this.preferredCrtEnabled = true;
     this.musicVolume = 0.7;
@@ -1353,7 +1368,13 @@ class GameEngine {
   }
 
   applyBattlefieldView(view) {
-    this.ctx.translate(view.screenCenterX, view.screenCenterY);
+    let shakeX = 0;
+    let shakeY = 0;
+    if (!this.prefersReducedMotion && this.cameraShake > 0.1) {
+      shakeX = (Math.random() - 0.5) * 2 * this.cameraShake;
+      shakeY = (Math.random() - 0.5) * 2 * this.cameraShake;
+    }
+    this.ctx.translate(view.screenCenterX + shakeX, view.screenCenterY + shakeY);
     this.ctx.scale(view.scale, view.scale);
     this.ctx.translate(-view.worldCenterX, -view.worldCenterY);
   }
@@ -1498,6 +1519,10 @@ class GameEngine {
     const terrainSrc = LAYOUT_TERRAIN_SOURCES[this.selectedLayoutId] || APPROACH_TERRAIN_IMAGE_SRC;
     this.approachTerrainImage = this.preloadSpriteAsset(terrainSrc, 'Terrain d’approche');
     this.spawnGateAtlasImage = this.preloadSpriteAsset(SPAWN_GATE_ATLAS_SRC, 'Portails d’approche');
+    this.companionFxImages = this.companionFxImages || {};
+    Object.entries(COMPANION_FX_SPRITE_DATA).forEach(([key, data]) => {
+      this.companionFxImages[key] = this.preloadSpriteAsset(data.src, `Animation ${key}`);
+    });
     this.floorImage?.addEventListener('load', () => {
       // Recreate the pattern after late decoding or a context restoration.
       this.floorPattern = null;
@@ -2673,6 +2698,7 @@ class GameEngine {
     modal.classList.add('active');
     this.syncModalAccessibility();
     this.isPaused = true;
+    if (!wasOpen && modal.id !== 'adult-gate-modal') audio.playModalOpen?.();
     if (!wasOpen) {
       const firstControl = this.getFocusableControls(modal)[0];
       if (firstControl) requestAnimationFrame(() => firstControl.focus());
@@ -2682,11 +2708,13 @@ class GameEngine {
   closeModal(modalOrId, restoreFocus = true) {
     const modal = typeof modalOrId === 'string' ? document.getElementById(modalOrId) : modalOrId;
     if (!modal || modal.id === 'adult-gate-modal') return;
+    const wasOpen = modal.classList.contains('active');
     const focusEntryIndex = this.modalFocusStack.map(entry => entry.modal).lastIndexOf(modal);
     const focusEntry = focusEntryIndex >= 0 ? this.modalFocusStack[focusEntryIndex] : null;
     if (focusEntryIndex >= 0) this.modalFocusStack.splice(focusEntryIndex, 1);
     if (modal.id === 'visual-novel-modal') this.restoreVnMusicMood();
     modal.classList.remove('active');
+    if (wasOpen) audio.playModalClose?.();
     this.syncModalAccessibility();
     this.isPaused = Boolean(this.getTopOpenModal());
     const returnTo = focusEntry?.returnTo || this.lastFocusedElement;
@@ -2723,6 +2751,78 @@ class GameEngine {
   showFeedback(message, color = '#00f0ff') {
     this.addFloatingText(message, this.citadel.x, this.citadel.y - 70, color);
     this.announce(message.replace(/[^\p{L}\p{N}\s.,'’!?+-]/gu, '').trim());
+  }
+
+  addCameraShake(amount) {
+    if (this.prefersReducedMotion) return;
+    this.cameraShake = Math.min(18, Math.max(this.cameraShake || 0, Number(amount) || 0));
+  }
+
+  showTacticalBanner(eyebrow, title, subtitle = '', tone = 'cyan', durationMs = 2600) {
+    const banner = document.getElementById('tactical-banner');
+    if (!banner) return;
+    const eyebrowNode = document.getElementById('tactical-banner-eyebrow');
+    const titleNode = document.getElementById('tactical-banner-title');
+    const subNode = document.getElementById('tactical-banner-sub');
+    if (eyebrowNode) eyebrowNode.textContent = eyebrow || 'LIAISON TACTIQUE HAVEN';
+    if (titleNode) titleNode.textContent = title || '';
+    if (subNode) subNode.textContent = subtitle || '';
+    banner.dataset.tone = tone || 'cyan';
+    banner.hidden = false;
+    banner.classList.remove('is-visible');
+    void banner.offsetWidth;
+    banner.classList.add('is-visible');
+    if (this.tacticalBannerTimeout) clearTimeout(this.tacticalBannerTimeout);
+    this.tacticalBannerTimeout = setTimeout(() => {
+      banner.classList.remove('is-visible');
+      setTimeout(() => {
+        if (!banner.classList.contains('is-visible')) banner.hidden = true;
+      }, 300);
+    }, Math.max(900, durationMs));
+  }
+
+  showCommanderComms(eventKey, customLine = '') {
+    const panel = document.getElementById('comms-transmission');
+    if (!panel) return;
+    const hero = this.selectedHero || HERO_CLASSES.aria;
+    const linesByEvent = {
+      deploy: 'Systèmes de Haven synchronisés. Périmètre prêt pour vos ordres, Commandant.',
+      wave_start: 'Contacts multiples sur les approches. Verrouillage des tourelles actif !',
+      wave_clear: 'Secteur dégagé. Profitons de cette accalmie pour consolider nos lignes.',
+      boss: 'Signature Souveraine détectée ! Concentrez la puissance de feu sur la menace.',
+      low_hp: 'Boucliers de la Citadelle critiques ! Renforcez le périmètre central !',
+      overdrive: 'Limiteurs désactivés. Toute la puissance d’Haven sur l’ennemi !'
+    };
+    const toneByEvent = {
+      boss: 'danger',
+      low_hp: 'danger',
+      overdrive: 'amber',
+      wave_clear: 'cyan',
+      wave_start: 'cyan',
+      deploy: 'cyan'
+    };
+    const avatar = document.getElementById('comms-avatar-img');
+    const callsign = document.getElementById('comms-callsign');
+    const lineNode = document.getElementById('comms-line-txt');
+    if (avatar) {
+      const src = hero.activeSkin === 'alt' && hero.altAvatar ? hero.altAvatar : hero.avatar;
+      if (src) avatar.src = src;
+    }
+    if (callsign) callsign.textContent = `${String(hero.name || 'VALKYRIE').toUpperCase()} // CANAL HAVEN`;
+    if (lineNode) lineNode.textContent = customLine || linesByEvent[eventKey] || linesByEvent.deploy;
+    panel.dataset.tone = toneByEvent[eventKey] || 'cyan';
+    panel.hidden = false;
+    panel.classList.remove('is-visible');
+    void panel.offsetWidth;
+    panel.classList.add('is-visible');
+    audio.playCommsBeep?.();
+    if (this.commsTimeout) clearTimeout(this.commsTimeout);
+    this.commsTimeout = setTimeout(() => {
+      panel.classList.remove('is-visible');
+      setTimeout(() => {
+        if (!panel.classList.contains('is-visible')) panel.hidden = true;
+      }, 280);
+    }, 4200);
   }
 
   formatRunTime(seconds = this.runElapsedSeconds) {
@@ -2856,6 +2956,15 @@ class GameEngine {
       rotation
     });
     this.focusBattlefield();
+    const layoutName = this.getWorldLayout(this.selectedLayoutId)?.name || 'Convergence';
+    this.showTacticalBanner(
+      'INSERTION TACTIQUE // HAVEN',
+      layoutName.toUpperCase(),
+      `${this.getCampaignDisplayName()} · Phase de déploiement`,
+      'cyan',
+      3000
+    );
+    this.showCommanderComms('deploy');
     this.announce(
       `Nouvelle campagne ${this.getCampaignDisplayName()} en difficulté ${DIFFICULTY_DATA[this.difficulty].name}. `
       + `Objectif : tenir ${this.getCampaignFinalWave()} vagues.`
@@ -3315,6 +3424,11 @@ class GameEngine {
         this.openModal('hq-menu-modal');
       });
     }
+
+    document.addEventListener('click', event => {
+      const target = event.target?.closest?.('.hq-card, .build-tower-card, .tactical-control-btn, .camera-control-btn, .btn-icon');
+      if (target && !target.disabled) audio.playUiClick?.();
+    });
 
     // Sub-modal triggers from HQ Hub Menu
     document.querySelectorAll('.hq-card').forEach(card => {
@@ -3897,9 +4011,19 @@ class GameEngine {
     }
 
     this.coins -= towerType.cost;
-    audio.playPickup();
+    audio.playTowerPlace?.();
 
     this.placedTowers.push(this.createPlacedDefense(towerType, x, y));
+    if (!this.prefersReducedMotion) {
+      this.particles.push({
+        type: 'gravity_ring',
+        x,
+        y,
+        radius: Math.min(85, towerType.range * 0.45),
+        life: 0.32,
+        color: '#00f0ff'
+      });
+    }
 
     this.towersBuiltThisRun++;
     if (this.towersBuiltThisRun >= 10) this.unlockAchievement('builder');
@@ -4230,6 +4354,15 @@ class GameEngine {
           : `Vague ${this.wave} sécurisée : +${runReward} 🪙 · économie permanente inchangée`),
       '#10b981'
     );
+    audio.playWaveClear?.();
+    this.showTacticalBanner(
+      'SECTEUR SÉCURISÉ',
+      `VAGUE ${String(this.wave).padStart(2, '0')} REPOUSSÉE`,
+      grantsPermanentWaveProgress ? `+${runReward} Bio-Coins · +${metaReward} Crédits Haven` : `+${runReward} Bio-Coins`,
+      'emerald',
+      2400
+    );
+    this.showCommanderComms('wave_clear');
     if (grantsPermanentWaveProgress && this.wave >= 5) this.unlockAchievement('wave_5');
     if (grantsPermanentWaveProgress && this.wave >= 10) this.unlockAchievement('wave_10');
     if (grantsPermanentWaveProgress && this.activeCampaignId === 'ten_thrones') {
@@ -4332,6 +4465,15 @@ class GameEngine {
     const nextWave = this.wave + 1;
     this.rotateWorldLayoutBetweenWaves();
     this.configureWave(nextWave);
+    audio.playWaveStart?.();
+    this.showTacticalBanner(
+      'ALERTE PÉRIMÈTRE',
+      `VAGUE ${String(nextWave).padStart(2, '0')} ENGAGÉE`,
+      this.activeWaveDefinition?.name || 'Hordes en approche sur les voies d’accès',
+      'cyan',
+      2500
+    );
+    this.showCommanderComms('wave_start');
     this.showFeedback(`Vague ${nextWave} engagée`, '#00f0ff');
   }
 
@@ -4584,6 +4726,13 @@ class GameEngine {
   update(dt) {
     this.runElapsedSeconds += dt;
     if (!this.prefersReducedMotion) this.animationClock += dt;
+    if (this.cameraShake > 0) this.cameraShake = Math.max(0, this.cameraShake - (dt * 28));
+    if (this.citadelShieldFlash > 0) this.citadelShieldFlash = Math.max(0, this.citadelShieldFlash - (dt * 2.8));
+    for (let i = 0; i < this.enemies.length; i++) {
+      if (this.enemies[i].hitFlashTimer > 0) {
+        this.enemies[i].hitFlashTimer = Math.max(0, this.enemies[i].hitFlashTimer - dt);
+      }
+    }
     const citadelDrain = this.getRunModifierMaximum('citadelHpDrainPerSecond');
     if (citadelDrain > 0 && this.invincibleTimer <= 0 && !this.isOverdriveActive) {
       this.damageCitadel(citadelDrain * dt);
@@ -4748,16 +4897,21 @@ class GameEngine {
 
   updateMercenaries(dt) {
     this.mercenaries.forEach((m, index) => {
-      m.angle = Number.isFinite(m.angle) ? m.angle + (dt * 0.42) : (index * ((Math.PI * 2) / 3));
+      const prevAngle = Number.isFinite(m.angle) ? m.angle : (index * ((Math.PI * 2) / 3));
+      m.angle = prevAngle + (dt * 0.42);
       const patrolRadius = 125 + (index * 22);
       m.x = this.citadel.x + Math.cos(m.angle) * patrolRadius;
       m.y = this.citadel.y + Math.sin(m.angle) * patrolRadius;
+      if (m.attackAnimationTimer > 0) m.attackAnimationTimer = Math.max(0, m.attackAnimationTimer - dt);
+      else m.facingAngle = m.angle + (Math.PI / 2);
       m.timer += dt * 1000;
       if (m.timer >= m.fireRate) {
         const target = this.findTarget(m.x, m.y, m.range);
         if (target) {
           audio.playShoot();
           const angle = Math.atan2(target.y - m.y, target.x - m.x);
+          m.facingAngle = angle;
+          m.attackAnimationTimer = 0.28;
           [-0.055, 0.055].forEach(spread => {
             this.projectiles.push({
               x: m.x, y: m.y,
@@ -4776,6 +4930,7 @@ class GameEngine {
       d.angle += dt * 1.5;
       d.x = this.citadel.x + Math.cos(d.angle) * 90;
       d.y = this.citadel.y + Math.sin(d.angle) * 90;
+      if (d.attackAnimationTimer > 0) d.attackAnimationTimer = Math.max(0, d.attackAnimationTimer - dt);
 
       d.timer += dt * 1000;
       const fireRate = Number(d.fireRate) || 400;
@@ -4784,6 +4939,7 @@ class GameEngine {
         if (target) {
           audio.playPlasma();
           const angle = Math.atan2(target.y - d.y, target.x - d.x);
+          d.attackAnimationTimer = 0.3;
           this.projectiles.push({
             x: d.x, y: d.y,
             vx: Math.cos(angle) * 550, vy: Math.sin(angle) * 550,
@@ -5070,6 +5226,18 @@ class GameEngine {
     };
     t.facingAngle = angle;
     t.animationTimer = 0.34;
+    if (!this.prefersReducedMotion && this.particles.length < 220 && ['bullet', 'saw', 'plasma', 'missile', 'rail', 'orbital'].includes(t.type)) {
+      this.particles.push({
+        type: 'sprite_fx',
+        row: 0,
+        x: t.x + Math.cos(angle) * 18,
+        y: t.y + Math.sin(angle) * 18,
+        size: 32,
+        life: 0.16,
+        maxLife: 0.16,
+        color: '#00f0ff'
+      });
+    }
 
     if (t.type === 'bullet' || t.type === 'saw') {
       audio.playShoot();
@@ -5090,6 +5258,7 @@ class GameEngine {
         color: '#00f0ff',
         radius: t.type === 'saw' ? 7 : 4,
         type: 'bullet',
+        visualType: t.type === 'saw' ? 'saw' : undefined,
         pierce,
         ricochetRemaining: Math.max(0, Math.floor(Number(modifiers.ricochetCount) || 0)),
         ricochetDamageMultiplier: Number(modifiers.ricochetDamageMultiplier) || 1,
@@ -5237,6 +5406,9 @@ class GameEngine {
         applyDirectLifesteal(t.damage * mult);
       });
       this.particles.push({ type: 'gravity_ring', x: t.x, y: t.y, radius: t.range, life: 0.28, color: '#00f0ff' });
+      if (!this.prefersReducedMotion && this.particles.length < 220) {
+        this.particles.push({ type: 'sprite_fx', row: 3, x: t.x, y: t.y, size: Math.min(180, t.range * 0.9), life: 0.34, maxLife: 0.34, color: '#00f0ff' });
+      }
     } else if (t.type === 'sonic') {
       audio.playAbility();
       this.getEnemiesInRange(t.x, t.y, t.range, t).forEach(enemy => {
@@ -5247,6 +5419,9 @@ class GameEngine {
         applyDirectLifesteal(t.damage * mult);
       });
       this.particles.push({ type: 'gravity_ring', x: t.x, y: t.y, radius: t.range, life: 0.25, color: '#f59e0b' });
+      if (!this.prefersReducedMotion && this.particles.length < 220) {
+        this.particles.push({ type: 'sprite_fx', row: 3, x: t.x, y: t.y, size: Math.min(160, t.range * 0.85), life: 0.3, maxLife: 0.3, color: '#f59e0b' });
+      }
     }
   }
 
@@ -5608,7 +5783,19 @@ class GameEngine {
         : 0
     };
     if (options.countForWave !== false) this.enemiesSpawnedThisWave++;
-    if (isBoss) this.bossSpawnedThisWave = true;
+    if (isBoss) {
+      this.bossSpawnedThisWave = true;
+      audio.playBossAlert?.();
+      this.addCameraShake(9);
+      this.showTacticalBanner(
+        'ALERTE SOUVERAINE',
+        String(enemy.name || 'MENACE MAJEURE').toUpperCase(),
+        'Signature hostile détectée sur les approches',
+        'danger',
+        3200
+      );
+      this.showCommanderComms('boss');
+    }
     this.nextSpawnGateIndex = (normalizedRouteIndex + 1) % routes.length;
     this.spawnGatePulses[route.side] = 0.82;
     this.enemies.push(enemy);
@@ -6613,7 +6800,22 @@ class GameEngine {
     const minimumHp = Number.isFinite(options.minimumHp) ? Math.max(0, options.minimumHp) : 0;
     this.citadel.hp = Math.max(minimumHp, before - amount);
     const damage = Math.max(0, before - this.citadel.hp);
-    if (damage > 0) this.citadelUntouchedThisRun = false;
+    if (damage > 0) {
+      this.citadelUntouchedThisRun = false;
+      this.citadelShieldFlash = 1;
+      if (damage >= 2) this.addCameraShake(Math.min(10, 2.5 + (damage * 0.12)));
+      const vignette = document.getElementById('citadel-danger-vignette');
+      if (vignette && damage >= 3) {
+        vignette.dataset.hit = 'true';
+        setTimeout(() => { if (vignette) vignette.dataset.hit = 'false'; }, 180);
+      }
+      const hpRatio = this.citadel.hp / Math.max(1, this.citadel.maxHp);
+      const now = Date.now();
+      if (hpRatio > 0 && hpRatio <= 0.35 && (now - (this.lastLowHpAlertTime || 0)) > 12000) {
+        this.lastLowHpAlertTime = now;
+        this.showCommanderComms('low_hp');
+      }
+    }
     return damage;
   }
 
@@ -6857,6 +7059,22 @@ class GameEngine {
     }
     enemy.hp -= effectiveAmount;
     enemy.hitAnimationTimer = 0.16;
+    enemy.hitFlashTimer = 0.08;
+    if (!this.prefersReducedMotion && effectiveAmount > 0 && this.particles.length < 220) {
+      for (let s = 0; s < 2; s++) {
+        const sparkAngle = Math.random() * Math.PI * 2;
+        const sparkSpeed = 75 + (Math.random() * 95);
+        this.particles.push({
+          x: enemy.x,
+          y: enemy.y,
+          vx: Math.cos(sparkAngle) * sparkSpeed,
+          vy: Math.sin(sparkAngle) * sparkSpeed,
+          radius: 2.2,
+          color: '#ffffff',
+          life: 0.18
+        });
+      }
+    }
     if (effectiveAmount > 0) {
       this.addFloatingText(`${Math.round(effectiveAmount)}`, enemy.x, enemy.y - 15, enemy.color);
     }
@@ -7792,6 +8010,15 @@ class GameEngine {
     this.overdriveCount++;
     this.heroAnimationState = 'ultimate';
     this.heroAnimationTimer = 0.95;
+    this.addCameraShake(10);
+    this.showTacticalBanner(
+      'SURCHARGE VALKYRIE',
+      'OVERDRIVE ACTIF',
+      `${this.selectedHero?.name || 'Valkyrie'} · Limiteurs désactivés`,
+      'amber',
+      2600
+    );
+    this.showCommanderComms('overdrive');
     this.applySelectedHeroUltimate();
 
     if (this.overdriveCount >= 3) this.unlockAchievement('frenzy_master');
@@ -10666,6 +10893,20 @@ class GameEngine {
     this.ctx.shadowColor = '#00f0ff';
     this.ctx.shadowBlur = 12;
     this.ctx.strokeRect(0, 0, w, h);
+
+    // 4 Corner Perimeter Tactical Beacons
+    const beaconPulse = this.prefersReducedMotion ? 0.65 : (0.45 + 0.45 * Math.sin(this.animationClock * 3.2));
+    [[14, 14], [w - 14, 14], [14, h - 14], [w - 14, h - 14]].forEach(([bx, by]) => {
+      this.ctx.beginPath();
+      this.ctx.arc(bx, by, 5, 0, Math.PI * 2);
+      this.ctx.fillStyle = `rgba(0, 240, 255, ${beaconPulse})`;
+      this.ctx.fill();
+      this.ctx.beginPath();
+      this.ctx.arc(bx, by, 10, 0, Math.PI * 2);
+      this.ctx.strokeStyle = `rgba(0, 240, 255, ${beaconPulse * 0.5})`;
+      this.ctx.lineWidth = 1.5;
+      this.ctx.stroke();
+    });
     this.ctx.restore();
   }
 
@@ -10688,6 +10929,24 @@ class GameEngine {
       const pulse = this.spawnGatePulses[side] || 0;
       const frame = pulse > 0.5 ? 2 : (pulse > 0 ? 3 : (routeIndex === warningRouteIndex ? 1 : 0));
       const position = route.polyline[0] || route.spawn || this.getSpawnGatePosition(side, w, h);
+      if ((this.gameplayPhase === 'preparation' || routeIndex === warningRouteIndex || pulse > 0) && route.polyline.length >= 2) {
+        const nextPt = route.polyline[1];
+        const dir = Math.atan2(nextPt.y - position.y, nextPt.x - position.x);
+        const chevOffset = this.prefersReducedMotion ? 58 : (48 + ((this.animationClock * 55) % 44));
+        const cx = position.x + Math.cos(dir) * chevOffset;
+        const cy = position.y + Math.sin(dir) * chevOffset;
+        this.ctx.save();
+        this.ctx.translate(cx, cy);
+        this.ctx.rotate(dir);
+        this.ctx.strokeStyle = pulse > 0 ? 'rgba(255, 42, 95, 0.72)' : 'rgba(0, 240, 255, 0.45)';
+        this.ctx.lineWidth = 2.2;
+        this.ctx.beginPath();
+        this.ctx.moveTo(-7, -7);
+        this.ctx.lineTo(3, 0);
+        this.ctx.lineTo(-7, 7);
+        this.ctx.stroke();
+        this.ctx.restore();
+      }
       this.drawAtlasFrame(
         this.spawnGateAtlasImage,
         { row },
@@ -10710,6 +10969,37 @@ class GameEngine {
     const frame = spriteData ? this.getTowerAnimationFrame(tower, spriteData) : 0;
     const rotation = spriteData?.rotate ? (tower.facingAngle || 0) : undefined;
     const visualSize = this.getReadableWorldSize(spriteData?.size || tower.radius * 2, MIN_TOWER_SCREEN_SIZE);
+    const tierRadius = Math.max(tower.radius + 4, visualSize * 0.44);
+
+    if (!options.suppressLevel && ((tower.level || 1) >= 2 || tower.specializationId)) {
+      this.ctx.save();
+      if (tower.specializationId) {
+        this.ctx.beginPath();
+        this.ctx.arc(tower.x, tower.y, tierRadius + 4, 0, Math.PI * 2);
+        this.ctx.strokeStyle = 'rgba(236, 72, 153, 0.72)';
+        this.ctx.lineWidth = 2;
+        this.ctx.stroke();
+      }
+      if ((tower.level || 1) >= 3) {
+        const spin = this.prefersReducedMotion ? 0 : (this.animationClock * 1.4);
+        this.ctx.strokeStyle = 'rgba(245, 158, 11, 0.82)';
+        this.ctx.lineWidth = 2.2;
+        this.ctx.beginPath();
+        this.ctx.arc(tower.x, tower.y, tierRadius, spin, spin + Math.PI * 0.68);
+        this.ctx.stroke();
+        this.ctx.beginPath();
+        this.ctx.arc(tower.x, tower.y, tierRadius, spin + Math.PI, spin + Math.PI * 1.68);
+        this.ctx.stroke();
+      } else if ((tower.level || 1) === 2) {
+        this.ctx.beginPath();
+        this.ctx.arc(tower.x, tower.y, tierRadius, -Math.PI * 0.35, Math.PI * 0.35);
+        this.ctx.strokeStyle = 'rgba(16, 185, 129, 0.78)';
+        this.ctx.lineWidth = 2;
+        this.ctx.stroke();
+      }
+      this.ctx.restore();
+    }
+
     const drawn = spriteData && this.drawAtlasFrame(
       sprite,
       spriteData,
@@ -10717,7 +11007,7 @@ class GameEngine {
       tower.x,
       tower.y,
       visualSize,
-      { rotation, shadowColor: '#00f0ff', shadowBlur: 8 }
+      { rotation, shadowColor: tower.level >= 3 ? '#f59e0b' : '#00f0ff', shadowBlur: tower.level >= 3 ? 13 : 8 }
     );
 
     if (!drawn) {
@@ -10821,6 +11111,12 @@ class GameEngine {
     }
 
     this.ctx.save();
+    if (enemy.hitFlashTimer > 0) {
+      this.ctx.beginPath();
+      this.ctx.arc(enemy.x, enemy.y, Math.max(enemy.radius, visualSize * 0.36), 0, Math.PI * 2);
+      this.ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(0.65, enemy.hitFlashTimer * 6)})`;
+      this.ctx.fill();
+    }
     if (enemy.stunTimer > 0 || enemy.slowTimer > 0) {
       this.ctx.beginPath();
       this.ctx.arc(enemy.x, enemy.y, Math.max(enemy.radius + 3, visualSize * 0.4), 0, Math.PI * 2);
@@ -10843,10 +11139,25 @@ class GameEngine {
     }
 
     if (enemy.isBoss) {
+      const bossRingRadius = Math.max(enemy.radius + 8, visualRadius * 0.92);
+      const bossSpin = this.prefersReducedMotion ? 0 : (this.animationClock * (1.2 + ((enemy.bossPhase || 1) * 0.35)));
+      this.ctx.strokeStyle = enemy.color;
+      this.ctx.lineWidth = 2.4;
+      this.ctx.beginPath();
+      this.ctx.arc(enemy.x, enemy.y, bossRingRadius, bossSpin, bossSpin + Math.PI * 0.65);
+      this.ctx.stroke();
+      this.ctx.beginPath();
+      this.ctx.arc(enemy.x, enemy.y, bossRingRadius, bossSpin + Math.PI, bossSpin + Math.PI * 1.65);
+      this.ctx.stroke();
+
+      const phaseTag = enemy.bossPhase >= 3 ? ' · PH III' : (enemy.bossPhase === 2 ? ' · PH II' : '');
       this.ctx.font = `bold ${this.getReadableWorldSize(11, 11)}px Rajdhani, sans-serif`;
       this.ctx.textAlign = 'center';
+      this.ctx.lineWidth = 3;
+      this.ctx.strokeStyle = 'rgba(2, 6, 15, 0.9)';
+      this.ctx.strokeText(`${enemy.name}${phaseTag}`, enemy.x, enemy.y - visualRadius - this.getReadableWorldSize(18, 15));
       this.ctx.fillStyle = '#fff';
-      this.ctx.fillText(enemy.name, enemy.x, enemy.y - visualRadius - this.getReadableWorldSize(18, 15));
+      this.ctx.fillText(`${enemy.name}${phaseTag}`, enemy.x, enemy.y - visualRadius - this.getReadableWorldSize(18, 15));
     }
     this.ctx.restore();
   }
@@ -10897,30 +11208,69 @@ class GameEngine {
       this.ctx.fillRect(view.left, view.top, viewWidth, viewHeight);
     }
 
-    // Render Mercenaries
+    // Render Mercenaries (8-frame animated Gunship Interceptor)
     this.mercenaries.forEach(m => {
-      const mercRadius = this.getReadableWorldSize(14, 9);
-      this.ctx.save();
-      this.ctx.beginPath();
-      this.ctx.arc(m.x, m.y, mercRadius, 0, Math.PI * 2);
-      this.ctx.fillStyle = '#f59e0b';
-      this.ctx.shadowColor = '#f59e0b';
-      this.ctx.shadowBlur = 10;
-      this.ctx.fill();
-      this.ctx.restore();
+      const mercData = COMPANION_FX_SPRITE_DATA.merc_hunter;
+      const mercImg = this.companionFxImages?.merc_hunter;
+      const mercFrame = Math.floor(this.animationClock * mercData.fps) % mercData.columns;
+      const mercSize = this.getReadableWorldSize(mercData.size, 30);
+      const drawn = this.drawAtlasFrame(
+        mercImg,
+        mercData,
+        mercFrame,
+        m.x,
+        m.y,
+        mercSize,
+        {
+          row: m.attackAnimationTimer > 0 ? 1 : 0,
+          rotation: Number.isFinite(m.facingAngle) ? m.facingAngle : 0,
+          shadowColor: '#f59e0b',
+          shadowBlur: 10
+        }
+      );
+      if (!drawn) {
+        const mercRadius = this.getReadableWorldSize(14, 9);
+        this.ctx.save();
+        this.ctx.beginPath();
+        this.ctx.arc(m.x, m.y, mercRadius, 0, Math.PI * 2);
+        this.ctx.fillStyle = '#f59e0b';
+        this.ctx.shadowColor = '#f59e0b';
+        this.ctx.shadowBlur = 10;
+        this.ctx.fill();
+        this.ctx.restore();
+      }
     });
 
-    // Render Pet Drones
+    // Render Pet Drones (8-frame animated Bio-Lab Chiroptère)
     this.petDrones.forEach(d => {
-      const droneRadius = this.getReadableWorldSize(10, 8);
-      this.ctx.save();
-      this.ctx.beginPath();
-      this.ctx.arc(d.x, d.y, droneRadius, 0, Math.PI * 2);
-      this.ctx.fillStyle = '#ec4899';
-      this.ctx.shadowColor = '#ec4899';
-      this.ctx.shadowBlur = 12;
-      this.ctx.fill();
-      this.ctx.restore();
+      const droneData = COMPANION_FX_SPRITE_DATA.pet_drone;
+      const droneImg = this.companionFxImages?.pet_drone;
+      const droneFrame = Math.floor(this.animationClock * droneData.fps) % droneData.columns;
+      const droneSize = this.getReadableWorldSize(droneData.size, 26);
+      const drawn = this.drawAtlasFrame(
+        droneImg,
+        droneData,
+        droneFrame,
+        d.x,
+        d.y,
+        droneSize,
+        {
+          row: d.attackAnimationTimer > 0 ? 1 : 0,
+          shadowColor: '#ec4899',
+          shadowBlur: 12
+        }
+      );
+      if (!drawn) {
+        const droneRadius = this.getReadableWorldSize(10, 8);
+        this.ctx.save();
+        this.ctx.beginPath();
+        this.ctx.arc(d.x, d.y, droneRadius, 0, Math.PI * 2);
+        this.ctx.fillStyle = '#ec4899';
+        this.ctx.shadowColor = '#ec4899';
+        this.ctx.shadowBlur = 12;
+        this.ctx.fill();
+        this.ctx.restore();
+      }
     });
 
     // Render Placed Towers
@@ -10991,58 +11341,138 @@ class GameEngine {
       });
     });
 
-    // Render Citadel
+    // Render Citadel (8-frame animated Haven Bastion Core)
     const citX = this.citadel.x || (w / 2);
     const citY = this.citadel.y || (h / 2);
     const citadelVisualRadius = this.getReadableWorldSize(this.citadel.radius, 24);
+    const citadelCoreData = COMPANION_FX_SPRITE_DATA.citadel_core;
+    const citadelCoreImg = this.companionFxImages?.citadel_core;
+    const citadelCoreFrame = Math.floor(this.animationClock * citadelCoreData.fps) % citadelCoreData.columns;
+    const citadelDrawn = this.drawAtlasFrame(
+      citadelCoreImg,
+      citadelCoreData,
+      citadelCoreFrame,
+      citX,
+      citY,
+      Math.max(citadelVisualRadius * 2.25, this.getReadableWorldSize(citadelCoreData.size, 64)),
+      {
+        row: this.isOverdriveActive ? 1 : 0,
+        shadowColor: this.isOverdriveActive ? '#f59e0b' : '#00f0ff',
+        shadowBlur: 18
+      }
+    );
 
     this.ctx.save();
+    if (!citadelDrawn) {
+      this.ctx.beginPath();
+      this.ctx.arc(citX, citY, citadelVisualRadius, 0, Math.PI * 2);
+      this.ctx.fillStyle = '#121829';
+      this.ctx.fill();
+      this.ctx.strokeStyle = this.isOverdriveActive ? '#f59e0b' : '#ff2a5f';
+      this.ctx.lineWidth = 4;
+      this.ctx.shadowColor = this.isOverdriveActive ? '#f59e0b' : '#ff2a5f';
+      this.ctx.shadowBlur = 20;
+      this.ctx.stroke();
+
+      this.ctx.beginPath();
+      this.ctx.arc(citX, citY, this.getReadableWorldSize(18, 9), 0, Math.PI * 2);
+      this.ctx.fillStyle = '#00f0ff';
+      this.ctx.shadowColor = '#00f0ff';
+      this.ctx.shadowBlur = 15;
+      this.ctx.fill();
+    }
+
+    // Diegetic rotating orbital tactical rings & shield impact pulse
+    const ringSpin = this.prefersReducedMotion ? 0 : (this.animationClock * 0.85);
+    this.ctx.strokeStyle = this.isOverdriveActive ? 'rgba(245, 158, 11, 0.55)' : 'rgba(0, 240, 255, 0.42)';
+    this.ctx.lineWidth = 2;
+    this.ctx.shadowBlur = 8;
     this.ctx.beginPath();
-    this.ctx.arc(citX, citY, citadelVisualRadius, 0, Math.PI * 2);
-    this.ctx.fillStyle = '#121829';
-    this.ctx.fill();
-    this.ctx.strokeStyle = this.isOverdriveActive ? '#f59e0b' : '#ff2a5f';
-    this.ctx.lineWidth = 4;
-    this.ctx.shadowColor = this.isOverdriveActive ? '#f59e0b' : '#ff2a5f';
-    this.ctx.shadowBlur = 20;
+    this.ctx.arc(citX, citY, citadelVisualRadius + 10, ringSpin, ringSpin + Math.PI * 0.72);
+    this.ctx.stroke();
+    this.ctx.beginPath();
+    this.ctx.arc(citX, citY, citadelVisualRadius + 10, ringSpin + Math.PI, ringSpin + Math.PI * 1.72);
     this.ctx.stroke();
 
-    this.ctx.beginPath();
-    this.ctx.arc(citX, citY, this.getReadableWorldSize(18, 9), 0, Math.PI * 2);
-    this.ctx.fillStyle = '#00f0ff';
-    this.ctx.shadowColor = '#00f0ff';
-    this.ctx.shadowBlur = 15;
-    this.ctx.fill();
+    if (this.citadelShieldFlash > 0) {
+      this.ctx.beginPath();
+      this.ctx.arc(citX, citY, citadelVisualRadius + 15, 0, Math.PI * 2);
+      this.ctx.strokeStyle = `rgba(255, 42, 95, ${Math.min(0.9, this.citadelShieldFlash)})`;
+      this.ctx.lineWidth = 3.5;
+      this.ctx.shadowColor = '#ff2a5f';
+      this.ctx.shadowBlur = 22;
+      this.ctx.stroke();
+    }
     this.ctx.restore();
     this.drawHero(citX, citY - 7);
 
-    // Render Crates
+    // Render Crates (8-frame holographic supply pods)
     this.crates.forEach(c => {
-      const crateRadius = this.getReadableWorldSize(c.radius, 7);
-      this.ctx.save();
-      this.ctx.fillStyle = c.type === 'red' ? '#ff2a5f' : '#00f0ff';
-      this.ctx.shadowColor = c.type === 'red' ? '#ff2a5f' : '#00f0ff';
-      this.ctx.shadowBlur = 10;
-      this.ctx.fillRect(c.x - crateRadius, c.y - crateRadius, crateRadius * 2, crateRadius * 2);
-      this.ctx.restore();
+      const crateData = COMPANION_FX_SPRITE_DATA.loot_crate;
+      const crateImg = this.companionFxImages?.loot_crate;
+      const crateFrame = Math.floor(this.animationClock * crateData.fps) % crateData.columns;
+      const crateSize = this.getReadableWorldSize(crateData.size, 22);
+      const drawn = this.drawAtlasFrame(
+        crateImg,
+        crateData,
+        crateFrame,
+        c.x,
+        c.y,
+        crateSize,
+        {
+          row: c.type === 'red' ? 1 : 0,
+          shadowColor: c.type === 'red' ? '#ff2a5f' : '#00f0ff',
+          shadowBlur: 12
+        }
+      );
+      if (!drawn) {
+        const crateRadius = this.getReadableWorldSize(c.radius, 7);
+        this.ctx.save();
+        this.ctx.fillStyle = c.type === 'red' ? '#ff2a5f' : '#00f0ff';
+        this.ctx.shadowColor = c.type === 'red' ? '#ff2a5f' : '#00f0ff';
+        this.ctx.shadowBlur = 10;
+        this.ctx.fillRect(c.x - crateRadius, c.y - crateRadius, crateRadius * 2, crateRadius * 2);
+        this.ctx.restore();
+      }
     });
 
-    // Render Powerups
-    this.powerups.forEach(p => {
-      const powerupRadius = this.getReadableWorldSize(p.radius, 9);
-      this.ctx.save();
-      this.ctx.beginPath();
-      this.ctx.arc(p.x, p.y, powerupRadius, 0, Math.PI * 2);
-      this.ctx.fillStyle = p.type.color;
-      this.ctx.shadowColor = p.type.color;
-      this.ctx.shadowBlur = 15;
-      this.ctx.fill();
-
-      this.ctx.font = `${this.getReadableWorldSize(14, 12)}px sans-serif`;
-      this.ctx.textAlign = 'center';
-      this.ctx.textBaseline = 'middle';
-      this.ctx.fillText(p.type.icon, p.x, p.y);
-      this.ctx.restore();
+    // Render Powerups (8-frame holographic beacon sprites)
+    const powerupRowMap = { nuke: 0, freeze: 1, quad: 2, magnet: 3, invincible: 4, frenzy: 5 };
+    this.powerups.forEach((p, idx) => {
+      const powerupData = COMPANION_FX_SPRITE_DATA.powerups;
+      const powerupImg = this.companionFxImages?.powerups;
+      const powerupFrame = Math.floor((this.animationClock * powerupData.fps) + idx) % powerupData.columns;
+      const powerupSize = this.getReadableWorldSize(powerupData.size, 24);
+      const bob = this.prefersReducedMotion ? 0 : Math.sin((this.animationClock * 4.5) + idx) * 3;
+      const py = p.y + bob;
+      const row = powerupRowMap[p.type?.id] ?? 0;
+      const drawn = this.drawAtlasFrame(
+        powerupImg,
+        powerupData,
+        powerupFrame,
+        p.x,
+        py,
+        powerupSize,
+        { row, shadowColor: p.type.color, shadowBlur: 16 }
+      );
+      if (!drawn) {
+        const powerupRadius = this.getReadableWorldSize(p.radius, 9);
+        this.ctx.save();
+        this.ctx.beginPath();
+        this.ctx.arc(p.x, py, powerupRadius, 0, Math.PI * 2);
+        this.ctx.fillStyle = 'rgba(10, 15, 29, 0.92)';
+        this.ctx.shadowColor = p.type.color;
+        this.ctx.shadowBlur = 16;
+        this.ctx.fill();
+        this.ctx.strokeStyle = p.type.color;
+        this.ctx.lineWidth = 2;
+        this.ctx.stroke();
+        this.ctx.font = `${this.getReadableWorldSize(14, 12)}px sans-serif`;
+        this.ctx.textAlign = 'center';
+        this.ctx.textBaseline = 'middle';
+        this.ctx.fillText(p.type.icon, p.x, py);
+        this.ctx.restore();
+      }
     });
 
     // Render persistent acid and napalm zones.
@@ -11061,8 +11491,15 @@ class GameEngine {
     // Render Enemies
     this.enemies.forEach(enemy => this.drawEnemy(enemy));
 
-    // Render Boss Bullets
-    this.enemyBullets.forEach(b => {
+    // Render Boss & Hostile Bullets (8-frame crimson energy orbs)
+    this.enemyBullets.forEach((b, idx) => {
+      const projData = COMPANION_FX_SPRITE_DATA.projectiles;
+      const projImg = this.companionFxImages?.projectiles;
+      const frame = Math.floor((this.animationClock * projData.fps) + idx) % projData.columns;
+      const bulletSize = this.getReadableWorldSize((b.radius || 7) * 3.2, 16);
+      if (this.drawAtlasFrame(projImg, projData, frame, b.x, b.y, bulletSize, { row: 2, shadowColor: b.color, shadowBlur: 12 })) {
+        return;
+      }
       const bulletRadius = this.getReadableWorldSize(b.radius, 4);
       this.ctx.save();
       this.ctx.beginPath();
@@ -11074,9 +11511,45 @@ class GameEngine {
       this.ctx.restore();
     });
 
-    // Render Projectiles
-    this.projectiles.forEach(p => {
+    // Render Projectiles with glowing motion trails & 8-frame animated energy bolts
+    this.projectiles.forEach((p, idx) => {
+      if (p.type === 'saw' || p.visualType === 'saw') {
+        const fxData = COMPANION_FX_SPRITE_DATA.combat_fx;
+        const fxImg = this.companionFxImages?.combat_fx;
+        const sawFrame = Math.floor(this.animationClock * 20) % fxData.columns;
+        const sawSize = this.getReadableWorldSize(26, 16);
+        if (this.drawAtlasFrame(fxImg, fxData, sawFrame, p.x, p.y, sawSize, { row: 2, shadowColor: '#00f0ff', shadowBlur: 10 })) {
+          return;
+        }
+      }
       const projectileRadius = this.getReadableWorldSize(p.radius, 2.5);
+      this.ctx.save();
+      if (!this.prefersReducedMotion && (p.vx || p.vy)) {
+        const speed = Math.hypot(p.vx, p.vy) || 1;
+        const tailLen = Math.min(22, Math.max(8, speed * 0.025));
+        const tx = p.x - ((p.vx / speed) * tailLen);
+        const ty = p.y - ((p.vy / speed) * tailLen);
+        this.ctx.beginPath();
+        this.ctx.moveTo(tx, ty);
+        this.ctx.lineTo(p.x, p.y);
+        this.ctx.strokeStyle = p.color;
+        this.ctx.lineWidth = Math.max(2, projectileRadius * 1.15);
+        this.ctx.lineCap = 'round';
+        this.ctx.globalAlpha = 0.55;
+        this.ctx.stroke();
+        this.ctx.globalAlpha = 1;
+      }
+      this.ctx.restore();
+
+      const projData = COMPANION_FX_SPRITE_DATA.projectiles;
+      const projImg = this.companionFxImages?.projectiles;
+      const projRow = p.type === 'plasma_mortar' ? 1 : ((p.color === '#f59e0b' || p.color === '#ec4899') ? 3 : 0);
+      const projFrame = Math.floor((this.animationClock * projData.fps) + idx) % projData.columns;
+      const projSize = this.getReadableWorldSize((p.radius || 4) * 3.4, 11);
+      if (this.drawAtlasFrame(projImg, projData, projFrame, p.x, p.y, projSize, { row: projRow, shadowColor: p.color, shadowBlur: 10 })) {
+        return;
+      }
+
       this.ctx.save();
       this.ctx.beginPath();
       this.ctx.arc(p.x, p.y, projectileRadius, 0, Math.PI * 2);
@@ -11087,9 +11560,34 @@ class GameEngine {
       this.ctx.restore();
     });
 
+    // Ambient drifting cyber-embers over Haven's battlefield
+    if (!this.prefersReducedMotion) {
+      this.ctx.save();
+      for (let i = 0; i < 22; i++) {
+        const ex = ((i * 197 + this.animationClock * (14 + (i % 5) * 4)) % (w + 80)) - 40;
+        const ey = ((i * 131 + Math.sin(this.animationClock * 0.9 + i) * 32 + this.animationClock * (8 + (i % 3) * 3)) % (h + 80)) - 40;
+        const alpha = 0.14 + 0.14 * Math.sin(this.animationClock * 2.5 + i);
+        this.ctx.fillStyle = i % 3 === 0 ? `rgba(0, 240, 255, ${alpha})` : `rgba(255, 42, 95, ${alpha})`;
+        this.ctx.fillRect(ex, ey, 2.2, 2.2);
+      }
+      this.ctx.restore();
+    }
+
     // Render Particles
     (this.prefersReducedMotion ? [] : this.particles).forEach(p => {
-      if (p.type === 'rail_beam') {
+      if (p.type === 'sprite_fx') {
+        const fxData = COMPANION_FX_SPRITE_DATA.combat_fx;
+        const fxImg = this.companionFxImages?.combat_fx;
+        const maxLife = p.maxLife || 0.35;
+        const progress = Math.max(0, Math.min(0.999, 1 - (p.life / maxLife)));
+        const frame = Math.floor(progress * fxData.columns);
+        this.drawAtlasFrame(fxImg, fxData, frame, p.x, p.y, p.size || 64, {
+          row: p.row ?? 1,
+          alpha: Math.min(1, p.life * 3.2),
+          shadowColor: p.color || '#a855f7',
+          shadowBlur: 14
+        });
+      } else if (p.type === 'rail_beam') {
         this.ctx.save();
         this.ctx.beginPath();
         this.ctx.moveTo(p.x1, p.y1);
@@ -11119,33 +11617,87 @@ class GameEngine {
       }
     });
 
-    // Render Floating Text
+    // Render Floating Text with crisp dark outline
     this.floatingTexts.forEach(t => {
       this.ctx.save();
       this.ctx.font = `bold ${this.getReadableWorldSize(15, 12)}px Rajdhani`;
+      this.ctx.lineWidth = 3;
+      this.ctx.strokeStyle = 'rgba(2, 6, 15, 0.88)';
+      this.ctx.strokeText(t.text, t.x, t.y);
       this.ctx.fillStyle = t.color;
       this.ctx.fillText(t.text, t.x, t.y);
       this.ctx.restore();
     });
 
     if (this.buildCursor.visible && !this.isPaused) {
+      const selectedTower = this.selectedTowerToBuild;
+      const existingAtCursor = this.findPlacedDefenseAt?.(this.buildCursor.x, this.buildCursor.y);
       this.ctx.save();
-      this.ctx.strokeStyle = '#fff';
-      this.ctx.lineWidth = 2;
-      this.ctx.beginPath();
-      this.ctx.arc(this.buildCursor.x, this.buildCursor.y, 16, 0, Math.PI * 2);
-      this.ctx.moveTo(this.buildCursor.x - 24, this.buildCursor.y);
-      this.ctx.lineTo(this.buildCursor.x + 24, this.buildCursor.y);
-      this.ctx.moveTo(this.buildCursor.x, this.buildCursor.y - 24);
-      this.ctx.lineTo(this.buildCursor.x, this.buildCursor.y + 24);
-      this.ctx.stroke();
+      if (selectedTower && !existingAtCursor && !this.activeHeroTargeting) {
+        const placement = this.validateDefensePlacement?.(this.buildCursor.x, this.buildCursor.y);
+        const affordable = this.coins >= selectedTower.cost;
+        const canPlace = Boolean(placement?.ok) && affordable;
+        const previewColor = canPlace ? '#00f0ff' : '#ff2a5f';
+        const previewRange = Math.max(36, Number(selectedTower.range) || 120);
+
+        this.ctx.beginPath();
+        this.ctx.arc(this.buildCursor.x, this.buildCursor.y, previewRange, 0, Math.PI * 2);
+        this.ctx.fillStyle = canPlace ? 'rgba(0, 240, 255, 0.06)' : 'rgba(255, 42, 95, 0.06)';
+        this.ctx.fill();
+        this.ctx.setLineDash([7, 6]);
+        this.ctx.strokeStyle = canPlace ? 'rgba(0, 240, 255, 0.45)' : 'rgba(255, 42, 95, 0.55)';
+        this.ctx.lineWidth = 1.6;
+        this.ctx.stroke();
+        this.ctx.setLineDash([]);
+
+        this.ctx.beginPath();
+        this.ctx.arc(this.buildCursor.x, this.buildCursor.y, 20, 0, Math.PI * 2);
+        this.ctx.fillStyle = canPlace ? 'rgba(0, 240, 255, 0.16)' : 'rgba(255, 42, 95, 0.18)';
+        this.ctx.fill();
+        this.ctx.strokeStyle = previewColor;
+        this.ctx.lineWidth = 2;
+        this.ctx.stroke();
+
+        this.ctx.font = `${this.getReadableWorldSize(16, 14)}px sans-serif`;
+        this.ctx.textAlign = 'center';
+        this.ctx.textBaseline = 'middle';
+        this.ctx.fillText(selectedTower.icon || '🔫', this.buildCursor.x, this.buildCursor.y);
+
+        this.ctx.font = `bold ${this.getReadableWorldSize(10, 10)}px Rajdhani, sans-serif`;
+        this.ctx.fillStyle = previewColor;
+        const statusLabel = !placement?.ok ? 'ZONE BLOQUÉE' : (!affordable ? `${selectedTower.cost} 🪙 REQUIS` : `${selectedTower.cost} 🪙`);
+        this.ctx.fillText(statusLabel, this.buildCursor.x, this.buildCursor.y + 30);
+      } else {
+        this.ctx.strokeStyle = '#fff';
+        this.ctx.lineWidth = 2;
+        this.ctx.beginPath();
+        this.ctx.arc(this.buildCursor.x, this.buildCursor.y, 16, 0, Math.PI * 2);
+        this.ctx.moveTo(this.buildCursor.x - 24, this.buildCursor.y);
+        this.ctx.lineTo(this.buildCursor.x + 24, this.buildCursor.y);
+        this.ctx.moveTo(this.buildCursor.x, this.buildCursor.y - 24);
+        this.ctx.lineTo(this.buildCursor.x, this.buildCursor.y + 24);
+        this.ctx.stroke();
+      }
       this.ctx.restore();
     }
     this.ctx.restore();
   }
 
   createExplosion(x, y, radius, damage, options = {}) {
-    const visualParticleCount = this.prefersReducedMotion ? 0 : 16;
+    this.addCameraShake(Math.min(8, 2 + (Number(radius) || 0) * 0.04));
+    if (!this.prefersReducedMotion && this.particles.length < 220) {
+      this.particles.push({
+        type: 'sprite_fx',
+        row: 1,
+        x,
+        y,
+        size: Math.max(46, Math.min(140, (Number(radius) || 40) * 1.45)),
+        life: 0.32,
+        maxLife: 0.32,
+        color: '#a855f7'
+      });
+    }
+    const visualParticleCount = this.prefersReducedMotion ? 0 : 12;
     for (let i = 0; i < visualParticleCount; i++) {
       const angle = (Math.PI * 2 / visualParticleCount) * i;
       this.particles.push({ x, y, vx: Math.cos(angle) * radius * 3, vy: Math.sin(angle) * radius * 3, radius: 4, color: '#a855f7', life: 0.3 });
@@ -11206,6 +11758,10 @@ class GameEngine {
       hpFill.setAttribute('aria-valuenow', String(Math.max(0, Math.round(this.citadel.hp))));
     }
     const hpTxt = document.getElementById('citadel-hp-txt'); if (hpTxt) hpTxt.textContent = `${Math.round(this.citadel.hp)} / ${this.citadel.maxHp}`;
+    const dangerVignette = document.getElementById('citadel-danger-vignette');
+    if (dangerVignette) {
+      dangerVignette.dataset.level = hpPct <= 20 ? 'critical' : (hpPct <= 35 ? 'warning' : 'safe');
+    }
 
     const affinityPct = this.selectedHero.affinityLvl >= 5 ? 100 : Math.min(100, (this.affinityXp / Math.max(1, this.nextAffinityXp)) * 100);
     const affFill = document.getElementById('affinity-meter-fill');

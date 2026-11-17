@@ -262,6 +262,26 @@
       aria-describedby="camera-controls-help battlefield-status"
     ></canvas>
 
+    <!-- Diegetic Hull Warning Vignette & Sector Tactical Banner -->
+    <div id="citadel-danger-vignette" class="citadel-danger-vignette" aria-hidden="true"></div>
+
+    <div id="tactical-banner" class="tactical-banner" aria-hidden="true" hidden>
+      <span class="tactical-banner-eyebrow" id="tactical-banner-eyebrow">LIAISON TACTIQUE HAVEN</span>
+      <strong class="tactical-banner-title" id="tactical-banner-title">SECTEUR EN ALERTE</strong>
+      <span class="tactical-banner-sub" id="tactical-banner-sub">Synchronisation du périmètre</span>
+    </div>
+
+    <aside id="comms-transmission" class="comms-transmission" aria-hidden="true" hidden>
+      <img id="comms-avatar-img" class="comms-avatar" alt="" decoding="async">
+      <div class="comms-body">
+        <div class="comms-header">
+          <span class="comms-callsign" id="comms-callsign">COMMANDANTE ARIA // CANAL HAVEN</span>
+          <span class="comms-signal" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        </div>
+        <p class="comms-line" id="comms-line-txt">Périmètre synchronisé. En attente de vos ordres.</p>
+      </div>
+    </aside>
+
     <div id="camera-controls" class="camera-controls" role="group" aria-label="Contrôles de caméra">
       <button
         class="camera-control-btn"
@@ -354,96 +374,97 @@
     <div class="modal-overlay" id="hq-menu-modal">
       <div class="modal-box" style="max-width: 900px;">
         <button class="btn-close">&times;</button>
+        <p class="section-eyebrow" style="text-align: center;">LIAISON NEURALE // BASTION CENTRAL D’HAVEN</p>
         <h2 class="modal-title" style="color: #00f0ff;">🏰 QUARTIER GÉNÉRAL DE LA CITADELLE</h2>
-        <p class="modal-subtitle">Menu de gestion, personnalisation, laboratoire et archives hors-combat.</p>
+        <p class="modal-subtitle">Console unifiée du Bastion : commandement des Valkyries, forge bio-cybernétique, aile privée et archives tactiques.</p>
 
         <div class="hq-nav-grid">
           <button class="hq-card" id="btn-harem-toggle" type="button">
-            <div class="hq-card-icon">💖</div>
+            <div class="hq-card-icon"><img src="assets/icons/hq/harem.png" alt="" decoding="async"></div>
             <h3>Salon Nocturne (18+)</h3>
             <p>Relations adultes, libres et consensuelles. Parlez, invitez, ou dites « pas maintenant ».</p>
           </button>
 
           <button class="hq-card" id="btn-roster-toggle" type="button">
-            <div class="hq-card-icon">⚔️</div>
+            <div class="hq-card-icon"><img src="assets/icons/hq/roster.png" alt="" decoding="async"></div>
             <h3>Salle de Commandement</h3>
             <p>Choisissez la Valkyrie adulte qui mènera la prochaine sortie.</p>
           </button>
 
           <button class="hq-card" id="btn-antagonist-codex-toggle" type="button">
-            <div class="hq-card-icon" aria-hidden="true">♛</div>
+            <div class="hq-card-icon" aria-hidden="true"><img src="assets/icons/hq/codex.png" alt="" decoding="async"></div>
             <h3>Codex des Dix Trônes</h3>
             <p>Étudiez leurs trois phases, préparez un contre et lancez une chasse de boss.</p>
           </button>
 
           <button class="hq-card" id="btn-wardrobe-toggle" type="button">
-            <div class="hq-card-icon">👙</div>
+            <div class="hq-card-icon"><img src="assets/icons/hq/wardrobe.png" alt="" decoding="async"></div>
             <h3>Garde-Robe & Skins</h3>
             <p>Choisissez librement armures, maillots, lingerie tactique et soie néon.</p>
           </button>
 
           <button class="hq-card" id="btn-biolab-toggle" type="button">
-            <div class="hq-card-icon">🧪</div>
+            <div class="hq-card-icon"><img src="assets/icons/hq/biolab.png" alt="" decoding="async"></div>
             <h3>Bio-Laboratoire</h3>
             <p>Activez et améliorez des familiers IA non humanoïdes.</p>
           </button>
 
           <button class="hq-card" id="btn-mercs-toggle" type="button">
-            <div class="hq-card-icon">💥</div>
+            <div class="hq-card-icon"><img src="assets/icons/hq/mercs.png" alt="" decoding="async"></div>
             <h3>Guilde des Mercenaires</h3>
             <p>Engagez des mercenaires IA pour patrouiller autour de la Citadelle.</p>
           </button>
 
           <button class="hq-card" id="btn-tower-toggle" type="button">
-            <div class="hq-card-icon">🌀</div>
+            <div class="hq-card-icon"><img src="assets/icons/hq/tower.png" alt="" decoding="async"></div>
             <h3>Tour Infinitum</h3>
             <p>Défiez 100 étages à mutateurs et gagnez des Crédits Haven permanents.</p>
           </button>
 
           <button class="hq-card" id="btn-studio-toggle" type="button">
-            <div class="hq-card-icon">📸</div>
+            <div class="hq-card-icon"><img src="assets/icons/hq/studio.png" alt="" decoding="async"></div>
             <h3>Studio Boudoir Néon</h3>
             <p>Portraits sensuels non nus, dont 20 boudoirs, 60 parenthèses privées et 60 CG Éros Time OpenAI.</p>
           </button>
 
           <button class="hq-card" id="btn-slot-toggle" type="button">
-            <div class="hq-card-icon">🎰</div>
+            <div class="hq-card-icon"><img src="assets/icons/hq/slot.png" alt="" decoding="async"></div>
             <h3>Machine à Sous</h3>
             <p>Tentez de décrocher un jackpot de Bio-Coins fictifs, sans argent réel.</p>
           </button>
 
           <button class="hq-card" id="btn-shop-toggle" type="button">
-            <div class="hq-card-icon">🛒</div>
+            <div class="hq-card-icon"><img src="assets/icons/hq/shop.png" alt="" decoding="async"></div>
             <h3>Armurerie & Boutique</h3>
             <p>Dépensez vos Crédits Haven en améliorations permanentes.</p>
           </button>
 
           <button class="hq-card" id="btn-gallery-toggle" type="button">
-            <div class="hq-card-icon">🔞</div>
+            <div class="hq-card-icon"><img src="assets/icons/hq/gallery.png" alt="" decoding="async"></div>
             <h3>Archives Secrètes</h3>
             <p>Codex adulte, portraits suggestifs consentis et récits personnels.</p>
           </button>
 
           <button class="hq-card" id="btn-adult-scenes-toggle" type="button">
-            <div class="hq-card-icon" aria-hidden="true">💋</div>
+            <div class="hq-card-icon" aria-hidden="true"><img src="assets/icons/hq/adult_scenes.png" alt="" decoding="async"></div>
             <h3>Archives Sensuelles</h3>
             <p>Maillots, romances, boudoirs, 20 séquences Éros Time hors champ et 60 routes VN vers les CG chubby, maternité et jeunes années adultes 27+.</p>
           </button>
 
           <button class="hq-card" id="btn-achieve-toggle" type="button">
-            <div class="hq-card-icon">🏆</div>
+            <div class="hq-card-icon"><img src="assets/icons/hq/achieve.png" alt="" decoding="async"></div>
             <h3>Hauts Faits & Succès</h3>
             <p>Suivez vos accomplissements et récoltez des Crédits Haven.</p>
           </button>
 
           <button class="hq-card" id="btn-run-history-toggle" type="button">
-            <div class="hq-card-icon" aria-hidden="true">▤</div>
+            <div class="hq-card-icon" aria-hidden="true"><img src="assets/icons/hq/history.png" alt="" decoding="async"></div>
             <h3>Historique des sorties</h3>
             <p>Comparez terrains, mutateurs, scores et compositions de vos derniers runs.</p>
           </button>
 
           <button class="hq-card" id="btn-settings-toggle" type="button">
-            <div class="hq-card-icon" aria-hidden="true">⚙</div>
+            <div class="hq-card-icon" aria-hidden="true"><img src="assets/icons/hq/settings.png" alt="" decoding="async"></div>
             <h3>Paramètres & sauvegarde</h3>
             <p>Réglez le son, la lisibilité et la manette, puis exportez ou importez votre progression.</p>
           </button>

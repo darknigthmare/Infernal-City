@@ -470,6 +470,172 @@ class SoundEngine {
     osc.stop(now + 0.55);
   }
 
+  // --- Diegetic UI, Tactical Comms & Transition Cues --- //
+
+  playUiClick() {
+    if (this.isMuted || !this.ensureAudio()) return;
+    if (!this.canPlayHotSfx('ui_click', 0.045)) return;
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(920, now);
+    osc.frequency.exponentialRampToValueAtTime(480, now + 0.045);
+    gain.gain.setValueAtTime(0.08, now);
+    gain.gain.exponentialRampToValueAtTime(0.005, now + 0.045);
+    osc.connect(gain);
+    gain.connect(this.sfxGain);
+    this.trackHotSfxSource(osc);
+    osc.start(now);
+    osc.stop(now + 0.05);
+  }
+
+  playModalOpen() {
+    if (this.isMuted || !this.ensureAudio()) return;
+    if (!this.canPlayHotSfx('modal_open', 0.12)) return;
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(320, now);
+    osc.frequency.exponentialRampToValueAtTime(640, now + 0.14);
+    gain.gain.setValueAtTime(0.11, now);
+    gain.gain.exponentialRampToValueAtTime(0.008, now + 0.16);
+    osc.connect(gain);
+    gain.connect(this.sfxGain);
+    this.trackHotSfxSource(osc);
+    osc.start(now);
+    osc.stop(now + 0.16);
+  }
+
+  playModalClose() {
+    if (this.isMuted || !this.ensureAudio()) return;
+    if (!this.canPlayHotSfx('modal_close', 0.12)) return;
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(520, now);
+    osc.frequency.exponentialRampToValueAtTime(240, now + 0.13);
+    gain.gain.setValueAtTime(0.09, now);
+    gain.gain.exponentialRampToValueAtTime(0.006, now + 0.14);
+    osc.connect(gain);
+    gain.connect(this.sfxGain);
+    this.trackHotSfxSource(osc);
+    osc.start(now);
+    osc.stop(now + 0.14);
+  }
+
+  playTowerPlace() {
+    if (this.isMuted || !this.ensureAudio()) return;
+    if (!this.canPlayHotSfx('tower_place', 0.08)) return;
+    const now = this.ctx.currentTime;
+    const thud = this.ctx.createOscillator();
+    const thudGain = this.ctx.createGain();
+    thud.type = 'triangle';
+    thud.frequency.setValueAtTime(160, now);
+    thud.frequency.exponentialRampToValueAtTime(55, now + 0.12);
+    thudGain.gain.setValueAtTime(0.24, now);
+    thudGain.gain.exponentialRampToValueAtTime(0.008, now + 0.13);
+    thud.connect(thudGain);
+    thudGain.connect(this.sfxGain);
+    this.trackHotSfxSource(thud);
+    thud.start(now);
+    thud.stop(now + 0.13);
+
+    const chime = this.ctx.createOscillator();
+    const chimeGain = this.ctx.createGain();
+    chime.type = 'sine';
+    chime.frequency.setValueAtTime(680, now + 0.04);
+    chime.frequency.exponentialRampToValueAtTime(1020, now + 0.16);
+    chimeGain.gain.setValueAtTime(0.11, now + 0.04);
+    chimeGain.gain.exponentialRampToValueAtTime(0.005, now + 0.18);
+    chime.connect(chimeGain);
+    chimeGain.connect(this.sfxGain);
+    this.trackHotSfxSource(chime);
+    chime.start(now + 0.04);
+    chime.stop(now + 0.18);
+  }
+
+  playWaveStart() {
+    if (this.isMuted || !this.ensureAudio()) return;
+    if (!this.canPlayHotSfx('wave_start', 0.3)) return;
+    const now = this.ctx.currentTime;
+    const horn = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    horn.type = 'sawtooth';
+    horn.frequency.setValueAtTime(146.83, now);
+    horn.frequency.linearRampToValueAtTime(220, now + 0.25);
+    horn.frequency.exponentialRampToValueAtTime(196, now + 0.55);
+    gain.gain.setValueAtTime(0.001, now);
+    gain.gain.linearRampToValueAtTime(0.22, now + 0.08);
+    gain.gain.exponentialRampToValueAtTime(0.008, now + 0.58);
+    horn.connect(gain);
+    gain.connect(this.sfxGain);
+    this.trackHotSfxSource(horn);
+    horn.start(now);
+    horn.stop(now + 0.58);
+  }
+
+  playWaveClear() {
+    if (this.isMuted || !this.ensureAudio()) return;
+    if (!this.canPlayHotSfx('wave_clear', 0.35)) return;
+    const now = this.ctx.currentTime;
+    [392.0, 493.88, 587.33, 783.99].forEach((freq, idx) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      const start = now + idx * 0.075;
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, start);
+      gain.gain.setValueAtTime(0.14, start);
+      gain.gain.exponentialRampToValueAtTime(0.006, start + 0.28);
+      osc.connect(gain);
+      gain.connect(this.sfxGain);
+      this.trackHotSfxSource(osc);
+      osc.start(start);
+      osc.stop(start + 0.28);
+    });
+  }
+
+  playBossAlert() {
+    if (this.isMuted || !this.ensureAudio()) return;
+    if (!this.canPlayHotSfx('boss_alert', 0.4)) return;
+    const now = this.ctx.currentTime;
+    for (let i = 0; i < 2; i++) {
+      const start = now + i * 0.24;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(110, start);
+      osc.frequency.linearRampToValueAtTime(82.41, start + 0.2);
+      gain.gain.setValueAtTime(0.26, start);
+      gain.gain.exponentialRampToValueAtTime(0.008, start + 0.22);
+      osc.connect(gain);
+      gain.connect(this.sfxGain);
+      this.trackHotSfxSource(osc);
+      osc.start(start);
+      osc.stop(start + 0.22);
+    }
+  }
+
+  playCommsBeep() {
+    if (this.isMuted || !this.ensureAudio()) return;
+    if (!this.canPlayHotSfx('comms_beep', 0.25)) return;
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(1180, now);
+    osc.frequency.setValueAtTime(1420, now + 0.05);
+    gain.gain.setValueAtTime(0.075, now);
+    gain.gain.exponentialRampToValueAtTime(0.004, now + 0.12);
+    osc.connect(gain);
+    gain.connect(this.sfxGain);
+    this.trackHotSfxSource(osc);
+    osc.start(now);
+    osc.stop(now + 0.12);
+  }
+
   // --- 5-Station Procedural Synthesizer Radio --- //
 
   toggleMusic() {

@@ -813,6 +813,15 @@
       this.waveRouteKills = new Set();
       this.secondaryObjectiveResult = null;
       this.progressTutorial('launch');
+      audio.playWaveStart?.();
+      this.showTacticalBanner?.(
+        'ALERTE PÉRIMÈTRE',
+        `VAGUE ${String(this.wave).padStart(2, '0')} ENGAGÉE`,
+        this.activeWaveDefinition?.name || 'Déploiement hostile confirmé',
+        'cyan',
+        2500
+      );
+      this.showCommanderComms?.('wave_start');
       this.showFeedback('Vague ' + this.wave + ' engagée', '#00f0ff');
       this.syncSecondaryObjective();
       this.syncTacticalControls();

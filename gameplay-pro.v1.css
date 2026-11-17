@@ -422,3 +422,294 @@
     overflow-y: auto;
   }
 }
+
+/* ==========================================================================
+   AAA Diegetic Transitions, Tactical Banner & Neural Comms
+   ========================================================================== */
+
+.modal-overlay .modal-box,
+.modal-overlay .adult-gate-box,
+.modal-overlay .cg-viewer-layout {
+  transform: translateY(14px) scale(0.975);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease;
+}
+
+.modal-overlay.active .modal-box,
+.modal-overlay.active .adult-gate-box,
+.modal-overlay.active .cg-viewer-layout {
+  transform: translateY(0) scale(1);
+}
+
+.modal-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(0, 240, 255, 0.05) 0%, transparent 18%, transparent 88%, rgba(255, 42, 95, 0.05) 100%);
+  pointer-events: none;
+}
+
+.citadel-danger-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle at center, transparent 52%, rgba(255, 24, 68, 0.42) 100%);
+  transition: opacity 0.25s ease;
+}
+
+.citadel-danger-vignette[data-level="warning"] {
+  opacity: 0.45;
+  animation: hull-pulse 1.8s ease-in-out infinite;
+}
+
+.citadel-danger-vignette[data-level="critical"] {
+  opacity: 0.85;
+  animation: hull-pulse 0.9s ease-in-out infinite;
+}
+
+.citadel-danger-vignette[data-hit="true"] {
+  opacity: 0.92;
+}
+
+@keyframes hull-pulse {
+  0%, 100% { opacity: 0.38; }
+  50% { opacity: 0.85; }
+}
+
+.tactical-banner {
+  position: absolute;
+  top: 86px;
+  left: 50%;
+  z-index: 16;
+  display: grid;
+  justify-items: center;
+  gap: 3px;
+  min-width: min(460px, calc(100% - 32px));
+  padding: 10px 26px 12px;
+  transform: translate(-50%, -12px) scale(0.96);
+  opacity: 0;
+  pointer-events: none;
+  border: 1px solid rgba(0, 240, 255, 0.48);
+  border-radius: 12px;
+  background:
+    linear-gradient(90deg, rgba(7, 11, 22, 0.92), rgba(14, 22, 42, 0.95), rgba(7, 11, 22, 0.92));
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.72), 0 0 24px rgba(0, 240, 255, 0.2);
+  backdrop-filter: blur(10px);
+  text-align: center;
+  transition: opacity 0.28s ease, transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tactical-banner[hidden] {
+  display: none;
+}
+
+.tactical-banner.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+}
+
+.tactical-banner[data-tone="danger"] {
+  border-color: rgba(255, 42, 95, 0.72);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.78), 0 0 28px rgba(255, 42, 95, 0.35);
+}
+
+.tactical-banner[data-tone="amber"] {
+  border-color: rgba(245, 158, 11, 0.72);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.78), 0 0 28px rgba(245, 158, 11, 0.3);
+}
+
+.tactical-banner[data-tone="emerald"] {
+  border-color: rgba(16, 185, 129, 0.68);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.75), 0 0 26px rgba(16, 185, 129, 0.28);
+}
+
+.tactical-banner-eyebrow {
+  font-family: var(--font-tech);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-cyan);
+}
+
+.tactical-banner[data-tone="danger"] .tactical-banner-eyebrow {
+  color: #fb7185;
+}
+
+.tactical-banner[data-tone="amber"] .tactical-banner-eyebrow {
+  color: #fbbf24;
+}
+
+.tactical-banner[data-tone="emerald"] .tactical-banner-eyebrow {
+  color: #34d399;
+}
+
+.tactical-banner-title {
+  font-family: var(--font-tech);
+  font-size: clamp(1.05rem, 2.2vw, 1.45rem);
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #f8fafc;
+  text-shadow: 0 0 14px rgba(0, 240, 255, 0.35);
+}
+
+.tactical-banner-sub {
+  font-size: 0.78rem;
+  color: #cbd5e1;
+}
+
+.comms-transmission {
+  position: absolute;
+  left: max(12px, env(safe-area-inset-left));
+  bottom: calc(174px + env(safe-area-inset-bottom));
+  z-index: 12;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: min(350px, calc(100% - 24px));
+  padding: 8px 12px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-14px);
+  border: 1px solid rgba(0, 240, 255, 0.42);
+  border-left: 3px solid var(--color-cyan);
+  border-radius: 10px;
+  background: rgba(8, 13, 25, 0.9);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.68);
+  backdrop-filter: blur(10px);
+  transition: opacity 0.25s ease, transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.comms-transmission[hidden] {
+  display: none;
+}
+
+.comms-transmission.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.comms-transmission[data-tone="danger"] {
+  border-color: rgba(255, 42, 95, 0.6);
+  border-left-color: #ff2a5f;
+}
+
+.comms-transmission[data-tone="amber"] {
+  border-color: rgba(245, 158, 11, 0.6);
+  border-left-color: #f59e0b;
+}
+
+.comms-avatar {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 240, 255, 0.55);
+  object-fit: cover;
+}
+
+.comms-body {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.comms-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.comms-callsign {
+  font-family: var(--font-tech);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-cyan);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.comms-signal {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 10px;
+}
+
+.comms-signal i {
+  display: block;
+  width: 2px;
+  background: var(--color-cyan);
+  border-radius: 2px;
+  animation: comms-eq 0.7s ease-in-out infinite alternate;
+}
+
+.comms-signal i:nth-child(1) { height: 4px; animation-delay: 0s; }
+.comms-signal i:nth-child(2) { height: 8px; animation-delay: 0.15s; }
+.comms-signal i:nth-child(3) { height: 10px; animation-delay: 0.3s; }
+.comms-signal i:nth-child(4) { height: 6px; animation-delay: 0.45s; }
+
+@keyframes comms-eq {
+  0% { transform: scaleY(0.45); opacity: 0.6; }
+  100% { transform: scaleY(1); opacity: 1; }
+}
+
+.comms-line {
+  margin: 0;
+  font-size: 0.76rem;
+  line-height: 1.3;
+  color: #e2e8f0;
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .comms-transmission {
+    display: none;
+  }
+
+  .tactical-banner {
+    top: 62px;
+    padding: 6px 16px 8px;
+  }
+}
+
+.hq-card-icon {
+  display: grid;
+  place-items: center;
+  min-height: 52px;
+}
+
+.hq-card-icon img {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.35));
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), filter 0.22s ease;
+}
+
+.hq-card:hover .hq-card-icon img {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 16px rgba(0, 240, 255, 0.65));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-overlay .modal-box,
+  .modal-overlay .adult-gate-box,
+  .modal-overlay .cg-viewer-layout,
+  .tactical-banner,
+  .comms-transmission {
+    transition: none;
+    transform: none;
+  }
+
+  .citadel-danger-vignette,
+  .comms-signal i {
+    animation: none;
+  }
+}
