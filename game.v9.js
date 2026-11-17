@@ -3591,7 +3591,8 @@ class GameEngine {
       card.setAttribute('aria-label', `${t.name}, coût ${t.cost} Bio-Coins. ${t.desc}`);
       card.setAttribute('aria-pressed', String(isSelected));
       card.tabIndex = isSelected ? 0 : -1;
-      card.innerHTML = `<span class="icon" aria-hidden="true">${t.icon}</span><span class="tower-name">${t.name}</span><span class="cost">${t.cost}🪙</span>`;
+      const iconPath = ['assets', 'icons', 'towers', `${t.id}.png`].join('/');
+      card.innerHTML = `<span class="icon" aria-hidden="true"><img src="${iconPath}" alt="" decoding="async"></span><span class="tower-name">${t.name}</span><span class="cost">${t.cost}🪙</span>`;
       card.addEventListener('click', (e) => {
         e.stopPropagation();
         if (card.dataset.affordable === 'false') {
@@ -11820,7 +11821,11 @@ class GameEngine {
         card.setAttribute('aria-label', `${wp.name}, ${wp.isEvolved ? 'évolution maximale' : `niveau ${wp.level}`}`);
         const icon = document.createElement('div');
         icon.className = 'icon';
-        icon.textContent = String(wp.icon || '');
+        const iconImg = document.createElement('img');
+        iconImg.src = ['assets', 'icons', 'weapons', `${wp.id}.png`].join('/');
+        iconImg.alt = '';
+        iconImg.decoding = 'async';
+        icon.appendChild(iconImg);
         const level = document.createElement('div');
         level.className = 'lvl';
         level.textContent = wp.isEvolved ? 'MAX' : `L${wp.level}`;

@@ -698,6 +698,19 @@
   filter: drop-shadow(0 0 16px rgba(0, 240, 255, 0.65));
 }
 
+.build-tower-card .icon img,
+.weapon-card .icon img {
+  width: 28px;
+  height: 28px;
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.35));
+}
+
+.weapon-card.evolved .icon img {
+  filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.75));
+}
+
 @media (prefers-reduced-motion: reduce) {
   .modal-overlay .modal-box,
   .modal-overlay .adult-gate-box,
