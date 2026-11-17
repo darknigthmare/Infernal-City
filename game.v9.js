@@ -291,6 +291,19 @@ const COMPANION_FX_SPRITE_DATA = {
   projectiles: { src: 'assets/animations/fx/projectiles-atlas.png', columns: 8, rows: 4, size: 22, fps: 16 }
 };
 
+const SMOOTH_ATLAS_OVERRIDES = {
+  'assets/animations/towers/tower-atlas-01.png': { src: 'assets/animations/smooth/tower-smooth-01.png', columns: 16, rows: 4 },
+  'assets/animations/towers/tower-atlas-02.png': { src: 'assets/animations/smooth/tower-smooth-02.png', columns: 16, rows: 4 },
+  'assets/animations/towers/tower-atlas-03.png': { src: 'assets/animations/smooth/tower-smooth-03.png', columns: 16, rows: 4 },
+  'assets/animations/towers/tower-atlas-04.png': { src: 'assets/animations/smooth/tower-smooth-04.png', columns: 16, rows: 4 },
+  'assets/animations/towers/tower-atlas-05.png': { src: 'assets/animations/smooth/tower-smooth-05.png', columns: 16, rows: 4 },
+  'assets/animations/heroes/hero-atlas-01.png': { src: 'assets/animations/smooth/hero-smooth-01.png', columns: 16, rows: 4 },
+  'assets/animations/heroes/hero-atlas-02.png': { src: 'assets/animations/smooth/hero-smooth-02.png', columns: 16, rows: 4 },
+  'assets/animations/enemies/enemy-atlas-01.png': { src: 'assets/animations/smooth/enemy-smooth-01.png', columns: 16, rows: 4 },
+  'assets/animations/enemies/enemy-atlas-02.png': { src: 'assets/animations/smooth/enemy-smooth-02.png', columns: 16, rows: 4 },
+  'assets/animations/enemies/enemy-specialist-atlas.png': { src: 'assets/animations/smooth/enemy-specialist-smooth.png', columns: 16, rows: 4 }
+};
+
 // Weapon Base Definitions
 const WEAPONS_DATA = {
   vulcan: { id: 'vulcan', name: 'Vulcan Minigun', icon: '🔫', level: 0, maxLevel: 5, damage: 18, fireRate: 200, range: 280, type: 'ballistic', desc: 'Tirs cinétiques à haute cadence.', evolutionName: 'Vulcan Cerberus', evolutionDesc: 'Munitions surchargées capables de traverser trois cibles.' },
@@ -1465,11 +1478,22 @@ class GameEngine {
     return image;
   }
 
+  ensureSmoothAtlas(originalSrc) {
+    const override = SMOOTH_ATLAS_OVERRIDES[originalSrc];
+    if (!override) return null;
+    this.smoothAtlasImages = this.smoothAtlasImages || {};
+    if (!this.smoothAtlasImages[originalSrc]) {
+      this.smoothAtlasImages[originalSrc] = this.preloadSpriteAsset(override.src, 'Planche fluide 16-frames');
+    }
+    return this.smoothAtlasImages[originalSrc];
+  }
+
   ensureEnemySprite(type) {
     const spriteData = ENEMY_SPRITE_DATA[type];
     if (!spriteData) return null;
     const image = this.preloadSpriteAsset(spriteData.src, 'Planche ennemie');
     if (image) this.enemySpriteImages[type] = image;
+    this.ensureSmoothAtlas(spriteData.src);
     return image || null;
   }
 
@@ -1478,6 +1502,7 @@ class GameEngine {
     if (!spriteData) return null;
     const image = this.preloadSpriteAsset(spriteData.src, 'Planche de héros');
     if (image) this.heroSpriteImages[heroId] = image;
+    this.ensureSmoothAtlas(spriteData.src);
     return image || null;
   }
 
@@ -1486,6 +1511,7 @@ class GameEngine {
     if (!spriteData) return null;
     const image = this.preloadSpriteAsset(spriteData.src, 'Planche défense');
     if (image) this.towerSpriteImages[towerId] = image;
+    this.ensureSmoothAtlas(spriteData.src);
     return image || null;
   }
 
@@ -1506,6 +1532,7 @@ class GameEngine {
     const starterIds = this.dailyChallenge?.startingDefenseIds || ['vulcan_turret', 'flame_trap'];
     Object.entries(TOWER_SPRITE_DATA).filter(([id]) => starterIds.includes(id)).forEach(([id, spriteData]) => {
       this.towerSpriteImages[id] = this.preloadSpriteAsset(spriteData.src, 'Planche de défense');
+      this.ensureSmoothAtlas(spriteData.src);
     });
     Object.keys(HERO_SPRITE_DATA).filter(heroId => heroId === this.selectedHero?.id).forEach(heroId => {
       const isCharacterExpansionHero = Boolean(CHARACTER_EXPANSION?.heroines?.[heroId]);
@@ -10718,40 +10745,84 @@ class GameEngine {
   }
 
   drawAtlasFrame(image, spriteData, frame, x, y, size, options = {}) {
-    if (!this.isSpriteReady(image)) return false;
-    const sourceWidth = image.naturalWidth || image.width;
-    const sourceHeight = image.naturalHeight || image.height;
-    // Legacy character atlases are 4x4, while the OpenAI legion and effect
-    // plates are authored as a single 4-frame strip. Honour per-asset layout
-    // metadata so a 4x1 sheet is never cropped to its top quarter.
-    const columns = Math.max(1, Math.round(Number(spriteData?.columns) || SPRITE_ATLAS_COLUMNS));
-    const rows = Math.max(1, Math.round(Number(spriteData?.rows) || SPRITE_ATLAS_ROWS));
+    let activeImage = image;
+    let columns = Math.max(1, Math.round(Number(spriteData?.columns) || SPRITE_ATLAS_COLUMNS));
+    let rows = Math.max(1, Math.round(Number(spriteData?.rows) || SPRITE_ATLAS_ROWS));
+    let activeFrame = Number.isFinite(options.smoothFrame) ? options.smoothFrame : (Number(frame) || 0);
+
+    const smoothOverride = spriteData?.src ? SMOOTH_ATLAS_OVERRIDES[spriteData.src] : null;
+    const smoothImage = smoothOverride ? this.smoothAtlasImages?.[spriteData.src] : null;
+    if (smoothOverride && options.allowSmooth !== false && this.isSpriteReady(smoothImage)) {
+      activeImage = smoothImage;
+      activeFrame = activeFrame * (smoothOverride.columns / columns);
+      columns = smoothOverride.columns;
+      rows = smoothOverride.rows;
+    }
+
+    if (!this.isSpriteReady(activeImage)) return false;
+    const sourceWidth = activeImage.naturalWidth || activeImage.width;
+    const sourceHeight = activeImage.naturalHeight || activeImage.height;
     const frameWidth = sourceWidth / columns;
     const frameHeight = sourceHeight / rows;
     const requestedRow = Number.isFinite(options.row) ? options.row : (spriteData.row || 0);
     const row = Math.max(0, Math.min(rows - 1, requestedRow));
-    const column = Math.max(0, Math.min(columns - 1, frame || 0));
+
+    const wrappedFrame = ((activeFrame % columns) + columns) % columns;
+    const colA = Math.max(0, Math.min(columns - 1, Math.floor(wrappedFrame)));
+    const frac = wrappedFrame - colA;
+    const colB = (colA + 1) % columns;
+    const shouldCrossFade = !this.prefersReducedMotion && frac > 0.03 && frac < 0.97;
+    const baseAlpha = Number.isFinite(options.alpha) ? options.alpha : 1;
 
     this.ctx.save();
     this.ctx.translate(x, y);
     if (Number.isFinite(options.rotation)) this.ctx.rotate(options.rotation);
     if (options.flipX) this.ctx.scale(-1, 1);
-    if (Number.isFinite(options.alpha)) this.ctx.globalAlpha = options.alpha;
     if (options.shadowColor) {
       this.ctx.shadowColor = options.shadowColor;
       this.ctx.shadowBlur = options.shadowBlur || 0;
     }
-    this.ctx.drawImage(
-      image,
-      column * frameWidth,
-      row * frameHeight,
-      frameWidth,
-      frameHeight,
-      -size / 2,
-      -size / 2,
-      size,
-      size
-    );
+
+    if (shouldCrossFade) {
+      const smoothFrac = frac * frac * (3 - (2 * frac));
+      this.ctx.globalAlpha = baseAlpha * (1 - smoothFrac);
+      this.ctx.drawImage(
+        activeImage,
+        colA * frameWidth,
+        row * frameHeight,
+        frameWidth,
+        frameHeight,
+        -size / 2,
+        -size / 2,
+        size,
+        size
+      );
+      this.ctx.globalAlpha = baseAlpha * smoothFrac;
+      this.ctx.drawImage(
+        activeImage,
+        colB * frameWidth,
+        row * frameHeight,
+        frameWidth,
+        frameHeight,
+        -size / 2,
+        -size / 2,
+        size,
+        size
+      );
+    } else {
+      if (Number.isFinite(options.alpha)) this.ctx.globalAlpha = options.alpha;
+      this.ctx.drawImage(
+        activeImage,
+        colA * frameWidth,
+        row * frameHeight,
+        frameWidth,
+        frameHeight,
+        -size / 2,
+        -size / 2,
+        size,
+        size
+      );
+    }
     this.ctx.restore();
     return true;
   }
@@ -10769,6 +10840,17 @@ class GameEngine {
     return 0;
   }
 
+  getSmoothTowerFrame(tower, spriteData) {
+    if (tower.animationTimer > 0) {
+      const progress = Math.max(0, Math.min(1, 1 - (tower.animationTimer / 0.34)));
+      return 1 + (progress * 3);
+    }
+    if (spriteData?.ambient) {
+      return ((this.animationClock * 3.2) + (tower.animationPhase || 0)) % SPRITE_ATLAS_COLUMNS;
+    }
+    return ((this.animationClock * 0.65) + (tower.animationPhase || 0)) % 0.6;
+  }
+
   getEnemyAnimationFrame(enemy, spriteData) {
     if (spriteData.layout === 'state_rows') {
       return Math.floor(
@@ -10780,11 +10862,27 @@ class GameEngine {
     return Math.floor((this.animationClock * (spriteData.fps || 6)) + (enemy.animationPhase || 0)) % 2;
   }
 
+  getSmoothEnemyFrame(enemy, spriteData) {
+    if (spriteData.layout === 'state_rows') {
+      return ((this.animationClock * (spriteData.fps || 7)) + (enemy.animationPhase || 0)) % SPRITE_ATLAS_COLUMNS;
+    }
+    if (enemy.hitAnimationTimer > 0) return 3;
+    if (enemy.attackAnimationTimer > 0) return 2 + Math.max(0, 1 - (enemy.attackAnimationTimer / 0.3));
+    return ((this.animationClock * (spriteData.fps || 6)) + (enemy.animationPhase || 0)) % 2;
+  }
+
   getHeroAnimationFrame() {
     if (this.heroAnimationState === 'ability') return 3;
     if (this.heroAnimationState === 'attack') return 2;
-    // A brief command pose keeps an otherwise idle defender alive on screen.
     return Math.floor(this.animationClock * 1.4) % 7 === 6 ? 1 : 0;
+  }
+
+  getSmoothHeroFrame() {
+    if (this.heroAnimationState === 'ability') return 3;
+    if (this.heroAnimationState === 'attack') return 2;
+    const cycle = (this.animationClock * 1.4) % 7;
+    if (cycle > 5.5) return Math.min(1, (cycle - 5.5) * 2);
+    return 0;
   }
 
   drawInfernalFloor(w, h, x = 0, y = 0) {
@@ -11008,7 +11106,12 @@ class GameEngine {
       tower.x,
       tower.y,
       visualSize,
-      { rotation, shadowColor: tower.level >= 3 ? '#f59e0b' : '#00f0ff', shadowBlur: tower.level >= 3 ? 13 : 8 }
+      {
+        rotation,
+        smoothFrame: this.getSmoothTowerFrame(tower, spriteData),
+        shadowColor: tower.level >= 3 ? '#f59e0b' : '#00f0ff',
+        shadowBlur: tower.level >= 3 ? 13 : 8
+      }
     );
 
     if (!drawn) {
@@ -11058,6 +11161,11 @@ class GameEngine {
       this.getReadableWorldSize(options.size || spriteData.size, MIN_HERO_SCREEN_SIZE),
       {
         row: usesStateRows ? stateRow : undefined,
+        smoothFrame: Number.isFinite(options.frame)
+          ? options.frame
+          : (usesStateRows
+            ? ((this.animationClock * (spriteData.fps || 7)) % SPRITE_ATLAS_COLUMNS)
+            : this.getSmoothHeroFrame()),
         flipX: Math.cos(facingAngle || 0) < 0,
         alpha: options.alpha,
         shadowColor: options.shadowColor || '#00f0ff',
@@ -11093,6 +11201,7 @@ class GameEngine {
         visualSize,
         {
           row: usesStateRows ? stateRow : undefined,
+          smoothFrame: this.getSmoothEnemyFrame(enemy, spriteData),
           rotation: spriteData.rotate ? facingAngle + (spriteData.rotationOffset || 0) : undefined,
           flipX: !spriteData.rotate && Math.cos(facingAngle) < 0,
           alpha: enemy.stealthTimer > 0 ? 0.2 : 1,
