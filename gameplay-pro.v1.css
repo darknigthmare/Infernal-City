@@ -781,6 +781,86 @@
   }
 }
 
+/* Cyber-gothic tactical visor polish (diegetic hardware-HUD) */
+.hq-card,
+#mission-status-panel,
+.camera-controls {
+  border-color: rgba(0, 240, 255, 0.46);
+  background-image:
+    linear-gradient(135deg, rgba(0, 240, 255, 0.32) 0 4px, transparent 4px),
+    linear-gradient(-135deg, rgba(0, 240, 255, 0.32) 0 4px, transparent 4px),
+    linear-gradient(45deg, rgba(0, 240, 255, 0.24) 0 4px, transparent 4px),
+    linear-gradient(-45deg, rgba(0, 240, 255, 0.24) 0 4px, transparent 4px),
+    linear-gradient(180deg, rgba(0, 240, 255, 0.08) 0%, transparent 42%);
+  background-repeat: no-repeat;
+  background-position: top left, top right, bottom left, bottom right, top center;
+  background-size: 12px 12px, 12px 12px, 12px 12px, 12px 12px, 100% 100%;
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.66),
+    0 0 16px rgba(0, 240, 255, 0.12),
+    inset 0 1px 0 rgba(0, 240, 255, 0.2),
+    inset 0 0 16px rgba(0, 240, 255, 0.08);
+}
+
+.hq-card:hover {
+  border-color: rgba(0, 240, 255, 0.85);
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.7),
+    0 0 22px rgba(0, 240, 255, 0.34),
+    inset 0 1px 0 rgba(0, 240, 255, 0.35),
+    inset 0 0 20px rgba(0, 240, 255, 0.14);
+}
+
+.tactical-controls {
+  border-color: rgba(245, 158, 11, 0.62);
+  background-image:
+    linear-gradient(135deg, rgba(251, 191, 36, 0.36) 0 4px, transparent 4px),
+    linear-gradient(-135deg, rgba(251, 191, 36, 0.36) 0 4px, transparent 4px),
+    linear-gradient(45deg, rgba(251, 191, 36, 0.26) 0 4px, transparent 4px),
+    linear-gradient(-45deg, rgba(251, 191, 36, 0.26) 0 4px, transparent 4px),
+    linear-gradient(180deg, rgba(245, 158, 11, 0.08) 0%, transparent 42%);
+  background-repeat: no-repeat;
+  background-position: top left, top right, bottom left, bottom right, top center;
+  background-size: 12px 12px, 12px 12px, 12px 12px, 12px 12px, 100% 100%;
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.68),
+    0 0 16px rgba(245, 158, 11, 0.14),
+    inset 0 1px 0 rgba(251, 191, 36, 0.24),
+    inset 0 0 16px rgba(245, 158, 11, 0.1);
+}
+
+#btn-overdrive:not(:disabled) {
+  border: 1px solid rgba(251, 191, 36, 0.72);
+  animation: visor-ready-pulse-amber 1.8s ease-in-out infinite alternate;
+}
+
+#btn-hero-skill:not(:disabled) {
+  border: 1px solid rgba(0, 240, 255, 0.68);
+  animation: visor-ready-pulse-cyan 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes visor-ready-pulse-amber {
+  0% {
+    border-color: rgba(251, 191, 36, 0.58);
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.38), inset 0 0 8px rgba(251, 191, 36, 0.14);
+  }
+  100% {
+    border-color: rgba(253, 224, 71, 0.92);
+    box-shadow: 0 0 22px rgba(245, 158, 11, 0.78), inset 0 0 14px rgba(251, 191, 36, 0.3);
+  }
+}
+
+@keyframes visor-ready-pulse-cyan {
+  0% {
+    border-color: rgba(0, 240, 255, 0.52);
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.32), inset 0 0 8px rgba(0, 240, 255, 0.12);
+  }
+  100% {
+    border-color: rgba(125, 211, 252, 0.92);
+    box-shadow: 0 0 22px rgba(0, 240, 255, 0.72), inset 0 0 14px rgba(0, 240, 255, 0.28);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .modal-overlay .modal-box,
   .modal-overlay .adult-gate-box,
@@ -792,7 +872,9 @@
   }
 
   .citadel-danger-vignette,
-  .comms-signal i {
+  .comms-signal i,
+  #btn-overdrive:not(:disabled),
+  #btn-hero-skill:not(:disabled) {
     animation: none;
   }
 }

@@ -3987,7 +3987,7 @@ class GameEngine {
       return;
     }
 
-    audio.playPickup();
+    audio.playTowerUpgrade?.();
     this.showFeedback(`${defense.name} améliorée au niveau ${result.level}`, '#10b981');
     this.updateHUD();
     if (result.requiresSpecialization) {
@@ -4511,6 +4511,7 @@ class GameEngine {
     this.campaignVictoryClaimed = true;
     this.campaignVictory = true;
     this.waveIntermissionTimer = 0;
+    audio.playVictoryFanfare?.();
     this.clearRunCheckpoint();
     const campaignDefinition = this.getCampaignDefinition();
     const completionRewards = campaignDefinition?.completionRewards || {};
@@ -9783,6 +9784,7 @@ class GameEngine {
       container.appendChild(card);
     });
     this.openModal(modal);
+    if (!wasOpen) audio.playLevelUp?.();
     if (wasOpen) requestAnimationFrame(() => container.querySelector('button')?.focus());
   }
 
@@ -10723,6 +10725,7 @@ class GameEngine {
       return;
     }
     this.isGameOver = true;
+    audio.playDefeatStinger?.();
     this.pendingCinematics = [];
     this.activeCinematic = null;
     this.closeAllGameplayModals();

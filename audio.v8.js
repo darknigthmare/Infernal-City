@@ -4,6 +4,7 @@ class SoundEngine {
   constructor() {
     this.ctx = null;
     this.musicGain = null;
+    this.musicFilter = null;
     this.sfxGain = null;
     this.musicVolume = 0.7;
     this.sfxVolume = 0.8;
@@ -33,7 +34,21 @@ class SoundEngine {
       this.ctx = new AudioCtx();
       this.musicGain = this.ctx.createGain();
       this.musicGain.gain.value = this.getMusicGainValue();
-      this.musicGain.connect(this.ctx.destination);
+      if (typeof this.ctx.createBiquadFilter === 'function') {
+        const filter = this.ctx.createBiquadFilter();
+        if (filter && typeof filter.connect === 'function') {
+          this.musicFilter = filter;
+          this.musicFilter.type = 'lowpass';
+          if (this.musicFilter.frequency) this.musicFilter.frequency.value = 2400;
+          if (this.musicFilter.Q) this.musicFilter.Q.value = 0.7;
+          this.musicGain.connect(this.musicFilter);
+          this.musicFilter.connect(this.ctx.destination);
+        } else {
+          this.musicGain.connect(this.ctx.destination);
+        }
+      } else {
+        this.musicGain.connect(this.ctx.destination);
+      }
 
       this.sfxGain = this.ctx.createGain();
       this.sfxGain.gain.value = this.getSfxGainValue();
@@ -43,6 +58,7 @@ class SoundEngine {
       console.warn('Audio indisponible dans ce navigateur.', error);
       this.ctx = null;
       this.musicGain = null;
+      this.musicFilter = null;
       this.sfxGain = null;
       return false;
     }
@@ -634,6 +650,125 @@ class SoundEngine {
     this.trackHotSfxSource(osc);
     osc.start(now);
     osc.stop(now + 0.12);
+  }
+
+  playTowerUpgrade() {
+    if (this.isMuted || !this.ensureAudio()) return;
+    if (!this.canPlayHotSfx('tower_upgrade', 0.1)) return;
+    const now = this.ctx.currentTime;
+
+    const sweep = this.ctx.createOscillator();
+    const sweepGain = this.ctx.createGain();
+    sweep.type = 'triangle';
+    sweep.frequency.setValueAtTime(440, now);
+    sweep.frequency.exponentialRampToValueAtTime(880, now + 0.14);
+    sweepGain.gain.setValueAtTime(0.14, now);
+    sweepGain.gain.exponentialRampToValueAtTime(0.005, now + 0.16);
+    sweep.connect(sweepGain);
+    sweepGain.connect(this.sfxGain);
+    this.trackHotSfxSource(sweep);
+    sweep.start(now);
+    sweep.stop(now + 0.16);
+
+    [880, 1318.51].forEach((freq, idx) => {
+      const start = now + 0.06 + idx * 0.055;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, start);
+      gain.gain.setValueAtTime(0.11, start);
+      gain.gain.exponentialRampToValueAtTime(0.004, start + 0.22);
+      osc.connect(gain);
+      gain.connect(this.sfxGain);
+      this.trackHotSfxSource(osc);
+      osc.start(start);
+      osc.stop(start + 0.22);
+    });
+  }
+
+  playLevelUp() {
+    if (this.isMuted || !this.ensureAudio()) return;
+    if (!this.canPlayHotSfx('level_up', 0.25)) return;
+    const now = this.ctx.currentTime;
+
+    [523.25, 659.25, 783.99].forEach((freq, idx) => {
+      const start = now + idx * 0.07;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, start);
+      gain.gain.setValueAtTime(0.14, start);
+      gain.gain.exponentialRampToValueAtTime(0.005, start + 0.28);
+      osc.connect(gain);
+      gain.connect(this.sfxGain);
+      this.trackHotSfxSource(osc);
+      osc.start(start);
+      osc.stop(start + 0.28);
+    });
+  }
+
+  playVictoryFanfare() {
+    if (this.isMuted || !this.ensureAudio()) return;
+    if (!this.canPlayHotSfx('victory_fanfare', 0.6)) return;
+    const now = this.ctx.currentTime;
+
+    [293.66, 349.23, 440.0, 587.33].forEach((freq, idx) => {
+      const start = now + idx * 0.09;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(freq, start);
+      gain.gain.setValueAtTime(0.001, start);
+      gain.gain.linearRampToValueAtTime(0.12, start + 0.04);
+      gain.gain.exponentialRampToValueAtTime(0.005, start + 0.55);
+
+      if (typeof this.ctx.createBiquadFilter === 'function') {
+        const filter = this.ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(1800, start);
+        osc.connect(filter);
+        filter.connect(gain);
+      } else {
+        osc.connect(gain);
+      }
+
+      gain.connect(this.sfxGain);
+      this.trackHotSfxSource(osc);
+      osc.start(start);
+      osc.stop(start + 0.55);
+    });
+  }
+
+  playDefeatStinger() {
+    if (this.isMuted || !this.ensureAudio()) return;
+    if (!this.canPlayHotSfx('defeat_stinger', 0.6)) return;
+    const now = this.ctx.currentTime;
+
+    const lead = this.ctx.createOscillator();
+    const leadGain = this.ctx.createGain();
+    lead.type = 'sawtooth';
+    lead.frequency.setValueAtTime(146.83, now);
+    lead.frequency.exponentialRampToValueAtTime(55.0, now + 0.65);
+    leadGain.gain.setValueAtTime(0.18, now);
+    leadGain.gain.exponentialRampToValueAtTime(0.005, now + 0.68);
+    lead.connect(leadGain);
+    leadGain.connect(this.sfxGain);
+    this.trackHotSfxSource(lead);
+    lead.start(now);
+    lead.stop(now + 0.68);
+
+    const sub = this.ctx.createOscillator();
+    const subGain = this.ctx.createGain();
+    sub.type = 'sine';
+    sub.frequency.setValueAtTime(98.0, now);
+    sub.frequency.exponentialRampToValueAtTime(36.71, now + 0.75);
+    subGain.gain.setValueAtTime(0.24, now);
+    subGain.gain.exponentialRampToValueAtTime(0.004, now + 0.78);
+    sub.connect(subGain);
+    subGain.connect(this.sfxGain);
+    this.trackHotSfxSource(sub);
+    sub.start(now);
+    sub.stop(now + 0.78);
   }
 
   // --- 5-Station Procedural Synthesizer Radio --- //
