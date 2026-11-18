@@ -3613,7 +3613,7 @@ class GameEngine {
         const enabled = !audio.isMuted;
         btnSfx.setAttribute('aria-pressed', String(enabled));
         btnSfx.setAttribute('aria-label', enabled ? 'Couper les effets sonores' : 'Activer les effets sonores');
-        btnSfx.textContent = enabled ? '🔊' : '🔇';
+        btnSfx.classList.toggle('is-muted', !enabled);
       };
       updateSfxState();
       btnSfx.addEventListener('click', () => {
@@ -8326,7 +8326,7 @@ class GameEngine {
 
     if (this.overdriveCount >= 3) this.unlockAchievement('frenzy_master');
 
-    this.addFloatingText('🔥 OVERDRIVE FRÉNÉSIE ACTIVÉ !', this.citadel.x, this.citadel.y - 70, '#f59e0b');
+    this.addFloatingText('OVERDRIVE FRÉNÉSIE ACTIVÉ !', this.citadel.x, this.citadel.y - 70, '#f59e0b');
     this.unlockGalleryItem('selene');
     this.updateHUD();
   }
@@ -10024,7 +10024,7 @@ class GameEngine {
     const heroName = document.getElementById('hero-name-txt');
     if (heroName) heroName.textContent = this.selectedHero.name;
     const btnSkill = document.getElementById('btn-hero-skill');
-    if (btnSkill) btnSkill.textContent = `⚡ ${this.selectedHero.abilityName}`;
+    if (btnSkill) btnSkill.textContent = `[Q] ${this.selectedHero.abilityName}`;
     this.updateHUD();
   }
 
@@ -12755,7 +12755,7 @@ class GameEngine {
       const reserve = this.selectedHero.id === 'carmilla'
         ? Math.round(Number(this.carmillaStoredCharge) || 0)
         : 0;
-      heroSkillButton.textContent = `⚡ ${this.selectedHero.abilityName}${reserve > 0 ? ` · RÉSERVE ${reserve}` : ''}`;
+      heroSkillButton.textContent = `[Q] ${this.selectedHero.abilityName}${reserve > 0 ? ` · RÉSERVE ${reserve}` : ''}`;
       heroSkillButton.dataset.storedCharge = String(reserve);
       if (reserve > 0 && this.abilityCooldownTimer <= 0) {
         heroSkillButton.setAttribute(
