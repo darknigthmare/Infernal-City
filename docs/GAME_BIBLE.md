@@ -363,3 +363,59 @@ Total de fichiers d’assets recensés dans `assets/` : **592**.
 
 - Deux boutons statiques HTML (`#btn-defense-specialization-a` / `#btn-defense-specialization-b`) restent présents dans le DOM d’`index.html` mais sont remplacés dynamiquement à l’ouverture de `#defense-management-modal` par `renderDefenseManagementModal()`.
 - Les tests E2E Playwright (`npm run test:e2e`) nécessitent l’installation locale de `playwright` pour être exécutés en navigateur réel ; la suite `npm run check` couvre `17` vérifications syntaxiques, l’audit statique complet et `213` tests unitaires.
+
+---
+
+## 15. Cahier des Charges des Manques & Feuille de Route Complète (Tous Domaines)
+
+> Cette section recense de manière structurée tout ce qui reste à produire ou étendre pour passer du socle actuel (`v3.1.0`) à la version finale complète, y compris les spécifications destinées à d’autres IA spécialisées (animation, contenu adulte, bestiaire, level design).
+
+### 15.1 Animations de sprites manquantes (À produire)
+| Catégorie | État actuel | Animations manquantes à produire | Format cible recommandé |
+|---|---|---|---|
+| **6 Valkyries historiques** (`aria`, `kira`, `rin`, `nova`, `selene`, `vespera`, `carmilla`) | Planches `hero-atlas-01/02` + lissage 16 frames + `character-states-fx-atlas.png` (auras de pose) | Planches dédiées par état : `intro` (atterrissage/salut), `idle_respiration`, `attack` (tir/frappe arme), `ability` (`[Q]`), `ultimate` (Overdrive), `victory`, `defeat` (genou à terre/armure fissurée), `outro` | PNG RGBA `16×8` (`2048×1024`, 128×128/cellule) avec ligne par état |
+| **10 Valkyries Dix Trônes** | Déjà structurées en `state_rows` (`idle`, `move`, `attack`, `ultimate`) | Lignes dédiées `intro`, `victory`, `defeat`, `outro` et poses portrait animées pour le Studio & VN | Extension des atlas `*-atlas-v1.png` à 8 lignes |
+| **10 Antagonistes (Dix Trônes) + Léviathan** | `state_rows` (idle/walk/attack/ultimate) + anneaux de phase (`bossPhase` 1–3) | Animations distinctes de **changement de phase** (`phase_shift_2`, `phase_shift_3`), **intro théâtrale**, **télégraphe d’attaque lourde** et **animation de défaite / reddition** | PNG RGBA `8×6` par boss, 256×256/cellule pour lisibilité AAA |
+| **50 Ennemis des Légions + 4 Spécialistes** | 4 frames WebP (marche/idle) + rotation/bobbing procédural | Animations dédiées `attack`, `death_dissolve` (désintégration spécifique par faction : cendre, os, néant, acide), `shield_break` | 4 états × 8 frames par unité |
+| **20 Tourelles & Spécialisations** | 16 frames lissées + recul procédural | Visuels distincts de **Niv 1 / Niv 2 / Niv 3** et **variante visuelle pour chaque spécialisation A/B** + animation de déploiement/construction et de recyclage | 2 variantes de skin par tourelle + VFX de construction |
+| **VFX & Environnement** | `combat-fx-atlas`, `projectiles-atlas`, `citadel-bastion/shield`, `props-animated` | Projectiles animés spécifiques aux 4 évolutions d’armes (`Vulcan Cerberus`, `Nova Cataclysmique`, `Lance d’Odin`, `Souffle de Niflhel`), pluie/orage dynamique sur carte, débris persistants temporaires | PNG/WebP RGBA 8–16 frames |
+
+### 15.2 Spécification Handoff — Partie Adulte Explicite (Pour IA / Studio spécialisé)
+> **Avertissement contractuel :** Le dépôt actuel (`v3.1.0`) gèle un contrat **non explicite / hors champ** vérifié par `tests/*.test.js`. Toute implémentation explicite ultérieure devra vivre dans un module/pack séparé ou mettre à jour explicitement ce contrat, **tout en conservant impérativement les garde-fous suivants** :
+- **Garde-fous absolus :**
+  1. **Âge strictement adulte (27+)** vérifié sur 100 % des personnages (`age >= 27`, `isAdult: true`).
+  2. **Consentement explicite, préalable et révocable à tout instant** (`romanceOptIn`, bouton de pause/retrait sans pénalité).
+  3. **Zéro impact gameplay / militaire** (`loreChoicesAreNarrativeOnly: true`) : aucune statistique de combat ne dépend des scènes privées.
+- **Architecture de contenu à produire par l’IA spécialisée (par héroïne & par antagoniste recrutée — 16 + 10 personnages) :**
+  - **3 paliers d’intimité progressifs :**
+    1. *Palier I — Rapprochement (Rang 2) :* dialogue long en Salon Nocturne + CG/animation boucle douce (habillée / détente).
+    2. *Palier II — Parenthèse Privée / Boudoir (Rang 3–4) :* choix d’ambiance (`néon`, `chandelle`, `observatoire`), tenue (`garde-robe`), 3 scènes séquentielles (*avant / pendant / afterglow*) avec variantes F/F.
+    3. *Palier III — Scène Intime Explicite Complète (Rang 5, opt-in confirmé) :* script narratif multi-embranchements (rythme, posture, dialogue réactif), **boucles d’animation sprite/Live2D-like 60fps** (3 vitesses : *lent / soutenu / climax* + *afterglow*), couche d’expressions faciales synchronisées (6 expressions : *désir, douceur, surprise, extase, souffle, repos*), et design sonore ASMR/voix optionnel.
+- **Spécification technique d’intégration :**
+  - Format visuel : planches PNG/WebP RGBA multi-calques (`base_corps`, `tenue_amovible`, `tête_expressions`, `fx_lumière`) à `1024×1024` ou `1536×1024` par frame pour supporter le mode Studio Boudoir et le lecteur CG plein écran.
+  - Schéma JSON cible : `{ id, characterId, ageVerified: true, consentRequired: true, intensityTier, poses: [...], loops: { slow, medium, climax, afterglow }, branches: [...], audioCues: [...] }`.
+
+### 15.3 Unités ennemies manquantes & Extensions du Bestiaire
+| Manque identifié | Rôle tactique proposé | Faction / Contexte |
+|---|---|---|
+| **Unités aériennes dédiées par légion (10 unités)** | Ennemis volants ignorant les barrières au sol, forçant l’usage des tourelles anti-air / Tesla / Railgun | 1 volant par faction (ex. *Harpyie de Cendre*, *Drone Bioforge*, *Spectre du Vide*) |
+| **Sapeurs / Saboteurs EMP (5 unités)** | Désactivent temporairement une tourelle pendant 3 s s’ils atteignent le périmètre | Légions *Quantum*, *Shadow*, *Bioforge* |
+| **Mini-Boss intermédiaires (Vagues 4, 8, 12, 14)** | Lieutenants blindés avec 1 mécanique de garde ou d’aura avant l’arrivée du boss majeur | Campagnes *Quatre Portes* et *Dix Trônes* |
+| **Porteurs de Brèche / Invocateurs de Portails** | Ouvrent un mini-portail temporaire à mi-chemin si non éliminés en < 8 s | *Vagues 16–20* & *Infinitum* |
+| **Variantes Apex / Mutées Infinitum** | Modificateurs visuels et de stats (bouclier régénératif, division explosive, camouflage) | Mode *Infinitum* au-delà de la vague 20 |
+
+### 15.4 Niveaux, Cartes & Progression manquants
+- **Acte III — Campagne « Chute de l’Abîme » (Vagues 21 à 30) :** assaut coordonné multi-Trônes avec double boss en vague 25 et vague 30.
+- **4 Nouveaux Théâtres d’Opération (Cartes 5 à 8) :**
+  1. *Port Extérieur d’Haven* : jetées maritimes étroites, ponts destructibles/réparables, attaques navales & aériennes.
+  2. *Cathédrale Engloutie* : labyrinthe gothique à piliers bloquant la ligne de vue (avantage mortier/Tesla/flammes).
+  3. *Réacteur Abyssal* : arène circulaire à anneaux rotatifs et zones de surchauffe (+25 % dégâts, -15 % portée).
+  4. *Citadelle Intérieure (Dernier Carré)* : combat rapproché sur 3 niveaux de remparts autour du cœur central.
+- **Niveaux de maîtrise des tourelles (Niv 4 & Niv 5 Prestige) :** déblocables via Crédits Haven, avec aura visuelle dorée/chromatique.
+- **Arbre de Recherche du Bastion (QG) :** améliorations tactiques persistantes (armure du rempart, capacité du bouclier Aegis, drones de réparation).
+
+### 15.5 Gameplay, Audio, UI/Diégétique & Technique manquants
+- **Synergies élémentaires inter-tourelles :** *Cryo + Plasma* (Choc thermique +35 % dégâts), *Tesla + Gravité* (Tempête magnétique de zone), *Lance-flammes + Pique Siphon* (Embrasement toxique).
+- **Météo dynamique tactique :** *Pluie acide* (affaiblit armure ennemie), *Tempête ionique* (recharge compétences `[Q]` +20 %, perturbe visée longue portée), *Brouillard infernal*.
+- **Audio & Doublage (VO) :** répliques vocales courtes françaises lors de l’activation `[Q]`, Overdrive `[F]`, alerte boss et Salon Nocturne pour les 16 Valkyries et 10 Trônes ; thèmes musicaux adaptatifs par phase de boss.
+- **Tests & Outillage :** installation et exécution complète de la suite E2E Playwright (`npm run test:e2e`) en intégration continue sur navigateur réel (Chrome/WebKit) pour valider visuellement chaque carte, modale et shader/canvas.

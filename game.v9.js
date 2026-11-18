@@ -4485,6 +4485,18 @@ class GameEngine {
       '#10b981'
     );
     audio.playWaveClear?.();
+    if (!this.prefersReducedMotion && this.particles.length < 220) {
+      this.particles.push({
+        type: 'gravity_ring',
+        x: this.citadel.x,
+        y: this.citadel.y,
+        radius: 40,
+        maxRadius: 240,
+        life: 0.55,
+        maxLife: 0.55,
+        color: '#10b981'
+      });
+    }
     this.heroAnimationState = 'victory';
     this.heroAnimationTimer = 2.2;
     this.showTacticalBanner(
@@ -5960,6 +5972,18 @@ class GameEngine {
       enemy.poseTimer = 1.6;
       audio.playBossAlert?.();
       this.addCameraShake(9);
+      if (!this.prefersReducedMotion && this.particles.length < 220) {
+        this.particles.push({
+          type: 'gravity_ring',
+          x: enemy.x,
+          y: enemy.y,
+          radius: 28,
+          maxRadius: 190,
+          life: 0.6,
+          maxLife: 0.6,
+          color: enemy.color || '#ff2a5f'
+        });
+      }
       this.showTacticalBanner(
         'ALERTE SOUVERAINE',
         String(enemy.name || 'MENACE MAJEURE').toUpperCase(),
@@ -12756,6 +12780,7 @@ class GameEngine {
         ? Math.round(Number(this.carmillaStoredCharge) || 0)
         : 0;
       heroSkillButton.textContent = `[Q] ${this.selectedHero.abilityName}${reserve > 0 ? ` · RÉSERVE ${reserve}` : ''}`;
+      heroSkillButton.classList.toggle('is-ready', this.abilityCooldownTimer <= 0);
       heroSkillButton.dataset.storedCharge = String(reserve);
       if (reserve > 0 && this.abilityCooldownTimer <= 0) {
         heroSkillButton.setAttribute(

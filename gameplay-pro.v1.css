@@ -1798,6 +1798,11 @@ button.adult-scene-card:focus-visible {
   opacity: 0.2;
 }
 
+.hero-skill-btn.is-ready {
+  border-color: rgba(0, 240, 255, 0.78);
+  box-shadow: 0 0 14px rgba(0, 240, 255, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
   .citadel-danger-vignette,
   .comms-signal i,
   #btn-overdrive:not(:disabled),
