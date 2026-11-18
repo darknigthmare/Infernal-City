@@ -419,3 +419,107 @@ Total de fichiers d’assets recensés dans `assets/` : **592**.
 - **Météo dynamique tactique :** *Pluie acide* (affaiblit armure ennemie), *Tempête ionique* (recharge compétences `[Q]` +20 %, perturbe visée longue portée), *Brouillard infernal*.
 - **Audio & Doublage (VO) :** répliques vocales courtes françaises lors de l’activation `[Q]`, Overdrive `[F]`, alerte boss et Salon Nocturne pour les 16 Valkyries et 10 Trônes ; thèmes musicaux adaptatifs par phase de boss.
 - **Tests & Outillage :** installation et exécution complète de la suite E2E Playwright (`npm run test:e2e`) en intégration continue sur navigateur réel (Chrome/WebKit) pour valider visuellement chaque carte, modale et shader/canvas.
+
+---
+
+## 16. Extensions Gratuites de Contenu (Lore, Histoire & Rejouabilité)
+
+> Deux extensions gratuites conçues pour densifier l’univers d’Haven, combler les manques narratifs/bestiaire et enrichir la boucle tactique sans mur payant.
+
+### 16.1 Extension Gratuite I — « Archives de la Première Brèche » (Lore, Origines & Synergies)
+- **Pitch & Thème :** Préquelle narrative explorant la chute du District Extérieur, la fondation de la Citadelle Haven et le passé des 6 Valkyries d’origine (`Aria`, `Kira`, `Rin`, `Nova`, `Sélène`, `Vespera`, `Carmilla`).
+- **Contenu Campagne & Missions :**
+  - **5 Opérations Mémoires (10 vagues scénarisées)** jouables depuis les *Archives du Bastion*, avec modificateurs historiques (arsenal restreint d’époque, défense de convois civils avant l’érection du dôme Aegis).
+  - **Journal de Guerre & Codex d’Origine :** 24 entrées audio/texte débloquées par objectifs tactiques (ex. défendre un relais intact pendant 5 vagues).
+- **Nouvelles Mécaniques de Gameplay :**
+  - **Matrice de Synergies Élémentaires inter-tourelles :**
+    - *Choc Thermique* (`Cryo` + `Mortier Plasma` / `Lance-Flammes`) : +35 % dégâts sur cibles gelées ou brûlées.
+    - *Tempête Magnétique* (`Tesla` + `Puits Gravité`) : arcs électriques rebondissant sur toutes les cibles ralenties dans le champ.
+    - *Embrasement Toxique* (`Pique Siphon` + `Lance-Flammes`) : nuage corrosif infligeant des dégâts sur la durée proportionnels aux PV max.
+  - **Niveaux 4 & 5 Prestige des Tourelles :** aura dorée/chromatique et second module passif déblocable via Crédits Haven.
+- **Narratif, VN & Récompenses gratuites :**
+  - **18 nouveaux chapitres VN « Mémoires d’Avant-Siège »** (dialogues F/F et commandement, 100 % adultes 27+, consentement révocable, sans bonus militaire).
+  - **6 tenues « Tenue de Service Historique »** déblocables gratuitement en jeu dans la Garde-Robe.
+- **Audio, VFX & UI Diégétique :**
+  - Couche de transmission radio archivée (filtre bande-passante historique), VFX de liaison énergétique entre tourelles synergiques sur le canvas, onglet *Mémoires* dans le QG.
+
+### 16.2 Extension Gratuite II — « Protocole Éclipse » (Endgame, Bestiaire Aérien & Météo)
+- **Pitch & Thème :** Escalade de la guerre de siège au-delà des vagues 1–20 : l’ennemi contourne les remparts par les airs et les tempêtes magnétiques frappent Haven.
+- **Nouvelles Unités Ennemies (14 ajouts) :**
+  - **10 Unités Aériennes de Légion** (1 par faction, ex. *Harpyie de Cendre*, *Drone Bioforge*, *Spectre du Vide*) ignorant les barrières au sol et ciblant la spire centrale.
+  - **4 Mini-Boss Lieutenants** apparaissant aux vagues **4, 8, 12 et 14** (avec aura de commandement et mécanique de garde unique).
+- **Nouveaux Niveaux & Modes :**
+  - **Acte III — « Chute de l’Abîme » (Vagues 21 à 30) :** vagues haute intensité culminant par un double assaut de Trônes en vagues 25 et 30.
+  - **Mode Endless Boss Rush :** enchaînement pur des 10 Trônes + Léviathan avec chrono et classement local.
+- **Mécaniques Tactiques & Progression :**
+  - **Météo Tactique Dynamique :** *Pluie Acide* (-15 % armure ennemie), *Tempête Ionique* (+20 % recharge `[Q]`, portée longue -10 %), *Brouillard Infernal* (portée radar réduite, bonus dégâts courte portée).
+  - **Arbre de Recherche du Bastion (QG) :** 12 nœuds persistants achetables en Crédits Haven (blindage du rempart, capacité d’absorption du bouclier Aegis, drones de réparation automatisés).
+  - **12 nouveaux Mutateurs Infinitum** liés à la météo et aux vagues aériennes.
+- **VFX, Sprites & Audio :**
+  - Planches RGBA 8 frames pour les 10 unités aériennes, particules météo canvas (pluie oblique, éclairs ambiants, brume basse), alerte sonore dédiée « Intrusion Aérienne » (`playAirRaidAlert()`).
+
+---
+
+## 17. Extensions Payantes de Contenu (3 Domaines Visuels Inédits)
+
+> Trois extensions premium conçues chacune autour d’une **direction artistique totalement inédite** (en rupture visuelle avec la cité côtière cyber-gothique sombre du jeu de base), avec cartes, héroïnes adultes (27+), antagonistes, bestiaire, arsenal, radio et contenu narratif complet.
+
+### 17.1 Extension Payante I — « Cathédrale Astrale & Nécropole Solaire »
+- **Domaine Visuel Inédit :** **Gothique Sacré Doré, Marbre Blanc & Horlogerie Céleste** (au-dessus de la couche nuageuse, baignée de lumière astrale chaude — rupture totale avec l’asphalte nocturne néon).
+  - **Palette :** Marbre `#f8fafc`, Or astral `#f59e0b` / `#fef3c7`, Indigo céleste `#312e81`, Cyan stellaire `#38bdf8`.
+  - **Props & Hors-Arène :** vitraux géants flottants, rouages d’astrolabe en rotation lente, arches de marbre suspendues, nuages dorés en parallaxe.
+- **Cartes (2 nouveaux théâtres d’opération) :**
+  1. *Parvis Solaire* : esplanade symétrique à miroirs concentrateurs augmentant la portée des tourelles alignées.
+  2. *Nef d’Horlogerie* : couloirs rythmés par des engrenages rotatifs modifiant périodiquement les lignes de tir.
+- **Personnages (2 Valkyries adultes 27+ & 1 Archonte Boss) :**
+  - **Séraphine Vesper-Sol (29 ans)** — *Garde du Méridien* : `[Q]` *Prisme Orbital* (rayon solaire balayant une allée), Ultime *Zénith d’Or* (invulnérabilité brève + pluie de lances lumineuses).
+  - **Béatrice Horologia (33 ans)** — *Maîtresse des Rouages* : `[Q]` *Ralentissement Astral* (zone temporelle -55 % vitesse ennemie), Ultime *Minuit Solaire* (réinitialise les temps de recharge des tourelles proches).
+  - **Antagoniste — Archonte Aurélien-X (Boss 3 phases)** : *Ph.1 Jugement de Verre*, *Ph.2 Éclipse Dorée*, *Ph.3 Effondrement d’Astrolabe*.
+- **Bestiaire & Arsenal :**
+  - **8 Ennemis Célestes/Horlogerie** (*Chérubin Automaton*, *Porte-Encensoir*, *Golem d’Albâtre*, *Pendulier de Siège*, etc.).
+  - **2 Tourelles :** *Orgue Solaire* (rayon continu focalisé) & *Pendule Stase* (impulsion chrono-ralentissante).
+  - **1 Arme Héroïne :** *Rayon Séraphique* (évolution : *Chœur de Supernova*).
+- **Audio, HUD & Contenu 18+ :**
+  - **Station Radio `CH-06 · Celestial Organ` :** orgue synthétique baroque + chœurs éthérés.
+  - **Skin HUD Doré Diégétique :** bordures filigranées or & marbre dans les modales.
+  - **Pack VN & Studio Boudoir « Sanctuaire Solaire » :** 6 chapitres longs, 2 décors de boudoir dorés, 4 tenues soie/or (strictement adultes 27+, consensuel).
+
+### 17.2 Extension Payante II — « Abysses Bioluminescents »
+- **Domaine Visuel Inédit :** **Sous-Marin Abyssal, Récifs Coralliens Mécaniques & Bioluminescence Organique** (station bathyscaphe sous la côte d’Haven, ambiance aquatique profonde et caustiques lumineuses).
+  - **Palette :** Bleu abyssal `#042f2e` / `#091526`, Turquoise bioluminescent `#2dd4bf`, Violet médusaire `#a855f7`, Corail néon `#fb7185`.
+  - **Props & Hors-Arène :** fosses océaniques sombres, bancs de méduses lumineuses dérivantes, épaves de sous-marins, caustiques d’eau animées en superposition.
+- **Cartes (2 nouveaux théâtres d’opération) :**
+  1. *Fosse de Corail* : récifs organiques créant des goulots sinueux + geysers thermaux repoussant les ennemis.
+  2. *Dôme Bathyal* : station pressurisée circulaire à sas étanches activables tactiquement.
+- **Personnages (2 Valkyries adultes 27+ & 1 Impératrice Abyssale Boss) :**
+  - **Néréa Kestrel (28 ans)** — *Plongeuse Pression* : `[Q]` *Onde Sonar* (révèle les unités furtives et étourdit 1,8 s), Ultime *Maelström Bathyal*.
+  - **Thalassa Vance (35 ans)** — *Commandante du Bathyscaphe* : `[Q]` *Harpon Cryo-Pression*, Ultime *Décompression Souveraine*.
+  - **Antagoniste — Léviathane Abyssale Charybde (Boss 3 phases)** : *Ph.1 Courant Noir*, *Ph.2 Essaim Médusaire*, *Ph.3 Pression Critique*.
+- **Bestiaire & Arsenal :**
+  - **8 Ennemis Abyssaux** (*Nautile Blindé*, *Méduse EMP*, *Raie Furtive*, *Crabe Foreur*, etc.).
+  - **2 Tourelles :** *Tour Sonar* (détection furtive + onde de choc) & *Harpon Pression* (perforation lourde anti-armure).
+  - **1 Arme Héroïne :** *Torpille à Cavitation* (évolution : *Vortex Abyssal*).
+- **Audio, VFX & Contenu 18+ :**
+  - **Station Radio `CH-07 · Abyssal Pulse` :** deep-ambient, basses sous-marines filtrées et impulsions sonar.
+  - **VFX dédiés :** bulles de cavitation, ondes sonar concentriques, traînées bioluminescentes.
+  - **Pack VN & Studio Boudoir « Observatoire Sous-Marin » :** 6 chapitres longs, 2 ambiances aquatiques nocturnes, 4 tenues néoprène tactique / soie nacrée (27+, consensuel).
+
+### 17.3 Extension Payante III — « Jardin de Cendre & Verrière Art Nouveau »
+- **Domaine Visuel Inédit :** **Botanique Mutante, Fer Forgé Art Nouveau & Serres de Cristal Émeraude/Pourpre** (mégastructure végétale ayant repris ses droits sur d’anciens quartiers industriels, lumière filtrée à travers des verrières brisées).
+  - **Palette :** Émeraude profond `#064e3b`, Vert sève lumineux `#34d399`, Rose ronce `#e11d48`, Ambre pollen `#fbbf24`.
+  - **Props & Hors-Arène :** arches de fer forgé Art Nouveau couvertes de lianes luminescentes, bassins de sève, pétales géants et spores flottantes en continu.
+- **Cartes (2 nouveaux théâtres d’opération) :**
+  1. *Grande Serre* : allées vitrées traversées par des ronces rétractables ralentissant naturellement l’ennemi.
+  2. *Racines du Cœur* : arène organique où des bourgeons d’énergie soignent légèrement les tourelles adjacentes.
+- **Personnages (2 Valkyries adultes 27+ & 1 Souveraine Florale Boss) :**
+  - **Sylva Rosier (31 ans)** — *Architecte Botanique* : `[Q]` *Mur de Ronces Cristallines*, Ultime *Éclosion Écarlate* (poison + soin léger de la Citadelle).
+  - **Ophélia Lierre (37 ans)** — *Maîtresse des Serres* : `[Q]` *Nuage de Spores Dorées* (confusion/ralentissement), Ultime *Canopée d’Émeraude*.
+  - **Antagoniste — Reine Noctiflora (Boss 3 phases)** : *Ph.1 Pollen Hallucinogène*, *Ph.2 Lianes Étrangleuses*, *Ph.3 Floraison Finale*.
+- **Bestiaire & Arsenal :**
+  - **8 Ennemis Bio-Botaniques** (*Guêpe Cristalline*, *Tréant d’Acier*, *Fleur Mortier*, *Rampeur de Lierre*, etc.).
+  - **2 Tourelles :** *Ruche de Spores* (essaims autonomes) & *Prisme Botanique* (laser réfracté multi-cibles).
+  - **1 Arme Héroïne :** *Liane Plasma* (évolution : *Couronne d’Épines*).
+- **Audio, VFX & Contenu 18+ :**
+  - **Station Radio `CH-08 · Velvet Flora` :** trip-hop organique, nappes analogiques chaudes et percussions boisées.
+  - **VFX dédiés :** pluie de pétales cristallins, pollen lumineux, éclats de verre Art Nouveau.
+  - **Pack VN & Studio Boudoir « Serre Privée au Clair de Lune » :** 6 chapitres longs, 2 ambiances verrière nocturne/pluie sur vitre, 4 tenues dentelle botanique / soie émeraude (27+, consensuel).
