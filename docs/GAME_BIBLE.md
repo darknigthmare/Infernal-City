@@ -422,47 +422,38 @@ Total de fichiers d’assets recensés dans `assets/` : **592**.
 
 ---
 
-## 16. Extensions Gratuites de Contenu (Lore, Histoire & Rejouabilité)
+## 16. Extensions Gratuites de Contenu (POV Boss Inversé & Alliance Aftermath)
 
-> Deux extensions gratuites conçues pour densifier l’univers d’Haven, combler les manques narratifs/bestiaire et enrichir la boucle tactique sans mur payant.
+> Deux extensions gratuites majeures transformant la boucle de jeu et concluant l’arc narratif global d’Infernal City.
 
-### 16.1 Extension Gratuite I — « Archives de la Première Brèche » (Lore, Origines & Synergies)
-- **Pitch & Thème :** Préquelle narrative explorant la chute du District Extérieur, la fondation de la Citadelle Haven et le passé des 6 Valkyries d’origine (`Aria`, `Kira`, `Rin`, `Nova`, `Sélène`, `Vespera`, `Carmilla`).
-- **Contenu Campagne & Missions :**
-  - **5 Opérations Mémoires (10 vagues scénarisées)** jouables depuis les *Archives du Bastion*, avec modificateurs historiques (arsenal restreint d’époque, défense de convois civils avant l’érection du dôme Aegis).
-  - **Journal de Guerre & Codex d’Origine :** 24 entrées audio/texte débloquées par objectifs tactiques (ex. défendre un relais intact pendant 5 vagues).
-- **Nouvelles Mécaniques de Gameplay :**
-  - **Matrice de Synergies Élémentaires inter-tourelles :**
-    - *Choc Thermique* (`Cryo` + `Mortier Plasma` / `Lance-Flammes`) : +35 % dégâts sur cibles gelées ou brûlées.
-    - *Tempête Magnétique* (`Tesla` + `Puits Gravité`) : arcs électriques rebondissant sur toutes les cibles ralenties dans le champ.
-    - *Embrasement Toxique* (`Pique Siphon` + `Lance-Flammes`) : nuage corrosif infligeant des dégâts sur la durée proportionnels aux PV max.
-  - **Niveaux 4 & 5 Prestige des Tourelles :** aura dorée/chromatique et second module passif déblocable via Crédits Haven.
-- **Narratif, VN & Récompenses gratuites :**
-  - **18 nouveaux chapitres VN « Mémoires d’Avant-Siège »** (dialogues F/F et commandement, 100 % adultes 27+, consentement révocable, sans bonus militaire).
-  - **6 tenues « Tenue de Service Historique »** déblocables gratuitement en jeu dans la Garde-Robe.
-- **Audio, VFX & UI Diégétique :**
-  - Couche de transmission radio archivée (filtre bande-passante historique), VFX de liaison énergétique entre tourelles synergiques sur le canvas, onglet *Mémoires* dans le QG.
+### 16.1 Extension Gratuite I — « Règne des Trônes : Assaut Inversé » (Gameplay POV Boss)
+- **Pitch & Concept :** Retournement complet du Tower Defense : le joueur incarne tour à tour chacun des **10 Trônes** (ainsi que le **Léviathan** en siège spécial) pour **commander les hordes et faire tomber les citadelles humaines d’Haven**.
+- **Boucle de Gameplay Inversée :**
+  - **Jauge d’Essence Abyssale :** ressource régénérée dans le temps et par la destruction de tourelles adverses, servant à déployer les escouades sur les 4 portes.
+  - **Contrôle des Hordes (50 unités jouables) :** composition de vagues tactiques par légion (avant-garde rapide en tête, `bulwark`/blindés pour absorber les tirs, sapeurs/artillerie pour neutraliser les batteries d’Haven).
+  - **Incarnation du Boss (3 Phases actives) :** le joueur pilote l’entrée sur le champ de bataille de son Trône, déclenche ses patterns signature (`aimed`, `summon`, téléportation, aura de corruption) et passe manuellement en Phase II / Phase III pour briser le dôme Aegis ennemi.
+- **Structure étendue à tous les Boss :**
+  - **10 Campagnes d’Assaut (1 par Trône × 3 bastions à raser = 30 missions POV)** face à des défenses IA évolutives (tourelles spécialisées, pièges et Valkyries en défense centrale).
+- **Narratif, UI Diégétique, VFX & Audio :**
+  - **Point de vue inédit :** monologues intérieurs et conseils de guerre vus du côté des légions infernales.
+  - **HUD Inversé « Souveraineté » :** palette pourpre/or, carte tactique des portes d’entrée, barre d’intégrité du bouclier de la cité cible, SFX de cor de siège et de brèche.
 
-### 16.2 Extension Gratuite II — « Protocole Éclipse » (Endgame, Bestiaire Aérien & Météo)
-- **Pitch & Thème :** Escalade de la guerre de siège au-delà des vagues 1–20 : l’ennemi contourne les remparts par les airs et les tempêtes magnétiques frappent Haven.
-- **Nouvelles Unités Ennemies (14 ajouts) :**
-  - **10 Unités Aériennes de Légion** (1 par faction, ex. *Harpyie de Cendre*, *Drone Bioforge*, *Spectre du Vide*) ignorant les barrières au sol et ciblant la spire centrale.
-  - **4 Mini-Boss Lieutenants** apparaissant aux vagues **4, 8, 12 et 14** (avec aura de commandement et mécanique de garde unique).
-- **Nouveaux Niveaux & Modes :**
-  - **Acte III — « Chute de l’Abîme » (Vagues 21 à 30) :** vagues haute intensité culminant par un double assaut de Trônes en vagues 25 et 30.
-  - **Mode Endless Boss Rush :** enchaînement pur des 10 Trônes + Léviathan avec chrono et classement local.
-- **Mécaniques Tactiques & Progression :**
-  - **Météo Tactique Dynamique :** *Pluie Acide* (-15 % armure ennemie), *Tempête Ionique* (+20 % recharge `[Q]`, portée longue -10 %), *Brouillard Infernal* (portée radar réduite, bonus dégâts courte portée).
-  - **Arbre de Recherche du Bastion (QG) :** 12 nœuds persistants achetables en Crédits Haven (blindage du rempart, capacité d’absorption du bouclier Aegis, drones de réparation automatisés).
-  - **12 nouveaux Mutateurs Infinitum** liés à la météo et aux vagues aériennes.
-- **VFX, Sprites & Audio :**
-  - Planches RGBA 8 frames pour les 10 unités aériennes, particules météo canvas (pluie oblique, éclairs ambiants, brume basse), alerte sonore dédiée « Intrusion Aérienne » (`playAirRaidAlert()`).
+### 16.2 Extension Gratuite II — « Pacte de l’Éclipse : L’Ennemi Supérieur » (Aftermath & Alliance Totale)
+- **Pitch & Condition de Déblocage :** Histoire post-campagne (*Aftermath*) déclenchée lorsque **tous les 10 Trônes ont été vaincus et ralliés** à la cause d’Haven. Face à l’émergence d’une force cosmique supérieure (**« L’Architecture Zéro / Les Veilleurs du Zénith »**) décidée à effacer humains et légions, **tous les effectifs du jeu doivent s’unir**.
+- **Gameplay d’Alliance Totale (Valkyries + Trônes + Légions) :**
+  - **Double Commandement :** le joueur déploie sa **Valkyrie (16 choix)** sur la spire centrale ET assigne **1 à 2 Trônes alliées** en tant que **Commandantes de Secteur / Tourelles Souveraines** sur les bastions avancés.
+  - **Renforts de Légion Alliés :** appel ponctuel d’escouades des 10 factions (ex. squelettes d’`Lady Ossuary` ou drones quantiques de `Kali-X`) pour intercepter les assauts du Zénith.
+  - **Attaques Combinées « Duo Valkyrie × Trône » :** ultimes synchronisés (ex. *Aria × Astarra* « Rempart de Braise », *Nyx × Kali-X* « Faille Temporelle », *Carmilla × Lady Ossuary* « Cour Écarlate »).
+- **Contenu, Ennemis & Progression :**
+  - **Acte III — « Le Jugement du Zénith » (Vagues 21 à 35) :** 15 vagues épiques contre une nouvelle faction blanche/or/antimatière (**12 unités du Zénith** + **3 Généraux** + **L’Architecte Zéro** en 4 phases).
+  - **20 Chapitres VN *Aftermath & Réconciliation* :** dialogues croisés entre Valkyries et anciens Trônes (27+ adultes, consentement libre, zéro bonus militaire sur le mode privé).
+  - **Météo Tactique & Arbre de Recherche du Bastion :** tempêtes ioniques, pluie acide et 12 nœuds d’amélioration persistants en Crédits Haven.
 
 ---
 
-## 17. Extensions Payantes de Contenu (3 Domaines Visuels Inédits)
+## 17. Extensions Payantes de Contenu (6 Domaines Visuels Inédits)
 
-> Trois extensions premium conçues chacune autour d’une **direction artistique totalement inédite** (en rupture visuelle avec la cité côtière cyber-gothique sombre du jeu de base), avec cartes, héroïnes adultes (27+), antagonistes, bestiaire, arsenal, radio et contenu narratif complet.
+> Extensions premium conçues chacune autour d’une **direction artistique totalement inédite** (en rupture visuelle avec la cité côtière cyber-gothique sombre du jeu de base), avec cartes, héroïnes adultes (27+), antagonistes, bestiaire, arsenal, radio et contenu narratif complet.
 
 ### 17.1 Extension Payante I — « Cathédrale Astrale & Nécropole Solaire »
 - **Domaine Visuel Inédit :** **Gothique Sacré Doré, Marbre Blanc & Horlogerie Céleste** (au-dessus de la couche nuageuse, baignée de lumière astrale chaude — rupture totale avec l’asphalte nocturne néon).
@@ -523,3 +514,27 @@ Total de fichiers d’assets recensés dans `assets/` : **592**.
   - **Station Radio `CH-08 · Velvet Flora` :** trip-hop organique, nappes analogiques chaudes et percussions boisées.
   - **VFX dédiés :** pluie de pétales cristallins, pollen lumineux, éclats de verre Art Nouveau.
   - **Pack VN & Studio Boudoir « Serre Privée au Clair de Lune » :** 6 chapitres longs, 2 ambiances verrière nocturne/pluie sur vitre, 4 tenues dentelle botanique / soie émeraude (27+, consensuel).
+
+### 17.4 Extension Payante IV — « Mirage Chromatique & Cité des Sables de Verre »
+- **Domaine Visuel Inédit :** **Désert Solarpunk & Architecture Néo-Perse** (dunes de silice vitrifiée par d’anciens tirs orbitaux, palais d’obsidienne et d’or sous un soleil zénithal aveuglant).
+  - **Palette :** Sable vitrifié `#fde68a`, Terracotta ardent `#ea580c`, Lapis-lazuli `#1d4ed8`, Obsidienne `#0f172a`.
+  - **Props & Hors-Arène :** obélisques miroirs solaires, dunes animées par le vent, aqueducs de plasma doré, distorsion thermique à l’horizon.
+- **Cartes (2 théâtres) :** *Oasis Vitrifiée* (miroirs solaires amplifiant les tourelles laser) & *Canyon des Miroirs* (tempêtes de sable périodiques réduisant la visibilité).
+- **Personnages (2 Valkyries 27+ & 1 Boss) :** **Shéhérazade Solis (30 ans)** (`[Q]` *Mirage Réfractaire*), **Daria Al-Qamar (34 ans)** (`[Q]` *Lance de Verre Fondu*), Boss **Sultane Ignis-Rah** (3 phases).
+- **Bestiaire, Arsenal, Audio & 18+ :** 8 ennemis nomades/automates de sable, 2 tourelles (*Tour Miroir Hélios*, *Mortier Silice*), arme *Sabre Solaire*, radio `CH-09 · Desert Synthwave`, pack VN/Boudoir « Pavillon des Sables » (27+, consensuel).
+
+### 17.5 Extension Payante V — « Bastion Cryo-Brutaliste & Aurores Boréales »
+- **Domaine Visuel Inédit :** **Polaire Brutaliste & Glace Cristalline** (monolithes de béton glacé au milieu d’un océan arctique gelé sous des aurores boréales vert/magenta en mouvement continu).
+  - **Palette :** Glace pure `#e0f2fe`, Vert aurore `#4ade80`, Magenta boréal `#e879f9`, Béton arctique `#334155`.
+  - **Props & Hors-Arène :** brise-glaces nucléaires immobilisés, crevasses lumineuses, rideaux d’aurores boréales animées, cristaux de givre en suspension.
+- **Cartes (2 théâtres) :** *Banquise Fracturée* (plaques de glace mouvantes ouvrant/fermant des raccourcis) & *Centrale Polaire* (conduits thermiques protégeant les tourelles du gel).
+- **Personnages (2 Valkyries 27+ & 1 Boss) :** **Astrid Valen (32 ans)** (`[Q]` *Bris de Banquise*), **Katya Moroz (36 ans)** (`[Q]` *Dôme Boréal*), Boss **Tsarine Cryo-Valkyr** (3 phases).
+- **Bestiaire, Arsenal, Audio & 18+ :** 8 ennemis cryoniques/blindés arctiques, 2 tourelles (*Canon Brise-Glace*, *Balise Boréale*), arme *Faisceau Cryo-Laser*, radio `CH-10 · Arctic Ambient`, pack VN/Boudoir « Chalet Boréal & Sources Chaudes » (27+, consensuel).
+
+### 17.6 Extension Payante VI — « Palais Mécanique & Horlogerie de Cuivre »
+- **Domaine Visuel Inédit :** **Steampunk Impérial & Rétro-Ingénierie Victorienne** (usine-palais gigantesque en laiton, cuivre brossé, acajou et velours pourpre baignée de vapeur dorée).
+  - **Palette :** Cuivre `#d97706`, Laiton `#fbbf24`, Velours pourpre `#881337`, Acier fumé `#1e293b`.
+  - **Props & Hors-Arène :** pistons géants en mouvement, dirigeables amarrés hors-arène, soupapes crachant de la vapeur animée, horloges monumentales.
+- **Cartes (2 théâtres) :** *Fonderie Impériale* (vapeur sous pression repoussant les vagues) & *Pont des Dirigeables* (passerelles étroites multi-niveaux).
+- **Personnages (2 Valkyries 27+ & 1 Boss) :** **Lady Vivienne Gearhart (33 ans)** (`[Q]` *Surcharge Vapeur*), **Clarisse Pendule (29 ans)** (`[Q]` *Griffe Mécanique*), Boss **Automate Souveraine Brass-Queen** (3 phases).
+- **Bestiaire, Arsenal, Audio & 18+ :** 8 automates à vapeur/cuirassés, 2 tourelles (*Gatling à Vapeur*, *Bobine Tesla Cuivre*), arme *Mousquet Voltaïque*, radio `CH-11 · Brass Electro-Swing`, pack VN/Boudoir « Salon Privé de l’Horlogère » (27+, consensuel).
