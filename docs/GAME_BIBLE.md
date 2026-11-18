@@ -422,11 +422,31 @@ Total de fichiers d’assets recensés dans `assets/` : **592**.
 
 ---
 
-## 16. Extensions Gratuites de Contenu (POV Boss Inversé & Alliance Aftermath)
+## 16. Extensions Gratuites de Contenu (4 Extensions : Lore, Endgame, POV Boss & Aftermath)
 
-> Deux extensions gratuites majeures transformant la boucle de jeu et concluant l’arc narratif global d’Infernal City.
+> Quatre extensions gratuites majeures pour approfondir le lore, combler le bestiaire, retourner le gameplay côté Boss et conclure l’arc narratif global d’Infernal City.
 
-### 16.1 Extension Gratuite I — « Règne des Trônes : Assaut Inversé » (Gameplay POV Boss)
+### 16.1 Extension Gratuite I — « Archives de la Première Brèche » (Lore, Origines & Synergies)
+- **Pitch & Thème :** Préquelle narrative explorant la chute du District Extérieur, la fondation de la Citadelle Haven et le passé des 6 Valkyries d’origine (`Aria`, `Kira`, `Rin`, `Nova`, `Sélène`, `Vespera`, `Carmilla`).
+- **Contenu Campagne & Missions :**
+  - **5 Opérations Mémoires (10 vagues scénarisées)** jouables depuis les *Archives du Bastion*, avec modificateurs historiques (arsenal restreint d’époque, défense de convois civils avant l’érection du dôme Aegis).
+  - **Journal de Guerre & Codex d’Origine :** 24 entrées audio/texte débloquées par objectifs tactiques.
+- **Nouvelles Mécaniques de Gameplay :**
+  - **Matrice de Synergies Élémentaires inter-tourelles :** *Choc Thermique* (`Cryo` + `Plasma`/`Flamme`, +35 %), *Tempête Magnétique* (`Tesla` + `Gravité`), *Embrasement Toxique* (`Pique Siphon` + `Flamme`).
+  - **Niveaux 4 & 5 Prestige des Tourelles :** aura dorée/chromatique et second module passif déblocable via Crédits Haven.
+- **Narratif, VFX & Récompenses gratuites :** **18 chapitres VN « Mémoires d’Avant-Siège »** (27+ adultes, consentement révocable, zéro bonus militaire), **6 tenues de service historiques** gratuites, liaisons énergétiques entre tourelles synergiques.
+
+### 16.2 Extension Gratuite II — « Horizon Aérien & Météo de Siège » (Bestiaire Aérien, Mini-Boss & Infinitum 2.0)
+- **Pitch & Thème :** Escalade tactique de la guerre de siège : l’ennemi contourne les remparts par les airs et des phénomènes météorologiques frappent Haven.
+- **Nouvelles Unités Ennemies (14 ajouts) :**
+  - **10 Unités Aériennes de Légion** (1 par faction, ex. *Harpyie de Cendre*, *Drone Bioforge*, *Spectre du Vide*) ignorant les barrières au sol et ciblant la spire centrale.
+  - **4 Mini-Boss Lieutenants** apparaissant aux vagues **4, 8, 12 et 14** (avec aura de commandement et mécanique de garde unique).
+- **Mécaniques Tactiques & Progression :**
+  - **Météo Tactique Dynamique :** *Pluie Acide* (-15 % armure ennemie), *Tempête Ionique* (+20 % recharge `[Q]`, portée longue -10 %), *Brouillard Infernal* (radar réduit, bonus courte portée).
+  - **Arbre de Recherche du Bastion (QG) :** 12 nœuds persistants achetables en Crédits Haven (blindage du rempart, absorption bouclier Aegis, drones de réparation).
+  - **Mode Endless Boss Rush & 12 nouveaux Mutateurs Infinitum** liés à la météo et aux vagues aériennes.
+
+### 16.3 Extension Gratuite III — « Règne des Trônes : Assaut Inversé » (Gameplay POV Boss)
 - **Pitch & Concept :** Retournement complet du Tower Defense : le joueur incarne tour à tour chacun des **10 Trônes** (ainsi que le **Léviathan** en siège spécial) pour **commander les hordes et faire tomber les citadelles humaines d’Haven**.
 - **Boucle de Gameplay Inversée :**
   - **Jauge d’Essence Abyssale :** ressource régénérée dans le temps et par la destruction de tourelles adverses, servant à déployer les escouades sur les 4 portes.
@@ -438,7 +458,7 @@ Total de fichiers d’assets recensés dans `assets/` : **592**.
   - **Point de vue inédit :** monologues intérieurs et conseils de guerre vus du côté des légions infernales.
   - **HUD Inversé « Souveraineté » :** palette pourpre/or, carte tactique des portes d’entrée, barre d’intégrité du bouclier de la cité cible, SFX de cor de siège et de brèche.
 
-### 16.2 Extension Gratuite II — « Pacte de l’Éclipse : L’Ennemi Supérieur » (Aftermath & Alliance Totale)
+### 16.4 Extension Gratuite IV — « Pacte de l’Éclipse : L’Ennemi Supérieur » (Aftermath & Alliance Totale)
 - **Pitch & Condition de Déblocage :** Histoire post-campagne (*Aftermath*) déclenchée lorsque **tous les 10 Trônes ont été vaincus et ralliés** à la cause d’Haven. Face à l’émergence d’une force cosmique supérieure (**« L’Architecture Zéro / Les Veilleurs du Zénith »**) décidée à effacer humains et légions, **tous les effectifs du jeu doivent s’unir**.
 - **Gameplay d’Alliance Totale (Valkyries + Trônes + Légions) :**
   - **Double Commandement :** le joueur déploie sa **Valkyrie (16 choix)** sur la spire centrale ET assigne **1 à 2 Trônes alliées** en tant que **Commandantes de Secteur / Tourelles Souveraines** sur les bastions avancés.
