@@ -789,6 +789,45 @@ class SoundEngine {
     osc.stop(now + 0.17);
   }
 
+  playCitadelHeal() {
+    if (this.isMuted || !this.ensureAudio()) return;
+    if (!this.canPlayHotSfx('citadel_heal', 0.5)) return;
+    const now = this.ctx.currentTime;
+    [523.25, 659.25, 783.99].forEach((freq, idx) => {
+      const start = now + idx * 0.06;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, start);
+      gain.gain.setValueAtTime(0.0001, start);
+      gain.gain.exponentialRampToValueAtTime(0.08, start + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.003, start + 0.32);
+      osc.connect(gain);
+      gain.connect(this.sfxGain);
+      this.trackHotSfxSource(osc);
+      osc.start(start);
+      osc.stop(start + 0.33);
+    });
+  }
+
+  playBossAttack() {
+    if (this.isMuted || !this.ensureAudio()) return;
+    if (!this.canPlayHotSfx('boss_attack', 0.35)) return;
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(220, now);
+    osc.frequency.exponentialRampToValueAtTime(70, now + 0.28);
+    gain.gain.setValueAtTime(0.12, now);
+    gain.gain.exponentialRampToValueAtTime(0.003, now + 0.3);
+    osc.connect(gain);
+    gain.connect(this.sfxGain);
+    this.trackHotSfxSource(osc);
+    osc.start(now);
+    osc.stop(now + 0.3);
+  }
+
   // --- 5-Station Procedural Synthesizer Radio --- //
 
   toggleMusic() {

@@ -3998,6 +3998,19 @@ class GameEngine {
           button.setAttribute('aria-label', `Spécialiser ${defense.name} : ${option.name}`);
           button.addEventListener('click', () => {
             if (!this.chooseDefenseSpecialization(defense, option.id).ok) return;
+            audio.playTowerUpgrade?.();
+            if (!this.prefersReducedMotion && this.particles.length < 220) {
+              this.particles.push({
+                type: 'gravity_ring',
+                x: defense.x,
+                y: defense.y,
+                radius: 16,
+                maxRadius: 96,
+                life: 0.45,
+                maxLife: 0.45,
+                color: '#a855f7'
+              });
+            }
             this.showFeedback(`${defense.name} · ${option.name}`, '#a855f7');
             this.renderDefenseManagementModal(defense);
             this.updateHUD();
@@ -4675,6 +4688,9 @@ class GameEngine {
     this.campaignVictoryClaimed = true;
     this.campaignVictory = true;
     this.waveIntermissionTimer = 0;
+    this.heroAnimationState = 'victory';
+    this.heroAnimationTimer = 4.0;
+    audio.playVictoryFanfare?.();
 
     const scoreBonuses = challenge.rules?.scoreBonuses || {};
     const earnedBonuses = [];
@@ -4810,6 +4826,7 @@ class GameEngine {
       hero.relationshipXp -= threshold;
       hero.affinityLvl++;
       rankChanged = true;
+      audio.playRelationshipCue?.();
       this.showFeedback(`Confiance avec ${hero.name} : rang ${hero.affinityLvl}`, '#ec4899');
       if (hero.affinityLvl >= 2) this.unlockAchievement('harem_lover');
       threshold = this.getAffinityThreshold(hero);
@@ -6741,6 +6758,7 @@ class GameEngine {
       const speed = Math.max(140, Number(authoredPattern.speed) || 210);
       const damage = Math.max(8, Number(authoredPattern.damage) || 18);
       boss.attackAnimationTimer = 0.48;
+      audio.playBossAttack?.();
       this.applyBossSignature(boss, bossDefinition, phase, 'pattern');
       if (authoredPattern.type === 'aimed') {
         this.fireAimedBossVolley(boss, Math.min(9, count), 0.12, speed, damage);
@@ -7012,6 +7030,27 @@ class GameEngine {
     const healed = Math.min(amount, Math.max(0, maximum - before));
     const overheal = Math.max(0, amount - healed);
     this.citadel.hp = Math.min(maximum, before + healed);
+
+    if (healed >= 5) {
+      const healNow = Date.now();
+      if ((healNow - (this.lastCitadelHealFxTime || 0)) > 600) {
+        this.lastCitadelHealFxTime = healNow;
+        audio.playCitadelHeal?.();
+        this.addFloatingText?.(`+${Math.round(healed)} INTÉGRITÉ`, this.citadel.x, this.citadel.y - 84, '#34d399');
+        if (!this.prefersReducedMotion && Array.isArray(this.particles) && this.particles.length < 220) {
+          this.particles.push({
+            type: 'gravity_ring',
+            x: this.citadel.x,
+            y: this.citadel.y,
+            radius: 30,
+            maxRadius: 150,
+            life: 0.5,
+            maxLife: 0.5,
+            color: '#34d399'
+          });
+        }
+      }
+    }
 
     if (this.selectedHero?.id === 'carmilla' && overheal > 0) {
       const modifiers = this.getHeroKit('carmilla')?.passive?.modifiers || {};
@@ -7557,9 +7596,22 @@ class GameEngine {
 
   activatePowerup(p) {
     audio.playPickup();
-    this.addFloatingText(`✨ POWER-UP: ${p.name}!`, this.citadel.x, this.citadel.y - 60, p.color);
+    this.addFloatingText(`POWER-UP · ${String(p.name || '').toUpperCase()}`, this.citadel.x, this.citadel.y - 60, p.color);
+    if (!this.prefersReducedMotion && this.particles.length < 220) {
+      this.particles.push({
+        type: 'gravity_ring',
+        x: this.citadel.x,
+        y: this.citadel.y,
+        radius: 24,
+        maxRadius: p.id === 'nuke' ? 420 : 180,
+        life: p.id === 'nuke' ? 0.7 : 0.45,
+        maxLife: p.id === 'nuke' ? 0.7 : 0.45,
+        color: p.color || '#00f0ff'
+      });
+    }
 
     if (p.id === 'nuke') {
+      this.addCameraShake(12);
       audio.playNuke();
       [...this.enemies].forEach(e => this.damageEnemy(e, 9999));
     } else if (p.id === 'freeze') {
@@ -7602,6 +7654,18 @@ class GameEngine {
       }
       if (Math.hypot(this.citadel.x - c.x, this.citadel.y - c.y) < this.citadel.radius + c.radius + (this.getEffectiveShopUpgrade('magnetRange') * 20) || this.isInsideMagnetField(c)) {
         audio.playPickup();
+        if (!this.prefersReducedMotion && this.particles.length < 220) {
+          this.particles.push({
+            type: 'sprite_fx',
+            row: 3,
+            x: c.x,
+            y: c.y,
+            size: 64,
+            life: 0.32,
+            maxLife: 0.32,
+            color: c.type === 'red' ? '#ff2a5f' : '#00f0ff'
+          });
+        }
         if (c.type === 'red') this.triggerEvolutionModal();
         else this.triggerLevelUpModal();
         this.crates.splice(i, 1);
@@ -12431,10 +12495,23 @@ class GameEngine {
       } else if (p.type === 'gravity_ring') {
         this.ctx.save();
         this.ctx.beginPath();
-        this.ctx.arc(p.x, p.y, Math.max(8, p.radius * (1 - Math.min(0.9, p.life))), 0, Math.PI * 2);
-        this.ctx.strokeStyle = p.color;
-        this.ctx.lineWidth = 3;
-        this.ctx.globalAlpha = Math.min(1, p.life * 4);
+        if (Number.isFinite(p.maxRadius) && Number.isFinite(p.maxLife) && p.maxLife > 0) {
+          // Expanding shockwave: grows from radius to maxRadius and fades out.
+          const progress = Math.max(0, Math.min(1, 1 - (p.life / p.maxLife)));
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const ringRadius = p.radius + ((p.maxRadius - p.radius) * eased);
+          this.ctx.arc(p.x, p.y, Math.max(4, ringRadius), 0, Math.PI * 2);
+          this.ctx.strokeStyle = p.color;
+          this.ctx.lineWidth = Math.max(1.2, 4.5 * (1 - progress));
+          this.ctx.shadowColor = p.color;
+          this.ctx.shadowBlur = 14;
+          this.ctx.globalAlpha = Math.max(0, 1 - progress);
+        } else {
+          this.ctx.arc(p.x, p.y, Math.max(8, p.radius * (1 - Math.min(0.9, p.life))), 0, Math.PI * 2);
+          this.ctx.strokeStyle = p.color;
+          this.ctx.lineWidth = 3;
+          this.ctx.globalAlpha = Math.min(1, p.life * 4);
+        }
         this.ctx.stroke();
         this.ctx.restore();
       } else {
