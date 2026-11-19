@@ -4936,7 +4936,8 @@ class GameEngine {
     }
 
     if (this.abilityCooldownTimer > 0) {
-      this.abilityCooldownTimer -= dt;
+      const weatherCdMult = this.getActiveTacticalWeather?.() === 'ion_storm' ? 1.15 : 1.0;
+      this.abilityCooldownTimer -= dt * weatherCdMult;
       if (this.abilityCooldownTimer <= 0) {
         this.abilityCooldownTimer = 0;
         const btn = document.getElementById('btn-hero-skill');
@@ -5558,6 +5559,7 @@ class GameEngine {
       this.getEnemiesInRange(t.x, t.y, t.range, t).forEach(enemy => {
         const pullDistance = 32 * (Number(modifiers.pullStrengthMultiplier) || 1);
         this.displaceEnemy(enemy, t.x, t.y, pullDistance, -1);
+        enemy.gravityPulledUntil = this.animationClock + 2.8;
         this.damageEnemyFromDefense(t, enemy, t.damage * mult);
         applyDirectLifesteal(t.damage * mult);
       });
@@ -7199,6 +7201,55 @@ class GameEngine {
         (Number(enemy.armorBreakMultiplier) || 1) + (0.05 * corrosionPower)
       );
       enemy.armorBreakTimer = 4;
+    }
+
+    // Elemental Tower Synergy Matrix (Choc Thermique, Tempête Magnétique, Embrasement Toxique)
+    if (['acid', 'siphon'].includes(defense.type)) {
+      enemy.bioCorrodedUntil = this.animationClock + 3.2;
+    }
+    const synergyReady = (this.animationClock - (enemy.lastSynergyTime || -9)) > 1.2;
+    if (synergyReady) {
+      const isThermal = ['plasma', 'mortar', 'flame', 'flamethrower', 'laser'].includes(defense.type);
+      const isChilled = (enemy.slowTimer > 0) || (this.freezeTimer > 0);
+      const isGravPulled = (enemy.gravityPulledUntil || 0) > this.animationClock;
+      const isBioCorroded = (enemy.bioCorrodedUntil || 0) > this.animationClock;
+      let synergyLabel = '';
+      let synergyColor = '';
+
+      if (isThermal && isChilled) {
+        adjustedDamage *= 1.35;
+        synergyLabel = 'CHOC THERMIQUE !';
+        synergyColor = '#38bdf8';
+      } else if (defense.type === 'tesla' && isGravPulled) {
+        adjustedDamage *= 1.3;
+        synergyLabel = 'TEMPÊTE MAGNÉTIQUE !';
+        synergyColor = '#c084fc';
+      } else if (isThermal && isBioCorroded) {
+        adjustedDamage *= 1.25;
+        synergyLabel = 'EMBRASEMENT TOXIQUE !';
+        synergyColor = '#34d399';
+      }
+
+      if (synergyLabel) {
+        enemy.lastSynergyTime = this.animationClock;
+        audio.playSynergyCombo?.();
+        if ((this.animationClock - (this.lastSynergyBannerClock || -9)) > 1.4) {
+          this.lastSynergyBannerClock = this.animationClock;
+          this.addFloatingText?.(synergyLabel, enemy.x, enemy.y - 26, synergyColor);
+        }
+        if (!this.prefersReducedMotion && this.particles.length < 220) {
+          this.particles.push({
+            type: 'gravity_ring',
+            x: enemy.x,
+            y: enemy.y,
+            radius: 10,
+            maxRadius: 56,
+            life: 0.34,
+            maxLife: 0.34,
+            color: synergyColor
+          });
+        }
+      }
     }
 
     this.damageEnemy(enemy, adjustedDamage, { ignoreShield });
@@ -11940,6 +11991,13 @@ class GameEngine {
     this.ctx.restore();
   }
 
+  getActiveTacticalWeather() {
+    const wave = Math.max(1, Number(this.wave) || 1);
+    if (wave < 3) return 'clear';
+    const cycle = ['clear', 'acid_rain', 'ion_storm', 'infernal_fog'];
+    return cycle[wave % cycle.length];
+  }
+
   render() {
     if (!this.ctx || !this.canvas) return;
 
@@ -12050,6 +12108,70 @@ class GameEngine {
         this.ctx.restore();
       }
     });
+
+    // Active Elemental Synergy Conduits between adjacent complementary towers
+    if (this.placedTowers.length >= 2) {
+      const thermalTypes = new Set(['plasma', 'mortar', 'flame', 'flamethrower', 'laser']);
+      const bioTypes = new Set(['acid', 'siphon']);
+      this.ctx.save();
+      this.ctx.lineWidth = 1.6;
+      this.ctx.setLineDash([5, 7]);
+      for (let i = 0; i < this.placedTowers.length; i++) {
+        const a = this.placedTowers[i];
+        for (let j = i + 1; j < this.placedTowers.length; j++) {
+          const b = this.placedTowers[j];
+          if (Math.hypot(a.x - b.x, a.y - b.y) > 220) continue;
+          let linkColor = '';
+          if ((a.type === 'cryo' && thermalTypes.has(b.type)) || (b.type === 'cryo' && thermalTypes.has(a.type))) {
+            linkColor = 'rgba(56, 189, 248, 0.32)';
+          } else if ((a.type === 'tesla' && b.type === 'gravity') || (b.type === 'tesla' && a.type === 'gravity')) {
+            linkColor = 'rgba(192, 132, 252, 0.34)';
+          } else if ((bioTypes.has(a.type) && thermalTypes.has(b.type)) || (bioTypes.has(b.type) && thermalTypes.has(a.type))) {
+            linkColor = 'rgba(52, 211, 153, 0.3)';
+          }
+          if (!linkColor) continue;
+          this.ctx.strokeStyle = linkColor;
+          this.ctx.beginPath();
+          this.ctx.moveTo(a.x, a.y);
+          this.ctx.lineTo(b.x, b.y);
+          this.ctx.stroke();
+        }
+      }
+      this.ctx.setLineDash([]);
+      this.ctx.restore();
+    }
+
+    // Dynamic Tactical Weather Overlay (Acid Rain, Ion Storm, Infernal Fog)
+    if (!this.prefersReducedMotion && this.waveActive) {
+      const weather = this.getActiveTacticalWeather();
+      if (weather === 'acid_rain') {
+        this.ctx.save();
+        this.ctx.strokeStyle = 'rgba(52, 211, 153, 0.16)';
+        this.ctx.lineWidth = 1.2;
+        for (let r = 0; r < 24; r++) {
+          const rx = ((r * 173 + this.animationClock * 160) % (w + 200)) - 100;
+          const ry = ((r * 97 + this.animationClock * 380) % (h + 200)) - 100;
+          this.ctx.beginPath();
+          this.ctx.moveTo(rx, ry);
+          this.ctx.lineTo(rx - 8, ry + 18);
+          this.ctx.stroke();
+        }
+        this.ctx.restore();
+      } else if (weather === 'ion_storm') {
+        const flash = Math.pow(Math.max(0, Math.sin(this.animationClock * 2.3) * Math.sin(this.animationClock * 5.7)), 8);
+        if (flash > 0.08) {
+          this.ctx.save();
+          this.ctx.fillStyle = `rgba(56, 189, 248, ${(flash * 0.12).toFixed(3)})`;
+          this.ctx.fillRect(view.left, view.top, viewWidth, viewHeight);
+          this.ctx.restore();
+        }
+      } else if (weather === 'infernal_fog') {
+        this.ctx.save();
+        this.ctx.fillStyle = 'rgba(245, 158, 11, 0.045)';
+        this.ctx.fillRect(view.left, view.top, viewWidth, viewHeight);
+        this.ctx.restore();
+      }
+    }
 
     // Render Placed Towers
     this.placedTowers.forEach(t => {

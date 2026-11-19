@@ -828,6 +828,27 @@ class SoundEngine {
     osc.stop(now + 0.3);
   }
 
+  playSynergyCombo() {
+    if (this.isMuted || !this.ensureAudio()) return;
+    if (!this.canPlayHotSfx('synergy_combo', 0.28)) return;
+    const now = this.ctx.currentTime;
+    [587.33, 880.0].forEach((freq, idx) => {
+      const start = now + idx * 0.04;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, start);
+      osc.frequency.exponentialRampToValueAtTime(freq * 1.18, start + 0.16);
+      gain.gain.setValueAtTime(0.08, start);
+      gain.gain.exponentialRampToValueAtTime(0.003, start + 0.18);
+      osc.connect(gain);
+      gain.connect(this.sfxGain);
+      this.trackHotSfxSource(osc);
+      osc.start(start);
+      osc.stop(start + 0.18);
+    });
+  }
+
   // --- 5-Station Procedural Synthesizer Radio --- //
 
   toggleMusic() {
