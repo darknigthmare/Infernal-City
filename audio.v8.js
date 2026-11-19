@@ -899,6 +899,36 @@ class SoundEngine {
         arpeggio = [164.81, 196.00, 220.00, 329.63];
         oscType = 'sawtooth';
         speed = 180;
+      } else if (this.currentStation === 'celestial') {
+        bassNotes = [73.42, 82.41, 98.00, 110.00];
+        arpeggio = [293.66, 369.99, 440.00, 587.33];
+        oscType = 'triangle';
+        speed = 310;
+      } else if (this.currentStation === 'abyssal') {
+        bassNotes = [46.25, 46.25, 55.00, 61.74];
+        arpeggio = [185.00, 220.00, 277.18, 369.99];
+        oscType = 'sine';
+        speed = 360;
+      } else if (this.currentStation === 'flora') {
+        bassNotes = [82.41, 92.50, 110.00, 123.47];
+        arpeggio = [329.63, 415.30, 493.88, 659.25];
+        oscType = 'triangle';
+        speed = 295;
+      } else if (this.currentStation === 'desert') {
+        bassNotes = [61.74, 65.41, 77.78, 82.41];
+        arpeggio = [246.94, 261.63, 311.13, 392.00];
+        oscType = 'sawtooth';
+        speed = 235;
+      } else if (this.currentStation === 'arctic') {
+        bassNotes = [69.30, 69.30, 82.41, 92.50];
+        arpeggio = [277.18, 329.63, 415.30, 554.37];
+        oscType = 'sine';
+        speed = 350;
+      } else if (this.currentStation === 'brass') {
+        bassNotes = [58.27, 65.41, 73.42, 87.31];
+        arpeggio = [233.08, 293.66, 349.23, 466.16];
+        oscType = 'square';
+        speed = 220;
       }
 
       const osc = this.ctx.createOscillator();

@@ -1803,6 +1803,53 @@ button.adult-scene-card:focus-visible {
   box-shadow: 0 0 14px rgba(0, 240, 255, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.14);
 }
 
+.dlc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+  text-align: left;
+}
+
+.dlc-card {
+  background: linear-gradient(180deg, rgba(16, 24, 44, 0.88), rgba(8, 12, 24, 0.94));
+  border: 1px solid rgba(0, 240, 255, 0.24);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dlc-card.is-active {
+  border-color: rgba(245, 158, 11, 0.88);
+  box-shadow: 0 0 18px rgba(245, 158, 11, 0.28);
+}
+
+.dlc-card h3 {
+  margin: 0;
+  font-size: 0.98rem;
+  color: #f8fafc;
+}
+
+.dlc-card p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #cbd5e1;
+  line-height: 1.4;
+}
+
+.dlc-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(0, 240, 255, 0.14);
+  color: #67e8f9;
+  width: fit-content;
+}
+
   .citadel-danger-vignette,
   .comms-signal i,
   #btn-overdrive:not(:disabled),

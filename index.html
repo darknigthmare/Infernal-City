@@ -243,6 +243,12 @@
           <option value="industrial">CH-03 · Cyber Industrial</option>
           <option value="chillwave">CH-04 · Chillwave</option>
           <option value="heavy">CH-05 · Heavy Electro</option>
+          <option value="celestial">CH-06 · Celestial Organ</option>
+          <option value="abyssal">CH-07 · Abyssal Pulse</option>
+          <option value="flora">CH-08 · Velvet Flora</option>
+          <option value="desert">CH-09 · Desert Synthwave</option>
+          <option value="arctic">CH-10 · Arctic Ambient</option>
+          <option value="brass">CH-11 · Brass Electro-Swing</option>
         </select>
 
         <!-- Essential Quick Buttons -->
@@ -478,6 +484,12 @@
             <h3>Paramètres & sauvegarde</h3>
             <p>Réglez le son, la lisibilité et la manette, puis exportez ou importez votre progression.</p>
           </button>
+
+          <button class="hq-card" id="btn-dlc-hub-toggle" type="button">
+            <div class="hq-card-icon" aria-hidden="true"><img src="assets/icons/ui/dlc_crest.png" alt="" decoding="async"></div>
+            <h3>Extensions & Théâtres DLC</h3>
+            <p>4 extensions gratuites (POV Boss, Alliance Aftermath, Synergies) et 6 domaines visuels inédits.</p>
+          </button>
         </div>
 
         <div style="text-align: center; margin-top: 15px;">
@@ -489,6 +501,22 @@
     </div>
 
     <!-- Sub-Modals (Accessible via HQ Hub Modal) -->
+
+    <div class="modal-overlay" id="dlc-hub-modal" role="dialog" aria-modal="true" aria-labelledby="dlc-hub-title">
+      <div class="modal-box" style="max-width: 980px;">
+        <button class="btn-close" type="button" aria-label="Fermer la console des Extensions DLC">&times;</button>
+        <p class="section-eyebrow" style="text-align: center;">ARCHIVES STRATÉGIQUES // THÉÂTRES & EXTENSIONS HAVEN</p>
+        <h2 class="modal-title" id="dlc-hub-title" style="color: #f59e0b;"><img src="assets/icons/ui/dlc_crest.png" alt="" width="28" height="28" style="width:28px; height:28px; object-fit:contain; vertical-align:middle; margin-right:8px;" loading="lazy" decoding="async">EXTENSIONS & THÉÂTRES DLC</h2>
+        <p class="modal-subtitle" id="dlc-hub-status">Théâtre visuel actif : Citadelle Haven (Standard) · 4 Extensions Gratuites & 6 Domaines Visuels disponibles.</p>
+        <div style="display:flex; justify-content:center; gap:10px; margin-bottom:16px; flex-wrap:wrap;">
+          <button class="btn-secondary" id="btn-dlc-reset-biome" type="button">RÉTABLIR THÉÂTRE HAVEN STANDARD</button>
+        </div>
+        <h3 style="color:#00f0ff; margin: 12px 0 8px;">EXTENSIONS GRATUITES (4 PACKS)</h3>
+        <div class="dlc-grid" id="dlc-free-grid"></div>
+        <h3 style="color:#f59e0b; margin: 18px 0 8px;">DOMAINES VISUELS DLC (6 BIOMES INÉDITS)</h3>
+        <div class="dlc-grid" id="dlc-paid-grid"></div>
+      </div>
+    </div>
 
     <div class="modal-overlay" id="antagonist-codex-modal" role="dialog" aria-modal="true" aria-labelledby="antagonist-codex-title" aria-describedby="antagonist-codex-description">
       <div class="modal-box antagonist-codex-box">
@@ -1168,6 +1196,7 @@
   <script src="specialization-runtime.v1.js"></script>
   <script src="enemy-legions.v1.js"></script>
   <script src="campaign-content.v1.js"></script>
+  <script src="dlc-packs.v1.js"></script>
   <script src="game.v9.js"></script>
   <script src="gameplay-professional.v1.js"></script>
   <script src="infinitum-runtime.v1.js"></script>

@@ -115,6 +115,11 @@ const ADULT_SCENES = (
   || (typeof globalThis !== 'undefined' && globalThis.INFERNAL_CITY_ADULT_SCENES)
   || ADULT_SCENES_FALLBACK
 );
+const DLC_PACKS = (
+  (typeof window !== 'undefined' && window.INFERNAL_CITY_DLCS)
+  || (typeof globalThis !== 'undefined' && globalThis.INFERNAL_CITY_DLCS)
+  || { version: 'fallback', freeExpansions: [], paidDlcs: [], allPacks: [] }
+);
 
 const DIFFICULTY_DATA = {
   story: {
@@ -307,6 +312,12 @@ const COMPANION_FX_SPRITE_DATA = {
   env_props: { src: 'assets/animations/environment/props-atlas.png', columns: 4, rows: 1, size: 54, fps: 1 },
   env_props_anim: { src: 'assets/animations/environment/props-animated-atlas.png', columns: 8, rows: 4, size: 68, fps: 10 },
   outer_structures: { src: 'assets/animations/environment/outer-city-structures-atlas.png', columns: 4, rows: 2, size: 175, fps: 1 },
+  dlc_biome_astral: { src: 'assets/dlc/biome-astral-atlas.png', columns: 4, rows: 1, size: 168, fps: 6 },
+  dlc_biome_abyss: { src: 'assets/dlc/biome-abyss-atlas.png', columns: 4, rows: 1, size: 168, fps: 6 },
+  dlc_biome_flora: { src: 'assets/dlc/biome-flora-atlas.png', columns: 4, rows: 1, size: 168, fps: 6 },
+  dlc_biome_desert: { src: 'assets/dlc/biome-desert-atlas.png', columns: 4, rows: 1, size: 168, fps: 6 },
+  dlc_biome_arctic: { src: 'assets/dlc/biome-arctic-atlas.png', columns: 4, rows: 1, size: 168, fps: 6 },
+  dlc_biome_brass: { src: 'assets/dlc/biome-brass-atlas.png', columns: 4, rows: 1, size: 168, fps: 6 },
   state_poses: { src: 'assets/animations/smooth/character-states-fx-atlas.png', columns: 8, rows: 6, size: 120, fps: 12 }
 };
 
@@ -3541,6 +3552,7 @@ class GameEngine {
         else if (targetId === 'btn-achieve-toggle') this.openAchievementsModal();
         else if (targetId === 'btn-run-history-toggle') this.openRunHistoryModal();
         else if (targetId === 'btn-settings-toggle') this.openSettingsModal();
+        else if (targetId === 'btn-dlc-hub-toggle') this.openDlcHubModal();
       });
     });
 
@@ -11998,6 +12010,129 @@ class GameEngine {
     return cycle[wave % cycle.length];
   }
 
+  openDlcHubModal() {
+    const modal = document.getElementById('dlc-hub-modal');
+    const freeGrid = document.getElementById('dlc-free-grid');
+    const paidGrid = document.getElementById('dlc-paid-grid');
+    const status = document.getElementById('dlc-hub-status');
+    const resetBtn = document.getElementById('btn-dlc-reset-biome');
+    if (!modal || !freeGrid || !paidGrid) return;
+
+    const activePaid = (DLC_PACKS.paidDlcs || []).find(d => d.id === this.activeDlcBiomeId);
+    if (status) {
+      status.textContent = activePaid
+        ? `Théâtre visuel actif : ${activePaid.name} (${activePaid.visualDomain}) · Radio ${activePaid.radioLabel}.`
+        : 'Théâtre visuel actif : Citadelle Haven (Standard) · 4 Extensions Gratuites & 6 Domaines Visuels disponibles.';
+    }
+    if (resetBtn) {
+      resetBtn.onclick = () => {
+        this.activeDlcBiomeId = null;
+        this.showFeedback('Théâtre visuel rétabli sur Citadelle Haven (Standard).', '#00f0ff');
+        this.openDlcHubModal();
+      };
+    }
+
+    freeGrid.innerHTML = '';
+    (DLC_PACKS.freeExpansions || []).forEach(ext => {
+      const card = document.createElement('article');
+      card.className = 'dlc-card';
+      const detail = ext.modeType === 'reverse_tower_defense'
+        ? `${ext.playableBosses.length} Boss jouables · ${ext.totalSiegeMissions} sièges POV · ${ext.resourceName}`
+        : (ext.superiorEnemyFaction
+          ? `Vagues ${ext.wavesRange[0]}–${ext.wavesRange[1]} · ${ext.duoCombos.length} Duos Valkyrie×Trône · ${ext.aftermathVnChapters} chapitres VN`
+          : (ext.aerialLegionUnits
+            ? `${ext.aerialLegionUnits.length} aériens de légion · ${ext.researchTree.length} recherches Bastion`
+            : `${ext.operations.length} Opérations Mémoires · ${ext.synergies.length} synergies actives`));
+      card.innerHTML = `<span class="dlc-badge">${ext.code} · GRATUIT</span><h3>${ext.name}</h3><p>${ext.tagline}</p><p style="color:#67e8f9;">${detail}</p>`;
+      freeGrid.appendChild(card);
+    });
+
+    paidGrid.innerHTML = '';
+    (DLC_PACKS.paidDlcs || []).forEach(dlc => {
+      const card = document.createElement('article');
+      const isActive = this.activeDlcBiomeId === dlc.id;
+      card.className = `dlc-card${isActive ? ' is-active' : ''}`;
+      const heroNames = dlc.heroines.map(h => `${h.name} (${h.age} ans)`).join(' & ');
+      card.innerHTML = `<span class="dlc-badge" style="color:${dlc.palette.primary};">${dlc.code} · ${dlc.radioLabel}</span><h3>${dlc.name}</h3><p>${dlc.visualDomain}</p><p style="color:#fde68a;">Valkyries : ${heroNames} · Boss : ${dlc.boss.name}</p><p style="color:#94a3b8;">Cartes : ${dlc.maps.join(' / ')} · Tourelles : ${dlc.towers.map(t => t.name).join(', ')}</p>`;
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = isActive ? 'btn-primary' : 'btn-secondary';
+      btn.textContent = isActive ? 'THÉÂTRE VISUEL ACTIF' : 'ACTIVER CE DOMAINE VISUEL';
+      btn.onclick = () => {
+        this.activateDlcBiome(dlc.id);
+        this.openDlcHubModal();
+      };
+      card.appendChild(btn);
+      paidGrid.appendChild(card);
+    });
+
+    this.openModal(modal);
+  }
+
+  activateDlcBiome(dlcId) {
+    const dlc = (DLC_PACKS.paidDlcs || []).find(d => d.id === dlcId);
+    if (!dlc) return false;
+    this.activeDlcBiomeId = dlc.id;
+    const radioSel = document.getElementById('radio-station-select');
+    if (radioSel && dlc.radioStation) {
+      radioSel.value = dlc.radioStation;
+      audio.currentStation = dlc.radioStation;
+    }
+    this.showTacticalBanner(
+      dlc.code,
+      dlc.name.toUpperCase(),
+      `${dlc.visualDomain} · ${dlc.radioLabel}`,
+      'amber',
+      2800
+    );
+    this.showFeedback(`Domaine visuel activé : ${dlc.name}`, dlc.palette.primary);
+    return true;
+  }
+
+  renderDlcBiomeOverlay(w, h, view) {
+    if (!this.activeDlcBiomeId || !view) return;
+    const dlc = (DLC_PACKS.paidDlcs || []).find(d => d.id === this.activeDlcBiomeId);
+    if (!dlc) return;
+    const viewW = view.right - view.left;
+    const viewH = view.bottom - view.top;
+
+    this.ctx.save();
+    this.ctx.fillStyle = dlc.palette.bg;
+    this.ctx.globalAlpha = 0.22;
+    this.ctx.fillRect(view.left, view.top, viewW, viewH);
+
+    // Render 4 biome-specific outer monoliths from its dedicated RGBA atlas
+    const key = `dlc_biome_${dlc.biomeKey}`;
+    const atlasData = COMPANION_FX_SPRITE_DATA[key];
+    const atlasImg = this.companionFxImages?.[key];
+    if (atlasData && this.isSpriteReady(atlasImg)) {
+      const frame = this.prefersReducedMotion ? 0 : (Math.floor(this.animationClock * atlasData.fps) % atlasData.columns);
+      const size = this.getReadableWorldSize(atlasData.size, 84);
+      this.ctx.globalAlpha = 0.9;
+      [[-150, -140], [w + 150, -140], [-150, h + 140], [w + 150, h + 140]].forEach(([bx, by]) => {
+        this.drawAtlasFrame(atlasImg, atlasData, frame, bx, by, size, {
+          allowSmooth: false,
+          shadowColor: dlc.palette.primary,
+          shadowBlur: 18
+        });
+      });
+    }
+
+    // Biome atmospheric particles (respecting prefersReducedMotion)
+    if (!this.prefersReducedMotion) {
+      this.ctx.globalAlpha = 0.36;
+      this.ctx.fillStyle = dlc.palette.secondary;
+      for (let i = 0; i < 16; i++) {
+        const px = ((i * 211 + this.animationClock * (22 + (i % 3) * 10)) % (w + 300)) - 150;
+        const py = ((i * 149 + Math.sin(this.animationClock * 1.1 + i) * 35) % (h + 240)) - 120;
+        this.ctx.beginPath();
+        this.ctx.arc(px, py, 2 + (i % 3), 0, Math.PI * 2);
+        this.ctx.fill();
+      }
+    }
+    this.ctx.restore();
+  }
+
   render() {
     if (!this.ctx || !this.canvas) return;
 
@@ -12015,6 +12150,7 @@ class GameEngine {
 
     // OpenAI-authored tileable street floor, with a dark fallback while loading.
     this.drawBattlefieldFloor(w, h, view);
+    this.renderDlcBiomeOverlay(w, h, view);
 
     // Retain a restrained tactical grid above the authored floor.
     if (!this.prefersReducedMotion) this.gridOffset = (this.gridOffset + 0.4) % 40;
