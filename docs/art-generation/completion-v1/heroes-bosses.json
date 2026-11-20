@@ -1,0 +1,1338 @@
+[
+  {
+    "id": "aria",
+    "name": "Aria",
+    "row": 0,
+    "desc": "Long silver hair, pointed winged black helmet, dark navy armor traced in cyan, red flowing cape, black wing ornaments, bright cyan sword.",
+    "category": "heroes",
+    "ref": "assets/animations/heroes/hero-atlas-01.png",
+    "states": [
+      "intro",
+      "idle_respiration",
+      "attack",
+      "ability",
+      "ultimate",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "columns": 8,
+    "rows": 8,
+    "prompt": "Use case: stylized-concept. Asset type: production sprite animation atlas for Infernal City: Valkyrie Sweeper. Reference image: use ONLY character in ROW 1 of reference atlas as exact identity/costume reference. Character Aria: Long silver hair, pointed winged black helmet, dark navy armor traced in cyan, red flowing cape, black wing ornaments, bright cyan sword. Clearly adult woman, fully clothed nonsexual combat poses. Create a NEW atlas of ONLY this character. EXACT regular GRID 8 columns x 8 rows, 64 equal SQUARE cells, 2048x2048 preferred, no visible cell borders. Each row is an eight frame distinct hand-drawn animation read left to right. Row1 intro: settle from a low landing into confident salute. Row2 idle breathing: subtle natural body/cape/hair motion. Row3 attack: weapon anticipation, strike or cast, follow-through, recovery. Row4 ability: raised hand, gathering signature magic, release, recovery. Row5 ultimate: stronger grounded power-up, full signature release, settle. Row6 victory: proud salute or weapon raise, then relax. Row7 defeat: exhausted lowering to one knee, intact opaque clothing, no blood/injury. Row8 outro: respectful farewell and gentle turn, remains fully visible. Same camera as supplied source: orthographic game battle three-quarter view; stable scale and central foot anchor within each cell. Every cell contains exactly one complete full-body character, NO extras, NO overlaps. Keep all limbs, weapon, cape and glow INSIDE central 60% of each cell, 20% blank margin all sides. Preserve face, hair, species, costume, palette, weapons. Crisp anime cel-shaded cyber-gothic rendering. Genuine transparent alpha background, no scenery, no floor/shadows, no checker pattern, no text/labels/numbers/borders/watermark. Do not copy other rows of the reference.",
+    "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-232addc1-e5b3-4368-bdb5-35928b0dab97.png",
+    "output_hint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-a7ab6e38-0c13-4e82-81e9-c3325881b33f.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "path": "assets/animations/completion-v1/heroes/aria.png",
+    "attempts": [
+      {
+        "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-a7ab6e38-0c13-4e82-81e9-c3325881b33f.png",
+        "prompt": "Use case: stylized-concept. Asset type: production sprite animation atlas for Infernal City: Valkyrie Sweeper. Reference image: use ONLY character in ROW 1 of reference atlas as exact identity/costume reference. Character Aria: Long silver hair, pointed winged black helmet, dark navy armor traced in cyan, red flowing cape, black wing ornaments, bright cyan sword. Clearly adult woman, fully clothed nonsexual combat poses. Create a NEW atlas of ONLY this character. EXACT regular GRID 8 columns x 8 rows, 64 equal SQUARE cells, 2048x2048 preferred, no visible cell borders. Each row is an eight frame distinct hand-drawn animation read left to right. Row1 intro: settle from a low landing into confident salute. Row2 idle breathing: subtle natural body/cape/hair motion. Row3 attack: weapon anticipation, strike or cast, follow-through, recovery. Row4 ability: raised hand, gathering signature magic, release, recovery. Row5 ultimate: stronger grounded power-up, full signature release, settle. Row6 victory: proud salute or weapon raise, then relax. Row7 defeat: exhausted lowering to one knee, intact opaque clothing, no blood/injury. Row8 outro: respectful farewell and gentle turn, remains fully visible. Same camera as supplied source: orthographic game battle three-quarter view; stable scale and central foot anchor within each cell. Every cell contains exactly one complete full-body character, NO extras, NO overlaps. Keep all limbs, weapon, cape and glow INSIDE central 60% of each cell, 20% blank margin all sides. Preserve face, hair, species, costume, palette, weapons. Crisp anime cel-shaded cyber-gothic rendering. Genuine transparent alpha background, no scenery, no floor/shadows, no checker pattern, no text/labels/numbers/borders/watermark. Do not copy other rows of the reference.",
+        "status": "rejected_external_vfx_overlap"
+      }
+    ],
+    "revisionPrompt": "Use case: precise-object-edit. Edit target: this sprite animation atlas. Keep all 64 character drawings in EXACTLY the same regular 8-column x 8-row grid, keep every body, face, hairstyle, costume and pose, color palette and weapon. Change ONLY effects and spacing: REMOVE ALL external magic halos, aura rings, spell clouds, sparks, detached particles and sweeping trails that extend beyond the character. Keep glowing blades but no sword trails. Every complete silhouette including weapon MUST fit inside its own cell, with a transparent gap to every neighbor. Shrink each sprite uniformly to 65% of cell height if needed to provide generous gaps; keep uniform scale across all rows. Preserve body actions. Row5 is a powerful casting pose with NO large surrounding VFX. Genuine transparent alpha, no shadow/background/text/borders. Precisely 64 full-body sprites, 8 columns and8 rows; no connecting effects anywhere.",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-232addc1-e5b3-4368-bdb5-35928b0dab97.png",
+    "stateRows": [
+      "intro",
+      "idle_respiration",
+      "attack",
+      "ability",
+      "ultimate",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "qa": {
+      "status": "generated_visual_reviewed",
+      "notes": "Identité, nombre de lignes et poses revus; ancrage/timing final à contrôler en jeu.",
+      "alphaMetrics": {
+        "fullyTransparentFraction": 0.49023,
+        "internalBoundaryMeanAlpha": 0.174,
+        "internalBoundaryFractionAbove32": 0.0,
+        "internalBoundaryFractionAbove128": 0.0
+      }
+    },
+    "runtimeApproved": true,
+    "sha256": "f416ad41b9080d1d38d0dae65552d15c38766923dcda0ff93ef4fc6474fe0876",
+    "nativeDimensions": {
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA"
+    },
+    "nativeCopiedUnchanged": true,
+    "frameCount": 64
+  },
+  {
+    "id": "rin",
+    "name": "Rin",
+    "row": 2,
+    "desc": "Long red hair, layered black robe with orange filigree, orange fire in hand; fire mage.",
+    "category": "heroes",
+    "ref": "assets/animations/heroes/hero-atlas-01.png",
+    "states": [
+      "intro",
+      "idle_respiration",
+      "attack",
+      "ability",
+      "ultimate",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "columns": 8,
+    "rows": 8,
+    "prompt": "Use case: stylized-concept. Asset type: production sprite animation atlas for Infernal City: Valkyrie Sweeper. Reference image: use ONLY character in ROW 3 of reference atlas as exact identity/costume reference. Character Rin: Long red hair, layered black robe with orange filigree, orange fire in hand; fire mage. Clearly adult woman, fully clothed nonsexual combat poses. Create a NEW atlas of ONLY this character. EXACT regular GRID 8 columns x 8 rows, 64 equal SQUARE cells, 2048x2048 preferred, no visible cell borders. Each row is an eight frame distinct hand-drawn animation read left to right. Row1 intro: settle from a low landing into confident salute. Row2 idle breathing: subtle natural body/cape/hair motion. Row3 attack: weapon anticipation, strike or cast, follow-through, recovery. Row4 ability: raised hand, gathering signature magic, release, recovery. Row5 ultimate: stronger grounded power-up, full signature release, settle. Row6 victory: proud salute or weapon raise, then relax. Row7 defeat: exhausted lowering to one knee, intact opaque clothing, no blood/injury. Row8 outro: respectful farewell and gentle turn, remains fully visible. Same camera as supplied source: orthographic game battle three-quarter view; stable scale and central foot anchor within each cell. Every cell contains exactly one complete full-body character, NO extras, NO overlaps. Keep all limbs, weapon, cape and glow INSIDE central 60% of each cell, 20% blank margin all sides. Preserve face, hair, species, costume, palette, weapons. Crisp anime cel-shaded cyber-gothic rendering. Genuine transparent alpha background, no scenery, no floor/shadows, no checker pattern, no text/labels/numbers/borders/watermark. Do not copy other rows of the reference.",
+    "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-1998469b-f398-492c-adb9-d92741dff803.png",
+    "output_hint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-ba391f6a-3b0d-4ba3-a302-56f65b5c47bd.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "path": "assets/animations/completion-v1/heroes/rin.png",
+    "attempts": [
+      {
+        "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-ba391f6a-3b0d-4ba3-a302-56f65b5c47bd.png",
+        "prompt": "Use case: stylized-concept. Asset type: production sprite animation atlas for Infernal City: Valkyrie Sweeper. Reference image: use ONLY character in ROW 3 of reference atlas as exact identity/costume reference. Character Rin: Long red hair, layered black robe with orange filigree, orange fire in hand; fire mage. Clearly adult woman, fully clothed nonsexual combat poses. Create a NEW atlas of ONLY this character. EXACT regular GRID 8 columns x 8 rows, 64 equal SQUARE cells, 2048x2048 preferred, no visible cell borders. Each row is an eight frame distinct hand-drawn animation read left to right. Row1 intro: settle from a low landing into confident salute. Row2 idle breathing: subtle natural body/cape/hair motion. Row3 attack: weapon anticipation, strike or cast, follow-through, recovery. Row4 ability: raised hand, gathering signature magic, release, recovery. Row5 ultimate: stronger grounded power-up, full signature release, settle. Row6 victory: proud salute or weapon raise, then relax. Row7 defeat: exhausted lowering to one knee, intact opaque clothing, no blood/injury. Row8 outro: respectful farewell and gentle turn, remains fully visible. Same camera as supplied source: orthographic game battle three-quarter view; stable scale and central foot anchor within each cell. Every cell contains exactly one complete full-body character, NO extras, NO overlaps. Keep all limbs, weapon, cape and glow INSIDE central 60% of each cell, 20% blank margin all sides. Preserve face, hair, species, costume, palette, weapons. Crisp anime cel-shaded cyber-gothic rendering. Genuine transparent alpha background, no scenery, no floor/shadows, no checker pattern, no text/labels/numbers/borders/watermark. Do not copy other rows of the reference.",
+        "status": "rejected_external_vfx_overlap"
+      }
+    ],
+    "revisionPrompt": "Use case: precise-object-edit. Edit target: this sprite animation atlas. Keep all 64 character drawings in EXACTLY the same regular 8-column x 8-row grid, keep every body, face, hairstyle, costume and pose, color palette and weapon. Change ONLY effects and spacing: REMOVE ALL external magic halos, aura rings, spell clouds, sparks, detached particles and sweeping trails that extend beyond the character. Keep glowing blades but no sword trails. Every complete silhouette including weapon MUST fit inside its own cell, with a transparent gap to every neighbor. Shrink each sprite uniformly to 65% of cell height if needed to provide generous gaps; keep uniform scale across all rows. Preserve body actions. Row5 is a powerful casting pose with NO large surrounding VFX. Genuine transparent alpha, no shadow/background/text/borders. Precisely 64 full-body sprites, 8 columns and8 rows; no connecting effects anywhere.",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-1998469b-f398-492c-adb9-d92741dff803.png",
+    "stateRows": [
+      "intro",
+      "idle_respiration",
+      "attack",
+      "ability",
+      "ultimate",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "qa": {
+      "status": "generated_visual_reviewed",
+      "notes": "Identité, nombre de lignes et poses revus; ancrage/timing final à contrôler en jeu.",
+      "alphaMetrics": {
+        "fullyTransparentFraction": 0.54773,
+        "internalBoundaryMeanAlpha": 0.078,
+        "internalBoundaryFractionAbove32": 0.0,
+        "internalBoundaryFractionAbove128": 0.0
+      }
+    },
+    "runtimeApproved": true,
+    "sha256": "18c00c4ada9b2bb0943c947eb3b691863e86a5803f4bbc38f08dbbe824724b98",
+    "nativeDimensions": {
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA"
+    },
+    "nativeCopiedUnchanged": true,
+    "frameCount": 64
+  },
+  {
+    "id": "kira",
+    "name": "Kira",
+    "row": 1,
+    "desc": "Long dark purple ponytail, fully covered fitted black-purple segmented combat armor, two short purple energy daggers.",
+    "category": "heroes",
+    "ref": "assets/animations/heroes/hero-atlas-01.png",
+    "states": [
+      "intro",
+      "idle_respiration",
+      "attack",
+      "ability",
+      "ultimate",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "columns": 8,
+    "rows": 8,
+    "prompt": "Use case: stylized-concept. Asset type: production sprite animation atlas for Infernal City: Valkyrie Sweeper. Reference image: use ONLY character in ROW 2 of reference atlas as exact identity/costume reference. Character Kira: Long dark purple ponytail, fully covered fitted black-purple segmented combat armor, two short purple energy daggers. Clearly adult woman, fully clothed nonsexual combat poses. Create a NEW atlas of ONLY this character. EXACT regular GRID 8 columns x 8 rows, 64 equal SQUARE cells, 2048x2048 preferred, no visible cell borders. Each row is an eight frame distinct hand-drawn animation read left to right. Row1 intro: settle from a low landing into confident salute. Row2 idle breathing: subtle natural body/cape/hair motion. Row3 attack: weapon anticipation, strike or cast, follow-through, recovery. Row4 ability: raised hand, gathering signature magic, release, recovery. Row5 ultimate: stronger grounded power-up, full signature release, settle. Row6 victory: proud salute or weapon raise, then relax. Row7 defeat: exhausted lowering to one knee, intact opaque clothing, no blood/injury. Row8 outro: respectful farewell and gentle turn, remains fully visible. Same camera as supplied source: orthographic game battle three-quarter view; stable scale and central foot anchor within each cell. Every cell contains exactly one complete full-body character, NO extras, NO overlaps. Keep all limbs, weapon, cape and glow INSIDE central 60% of each cell, 20% blank margin all sides. Preserve face, hair, species, costume, palette, weapons. Crisp anime cel-shaded cyber-gothic rendering. Genuine transparent alpha background, no scenery, no floor/shadows, no checker pattern, no text/labels/numbers/borders/watermark. Do not copy other rows of the reference.",
+    "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-1714a80e-4abe-48e4-bcd6-50941f033cb5.png",
+    "output_hint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-061ffc06-317f-4c56-8b7f-927a376aaa6b.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "path": "assets/animations/completion-v1/heroes/kira.png",
+    "attempts": [
+      {
+        "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-061ffc06-317f-4c56-8b7f-927a376aaa6b.png",
+        "prompt": "Use case: stylized-concept. Asset type: production sprite animation atlas for Infernal City: Valkyrie Sweeper. Reference image: use ONLY character in ROW 2 of reference atlas as exact identity/costume reference. Character Kira: Long dark purple ponytail, fully covered fitted black-purple segmented combat armor, two short purple energy daggers. Clearly adult woman, fully clothed nonsexual combat poses. Create a NEW atlas of ONLY this character. EXACT regular GRID 8 columns x 8 rows, 64 equal SQUARE cells, 2048x2048 preferred, no visible cell borders. Each row is an eight frame distinct hand-drawn animation read left to right. Row1 intro: settle from a low landing into confident salute. Row2 idle breathing: subtle natural body/cape/hair motion. Row3 attack: weapon anticipation, strike or cast, follow-through, recovery. Row4 ability: raised hand, gathering signature magic, release, recovery. Row5 ultimate: stronger grounded power-up, full signature release, settle. Row6 victory: proud salute or weapon raise, then relax. Row7 defeat: exhausted lowering to one knee, intact opaque clothing, no blood/injury. Row8 outro: respectful farewell and gentle turn, remains fully visible. Same camera as supplied source: orthographic game battle three-quarter view; stable scale and central foot anchor within each cell. Every cell contains exactly one complete full-body character, NO extras, NO overlaps. Keep all limbs, weapon, cape and glow INSIDE central 60% of each cell, 20% blank margin all sides. Preserve face, hair, species, costume, palette, weapons. Crisp anime cel-shaded cyber-gothic rendering. Genuine transparent alpha background, no scenery, no floor/shadows, no checker pattern, no text/labels/numbers/borders/watermark. Do not copy other rows of the reference.",
+        "status": "rejected_external_vfx_overlap"
+      }
+    ],
+    "revisionPrompt": "Use case: precise-object-edit. Edit target: this sprite animation atlas. Keep all 64 character drawings in EXACTLY the same regular 8-column x 8-row grid, keep every body, face, hairstyle, costume and pose, color palette and weapon. Change ONLY effects and spacing: REMOVE ALL external magic halos, aura rings, spell clouds, sparks, detached particles and sweeping trails that extend beyond the character. Keep glowing blades but no sword trails. Every complete silhouette including weapon MUST fit inside its own cell, with a transparent gap to every neighbor. Shrink each sprite uniformly to 65% of cell height if needed to provide generous gaps; keep uniform scale across all rows. Preserve body actions. Row5 is a powerful casting pose with NO large surrounding VFX. Genuine transparent alpha, no shadow/background/text/borders. Precisely 64 full-body sprites, 8 columns and8 rows; no connecting effects anywhere.",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-1714a80e-4abe-48e4-bcd6-50941f033cb5.png",
+    "stateRows": [
+      "intro",
+      "idle_respiration",
+      "attack",
+      "ability",
+      "ultimate",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "qa": {
+      "status": "generated_visual_reviewed",
+      "notes": "Identité, nombre de lignes et poses revus; ancrage/timing final à contrôler en jeu.",
+      "alphaMetrics": {
+        "fullyTransparentFraction": 0.7,
+        "internalBoundaryMeanAlpha": 0.109,
+        "internalBoundaryFractionAbove32": 0.0,
+        "internalBoundaryFractionAbove128": 0.0
+      }
+    },
+    "runtimeApproved": true,
+    "sha256": "177b1238c1960e02b7d163d71c27ebc3ce7abf595d0eb85313807e308b3bd5cb",
+    "nativeDimensions": {
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA"
+    },
+    "nativeCopiedUnchanged": true,
+    "frameCount": 64
+  },
+  {
+    "id": "carmilla",
+    "name": "Carmilla",
+    "row": 1,
+    "desc": "Long black hair, regal black and burgundy long robe with crimson panels, fine rapier, floating crimson-gold magical sigil.",
+    "category": "heroes",
+    "ref": "assets/animations/heroes/hero-atlas-02.png",
+    "states": [
+      "intro",
+      "idle_respiration",
+      "attack",
+      "ability",
+      "ultimate",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "columns": 8,
+    "rows": 8,
+    "stateRows": [
+      "intro",
+      "idle_respiration",
+      "attack",
+      "ability",
+      "ultimate",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "prompt": "Use case: stylized-concept. Asset type: production sprite animation atlas for Infernal City: Valkyrie Sweeper. Input reference: use ONLY character in ROW 2 of supplied atlas as identity/costume reference. Carmilla: Long black hair, regal black and burgundy long robe with crimson panels, fine rapier, floating crimson-gold magical sigil. Mature adult woman, nonsexual fully dressed combat poses. NEW atlas of ONLY this character. EXACT uniform GRID: 8 columns x 8 rows, 64 equal SQUARE cells, square2048x2048 preferred. ONE full-body drawing per cell, central60% ONLY, 20% transparent padding all sides, feet anchored at75% cellheight. All character parts and weapons completely contained. Each row has8 distinct smoothly progressive hand-drawn frames LEFT to RIGHT: Row1 settle from landing to salute. Row2 idle subtle breathing. Row3 anticipation/weapon strike/cast/recovery. Row4 ability arm-raise and small hand gesture. Row5 powerful ultimate pose (NO aura). Row6 victory proud salute, relax. Row7 defeat exhausted one knee, intact clothing no injury. Row8 farewell then turn, stay visible. Preserve source identity, face, hair, species, costume, weapons, palette, three-quarter orthographic game camera. Crisp detailed anime cel-shaded cyber-gothic game art. IMPORTANT: bodies and solid weapons ONLY; NO magic circles, NO clouds, NO aura, NO rays, NO trails, NO detached sparks, NO effect outside silhouette. Auras are added by the engine. Genuine transparent alpha background; no floor/shadow, no scenery, no checker pattern, no text/labels/numbers/grid/borders/watermark. Do not duplicate other reference characters.",
+    "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-52f26b3e-09ca-464d-b02b-d2ad5ee31f57.png",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-52f26b3e-09ca-464d-b02b-d2ad5ee31f57.png",
+    "path": "assets/animations/completion-v1/heroes/carmilla.png",
+    "qa": {
+      "status": "generated_visual_reviewed",
+      "notes": "Identité, nombre de lignes et poses revus; ancrage/timing final à contrôler en jeu.",
+      "alphaMetrics": {
+        "fullyTransparentFraction": 0.43676,
+        "internalBoundaryMeanAlpha": 0.242,
+        "internalBoundaryFractionAbove32": 0.0004,
+        "internalBoundaryFractionAbove128": 0.00017
+      }
+    },
+    "runtimeApproved": true,
+    "sha256": "60ed8bf0ce3cfd5d57c2be7dd7ee8c754ed8450193df4f3d89f4763eecfd0359",
+    "nativeDimensions": {
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA"
+    },
+    "nativeCopiedUnchanged": true,
+    "frameCount": 64
+  },
+  {
+    "id": "vespera",
+    "name": "Vespera",
+    "row": 0,
+    "desc": "Long dark red black hair, curling horns, large red-black bat wings, red-black armored battle outfit, crimson polearm.",
+    "category": "heroes",
+    "ref": "assets/animations/heroes/hero-atlas-02.png",
+    "states": [
+      "intro",
+      "idle_respiration",
+      "attack",
+      "ability",
+      "ultimate",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "columns": 8,
+    "rows": 8,
+    "stateRows": [
+      "intro",
+      "idle_respiration",
+      "attack",
+      "ability",
+      "ultimate",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "prompt": "Use case: stylized-concept. Asset type: production sprite animation atlas for Infernal City: Valkyrie Sweeper. Input reference: use ONLY character in ROW 1 of supplied atlas as identity/costume reference. Vespera: Long dark red black hair, curling horns, large red-black bat wings, red-black armored battle outfit, crimson polearm. Mature adult woman, nonsexual fully dressed combat poses. NEW atlas of ONLY this character. EXACT uniform GRID: 8 columns x 8 rows, 64 equal SQUARE cells, square2048x2048 preferred. ONE full-body drawing per cell, central60% ONLY, 20% transparent padding all sides, feet anchored at75% cellheight. All character parts and weapons completely contained. Each row has8 distinct smoothly progressive hand-drawn frames LEFT to RIGHT: Row1 settle from landing to salute. Row2 idle subtle breathing. Row3 anticipation/weapon strike/cast/recovery. Row4 ability arm-raise and small hand gesture. Row5 powerful ultimate pose (NO aura). Row6 victory proud salute, relax. Row7 defeat exhausted one knee, intact clothing no injury. Row8 farewell then turn, stay visible. Preserve source identity, face, hair, species, costume, weapons, palette, three-quarter orthographic game camera. Crisp detailed anime cel-shaded cyber-gothic game art. IMPORTANT: bodies and solid weapons ONLY; NO magic circles, NO clouds, NO aura, NO rays, NO trails, NO detached sparks, NO effect outside silhouette. Auras are added by the engine. Genuine transparent alpha background; no floor/shadow, no scenery, no checker pattern, no text/labels/numbers/grid/borders/watermark. Do not duplicate other reference characters.",
+    "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-860d0564-b9e5-41b1-90f9-3f667b62028e.png",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-860d0564-b9e5-41b1-90f9-3f667b62028e.png",
+    "path": "assets/animations/completion-v1/heroes/vespera.png",
+    "qa": {
+      "status": "generated_visual_reviewed",
+      "notes": "Identité, nombre de lignes et poses revus; ancrage/timing final à contrôler en jeu.",
+      "alphaMetrics": {
+        "fullyTransparentFraction": 0.40332,
+        "internalBoundaryMeanAlpha": 0.682,
+        "internalBoundaryFractionAbove32": 0.00256,
+        "internalBoundaryFractionAbove128": 0.00154
+      }
+    },
+    "runtimeApproved": true,
+    "sha256": "90b641834b6f49e2d893cccdb0f0a55c619b120bc05e123f944c81f79202eb14",
+    "nativeDimensions": {
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA"
+    },
+    "nativeCopiedUnchanged": true,
+    "frameCount": 64
+  },
+  {
+    "id": "selene",
+    "name": "Selene",
+    "row": 3,
+    "desc": "Long silver blue hair, blue-violet celestial cloak, armored opaque battle outfit, cyan orb staff.",
+    "category": "heroes",
+    "ref": "assets/animations/heroes/hero-atlas-01.png",
+    "states": [
+      "intro",
+      "idle_respiration",
+      "attack",
+      "ability",
+      "ultimate",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "columns": 8,
+    "rows": 8,
+    "stateRows": [
+      "intro",
+      "idle_respiration",
+      "attack",
+      "ability",
+      "ultimate",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "prompt": "Use case: stylized-concept. Asset type: production sprite animation atlas for Infernal City: Valkyrie Sweeper. Input reference: use ONLY character in ROW 4 of supplied atlas as identity/costume reference. Selene: Long silver blue hair, blue-violet celestial cloak, armored opaque battle outfit, cyan orb staff. Mature adult woman, nonsexual fully dressed combat poses. NEW atlas of ONLY this character. EXACT uniform GRID: 8 columns x 8 rows, 64 equal SQUARE cells, square2048x2048 preferred. ONE full-body drawing per cell, central60% ONLY, 20% transparent padding all sides, feet anchored at75% cellheight. All character parts and weapons completely contained. Each row has8 distinct smoothly progressive hand-drawn frames LEFT to RIGHT: Row1 settle from landing to salute. Row2 idle subtle breathing. Row3 anticipation/weapon strike/cast/recovery. Row4 ability arm-raise and small hand gesture. Row5 powerful ultimate pose (NO aura). Row6 victory proud salute, relax. Row7 defeat exhausted one knee, intact clothing no injury. Row8 farewell then turn, stay visible. Preserve source identity, face, hair, species, costume, weapons, palette, three-quarter orthographic game camera. Crisp detailed anime cel-shaded cyber-gothic game art. IMPORTANT: bodies and solid weapons ONLY; NO magic circles, NO clouds, NO aura, NO rays, NO trails, NO detached sparks, NO effect outside silhouette. Auras are added by the engine. Genuine transparent alpha background; no floor/shadow, no scenery, no checker pattern, no text/labels/numbers/grid/borders/watermark. Do not duplicate other reference characters.",
+    "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-3b9181dc-3793-4b35-a56f-3272553eef75.png",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-3b9181dc-3793-4b35-a56f-3272553eef75.png",
+    "path": "assets/animations/completion-v1/heroes/selene.png",
+    "qa": {
+      "status": "generated_visual_reviewed",
+      "notes": "Revue visuelle identité/poses/grille et mesures alpha: silhouettes distinctes; bruit RVB de faible alpha hors silhouettes.",
+      "alphaMetrics": {
+        "fullyTransparentFraction": 0.45721,
+        "internalBoundaryMeanAlpha": 0.604,
+        "internalBoundaryFractionAbove32": 0.0033,
+        "internalBoundaryFractionAbove128": 0.00154
+      }
+    },
+    "revisionPrompt": "Use case: background-extraction. Edit target is this 8x8 character spritesheet. Remove ALL gray background pixels, haze, ambient glow and halos from every gap and outer margin. Make background and all64 cell gutters genuinely transparent alpha0. Keep ONLY the64 complete character silhouettes and their staffs, exactly unchanged in their existing8x8 grid. Keep faces hair clothing poses weapons details colors and positions. Do not erase the blue cloak itself, only all pixels not belonging to the actual character/staff. No new scene, no checkerboard, no floor, no shadow, no text. Crisp clean cutout edges. Keep EXACTLY8columns8rows64sprites; all remain in separate cells with gap.",
+    "attempts": [
+      {
+        "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-2ef889a8-4820-46c1-b547-5cea5456d761.png",
+        "status": "rejected_background_haze"
+      }
+    ],
+    "runtimeApproved": true,
+    "sha256": "4769e085b75874ecd0be128f4e8b7c3c732aaf52d5d2933d9aa78d0e267223ad",
+    "nativeDimensions": {
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA"
+    },
+    "nativeCopiedUnchanged": true,
+    "frameCount": 64
+  },
+  {
+    "id": "nyx",
+    "name": "nyx-circuit",
+    "ref": "assets/characters/heroines/nyx-circuit-atlas-v1.png",
+    "category": "heroes",
+    "columns": 8,
+    "rows": 4,
+    "states": [
+      "intro",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "stateRows": [
+      "intro",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "prompt": "Use case: stylized-concept. Asset type: production character animation spritesheet for original cyber-gothic game Infernal City. Image1 is the exact adult character nyx-circuit, identity/costume reference only. Generate ONLY this same adult woman, keeping her exact face, hair, costume, weapon, species, palette, art style and original three-quarter orthographic camera. NEW SHEET precisely8 columns x4 rows,32 equal SQUARE cells; overall2:1 landscape, 2048x1024 preferred. ONE complete full-body sprite per cell with identical scale, centered foot anchor at75% cellheight. Character and weapon occupy at most60%cell dimensions, leaving20%padding all sides. Each row is8 genuinely distinct sequential poses, left to right. Row1 INTRO: low arrival/landing, rise, ready salute. Row2 VICTORY: look up, proud salute or weapon raise, relax. Row3 DEFEAT: lose balance, lower onto one knee, bow head; intact fully clothed and uninjured. Row4 OUTRO: respectful farewell, lower hand, slight turn away; do not leave cell or disappear. Subtle natural clothing/hair motion across frames. No sensual posing, no nudity, no blood. Bodies and weapons ONLY: no halos, magic rings, mist, glow clouds, rays, projectiles, detached particles or connecting trails. Genuine transparent alpha background, crisp silhouette with clear blank gutters. No floor/shadow/scenery, no text/labels/numbers/grid/dividers/watermark. Do not reproduce reference four old action rows: make these FOUR NEW narrative states.",
+    "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-a0b3863a-1c12-4a0b-a71b-13635372aaee.png",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-a0b3863a-1c12-4a0b-a71b-13635372aaee.png",
+    "path": "assets/animations/completion-v1/heroes/nyx.png",
+    "qa": {
+      "status": "generated_visual_reviewed",
+      "notes": "Identité, nombre de lignes et poses revus; ancrage/timing final à contrôler en jeu.",
+      "alphaMetrics": {
+        "fullyTransparentFraction": 0.77128,
+        "internalBoundaryMeanAlpha": 0.014,
+        "internalBoundaryFractionAbove32": 0.0,
+        "internalBoundaryFractionAbove128": 0.0
+      }
+    },
+    "runtimeApproved": true,
+    "sha256": "3d1caba682dd1fae101b4b98d64579c3884e0e9fddeece05ab0d517f527d32fa",
+    "nativeDimensions": {
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA"
+    },
+    "nativeCopiedUnchanged": true,
+    "frameCount": 32
+  },
+  {
+    "id": "maris",
+    "name": "maris-blacktide",
+    "ref": "assets/characters/heroines/maris-blacktide-atlas-v1.png",
+    "category": "heroes",
+    "columns": 8,
+    "rows": 4,
+    "states": [
+      "intro",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "stateRows": [
+      "intro",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "prompt": "Use case: stylized-concept. Asset type: production character animation spritesheet for original cyber-gothic game Infernal City. Image1 is the exact adult character maris-blacktide, identity/costume reference only. Generate ONLY this same adult woman, keeping her exact face, hair, costume, weapon, species, palette, art style and original three-quarter orthographic camera. NEW SHEET precisely8 columns x4 rows,32 equal SQUARE cells; overall2:1 landscape, 2048x1024 preferred. ONE complete full-body sprite per cell with identical scale, centered foot anchor at75% cellheight. Character and weapon occupy at most60%cell dimensions, leaving20%padding all sides. Each row is8 genuinely distinct sequential poses, left to right. Row1 INTRO: low arrival/landing, rise, ready salute. Row2 VICTORY: look up, proud salute or weapon raise, relax. Row3 DEFEAT: lose balance, lower onto one knee, bow head; intact fully clothed and uninjured. Row4 OUTRO: respectful farewell, lower hand, slight turn away; do not leave cell or disappear. Subtle natural clothing/hair motion across frames. No sensual posing, no nudity, no blood. Bodies and weapons ONLY: no halos, magic rings, mist, glow clouds, rays, projectiles, detached particles or connecting trails. Genuine transparent alpha background, crisp silhouette with clear blank gutters. No floor/shadow/scenery, no text/labels/numbers/grid/dividers/watermark. Do not reproduce reference four old action rows: make these FOUR NEW narrative states.",
+    "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-2e65545d-a55c-49c6-b3de-73ab5a8d5627.png",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-2e65545d-a55c-49c6-b3de-73ab5a8d5627.png",
+    "path": "assets/animations/completion-v1/heroes/maris.png",
+    "qa": {
+      "status": "generated_visual_reviewed",
+      "notes": "Identité, nombre de lignes et poses revus; ancrage/timing final à contrôler en jeu.",
+      "alphaMetrics": {
+        "fullyTransparentFraction": 0.60261,
+        "internalBoundaryMeanAlpha": 0.084,
+        "internalBoundaryFractionAbove32": 0.0,
+        "internalBoundaryFractionAbove128": 0.0
+      }
+    },
+    "runtimeApproved": true,
+    "sha256": "7d8c81308f99ca1f4972eaa59797f9e19b6392c8c81ae9a05d8e049f5aec73fc",
+    "nativeDimensions": {
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA"
+    },
+    "nativeCopiedUnchanged": true,
+    "frameCount": 32
+  },
+  {
+    "id": "zahra",
+    "name": "zahra-mille-ciels",
+    "ref": "assets/characters/heroines/zahra-mille-ciels-atlas-v1.png",
+    "category": "heroes",
+    "columns": 8,
+    "rows": 4,
+    "states": [
+      "intro",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "stateRows": [
+      "intro",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "prompt": "Use case: stylized-concept. Asset type: production character animation spritesheet for original cyber-gothic game Infernal City. Image1 is the exact adult character zahra-mille-ciels, identity/costume reference only. Generate ONLY this same adult woman, keeping her exact face, hair, costume, weapon, species, palette, art style and original three-quarter orthographic camera. NEW SHEET precisely8 columns x4 rows,32 equal SQUARE cells; overall2:1 landscape, 2048x1024 preferred. ONE complete full-body sprite per cell with identical scale, centered foot anchor at75% cellheight. Character and weapon occupy at most60%cell dimensions, leaving20%padding all sides. Each row is8 genuinely distinct sequential poses, left to right. Row1 INTRO: low arrival/landing, rise, ready salute. Row2 VICTORY: look up, proud salute or weapon raise, relax. Row3 DEFEAT: lose balance, lower onto one knee, bow head; intact fully clothed and uninjured. Row4 OUTRO: respectful farewell, lower hand, slight turn away; do not leave cell or disappear. Subtle natural clothing/hair motion across frames. No sensual posing, no nudity, no blood. Bodies and weapons ONLY: no halos, magic rings, mist, glow clouds, rays, projectiles, detached particles or connecting trails. Genuine transparent alpha background, crisp silhouette with clear blank gutters. No floor/shadow/scenery, no text/labels/numbers/grid/dividers/watermark. Do not reproduce reference four old action rows: make these FOUR NEW narrative states.",
+    "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-64f8abf6-7316-4181-819b-207c08c1f442.png",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-64f8abf6-7316-4181-819b-207c08c1f442.png",
+    "path": "assets/animations/completion-v1/heroes/zahra.png",
+    "qa": {
+      "status": "generated_visual_reviewed",
+      "notes": "Fond gris supprimé via imagegen; atlas 8×4, identité, poses et alpha revus.",
+      "alphaMetrics": {
+        "fullyTransparentFraction": 0.66376,
+        "internalBoundaryMeanAlpha": 0.017,
+        "internalBoundaryFractionAbove32": 0.0,
+        "internalBoundaryFractionAbove128": 0.0
+      }
+    },
+    "runtimeApproved": true,
+    "attempts": [
+      {
+        "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-c6726bbe-debb-4722-9bf5-40f23583e393.png",
+        "status": "rejected_gray_haze"
+      }
+    ],
+    "revisionPrompt": "Edit the supplied production sprite sheet ONLY to remove all background and ambient gray haze. Preserve the exact image dimensions, all 32 character poses, their grid positions, scale, identities and costume details without changing composition. Remove every pixel of white/gray/colored matte and atmospheric haze outside each solid woman/robe/weapon silhouette. Output genuine transparent PNG with exactly alpha 0 in all empty gutters and around the characters; clean subtle antialiased silhouette edges. Do NOT draw colored outlines or replacement backgrounds. The entire 8 columns by 4 rows sprite sheet must remain unchanged otherwise. Each one is a nonsexual fully clothed adult fantasy combat character.",
+    "output_hint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-64f8abf6-7316-4181-819b-207c08c1f442.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "sha256": "235f5bdd6e76db649c9f5579615500ada6a64590598c9cdc642632072c13a758",
+    "nativeDimensions": {
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA"
+    },
+    "nativeCopiedUnchanged": true,
+    "frameCount": 32
+  },
+  {
+    "id": "mircalla",
+    "name": "mircalla-dollheart",
+    "ref": "assets/characters/heroines/mircalla-dollheart-atlas-v1.png",
+    "category": "heroes",
+    "columns": 8,
+    "rows": 4,
+    "states": [
+      "intro",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "stateRows": [
+      "intro",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "prompt": "Use case: stylized-concept. Asset type: production character animation spritesheet for original cyber-gothic game Infernal City. Image1 is the exact adult character mircalla-dollheart, identity/costume reference only. Generate ONLY this same adult woman, keeping her exact face, hair, costume, weapon, species, palette, art style and original three-quarter orthographic camera. NEW SHEET precisely8 columns x4 rows,32 equal SQUARE cells; overall2:1 landscape, 2048x1024 preferred. ONE complete full-body sprite per cell with identical scale, centered foot anchor at75% cellheight. Character and weapon occupy at most60%cell dimensions, leaving20%padding all sides. Each row is8 genuinely distinct sequential poses, left to right. Row1 INTRO: low arrival/landing, rise, ready salute. Row2 VICTORY: look up, proud salute or weapon raise, relax. Row3 DEFEAT: lose balance, lower onto one knee, bow head; intact fully clothed and uninjured. Row4 OUTRO: respectful farewell, lower hand, slight turn away; do not leave cell or disappear. Subtle natural clothing/hair motion across frames. No sensual posing, no nudity, no blood. Bodies and weapons ONLY: no halos, magic rings, mist, glow clouds, rays, projectiles, detached particles or connecting trails. Genuine transparent alpha background, crisp silhouette with clear blank gutters. No floor/shadow/scenery, no text/labels/numbers/grid/dividers/watermark. Do not reproduce reference four old action rows: make these FOUR NEW narrative states.",
+    "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-6370df73-bfbe-4202-9b00-835d9bf6ab31.png",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-6370df73-bfbe-4202-9b00-835d9bf6ab31.png",
+    "path": "assets/animations/completion-v1/heroes/mircalla.png",
+    "qa": {
+      "status": "generated_visual_reviewed",
+      "notes": "Identité, nombre de lignes et poses revus; ancrage/timing final à contrôler en jeu.",
+      "alphaMetrics": {
+        "fullyTransparentFraction": 0.73493,
+        "internalBoundaryMeanAlpha": 0.021,
+        "internalBoundaryFractionAbove32": 0.0,
+        "internalBoundaryFractionAbove128": 0.0
+      }
+    },
+    "runtimeApproved": true,
+    "sha256": "57c33e13d8910cf6748767e1f0d3d63be041dbd70090763493fd0468faba6ce3",
+    "nativeDimensions": {
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA"
+    },
+    "nativeCopiedUnchanged": true,
+    "frameCount": 32
+  },
+  {
+    "id": "aurelia",
+    "name": "aurelia-brassheart",
+    "ref": "assets/characters/heroines/aurelia-brassheart-atlas-v1.png",
+    "category": "heroes",
+    "columns": 8,
+    "rows": 4,
+    "states": [
+      "intro",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "stateRows": [
+      "intro",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "prompt": "Use case: stylized-concept. Asset type: production character animation spritesheet for original cyber-gothic game Infernal City. Image1 is the exact adult character aurelia-brassheart, identity/costume reference only. Generate ONLY this same adult woman, keeping her exact face, hair, costume, weapon, species, palette, art style and original three-quarter orthographic camera. NEW SHEET precisely8 columns x4 rows,32 equal SQUARE cells; overall2:1 landscape, 2048x1024 preferred. ONE complete full-body sprite per cell with identical scale, centered foot anchor at75% cellheight. Character and weapon occupy at most60%cell dimensions, leaving20%padding all sides. Each row is8 genuinely distinct sequential poses, left to right. Row1 INTRO: low arrival/landing, rise, ready salute. Row2 VICTORY: look up, proud salute or weapon raise, relax. Row3 DEFEAT: lose balance, lower onto one knee, bow head; intact fully clothed and uninjured. Row4 OUTRO: respectful farewell, lower hand, slight turn away; do not leave cell or disappear. Subtle natural clothing/hair motion across frames. No sensual posing, no nudity, no blood. Bodies and weapons ONLY: no halos, magic rings, mist, glow clouds, rays, projectiles, detached particles or connecting trails. Genuine transparent alpha background, crisp silhouette with clear blank gutters. No floor/shadow/scenery, no text/labels/numbers/grid/dividers/watermark. Do not reproduce reference four old action rows: make these FOUR NEW narrative states.",
+    "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-0eaa9832-281b-42a4-a6e0-9b60ba465ce3.png",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-0eaa9832-281b-42a4-a6e0-9b60ba465ce3.png",
+    "path": "assets/animations/completion-v1/heroes/aurelia.png",
+    "qa": {
+      "status": "generated_visual_reviewed",
+      "notes": "Identité, nombre de lignes et poses revus; ancrage/timing final à contrôler en jeu.",
+      "alphaMetrics": {
+        "fullyTransparentFraction": 0.68583,
+        "internalBoundaryMeanAlpha": 0.022,
+        "internalBoundaryFractionAbove32": 0.0,
+        "internalBoundaryFractionAbove128": 0.0
+      }
+    },
+    "runtimeApproved": true,
+    "sha256": "7b79f94302a24e84b68228c4923127de27d2b3c5b4918e0d306d3c87dc4673cd",
+    "nativeDimensions": {
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA"
+    },
+    "nativeCopiedUnchanged": true,
+    "frameCount": 32
+  },
+  {
+    "id": "isolde",
+    "name": "isolde-mourne",
+    "ref": "assets/characters/heroines/isolde-mourne-atlas-v1.png",
+    "category": "heroes",
+    "columns": 8,
+    "rows": 4,
+    "states": [
+      "intro",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "stateRows": [
+      "intro",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "prompt": "Use case: stylized-concept. Asset type: production character animation spritesheet for Infernal City. Image1 is ONLY identity/costume reference for isolde-mourne, a mature adult woman. Preserve exact face,hair,species,costume,weapon,palette and crisp anime cel-shaded three-quarter orthographic game camera. NEW sheet exactly8 columns by4 rows,32equal SQUARE cells,total2:1 landscape. Exactly ONE isolated complete full-body sprite per cell, fixed centered foot anchor and same scale throughout. All weapons/limbs/capes stay within central60% of cell, leaving20%TRANSPARENT padding. Every row is8 different sequential poses left-right. Row1 INTRO: low landing, rise into ready posture and salute. Row2 VICTORY: proud gaze, salute or raise weapon, then relax. Row3 DEFEAT: lower gradually to one knee/head bowed, intact fully opaque clothing, no blood/injury. Row4 OUTRO: farewell gesture, lower hand, gentle turn away, remain visible. Natural hair/clothing motion, nonsexual action. No magic effects, no halos, no glow clouds, no mist, no shadows, no detached particles/trails. Only fully rendered opaque character and solid weapon silhouette, crisp contours and genuine alpha0 completely empty space everywhere else. Do not depict any background color, ambient haze, white/gray matte, floor, scenery, labels/text/numbers/grid/borders/watermark. 2048x1024 preferred; regular8x4 grid essential. Do not copy old action rows; create these4new narrative states.",
+    "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-2afe562e-8251-4627-94ee-7c7a9d3c72be.png",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-2afe562e-8251-4627-94ee-7c7a9d3c72be.png",
+    "path": "assets/animations/completion-v1/heroes/isolde.png",
+    "qa": {
+      "status": "generated_visual_reviewed",
+      "notes": "Identité, nombre de lignes et poses revus; ancrage/timing final à contrôler en jeu.",
+      "alphaMetrics": {
+        "fullyTransparentFraction": 0.61414,
+        "internalBoundaryMeanAlpha": 0.045,
+        "internalBoundaryFractionAbove32": 0.0,
+        "internalBoundaryFractionAbove128": 0.0
+      }
+    },
+    "runtimeApproved": true,
+    "sha256": "d89024719d3c6555fca538957f9861ef3c301fe71e818d35dac98d7b16d0f665",
+    "nativeDimensions": {
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA"
+    },
+    "nativeCopiedUnchanged": true,
+    "frameCount": 32
+  },
+  {
+    "id": "vega",
+    "name": "vega-solari",
+    "ref": "assets/characters/heroines/vega-solari-atlas-v1.png",
+    "category": "heroes",
+    "columns": 8,
+    "rows": 4,
+    "states": [
+      "intro",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "stateRows": [
+      "intro",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "prompt": "Use case: stylized-concept. Asset type: production character animation spritesheet for Infernal City. Image1 is ONLY identity/costume reference for vega-solari, a mature adult woman. Preserve exact face,hair,species,costume,weapon,palette and crisp anime cel-shaded three-quarter orthographic game camera. NEW sheet exactly8 columns by4 rows,32equal SQUARE cells,total2:1 landscape. Exactly ONE isolated complete full-body sprite per cell, fixed centered foot anchor and same scale throughout. All weapons/limbs/capes stay within central60% of cell, leaving20%TRANSPARENT padding. Every row is8 different sequential poses left-right. Row1 INTRO: low landing, rise into ready posture and salute. Row2 VICTORY: proud gaze, salute or raise weapon, then relax. Row3 DEFEAT: lower gradually to one knee/head bowed, intact fully opaque clothing, no blood/injury. Row4 OUTRO: farewell gesture, lower hand, gentle turn away, remain visible. Natural hair/clothing motion, nonsexual action. No magic effects, no halos, no glow clouds, no mist, no shadows, no detached particles/trails. Only fully rendered opaque character and solid weapon silhouette, crisp contours and genuine alpha0 completely empty space everywhere else. Do not depict any background color, ambient haze, white/gray matte, floor, scenery, labels/text/numbers/grid/borders/watermark. 2048x1024 preferred; regular8x4 grid essential. Do not copy old action rows; create these4new narrative states.",
+    "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-e5b29a90-85fa-42e1-bfba-a7a9fe8f0077.png",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-e5b29a90-85fa-42e1-bfba-a7a9fe8f0077.png",
+    "path": "assets/animations/completion-v1/heroes/vega.png",
+    "qa": {
+      "status": "generated_visual_reviewed",
+      "notes": "Revue visuelle identité/poses/grille et mesures alpha: silhouettes distinctes; bruit RVB de faible alpha hors silhouettes.",
+      "alphaMetrics": {
+        "fullyTransparentFraction": 0.32947,
+        "internalBoundaryMeanAlpha": 0.805,
+        "internalBoundaryFractionAbove32": 0.00182,
+        "internalBoundaryFractionAbove128": 0.00139
+      }
+    },
+    "runtimeApproved": true,
+    "sha256": "1111a8bf20b45d0ecc3fc46657b2aea1940d958fb9251a5cbfb7c4bb3cce2ab0",
+    "nativeDimensions": {
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA"
+    },
+    "nativeCopiedUnchanged": true,
+    "frameCount": 32
+  },
+  {
+    "id": "hana",
+    "name": "hana-kurogane",
+    "ref": "assets/characters/heroines/hana-kurogane-atlas-v1.png",
+    "category": "heroes",
+    "columns": 8,
+    "rows": 4,
+    "states": [
+      "intro",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "stateRows": [
+      "intro",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "prompt": "Use case: stylized-concept. Asset type: production character animation spritesheet for Infernal City. Image1 is ONLY identity/costume reference for hana-kurogane, a mature adult woman. Preserve exact face,hair,species,costume,weapon,palette and crisp anime cel-shaded three-quarter orthographic game camera. NEW sheet exactly8 columns by4 rows,32equal SQUARE cells,total2:1 landscape. Exactly ONE isolated complete full-body sprite per cell, fixed centered foot anchor and same scale throughout. All weapons/limbs/capes stay within central60% of cell, leaving20%TRANSPARENT padding. Every row is8 different sequential poses left-right. Row1 INTRO: low landing, rise into ready posture and salute. Row2 VICTORY: proud gaze, salute or raise weapon, then relax. Row3 DEFEAT: lower gradually to one knee/head bowed, intact fully opaque clothing, no blood/injury. Row4 OUTRO: farewell gesture, lower hand, gentle turn away, remain visible. Natural hair/clothing motion, nonsexual action. No magic effects, no halos, no glow clouds, no mist, no shadows, no detached particles/trails. Only fully rendered opaque character and solid weapon silhouette, crisp contours and genuine alpha0 completely empty space everywhere else. Do not depict any background color, ambient haze, white/gray matte, floor, scenery, labels/text/numbers/grid/borders/watermark. 2048x1024 preferred; regular8x4 grid essential. Do not copy old action rows; create these4new narrative states.",
+    "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-b2561aee-89e3-4f65-a6c3-2b09963e5cb7.png",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-b2561aee-89e3-4f65-a6c3-2b09963e5cb7.png",
+    "path": "assets/animations/completion-v1/heroes/hana.png",
+    "qa": {
+      "status": "generated_visual_reviewed",
+      "notes": "Identité, nombre de lignes et poses revus; ancrage/timing final à contrôler en jeu.",
+      "alphaMetrics": {
+        "fullyTransparentFraction": 0.57982,
+        "internalBoundaryMeanAlpha": 0.11,
+        "internalBoundaryFractionAbove32": 0.0,
+        "internalBoundaryFractionAbove128": 0.0
+      }
+    },
+    "runtimeApproved": true,
+    "sha256": "8ec9f9278fcdd9ee139c74d543a9e9be374aee3758533c68b9e9645bae168fe4",
+    "nativeDimensions": {
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA"
+    },
+    "nativeCopiedUnchanged": true,
+    "frameCount": 32
+  },
+  {
+    "id": "amara",
+    "name": "amara-verdigris",
+    "ref": "assets/characters/heroines/amara-verdigris-atlas-v1.png",
+    "category": "heroes",
+    "columns": 8,
+    "rows": 4,
+    "states": [
+      "intro",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "stateRows": [
+      "intro",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "prompt": "Use case: stylized-concept. Asset type: production character animation spritesheet for Infernal City. Image1 is ONLY identity/costume reference for amara-verdigris, a mature adult woman. Preserve exact face,hair,species,costume,weapon,palette and crisp anime cel-shaded three-quarter orthographic game camera. NEW sheet exactly8 columns by4 rows,32equal SQUARE cells,total2:1 landscape. Exactly ONE isolated complete full-body sprite per cell, fixed centered foot anchor and same scale throughout. All weapons/limbs/capes stay within central60% of cell, leaving20%TRANSPARENT padding. Every row is8 different sequential poses left-right. Row1 INTRO: low landing, rise into ready posture and salute. Row2 VICTORY: proud gaze, salute or raise weapon, then relax. Row3 DEFEAT: lower gradually to one knee/head bowed, intact fully opaque clothing, no blood/injury. Row4 OUTRO: farewell gesture, lower hand, gentle turn away, remain visible. Natural hair/clothing motion, nonsexual action. No magic effects, no halos, no glow clouds, no mist, no shadows, no detached particles/trails. Only fully rendered opaque character and solid weapon silhouette, crisp contours and genuine alpha0 completely empty space everywhere else. Do not depict any background color, ambient haze, white/gray matte, floor, scenery, labels/text/numbers/grid/borders/watermark. 2048x1024 preferred; regular8x4 grid essential. Do not copy old action rows; create these4new narrative states.",
+    "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-47f3f11b-eb89-42cf-9de9-b8fbcb60d235.png",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-47f3f11b-eb89-42cf-9de9-b8fbcb60d235.png",
+    "path": "assets/animations/completion-v1/heroes/amara.png",
+    "qa": {
+      "status": "generated_visual_reviewed",
+      "notes": "Revue visuelle identité/poses/grille et mesures alpha: silhouettes distinctes; bruit RVB de faible alpha hors silhouettes.",
+      "alphaMetrics": {
+        "fullyTransparentFraction": 0.27945,
+        "internalBoundaryMeanAlpha": 0.61,
+        "internalBoundaryFractionAbove32": 0.00104,
+        "internalBoundaryFractionAbove128": 0.00078
+      }
+    },
+    "runtimeApproved": true,
+    "sha256": "9dca7a1f80b35f2aaf0391215aa4495fd4ec593398aa0079d9c0bfe62ba8e37a",
+    "nativeDimensions": {
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA"
+    },
+    "nativeCopiedUnchanged": true,
+    "frameCount": 32
+  },
+  {
+    "id": "freyja",
+    "name": "freyja-rimeborne",
+    "ref": "assets/characters/heroines/freyja-rimeborne-atlas-v1.png",
+    "category": "heroes",
+    "columns": 8,
+    "rows": 4,
+    "states": [
+      "intro",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "stateRows": [
+      "intro",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "prompt": "Use case: stylized-concept. Asset type: production character animation spritesheet for Infernal City. Image1 is ONLY identity/costume reference for freyja-rimeborne, a mature adult woman. Preserve exact face,hair,species,costume,weapon,palette and crisp anime cel-shaded three-quarter orthographic game camera. NEW sheet exactly8 columns by4 rows,32equal SQUARE cells,total2:1 landscape. Exactly ONE isolated complete full-body sprite per cell, fixed centered foot anchor and same scale throughout. All weapons/limbs/capes stay within central60% of cell, leaving20%TRANSPARENT padding. Every row is8 different sequential poses left-right. Row1 INTRO: low landing, rise into ready posture and salute. Row2 VICTORY: proud gaze, salute or raise weapon, then relax. Row3 DEFEAT: lower gradually to one knee/head bowed, intact fully opaque clothing, no blood/injury. Row4 OUTRO: farewell gesture, lower hand, gentle turn away, remain visible. Natural hair/clothing motion, nonsexual action. No magic effects, no halos, no glow clouds, no mist, no shadows, no detached particles/trails. Only fully rendered opaque character and solid weapon silhouette, crisp contours and genuine alpha0 completely empty space everywhere else. Do not depict any background color, ambient haze, white/gray matte, floor, scenery, labels/text/numbers/grid/borders/watermark. 2048x1024 preferred; regular8x4 grid essential. Do not copy old action rows; create these4new narrative states.",
+    "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-b7f79bbc-b400-4cc1-8031-4b94914debb3.png",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-b7f79bbc-b400-4cc1-8031-4b94914debb3.png",
+    "path": "assets/animations/completion-v1/heroes/freyja.png",
+    "qa": {
+      "status": "generated_visual_reviewed",
+      "notes": "Revue visuelle identité/poses/grille et mesures alpha: silhouettes distinctes; bruit RVB de faible alpha hors silhouettes.",
+      "alphaMetrics": {
+        "fullyTransparentFraction": 0.20329,
+        "internalBoundaryMeanAlpha": 0.998,
+        "internalBoundaryFractionAbove32": 0.00156,
+        "internalBoundaryFractionAbove128": 0.00139
+      }
+    },
+    "runtimeApproved": true,
+    "sha256": "d26e4da19c838e7bdef83c26c5408131f2f13cdd2f662f2f89ca38def06db76b",
+    "nativeDimensions": {
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA"
+    },
+    "nativeCopiedUnchanged": true,
+    "frameCount": 32
+  },
+  {
+    "id": "xyra",
+    "name": "xyra-bioforge",
+    "category": "bosses",
+    "ref": "assets/characters/villains/xyra-bioforge-atlas-v1.png",
+    "phase": "Biomechanical demon: unfold steel carapace, then spread mechanical back limbs; preserve body silhouette.",
+    "columns": 8,
+    "rows": 6,
+    "states": [
+      "intro",
+      "phase_shift_2",
+      "phase_shift_3",
+      "heavy_telegraph",
+      "defeat",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Production game animation sprite sheet for Infernal City.\nREFERENCE IMAGE is the identity/costume/model reference of xyra-bioforge. Preserve exactly the distinctive mature adult character face, hair, species, armor, weapon, colors, and crisp anime cel shaded three-quarter orthographic combat camera. Biomechanical demon: unfold steel carapace, then spread mechanical back limbs; preserve body silhouette.\nCreate a NEW TRANSPARENT PNG atlas, EXACTLY EIGHT COLUMNS AND SIX ROWS, 48 individual complete full-body sprites. All 48 cells equal square size; overall landscape aspect ratio 4:3. This output has SIX rows, not the reference's four rows. One and only one character per cell. Use a fixed centered foot anchor and consistent character scale in all frames. Each whole silhouette including weapons, wings and cloak stays inside its own cell, with 20 percent clear transparent margin on every side; never cross a cell boundary.\nRows top to bottom, each row 8 chronological distinct keyframes:\nROW 1 INTRO: low arrival crouch, gradually rise, inspect opponent, confident ready stance.\nROW 2 PHASE_SHIFT_2: visibly tense, open armor/cape or prepare weapon, build into stronger battle stance.\nROW 3 PHASE_SHIFT_3: visibly different more imposing posture, unfold own armor/wings/cape, establish final commanding stance.\nROW 4 HEAVY_TELEGRAPH: lean and draw weapon/arms far back, wind up slowly, brief held charged posture, return ready. Use body pose only.\nROW 5 DEFEAT: stagger softly, lower weapon, sink to one knee or low weary crouch, bow head. No blood, wounds, exposed anatomy or disintegration. Outfit intact.\nROW 6 IDLE: subtle breathing cycle in ready posture, tiny hair/clothing motion, final frame loops back to first.\nThe character is fully dressed in opaque combat costume. Nonsexual, no graphic injury. No additional characters or summons. No external aura, fog, smoke, glow clouds, circles, particles, trails, ground shadow, text, numbers, gridlines or scenery. ONLY solid character and weapon silhouettes with crisp edges. Empty space must be real alpha=0, not gray/white/black paint or semitransparent matte. Retain design details; never copy or retain reference background or effects. Exactly 8 by 6 alignment is essential.",
+    "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-f4d1e620-5745-4f59-9e06-ab850bcf34b9.png",
+    "output_hint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-f4d1e620-5745-4f59-9e06-ab850bcf34b9.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "path": "assets/animations/completion-v1/bosses/xyra.png",
+    "stateRows": {
+      "intro": 0,
+      "phase_shift_2": 1,
+      "phase_shift_3": 2,
+      "heavy_telegraph": 3,
+      "defeat": 4,
+      "idle": 5
+    },
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-f4d1e620-5745-4f59-9e06-ab850bcf34b9.png",
+    "qa": {
+      "status": "generated_visual_reviewed",
+      "notes": "Atlas 8×6: identité, silhouettes/poses et transparence vérifiées; ajustement du timing final en jeu.",
+      "alphaMetrics": {
+        "fullyTransparentFraction": 0.18821,
+        "internalBoundaryMeanAlpha": 1.345,
+        "internalBoundaryFractionAbove32": 0.0,
+        "internalBoundaryFractionAbove128": 0.0
+      }
+    },
+    "runtimeApproved": true,
+    "sha256": "a922225eabb0d927048b6246efa4b96a7d1ae98d6c584d09eea32c8be7c785c2",
+    "nativeDimensions": {
+      "width": 1448,
+      "height": 1086,
+      "mode": "RGBA"
+    },
+    "nativeCopiedUnchanged": true,
+    "frameCount": 48
+  },
+  {
+    "id": "ossuary",
+    "name": "lady-ossuary",
+    "category": "bosses",
+    "ref": "assets/characters/villains/lady-ossuary-atlas-v1.png",
+    "phase": "Skeletal noble sovereign: raise skeletal armor plates and bone crown in two stages; no gore.",
+    "columns": 8,
+    "rows": 6,
+    "states": [
+      "intro",
+      "phase_shift_2",
+      "phase_shift_3",
+      "heavy_telegraph",
+      "defeat",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Production game animation sprite sheet for Infernal City.\nREFERENCE IMAGE is the identity/costume/model reference of lady-ossuary. Preserve exactly the distinctive mature adult character face, hair, species, armor, weapon, colors, and crisp anime cel shaded three-quarter orthographic combat camera. Skeletal noble sovereign: raise skeletal armor plates and bone crown in two stages; no gore.\nCreate a NEW TRANSPARENT PNG atlas, EXACTLY EIGHT COLUMNS AND SIX ROWS, 48 individual complete full-body sprites. All 48 cells equal square size; overall landscape aspect ratio 4:3. This output has SIX rows, not the reference's four rows. One and only one character per cell. Use a fixed centered foot anchor and consistent character scale in all frames. Each whole silhouette including weapons, wings and cloak stays inside its own cell, with 20 percent clear transparent margin on every side; never cross a cell boundary.\nRows top to bottom, each row 8 chronological distinct keyframes:\nROW 1 INTRO: low arrival crouch, gradually rise, inspect opponent, confident ready stance.\nROW 2 PHASE_SHIFT_2: visibly tense, open armor/cape or prepare weapon, build into stronger battle stance.\nROW 3 PHASE_SHIFT_3: visibly different more imposing posture, unfold own armor/wings/cape, establish final commanding stance.\nROW 4 HEAVY_TELEGRAPH: lean and draw weapon/arms far back, wind up slowly, brief held charged posture, return ready. Use body pose only.\nROW 5 DEFEAT: stagger softly, lower weapon, sink to one knee or low weary crouch, bow head. No blood, wounds, exposed anatomy or disintegration. Outfit intact.\nROW 6 IDLE: subtle breathing cycle in ready posture, tiny hair/clothing motion, final frame loops back to first.\nThe character is fully dressed in opaque combat costume. Nonsexual, no graphic injury. No additional characters or summons. No external aura, fog, smoke, glow clouds, circles, particles, trails, ground shadow, text, numbers, gridlines or scenery. ONLY solid character and weapon silhouettes with crisp edges. Empty space must be real alpha=0, not gray/white/black paint or semitransparent matte. Retain design details; never copy or retain reference background or effects. Exactly 8 by 6 alignment is essential.",
+    "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-2e2da56b-adec-430c-94ca-a28c8ee7069c.png",
+    "output_hint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-2e2da56b-adec-430c-94ca-a28c8ee7069c.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "path": "assets/animations/completion-v1/bosses/ossuary.png",
+    "stateRows": {
+      "intro": 0,
+      "phase_shift_2": 1,
+      "phase_shift_3": 2,
+      "heavy_telegraph": 3,
+      "defeat": 4,
+      "idle": 5
+    },
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-2e2da56b-adec-430c-94ca-a28c8ee7069c.png",
+    "qa": {
+      "status": "generated_visual_reviewed",
+      "notes": "Atlas 8×6: identité, silhouettes/poses et transparence vérifiées; ajustement du timing final en jeu.",
+      "alphaMetrics": {
+        "fullyTransparentFraction": 0.39829,
+        "internalBoundaryMeanAlpha": 0.445,
+        "internalBoundaryFractionAbove32": 0.00115,
+        "internalBoundaryFractionAbove128": 0.00081
+      }
+    },
+    "runtimeApproved": true,
+    "sha256": "e8372efedd9a6597cfdfaf310885fc51530bba6b31c51630c182369bd2f1b0b2",
+    "nativeDimensions": {
+      "width": 1448,
+      "height": 1086,
+      "mode": "RGBA"
+    },
+    "nativeCopiedUnchanged": true,
+    "frameCount": 48
+  },
+  {
+    "id": "umbrael",
+    "name": "umbrael-shadow",
+    "category": "bosses",
+    "ref": "assets/characters/villains/umbrael-shadow-atlas-v1.png",
+    "phase": "Shadow mistress: coil cloak inward, then unfurl cloak into a powerful pose; no smoke.",
+    "columns": 8,
+    "rows": 6,
+    "states": [
+      "intro",
+      "phase_shift_2",
+      "phase_shift_3",
+      "heavy_telegraph",
+      "defeat",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Production game animation sprite sheet for Infernal City.\nREFERENCE IMAGE is the identity/costume/model reference of umbrael-shadow. Preserve exactly the distinctive mature adult character face, hair, species, armor, weapon, colors, and crisp anime cel shaded three-quarter orthographic combat camera. Shadow mistress: coil cloak inward, then unfurl cloak into a powerful pose; no smoke.\nCreate a NEW TRANSPARENT PNG atlas, EXACTLY EIGHT COLUMNS AND SIX ROWS, 48 individual complete full-body sprites. All 48 cells equal square size; overall landscape aspect ratio 4:3. This output has SIX rows, not the reference's four rows. One and only one character per cell. Use a fixed centered foot anchor and consistent character scale in all frames. Each whole silhouette including weapons, wings and cloak stays inside its own cell, with 20 percent clear transparent margin on every side; never cross a cell boundary.\nRows top to bottom, each row 8 chronological distinct keyframes:\nROW 1 INTRO: low arrival crouch, gradually rise, inspect opponent, confident ready stance.\nROW 2 PHASE_SHIFT_2: visibly tense, open armor/cape or prepare weapon, build into stronger battle stance.\nROW 3 PHASE_SHIFT_3: visibly different more imposing posture, unfold own armor/wings/cape, establish final commanding stance.\nROW 4 HEAVY_TELEGRAPH: lean and draw weapon/arms far back, wind up slowly, brief held charged posture, return ready. Use body pose only.\nROW 5 DEFEAT: stagger softly, lower weapon, sink to one knee or low weary crouch, bow head. No blood, wounds, exposed anatomy or disintegration. Outfit intact.\nROW 6 IDLE: subtle breathing cycle in ready posture, tiny hair/clothing motion, final frame loops back to first.\nThe character is fully dressed in opaque combat costume. Nonsexual, no graphic injury. No additional characters or summons. No external aura, fog, smoke, glow clouds, circles, particles, trails, ground shadow, text, numbers, gridlines or scenery. ONLY solid character and weapon silhouettes with crisp edges. Empty space must be real alpha=0, not gray/white/black paint or semitransparent matte. Retain design details; never copy or retain reference background or effects. Exactly 8 by 6 alignment is essential.",
+    "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-c4f95ad9-2b16-40fd-9d7e-85a7105e2a6e.png",
+    "output_hint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-c4f95ad9-2b16-40fd-9d7e-85a7105e2a6e.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "path": "assets/animations/completion-v1/bosses/umbrael.png",
+    "stateRows": {
+      "intro": 0,
+      "phase_shift_2": 1,
+      "phase_shift_3": 2,
+      "heavy_telegraph": 3,
+      "defeat": 4,
+      "idle": 5
+    },
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-c4f95ad9-2b16-40fd-9d7e-85a7105e2a6e.png",
+    "qa": {
+      "status": "generated_visual_reviewed",
+      "notes": "Atlas 8×6: identité, séquences, silhouettes et gouttières vérifiées. Aucun pixel alpha>32 sur les limites de cellules; bruit RVB invisible à faible alpha conservé natif.",
+      "alphaMetrics": {
+        "fullyTransparentFraction": 0.30021,
+        "internalBoundaryMeanAlpha": 0.488,
+        "internalBoundaryFractionAbove32": 0.0,
+        "internalBoundaryFractionAbove128": 0.0
+      }
+    },
+    "runtimeApproved": true,
+    "sha256": "29332d4b8c5c4831079362d04a15cf875339c7cfd8e94b7fd15e87e1c240874d",
+    "nativeDimensions": {
+      "width": 1448,
+      "height": 1086,
+      "mode": "RGBA"
+    },
+    "nativeCopiedUnchanged": true,
+    "frameCount": 48
+  },
+  {
+    "id": "pestifera",
+    "name": "pestifera",
+    "category": "bosses",
+    "ref": "assets/characters/villains/pestifera-atlas-v1.png",
+    "phase": "Plague doctor: prepare syringe staff, then open brass shoulder apparatus; preserve hat, ivory beak mask, vials and long coat.",
+    "columns": 8,
+    "rows": 6,
+    "states": [
+      "intro",
+      "phase_shift_2",
+      "phase_shift_3",
+      "heavy_telegraph",
+      "defeat",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Production game animation sprite sheet for Infernal City.\nREFERENCE IMAGE is the identity/costume/model reference of pestifera. Preserve exactly the distinctive mature adult character face, hair, species, armor, weapon, colors, and crisp anime cel shaded three-quarter orthographic combat camera. Plague physician duchess wearing the exact reference top hat, ivory beak mask, black/brass long coat, dark trousers, gloves and boots, green medicine vials, brass syringe staff. Phase changes ready her medical staff and expand her brass shoulder apparatus, always preserve this plague-doctor identity. No organic carapace, fungal fins, exposed disease or gore.\nCreate a NEW TRANSPARENT PNG atlas, EXACTLY EIGHT COLUMNS AND SIX ROWS, 48 individual complete full-body sprites. All 48 cells equal square size; overall landscape aspect ratio 4:3. This output has SIX rows, not the reference's four rows. One and only one character per cell. Use a fixed centered foot anchor and consistent character scale in all frames. Each whole silhouette including weapons, wings and cloak stays inside its own cell, with 20 percent clear transparent margin on every side; never cross a cell boundary.\nRows top to bottom, each row 8 chronological distinct keyframes:\nROW 1 INTRO: low arrival crouch, gradually rise, inspect opponent, confident ready stance.\nROW 2 PHASE_SHIFT_2: visibly tense, open armor/cape or prepare weapon, build into stronger battle stance.\nROW 3 PHASE_SHIFT_3: visibly different more imposing posture, unfold own armor/wings/cape, establish final commanding stance.\nROW 4 HEAVY_TELEGRAPH: lean and draw weapon/arms far back, wind up slowly, brief held charged posture, return ready. Use body pose only.\nROW 5 DEFEAT: stagger softly, lower weapon, sink to one knee or low weary crouch, bow head. No blood, wounds, exposed anatomy or disintegration. Outfit intact.\nROW 6 IDLE: subtle breathing cycle in ready posture, tiny hair/clothing motion, final frame loops back to first.\nThe character is fully dressed in opaque combat costume. Nonsexual, no graphic injury. No additional characters or summons. No external aura, fog, smoke, glow clouds, circles, particles, trails, ground shadow, text, numbers, gridlines or scenery. ONLY solid character and weapon silhouettes with crisp edges. Empty space must be real alpha=0, not gray/white/black paint or semitransparent matte. Retain design details; never copy or retain reference background or effects. Exactly 8 by 6 alignment is essential.",
+    "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-7ab8c191-29fe-4a1d-a767-59da24846726.png",
+    "output_hint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-7ab8c191-29fe-4a1d-a767-59da24846726.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "path": "assets/animations/completion-v1/bosses/pestifera.png",
+    "stateRows": {
+      "intro": 0,
+      "phase_shift_2": 1,
+      "phase_shift_3": 2,
+      "heavy_telegraph": 3,
+      "defeat": 4,
+      "idle": 5
+    },
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-7ab8c191-29fe-4a1d-a767-59da24846726.png",
+    "qa": {
+      "status": "generated_visual_reviewed",
+      "notes": "Atlas 8×6: identité, séquences, silhouettes et gouttières vérifiées. Aucun pixel alpha>32 sur les limites de cellules; bruit RVB invisible à faible alpha conservé natif.",
+      "alphaMetrics": {
+        "fullyTransparentFraction": 0.59117,
+        "internalBoundaryMeanAlpha": 0.048,
+        "internalBoundaryFractionAbove32": 0.0,
+        "internalBoundaryFractionAbove128": 0.0
+      }
+    },
+    "runtimeApproved": true,
+    "sha256": "b6d5ff78a41ec8283dd0dd2a7ac7042e3c7d927b6349159f2274a55caad4cd11",
+    "nativeDimensions": {
+      "width": 1448,
+      "height": 1086,
+      "mode": "RGBA"
+    },
+    "nativeCopiedUnchanged": true,
+    "frameCount": 48
+  },
+  {
+    "id": "nhalzara",
+    "name": "nhal-zara",
+    "category": "bosses",
+    "ref": "assets/characters/villains/nhal-zara-atlas-v1.png",
+    "phase": "Void empress: step into floating poised forms and spread ornate astral cape in two stages; no external clouds.",
+    "columns": 8,
+    "rows": 6,
+    "states": [
+      "intro",
+      "phase_shift_2",
+      "phase_shift_3",
+      "heavy_telegraph",
+      "defeat",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Production game animation sprite sheet for Infernal City.\nREFERENCE IMAGE is the identity/costume/model reference of nhal-zara. Preserve exactly the distinctive mature adult character face, hair, species, armor, weapon, colors, and crisp anime cel shaded three-quarter orthographic combat camera. Void empress: step into floating poised forms and spread ornate astral cape in two stages; no external clouds.\nCreate a NEW TRANSPARENT PNG atlas, EXACTLY EIGHT COLUMNS AND SIX ROWS, 48 individual complete full-body sprites. All 48 cells equal square size; overall landscape aspect ratio 4:3. This output has SIX rows, not the reference's four rows. One and only one character per cell. Use a fixed centered foot anchor and consistent character scale in all frames. Each whole silhouette including weapons, wings and cloak stays inside its own cell, with 20 percent clear transparent margin on every side; never cross a cell boundary.\nRows top to bottom, each row 8 chronological distinct keyframes:\nROW 1 INTRO: low arrival crouch, gradually rise, inspect opponent, confident ready stance.\nROW 2 PHASE_SHIFT_2: visibly tense, open armor/cape or prepare weapon, build into stronger battle stance.\nROW 3 PHASE_SHIFT_3: visibly different more imposing posture, unfold own armor/wings/cape, establish final commanding stance.\nROW 4 HEAVY_TELEGRAPH: lean and draw weapon/arms far back, wind up slowly, brief held charged posture, return ready. Use body pose only.\nROW 5 DEFEAT: stagger softly, lower weapon, sink to one knee or low weary crouch, bow head. No blood, wounds, exposed anatomy or disintegration. Outfit intact.\nROW 6 IDLE: subtle breathing cycle in ready posture, tiny hair/clothing motion, final frame loops back to first.\nThe character is fully dressed in opaque combat costume. Nonsexual, no graphic injury. No additional characters or summons. No external aura, fog, smoke, glow clouds, circles, particles, trails, ground shadow, text, numbers, gridlines or scenery. ONLY solid character and weapon silhouettes with crisp edges. Empty space must be real alpha=0, not gray/white/black paint or semitransparent matte. Retain design details; never copy or retain reference background or effects. Exactly 8 by 6 alignment is essential.",
+    "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-9ab6ea1c-2c6d-43b5-9653-03fc030a921d.png",
+    "output_hint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-9ab6ea1c-2c6d-43b5-9653-03fc030a921d.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "path": "assets/animations/completion-v1/bosses/nhalzara.png",
+    "stateRows": {
+      "intro": 0,
+      "phase_shift_2": 1,
+      "phase_shift_3": 2,
+      "heavy_telegraph": 3,
+      "defeat": 4,
+      "idle": 5
+    },
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-9ab6ea1c-2c6d-43b5-9653-03fc030a921d.png",
+    "qa": {
+      "status": "generated_visual_reviewed",
+      "notes": "Atlas 8×6: identité, séquences, silhouettes et gouttières vérifiées. Aucun pixel alpha>32 sur les limites de cellules; bruit RVB invisible à faible alpha conservé natif.",
+      "alphaMetrics": {
+        "fullyTransparentFraction": 0.34191,
+        "internalBoundaryMeanAlpha": 0.428,
+        "internalBoundaryFractionAbove32": 0.0,
+        "internalBoundaryFractionAbove128": 0.0
+      }
+    },
+    "runtimeApproved": true,
+    "sha256": "12832ded756a4abdd4ed2e3c9b46f07873cd58560bc88581ad23ffb7029232c6",
+    "nativeDimensions": {
+      "width": 1448,
+      "height": 1086,
+      "mode": "RGBA"
+    },
+    "nativeCopiedUnchanged": true,
+    "frameCount": 48
+  },
+  {
+    "id": "astarra",
+    "name": "astarra-infernal",
+    "category": "bosses",
+    "ref": "assets/characters/villains/astarra-infernal-atlas-v1.png",
+    "phase": "Infernal queen: unfold the exact reference red/gold cape and horned crown; no added wings.",
+    "columns": 8,
+    "rows": 6,
+    "states": [
+      "intro",
+      "phase_shift_2",
+      "phase_shift_3",
+      "heavy_telegraph",
+      "defeat",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Production game animation sprite sheet for Infernal City.\nREFERENCE IMAGE is the identity/costume/model reference of astarra-infernal. Preserve exactly the distinctive mature adult character face, hair, species, armor, weapon, colors, and crisp anime cel shaded three-quarter orthographic combat camera. Infernal queen: rise into commanding horned-crown and cape display in two stages; exact red hair, black/red/gold armor and ornate long cape of the reference. Do not add wings or external fire.\nCreate a NEW TRANSPARENT PNG atlas, EXACTLY EIGHT COLUMNS AND SIX ROWS, 48 individual complete full-body sprites. All 48 cells equal square size; overall landscape aspect ratio 4:3. This output has SIX rows, not the reference's four rows. One and only one character per cell. Use a fixed centered foot anchor and consistent character scale in all frames. Each whole silhouette including weapons, wings and cloak stays inside its own cell, with 20 percent clear transparent margin on every side; never cross a cell boundary.\nRows top to bottom, each row 8 chronological distinct keyframes:\nROW 1 INTRO: low arrival crouch, gradually rise, inspect opponent, confident ready stance.\nROW 2 PHASE_SHIFT_2: visibly tense, open armor/cape or prepare weapon, build into stronger battle stance.\nROW 3 PHASE_SHIFT_3: visibly different more imposing posture, unfold own armor/wings/cape, establish final commanding stance.\nROW 4 HEAVY_TELEGRAPH: lean and draw weapon/arms far back, wind up slowly, brief held charged posture, return ready. Use body pose only.\nROW 5 DEFEAT: stagger softly, lower weapon, sink to one knee or low weary crouch, bow head. No blood, wounds, exposed anatomy or disintegration. Outfit intact.\nROW 6 IDLE: subtle breathing cycle in ready posture, tiny hair/clothing motion, final frame loops back to first.\nThe character is fully dressed in opaque combat costume. Nonsexual, no graphic injury. No additional characters or summons. No external aura, fog, smoke, glow clouds, circles, particles, trails, ground shadow, text, numbers, gridlines or scenery. ONLY solid character and weapon silhouettes with crisp edges. Empty space must be real alpha=0, not gray/white/black paint or semitransparent matte. Retain design details; never copy or retain reference background or effects. Exactly 8 by 6 alignment is essential.",
+    "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-27245cbb-0559-4ec4-a85c-dfa16ad2ff36.png",
+    "output_hint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-27245cbb-0559-4ec4-a85c-dfa16ad2ff36.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "path": "assets/animations/completion-v1/bosses/astarra.png",
+    "stateRows": {
+      "intro": 0,
+      "phase_shift_2": 1,
+      "phase_shift_3": 2,
+      "heavy_telegraph": 3,
+      "defeat": 4,
+      "idle": 5
+    },
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-27245cbb-0559-4ec4-a85c-dfa16ad2ff36.png",
+    "qa": {
+      "status": "generated_visual_reviewed",
+      "notes": "Atlas 8×6: identité, séquences, silhouettes et gouttières vérifiées. Aucun pixel alpha>32 sur les limites de cellules; bruit RVB invisible à faible alpha conservé natif.",
+      "alphaMetrics": {
+        "fullyTransparentFraction": 0.0243,
+        "internalBoundaryMeanAlpha": 1.165,
+        "internalBoundaryFractionAbove32": 0.0,
+        "internalBoundaryFractionAbove128": 0.0
+      }
+    },
+    "runtimeApproved": true,
+    "sha256": "58d42db8a414634465ed43728d022301d0ac4b0fd195e4371e805045a4e2bd7c",
+    "nativeDimensions": {
+      "width": 1448,
+      "height": 1086,
+      "mode": "RGBA"
+    },
+    "nativeCopiedUnchanged": true,
+    "frameCount": 48
+  },
+  {
+    "id": "malika",
+    "name": "malika-ash-djinn",
+    "category": "bosses",
+    "ref": "assets/characters/villains/malika-ash-djinn-atlas-v1.png",
+    "phase": "Ash-djinn sultana: raise arms and spread embroidered cape; no ash clouds.",
+    "columns": 8,
+    "rows": 6,
+    "states": [
+      "intro",
+      "phase_shift_2",
+      "phase_shift_3",
+      "heavy_telegraph",
+      "defeat",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Production game animation sprite sheet for Infernal City.\nREFERENCE IMAGE is the identity/costume/model reference of malika-ash-djinn. Preserve exactly the distinctive mature adult character face, hair, species, armor, weapon, colors, and crisp anime cel shaded three-quarter orthographic combat camera. Ash-djinn sultana with dark skin, long braided black hair, ornate black/brown/gold covered robe and armor, gold incense lantern on chain. Phase changes raise the lantern then spread embroidered cape with commanding posture. Retain the exact bodily silhouette and costume; no ash clouds.\nCreate a NEW TRANSPARENT PNG atlas, EXACTLY EIGHT COLUMNS AND SIX ROWS, 48 individual complete full-body sprites. All 48 cells equal square size; overall landscape aspect ratio 4:3. This output has SIX rows, not the reference's four rows. One and only one character per cell. Use a fixed centered foot anchor and consistent character scale in all frames. Each whole silhouette including weapons, wings and cloak stays inside its own cell, with 20 percent clear transparent margin on every side; never cross a cell boundary.\nRows top to bottom, each row 8 chronological distinct keyframes:\nROW 1 INTRO: low arrival crouch, gradually rise, inspect opponent, confident ready stance.\nROW 2 PHASE_SHIFT_2: visibly tense, open armor/cape or prepare weapon, build into stronger battle stance.\nROW 3 PHASE_SHIFT_3: visibly different more imposing posture, unfold own armor/wings/cape, establish final commanding stance.\nROW 4 HEAVY_TELEGRAPH: lean and draw weapon/arms far back, wind up slowly, brief held charged posture, return ready. Use body pose only.\nROW 5 DEFEAT: stagger softly, lower weapon, sink to one knee or low weary crouch, bow head. No blood, wounds, exposed anatomy or disintegration. Outfit intact.\nROW 6 IDLE: subtle breathing cycle in ready posture, tiny hair/clothing motion, final frame loops back to first.\nThe character is fully dressed in opaque combat costume. Nonsexual, no graphic injury. No additional characters or summons. No external aura, fog, smoke, glow clouds, circles, particles, trails, ground shadow, text, numbers, gridlines or scenery. ONLY solid character and weapon silhouettes with crisp edges. Empty space must be real alpha=0, not gray/white/black paint or semitransparent matte. Retain design details; never copy or retain reference background or effects. Exactly 8 by 6 alignment is essential.",
+    "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-3698b880-6423-4fac-9661-64fde5af6c6a.png",
+    "output_hint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-3698b880-6423-4fac-9661-64fde5af6c6a.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "path": "assets/animations/completion-v1/bosses/malika.png",
+    "stateRows": {
+      "intro": 0,
+      "phase_shift_2": 1,
+      "phase_shift_3": 2,
+      "heavy_telegraph": 3,
+      "defeat": 4,
+      "idle": 5
+    },
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-3698b880-6423-4fac-9661-64fde5af6c6a.png",
+    "qa": {
+      "status": "generated_visual_reviewed",
+      "notes": "Atlas 8×6: référence anatomique, silhouettes, poses et gouttières vérifiées; Vexara garde une queue de sirène, Leviathan reste dragon.",
+      "alphaMetrics": {
+        "fullyTransparentFraction": 0.4381,
+        "internalBoundaryMeanAlpha": 0.134,
+        "internalBoundaryFractionAbove32": 0.0,
+        "internalBoundaryFractionAbove128": 0.0
+      }
+    },
+    "runtimeApproved": true,
+    "sha256": "b3b5a1c079b18c346bb0bebfc5a813b123791591968cea6a53ce864839c4b8c2",
+    "nativeDimensions": {
+      "width": 1448,
+      "height": 1086,
+      "mode": "RGBA"
+    },
+    "nativeCopiedUnchanged": true,
+    "frameCount": 48
+  },
+  {
+    "id": "vexara",
+    "name": "vexara-dreadtide",
+    "category": "bosses",
+    "ref": "assets/characters/villains/vexara-dreadtide-atlas-v1.png",
+    "phase": "Mermaid admiral: coil/uncoil blue scaled fish tail, draw and lift saber; no legs.",
+    "columns": 8,
+    "rows": 6,
+    "states": [
+      "intro",
+      "phase_shift_2",
+      "phase_shift_3",
+      "heavy_telegraph",
+      "defeat",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Production game animation sprite sheet for Infernal City.\nREFERENCE IMAGE is the identity/costume/model reference of vexara-dreadtide. Preserve exactly the distinctive mature adult character face, hair, species, armor, weapon, colors, and crisp anime cel shaded three-quarter orthographic combat camera. Abyssal mermaid admiral with ONE long blue scaled fish tail and fins, NO LEGS. Preserve purple hair, navy/gold tricorn and long naval coat, saber and fish anatomy. Phase changes curl/uncoil her tail then raise saber and open her coat; no water wave.\nCreate a NEW TRANSPARENT PNG atlas, EXACTLY EIGHT COLUMNS AND SIX ROWS, 48 individual complete full-body sprites. All 48 cells equal square size; overall landscape aspect ratio 4:3. This output has SIX rows, not the reference's four rows. One and only one character per cell. Use a fixed centered lower-tail anchor and consistent character scale in all frames. Each whole silhouette including weapons, wings and cloak stays inside its own cell, with 20 percent clear transparent margin on every side; never cross a cell boundary.\nRows top to bottom, each row 8 chronological distinct keyframes:\nROW 1 INTRO: low arrival crouch, gradually rise, inspect opponent, confident ready stance.\nROW 2 PHASE_SHIFT_2: visibly tense, open armor/cape or prepare weapon, build into stronger battle stance.\nROW 3 PHASE_SHIFT_3: visibly different more imposing posture, unfold own armor/wings/cape, establish final commanding stance.\nROW 4 HEAVY_TELEGRAPH: lean and draw weapon/arms far back, wind up slowly, brief held charged posture, return ready. Use body pose only.\nROW 5 DEFEAT: stagger softly, lower weapon, coil tail underneath, sink into low weary resting posture, bow head. No blood, wounds, exposed anatomy or disintegration. Outfit intact.\nROW 6 IDLE: subtle breathing cycle in ready posture, tiny hair/clothing motion, final frame loops back to first.\nThe character is fully dressed in opaque combat costume. Nonsexual, no graphic injury. No additional characters or summons. No external aura, fog, smoke, glow clouds, circles, particles, trails, ground shadow, text, numbers, gridlines or scenery. ONLY solid character and weapon silhouettes with crisp edges. Empty space must be real alpha=0, not gray/white/black paint or semitransparent matte. Retain design details; never copy or retain reference background or effects. Exactly 8 by 6 alignment is essential. Do not create legs or feet. Mermaid tail remains complete within every cell.",
+    "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-96bae3ac-e864-43a8-8b1f-f6c78946cd06.png",
+    "output_hint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-96bae3ac-e864-43a8-8b1f-f6c78946cd06.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "path": "assets/animations/completion-v1/bosses/vexara.png",
+    "attempts": [
+      {
+        "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-592baf0e-8bdc-416e-bedb-2e8f3f68d036.png",
+        "status": "rejected_saber_crosses_row_boundary"
+      }
+    ],
+    "revisionPrompt": "Production sprite-sheet cleanup edit. Preserve this exact Vexara MERMAID admiral identity, face, navy/gold costume, blue scaled fish tail and weapon and all 48 poses. Keep the existing canvas dimensions and the EXACT regular 8-column by 6-row grid. Within EACH of the 48 cells, make the COMPLETE sprite exactly 85 percent of its current width and height, uniformly, and center it in that same cell, retaining consistent lower-tail anchor relative to the cell. Do not move sprites to other cells. Give every complete silhouette generous genuine transparent breathing space on all four sides. ESPECIALLY row4 frames5,6,7: her lifted saber/hat must fit fully below row4's TOP boundary, never touch the row above; whole sword and tail stay inside their own cell. No cropping, overlap, neighboring figure fragments, new limbs, new background, text or gridlines. Remove any gray matte/haze from all empty space to actual alpha0; retain subtle antialiased edges. Nonsexual fully clothed adult fantasy mermaid. Output the same complete 8x6 atlas with48isolated sprites.",
+    "stateRows": {
+      "intro": 0,
+      "phase_shift_2": 1,
+      "phase_shift_3": 2,
+      "heavy_telegraph": 3,
+      "defeat": 4,
+      "idle": 5
+    },
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-96bae3ac-e864-43a8-8b1f-f6c78946cd06.png",
+    "qa": {
+      "status": "generated_visual_reviewed",
+      "notes": "Atlas 8×6: référence anatomique, silhouettes, poses et gouttières vérifiées; Vexara garde une queue de sirène, Leviathan reste dragon.",
+      "alphaMetrics": {
+        "fullyTransparentFraction": 0.6453,
+        "internalBoundaryMeanAlpha": 0.001,
+        "internalBoundaryFractionAbove32": 0.0,
+        "internalBoundaryFractionAbove128": 0.0
+      }
+    },
+    "runtimeApproved": true,
+    "sha256": "add8321a2fc237c06ac717ee7bf79ae3fcbec69a80ae0bd0584f866049829195",
+    "nativeDimensions": {
+      "width": 1448,
+      "height": 1086,
+      "mode": "RGBA"
+    },
+    "nativeCopiedUnchanged": true,
+    "frameCount": 48
+  },
+  {
+    "id": "kalix",
+    "name": "kali-x",
+    "category": "bosses",
+    "ref": "assets/characters/villains/kali-x-atlas-v1.png",
+    "phase": "Quantum sovereign: align cyber armor and extend her existing two arms; no added limbs.",
+    "columns": 8,
+    "rows": 6,
+    "states": [
+      "intro",
+      "phase_shift_2",
+      "phase_shift_3",
+      "heavy_telegraph",
+      "defeat",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Production game animation sprite sheet for Infernal City.\nREFERENCE IMAGE is the identity/costume/model reference of kali-x. Preserve exactly the distinctive mature adult character face, hair, species, armor, weapon, colors, and crisp anime cel shaded three-quarter orthographic combat camera. Quantum sovereign: dark-skinned adult woman with short white hair, exact black armored suit with magenta seam lights, twin energy-blade hilts and shoulder device. Phase two aligns armor segments; phase three brings both arms into commanding extended stance. Keep two arms and two legs. No rings, halos or new extra limbs.\nCreate a NEW TRANSPARENT PNG atlas, EXACTLY EIGHT COLUMNS AND SIX ROWS, 48 individual complete full-body sprites. All 48 cells equal square size; overall landscape aspect ratio 4:3. This output has SIX rows, not the reference's four rows. One and only one character per cell. Use a fixed centered foot anchor and consistent character scale in all frames. Each whole silhouette including weapons, wings and cloak stays inside its own cell, with 20 percent clear transparent margin on every side; never cross a cell boundary.\nRows top to bottom, each row 8 chronological distinct keyframes:\nROW 1 INTRO: low arrival crouch, gradually rise, inspect opponent, confident ready stance.\nROW 2 PHASE_SHIFT_2: visibly tense, open armor/cape or prepare weapon, build into stronger battle stance.\nROW 3 PHASE_SHIFT_3: visibly different more imposing posture, unfold own armor/wings/cape, establish final commanding stance.\nROW 4 HEAVY_TELEGRAPH: lean and draw weapon/arms far back, wind up slowly, brief held charged posture, return ready. Use body pose only.\nROW 5 DEFEAT: stagger softly, lower weapon, sink to one knee or low weary crouch, bow head. No blood, wounds, exposed anatomy or disintegration. Outfit intact.\nROW 6 IDLE: subtle breathing cycle in ready posture, tiny hair/clothing motion, final frame loops back to first.\nThe character is fully dressed in opaque combat costume. Nonsexual, no graphic injury. No additional characters or summons. No external aura, fog, smoke, glow clouds, circles, particles, trails, ground shadow, text, numbers, gridlines or scenery. ONLY solid character and weapon silhouettes with crisp edges. Empty space must be real alpha=0, not gray/white/black paint or semitransparent matte. Retain design details; never copy or retain reference background or effects. Exactly 8 by 6 alignment is essential.",
+    "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-0423ef84-cf41-4ebb-97b9-4fff1f99aaec.png",
+    "output_hint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-0423ef84-cf41-4ebb-97b9-4fff1f99aaec.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "path": "assets/animations/completion-v1/bosses/kalix.png",
+    "stateRows": {
+      "intro": 0,
+      "phase_shift_2": 1,
+      "phase_shift_3": 2,
+      "heavy_telegraph": 3,
+      "defeat": 4,
+      "idle": 5
+    },
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-0423ef84-cf41-4ebb-97b9-4fff1f99aaec.png",
+    "qa": {
+      "status": "generated_visual_reviewed",
+      "notes": "Atlas 8×6: référence anatomique, silhouettes, poses et gouttières vérifiées; Vexara garde une queue de sirène, Leviathan reste dragon.",
+      "alphaMetrics": {
+        "fullyTransparentFraction": 0.52409,
+        "internalBoundaryMeanAlpha": 0.304,
+        "internalBoundaryFractionAbove32": 0.00067,
+        "internalBoundaryFractionAbove128": 0.0002
+      }
+    },
+    "runtimeApproved": true,
+    "sha256": "0d676b0d57eaa892e978db5e4ee544a7286faebd8c3e541d1f85ef1921ec73f0",
+    "nativeDimensions": {
+      "width": 1448,
+      "height": 1086,
+      "mode": "RGBA"
+    },
+    "nativeCopiedUnchanged": true,
+    "frameCount": 48
+  },
+  {
+    "id": "noctis",
+    "name": "madame-noctis",
+    "category": "bosses",
+    "ref": "assets/characters/villains/madame-noctis-atlas-v1.png",
+    "phase": "Nightmare weaver: extend wand arm and unfurl violet coat; preserve human hands.",
+    "columns": 8,
+    "rows": 6,
+    "states": [
+      "intro",
+      "phase_shift_2",
+      "phase_shift_3",
+      "heavy_telegraph",
+      "defeat",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Production game animation sprite sheet for Infernal City.\nREFERENCE IMAGE is the identity/costume/model reference of madame-noctis. Preserve exactly the distinctive mature adult character face, hair, species, armor, weapon, colors, and crisp anime cel shaded three-quarter orthographic combat camera. Nightmare weaver: dark-skinned mature adult woman, braided dark hair tied up, violet armored long coat over black opaque trousers, pointed boots, small violet wand. Phase changes extend her wand arm then unfurl her ornamental coat in a commanding posture. Preserve human hands and reference face; no new claws, creatures or summoned entities.\nCreate a NEW TRANSPARENT PNG atlas, EXACTLY EIGHT COLUMNS AND SIX ROWS, 48 individual complete full-body sprites. All 48 cells equal square size; overall landscape aspect ratio 4:3. This output has SIX rows, not the reference's four rows. One and only one character per cell. Use a fixed centered foot anchor and consistent character scale in all frames. Each whole silhouette including weapons, wings and cloak stays inside its own cell, with 20 percent clear transparent margin on every side; never cross a cell boundary.\nRows top to bottom, each row 8 chronological distinct keyframes:\nROW 1 INTRO: low arrival crouch, gradually rise, inspect opponent, confident ready stance.\nROW 2 PHASE_SHIFT_2: visibly tense, open armor/cape or prepare weapon, build into stronger battle stance.\nROW 3 PHASE_SHIFT_3: visibly different more imposing posture, unfold own armor/wings/cape, establish final commanding stance.\nROW 4 HEAVY_TELEGRAPH: lean and draw weapon/arms far back, wind up slowly, brief held charged posture, return ready. Use body pose only.\nROW 5 DEFEAT: stagger softly, lower weapon, sink to one knee or low weary crouch, bow head. No blood, wounds, exposed anatomy or disintegration. Outfit intact.\nROW 6 IDLE: subtle breathing cycle in ready posture, tiny hair/clothing motion, final frame loops back to first.\nThe character is fully dressed in opaque combat costume. Nonsexual, no graphic injury. No additional characters or summons. No external aura, fog, smoke, glow clouds, circles, particles, trails, ground shadow, text, numbers, gridlines or scenery. ONLY solid character and weapon silhouettes with crisp edges. Empty space must be real alpha=0, not gray/white/black paint or semitransparent matte. Retain design details; never copy or retain reference background or effects. Exactly 8 by 6 alignment is essential.",
+    "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-5c737555-553f-48ab-97d3-44c20b44e36e.png",
+    "output_hint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-5c737555-553f-48ab-97d3-44c20b44e36e.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "path": "assets/animations/completion-v1/bosses/noctis.png",
+    "stateRows": {
+      "intro": 0,
+      "phase_shift_2": 1,
+      "phase_shift_3": 2,
+      "heavy_telegraph": 3,
+      "defeat": 4,
+      "idle": 5
+    },
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-5c737555-553f-48ab-97d3-44c20b44e36e.png",
+    "qa": {
+      "status": "generated_visual_reviewed",
+      "notes": "Atlas 8×6: référence anatomique, silhouettes, poses et gouttières vérifiées; Vexara garde une queue de sirène, Leviathan reste dragon.",
+      "alphaMetrics": {
+        "fullyTransparentFraction": 0.20067,
+        "internalBoundaryMeanAlpha": 0.93,
+        "internalBoundaryFractionAbove32": 0.00013,
+        "internalBoundaryFractionAbove128": 0.0
+      }
+    },
+    "runtimeApproved": true,
+    "sha256": "edfa36de31ff56669c0d45897d46ba3b26585fd7c6d2aa28412b50568099145e",
+    "nativeDimensions": {
+      "width": 1448,
+      "height": 1086,
+      "mode": "RGBA"
+    },
+    "nativeCopiedUnchanged": true,
+    "frameCount": 48
+  },
+  {
+    "id": "leviathan",
+    "name": "leviathan",
+    "category": "bosses",
+    "ref": "assets/enemies/leviathan.png",
+    "phase": "Enormous black-steel cybernetic dragon with crimson wing membranes, segmented tail and glowing red chest; spreads wings and rears in phases, remain dragon not human.",
+    "columns": 8,
+    "rows": 6,
+    "states": [
+      "intro",
+      "phase_shift_2",
+      "phase_shift_3",
+      "heavy_telegraph",
+      "defeat",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Production game animation sprite sheet for Infernal City.\nREFERENCE IMAGE is Leviathan, the enormous quadrupedal black-steel CYBERNETIC DRAGON with segmented curling tail, articulated clawed feet, horned long dragon head, crimson red wing membranes and bright red mechanical chest. Preserve this exact NON-HUMANOID dragon design, metal panel shapes and colors, crisp anime cel shaded three-quarter view facing right. No human form.\nCreate NEW TRANSPARENT PNG atlas, EXACTLY 8 COLUMNS by 6 ROWS, 48 complete isolated dragon sprites in equal square cells. Overall landscape 4:3. Exactly ONE full dragon per cell, same scale and centered lower-body anchor. Entire wings, all four legs, head, horns and tail remain contained in central60% of each cell, with20% clear transparent margin on every side. Never cross cell boundaries.\nEach row has8 distinct chronological animation frames:\nROW1 INTRO: low landed crouch, gradually lift head and stand on four feet, wings folded partly, settle ready.\nROW2 PHASE_SHIFT_2: lift head and open red mechanical wing membranes from half folded to wide in8steps, remain on four feet.\nROW3 PHASE_SHIFT_3: raise upper body powerfully, arch back, spread wings to different intimidating display, settle into final fierce stance.\nROW4 HEAVY_TELEGRAPH: retract head and neck, pull foreclaws back, deeply tense chest and prepare a strike, final ready; no breath beam or outside effect.\nROW5 DEFEAT: lower head and shoulders, bend four legs slowly into crouch, fold wings, rest head low. No wounds, blood, damage, disintegration or death gore.\nROW6 IDLE: subtle breathing cycle and tiny wing tip/tail motion, final frame loops seamlessly tofirst.\nNo smoke, flame, glow clouds, aura, circles, particles, trails, shadow, floor, scenery, text, numbers or gridlines. The internal red illuminated panel details remain confined to the body and wing membranes. ONLY the solid dragon silhouette with crisp edges. Empty gutters must be genuine alpha0 transparency, no gray/white/black matte or haze. Exactly8columns by6rows is essential.",
+    "nativePath": "/workspace/scratch/3c707a35b074/generated_images/exec-ba157898-a264-4daf-8845-db3643f3ba98.png",
+    "output_hint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-ba157898-a264-4daf-8845-db3643f3ba98.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "path": "assets/animations/completion-v1/bosses/leviathan.png",
+    "stateRows": {
+      "intro": 0,
+      "phase_shift_2": 1,
+      "phase_shift_3": 2,
+      "heavy_telegraph": 3,
+      "defeat": 4,
+      "idle": 5
+    },
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-ba157898-a264-4daf-8845-db3643f3ba98.png",
+    "qa": {
+      "status": "generated_visual_reviewed",
+      "notes": "Atlas 8×6: référence anatomique, silhouettes, poses et gouttières vérifiées; Vexara garde une queue de sirène, Leviathan reste dragon.",
+      "alphaMetrics": {
+        "fullyTransparentFraction": 0.14418,
+        "internalBoundaryMeanAlpha": 0.907,
+        "internalBoundaryFractionAbove32": 0.0,
+        "internalBoundaryFractionAbove128": 0.0
+      }
+    },
+    "runtimeApproved": true,
+    "sha256": "d93690ddc88369deb475d7ee8e247024fe722618a11e8de496f5b31842b41b82",
+    "nativeDimensions": {
+      "width": 1448,
+      "height": 1086,
+      "mode": "RGBA"
+    },
+    "nativeCopiedUnchanged": true,
+    "frameCount": 48
+  }
+]

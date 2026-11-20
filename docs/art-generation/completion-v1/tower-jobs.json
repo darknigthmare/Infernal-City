@@ -1,0 +1,402 @@
+[
+  {
+    "id": "vulcan_turret",
+    "a": "Cerbère Rotatif — Trois canons chauffent progressivement et percent une cible supplémentaire à plein régime.",
+    "b": "Doctrine Suppressive — Des rafales larges marquent et ralentissent les unités légères au prix de dégâts directs.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-01.png",
+    "referenceRow": 1,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ]
+  },
+  {
+    "id": "plasma_mortar",
+    "a": "Nova Cataclysmique — Chaque obus crée deux détonations concentriques avec une zone brûlante résiduelle.",
+    "b": "Batterie à Sous-Munitions — L’obus se divise pour saturer plusieurs routes proches.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-01.png",
+    "referenceRow": 2,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ]
+  },
+  {
+    "id": "railgun_pylon",
+    "a": "Lance d’Odin — Un rayon extrême traverse toute la colonne et brise les boucliers frontaux.",
+    "b": "Pylône Chasseur — Verrouille les unités aériennes ou d’artillerie et accélère après chaque élimination.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-01.png",
+    "referenceRow": 3,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ]
+  },
+  {
+    "id": "flame_trap",
+    "a": "Souffle de Niflhel — Un plasma froid brûle et ralentit simultanément les cibles.",
+    "b": "Fournaise Vorace — Une flamme étroite gagne en puissance tant qu’elle reste sur le même ennemi.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-01.png",
+    "referenceRow": 4,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ]
+  },
+  {
+    "id": "tesla_spire",
+    "a": "Tempête Synaptique — Les arcs se multiplient dans les hordes denses et étourdissent la dernière cible.",
+    "b": "Paratonnerre d’Exil — Des impulsions rares frappent prioritairement les volants et les artilleurs.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-02.png",
+    "referenceRow": 1,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ]
+  },
+  {
+    "id": "cryo_cannon",
+    "a": "Zéro Absolu — Accumule du gel jusqu’à immobiliser puis fracturer les unités lourdes.",
+    "b": "Brouillard Blanc — Diffuse un brouillard permanent qui ralentit une vaste section de route.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-02.png",
+    "referenceRow": 2,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ]
+  },
+  {
+    "id": "acid_trap",
+    "a": "Solvant Royal — Dissout rapidement armures et boucliers dans une flaque plus concentrée.",
+    "b": "Marée Corrosive — La flaque s’étend lorsqu’un ennemi y meurt et couvre progressivement le couloir.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-02.png",
+    "referenceRow": 3,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ]
+  },
+  {
+    "id": "laser_drone",
+    "a": "Intercepteur Séraphin — Patrouille entre deux points et abat les unités aériennes en priorité.",
+    "b": "Désignateur Fantôme — Sacrifie sa cadence pour marquer les cibles et amplifier les tirs alliés.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-02.png",
+    "referenceRow": 4,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ]
+  },
+  {
+    "id": "landmine",
+    "a": "Charge Creuse — Une explosion directionnelle transperce les remparts et les brutes.",
+    "b": "Nid de Vipères — Déploie quatre petites mines qui se réarment lentement entre les vagues.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-03.png",
+    "referenceRow": 1,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ]
+  },
+  {
+    "id": "aegis_barrier",
+    "a": "Bastion Inébranlable — Un mur compact doté d’une immense réserve de points de vie et d’une réparation autonome.",
+    "b": "Miroir Aegis — Une barrière plus fragile renvoie les projectiles de siège vers leur source.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-03.png",
+    "referenceRow": 2,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ]
+  },
+  {
+    "id": "gravity_well",
+    "a": "Singularité Affamée — Compacte brutalement les unités légères et leur inflige des dégâts croissants.",
+    "b": "Anneau Orbital — Un champ large dévie les volants et allonge toutes les routes affectées.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-03.png",
+    "referenceRow": 3,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ]
+  },
+  {
+    "id": "missile_pod",
+    "a": "Hydre de Saturation — Lance une salve de micro-missiles répartie entre toutes les cibles visibles.",
+    "b": "Brise-Forteresse — Un missile guidé lent détruit les boucliers et frappe l’artillerie à très longue portée.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-03.png",
+    "referenceRow": 4,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ]
+  },
+  {
+    "id": "bio_siphon",
+    "a": "Veine de la Citadelle — Transfère l’essentiel du drain directement vers le noyau de la Citadelle.",
+    "b": "Sang Partagé — Distribue les soins aux défenses proches et accélère leur cadence.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-04.png",
+    "referenceRow": 1,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ]
+  },
+  {
+    "id": "magnet_drone",
+    "a": "Récupérateur Haven — Collecte à grande distance et augmente légèrement la valeur des Bio-Coins.",
+    "b": "Polariseur de Guerre — Renonce au bonus économique pour repousser les unités métalliques et les projectiles.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-04.png",
+    "referenceRow": 2,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ]
+  },
+  {
+    "id": "sawblade_turret",
+    "a": "Danse des Lames — Les scies ricochent entre les ennemis et regagnent des dégâts à chaque rebond.",
+    "b": "Scie de l’Exécuteur — Une lourde lame revient vers la tourelle et exécute les unités très affaiblies.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-04.png",
+    "referenceRow": 3,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ]
+  },
+  {
+    "id": "emp_tower",
+    "a": "Black-out Total — Une impulsion immense désactive durablement boucliers, auras et artilleries.",
+    "b": "Impulsion Cascade — Des décharges rapides bondissent entre quelques cibles et interrompent leurs attaques.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-04.png",
+    "referenceRow": 4,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ]
+  },
+  {
+    "id": "orbital_beam",
+    "a": "Jugement Zénithal — Un rayon prolongé suit l’ennemi le plus dangereux et augmente continuellement ses dégâts.",
+    "b": "Grille Solaire — Divise le rayon en trois frappes moins puissantes réparties sur les routes.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-05.png",
+    "referenceRow": 1,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ]
+  },
+  {
+    "id": "napalm_mine",
+    "a": "Champ de Fournaise — La détonation laisse un brasier très large qui se propage aux unités embrasées.",
+    "b": "Charge Thermobarique — Une explosion unique concentre ses dégâts sur les unités lourdes et projette les survivants.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-05.png",
+    "referenceRow": 2,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ]
+  },
+  {
+    "id": "blood_shrine",
+    "a": "Chœur de Guerre — Amplifie les dégâts et la cadence des défenses dans son cercle rituel.",
+    "b": "Autel de la Valkyrie — Concentre le rituel sur l’héroïne et accélère fortement la charge de son ultime.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-05.png",
+    "referenceRow": 3,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ]
+  },
+  {
+    "id": "sonic_cannon",
+    "a": "Onde Répulsive — Une détonation large repousse fortement les unités légères et interrompt les lourdes.",
+    "b": "Résonance Fractale — Chaque impact pose une résonance ; la troisième fait exploser l’armure de la cible.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-05.png",
+    "referenceRow": 4,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ]
+  }
+]

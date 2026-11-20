@@ -1,0 +1,35 @@
+[
+  {
+    "id": "bio_siphon",
+    "category": "towers",
+    "path": "assets/animations/completion-v1/towers/bio_siphon.png",
+    "columns": 8,
+    "rows": 8,
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/towers/bio_siphon.png",
+    "prompt": "Correct the supplied tower animation atlas for precise game slicing. Keep exactly8 columns and8 rows,64 square cells on a square PNG. Preserve tower identity, eight rows of poses and all unique upgrades. BUT MAKE EVERY COMPLETE TOWER much smaller, maximum40percent of cell width AND height including antenna or tiny effects. Place each sprite exactly at center of its mathematical cell. Cell center percentages horizontally and vertically:6.25,18.75,31.25,43.75,56.25,68.75,81.25,93.75. Large30percent empty transparent margin on all4sides of EACH cell. No body, antenna, base or effect may enter adjacent cell. Ensure uniform grid spacing and identical central anchor. Draw tiny original towers with crisp details. Remove all smoke, surrounding haze, halos or broad effects; retain only solid machine and internal lights. True alpha0 background with no grid, text, captions or shadows. The source had overlapping cell boundaries: fix the grid and scale as top priority.",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-b5360c27-0637-4f03-b10c-e719f7740b4b.png",
+    "qa": "pending"
+  },
+  {
+    "id": "gravity_well",
+    "category": "towers",
+    "path": "assets/animations/completion-v1/towers/gravity_well.png",
+    "columns": 8,
+    "rows": 8,
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/towers/gravity_well.png",
+    "prompt": "Correct the supplied tower animation atlas for precise game slicing. Keep exactly8 columns and8 rows,64 square cells on a square PNG. Preserve tower identity, eight rows of poses and all unique upgrades. BUT MAKE EVERY COMPLETE TOWER much smaller, maximum40percent of cell width AND height including antenna or tiny effects. Place each sprite exactly at center of its mathematical cell. Cell center percentages horizontally and vertically:6.25,18.75,31.25,43.75,56.25,68.75,81.25,93.75. Large30percent empty transparent margin on all4sides of EACH cell. No body, antenna, base or effect may enter adjacent cell. Ensure uniform grid spacing and identical central anchor. Draw tiny original towers with crisp details. Remove all smoke, surrounding haze, halos or broad effects; retain only solid machine and internal lights. True alpha0 background with no grid, text, captions or shadows. The source had overlapping cell boundaries: fix the grid and scale as top priority.",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-af9a9dda-6220-46e6-b296-3f583e8d0aa9.png",
+    "qa": "pending"
+  },
+  {
+    "id": "aurelia",
+    "category": "portraits",
+    "path": "assets/animations/completion-v1/portraits/aurelia.png",
+    "columns": 4,
+    "rows": 2,
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/portraits/aurelia.png",
+    "prompt": "Edit this existing 4columns x2rows portrait sprite atlas. Remove the entire pale gray/white mottled BACKGROUND and edge haze, replacing all background pixels with true alpha0 transparency. Preserve all eight portraits exactly: original face, hair, clothes, colors, eyes, poses and exact positions. There must be NO visible gray/white cloud or rectangle behind the portraits. Do not add any other content; no new shadows, glow, borders or text. Keep original 2:1 image and4x2cell arrangement.",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-aa1ab516-b0d7-4317-a5c9-e1528a639e42.png",
+    "qa": "pending"
+  }
+]

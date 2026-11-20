@@ -1,0 +1,62 @@
+[
+  {
+    "id": "hana",
+    "category": "portraits",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/characters/heroines/hana-kurogane-portrait-v1.webp",
+    "columns": 4,
+    "rows": 2,
+    "states": [
+      "portrait_loop_1",
+      "portrait_loop_2"
+    ],
+    "prompt": "Use case: stylized-concept. Production animated dialogue PORTRAIT sprite atlas for Infernal City. Identity reference is attached. Preserve the exact character's mature adult face, eyes, hair, costume and headgear: adult woman with long black high ponytail tied with red ribbon, warm brown eyes, red-black samurai jacket and metallic shoulder armor. Create one landscape PNG, 2:1 ratio, EXACTLY4 columns by2 rows,8 equal square cells. Each cell contains the same intact HEAD-AND-SHOULDERS portrait, fixed frontal/three-quarter camera and stable centered face anchor. Keep the entire hair and any hat inside the cell with10% transparent margin, shoulders end neatly at lower bust/collar level. Match painted cyber-gothic anime style and face anatomy, no chibi. Eight subtle authored frames in row-major order:1neutral breathing,2gentle inhale/hair shift,3half blink,4eyes closed blink,5eyes reopening,6soft closed-mouth smile,7relaxed neutral return,8same resting pose as1 for loop. Tiny coherent facial/collar/hair changes only, NO weapon or combat VFX. Fully clothed same outfit, nonsexual portrait. No scenery or background from the input. Genuine transparent alpha background, no gray/black/white rectangle, no floor, halo, shadows, labels, frame boxes, text, numbers or watermark. Exactly8 portraits, generous empty space between cells, no part of one crosses into another.",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-c7ecc4d0-48db-4b8f-a62f-3b2905580770.png",
+    "path": "assets/animations/completion-v1/portraits/hana.png",
+    "qa": "pending"
+  },
+  {
+    "id": "freyja",
+    "category": "portraits",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/characters/heroines/freyja-rimeborne-portrait-v1.webp",
+    "columns": 4,
+    "rows": 2,
+    "states": [
+      "portrait_loop_1",
+      "portrait_loop_2"
+    ],
+    "prompt": "Use case: stylized-concept. Production animated dialogue PORTRAIT sprite atlas for Infernal City. Identity reference is attached. Preserve the exact character's mature adult face, eyes, hair, costume and headgear: adult woman with long thick blonde braids, blue eyes, dark Norse steel armor with pale fur collar and bronze knotwork. Create one landscape PNG, 2:1 ratio, EXACTLY4 columns by2 rows,8 equal square cells. Each cell contains the same intact HEAD-AND-SHOULDERS portrait, fixed frontal/three-quarter camera and stable centered face anchor. Keep the entire hair and any hat inside the cell with10% transparent margin, shoulders end neatly at lower bust/collar level. Match painted cyber-gothic anime style and face anatomy, no chibi. Eight subtle authored frames in row-major order:1neutral breathing,2gentle inhale/hair shift,3half blink,4eyes closed blink,5eyes reopening,6soft closed-mouth smile,7relaxed neutral return,8same resting pose as1 for loop. Tiny coherent facial/collar/hair changes only, NO weapon or combat VFX. Fully clothed same outfit, nonsexual portrait. No scenery or background from the input. Genuine transparent alpha background, no gray/black/white rectangle, no floor, halo, shadows, labels, frame boxes, text, numbers or watermark. Exactly8 portraits, generous empty space between cells, no part of one crosses into another.",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-041a432f-7bf2-44cb-805f-3d51d31ea25e.png",
+    "path": "assets/animations/completion-v1/portraits/freyja.png",
+    "qa": "pending"
+  },
+  {
+    "id": "vega",
+    "category": "portraits",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/characters/heroines/vega-solari-portrait-v1.webp",
+    "columns": 4,
+    "rows": 2,
+    "states": [
+      "portrait_loop_1",
+      "portrait_loop_2"
+    ],
+    "prompt": "Use case: stylized-concept. Production animated dialogue PORTRAIT sprite atlas for Infernal City. Identity reference is attached. Preserve the exact character's mature adult face, eyes, hair, costume and headgear: adult woman with warm tan skin, long platinum blonde high ponytail, braided headband with gold star crown, amber eyes, white-gold breastplate and navy high collar. Create one landscape PNG, 2:1 ratio, EXACTLY4 columns by2 rows,8 equal square cells. Each cell contains the same intact HEAD-AND-SHOULDERS portrait, fixed frontal/three-quarter camera and stable centered face anchor. Keep the entire hair and any hat inside the cell with10% transparent margin, shoulders end neatly at lower bust/collar level. Match painted cyber-gothic anime style and face anatomy, no chibi. Eight subtle authored frames in row-major order:1neutral breathing,2gentle inhale/hair shift,3half blink,4eyes closed blink,5eyes reopening,6soft closed-mouth smile,7relaxed neutral return,8same resting pose as1 for loop. Tiny coherent facial/collar/hair changes only, NO weapon or combat VFX. Fully clothed same outfit, nonsexual portrait. No scenery or background from the input. Genuine transparent alpha background, no gray/black/white rectangle, no floor, halo, shadows, labels, frame boxes, text, numbers or watermark. Exactly8 portraits, generous empty space between cells, no part of one crosses into another.",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-2fa0977b-41dd-4387-a307-311522b10c9f.png",
+    "path": "assets/animations/completion-v1/portraits/vega.png",
+    "qa": "pending"
+  },
+  {
+    "id": "amara",
+    "category": "portraits",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/characters/heroines/amara-verdigris-portrait-v1.webp",
+    "columns": 4,
+    "rows": 2,
+    "states": [
+      "portrait_loop_1",
+      "portrait_loop_2"
+    ],
+    "prompt": "Use case: stylized-concept. Production animated dialogue PORTRAIT sprite atlas for Infernal City. Identity reference is attached. Preserve the exact character's mature adult face, eyes, hair, costume and headgear: adult woman with rich dark brown skin, long red-brown braided ponytail, emerald eyes, golden leaf hair ornaments and fully covered teal high-collar tunic with ornate bronze filigree. Create one landscape PNG, 2:1 ratio, EXACTLY4 columns by2 rows,8 equal square cells. Each cell contains the same intact HEAD-AND-SHOULDERS portrait, fixed frontal/three-quarter camera and stable centered face anchor. Keep the entire hair and any hat inside the cell with10% transparent margin, shoulders end neatly at lower bust/collar level. Match painted cyber-gothic anime style and face anatomy, no chibi. Eight subtle authored frames in row-major order:1neutral breathing,2gentle inhale/hair shift,3half blink,4eyes closed blink,5eyes reopening,6soft closed-mouth smile,7relaxed neutral return,8same resting pose as1 for loop. Tiny coherent facial/collar/hair changes only, NO weapon or combat VFX. Fully clothed same outfit, nonsexual portrait. No scenery or background from the input. Genuine transparent alpha background, no gray/black/white rectangle, no floor, halo, shadows, labels, frame boxes, text, numbers or watermark. Exactly8 portraits, generous empty space between cells, no part of one crosses into another.",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-0d00018b-12ab-4269-b1f3-d01b482f05cb.png",
+    "path": "assets/animations/completion-v1/portraits/amara.png",
+    "qa": "pending"
+  }
+]

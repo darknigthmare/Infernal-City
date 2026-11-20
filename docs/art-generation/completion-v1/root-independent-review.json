@@ -1,0 +1,463 @@
+{
+  "reviewer": "hero_boss_art",
+  "scope": "Independent visual review of tower, evolved projectile and portrait completion atlases; no PNGs modified.",
+  "method": "Compared each native atlas to reference artwork/prompts, inspected identity, grid, framing, transparency and pose sequence. Technical audit uses alpha>=96 for bounding boxes and boundary contact; invisible alpha 1-2 RGB noise is not a defect.",
+  "reviewedCount": 34,
+  "files": [
+    {
+      "key": "towers/acid_trap",
+      "path": "assets/animations/completion-v1/towers/acid_trap.png",
+      "sha256": "27b88882a0cb44e86f2c7fbc3706f005b38eb21e746c60e2ce988a7d743f1183",
+      "verdict": "pass",
+      "reference": "assets/animations/towers/tower-atlas-02.png",
+      "grid": [
+        8,
+        8
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "towers/aegis_barrier",
+      "path": "assets/animations/completion-v1/towers/aegis_barrier.png",
+      "sha256": "873bdc8ae2d9ee33410cd3202ee5fc79c16de16d22509323918612ff5d7242f5",
+      "verdict": "pass",
+      "reference": "assets/animations/towers/tower-atlas-03.png",
+      "grid": [
+        8,
+        8
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "towers/bio_siphon",
+      "path": "assets/animations/completion-v1/towers/bio_siphon.png",
+      "sha256": "d8a9b535a752d0bc0e5519a80cb3f618812949e910dc36d77b3aa6be7fcd978e",
+      "verdict": "pass",
+      "reference": "assets/animations/towers/tower-atlas-04.png",
+      "grid": [
+        8,
+        8
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "towers/cryo_cannon",
+      "path": "assets/animations/completion-v1/towers/cryo_cannon.png",
+      "sha256": "1c75f32effbba57b4556d1b77578672afbf8fc5dbcd2a33e4cf2e2cbf56e6c07",
+      "verdict": "pass",
+      "reference": "assets/animations/towers/tower-atlas-02.png",
+      "grid": [
+        8,
+        8
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "towers/emp_tower",
+      "path": "assets/animations/completion-v1/towers/emp_tower.png",
+      "sha256": "8b2ec9eb37f273c1ada4497f0d60abd839bc6f410bea872307059e63928f984b",
+      "verdict": "pass",
+      "reference": "assets/animations/towers/tower-atlas-04.png",
+      "grid": [
+        8,
+        8
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "towers/flame_trap",
+      "path": "assets/animations/completion-v1/towers/flame_trap.png",
+      "sha256": "55685b4e90ffa952c4f047ad423e49e21e49cd67eae60bd53c24276cd7930946",
+      "verdict": "pass",
+      "reference": "assets/animations/towers/tower-atlas-01.png",
+      "grid": [
+        8,
+        8
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "towers/gravity_well",
+      "path": "assets/animations/completion-v1/towers/gravity_well.png",
+      "sha256": "31810ac58558dc8a395f16908a7a58a5556a3fd3146dc411eccc3ad02532dce5",
+      "verdict": "pass",
+      "reference": "assets/animations/towers/tower-atlas-03.png",
+      "grid": [
+        8,
+        8
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "towers/landmine",
+      "path": "assets/animations/completion-v1/towers/landmine.png",
+      "sha256": "17cac4b191bf62df5111be5f20a03f78e46661e58c9ccddd831756358f58a6dc",
+      "verdict": "pass",
+      "reference": "assets/animations/towers/tower-atlas-03.png",
+      "grid": [
+        8,
+        8
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "towers/laser_drone",
+      "path": "assets/animations/completion-v1/towers/laser_drone.png",
+      "sha256": "b822af60082194b64e0475817d95ef922a9468c198bdf62d79a41e350c268dd5",
+      "verdict": "pass",
+      "reference": "assets/animations/towers/tower-atlas-02.png",
+      "grid": [
+        8,
+        8
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "towers/magnet_drone",
+      "path": "assets/animations/completion-v1/towers/magnet_drone.png",
+      "sha256": "3397842201532f495534245f37bd9dcc3d3a0cb28a39b5cf28b0aab6c0fc38fd",
+      "verdict": "pass",
+      "reference": "assets/animations/towers/tower-atlas-04.png",
+      "grid": [
+        8,
+        8
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "towers/missile_pod",
+      "path": "assets/animations/completion-v1/towers/missile_pod.png",
+      "sha256": "befc6e65e5ec4269bf5779a045b8a16c8492c7a6615c4c849f69d966d6052ddf",
+      "verdict": "pass",
+      "reference": "assets/animations/towers/tower-atlas-03.png",
+      "grid": [
+        8,
+        8
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "towers/orbital_beam",
+      "path": "assets/animations/completion-v1/towers/orbital_beam.png",
+      "sha256": "a131d14c036f294ae223c8614b77efa93cc5dee4017a5dba749551b5727a57d0",
+      "verdict": "pass",
+      "reference": "assets/animations/towers/tower-atlas-05.png",
+      "grid": [
+        8,
+        8
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "towers/plasma_mortar",
+      "path": "assets/animations/completion-v1/towers/plasma_mortar.png",
+      "sha256": "db9620601542b6113997543ba97093671c1f4abd457bc0fbd36024df6213f243",
+      "verdict": "pass",
+      "reference": "assets/animations/towers/tower-atlas-01.png",
+      "grid": [
+        8,
+        8
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "towers/railgun_pylon",
+      "path": "assets/animations/completion-v1/towers/railgun_pylon.png",
+      "sha256": "090ee910d85ec5f0f5fd0866ce0dc15c78bc6402aa913f0d2f8ca6c1acbe18a6",
+      "verdict": "pass",
+      "reference": "assets/animations/towers/tower-atlas-01.png",
+      "grid": [
+        8,
+        8
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "towers/sawblade_turret",
+      "path": "assets/animations/completion-v1/towers/sawblade_turret.png",
+      "sha256": "7d0514690fa9226e5d3a566b78b759ba8f6c95d99220855021ce4e8921f13392",
+      "verdict": "pass",
+      "reference": "assets/animations/towers/tower-atlas-04.png",
+      "grid": [
+        8,
+        8
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "towers/sonic_cannon",
+      "path": "assets/animations/completion-v1/towers/sonic_cannon.png",
+      "sha256": "5269d7867952b502bd61c62c5add89e7edeaaddde2e4c21576264a5d8c9e15ed",
+      "verdict": "pass",
+      "reference": "assets/animations/towers/tower-atlas-05.png",
+      "grid": [
+        8,
+        8
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "towers/tesla_spire",
+      "path": "assets/animations/completion-v1/towers/tesla_spire.png",
+      "sha256": "2734dddc16ff81fd8c431caeb81bbd03cea6ebf363cb180c45d90d9290bcc30e",
+      "verdict": "pass",
+      "reference": "assets/animations/towers/tower-atlas-02.png",
+      "grid": [
+        8,
+        8
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "towers/vulcan_turret",
+      "path": "assets/animations/completion-v1/towers/vulcan_turret.png",
+      "sha256": "5d22973f310bde9355fb1f430fa9d97ab955d19f80d674d45fe6d382d97c29a3",
+      "verdict": "pass",
+      "reference": "assets/animations/towers/tower-atlas-01.png",
+      "grid": [
+        8,
+        8
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "evolutions/niflhel-breath",
+      "path": "assets/animations/completion-v1/evolutions/niflhel-breath.png",
+      "sha256": "d5b6252a11109ca355f2de63438aba813ff9a54010b48fe45e61ca5cd4bdcd15",
+      "verdict": "pass",
+      "reference": "docs/art-generation/completion-v1/root-prompts.json",
+      "grid": [
+        4,
+        2
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "evolutions/nova-cataclysm",
+      "path": "assets/animations/completion-v1/evolutions/nova-cataclysm.png",
+      "sha256": "5fd066698210c6ab7d4fdad75330a70ad0a6660e7205853eb2e71834377ab589",
+      "verdict": "pass",
+      "reference": "docs/art-generation/completion-v1/root-prompts.json",
+      "grid": [
+        4,
+        2
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "evolutions/odin-lance",
+      "path": "assets/animations/completion-v1/evolutions/odin-lance.png",
+      "sha256": "ae23fca75602a5f5a9154d8c4659b7db0d3892fc0b35967787a2a2780d20b01a",
+      "verdict": "pass",
+      "reference": "docs/art-generation/completion-v1/root-prompts.json",
+      "grid": [
+        4,
+        2
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "evolutions/vulcan-cerberus",
+      "path": "assets/animations/completion-v1/evolutions/vulcan-cerberus.png",
+      "sha256": "486156c9a9ef8cd5ec458c10671e218db4aaee6059c4cdad4a5ae633330f98d3",
+      "verdict": "pass",
+      "reference": "docs/art-generation/completion-v1/root-prompts.json",
+      "grid": [
+        4,
+        2
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "portraits/amara",
+      "path": "assets/animations/completion-v1/portraits/amara.png",
+      "sha256": "968b102a05cc50b5fa756b7345b80db5f81d82930d6e8703b764e035ada35423",
+      "verdict": "pass",
+      "reference": "assets/characters/heroines/amara-verdigris-portrait-v1.webp",
+      "grid": [
+        4,
+        2
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "portraits/aurelia",
+      "path": "assets/animations/completion-v1/portraits/aurelia.png",
+      "sha256": "26b278a8762f062b432f4b66e8566c443d08ffc9a29162d9f8c7542c9484cdf8",
+      "verdict": "pass",
+      "reference": "assets/characters/heroines/aurelia-brassheart-portrait-v1.webp",
+      "grid": [
+        4,
+        2
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "portraits/freyja",
+      "path": "assets/animations/completion-v1/portraits/freyja.png",
+      "sha256": "ef7f3d3ec13b302bf8a7c3b02f5811cd773f119786333af16f79d1e55bfbcfdb",
+      "verdict": "pass",
+      "reference": "assets/characters/heroines/freyja-rimeborne-portrait-v1.webp",
+      "grid": [
+        4,
+        2
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "portraits/hana",
+      "path": "assets/animations/completion-v1/portraits/hana.png",
+      "sha256": "22c83f40732781d56aa0070ae4af03e7c6087012e69e87b4f1c5385ee0d97831",
+      "verdict": "pass",
+      "reference": "assets/characters/heroines/hana-kurogane-portrait-v1.webp",
+      "grid": [
+        4,
+        2
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "portraits/isolde",
+      "path": "assets/animations/completion-v1/portraits/isolde.png",
+      "sha256": "432cd47a59b3b4f2ca890271f8e65c504a84b66ecb078e80208db7cea8866266",
+      "verdict": "pass",
+      "reference": "assets/characters/heroines/isolde-mourne-portrait-v1.webp",
+      "grid": [
+        4,
+        2
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "portraits/maris",
+      "path": "assets/animations/completion-v1/portraits/maris.png",
+      "sha256": "a1d1323b41698ed4f37c756a541aadf22ec83b5759c0e596452da375508cb7b4",
+      "verdict": "pass",
+      "reference": "assets/characters/heroines/maris-blacktide-portrait-v1.webp",
+      "grid": [
+        4,
+        2
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "portraits/mircalla",
+      "path": "assets/animations/completion-v1/portraits/mircalla.png",
+      "sha256": "e69fb04df8ba81d9335636d8a55c01b45b047ff2a981e680505c281bcfba684b",
+      "verdict": "pass",
+      "reference": "assets/characters/heroines/mircalla-dollheart-portrait-v1.webp",
+      "grid": [
+        4,
+        2
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "portraits/nyx",
+      "path": "assets/animations/completion-v1/portraits/nyx.png",
+      "sha256": "dbaa53badbe801866d99d714501aa4c58ed7c5d489d5e7ff7b1aca0a521cf7df",
+      "verdict": "pass",
+      "reference": "assets/characters/heroines/nyx-circuit-portrait-v1.webp",
+      "grid": [
+        4,
+        2
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "portraits/vega",
+      "path": "assets/animations/completion-v1/portraits/vega.png",
+      "sha256": "3185748c30ba5f3296debf40983dcf6f0bdb208f2fadd8763f51a36580280f29",
+      "verdict": "pass",
+      "reference": "assets/characters/heroines/vega-solari-portrait-v1.webp",
+      "grid": [
+        4,
+        2
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "portraits/zahra",
+      "path": "assets/animations/completion-v1/portraits/zahra.png",
+      "sha256": "3b7b933923f19a5e8265a7c91383ccba06709e48338c0a7256524bd1bd839698",
+      "verdict": "pass",
+      "reference": "assets/characters/heroines/zahra-mille-ciels-portrait-v1.webp",
+      "grid": [
+        4,
+        2
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "towers/napalm_mine",
+      "path": "assets/animations/completion-v1/towers/napalm_mine.png",
+      "sha256": "e475555bfca97ab510b569827790c158cefa55f2fe7a2e1026da572541341f79",
+      "verdict": "pass",
+      "reference": "assets/animations/towers/tower-atlas-05.png",
+      "grid": [
+        8,
+        8
+      ],
+      "technicalIssues": [],
+      "notes": []
+    },
+    {
+      "key": "towers/blood_shrine",
+      "path": "assets/animations/completion-v1/towers/blood_shrine.png",
+      "sha256": "3f5172e9c2d5e40476f5e9e85e18a10be8e1581156c9d4d6148066223d272bb7",
+      "verdict": "pass",
+      "reference": "assets/animations/towers/tower-atlas-05.png",
+      "grid": [
+        8,
+        8
+      ],
+      "technicalIssues": [],
+      "notes": []
+    }
+  ],
+  "pending": [],
+  "additionalBoundaryCheck": {
+    "paths": [
+      "assets/animations/completion-v1/towers/napalm_mine.png",
+      "assets/animations/completion-v1/towers/blood_shrine.png"
+    ],
+    "alphaThreshold": 24,
+    "internalBoundaryPixelsAtOrAboveThreshold": 0,
+    "maxBoundaryAlpha": {
+      "napalm_mine": 1,
+      "blood_shrine": 2
+    }
+  }
+}

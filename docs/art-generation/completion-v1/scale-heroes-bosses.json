@@ -1,0 +1,1255 @@
+[
+  {
+    "key": "heroes/aria",
+    "nativeSha256": "f416ad41b9080d1d38d0dae65552d15c38766923dcda0ff93ef4fc6474fe0876",
+    "path": "assets/animations/completion-v1/heroes/aria.png",
+    "oldPath": "assets/animations/smooth/hero-smooth-01.png",
+    "oldGrid": {
+      "columns": 16,
+      "rows": 4
+    },
+    "oldCell": {
+      "row": 0,
+      "column": 0
+    },
+    "newGrid": {
+      "columns": 8,
+      "rows": 8
+    },
+    "newCell": {
+      "row": 1,
+      "column": 0
+    },
+    "alphaThreshold": 96,
+    "oldCoverage": 0.789062,
+    "newCoverage": 0.708134,
+    "drawScale": 1.1143,
+    "oldBboxAlpha96": [
+      18,
+      14,
+      110,
+      115
+    ],
+    "newBboxAlpha96": [
+      35,
+      31,
+      126,
+      142
+    ],
+    "newRestRowCoverageRange": [
+      0.695375,
+      0.708134
+    ],
+    "sourceSelection": "game.v9.js HERO_SPRITE_DATA.aria -> SMOOTH_ATLAS_OVERRIDES; getSmoothHeroFrame idle = 0",
+    "limitations": [
+      "Bounding-box measure includes held weapons, wings and opaque effects; it is not an anatomy-only height measurement."
+    ]
+  },
+  {
+    "key": "heroes/rin",
+    "nativeSha256": "18c00c4ada9b2bb0943c947eb3b691863e86a5803f4bbc38f08dbbe824724b98",
+    "path": "assets/animations/completion-v1/heroes/rin.png",
+    "oldPath": "assets/animations/smooth/hero-smooth-01.png",
+    "oldGrid": {
+      "columns": 16,
+      "rows": 4
+    },
+    "oldCell": {
+      "row": 2,
+      "column": 0
+    },
+    "newGrid": {
+      "columns": 8,
+      "rows": 8
+    },
+    "newCell": {
+      "row": 1,
+      "column": 0
+    },
+    "alphaThreshold": 96,
+    "oldCoverage": 0.8125,
+    "newCoverage": 0.740032,
+    "drawScale": 1.0979,
+    "oldBboxAlpha96": [
+      26,
+      12,
+      102,
+      116
+    ],
+    "newBboxAlpha96": [
+      38,
+      27,
+      124,
+      143
+    ],
+    "newRestRowCoverageRange": [
+      0.727273,
+      0.740032
+    ],
+    "sourceSelection": "game.v9.js HERO_SPRITE_DATA.rin -> SMOOTH_ATLAS_OVERRIDES; getSmoothHeroFrame idle = 0",
+    "limitations": [
+      "Bounding-box measure includes held weapons, wings and opaque effects; it is not an anatomy-only height measurement."
+    ]
+  },
+  {
+    "key": "heroes/kira",
+    "nativeSha256": "177b1238c1960e02b7d163d71c27ebc3ce7abf595d0eb85313807e308b3bd5cb",
+    "path": "assets/animations/completion-v1/heroes/kira.png",
+    "oldPath": "assets/animations/smooth/hero-smooth-01.png",
+    "oldGrid": {
+      "columns": 16,
+      "rows": 4
+    },
+    "oldCell": {
+      "row": 1,
+      "column": 0
+    },
+    "newGrid": {
+      "columns": 8,
+      "rows": 8
+    },
+    "newCell": {
+      "row": 1,
+      "column": 0
+    },
+    "alphaThreshold": 96,
+    "oldCoverage": 0.8125,
+    "newCoverage": 0.61244,
+    "drawScale": 1.3267,
+    "oldBboxAlpha96": [
+      20,
+      12,
+      108,
+      116
+    ],
+    "newBboxAlpha96": [
+      50,
+      54,
+      120,
+      150
+    ],
+    "newRestRowCoverageRange": [
+      0.599681,
+      0.61244
+    ],
+    "sourceSelection": "game.v9.js HERO_SPRITE_DATA.kira -> SMOOTH_ATLAS_OVERRIDES; getSmoothHeroFrame idle = 0",
+    "limitations": [
+      "Bounding-box measure includes held weapons, wings and opaque effects; it is not an anatomy-only height measurement."
+    ]
+  },
+  {
+    "key": "heroes/carmilla",
+    "nativeSha256": "60ed8bf0ce3cfd5d57c2be7dd7ee8c754ed8450193df4f3d89f4763eecfd0359",
+    "path": "assets/animations/completion-v1/heroes/carmilla.png",
+    "oldPath": "assets/animations/smooth/hero-smooth-02.png",
+    "oldGrid": {
+      "columns": 16,
+      "rows": 4
+    },
+    "oldCell": {
+      "row": 1,
+      "column": 0
+    },
+    "newGrid": {
+      "columns": 8,
+      "rows": 8
+    },
+    "newCell": {
+      "row": 1,
+      "column": 0
+    },
+    "alphaThreshold": 96,
+    "oldCoverage": 0.820312,
+    "newCoverage": 0.880383,
+    "drawScale": 0.9318,
+    "oldBboxAlpha96": [
+      25,
+      12,
+      103,
+      117
+    ],
+    "newBboxAlpha96": [
+      27,
+      9,
+      130,
+      147
+    ],
+    "newRestRowCoverageRange": [
+      0.880383,
+      0.880383
+    ],
+    "sourceSelection": "game.v9.js HERO_SPRITE_DATA.carmilla -> SMOOTH_ATLAS_OVERRIDES; getSmoothHeroFrame idle = 0",
+    "limitations": [
+      "Bounding-box measure includes held weapons, wings and opaque effects; it is not an anatomy-only height measurement."
+    ]
+  },
+  {
+    "key": "heroes/vespera",
+    "nativeSha256": "90b641834b6f49e2d893cccdb0f0a55c619b120bc05e123f944c81f79202eb14",
+    "path": "assets/animations/completion-v1/heroes/vespera.png",
+    "oldPath": "assets/animations/smooth/hero-smooth-02.png",
+    "oldGrid": {
+      "columns": 16,
+      "rows": 4
+    },
+    "oldCell": {
+      "row": 0,
+      "column": 0
+    },
+    "newGrid": {
+      "columns": 8,
+      "rows": 8
+    },
+    "newCell": {
+      "row": 1,
+      "column": 0
+    },
+    "alphaThreshold": 96,
+    "oldCoverage": 0.765625,
+    "newCoverage": 0.816587,
+    "drawScale": 0.9376,
+    "oldBboxAlpha96": [
+      23,
+      15,
+      106,
+      113
+    ],
+    "newBboxAlpha96": [
+      32,
+      24,
+      138,
+      152
+    ],
+    "newRestRowCoverageRange": [
+      0.810207,
+      0.829346
+    ],
+    "sourceSelection": "game.v9.js HERO_SPRITE_DATA.vespera -> SMOOTH_ATLAS_OVERRIDES; getSmoothHeroFrame idle = 0",
+    "limitations": [
+      "Bounding-box measure includes held weapons, wings and opaque effects; it is not an anatomy-only height measurement."
+    ]
+  },
+  {
+    "key": "heroes/selene",
+    "nativeSha256": "4769e085b75874ecd0be128f4e8b7c3c732aaf52d5d2933d9aa78d0e267223ad",
+    "path": "assets/animations/completion-v1/heroes/selene.png",
+    "oldPath": "assets/animations/smooth/hero-smooth-01.png",
+    "oldGrid": {
+      "columns": 16,
+      "rows": 4
+    },
+    "oldCell": {
+      "row": 3,
+      "column": 0
+    },
+    "newGrid": {
+      "columns": 8,
+      "rows": 8
+    },
+    "newCell": {
+      "row": 1,
+      "column": 0
+    },
+    "alphaThreshold": 96,
+    "oldCoverage": 0.8125,
+    "newCoverage": 0.893142,
+    "drawScale": 0.9097,
+    "oldBboxAlpha96": [
+      26,
+      12,
+      103,
+      116
+    ],
+    "newBboxAlpha96": [
+      42,
+      7,
+      130,
+      147
+    ],
+    "newRestRowCoverageRange": [
+      0.880383,
+      0.893142
+    ],
+    "sourceSelection": "game.v9.js HERO_SPRITE_DATA.selene -> SMOOTH_ATLAS_OVERRIDES; getSmoothHeroFrame idle = 0",
+    "limitations": [
+      "Bounding-box measure includes held weapons, wings and opaque effects; it is not an anatomy-only height measurement."
+    ]
+  },
+  {
+    "key": "heroes/nyx",
+    "nativeSha256": "3d1caba682dd1fae101b4b98d64579c3884e0e9fddeece05ab0d517f527d32fa",
+    "path": "assets/animations/completion-v1/heroes/nyx.png",
+    "oldPath": "assets/characters/heroines/nyx-circuit-atlas-v1.png",
+    "oldGrid": {
+      "columns": 4,
+      "rows": 4
+    },
+    "oldCell": {
+      "row": 0,
+      "column": 0
+    },
+    "newGrid": {
+      "columns": 8,
+      "rows": 4
+    },
+    "newCell": {
+      "row": 0,
+      "column": 7
+    },
+    "alphaThreshold": 96,
+    "oldCoverage": 0.792969,
+    "newCoverage": 0.820744,
+    "drawScale": 0.9662,
+    "oldBboxAlpha96": [
+      72,
+      27,
+      153,
+      230
+    ],
+    "newBboxAlpha96": [
+      73,
+      27,
+      147,
+      209
+    ],
+    "newRestRowCoverageRange": [
+      0.563698,
+      0.820744
+    ],
+    "sourceSelection": "characters.v1.js heroine spriteAtlas; game.v9.js drawHero stateRow 0 when idle",
+    "limitations": [
+      "New intro column 7 is the settled upright pose; arrival/crouch frames are excluded from scale reference. Existing idle/move/attack/ultimate stay on the original atlas."
+    ]
+  },
+  {
+    "key": "heroes/maris",
+    "nativeSha256": "7d8c81308f99ca1f4972eaa59797f9e19b6392c8c81ae9a05d8e049f5aec73fc",
+    "path": "assets/animations/completion-v1/heroes/maris.png",
+    "oldPath": "assets/characters/heroines/maris-blacktide-atlas-v1.png",
+    "oldGrid": {
+      "columns": 4,
+      "rows": 4
+    },
+    "oldCell": {
+      "row": 0,
+      "column": 0
+    },
+    "newGrid": {
+      "columns": 8,
+      "rows": 4
+    },
+    "newCell": {
+      "row": 0,
+      "column": 7
+    },
+    "alphaThreshold": 96,
+    "oldCoverage": 0.757812,
+    "newCoverage": 0.843292,
+    "drawScale": 0.8986,
+    "oldBboxAlpha96": [
+      41,
+      34,
+      181,
+      228
+    ],
+    "newBboxAlpha96": [
+      55,
+      22,
+      181,
+      209
+    ],
+    "newRestRowCoverageRange": [
+      0.595265,
+      0.843292
+    ],
+    "sourceSelection": "characters.v1.js heroine spriteAtlas; game.v9.js drawHero stateRow 0 when idle",
+    "limitations": [
+      "New intro column 7 is the settled upright pose; arrival/crouch frames are excluded from scale reference. Existing idle/move/attack/ultimate stay on the original atlas.",
+      "Bounding-box measure includes held weapons, wings and opaque effects; it is not an anatomy-only height measurement."
+    ]
+  },
+  {
+    "key": "heroes/zahra",
+    "nativeSha256": "235f5bdd6e76db649c9f5579615500ada6a64590598c9cdc642632072c13a758",
+    "path": "assets/animations/completion-v1/heroes/zahra.png",
+    "oldPath": "assets/characters/heroines/zahra-mille-ciels-atlas-v1.png",
+    "oldGrid": {
+      "columns": 4,
+      "rows": 4
+    },
+    "oldCell": {
+      "row": 0,
+      "column": 0
+    },
+    "newGrid": {
+      "columns": 8,
+      "rows": 4
+    },
+    "newCell": {
+      "row": 0,
+      "column": 7
+    },
+    "alphaThreshold": 96,
+    "oldCoverage": 0.800781,
+    "newCoverage": 0.852311,
+    "drawScale": 0.9395,
+    "oldBboxAlpha96": [
+      70,
+      26,
+      181,
+      231
+    ],
+    "newBboxAlpha96": [
+      62,
+      13,
+      168,
+      202
+    ],
+    "newRestRowCoverageRange": [
+      0.65389,
+      0.852311
+    ],
+    "sourceSelection": "characters.v1.js heroine spriteAtlas; game.v9.js drawHero stateRow 0 when idle",
+    "limitations": [
+      "New intro column 7 is the settled upright pose; arrival/crouch frames are excluded from scale reference. Existing idle/move/attack/ultimate stay on the original atlas.",
+      "Bounding-box measure includes held weapons, wings and opaque effects; it is not an anatomy-only height measurement."
+    ]
+  },
+  {
+    "key": "heroes/mircalla",
+    "nativeSha256": "57c33e13d8910cf6748767e1f0d3d63be041dbd70090763493fd0468faba6ce3",
+    "path": "assets/animations/completion-v1/heroes/mircalla.png",
+    "oldPath": "assets/characters/heroines/mircalla-dollheart-atlas-v1.png",
+    "oldGrid": {
+      "columns": 4,
+      "rows": 4
+    },
+    "oldCell": {
+      "row": 0,
+      "column": 0
+    },
+    "newGrid": {
+      "columns": 8,
+      "rows": 4
+    },
+    "newCell": {
+      "row": 0,
+      "column": 7
+    },
+    "alphaThreshold": 96,
+    "oldCoverage": 0.839844,
+    "newCoverage": 0.86133,
+    "drawScale": 0.9751,
+    "oldBboxAlpha96": [
+      61,
+      21,
+      171,
+      236
+    ],
+    "newBboxAlpha96": [
+      70,
+      11,
+      178,
+      202
+    ],
+    "newRestRowCoverageRange": [
+      0.572717,
+      0.86584
+    ],
+    "sourceSelection": "characters.v1.js heroine spriteAtlas; game.v9.js drawHero stateRow 0 when idle",
+    "limitations": [
+      "New intro column 7 is the settled upright pose; arrival/crouch frames are excluded from scale reference. Existing idle/move/attack/ultimate stay on the original atlas."
+    ]
+  },
+  {
+    "key": "heroes/aurelia",
+    "nativeSha256": "7b79f94302a24e84b68228c4923127de27d2b3c5b4918e0d306d3c87dc4673cd",
+    "path": "assets/animations/completion-v1/heroes/aurelia.png",
+    "oldPath": "assets/characters/heroines/aurelia-brassheart-atlas-v1.png",
+    "oldGrid": {
+      "columns": 4,
+      "rows": 4
+    },
+    "oldCell": {
+      "row": 0,
+      "column": 0
+    },
+    "newGrid": {
+      "columns": 8,
+      "rows": 4
+    },
+    "newCell": {
+      "row": 0,
+      "column": 7
+    },
+    "alphaThreshold": 96,
+    "oldCoverage": 0.792969,
+    "newCoverage": 0.852311,
+    "drawScale": 0.9304,
+    "oldBboxAlpha96": [
+      74,
+      24,
+      182,
+      227
+    ],
+    "newBboxAlpha96": [
+      63,
+      16,
+      162,
+      205
+    ],
+    "newRestRowCoverageRange": [
+      0.65389,
+      0.852311
+    ],
+    "sourceSelection": "characters.v1.js heroine spriteAtlas; game.v9.js drawHero stateRow 0 when idle",
+    "limitations": [
+      "New intro column 7 is the settled upright pose; arrival/crouch frames are excluded from scale reference. Existing idle/move/attack/ultimate stay on the original atlas."
+    ]
+  },
+  {
+    "key": "heroes/isolde",
+    "nativeSha256": "d89024719d3c6555fca538957f9861ef3c301fe71e818d35dac98d7b16d0f665",
+    "path": "assets/animations/completion-v1/heroes/isolde.png",
+    "oldPath": "assets/characters/heroines/isolde-mourne-atlas-v1.png",
+    "oldGrid": {
+      "columns": 4,
+      "rows": 4
+    },
+    "oldCell": {
+      "row": 0,
+      "column": 0
+    },
+    "newGrid": {
+      "columns": 8,
+      "rows": 4
+    },
+    "newCell": {
+      "row": 0,
+      "column": 7
+    },
+    "alphaThreshold": 96,
+    "oldCoverage": 0.816406,
+    "newCoverage": 0.870349,
+    "drawScale": 0.938,
+    "oldBboxAlpha96": [
+      64,
+      34,
+      193,
+      243
+    ],
+    "newBboxAlpha96": [
+      61,
+      16,
+      175,
+      209
+    ],
+    "newRestRowCoverageRange": [
+      0.626832,
+      0.870349
+    ],
+    "sourceSelection": "characters.v1.js heroine spriteAtlas; game.v9.js drawHero stateRow 0 when idle",
+    "limitations": [
+      "New intro column 7 is the settled upright pose; arrival/crouch frames are excluded from scale reference. Existing idle/move/attack/ultimate stay on the original atlas."
+    ]
+  },
+  {
+    "key": "heroes/vega",
+    "nativeSha256": "1111a8bf20b45d0ecc3fc46657b2aea1940d958fb9251a5cbfb7c4bb3cce2ab0",
+    "path": "assets/animations/completion-v1/heroes/vega.png",
+    "oldPath": "assets/characters/heroines/vega-solari-atlas-v1.png",
+    "oldGrid": {
+      "columns": 4,
+      "rows": 4
+    },
+    "oldCell": {
+      "row": 0,
+      "column": 0
+    },
+    "newGrid": {
+      "columns": 8,
+      "rows": 4
+    },
+    "newCell": {
+      "row": 0,
+      "column": 7
+    },
+    "alphaThreshold": 96,
+    "oldCoverage": 0.761719,
+    "newCoverage": 0.843292,
+    "drawScale": 0.9033,
+    "oldBboxAlpha96": [
+      45,
+      48,
+      211,
+      243
+    ],
+    "newBboxAlpha96": [
+      61,
+      17,
+      196,
+      204
+    ],
+    "newRestRowCoverageRange": [
+      0.703495,
+      0.892897
+    ],
+    "sourceSelection": "characters.v1.js heroine spriteAtlas; game.v9.js drawHero stateRow 0 when idle",
+    "limitations": [
+      "New intro column 7 is the settled upright pose; arrival/crouch frames are excluded from scale reference. Existing idle/move/attack/ultimate stay on the original atlas."
+    ]
+  },
+  {
+    "key": "heroes/hana",
+    "nativeSha256": "8ec9f9278fcdd9ee139c74d543a9e9be374aee3758533c68b9e9645bae168fe4",
+    "path": "assets/animations/completion-v1/heroes/hana.png",
+    "oldPath": "assets/characters/heroines/hana-kurogane-atlas-v1.png",
+    "oldGrid": {
+      "columns": 4,
+      "rows": 4
+    },
+    "oldCell": {
+      "row": 0,
+      "column": 0
+    },
+    "newGrid": {
+      "columns": 8,
+      "rows": 4
+    },
+    "newCell": {
+      "row": 0,
+      "column": 7
+    },
+    "alphaThreshold": 96,
+    "oldCoverage": 0.816406,
+    "newCoverage": 0.879369,
+    "drawScale": 0.9284,
+    "oldBboxAlpha96": [
+      75,
+      34,
+      181,
+      243
+    ],
+    "newBboxAlpha96": [
+      70,
+      15,
+      170,
+      210
+    ],
+    "newRestRowCoverageRange": [
+      0.622322,
+      0.879369
+    ],
+    "sourceSelection": "characters.v1.js heroine spriteAtlas; game.v9.js drawHero stateRow 0 when idle",
+    "limitations": [
+      "New intro column 7 is the settled upright pose; arrival/crouch frames are excluded from scale reference. Existing idle/move/attack/ultimate stay on the original atlas."
+    ]
+  },
+  {
+    "key": "heroes/amara",
+    "nativeSha256": "9dca7a1f80b35f2aaf0391215aa4495fd4ec593398aa0079d9c0bfe62ba8e37a",
+    "path": "assets/animations/completion-v1/heroes/amara.png",
+    "oldPath": "assets/characters/heroines/amara-verdigris-atlas-v1.png",
+    "oldGrid": {
+      "columns": 4,
+      "rows": 4
+    },
+    "oldCell": {
+      "row": 0,
+      "column": 0
+    },
+    "newGrid": {
+      "columns": 8,
+      "rows": 4
+    },
+    "newCell": {
+      "row": 0,
+      "column": 7
+    },
+    "alphaThreshold": 96,
+    "oldCoverage": 0.796875,
+    "newCoverage": 0.825254,
+    "drawScale": 0.9656,
+    "oldBboxAlpha96": [
+      77,
+      39,
+      178,
+      243
+    ],
+    "newBboxAlpha96": [
+      70,
+      16,
+      176,
+      199
+    ],
+    "newRestRowCoverageRange": [
+      0.626832,
+      0.928974
+    ],
+    "sourceSelection": "characters.v1.js heroine spriteAtlas; game.v9.js drawHero stateRow 0 when idle",
+    "limitations": [
+      "New intro column 7 is the settled upright pose; arrival/crouch frames are excluded from scale reference. Existing idle/move/attack/ultimate stay on the original atlas."
+    ]
+  },
+  {
+    "key": "heroes/freyja",
+    "nativeSha256": "d26e4da19c838e7bdef83c26c5408131f2f13cdd2f662f2f89ca38def06db76b",
+    "path": "assets/animations/completion-v1/heroes/freyja.png",
+    "oldPath": "assets/characters/heroines/freyja-rimeborne-atlas-v1.png",
+    "oldGrid": {
+      "columns": 4,
+      "rows": 4
+    },
+    "oldCell": {
+      "row": 0,
+      "column": 0
+    },
+    "newGrid": {
+      "columns": 8,
+      "rows": 4
+    },
+    "newCell": {
+      "row": 0,
+      "column": 7
+    },
+    "alphaThreshold": 96,
+    "oldCoverage": 0.78125,
+    "newCoverage": 0.888388,
+    "drawScale": 0.8794,
+    "oldBboxAlpha96": [
+      56,
+      43,
+      201,
+      243
+    ],
+    "newBboxAlpha96": [
+      53,
+      10,
+      186,
+      207
+    ],
+    "newRestRowCoverageRange": [
+      0.748591,
+      0.933484
+    ],
+    "sourceSelection": "characters.v1.js heroine spriteAtlas; game.v9.js drawHero stateRow 0 when idle",
+    "limitations": [
+      "New intro column 7 is the settled upright pose; arrival/crouch frames are excluded from scale reference. Existing idle/move/attack/ultimate stay on the original atlas."
+    ]
+  },
+  {
+    "key": "bosses/xyra",
+    "nativeSha256": "a922225eabb0d927048b6246efa4b96a7d1ae98d6c584d09eea32c8be7c785c2",
+    "path": "assets/animations/completion-v1/bosses/xyra.png",
+    "oldPath": "assets/characters/villains/xyra-bioforge-atlas-v1.png",
+    "oldGrid": {
+      "columns": 4,
+      "rows": 4
+    },
+    "oldCell": {
+      "row": 1,
+      "column": 0
+    },
+    "newGrid": {
+      "columns": 8,
+      "rows": 6
+    },
+    "newCell": {
+      "row": 5,
+      "column": 0
+    },
+    "alphaThreshold": 96,
+    "oldCoverage": 0.855469,
+    "newCoverage": 0.878453,
+    "drawScale": 0.9738,
+    "oldBboxAlpha96": [
+      38,
+      19,
+      217,
+      238
+    ],
+    "newBboxAlpha96": [
+      40,
+      10,
+      134,
+      169
+    ],
+    "newRestRowCoverageRange": [
+      0.867403,
+      0.889503
+    ],
+    "sourceSelection": "characters.v1.js boss spriteAtlas; game.v9.js drawEnemy uses move row 1 outside attack, including rest",
+    "limitations": [
+      "Original renderer uses row 1 outside attack; unused authored idle row 0 was not substituted for the actually displayed reference."
+    ]
+  },
+  {
+    "key": "bosses/ossuary",
+    "nativeSha256": "e8372efedd9a6597cfdfaf310885fc51530bba6b31c51630c182369bd2f1b0b2",
+    "path": "assets/animations/completion-v1/bosses/ossuary.png",
+    "oldPath": "assets/characters/villains/lady-ossuary-atlas-v1.png",
+    "oldGrid": {
+      "columns": 4,
+      "rows": 4
+    },
+    "oldCell": {
+      "row": 1,
+      "column": 0
+    },
+    "newGrid": {
+      "columns": 8,
+      "rows": 6
+    },
+    "newCell": {
+      "row": 5,
+      "column": 0
+    },
+    "alphaThreshold": 96,
+    "oldCoverage": 0.84375,
+    "newCoverage": 0.850829,
+    "drawScale": 0.9917,
+    "oldBboxAlpha96": [
+      60,
+      22,
+      195,
+      238
+    ],
+    "newBboxAlpha96": [
+      37,
+      11,
+      152,
+      165
+    ],
+    "newRestRowCoverageRange": [
+      0.834254,
+      0.861878
+    ],
+    "sourceSelection": "characters.v1.js boss spriteAtlas; game.v9.js drawEnemy uses move row 1 outside attack, including rest",
+    "limitations": [
+      "Original renderer uses row 1 outside attack; unused authored idle row 0 was not substituted for the actually displayed reference.",
+      "Bounding-box measure includes held weapons, wings and opaque effects; it is not an anatomy-only height measurement."
+    ]
+  },
+  {
+    "key": "bosses/umbrael",
+    "nativeSha256": "29332d4b8c5c4831079362d04a15cf875339c7cfd8e94b7fd15e87e1c240874d",
+    "path": "assets/animations/completion-v1/bosses/umbrael.png",
+    "oldPath": "assets/characters/villains/umbrael-shadow-atlas-v1.png",
+    "oldGrid": {
+      "columns": 4,
+      "rows": 4
+    },
+    "oldCell": {
+      "row": 1,
+      "column": 0
+    },
+    "newGrid": {
+      "columns": 8,
+      "rows": 6
+    },
+    "newCell": {
+      "row": 5,
+      "column": 0
+    },
+    "alphaThreshold": 96,
+    "oldCoverage": 0.851562,
+    "newCoverage": 0.889503,
+    "drawScale": 0.9573,
+    "oldBboxAlpha96": [
+      34,
+      19,
+      222,
+      237
+    ],
+    "newBboxAlpha96": [
+      34,
+      10,
+      142,
+      171
+    ],
+    "newRestRowCoverageRange": [
+      0.867403,
+      0.895028
+    ],
+    "sourceSelection": "characters.v1.js boss spriteAtlas; game.v9.js drawEnemy uses move row 1 outside attack, including rest",
+    "limitations": [
+      "Original renderer uses row 1 outside attack; unused authored idle row 0 was not substituted for the actually displayed reference.",
+      "Bounding-box measure includes held weapons, wings and opaque effects; it is not an anatomy-only height measurement."
+    ]
+  },
+  {
+    "key": "bosses/pestifera",
+    "nativeSha256": "b6d5ff78a41ec8283dd0dd2a7ac7042e3c7d927b6349159f2274a55caad4cd11",
+    "path": "assets/animations/completion-v1/bosses/pestifera.png",
+    "oldPath": "assets/characters/villains/pestifera-atlas-v1.png",
+    "oldGrid": {
+      "columns": 4,
+      "rows": 4
+    },
+    "oldCell": {
+      "row": 1,
+      "column": 0
+    },
+    "newGrid": {
+      "columns": 8,
+      "rows": 6
+    },
+    "newCell": {
+      "row": 5,
+      "column": 0
+    },
+    "alphaThreshold": 96,
+    "oldCoverage": 0.851562,
+    "newCoverage": 0.906077,
+    "drawScale": 0.9398,
+    "oldBboxAlpha96": [
+      67,
+      19,
+      187,
+      237
+    ],
+    "newBboxAlpha96": [
+      50,
+      8,
+      134,
+      172
+    ],
+    "newRestRowCoverageRange": [
+      0.906077,
+      0.922652
+    ],
+    "sourceSelection": "characters.v1.js boss spriteAtlas; game.v9.js drawEnemy uses move row 1 outside attack, including rest",
+    "limitations": [
+      "Original renderer uses row 1 outside attack; unused authored idle row 0 was not substituted for the actually displayed reference.",
+      "Bounding-box measure includes held weapons, wings and opaque effects; it is not an anatomy-only height measurement."
+    ]
+  },
+  {
+    "key": "bosses/nhalzara",
+    "nativeSha256": "12832ded756a4abdd4ed2e3c9b46f07873cd58560bc88581ad23ffb7029232c6",
+    "path": "assets/animations/completion-v1/bosses/nhalzara.png",
+    "oldPath": "assets/characters/villains/nhal-zara-atlas-v1.png",
+    "oldGrid": {
+      "columns": 4,
+      "rows": 4
+    },
+    "oldCell": {
+      "row": 1,
+      "column": 0
+    },
+    "newGrid": {
+      "columns": 8,
+      "rows": 6
+    },
+    "newCell": {
+      "row": 5,
+      "column": 0
+    },
+    "alphaThreshold": 96,
+    "oldCoverage": 0.84375,
+    "newCoverage": 0.911602,
+    "drawScale": 0.9256,
+    "oldBboxAlpha96": [
+      19,
+      21,
+      235,
+      237
+    ],
+    "newBboxAlpha96": [
+      39,
+      6,
+      157,
+      171
+    ],
+    "newRestRowCoverageRange": [
+      0.906077,
+      0.917127
+    ],
+    "sourceSelection": "characters.v1.js boss spriteAtlas; game.v9.js drawEnemy uses move row 1 outside attack, including rest",
+    "limitations": [
+      "Original renderer uses row 1 outside attack; unused authored idle row 0 was not substituted for the actually displayed reference.",
+      "Bounding-box measure includes held weapons, wings and opaque effects; it is not an anatomy-only height measurement."
+    ]
+  },
+  {
+    "key": "bosses/astarra",
+    "nativeSha256": "58d42db8a414634465ed43728d022301d0ac4b0fd195e4371e805045a4e2bd7c",
+    "path": "assets/animations/completion-v1/bosses/astarra.png",
+    "oldPath": "assets/characters/villains/astarra-infernal-atlas-v1.png",
+    "oldGrid": {
+      "columns": 4,
+      "rows": 4
+    },
+    "oldCell": {
+      "row": 1,
+      "column": 0
+    },
+    "newGrid": {
+      "columns": 8,
+      "rows": 6
+    },
+    "newCell": {
+      "row": 5,
+      "column": 0
+    },
+    "alphaThreshold": 96,
+    "oldCoverage": 0.851562,
+    "newCoverage": 0.872928,
+    "drawScale": 0.9755,
+    "oldBboxAlpha96": [
+      51,
+      19,
+      205,
+      237
+    ],
+    "newBboxAlpha96": [
+      34,
+      10,
+      140,
+      168
+    ],
+    "newRestRowCoverageRange": [
+      0.872928,
+      0.889503
+    ],
+    "sourceSelection": "characters.v1.js boss spriteAtlas; game.v9.js drawEnemy uses move row 1 outside attack, including rest",
+    "limitations": [
+      "Original renderer uses row 1 outside attack; unused authored idle row 0 was not substituted for the actually displayed reference.",
+      "Bounding-box measure includes held weapons, wings and opaque effects; it is not an anatomy-only height measurement."
+    ]
+  },
+  {
+    "key": "bosses/malika",
+    "nativeSha256": "b3b5a1c079b18c346bb0bebfc5a813b123791591968cea6a53ce864839c4b8c2",
+    "path": "assets/animations/completion-v1/bosses/malika.png",
+    "oldPath": "assets/characters/villains/malika-ash-djinn-atlas-v1.png",
+    "oldGrid": {
+      "columns": 4,
+      "rows": 4
+    },
+    "oldCell": {
+      "row": 1,
+      "column": 0
+    },
+    "newGrid": {
+      "columns": 8,
+      "rows": 6
+    },
+    "newCell": {
+      "row": 5,
+      "column": 0
+    },
+    "alphaThreshold": 96,
+    "oldCoverage": 0.726562,
+    "newCoverage": 0.878453,
+    "drawScale": 0.8271,
+    "oldBboxAlpha96": [
+      43,
+      58,
+      213,
+      244
+    ],
+    "newBboxAlpha96": [
+      31,
+      11,
+      153,
+      170
+    ],
+    "newRestRowCoverageRange": [
+      0.878453,
+      0.878453
+    ],
+    "sourceSelection": "characters.v1.js boss spriteAtlas; game.v9.js drawEnemy uses move row 1 outside attack, including rest",
+    "limitations": [
+      "Original renderer uses row 1 outside attack; unused authored idle row 0 was not substituted for the actually displayed reference.",
+      "Bounding-box measure includes held weapons, wings and opaque effects; it is not an anatomy-only height measurement."
+    ]
+  },
+  {
+    "key": "bosses/vexara",
+    "nativeSha256": "add8321a2fc237c06ac717ee7bf79ae3fcbec69a80ae0bd0584f866049829195",
+    "path": "assets/animations/completion-v1/bosses/vexara.png",
+    "oldPath": "assets/characters/villains/vexara-dreadtide-atlas-v1.png",
+    "oldGrid": {
+      "columns": 4,
+      "rows": 4
+    },
+    "oldCell": {
+      "row": 1,
+      "column": 0
+    },
+    "newGrid": {
+      "columns": 8,
+      "rows": 6
+    },
+    "newCell": {
+      "row": 5,
+      "column": 0
+    },
+    "alphaThreshold": 96,
+    "oldCoverage": 0.847656,
+    "newCoverage": 0.707182,
+    "drawScale": 1.1986,
+    "oldBboxAlpha96": [
+      20,
+      65,
+      237,
+      191
+    ],
+    "newBboxAlpha96": [
+      45,
+      36,
+      150,
+      164
+    ],
+    "newRestRowCoverageRange": [
+      0.707182,
+      0.712707
+    ],
+    "sourceSelection": "characters.v1.js boss spriteAtlas; game.v9.js drawEnemy uses move row 1 outside attack, including rest",
+    "limitations": [
+      "Original renderer uses row 1 outside attack; unused authored idle row 0 was not substituted for the actually displayed reference.",
+      "Bounding-box measure includes held weapons, wings and opaque effects; it is not an anatomy-only height measurement."
+    ]
+  },
+  {
+    "key": "bosses/kalix",
+    "nativeSha256": "0d676b0d57eaa892e978db5e4ee544a7286faebd8c3e541d1f85ef1921ec73f0",
+    "path": "assets/animations/completion-v1/bosses/kalix.png",
+    "oldPath": "assets/characters/villains/kali-x-atlas-v1.png",
+    "oldGrid": {
+      "columns": 4,
+      "rows": 4
+    },
+    "oldCell": {
+      "row": 1,
+      "column": 0
+    },
+    "newGrid": {
+      "columns": 8,
+      "rows": 6
+    },
+    "newCell": {
+      "row": 5,
+      "column": 0
+    },
+    "alphaThreshold": 96,
+    "oldCoverage": 0.714844,
+    "newCoverage": 0.933702,
+    "drawScale": 0.7656,
+    "oldBboxAlpha96": [
+      66,
+      60,
+      193,
+      243
+    ],
+    "newBboxAlpha96": [
+      46,
+      4,
+      130,
+      173
+    ],
+    "newRestRowCoverageRange": [
+      0.922652,
+      0.939227
+    ],
+    "sourceSelection": "characters.v1.js boss spriteAtlas; game.v9.js drawEnemy uses move row 1 outside attack, including rest",
+    "limitations": [
+      "Original renderer uses row 1 outside attack; unused authored idle row 0 was not substituted for the actually displayed reference.",
+      "Bounding-box measure includes held weapons, wings and opaque effects; it is not an anatomy-only height measurement."
+    ]
+  },
+  {
+    "key": "bosses/noctis",
+    "nativeSha256": "edfa36de31ff56669c0d45897d46ba3b26585fd7c6d2aa28412b50568099145e",
+    "path": "assets/animations/completion-v1/bosses/noctis.png",
+    "oldPath": "assets/characters/villains/madame-noctis-atlas-v1.png",
+    "oldGrid": {
+      "columns": 4,
+      "rows": 4
+    },
+    "oldCell": {
+      "row": 1,
+      "column": 0
+    },
+    "newGrid": {
+      "columns": 8,
+      "rows": 6
+    },
+    "newCell": {
+      "row": 5,
+      "column": 0
+    },
+    "alphaThreshold": 96,
+    "oldCoverage": 0.78125,
+    "newCoverage": 0.917127,
+    "drawScale": 0.8518,
+    "oldBboxAlpha96": [
+      67,
+      40,
+      190,
+      240
+    ],
+    "newBboxAlpha96": [
+      53,
+      4,
+      137,
+      170
+    ],
+    "newRestRowCoverageRange": [
+      0.917127,
+      0.922652
+    ],
+    "sourceSelection": "characters.v1.js boss spriteAtlas; game.v9.js drawEnemy uses move row 1 outside attack, including rest",
+    "limitations": [
+      "Original renderer uses row 1 outside attack; unused authored idle row 0 was not substituted for the actually displayed reference.",
+      "Bounding-box measure includes held weapons, wings and opaque effects; it is not an anatomy-only height measurement."
+    ]
+  },
+  {
+    "key": "bosses/leviathan",
+    "nativeSha256": "d93690ddc88369deb475d7ee8e247024fe722618a11e8de496f5b31842b41b82",
+    "path": "assets/animations/completion-v1/bosses/leviathan.png",
+    "oldPath": "assets/animations/smooth/enemy-smooth-02.png",
+    "oldGrid": {
+      "columns": 16,
+      "rows": 4
+    },
+    "oldCell": {
+      "row": 2,
+      "column": 0
+    },
+    "newGrid": {
+      "columns": 8,
+      "rows": 6
+    },
+    "newCell": {
+      "row": 5,
+      "column": 0
+    },
+    "alphaThreshold": 96,
+    "oldCoverage": 0.71875,
+    "newCoverage": 0.900552,
+    "drawScale": 0.7981,
+    "oldBboxAlpha96": [
+      18,
+      31,
+      110,
+      98
+    ],
+    "newBboxAlpha96": [
+      9,
+      31,
+      172,
+      159
+    ],
+    "newRestRowCoverageRange": [
+      0.889503,
+      0.900552
+    ],
+    "sourceSelection": "game.v9.js ENEMY_SPRITE_DATA.leviathan -> SMOOTH_ATLAS_OVERRIDES; non-attack frame 0",
+    "limitations": [
+      "Wing/body silhouette measured in its non-attack pose; original idle cycles include other small shifts."
+    ]
+  }
+]

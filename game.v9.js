@@ -12650,6 +12650,7 @@ class GameEngine {
 
     // Render Projectiles with glowing motion trails & 8-frame animated energy bolts
     this.projectiles.forEach((p, idx) => {
+      if (this.drawCompletedEvolution?.(p)) return;
       if (p.type === 'flame') {
         const lifeRatio = Math.max(0.15, Math.min(1, (p.life || 0.3) / 0.5));
         const flameRadius = this.getReadableWorldSize((p.radius || 6) * (0.7 + lifeRatio * 0.8), 4);
@@ -12730,6 +12731,7 @@ class GameEngine {
 
     // Render Particles
     (this.prefersReducedMotion ? [] : this.particles).forEach(p => {
+      if (this.drawCompletedEvolution?.(p)) return;
       if (p.type === 'sprite_fx') {
         const fxData = COMPANION_FX_SPRITE_DATA.combat_fx;
         const fxImg = this.companionFxImages?.combat_fx;

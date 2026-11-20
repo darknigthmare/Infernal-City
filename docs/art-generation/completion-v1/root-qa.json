@@ -1,0 +1,142 @@
+{
+  "report": "root-independent-review.json",
+  "approved": [
+    {
+      "key": "towers/acid_trap",
+      "sha256": "27b88882a0cb44e86f2c7fbc3706f005b38eb21e746c60e2ce988a7d743f1183"
+    },
+    {
+      "key": "towers/aegis_barrier",
+      "sha256": "873bdc8ae2d9ee33410cd3202ee5fc79c16de16d22509323918612ff5d7242f5"
+    },
+    {
+      "key": "towers/bio_siphon",
+      "sha256": "d8a9b535a752d0bc0e5519a80cb3f618812949e910dc36d77b3aa6be7fcd978e"
+    },
+    {
+      "key": "towers/cryo_cannon",
+      "sha256": "1c75f32effbba57b4556d1b77578672afbf8fc5dbcd2a33e4cf2e2cbf56e6c07"
+    },
+    {
+      "key": "towers/emp_tower",
+      "sha256": "8b2ec9eb37f273c1ada4497f0d60abd839bc6f410bea872307059e63928f984b"
+    },
+    {
+      "key": "towers/flame_trap",
+      "sha256": "55685b4e90ffa952c4f047ad423e49e21e49cd67eae60bd53c24276cd7930946"
+    },
+    {
+      "key": "towers/gravity_well",
+      "sha256": "31810ac58558dc8a395f16908a7a58a5556a3fd3146dc411eccc3ad02532dce5"
+    },
+    {
+      "key": "towers/landmine",
+      "sha256": "17cac4b191bf62df5111be5f20a03f78e46661e58c9ccddd831756358f58a6dc"
+    },
+    {
+      "key": "towers/laser_drone",
+      "sha256": "b822af60082194b64e0475817d95ef922a9468c198bdf62d79a41e350c268dd5"
+    },
+    {
+      "key": "towers/magnet_drone",
+      "sha256": "3397842201532f495534245f37bd9dcc3d3a0cb28a39b5cf28b0aab6c0fc38fd"
+    },
+    {
+      "key": "towers/missile_pod",
+      "sha256": "befc6e65e5ec4269bf5779a045b8a16c8492c7a6615c4c849f69d966d6052ddf"
+    },
+    {
+      "key": "towers/orbital_beam",
+      "sha256": "a131d14c036f294ae223c8614b77efa93cc5dee4017a5dba749551b5727a57d0"
+    },
+    {
+      "key": "towers/plasma_mortar",
+      "sha256": "db9620601542b6113997543ba97093671c1f4abd457bc0fbd36024df6213f243"
+    },
+    {
+      "key": "towers/railgun_pylon",
+      "sha256": "090ee910d85ec5f0f5fd0866ce0dc15c78bc6402aa913f0d2f8ca6c1acbe18a6"
+    },
+    {
+      "key": "towers/sawblade_turret",
+      "sha256": "7d0514690fa9226e5d3a566b78b759ba8f6c95d99220855021ce4e8921f13392"
+    },
+    {
+      "key": "towers/sonic_cannon",
+      "sha256": "5269d7867952b502bd61c62c5add89e7edeaaddde2e4c21576264a5d8c9e15ed"
+    },
+    {
+      "key": "towers/tesla_spire",
+      "sha256": "2734dddc16ff81fd8c431caeb81bbd03cea6ebf363cb180c45d90d9290bcc30e"
+    },
+    {
+      "key": "towers/vulcan_turret",
+      "sha256": "5d22973f310bde9355fb1f430fa9d97ab955d19f80d674d45fe6d382d97c29a3"
+    },
+    {
+      "key": "evolutions/niflhel-breath",
+      "sha256": "d5b6252a11109ca355f2de63438aba813ff9a54010b48fe45e61ca5cd4bdcd15"
+    },
+    {
+      "key": "evolutions/nova-cataclysm",
+      "sha256": "5fd066698210c6ab7d4fdad75330a70ad0a6660e7205853eb2e71834377ab589"
+    },
+    {
+      "key": "evolutions/odin-lance",
+      "sha256": "ae23fca75602a5f5a9154d8c4659b7db0d3892fc0b35967787a2a2780d20b01a"
+    },
+    {
+      "key": "evolutions/vulcan-cerberus",
+      "sha256": "486156c9a9ef8cd5ec458c10671e218db4aaee6059c4cdad4a5ae633330f98d3"
+    },
+    {
+      "key": "portraits/amara",
+      "sha256": "968b102a05cc50b5fa756b7345b80db5f81d82930d6e8703b764e035ada35423"
+    },
+    {
+      "key": "portraits/aurelia",
+      "sha256": "26b278a8762f062b432f4b66e8566c443d08ffc9a29162d9f8c7542c9484cdf8"
+    },
+    {
+      "key": "portraits/freyja",
+      "sha256": "ef7f3d3ec13b302bf8a7c3b02f5811cd773f119786333af16f79d1e55bfbcfdb"
+    },
+    {
+      "key": "portraits/hana",
+      "sha256": "22c83f40732781d56aa0070ae4af03e7c6087012e69e87b4f1c5385ee0d97831"
+    },
+    {
+      "key": "portraits/isolde",
+      "sha256": "432cd47a59b3b4f2ca890271f8e65c504a84b66ecb078e80208db7cea8866266"
+    },
+    {
+      "key": "portraits/maris",
+      "sha256": "a1d1323b41698ed4f37c756a541aadf22ec83b5759c0e596452da375508cb7b4"
+    },
+    {
+      "key": "portraits/mircalla",
+      "sha256": "e69fb04df8ba81d9335636d8a55c01b45b047ff2a981e680505c281bcfba684b"
+    },
+    {
+      "key": "portraits/nyx",
+      "sha256": "dbaa53badbe801866d99d714501aa4c58ed7c5d489d5e7ff7b1aca0a521cf7df"
+    },
+    {
+      "key": "portraits/vega",
+      "sha256": "3185748c30ba5f3296debf40983dcf6f0bdb208f2fadd8763f51a36580280f29"
+    },
+    {
+      "key": "portraits/zahra",
+      "sha256": "3b7b933923f19a5e8265a7c91383ccba06709e48338c0a7256524bd1bd839698"
+    },
+    {
+      "key": "towers/napalm_mine",
+      "sha256": "e475555bfca97ab510b569827790c158cefa55f2fe7a2e1026da572541341f79"
+    },
+    {
+      "key": "towers/blood_shrine",
+      "sha256": "3f5172e9c2d5e40476f5e9e85e18a10be8e1581156c9d4d6148066223d272bb7"
+    }
+  ],
+  "rejected": []
+}

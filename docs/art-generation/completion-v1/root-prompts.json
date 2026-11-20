@@ -1,0 +1,466 @@
+[
+  {
+    "id": "vulcan_turret",
+    "a": "Cerbère Rotatif — Trois canons chauffent progressivement et percent une cible supplémentaire à plein régime.",
+    "b": "Doctrine Suppressive — Des rafales larges marquent et ralentissent les unités légères au prix de dégâts directs.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-01.png",
+    "referenceRow": 1,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: Infernal City production game animation atlas. Reference role: identity/style ONLY, take ONLY tower in ROW 1 of reference and no other object. Preserve exact tower design, gunmetal armored materials, signature glow, orthographic elevated 3/4 camera and original facing. Make ONE complete NEW sprite atlas containing this tower only. Layout STRICT 8 columns x 8 rows, 64 SQUARE cells, SQUARE image preferably 2048x2048. Every cell has ONE complete small isolated tower at identical anchor and camera, with large 20 percent empty alpha margins on EVERY side; no sprite crosses cell boundaries. Row1: base level1 eight fire-cycle poses (idle, wake, aim, charge, peak, recoil, cooling, idle). Row2: level2 upgraded reinforced armor and extra energy conduits, same eight action phases. Row3: level3 clearly stronger reinforced armor and enhanced weapon assembly, same eight phases. Row4: specialty A, Cerbère Rotatif — Trois canons chauffent progressivement et percent une cible supplémentaire à plein régime., dedicated visual design and its eight action phases. Row5: specialty B, Doctrine Suppressive — Des rafales larges marquent et ralentissent les unités légères au prix de dégâts directs., dedicated visual design and its eight action phases. Row6: deployment sequence from compact folded machine through unfolding to fully built tower in eighth frame. Row7: salvage sequence retracting equipment and dismantling safely into a compact mechanical crate in eighth frame, no explosion. Row8: eight subtle idle/energy pulse poses for the base tower. Draw the movement and mechanical changes, do not simply translate identical copies. ALL objects entirely contained within cells. Crisp cyber-gothic anime cel shaded game art matching the reference. Real transparent alpha background, no solid/checkered background, no floor, contact shadow, text, numbers, captions, border or drawn grid."
+  },
+  {
+    "id": "plasma_mortar",
+    "a": "Nova Cataclysmique — Chaque obus crée deux détonations concentriques avec une zone brûlante résiduelle.",
+    "b": "Batterie à Sous-Munitions — L’obus se divise pour saturer plusieurs routes proches.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-01.png",
+    "referenceRow": 2,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: Infernal City production game animation atlas. Reference role: identity/style ONLY, take ONLY tower in ROW 2 of reference and no other object. Preserve exact tower design, gunmetal armored materials, signature glow, orthographic elevated 3/4 camera and original facing. Make ONE complete NEW sprite atlas containing this tower only. Layout STRICT 8 columns x 8 rows, 64 SQUARE cells, SQUARE image preferably 2048x2048. Every cell has ONE complete small isolated tower at identical anchor and camera, with large 20 percent empty alpha margins on EVERY side; no sprite crosses cell boundaries. Row1: base level1 eight fire-cycle poses (idle, wake, aim, charge, peak, recoil, cooling, idle). Row2: level2 upgraded reinforced armor and extra energy conduits, same eight action phases. Row3: level3 clearly stronger reinforced armor and enhanced weapon assembly, same eight phases. Row4: specialty A, Nova Cataclysmique — Chaque obus crée deux détonations concentriques avec une zone brûlante résiduelle., dedicated visual design and its eight action phases. Row5: specialty B, Batterie à Sous-Munitions — L’obus se divise pour saturer plusieurs routes proches., dedicated visual design and its eight action phases. Row6: deployment sequence from compact folded machine through unfolding to fully built tower in eighth frame. Row7: salvage sequence retracting equipment and dismantling safely into a compact mechanical crate in eighth frame, no explosion. Row8: eight subtle idle/energy pulse poses for the base tower. Draw the movement and mechanical changes, do not simply translate identical copies. ALL objects entirely contained within cells. Crisp cyber-gothic anime cel shaded game art matching the reference. Real transparent alpha background, no solid/checkered background, no floor, contact shadow, text, numbers, captions, border or drawn grid."
+  },
+  {
+    "id": "railgun_pylon",
+    "a": "Lance d’Odin — Un rayon extrême traverse toute la colonne et brise les boucliers frontaux.",
+    "b": "Pylône Chasseur — Verrouille les unités aériennes ou d’artillerie et accélère après chaque élimination.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-01.png",
+    "referenceRow": 3,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: Infernal City production game animation atlas. Reference role: identity/style ONLY, take ONLY tower in ROW 3 of reference and no other object. Preserve exact tower design, gunmetal armored materials, signature glow, orthographic elevated 3/4 camera and original facing. Make ONE complete NEW sprite atlas containing this tower only. Layout STRICT 8 columns x 8 rows, 64 SQUARE cells, SQUARE image preferably 2048x2048. Every cell has ONE complete small isolated tower at identical anchor and camera, with large 20 percent empty alpha margins on EVERY side; no sprite crosses cell boundaries. Row1: base level1 eight fire-cycle poses (idle, wake, aim, charge, peak, recoil, cooling, idle). Row2: level2 upgraded reinforced armor and extra energy conduits, same eight action phases. Row3: level3 clearly stronger reinforced armor and enhanced weapon assembly, same eight phases. Row4: specialty A, Lance d’Odin — Un rayon extrême traverse toute la colonne et brise les boucliers frontaux., dedicated visual design and its eight action phases. Row5: specialty B, Pylône Chasseur — Verrouille les unités aériennes ou d’artillerie et accélère après chaque élimination., dedicated visual design and its eight action phases. Row6: deployment sequence from compact folded machine through unfolding to fully built tower in eighth frame. Row7: salvage sequence retracting equipment and dismantling safely into a compact mechanical crate in eighth frame, no explosion. Row8: eight subtle idle/energy pulse poses for the base tower. Draw the movement and mechanical changes, do not simply translate identical copies. ALL objects entirely contained within cells. Crisp cyber-gothic anime cel shaded game art matching the reference. Real transparent alpha background, no solid/checkered background, no floor, contact shadow, text, numbers, captions, border or drawn grid."
+  },
+  {
+    "id": "flame_trap",
+    "a": "Souffle de Niflhel — Un plasma froid brûle et ralentit simultanément les cibles.",
+    "b": "Fournaise Vorace — Une flamme étroite gagne en puissance tant qu’elle reste sur le même ennemi.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-01.png",
+    "referenceRow": 4,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: Infernal City production game animation atlas. Reference role: identity/style ONLY, take ONLY tower in ROW 4 of reference and no other object. Preserve exact tower design, gunmetal armored materials, signature glow, orthographic elevated 3/4 camera and original facing. Make ONE complete NEW sprite atlas containing this tower only. Layout STRICT 8 columns x 8 rows, 64 SQUARE cells, SQUARE image preferably 2048x2048. Every cell has ONE complete small isolated tower at identical anchor and camera, with large 20 percent empty alpha margins on EVERY side; no sprite crosses cell boundaries. Row1: base level1 eight fire-cycle poses (idle, wake, aim, charge, peak, recoil, cooling, idle). Row2: level2 upgraded reinforced armor and extra energy conduits, same eight action phases. Row3: level3 clearly stronger reinforced armor and enhanced weapon assembly, same eight phases. Row4: specialty A, Souffle de Niflhel — Un plasma froid brûle et ralentit simultanément les cibles., dedicated visual design and its eight action phases. Row5: specialty B, Fournaise Vorace — Une flamme étroite gagne en puissance tant qu’elle reste sur le même ennemi., dedicated visual design and its eight action phases. Row6: deployment sequence from compact folded machine through unfolding to fully built tower in eighth frame. Row7: salvage sequence retracting equipment and dismantling safely into a compact mechanical crate in eighth frame, no explosion. Row8: eight subtle idle/energy pulse poses for the base tower. Draw the movement and mechanical changes, do not simply translate identical copies. ALL objects entirely contained within cells. Crisp cyber-gothic anime cel shaded game art matching the reference. Real transparent alpha background, no solid/checkered background, no floor, contact shadow, text, numbers, captions, border or drawn grid."
+  },
+  {
+    "id": "tesla_spire",
+    "a": "Tempête Synaptique — Les arcs se multiplient dans les hordes denses et étourdissent la dernière cible.",
+    "b": "Paratonnerre d’Exil — Des impulsions rares frappent prioritairement les volants et les artilleurs.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-02.png",
+    "referenceRow": 1,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: Infernal City production game animation atlas. Reference role: identity/style ONLY, take ONLY tower in ROW 1 of reference and no other object. Preserve exact tower design, gunmetal armored materials, signature glow, orthographic elevated 3/4 camera and original facing. Make ONE complete NEW sprite atlas containing this tower only. Layout STRICT 8 columns x 8 rows, 64 SQUARE cells, SQUARE image preferably 2048x2048. Every cell has ONE complete small isolated tower at identical anchor and camera, with large 20 percent empty alpha margins on EVERY side; no sprite crosses cell boundaries. Row1: base level1 eight fire-cycle poses (idle, wake, aim, charge, peak, recoil, cooling, idle). Row2: level2 upgraded reinforced armor and extra energy conduits, same eight action phases. Row3: level3 clearly stronger reinforced armor and enhanced weapon assembly, same eight phases. Row4: specialty A, Tempête Synaptique — Les arcs se multiplient dans les hordes denses et étourdissent la dernière cible., dedicated visual design and its eight action phases. Row5: specialty B, Paratonnerre d’Exil — Des impulsions rares frappent prioritairement les volants et les artilleurs., dedicated visual design and its eight action phases. Row6: deployment sequence from compact folded machine through unfolding to fully built tower in eighth frame. Row7: salvage sequence retracting equipment and dismantling safely into a compact mechanical crate in eighth frame, no explosion. Row8: eight subtle idle/energy pulse poses for the base tower. Draw the movement and mechanical changes, do not simply translate identical copies. ALL objects entirely contained within cells. Crisp cyber-gothic anime cel shaded game art matching the reference. Real transparent alpha background, no solid/checkered background, no floor, contact shadow, text, numbers, captions, border or drawn grid."
+  },
+  {
+    "id": "cryo_cannon",
+    "a": "Zéro Absolu — Accumule du gel jusqu’à immobiliser puis fracturer les unités lourdes.",
+    "b": "Brouillard Blanc — Diffuse un brouillard permanent qui ralentit une vaste section de route.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-02.png",
+    "referenceRow": 2,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: Infernal City production game animation atlas. Reference role: identity/style ONLY, take ONLY tower in ROW 2 of reference and no other object. Preserve exact tower design, gunmetal armored materials, signature glow, orthographic elevated 3/4 camera and original facing. Make ONE complete NEW sprite atlas containing this tower only. Layout STRICT 8 columns x 8 rows, 64 SQUARE cells, SQUARE image preferably 2048x2048. Every cell has ONE complete small isolated tower at identical anchor and camera, with large 20 percent empty alpha margins on EVERY side; no sprite crosses cell boundaries. Row1: base level1 eight fire-cycle poses (idle, wake, aim, charge, peak, recoil, cooling, idle). Row2: level2 upgraded reinforced armor and extra energy conduits, same eight action phases. Row3: level3 clearly stronger reinforced armor and enhanced weapon assembly, same eight phases. Row4: specialty A, Zéro Absolu — Accumule du gel jusqu’à immobiliser puis fracturer les unités lourdes., dedicated visual design and its eight action phases. Row5: specialty B, Brouillard Blanc — Diffuse un brouillard permanent qui ralentit une vaste section de route., dedicated visual design and its eight action phases. Row6: deployment sequence from compact folded machine through unfolding to fully built tower in eighth frame. Row7: salvage sequence retracting equipment and dismantling safely into a compact mechanical crate in eighth frame, no explosion. Row8: eight subtle idle/energy pulse poses for the base tower. Draw the movement and mechanical changes, do not simply translate identical copies. ALL objects entirely contained within cells. Crisp cyber-gothic anime cel shaded game art matching the reference. Real transparent alpha background, no solid/checkered background, no floor, contact shadow, text, numbers, captions, border or drawn grid."
+  },
+  {
+    "id": "acid_trap",
+    "a": "Solvant Royal — Dissout rapidement armures et boucliers dans une flaque plus concentrée.",
+    "b": "Marée Corrosive — La flaque s’étend lorsqu’un ennemi y meurt et couvre progressivement le couloir.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-02.png",
+    "referenceRow": 3,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: Infernal City production game animation atlas. Reference role: identity/style ONLY, take ONLY tower in ROW 3 of reference and no other object. Preserve exact tower design, gunmetal armored materials, signature glow, orthographic elevated 3/4 camera and original facing. Make ONE complete NEW sprite atlas containing this tower only. Layout STRICT 8 columns x 8 rows, 64 SQUARE cells, SQUARE image preferably 2048x2048. Every cell has ONE complete small isolated tower at identical anchor and camera, with large 20 percent empty alpha margins on EVERY side; no sprite crosses cell boundaries. Row1: base level1 eight fire-cycle poses (idle, wake, aim, charge, peak, recoil, cooling, idle). Row2: level2 upgraded reinforced armor and extra energy conduits, same eight action phases. Row3: level3 clearly stronger reinforced armor and enhanced weapon assembly, same eight phases. Row4: specialty A, Solvant Royal — Dissout rapidement armures et boucliers dans une flaque plus concentrée., dedicated visual design and its eight action phases. Row5: specialty B, Marée Corrosive — La flaque s’étend lorsqu’un ennemi y meurt et couvre progressivement le couloir., dedicated visual design and its eight action phases. Row6: deployment sequence from compact folded machine through unfolding to fully built tower in eighth frame. Row7: salvage sequence retracting equipment and dismantling safely into a compact mechanical crate in eighth frame, no explosion. Row8: eight subtle idle/energy pulse poses for the base tower. Draw the movement and mechanical changes, do not simply translate identical copies. ALL objects entirely contained within cells. Crisp cyber-gothic anime cel shaded game art matching the reference. Real transparent alpha background, no solid/checkered background, no floor, contact shadow, text, numbers, captions, border or drawn grid."
+  },
+  {
+    "id": "laser_drone",
+    "a": "Intercepteur Séraphin — Patrouille entre deux points et abat les unités aériennes en priorité.",
+    "b": "Désignateur Fantôme — Sacrifie sa cadence pour marquer les cibles et amplifier les tirs alliés.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-02.png",
+    "referenceRow": 4,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: Infernal City production game animation atlas. Reference role: identity/style ONLY, take ONLY tower in ROW 4 of reference and no other object. Preserve exact tower design, gunmetal armored materials, signature glow, orthographic elevated 3/4 camera and original facing. Make ONE complete NEW sprite atlas containing this tower only. Layout STRICT 8 columns x 8 rows, 64 SQUARE cells, SQUARE image preferably 2048x2048. Every cell has ONE complete small isolated tower at identical anchor and camera, with large 20 percent empty alpha margins on EVERY side; no sprite crosses cell boundaries. Row1: base level1 eight fire-cycle poses (idle, wake, aim, charge, peak, recoil, cooling, idle). Row2: level2 upgraded reinforced armor and extra energy conduits, same eight action phases. Row3: level3 clearly stronger reinforced armor and enhanced weapon assembly, same eight phases. Row4: specialty A, Intercepteur Séraphin — Patrouille entre deux points et abat les unités aériennes en priorité., dedicated visual design and its eight action phases. Row5: specialty B, Désignateur Fantôme — Sacrifie sa cadence pour marquer les cibles et amplifier les tirs alliés., dedicated visual design and its eight action phases. Row6: deployment sequence from compact folded machine through unfolding to fully built tower in eighth frame. Row7: salvage sequence retracting equipment and dismantling safely into a compact mechanical crate in eighth frame, no explosion. Row8: eight subtle idle/energy pulse poses for the base tower. Draw the movement and mechanical changes, do not simply translate identical copies. ALL objects entirely contained within cells. Crisp cyber-gothic anime cel shaded game art matching the reference. Real transparent alpha background, no solid/checkered background, no floor, contact shadow, text, numbers, captions, border or drawn grid."
+  },
+  {
+    "id": "landmine",
+    "a": "Charge Creuse — Une explosion directionnelle transperce les remparts et les brutes.",
+    "b": "Nid de Vipères — Déploie quatre petites mines qui se réarment lentement entre les vagues.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-03.png",
+    "referenceRow": 1,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: Infernal City production game animation atlas. Reference role: identity/style ONLY, take ONLY tower in ROW 1 of reference and no other object. Preserve exact tower design, gunmetal armored materials, signature glow, orthographic elevated 3/4 camera and original facing. Make ONE complete NEW sprite atlas containing this tower only. Layout STRICT 8 columns x 8 rows, 64 SQUARE cells, SQUARE image preferably 2048x2048. Every cell has ONE complete small isolated tower at identical anchor and camera, with large 20 percent empty alpha margins on EVERY side; no sprite crosses cell boundaries. Row1: base level1 eight fire-cycle poses (idle, wake, aim, charge, peak, recoil, cooling, idle). Row2: level2 upgraded reinforced armor and extra energy conduits, same eight action phases. Row3: level3 clearly stronger reinforced armor and enhanced weapon assembly, same eight phases. Row4: specialty A, Charge Creuse — Une explosion directionnelle transperce les remparts et les brutes., dedicated visual design and its eight action phases. Row5: specialty B, Nid de Vipères — Déploie quatre petites mines qui se réarment lentement entre les vagues., dedicated visual design and its eight action phases. Row6: deployment sequence from compact folded machine through unfolding to fully built tower in eighth frame. Row7: salvage sequence retracting equipment and dismantling safely into a compact mechanical crate in eighth frame, no explosion. Row8: eight subtle idle/energy pulse poses for the base tower. Draw the movement and mechanical changes, do not simply translate identical copies. ALL objects entirely contained within cells. Crisp cyber-gothic anime cel shaded game art matching the reference. Real transparent alpha background, no solid/checkered background, no floor, contact shadow, text, numbers, captions, border or drawn grid."
+  },
+  {
+    "id": "aegis_barrier",
+    "a": "Bastion Inébranlable — Un mur compact doté d’une immense réserve de points de vie et d’une réparation autonome.",
+    "b": "Miroir Aegis — Une barrière plus fragile renvoie les projectiles de siège vers leur source.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-03.png",
+    "referenceRow": 2,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: Infernal City production game animation atlas. Reference role: identity/style ONLY, take ONLY tower in ROW 2 of reference and no other object. Preserve exact tower design, gunmetal armored materials, signature glow, orthographic elevated 3/4 camera and original facing. Make ONE complete NEW sprite atlas containing this tower only. Layout STRICT 8 columns x 8 rows, 64 SQUARE cells, SQUARE image preferably 2048x2048. Every cell has ONE complete small isolated tower at identical anchor and camera, with large 20 percent empty alpha margins on EVERY side; no sprite crosses cell boundaries. Row1: base level1 eight fire-cycle poses (idle, wake, aim, charge, peak, recoil, cooling, idle). Row2: level2 upgraded reinforced armor and extra energy conduits, same eight action phases. Row3: level3 clearly stronger reinforced armor and enhanced weapon assembly, same eight phases. Row4: specialty A, Bastion Inébranlable — Un mur compact doté d’une immense réserve de points de vie et d’une réparation autonome., dedicated visual design and its eight action phases. Row5: specialty B, Miroir Aegis — Une barrière plus fragile renvoie les projectiles de siège vers leur source., dedicated visual design and its eight action phases. Row6: deployment sequence from compact folded machine through unfolding to fully built tower in eighth frame. Row7: salvage sequence retracting equipment and dismantling safely into a compact mechanical crate in eighth frame, no explosion. Row8: eight subtle idle/energy pulse poses for the base tower. Draw the movement and mechanical changes, do not simply translate identical copies. ALL objects entirely contained within cells. Crisp cyber-gothic anime cel shaded game art matching the reference. Real transparent alpha background, no solid/checkered background, no floor, contact shadow, text, numbers, captions, border or drawn grid."
+  },
+  {
+    "id": "gravity_well",
+    "a": "Singularité Affamée — Compacte brutalement les unités légères et leur inflige des dégâts croissants.",
+    "b": "Anneau Orbital — Un champ large dévie les volants et allonge toutes les routes affectées.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-03.png",
+    "referenceRow": 3,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: Infernal City production game animation atlas. Reference role: identity/style ONLY, take ONLY tower in ROW 3 of reference and no other object. Preserve exact tower design, gunmetal armored materials, signature glow, orthographic elevated 3/4 camera and original facing. Make ONE complete NEW sprite atlas containing this tower only. Layout STRICT 8 columns x 8 rows, 64 SQUARE cells, SQUARE image preferably 2048x2048. Every cell has ONE complete small isolated tower at identical anchor and camera, with large 20 percent empty alpha margins on EVERY side; no sprite crosses cell boundaries. Row1: base level1 eight fire-cycle poses (idle, wake, aim, charge, peak, recoil, cooling, idle). Row2: level2 upgraded reinforced armor and extra energy conduits, same eight action phases. Row3: level3 clearly stronger reinforced armor and enhanced weapon assembly, same eight phases. Row4: specialty A, Singularité Affamée — Compacte brutalement les unités légères et leur inflige des dégâts croissants., dedicated visual design and its eight action phases. Row5: specialty B, Anneau Orbital — Un champ large dévie les volants et allonge toutes les routes affectées., dedicated visual design and its eight action phases. Row6: deployment sequence from compact folded machine through unfolding to fully built tower in eighth frame. Row7: salvage sequence retracting equipment and dismantling safely into a compact mechanical crate in eighth frame, no explosion. Row8: eight subtle idle/energy pulse poses for the base tower. Draw the movement and mechanical changes, do not simply translate identical copies. ALL objects entirely contained within cells. Crisp cyber-gothic anime cel shaded game art matching the reference. Real transparent alpha background, no solid/checkered background, no floor, contact shadow, text, numbers, captions, border or drawn grid."
+  },
+  {
+    "id": "missile_pod",
+    "a": "Hydre de Saturation — Lance une salve de micro-missiles répartie entre toutes les cibles visibles.",
+    "b": "Brise-Forteresse — Un missile guidé lent détruit les boucliers et frappe l’artillerie à très longue portée.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-03.png",
+    "referenceRow": 4,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: Infernal City production game animation atlas. Reference role: identity/style ONLY, take ONLY tower in ROW 4 of reference and no other object. Preserve exact tower design, gunmetal armored materials, signature glow, orthographic elevated 3/4 camera and original facing. Make ONE complete NEW sprite atlas containing this tower only. Layout STRICT 8 columns x 8 rows, 64 SQUARE cells, SQUARE image preferably 2048x2048. Every cell has ONE complete small isolated tower at identical anchor and camera, with large 20 percent empty alpha margins on EVERY side; no sprite crosses cell boundaries. Row1: base level1 eight fire-cycle poses (idle, wake, aim, charge, peak, recoil, cooling, idle). Row2: level2 upgraded reinforced armor and extra energy conduits, same eight action phases. Row3: level3 clearly stronger reinforced armor and enhanced weapon assembly, same eight phases. Row4: specialty A, Hydre de Saturation — Lance une salve de micro-missiles répartie entre toutes les cibles visibles., dedicated visual design and its eight action phases. Row5: specialty B, Brise-Forteresse — Un missile guidé lent détruit les boucliers et frappe l’artillerie à très longue portée., dedicated visual design and its eight action phases. Row6: deployment sequence from compact folded machine through unfolding to fully built tower in eighth frame. Row7: salvage sequence retracting equipment and dismantling safely into a compact mechanical crate in eighth frame, no explosion. Row8: eight subtle idle/energy pulse poses for the base tower. Draw the movement and mechanical changes, do not simply translate identical copies. ALL objects entirely contained within cells. Crisp cyber-gothic anime cel shaded game art matching the reference. Real transparent alpha background, no solid/checkered background, no floor, contact shadow, text, numbers, captions, border or drawn grid."
+  },
+  {
+    "id": "bio_siphon",
+    "a": "Veine de la Citadelle — Transfère l’essentiel du drain directement vers le noyau de la Citadelle.",
+    "b": "Sang Partagé — Distribue les soins aux défenses proches et accélère leur cadence.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-04.png",
+    "referenceRow": 1,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: Infernal City production game animation atlas. Reference role: identity/style ONLY, take ONLY tower in ROW 1 of reference and no other object. Preserve exact tower design, gunmetal armored materials, signature glow, orthographic elevated 3/4 camera and original facing. Make ONE complete NEW sprite atlas containing this tower only. Layout STRICT 8 columns x 8 rows, 64 SQUARE cells, SQUARE image preferably 2048x2048. Every cell has ONE complete small isolated tower at identical anchor and camera, with large 20 percent empty alpha margins on EVERY side; no sprite crosses cell boundaries. Row1: base level1 eight fire-cycle poses (idle, wake, aim, charge, peak, recoil, cooling, idle). Row2: level2 upgraded reinforced armor and extra energy conduits, same eight action phases. Row3: level3 clearly stronger reinforced armor and enhanced weapon assembly, same eight phases. Row4: specialty A, Veine de la Citadelle — Transfère l’essentiel du drain directement vers le noyau de la Citadelle., dedicated visual design and its eight action phases. Row5: specialty B, Sang Partagé — Distribue les soins aux défenses proches et accélère leur cadence., dedicated visual design and its eight action phases. Row6: deployment sequence from compact folded machine through unfolding to fully built tower in eighth frame. Row7: salvage sequence retracting equipment and dismantling safely into a compact mechanical crate in eighth frame, no explosion. Row8: eight subtle idle/energy pulse poses for the base tower. Draw the movement and mechanical changes, do not simply translate identical copies. ALL objects entirely contained within cells. Crisp cyber-gothic anime cel shaded game art matching the reference. Real transparent alpha background, no solid/checkered background, no floor, contact shadow, text, numbers, captions, border or drawn grid."
+  },
+  {
+    "id": "magnet_drone",
+    "a": "Récupérateur Haven — Collecte à grande distance et augmente légèrement la valeur des Bio-Coins.",
+    "b": "Polariseur de Guerre — Renonce au bonus économique pour repousser les unités métalliques et les projectiles.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-04.png",
+    "referenceRow": 2,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: Infernal City production game animation atlas. Reference role: identity/style ONLY, take ONLY tower in ROW 2 of reference and no other object. Preserve exact tower design, gunmetal armored materials, signature glow, orthographic elevated 3/4 camera and original facing. Make ONE complete NEW sprite atlas containing this tower only. Layout STRICT 8 columns x 8 rows, 64 SQUARE cells, SQUARE image preferably 2048x2048. Every cell has ONE complete small isolated tower at identical anchor and camera, with large 20 percent empty alpha margins on EVERY side; no sprite crosses cell boundaries. Row1: base level1 eight fire-cycle poses (idle, wake, aim, charge, peak, recoil, cooling, idle). Row2: level2 upgraded reinforced armor and extra energy conduits, same eight action phases. Row3: level3 clearly stronger reinforced armor and enhanced weapon assembly, same eight phases. Row4: specialty A, Récupérateur Haven — Collecte à grande distance et augmente légèrement la valeur des Bio-Coins., dedicated visual design and its eight action phases. Row5: specialty B, Polariseur de Guerre — Renonce au bonus économique pour repousser les unités métalliques et les projectiles., dedicated visual design and its eight action phases. Row6: deployment sequence from compact folded machine through unfolding to fully built tower in eighth frame. Row7: salvage sequence retracting equipment and dismantling safely into a compact mechanical crate in eighth frame, no explosion. Row8: eight subtle idle/energy pulse poses for the base tower. Draw the movement and mechanical changes, do not simply translate identical copies. ALL objects entirely contained within cells. Crisp cyber-gothic anime cel shaded game art matching the reference. Real transparent alpha background, no solid/checkered background, no floor, contact shadow, text, numbers, captions, border or drawn grid."
+  },
+  {
+    "id": "sawblade_turret",
+    "a": "Danse des Lames — Les scies ricochent entre les ennemis et regagnent des dégâts à chaque rebond.",
+    "b": "Scie de l’Exécuteur — Une lourde lame revient vers la tourelle et exécute les unités très affaiblies.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-04.png",
+    "referenceRow": 3,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: Infernal City production game animation atlas. Reference role: identity/style ONLY, take ONLY tower in ROW 3 of reference and no other object. Preserve exact tower design, gunmetal armored materials, signature glow, orthographic elevated 3/4 camera and original facing. Make ONE complete NEW sprite atlas containing this tower only. Layout STRICT 8 columns x 8 rows, 64 SQUARE cells, SQUARE image preferably 2048x2048. Every cell has ONE complete small isolated tower at identical anchor and camera, with large 20 percent empty alpha margins on EVERY side; no sprite crosses cell boundaries. Row1: base level1 eight fire-cycle poses (idle, wake, aim, charge, peak, recoil, cooling, idle). Row2: level2 upgraded reinforced armor and extra energy conduits, same eight action phases. Row3: level3 clearly stronger reinforced armor and enhanced weapon assembly, same eight phases. Row4: specialty A, Danse des Lames — Les scies ricochent entre les ennemis et regagnent des dégâts à chaque rebond., dedicated visual design and its eight action phases. Row5: specialty B, Scie de l’Exécuteur — Une lourde lame revient vers la tourelle et exécute les unités très affaiblies., dedicated visual design and its eight action phases. Row6: deployment sequence from compact folded machine through unfolding to fully built tower in eighth frame. Row7: salvage sequence retracting equipment and dismantling safely into a compact mechanical crate in eighth frame, no explosion. Row8: eight subtle idle/energy pulse poses for the base tower. Draw the movement and mechanical changes, do not simply translate identical copies. ALL objects entirely contained within cells. Crisp cyber-gothic anime cel shaded game art matching the reference. Real transparent alpha background, no solid/checkered background, no floor, contact shadow, text, numbers, captions, border or drawn grid."
+  },
+  {
+    "id": "emp_tower",
+    "a": "Black-out Total — Une impulsion immense désactive durablement boucliers, auras et artilleries.",
+    "b": "Impulsion Cascade — Des décharges rapides bondissent entre quelques cibles et interrompent leurs attaques.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-04.png",
+    "referenceRow": 4,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: Infernal City production game animation atlas. Reference role: identity/style ONLY, take ONLY tower in ROW 4 of reference and no other object. Preserve exact tower design, gunmetal armored materials, signature glow, orthographic elevated 3/4 camera and original facing. Make ONE complete NEW sprite atlas containing this tower only. Layout STRICT 8 columns x 8 rows, 64 SQUARE cells, SQUARE image preferably 2048x2048. Every cell has ONE complete small isolated tower at identical anchor and camera, with large 20 percent empty alpha margins on EVERY side; no sprite crosses cell boundaries. Row1: base level1 eight fire-cycle poses (idle, wake, aim, charge, peak, recoil, cooling, idle). Row2: level2 upgraded reinforced armor and extra energy conduits, same eight action phases. Row3: level3 clearly stronger reinforced armor and enhanced weapon assembly, same eight phases. Row4: specialty A, Black-out Total — Une impulsion immense désactive durablement boucliers, auras et artilleries., dedicated visual design and its eight action phases. Row5: specialty B, Impulsion Cascade — Des décharges rapides bondissent entre quelques cibles et interrompent leurs attaques., dedicated visual design and its eight action phases. Row6: deployment sequence from compact folded machine through unfolding to fully built tower in eighth frame. Row7: salvage sequence retracting equipment and dismantling safely into a compact mechanical crate in eighth frame, no explosion. Row8: eight subtle idle/energy pulse poses for the base tower. Draw the movement and mechanical changes, do not simply translate identical copies. ALL objects entirely contained within cells. Crisp cyber-gothic anime cel shaded game art matching the reference. Real transparent alpha background, no solid/checkered background, no floor, contact shadow, text, numbers, captions, border or drawn grid."
+  },
+  {
+    "id": "orbital_beam",
+    "a": "Jugement Zénithal — Un rayon prolongé suit l’ennemi le plus dangereux et augmente continuellement ses dégâts.",
+    "b": "Grille Solaire — Divise le rayon en trois frappes moins puissantes réparties sur les routes.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-05.png",
+    "referenceRow": 1,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: Infernal City production game animation atlas. Reference role: identity/style ONLY, take ONLY tower in ROW 1 of reference and no other object. Preserve exact tower design, gunmetal armored materials, signature glow, orthographic elevated 3/4 camera and original facing. Make ONE complete NEW sprite atlas containing this tower only. Layout STRICT 8 columns x 8 rows, 64 SQUARE cells, SQUARE image preferably 2048x2048. Every cell has ONE complete small isolated tower at identical anchor and camera, with large 20 percent empty alpha margins on EVERY side; no sprite crosses cell boundaries. Row1: base level1 eight fire-cycle poses (idle, wake, aim, charge, peak, recoil, cooling, idle). Row2: level2 upgraded reinforced armor and extra energy conduits, same eight action phases. Row3: level3 clearly stronger reinforced armor and enhanced weapon assembly, same eight phases. Row4: specialty A, Jugement Zénithal — Un rayon prolongé suit l’ennemi le plus dangereux et augmente continuellement ses dégâts., dedicated visual design and its eight action phases. Row5: specialty B, Grille Solaire — Divise le rayon en trois frappes moins puissantes réparties sur les routes., dedicated visual design and its eight action phases. Row6: deployment sequence from compact folded machine through unfolding to fully built tower in eighth frame. Row7: salvage sequence retracting equipment and dismantling safely into a compact mechanical crate in eighth frame, no explosion. Row8: eight subtle idle/energy pulse poses for the base tower. Draw the movement and mechanical changes, do not simply translate identical copies. ALL objects entirely contained within cells. Crisp cyber-gothic anime cel shaded game art matching the reference. Real transparent alpha background, no solid/checkered background, no floor, contact shadow, text, numbers, captions, border or drawn grid."
+  },
+  {
+    "id": "napalm_mine",
+    "a": "Champ de Fournaise — La détonation laisse un brasier très large qui se propage aux unités embrasées.",
+    "b": "Charge Thermobarique — Une explosion unique concentre ses dégâts sur les unités lourdes et projette les survivants.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-05.png",
+    "referenceRow": 2,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: Infernal City production game animation atlas. Reference role: identity/style ONLY, take ONLY tower in ROW 2 of reference and no other object. Preserve exact tower design, gunmetal armored materials, signature glow, orthographic elevated 3/4 camera and original facing. Make ONE complete NEW sprite atlas containing this tower only. Layout STRICT 8 columns x 8 rows, 64 SQUARE cells, SQUARE image preferably 2048x2048. Every cell has ONE complete small isolated tower at identical anchor and camera, with large 20 percent empty alpha margins on EVERY side; no sprite crosses cell boundaries. Row1: base level1 eight fire-cycle poses (idle, wake, aim, charge, peak, recoil, cooling, idle). Row2: level2 upgraded reinforced armor and extra energy conduits, same eight action phases. Row3: level3 clearly stronger reinforced armor and enhanced weapon assembly, same eight phases. Row4: specialty A, Champ de Fournaise — La détonation laisse un brasier très large qui se propage aux unités embrasées., dedicated visual design and its eight action phases. Row5: specialty B, Charge Thermobarique — Une explosion unique concentre ses dégâts sur les unités lourdes et projette les survivants., dedicated visual design and its eight action phases. Row6: deployment sequence from compact folded machine through unfolding to fully built tower in eighth frame. Row7: salvage sequence retracting equipment and dismantling safely into a compact mechanical crate in eighth frame, no explosion. Row8: eight subtle idle/energy pulse poses for the base tower. Draw the movement and mechanical changes, do not simply translate identical copies. ALL objects entirely contained within cells. Crisp cyber-gothic anime cel shaded game art matching the reference. Real transparent alpha background, no solid/checkered background, no floor, contact shadow, text, numbers, captions, border or drawn grid."
+  },
+  {
+    "id": "blood_shrine",
+    "a": "Chœur de Guerre — Amplifie les dégâts et la cadence des défenses dans son cercle rituel.",
+    "b": "Autel de la Valkyrie — Concentre le rituel sur l’héroïne et accélère fortement la charge de son ultime.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-05.png",
+    "referenceRow": 3,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: Infernal City production game animation atlas. Reference role: identity/style ONLY, take ONLY tower in ROW 3 of reference and no other object. Preserve exact tower design, gunmetal armored materials, signature glow, orthographic elevated 3/4 camera and original facing. Make ONE complete NEW sprite atlas containing this tower only. Layout STRICT 8 columns x 8 rows, 64 SQUARE cells, SQUARE image preferably 2048x2048. Every cell has ONE complete small isolated tower at identical anchor and camera, with large 20 percent empty alpha margins on EVERY side; no sprite crosses cell boundaries. Row1: base level1 eight fire-cycle poses (idle, wake, aim, charge, peak, recoil, cooling, idle). Row2: level2 upgraded reinforced armor and extra energy conduits, same eight action phases. Row3: level3 clearly stronger reinforced armor and enhanced weapon assembly, same eight phases. Row4: specialty A, Chœur de Guerre — Amplifie les dégâts et la cadence des défenses dans son cercle rituel., dedicated visual design and its eight action phases. Row5: specialty B, Autel de la Valkyrie — Concentre le rituel sur l’héroïne et accélère fortement la charge de son ultime., dedicated visual design and its eight action phases. Row6: deployment sequence from compact folded machine through unfolding to fully built tower in eighth frame. Row7: salvage sequence retracting equipment and dismantling safely into a compact mechanical crate in eighth frame, no explosion. Row8: eight subtle idle/energy pulse poses for the base tower. Draw the movement and mechanical changes, do not simply translate identical copies. ALL objects entirely contained within cells. Crisp cyber-gothic anime cel shaded game art matching the reference. Real transparent alpha background, no solid/checkered background, no floor, contact shadow, text, numbers, captions, border or drawn grid."
+  },
+  {
+    "id": "sonic_cannon",
+    "a": "Onde Répulsive — Une détonation large repousse fortement les unités légères et interrompt les lourdes.",
+    "b": "Résonance Fractale — Chaque impact pose une résonance ; la troisième fait exploser l’armure de la cible.",
+    "category": "towers",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/towers/tower-atlas-05.png",
+    "referenceRow": 4,
+    "rows": 8,
+    "columns": 8,
+    "stateRows": [
+      "level1",
+      "level2",
+      "level3",
+      "specialization_a",
+      "specialization_b",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: Infernal City production game animation atlas. Reference role: identity/style ONLY, take ONLY tower in ROW 4 of reference and no other object. Preserve exact tower design, gunmetal armored materials, signature glow, orthographic elevated 3/4 camera and original facing. Make ONE complete NEW sprite atlas containing this tower only. Layout STRICT 8 columns x 8 rows, 64 SQUARE cells, SQUARE image preferably 2048x2048. Every cell has ONE complete small isolated tower at identical anchor and camera, with large 20 percent empty alpha margins on EVERY side; no sprite crosses cell boundaries. Row1: base level1 eight fire-cycle poses (idle, wake, aim, charge, peak, recoil, cooling, idle). Row2: level2 upgraded reinforced armor and extra energy conduits, same eight action phases. Row3: level3 clearly stronger reinforced armor and enhanced weapon assembly, same eight phases. Row4: specialty A, Onde Répulsive — Une détonation large repousse fortement les unités légères et interrompt les lourdes., dedicated visual design and its eight action phases. Row5: specialty B, Résonance Fractale — Chaque impact pose une résonance ; la troisième fait exploser l’armure de la cible., dedicated visual design and its eight action phases. Row6: deployment sequence from compact folded machine through unfolding to fully built tower in eighth frame. Row7: salvage sequence retracting equipment and dismantling safely into a compact mechanical crate in eighth frame, no explosion. Row8: eight subtle idle/energy pulse poses for the base tower. Draw the movement and mechanical changes, do not simply translate identical copies. ALL objects entirely contained within cells. Crisp cyber-gothic anime cel shaded game art matching the reference. Real transparent alpha background, no solid/checkered background, no floor, contact shadow, text, numbers, captions, border or drawn grid."
+  },
+  {
+    "id": "vulcan-cerberus",
+    "description": "A compact cyan-white overcharged kinetic penetrator with three hot cyan filaments and a black-steel dart core, triple wake showing penetration energy. Long axis horizontal, tip facing RIGHT. Animate its pulse and trailing ion sparks.",
+    "category": "evolutions",
+    "columns": 4,
+    "rows": 2,
+    "stateRows": [
+      "pulse"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: Infernal City production animation sprite sheet. Subject: A compact cyan-white overcharged kinetic penetrator with three hot cyan filaments and a black-steel dart core, triple wake showing penetration energy. Long axis horizontal, tip facing RIGHT. Animate its pulse and trailing ion sparks. Crisp cyber-gothic anime game VFX. STRICT layout: 4 columns by 2 rows, EIGHT equal SQUARE cells, LANDSCAPE 2:1 image. Each cell is one sequential frame, left to right then second row. Stable center/size, subject plus ALL glow confined to central SIXTY PERCENT of each cell, at least 20% EMPTY margin EACH side; no crossing into neighboring cell. Eight distinct hand-drawn flowing animation frames, full subject in each frame. Real transparent alpha, no floor, shadow, background, text, labels, numbers, drawn grid or border."
+  },
+  {
+    "id": "nova-cataclysm",
+    "description": "A coherent magenta-violet thermonuclear plasma orb, bright white core wrapped in 3 swirling purple energy rings, restrained electric tendrils. Animate rotating plasma with a luminous shock front, circular stable silhouette.",
+    "category": "evolutions",
+    "columns": 4,
+    "rows": 2,
+    "stateRows": [
+      "pulse"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: Infernal City production animation sprite sheet. Subject: A coherent magenta-violet thermonuclear plasma orb, bright white core wrapped in 3 swirling purple energy rings, restrained electric tendrils. Animate rotating plasma with a luminous shock front, circular stable silhouette. Crisp cyber-gothic anime game VFX. STRICT layout: 4 columns by 2 rows, EIGHT equal SQUARE cells, LANDSCAPE 2:1 image. Each cell is one sequential frame, left to right then second row. Stable center/size, subject plus ALL glow confined to central SIXTY PERCENT of each cell, at least 20% EMPTY margin EACH side; no crossing into neighboring cell. Eight distinct hand-drawn flowing animation frames, full subject in each frame. Real transparent alpha, no floor, shadow, background, text, labels, numbers, drawn grid or border."
+  },
+  {
+    "id": "odin-lance",
+    "description": "A sharp elongated cyan-white particle lance with faceted luminous spear tip pointing RIGHT, three narrow electric filaments and a segmented teal energy sheath, no physical medieval weapon. Animate charged railgun energy and discharging arcs.",
+    "category": "evolutions",
+    "columns": 4,
+    "rows": 2,
+    "stateRows": [
+      "pulse"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: Infernal City production animation sprite sheet. Subject: A sharp elongated cyan-white particle lance with faceted luminous spear tip pointing RIGHT, three narrow electric filaments and a segmented teal energy sheath, no physical medieval weapon. Animate charged railgun energy and discharging arcs. Crisp cyber-gothic anime game VFX. STRICT layout: 4 columns by 2 rows, EIGHT equal SQUARE cells, LANDSCAPE 2:1 image. Each cell is one sequential frame, left to right then second row. Stable center/size, subject plus ALL glow confined to central SIXTY PERCENT of each cell, at least 20% EMPTY margin EACH side; no crossing into neighboring cell. Eight distinct hand-drawn flowing animation frames, full subject in each frame. Real transparent alpha, no floor, shadow, background, text, labels, numbers, drawn grid or border."
+  },
+  {
+    "id": "niflhel-breath",
+    "description": "A pale-blue, cyan and violet cryo-plasma flame plume projecting RIGHT from a narrow nozzle-free root at LEFT, forked crystalline tongues, icy sparks. Animate the flowing plasma flame, without a weapon or person.",
+    "category": "evolutions",
+    "columns": 4,
+    "rows": 2,
+    "stateRows": [
+      "pulse"
+    ],
+    "prompt": "Use case: stylized-concept. Asset: Infernal City production animation sprite sheet. Subject: A pale-blue, cyan and violet cryo-plasma flame plume projecting RIGHT from a narrow nozzle-free root at LEFT, forked crystalline tongues, icy sparks. Animate the flowing plasma flame, without a weapon or person. Crisp cyber-gothic anime game VFX. STRICT layout: 4 columns by 2 rows, EIGHT equal SQUARE cells, LANDSCAPE 2:1 image. Each cell is one sequential frame, left to right then second row. Stable center/size, subject plus ALL glow confined to central SIXTY PERCENT of each cell, at least 20% EMPTY margin EACH side; no crossing into neighboring cell. Eight distinct hand-drawn flowing animation frames, full subject in each frame. Real transparent alpha, no floor, shadow, background, text, labels, numbers, drawn grid or border."
+  }
+]

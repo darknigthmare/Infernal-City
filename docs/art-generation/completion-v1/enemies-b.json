@@ -1,0 +1,1336 @@
+[
+  {
+    "id": "ossuary_bone_thrall",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/ossuary_bone_thrall.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 is the exact character identity reference. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects or background from that reference.\nSubject: a thin hunched skeletal reaper, ivory skull and rib cage, weathered black ragged robe, dark harness with a cylindrical bone basket on its back, one hooked bone sickle held low, restrained cyan rimlight and magenta eyes.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: shuffle in a hunched gait with knees and elbows articulating; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: wind up the bone sickle, make a compact close slash, and recover, with no effect trail; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic magical death dissolution into small ivory bone dust, starting whole and progressively vanishing; final cell has a few tiny motes only, localized where the body was. No gore, injury, splatter, broad cloud or explosion.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, circle, ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemy-legions/enemies/ossuary_bone_thrall.webp",
+    "native": {
+      "method": "image_gen.imagegen",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-a75cfd47-d747-46ab-9040-3d3f53be8bba.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-a75cfd47-d747-46ab-9040-3d3f53be8bba.png",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 columns × 4 rows; all bodies and weapons contained",
+        "poses": "Distinct movement, attack, compact dissolution and recoil poses",
+        "effects": "No touching effects, shield bubbles, rings or broad halos"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.7652,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.0631,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.8813,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "300a139458d512b439fb9a0239a760800faff568104d1ee4e24c52959f477e9f"
+  },
+  {
+    "id": "ossuary_spine_archer",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/ossuary_spine_archer.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 is the exact character identity reference. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects or background from that reference.\nSubject: a thin undead skeleton archer with ivory skull, magenta eyes, ragged black hooded cloak, cyan edge accents, and a tall recurved bow made of vertebrae.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: take alternating measured skeletal steps with the bow close to the body; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: raise the vertebra bow, draw one arrow back, release while keeping the arrow close, and lower the bow, without a distant projectile; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic magical death dissolution into small ivory bone dust, starting whole and progressively vanishing; final cell has a few tiny motes only, localized where the body was. No gore, injury, splatter, broad cloud or explosion.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, circle, ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemy-legions/enemies/ossuary_spine_archer.webp",
+    "native": {
+      "method": "image_gen.imagegen",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-4619aa4b-27a7-489d-b813-c9634be5ba93.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-4619aa4b-27a7-489d-b813-c9634be5ba93.png",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 columns × 4 rows; all bodies and weapons contained",
+        "poses": "Distinct movement, attack, compact dissolution and recoil poses",
+        "effects": "No touching effects, shield bubbles, rings or broad halos"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.6112,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.1441,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.8701,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "cefe4a1642ed3ad05a11002542f5d056b785b03d0438d9e67bd8ebe7a3e9c15a"
+  },
+  {
+    "id": "ossuary_funeral_chantress",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/ossuary_funeral_chantress.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 is the exact character identity reference. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects or background from that reference.\nSubject: an undead female skeletal funeral singer, ivory skull with long silver hair and narrow spiked headdress, open rib cage lit magenta, black flowing layered ceremonial dress with cyan edging, delicate skeletal arms.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: glide in a gentle locomotion cycle with clearly changing arms, hair and cloth folds; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: bring hands toward her chest, sing with opening mouth and raised hands, then lower her hands, without sonic rings or any external aura; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic magical death dissolution into small ivory and dark cloth motes, starting whole and progressively vanishing; final cell has a few tiny motes only, localized where the body was. No gore, injury, splatter, broad cloud or explosion.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, circle, ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemy-legions/enemies/ossuary_funeral_chantress.webp",
+    "native": {
+      "method": "image_gen.imagegen",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-a4763415-279d-4f4a-8fb6-ddb662a505d2.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-a4763415-279d-4f4a-8fb6-ddb662a505d2.png",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 columns × 4 rows; all bodies and weapons contained",
+        "poses": "Distinct movement, attack, compact dissolution and recoil poses",
+        "effects": "No touching effects, shield bubbles, rings or broad halos"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.7336,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.1171,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.8434,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "13bcf12664a2c1ef55fd0abc0dab6c34dd1ce930d135929b1706fd10db440a1f"
+  },
+  {
+    "id": "ossuary_sarcophagus_knight",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/ossuary_sarcophagus_knight.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 is the exact character identity reference. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects or background from that reference.\nSubject: a heavy undead skeletal knight in black iron spiked plate armor with ivory rib details, skull face behind a high open spiked helmet, magenta inner glow and cyan rim accents, carrying a large rectangular coffin shield decorated with skull and ribs.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: march with heavy alternating armored steps, keeping the entire coffin shield inside the cell; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: raise and brace the coffin shield, perform a compact forward shield bash and recover, without a shockwave or energy trail; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic magical death dissolution into small ivory and iron dust, starting whole and progressively vanishing; final cell has a few tiny motes only, localized where the body was. No gore, injury, splatter, broad cloud or explosion.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, circle, ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemy-legions/enemies/ossuary_sarcophagus_knight.webp",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-744c787b-fe74-4d29-bf46-ce0b74aac2c1.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-744c787b-fe74-4d29-bf46-ce0b74aac2c1.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 × 4; whole bodies and weapons contained with empty gutters",
+        "poses": "Distinct movement, attack, compact dissolution and shield-break recoil",
+        "effects": "No bubbles, broad halos or rings"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.7383,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.1171,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.8136,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "626ddaf72d22830b22cde8ba2427e61dccf1788621d111eeb5d7b1134b05361f"
+  },
+  {
+    "id": "plague_miasma_rat",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/plague_miasma_rat.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 is the exact character identity reference. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects or background from that reference.\nSubject: a large low quadrupedal biomechanical rat with ivory scarred armor plates, metal snout, magenta eye, brass back harness carrying three amber chemical glass canisters, dark claws and curled segmented magenta tail.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: scurry with alternating articulated forelegs and hindlegs while keeping the curled tail within the cell; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: lower the armored head, open the jaws in a compact bite and recoil, no emitted fluid, smoke or spray; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic magical death dissolution into small dry ivory and amber motes, starting whole and progressively vanishing; final cell has a few tiny motes only, localized where the body was. No gore, injury, splatter, broad cloud or explosion.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, circle, ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemy-legions/enemies/plague_miasma_rat.webp",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-b16ee9a3-dac0-4336-bb3d-ef3527c78aef.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-b16ee9a3-dac0-4336-bb3d-ef3527c78aef.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 × 4; whole bodies and weapons contained with empty gutters",
+        "poses": "Distinct movement, attack, compact dissolution and shield-break recoil",
+        "effects": "No bubbles, broad halos or rings"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.7774,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.1577,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.8883,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "34feaa485d2cfa061753daeba71816b07ca70cd349cc434594b235cf25bffd0e"
+  },
+  {
+    "id": "ossuary_grave_architect",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/ossuary_grave_architect.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 is the exact character identity reference. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects or background from that reference.\nSubject: a hooded ivory skeleton necromancer in black floor-length tattered ceremonial robe, dark metal shoulders, articulated spiderlike brass mechanical arms attached behind his shoulders, one tiny magenta lantern hanging from a mechanical hand, all mechanical arms folded close to fit within the cell.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: move with a slow deliberate glide while the folded mechanical arms articulate slightly and the lantern swings close to the torso; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: draw his bone hands inward then extend one short summoning gesture and fold the mechanical arms back, without summoning other characters or buildings; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic magical death dissolution into small ivory bone and dark cloth motes, starting whole and progressively vanishing; final cell has a few tiny motes only, localized where the body was. No gore, injury, splatter, broad cloud or explosion.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, circle, ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.\nMANDATORY: Background alpha must be completely zero everywhere outside the tiny sprite bodies. This is a cutout spritesheet, absolutely NO white surface, NO gray background, NO ground, NO shadow and NO lighting backdrop. All gaps and full cell boundaries are empty alpha. Do not paint a background of any color.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemy-legions/enemies/ossuary_grave_architect.webp",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-8c13e8c3-a9ff-42cf-8f26-216694519f1d.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-8c13e8c3-a9ff-42cf-8f26-216694519f1d.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 × 4; whole bodies, tools and armor contained with clear gutters",
+        "poses": "Distinct movement, attack, compact dissolution and recoil",
+        "effects": "No shield bubbles, rings, external background or crossing effects"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.6895,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.1086,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.8277,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "5879babd3b2bcbbbaf34c59b50b0d6eaa8af14893a248524a1075c6161d4e022"
+  },
+  {
+    "id": "plague_pustule_bearer",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/plague_pustule_bearer.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 is the exact character identity reference. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects or background from that reference.\nSubject: a stocky hunched plague brute with pale ivory bulbous birdlike mask, small magenta eyes, heavy dark bronze riveted body armor, large clawed metal gauntlets, several amber fluid glass canisters on his back and shoulders.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: lumber with heavy alternating steps and hunched shoulders; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: pull one clawed gauntlet back, deliver a compact short claw strike and recover, with no swoosh or spray; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic magical death dissolution into small dry amber glass and ivory motes, starting whole and progressively vanishing; final cell has a few tiny motes only, localized where the body was. No gore, injury, splatter, broad cloud or explosion.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, circle, ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemy-legions/enemies/plague_pustule_bearer.webp",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-3ac0bd40-0a07-4267-a6a9-ba58fb24ac06.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-3ac0bd40-0a07-4267-a6a9-ba58fb24ac06.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 × 4; whole bodies, tools and armor contained with clear gutters",
+        "poses": "Distinct movement, attack, compact dissolution and recoil",
+        "effects": "No shield bubbles, rings, external background or crossing effects"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.5371,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.1622,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.8211,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "06df2989f2f18cfca0ddff93fc19be0f1f54951c74a149ac5096b751177ffe6b"
+  },
+  {
+    "id": "plague_septic_surgeon",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/plague_septic_surgeon.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 is the exact character identity reference. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects or background from that reference.\nSubject: a slender masked plague doctor in a long weathered ivory surgical coat over dark bronze equipment, long ivory beaked respirator, brass chemical canisters on his backpack, articulated thin metal armatures ending in small magenta syringe tools; armatures folded closely around his body.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: walk with alternating steps, coat flaps changing and close-folded armatures gently articulating; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: raise one short syringe tool, make a small forward jab and draw it back, keeping the entire tool and all needles inside the central half of the cell; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic magical death dissolution into small dry ivory fabric and brass motes, starting whole and progressively vanishing; final cell has a few tiny motes only, localized where the body was. No gore, injury, splatter, broad cloud or explosion.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, circle, ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemy-legions/enemies/plague_septic_surgeon.webp",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-01ea5bcb-3e44-40d9-875e-15d326eb8017.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-01ea5bcb-3e44-40d9-875e-15d326eb8017.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 × 4; whole bodies, tools and armor contained with clear gutters",
+        "poses": "Distinct movement, attack, compact dissolution and recoil",
+        "effects": "No shield bubbles, rings, external background or crossing effects"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.7254,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.1577,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.8665,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "a33376b68636144fb694d991f70a65a0994c0ea3578902ac7bc4a4719baf4abf"
+  },
+  {
+    "id": "plague_fungal_colossus",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/plague_fungal_colossus.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 is the exact character identity reference. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects or background from that reference.\nSubject: a hulking stocky bronze iron golem with round sealed diving helmet and amber visor, massive cylindrical armored arms, layered ivory shelf mushrooms clustered on shoulders and back, thick armored legs, dark bronze rivets and amber details.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: take slow lumbering steps, massive armored fists swinging close to the body; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: raise one huge fist, make a compact downward hammer blow and recover, without a floor, crater, shockwave or outward debris; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic magical death dissolution into small dry ivory mushroom and bronze motes, starting whole and progressively vanishing; final cell has a few tiny motes only, localized where the body was. No gore, injury, splatter, broad cloud or explosion.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, circle, ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemy-legions/enemies/plague_fungal_colossus.webp",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-188e9c02-6696-4639-b34d-3b57a055b491.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-188e9c02-6696-4639-b34d-3b57a055b491.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 × 4; whole bodies, tools and armor contained with clear gutters",
+        "poses": "Distinct movement, attack, compact dissolution and recoil",
+        "effects": "No shield bubbles, rings, external background or crossing effects"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.7114,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.1577,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.8144,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "e719767d4cb9b20cc08280b68674421d58c62e2b7fdc7d38d134265fb6e8c6f7"
+  },
+  {
+    "id": "plague_canker_sower",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/plague_canker_sower.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 is the exact character identity reference. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects or background from that reference.\nSubject: an ivory-armored hooded plague trooper with dark beaked gas mask, small magenta eyes, black long coat, weathered white shoulder and knee plates, a large amber liquid tank on his back and a compact brass chemical launcher gripped in both hands.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: walk with alternating armored legs while the coat moves and the launcher stays close to the torso; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: shoulder the compact chemical launcher, trigger it with a slight mechanical recoil, then lower it; no emitted gas, fluid, smoke or distant projectile; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic magical death dissolution into small dry amber and ivory flecks, starting whole and progressively vanishing; final cell has a few tiny motes only, localized where the body was. No gore, injury, splatter, broad cloud or explosion.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, external energy circle or ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemy-legions/enemies/plague_canker_sower.webp",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-a64b35de-9b40-4713-b253-f8082d5fe543.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-a64b35de-9b40-4713-b253-f8082d5fe543.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 × 4; full bodies and attached metal arcs stay inside each cell",
+        "poses": "Articulated movement, compact attacks, dissolution progression, recoil",
+        "effects": "Core light remains near body; no shield bubble, crossing ring or large trail"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.7686,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.1757,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.8642,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "97bff2ad693ac22bc2fa624c22e3288879499723013d731c9eda229a7501b96d"
+  },
+  {
+    "id": "quantum_qubit_drone",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/quantum_qubit_drone.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 is the exact character identity reference. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects or background from that reference.\nSubject: a hovering triangular black gunmetal quantum drone, three angular triangular fins edged cyan around an orange-magenta spherical core, small cyan mechanical shards closely attached to its body.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: hover in an articulated cycle with fins changing angle and the core iris rotating, no duplicates or motion trails; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: turn the three fins inward, open the core iris to a brighter magenta center, then close and recover, without a beam, ray or projectile; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic magical death dissolution into small dark triangular metal shards and tiny cyan motes, starting whole and progressively vanishing; final cell has a few tiny motes only, localized where the body was. No gore, injury, splatter, broad cloud or explosion.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, external energy circle or ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemy-legions/enemies/quantum_qubit_drone.webp",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-c5e3812a-4a9c-45cc-8438-a15f17773c45.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-c5e3812a-4a9c-45cc-8438-a15f17773c45.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 × 4; full bodies and attached metal arcs stay inside each cell",
+        "poses": "Articulated movement, compact attacks, dissolution progression, recoil",
+        "effects": "Core light remains near body; no shield bubble, crossing ring or large trail"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.7782,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.1757,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.9114,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "c0a16ae1615d56932a47eeb31c36c08c990c965ea177cff75cdb184653bc911c"
+  },
+  {
+    "id": "quantum_lag_runner",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/quantum_lag_runner.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 is the exact character identity reference. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects or background from that reference.\nSubject: an angular black armored avian-headed bipedal robot with sharp pointed head and shoulder fins, narrow magenta eye slit, round magenta clock device built into the upper chest, cyan armor edging, pointed jointed legs and a short magenta wrist blade kept close to its arm.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: run with genuinely articulated alternating pointed legs and swinging bent arms, no ghost copies or motion trails; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: draw the wrist blade inward, perform a compact short thrust and recoil, keeping the blade inside the central half of the cell and no swoosh; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic magical death dissolution into small dark angular shards and tiny cyan-magenta flecks, starting whole and progressively vanishing; final cell has a few tiny motes only, localized where the body was. No gore, injury, splatter, broad cloud or explosion.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, external energy circle or ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemy-legions/enemies/quantum_lag_runner.webp",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-290b28d2-0e73-4583-a686-4d8040f1281e.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-290b28d2-0e73-4583-a686-4d8040f1281e.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 × 4; full bodies and attached metal arcs stay inside each cell",
+        "poses": "Articulated movement, compact attacks, dissolution progression, recoil",
+        "effects": "Core light remains near body; no shield bubble, crossing ring or large trail"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.3053,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.1396,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.8908,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "27aee4c8ef126c695ad27244ca7d899bfa4c997ca41933085e62dd3ff07de67e"
+  },
+  {
+    "id": "quantum_chronal_jammer",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/quantum_chronal_jammer.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 is the exact character identity reference. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects or background from that reference.\nSubject: a small hovering black metal spherical robot with a round magenta clock face at its center, two short antennae, a pointed lower fin, cyan side lenses, four compact physically segmented mechanical arcs attached around its core; preserve those solid metal arcs but no external energy rings.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: hover with the attached mechanical arcs articulating inwards and outwards and clock hands rotating, no ghost copies; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: angle the mechanical arcs forward, open the core iris into a bright magenta point, then close and recover, without a beam or external clock ring; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic magical death dissolution into small dark mechanical pieces and tiny cyan-magenta flecks, starting whole and progressively vanishing; final cell has a few tiny motes only, localized where the body was. No gore, injury, splatter, broad cloud or explosion.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, external energy circle or ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemy-legions/enemies/quantum_chronal_jammer.webp",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-673e8320-5730-48e0-93d6-a64df2e90e5e.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-673e8320-5730-48e0-93d6-a64df2e90e5e.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 × 4; full bodies and attached metal arcs stay inside each cell",
+        "poses": "Articulated movement, compact attacks, dissolution progression, recoil",
+        "effects": "Core light remains near body; no shield bubble, crossing ring or large trail"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.2606,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.1757,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.868,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "773031b08a2237ddb617db1ad14748b87f4abe43fe219a6ed6dfb61680719ec3"
+  },
+  {
+    "id": "quantum_paradox_markswoman",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/quantum_paradox_markswoman.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 is the exact character identity reference. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects or background from that reference.\nSubject: a slender female automaton marksman in ornate ivory and black armor with gold trim, smooth white mechanical face, magenta eye, a solid decorative bronze clock dial mounted behind the head, long dark split coat printed with small magenta symbols, holding a long black sniper rifle with magenta details diagonally close to the body; the attached clock dial is physical equipment, not an aura.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: walk with alternate steps and subtle coat motion, keeping the whole rifle inside the cell; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: lift the rifle into a compact diagonal aiming pose, fire with a tiny mechanical recoil and recover, without any bullet trail, portal or magic circle; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic magical death dissolution into small dry ivory, brass and magenta motes, starting whole and progressively vanishing; final cell has a few tiny motes only, localized where the body was. No gore, injury, splatter, broad cloud or explosion.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, external energy circle or ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemy-legions/enemies/quantum_paradox_markswoman.webp",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-f67f7d18-243b-4dc9-85c1-b1ed3187d805.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-f67f7d18-243b-4dc9-85c1-b1ed3187d805.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 × 4; full silhouettes and weapons remain in separate cells",
+        "poses": "Distinct articulated movement, attacks, progressive dissolution and recoil",
+        "effects": "No crossing effects, shield bubbles or external circles"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.6741,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.1312,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.8882,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "0fe4c2d4ec4120320da34378979ce272cd0eec00913cca5b5ae00277f556fa7c"
+  },
+  {
+    "id": "shadow_shardling",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/shadow_shardling.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 is the exact character identity reference. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects or background from that reference.\nSubject: a small crouched dark imp made of jagged black-violet armor shards, very tall curved blade-shaped head crest, bright violet eyes, two small blade-like forearms, digitigrade legs and compact pointed back plates; no smoky trails.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: scuttle in a low articulated running cycle, alternating bent legs and blade forearms; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: draw one short blade forearm back, make a compact cross-body slash and recover, with no slash trail or swoosh; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic magical death dissolution into small compact black-violet shards, starting whole and progressively vanishing; final cell has a few tiny motes only, localized where the body was. No gore, injury, splatter, broad cloud or explosion.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, external energy circle or ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemy-legions/enemies/shadow_shardling.webp",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-0e805668-aeb8-4174-bb2a-11423227ad27.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-0e805668-aeb8-4174-bb2a-11423227ad27.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 × 4; full silhouettes and weapons remain in separate cells",
+        "poses": "Distinct articulated movement, attacks, progressive dissolution and recoil",
+        "effects": "No crossing effects, shield bubbles or external circles"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.8376,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.1577,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.9159,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "b01fcfd06f1f34909e6e5df6943932424d79a0c0c547611db9762ad709e5cc7d"
+  },
+  {
+    "id": "shadow_blinkblade",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/shadow_blinkblade.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 is the exact character identity reference. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects or background from that reference.\nSubject: a nimble hooded shadow assassin with smooth ivory mask and small magenta eye markings, pointed black hood and segmented dark armor, short violet ribbons folded close around its back, paired short curved magenta-edged daggers; include only this masked assassin and never the separate black-armored opponent visible in later reference frames.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: run with alternate bent knees and dagger arms, keeping ribbons folded closely; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: draw both daggers inward, perform a compact crossing strike, recoil and recover, without any opponent, ghost copies, trail or swoosh; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic magical death dissolution into small compact black-violet cloth and armor motes, starting whole and progressively vanishing; final cell has a few tiny motes only, localized where the body was. No gore, injury, splatter, broad cloud or explosion.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, external energy circle or ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemy-legions/enemies/shadow_blinkblade.webp",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-30e1048d-33cd-480b-a4a1-980116430199.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-30e1048d-33cd-480b-a4a1-980116430199.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 × 4; full silhouettes and weapons remain in separate cells",
+        "poses": "Distinct articulated movement, attacks, progressive dissolution and recoil",
+        "effects": "No crossing effects, shield bubbles or external circles"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.6481,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.1441,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.8941,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "a2cc2a2a8b0ea694a3357b9beb8e4af12009c1e8baa7b183da64620179edc08c"
+  },
+  {
+    "id": "quantum_entangled_sentinel",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/quantum_entangled_sentinel.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 is the exact character identity reference. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects or background from that reference.\nSubject: a broad heavy black gunmetal robot with tall pointed shoulder/back prongs, cyan edging, two different round chest cores one orange and one magenta, thick armored limbs, elongated shield plate on one arm and angular hammer held diagonally close to its body; preserve complete tall prongs and all equipment.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: march with alternate heavy armored steps and small articulated arm motions; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: draw the angular hammer close, perform a compact short downward blow and recover, without a floor, shockwave, link beam or external energy ring; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: dry non-graphic disappearance of the machine by missing pieces. Frame 1 intact, frame 2 a few small armor plates missing, frame 3 lower legs vanish, frame 4 only torso and head, frame 5 only half torso, frame 6 five tiny dark metal fragments close to the original center, frame 7 three tiny fragments, frame 8 one tiny dark fragment. The footprint SHRINKS in every frame. Absolutely NO cloud, NO fog, NO smoke, NO sphere, NO ring, NO glow, NO burst, NO light effect, NO explosion. Empty transparent space replaces missing parts. All remains fit within CENTRAL 40% of their own square cell.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, external energy circle or ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemy-legions/enemies/quantum_entangled_sentinel.webp",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-99f284bf-9e4e-457a-bb17-549b1d344add.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-99f284bf-9e4e-457a-bb17-549b1d344add.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 × 4; fully contained bodies and equipment, isolated cells",
+        "poses": "Movement, attack, compact disappearance and physical shield-break recoil",
+        "effects": "No crossing cloud or ring; corrected Sentinel death shrinks to isolated metal fragments"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.7497,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.1306,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.8335,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "df325f499cf087b27feceae279df07fa7127d07d54435322eb7fe08f26efa98c"
+  },
+  {
+    "id": "shadow_veil_specter",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/shadow_veil_specter.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 is the exact character identity reference. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects or background from that reference.\nSubject: a slender floating shadow specter with smooth ivory mask, pointed black hood, angular dark shoulder plates, clawlike hands and long narrow layered violet-black spectral robe with cyan edging; cloth tendrils stay folded tightly around the body and there are no legs or smoke.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: glide with articulated arms, head angle changes and folding robe tendrils, without trailing smoke or duplicate ghosts; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: pull one clawed hand inward, make a compact close forward stab with that hand and recover, without emitted blades or projectile trails; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic magical death dissolution into small compact black-violet cloth pieces, starting whole and progressively vanishing; final cell has a few tiny motes only, localized where the body was. No gore, injury, splatter, broad cloud or explosion.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, external energy circle or ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemy-legions/enemies/shadow_veil_specter.webp",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-ccf81ec8-a101-4416-98af-e7d137cb5e5a.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-ccf81ec8-a101-4416-98af-e7d137cb5e5a.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 × 4; fully contained bodies and equipment, isolated cells",
+        "poses": "Movement, attack, compact disappearance and physical shield-break recoil",
+        "effects": "No crossing cloud or ring; corrected Sentinel death shrinks to isolated metal fragments"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.7995,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.0905,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.8965,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "4f1fff6bd626012e750ff41e2e90762d9d2d828ebd2fa5ab51552042f0555faf"
+  },
+  {
+    "id": "shadow_black_lamplighter",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/shadow_black_lamplighter.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 is the exact character identity reference. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects or background from that reference.\nSubject: a tall slim dark gothic lamplighter in narrow black top hat, long black layered coat with violet lining, magenta facial lights and chest accents, carrying one small ornate black cage lantern with magenta glass at his side on a short chain; all light stays strictly inside the lantern glass.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: walk with alternating knees while the short-chain lantern swings closely by the leg; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: raise the small lantern toward the torso, extend the other hand briefly and lower the lantern again, no chains or magic effects extending outward; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic magical death dissolution into small compact black coat and violet glass fragments, starting whole and progressively vanishing; final cell has a few tiny motes only, localized where the body was. No gore, injury, splatter, broad cloud or explosion.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, external energy circle or ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemy-legions/enemies/shadow_black_lamplighter.webp",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-7ea6f02f-6412-4a5d-841e-f395c5d97234.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-7ea6f02f-6412-4a5d-841e-f395c5d97234.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 × 4; fully contained bodies and equipment, isolated cells",
+        "poses": "Movement, attack, compact disappearance and physical shield-break recoil",
+        "effects": "No crossing cloud or ring; corrected Sentinel death shrinks to isolated metal fragments"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.7912,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.045,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.8695,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "46e0fb31c9aa449cc8a03251db6dc10c2cb4deca6a98837f6d078db21a08e781"
+  },
+  {
+    "id": "shadow_eclipse_sniper",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/shadow_eclipse_sniper.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 is the exact character identity reference. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects or background from that reference.\nSubject: a slender female dark sniper with long black hair, small pale face beneath pointed black head armor, full black fitted segmented armor with magenta edging, narrow folded black cape with muted crimson lining, and a long black sniper rifle held diagonally close to the torso.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: walk with alternate armored legs and subtle folded cape motion, keeping the complete rifle contained; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: raise the rifle into a close diagonal aiming stance, make a small mechanical firing recoil and recover, with no muzzle beam, projectile trail, portal or spread cape; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic magical death dissolution into small compact dark fabric and magenta flecks, starting whole and progressively vanishing; final cell has a few tiny motes only, localized where the body was. No gore, injury, splatter, broad cloud or explosion.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, external energy circle or ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemy-legions/enemies/shadow_eclipse_sniper.webp",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-dd6314ae-10b7-44e2-b48f-0a0efbfd3129.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-dd6314ae-10b7-44e2-b48f-0a0efbfd3129.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 × 4; fully contained bodies and equipment, isolated cells",
+        "poses": "Movement, attack, compact disappearance and physical shield-break recoil",
+        "effects": "No crossing cloud or ring; corrected Sentinel death shrinks to isolated metal fragments"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.7966,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.1176,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.8938,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "95e16eafd4e397d1708ee970d229ab7831ecb4ef24e190aca82667db2d02011b"
+  },
+  {
+    "id": "void_mote",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/void_mote.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 is the exact character identity reference. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects, ghost copies, shield bubbles or background from that reference. First reference frame defines the body alone.\nSubject: a small floating jagged black obsidian crystal creature with many angular blade-like plates, sharp cyan seams and a single small round black core edged cyan near the front; all shards belong close to the physical body, no external halo.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: hover while articulating attached obsidian plates and small spines, no duplicated image or movement trails; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: fold the front crystal plates outward to expose the black core, make a compact forward strike and fold back, without emitting light rays or distant shards; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic dry magical disappearance into tiny dry black obsidian chips. Frame 1 intact body, frame 2 subtle missing edges, frame 3 slightly incomplete contour, frame 4 half the body fading, frame 5 only a compact central cluster, frame 6 five tiny pieces, frame 7 three tiny pieces, frame 8 one tiny piece. Footprint SHRINKS each frame; empty transparent space replaces vanished portions. ABSOLUTELY NO cloud, fog, smoke, sphere, ring, glow, ray or explosion. Remains stay within CENTRAL 40% of their own cell.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, external energy circle or ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemy-legions/enemies/void_mote.webp",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-78c64640-2b44-4b8d-8b1d-0d626cd09a5c.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-78c64640-2b44-4b8d-8b1d-0d626cd09a5c.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 × 4, bodies, hooks and shards contained with transparent gutters",
+        "poses": "Articulated locomotion and attacks; progressive compact disappearance; recoil",
+        "effects": "Dry small fragments, no external bubbles, crossing clouds or rings"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.7293,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.1261,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.9005,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "323d5d05d3aa6f044e1363a32ef6022ebc0c2957c9213ca322228da6896fbaca"
+  },
+  {
+    "id": "void_phasewalker",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/void_phasewalker.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 is the exact character identity reference. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects, ghost copies, shield bubbles or background from that reference. First reference frame defines the body alone.\nSubject: a tall thin hooded void wraith with featureless black oval face edged cyan, pointed black armor shoulders, narrow layered black-violet cloak edged cyan, and two small crescent hook blades carried low and close; no floating ghost copies or smoke.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: walk with alternately bent legs and small arm swings as the folded cloak changes shape; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: draw one crescent hook inward, perform a compact short curved slash and recoil, no effect trail or ghost duplicate; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic dry magical disappearance into tiny dry black-violet cloth and obsidian pieces. Frame 1 intact body, frame 2 subtle missing edges, frame 3 slightly incomplete contour, frame 4 half the body fading, frame 5 only a compact central cluster, frame 6 five tiny pieces, frame 7 three tiny pieces, frame 8 one tiny piece. Footprint SHRINKS each frame; empty transparent space replaces vanished portions. ABSOLUTELY NO cloud, fog, smoke, sphere, ring, glow, ray or explosion. Remains stay within CENTRAL 40% of their own cell.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, external energy circle or ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemy-legions/enemies/void_phasewalker.webp",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-d2058594-f97e-4d23-9196-69da22ab05cf.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-d2058594-f97e-4d23-9196-69da22ab05cf.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 × 4, bodies, hooks and shards contained with transparent gutters",
+        "poses": "Articulated locomotion and attacks; progressive compact disappearance; recoil",
+        "effects": "Dry small fragments, no external bubbles, crossing clouds or rings"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.7774,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.1396,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.9118,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "723bfbbad7a5b17108ffcc2d759321bd5eb9906fb9c5138c19cfd21409739b1e"
+  },
+  {
+    "id": "void_nullifier",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/void_nullifier.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 is the exact character identity reference. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects, ghost copies, shield bubbles or background from that reference. First reference frame defines the body alone.\nSubject: a floating regal void entity with narrow purple-black crystalline robe, tall pointed black crystal crown, featureless small black oval face edged purple, angular cyan-edged shoulder plates, and a few small physical black crystal shards held very close beside the torso; no magic bubble or exterior ring.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: hover with articulated narrow robe folds and close-held physical shards changing angles slightly; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: draw one angular hand close, extend it in a short compact casting gesture and return, without external glow, rays, sphere or projected blade; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic dry magical disappearance into tiny dry purple-black crystal chips. Frame 1 intact body, frame 2 subtle missing edges, frame 3 slightly incomplete contour, frame 4 half the body fading, frame 5 only a compact central cluster, frame 6 five tiny pieces, frame 7 three tiny pieces, frame 8 one tiny piece. Footprint SHRINKS each frame; empty transparent space replaces vanished portions. ABSOLUTELY NO cloud, fog, smoke, sphere, ring, glow, ray or explosion. Remains stay within CENTRAL 40% of their own cell.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, external energy circle or ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemy-legions/enemies/void_nullifier.webp",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-13e3c63f-5b57-4e75-ab03-c00d59e19fca.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-13e3c63f-5b57-4e75-ab03-c00d59e19fca.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 × 4, bodies, hooks and shards contained with transparent gutters",
+        "poses": "Articulated locomotion and attacks; progressive compact disappearance; recoil",
+        "effects": "Dry small fragments, no external bubbles, crossing clouds or rings"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.7752,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.1351,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.8895,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "6a42d257d1bf7052a131504598625a8bb57612a5a9afe78a298e89e5fc483e26"
+  },
+  {
+    "id": "void_gravity_maw",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/void_gravity_maw.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 is the exact character identity reference. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects, ghost copies, shield bubbles or background from that reference. First reference frame defines the body alone.\nSubject: a heavy floating obsidian monster built of black jagged overlapping armor plates and compact spines, with a large physical round open maw of black emptiness edged purple at its center, cyan seams and a few purple insets; the round maw is part of the actual body, not a separate energy ring.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: move with attached jaw plates and spines articulating inward and outward, no movement trails; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: close then open its physical armored jaws in a compact biting sequence, all motion within the body outline, no gravity waves, rays or light rings; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic dry magical disappearance into tiny dry black obsidian chips. Frame 1 intact body, frame 2 subtle missing edges, frame 3 slightly incomplete contour, frame 4 half the body fading, frame 5 only a compact central cluster, frame 6 five tiny pieces, frame 7 three tiny pieces, frame 8 one tiny piece. Footprint SHRINKS each frame; empty transparent space replaces vanished portions. ABSOLUTELY NO cloud, fog, smoke, sphere, ring, glow, ray or explosion. Remains stay within CENTRAL 40% of their own cell.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, external energy circle or ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemy-legions/enemies/void_gravity_maw.webp",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-73aec201-95f5-4cab-9257-82657293f1a7.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-73aec201-95f5-4cab-9257-82657293f1a7.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 × 4; full wings, jaw plates and attached bronze frame contained",
+        "poses": "Wingbeat or articulated movement, compact attack, dry disappearance, recoil",
+        "effects": "No crossing cloud or external ring; mouth and oracle framework are physical identity details"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.3976,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.0766,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.827,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "c7f44c408f44d7f27dd0bd2f01c7837d901988143362ab0109fd7b0a81849c56"
+  },
+  {
+    "id": "void_horizon_oracle",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/void_horizon_oracle.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 is the exact character identity reference. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects, ghost copies, shield bubbles or background from that reference. First reference frame defines the body alone.\nSubject: a regal void sorcerer in narrow black ragged robes with gold-black pointed armor, angular crowned head and violet face accents, one large SOLID bronze circular framework physically mounted behind the upper body, a dark teal interior inside that frame, purple accents on the hands; retain the attached mechanical frame but no floating portals, external halo or orbital rocks.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: glide with articulated hands and subtle narrow cloak movement while the attached bronze frame stays aligned with the torso; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: draw one hand inward then extend a short controlled gesture and recover, no released sphere, magic ring, ray or portal; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic dry magical disappearance into tiny dry black cloth and bronze fragments. Frame 1 intact body, frame 2 subtle missing edges, frame 3 slightly incomplete contour, frame 4 half the body fading, frame 5 only a compact central cluster, frame 6 five tiny pieces, frame 7 three tiny pieces, frame 8 one tiny piece. Footprint SHRINKS each frame; empty transparent space replaces vanished portions. ABSOLUTELY NO cloud, fog, smoke, sphere, ring, glow, ray or explosion. Remains stay within CENTRAL 40% of their own cell.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, external energy circle or ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemy-legions/enemies/void_horizon_oracle.webp",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-234d4c40-5380-4c61-b9cc-a450621ba0dc.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-234d4c40-5380-4c61-b9cc-a450621ba0dc.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 × 4; full wings, jaw plates and attached bronze frame contained",
+        "poses": "Wingbeat or articulated movement, compact attack, dry disappearance, recoil",
+        "effects": "No crossing cloud or external ring; mouth and oracle framework are physical identity details"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.7984,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.1176,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.8716,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "85001a5da2648246da41790f74d6d00c6a770b11467c1a68b8c74d370b8001d5"
+  },
+  {
+    "id": "flying",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/flying.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 contains FOUR DIFFERENT creature rows. Use ONLY THE TOP ROW / ROW ONE as the exact character identity reference. Ignore the other three creature rows completely. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects or background from that reference.\nSubject: the TOP ROW winged flying gargoyle: a slender airborne black armored demon with a small horned head, magenta eyes and chest accents, two large articulated angular black feather-like wings with magenta edges, compact clawed limbs; keep both complete wings partially folded close to the body, no other creatures.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: fly with eight different wing articulation poses through a complete compact wingbeat cycle; keep both wing tips inside the central half of each cell; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: tuck the wings inward, lean forward into a compact claw strike and return to hovering; no slash trail, ray or swoosh; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic magical death dissolution into small dark armor and magenta feather-like chips, starting whole and progressively vanishing; final cell has a few tiny motes only, localized where the body was. No gore, injury, splatter, broad cloud or explosion.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, external energy circle or ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemies/enemy-specialist-atlas.png",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-9c2647c5-f126-4d0a-86d1-63050dad2b57.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-9c2647c5-f126-4d0a-86d1-63050dad2b57.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 × 4; full wings, jaw plates and attached bronze frame contained",
+        "poses": "Wingbeat or articulated movement, compact attack, dry disappearance, recoil",
+        "effects": "No crossing cloud or external ring; mouth and oracle framework are physical identity details"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.8098,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.1086,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.8978,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "5038d185fc259f568dfc1abb8a953be474684b9877c189508af8a8fd95e45957"
+  },
+  {
+    "id": "bulwark",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/bulwark.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 contains FOUR DIFFERENT creature rows. Use ONLY THE SECOND ROW / ROW TWO as the exact character identity reference. Ignore all other creature rows completely. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects or background from that reference.\nSubject: a heavy horned black steel demon knight with skull-like armored face, magenta eye and chest accents, thick black plate armor, and one enormous rectangular black spiked shield bearing a small circular magenta center core; only this armored shield knight.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: march with alternating heavy armored steps while the shield stays held close and its full top and bottom remain inside the cell; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: raise and brace the massive shield, perform a short compact shield bash and return; no shockwave, streak, floor effect or energy bubble; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic magical death dissolution into small dry dark iron and magenta chips, starting whole and progressively vanishing; final cell has a few tiny motes only, localized where the body was. No gore, injury, splatter, broad cloud or explosion.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, external energy circle or ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemies/enemy-specialist-atlas.png",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-0325bf7a-e079-4834-853c-62b651134a80.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-0325bf7a-e079-4834-853c-62b651134a80.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 × 4; complete shield, cannon or creature fits each cell",
+        "poses": "Articulated movement, compact attack, dissolution, recoil",
+        "effects": "No crossing effects, bubbles, rings or background; specialist identity matches its source row"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.5038,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.0811,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.7798,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "8f75c27f206573b49e796d04ca5cd0d2f40efce2150c35c5cf1b799a0d92eb90"
+  },
+  {
+    "id": "artillery",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/artillery.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 contains FOUR DIFFERENT creature rows. Use ONLY THE THIRD ROW / ROW THREE as the exact character identity reference. Ignore all other creature rows completely. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects or background from that reference.\nSubject: a squat horned black armored artillery demon with a short snarling skull-like face, magenta eyes, thick bent armored legs, one large cylindrical black cannon angled upward from its back and shoulder, two small cyan liquid cylinders on its backpack; include the complete cannon muzzle and all equipment.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: walk with alternate short heavy steps while the cannon assembly articulates slightly; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: brace the feet, elevate the cannon a little, show a small mechanical recoil, and relax; no muzzle flash outside the barrel, flame, smoke, emitted shell or ray; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic magical death dissolution into small dry black iron and cyan glass chips, starting whole and progressively vanishing; final cell has a few tiny motes only, localized where the body was. No gore, injury, splatter, broad cloud or explosion.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, external energy circle or ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemies/enemy-specialist-atlas.png",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-0f7741d5-8dfb-489f-92a6-c19b8e129a3e.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-0f7741d5-8dfb-489f-92a6-c19b8e129a3e.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 × 4; complete shield, cannon or creature fits each cell",
+        "poses": "Articulated movement, compact attack, dissolution, recoil",
+        "effects": "No crossing effects, bubbles, rings or background; specialist identity matches its source row"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.7219,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.1622,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.8166,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "71cc2c4b3665ebc3636ac6ae50831442dec6903202c62ce17fed10c507f65f9f"
+  },
+  {
+    "id": "splitter",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/splitter.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 contains FOUR DIFFERENT creature rows. Use ONLY THE BOTTOM ROW / ROW FOUR as the exact character identity reference. Ignore all other creature rows completely. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects or background from that reference.\nSubject: a crouched quadrupedal amorphous monster with shiny black overlapping carapace plates, small magenta eyes, bright cyan seams on shoulders and back, green inner mouth, large clawed forelimbs and short bent rear legs; one complete single creature per cell, no secondary heads or clones, no green puddle or dripping ground.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: creep with articulated alternating claws and bent legs while its carapace shifts slightly; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: lower its armored head, open and snap its jaws in a compact bite, then recover; no emitted fluid, splash, extended neck or extra creature; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic magical death dissolution into small compact dry black carapace and cyan-green pieces, starting whole and progressively vanishing; final cell has a few tiny motes only, localized where the body was. No gore, injury, splatter, broad cloud or explosion.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, external energy circle or ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemies/enemy-specialist-atlas.png",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-b6f70a69-59bf-4eae-885a-032ccc13c5ca.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-b6f70a69-59bf-4eae-885a-032ccc13c5ca.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytePreserved": true
+    },
+    "qa": {
+      "status": "approved",
+      "visual": {
+        "inspected": true,
+        "grid": "8 × 4; complete shield, cannon or creature fits each cell",
+        "poses": "Articulated movement, compact attack, dissolution, recoil",
+        "effects": "No crossing effects, bubbles, rings or background; specialist identity matches its source row"
+      },
+      "technical": {
+        "transparentPixelRatio": 0.7785,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "nonemptyFrames": 32,
+        "minimumFrameMarginRatio": 0.0905,
+        "seamRiskCells": [],
+        "nearTransparentPixelRatio": 0.8463,
+        "uniqueCellByteHashes": 32
+      }
+    },
+    "sha256": "468cbf031c662b568b4358c976450c450349ff719d84f910bd544a8cef4d4cf2"
+  }
+]
