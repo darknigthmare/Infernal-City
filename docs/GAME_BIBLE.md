@@ -370,10 +370,13 @@ Total de fichiers d’assets recensés dans `assets/` : **592**.
 
 > Cette section recense de manière structurée tout ce qui reste à produire ou étendre pour passer du socle actuel (`v3.1.0`) à la version finale complète, y compris les spécifications destinées à d’autres IA spécialisées (animation, contenu adulte, bestiaire, level design).
 
-### 15.1 Animations de sprites manquantes (À produire)
+### 15.1 Animations de sprites — Suivi de production
+
+> **Pack `completion-v1` :** 118 atlas natifs et 4 376 cellules produits pour les besoins ci-dessous. Les 105 atlas de combat sont branchés sur le moteur ; les 10 portraits animés et 3 effets d’environnement sont livrés comme ressources préparées. [Inventaire et limites d’intégration](SPRITE_COMPLETION.md). Le tableau conserve les besoins et formats cibles de référence ; les héroïnes historiques sont livrées avec huit poses dessinées par état, et non seize poses interpolées. Nova est un personnage de galerie, pas une septième Valkyrie historique jouable.
+
 | Catégorie | État actuel | Animations manquantes à produire | Format cible recommandé |
 |---|---|---|---|
-| **6 Valkyries historiques** (`aria`, `kira`, `rin`, `nova`, `selene`, `vespera`, `carmilla`) | Planches `hero-atlas-01/02` + lissage 16 frames + `character-states-fx-atlas.png` (auras de pose) | Planches dédiées par état : `intro` (atterrissage/salut), `idle_respiration`, `attack` (tir/frappe arme), `ability` (`[Q]`), `ultimate` (Overdrive), `victory`, `defeat` (genou à terre/armure fissurée), `outro` | PNG RGBA `16×8` (`2048×1024`, 128×128/cellule) avec ligne par état |
+| **6 Valkyries historiques** (`aria`, `kira`, `rin`, `selene`, `vespera`, `carmilla`) | Planches `hero-atlas-01/02` + lissage 16 frames + `character-states-fx-atlas.png` (auras de pose) | Planches dédiées par état : `intro` (atterrissage/salut), `idle_respiration`, `attack` (tir/frappe arme), `ability` (`[Q]`), `ultimate` (Overdrive), `victory`, `defeat` (genou à terre/armure fissurée), `outro` | PNG RGBA `16×8` (`2048×1024`, 128×128/cellule) avec ligne par état |
 | **10 Valkyries Dix Trônes** | Déjà structurées en `state_rows` (`idle`, `move`, `attack`, `ultimate`) | Lignes dédiées `intro`, `victory`, `defeat`, `outro` et poses portrait animées pour le Studio & VN | Extension des atlas `*-atlas-v1.png` à 8 lignes |
 | **10 Antagonistes (Dix Trônes) + Léviathan** | `state_rows` (idle/walk/attack/ultimate) + anneaux de phase (`bossPhase` 1–3) | Animations distinctes de **changement de phase** (`phase_shift_2`, `phase_shift_3`), **intro théâtrale**, **télégraphe d’attaque lourde** et **animation de défaite / reddition** | PNG RGBA `8×6` par boss, 256×256/cellule pour lisibilité AAA |
 | **50 Ennemis des Légions + 4 Spécialistes** | 4 frames WebP (marche/idle) + rotation/bobbing procédural | Animations dédiées `attack`, `death_dissolve` (désintégration spécifique par faction : cendre, os, néant, acide), `shield_break` | 4 états × 8 frames par unité |

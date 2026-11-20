@@ -1,0 +1,58 @@
+[
+  {
+    "id": "ossuary_grave_architect",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/ossuary_grave_architect.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 is the exact character identity reference. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects or background from that reference.\nSubject: a hooded ivory skeleton necromancer in black floor-length tattered ceremonial robe, dark metal shoulders, articulated spiderlike brass mechanical arms attached behind his shoulders, one tiny magenta lantern hanging from a mechanical hand, all mechanical arms folded close to fit within the cell.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: move with a slow deliberate glide while the folded mechanical arms articulate slightly and the lantern swings close to the torso; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: draw his bone hands inward then extend one short summoning gesture and fold the mechanical arms back, without summoning other characters or buildings; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic magical death dissolution into small ivory bone and dark cloth motes, starting whole and progressively vanishing; final cell has a few tiny motes only, localized where the body was. No gore, injury, splatter, broad cloud or explosion.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, circle, ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemy-legions/enemies/ossuary_grave_architect.webp",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-775f7865-3071-4749-aff6-8ba3986c3655.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-775f7865-3071-4749-aff6-8ba3986c3655.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA"
+    },
+    "qa": {
+      "status": "rejected",
+      "reason": "White/gray painted backdrop and soft shadows visible across grid, despite requested transparent background. Regeneration required."
+    },
+    "sha256": "76d702a50ebf2ca66bd4421bb062ce71f6551b2ab6e841ef53c16d5dfa5a2823"
+  },
+  {
+    "id": "quantum_entangled_sentinel",
+    "category": "enemies",
+    "path": "assets/animations/completion-v1/enemies/quantum_entangled_sentinel.png",
+    "columns": 8,
+    "rows": 4,
+    "stateRows": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "prompt": "Use case: stylized-concept. Production 2D game sprite animation atlas for Infernal City.\nInput image 1 is the exact character identity reference. Preserve the CENTRAL character's anatomy, silhouette, materials, colors and weapon. Ignore stray clipped fragments from neighboring sprites along the bottom of the reference. Do not reproduce any effects or background from that reference.\nSubject: a broad heavy black gunmetal robot with tall pointed shoulder/back prongs, cyan edging, two different round chest cores one orange and one magenta, thick armored limbs, elongated shield plate on one arm and angular hammer held diagonally close to its body; preserve complete tall prongs and all equipment.\nGenerate ONE native landscape PNG, requested size 2048 by 1024, exact aspect ratio 2:1. Exact UNIFORM GRID of 8 equal columns and 4 equal rows, 32 square cells, no visible grid lines. Exactly 8 frames in each row. Every sprite is centered within its own square cell. Same camera and facing as the reference, same scale and ground anchor across all frames.\nCRITICAL LAYOUT: every complete body, limb, cloth and weapon must fit WITHIN THE CENTRAL HALF of its cell in both width and height. Leave at least 25% EMPTY TRANSPARENT MARGIN on EVERY side of EVERY cell. No part may touch a cell edge or neighboring sprite. Tiny characters with generous blank gutters are intentional. Keep even the tallest weapon small enough to fit entirely.\nRow 1, exactly 8 frames left to right: march with alternate heavy armored steps and small articulated arm motions; coherent continuous movement cycle with distinct authored articulated poses.\nRow 2, exactly 8 frames: draw the angular hammer close, perform a compact short downward blow and recover, without a floor, shockwave, link beam or external energy ring; anticipation, action and recovery, distinct articulated poses. No smoke, projectile trail, swoosh or large effect.\nRow 3, exactly 8 frames: non-graphic magical death dissolution into small dark iron shards and cyan-magenta motes, starting whole and progressively vanishing; final cell has a few tiny motes only, localized where the body was. No gore, injury, splatter, broad cloud or explosion.\nRow 4, exactly 8 frames: shield-break reaction shown ONLY by physical recoil and recovery of the complete character, with at most THREE TINY fragments very close to the torso in the middle frames; first and last frames are stable. ABSOLUTELY NO SHIELD BUBBLE, external energy circle or ring, halo, rays, aura, bloom, floor or cast shadow. The fragments remain within the central half of the cell.\nHand-painted techno-gothic anime cel shading closely matching the reference. Do not mirror, crop, stretch or merely translate a repeated drawing; make genuine pose changes. True transparent alpha background, not a drawn checkerboard. No labels, text, guides, borders, logos or watermark. Preserve plenty of transparent pixels between every pair of cells.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/enemy-legions/enemies/quantum_entangled_sentinel.webp",
+    "native": {
+      "method": "image_gen.imagegen",
+      "sourcePath": "/workspace/scratch/3c707a35b074/generated_images/exec-e075f694-12f8-45d0-92da-2685aff26d5d.png",
+      "outputHint": "Generated images are saved to /workspace/scratch/3c707a35b074/generated_images as /workspace/scratch/3c707a35b074/generated_images/exec-e075f694-12f8-45d0-92da-2685aff26d5d.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA"
+    },
+    "qa": {
+      "status": "rejected",
+      "reason": "Death row produces expanding circular clouds and rings crossing neighboring cell boundaries. Not copied into runtime asset path."
+    },
+    "sha256": "575e6af73f84df7a4665ae683a977009636b462ec56aa5f0e4dbc79103a17ccf"
+  }
+]

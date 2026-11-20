@@ -1,5 +1,17 @@
 # Infernal City: Valkyrie Sweeper
 
+## Sprites complémentaires — completion-v1
+
+- 118 atlas PNG natifs, soit 4 376 cellules : héroïnes, boss, légions,
+  spécialistes, niveaux et spécialisations des tourelles, armes évoluées,
+  portraits animés et effets d’environnement.
+- 105 atlas de combat reliés aux états du moteur, avec chargement à la demande
+  et retour au rendu existant en cas d’échec. Les 13 ressources de portraits et
+  d’environnement sont préparées pour leur intégration ultérieure.
+- [Inventaire, intégration et validation](docs/SPRITE_COMPLETION.md) ;
+  [lecteur des sprites](docs/sprite-completion-review.html) à ouvrir depuis un
+  serveur HTTP local.
+
 ## Mise à jour 2.11 — Passe professionnelle
 
 - Campagne, chasses du Codex et Tour Infinitum utilisent désormais des états

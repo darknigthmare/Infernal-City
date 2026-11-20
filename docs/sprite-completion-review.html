@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Infernal City · Revue des nouveaux sprites</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,sans-serif;background:#0b0f18;color:#e4edf7}body{max-width:1180px;margin:0 auto;padding:28px}h1{font-size:28px;margin-bottom:8px}p{color:#b6c6da;line-height:1.6}header{border-bottom:1px solid #2a3446;margin-bottom:24px;padding-bottom:16px}.layout{display:grid;grid-template-columns:300px 1fr;gap:24px}label{display:block;color:#b6c6da;font-size:14px;margin:14px 0 6px}select,input,button{font:inherit;max-width:100%;border:1px solid #3b4a60;border-radius:8px;padding:10px;background:#111a2b;color:#e4edf7}select{width:100%}button{cursor:pointer}button:hover{border-color:#00dbe9}a{color:#70edf3}#sprite{height:380px;max-height:55vh;display:block;width:100%;object-fit:contain;background-color:#151e2e;background-image:linear-gradient(45deg,#1e2a3d 25%,transparent 25%),linear-gradient(-45deg,#1e2a3d 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#1e2a3d 75%),linear-gradient(-45deg,transparent 75%,#1e2a3d 75%);background-size:32px 32px;background-position:0 0,0 16px,16px -16px,-16px 0;border:1px solid #34445b;border-radius:12px}#details{font-size:13px;overflow-wrap:anywhere;line-height:1.7}#status{font-weight:600;color:#70edf3}#frame{width:100%;padding:0}.actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:16px}details{margin-top:24px}#sheet{width:100%;margin-top:16px;background:#172235}#error{color:#ffb3b3}small{color:#a5b6ce}code{font-size:12px}@media(max-width:720px){body{padding:16px}.layout{grid-template-columns:1fr}#sprite{height:320px}}
+</style></head><body>
+<header><h1>Infernal City · Atelier des sprites</h1><p>Animations complémentaires du roster actuel. Le lecteur affiche les cellules natives, sans inventer de poses intermédiaires.</p><div id="summary" role="status">Lecture du manifeste…</div></header>
+<div class="layout"><aside>
+<label for="category">Famille</label><select id="category"><option value="all">Toutes les familles</option><option value="heroes">Héroïnes</option><option value="bosses">Boss</option><option value="enemies">Ennemis</option><option value="towers">Défenses</option><option value="evolutions">Armes évoluées</option><option value="portraits">Portraits animés</option><option value="environment">Environnement</option></select>
+<label for="asset">Sprite</label><select id="asset"></select>
+<label for="state">État</label><select id="state"></select>
+<label for="speed">Vitesse · images / seconde</label><input type="number" id="speed" value="10" min="1" max="30">
+<p id="status"></p><div id="details"></div><p id="error" role="alert"></p>
+</aside><main>
+<canvas id="sprite" width="600" height="420" aria-label="Aperçu animé du sprite"></canvas>
+<div class="actions"><button id="toggle" type="button">Pause</button><span id="frame-label"></span><a id="source" target="_blank" rel="noopener">Ouvrir le PNG natif</a></div>
+<label for="frame">Image de l’animation</label><input id="frame" type="range" min="0" max="7" value="0">
+<details><summary>Planche native complète</summary><img id="sheet" alt="Planche native du sprite sélectionné"></details>
+<p><small>« Validé » signifie que le fichier a été contrôlé visuellement et que son empreinte SHA-256 correspond au registre. Les animations de combat validées sont activées en jeu. Les portraits et effets d’environnement sont des ressources préparées pour leur intégration future.</small></p>
+</main></div><script src="sprite-completion-review.js"></script></body></html>

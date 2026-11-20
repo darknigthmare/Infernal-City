@@ -254,8 +254,9 @@ test('card headings do not skip directly from modal h2 titles to h4', () => {
 
 test('PWA 3.1 keeps atlases and CG in a separate runtime cache', () => {
   assert.match(worker, /RELEASE_VERSION = '3\.1\.0'/);
-  assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}core-\$\{RELEASE_VERSION\}`/);
-  assert.match(worker, /MEDIA_CACHE_NAME = `\$\{CACHE_PREFIX\}media-\$\{RELEASE_VERSION\}`/);
+  assert.match(worker, /CACHE_REVISION = 'sprites-v1'/);
+  assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}core-\$\{RELEASE_VERSION\}-\$\{CACHE_REVISION\}`/);
+  assert.match(worker, /MEDIA_CACHE_NAME = `\$\{CACHE_PREFIX\}media-\$\{RELEASE_VERSION\}-\$\{CACHE_REVISION\}`/);
   assert.match(worker, /MAX_MEDIA_CACHE_ENTRIES = 320/);
   assert.match(worker, /'\.\/expansion\.v1\.js'/);
   assert.match(worker, /'\.\/characters\.v1\.js'/);

@@ -1,0 +1,24 @@
+[
+  {
+    "id": "napalm_mine",
+    "category": "towers",
+    "path": "assets/animations/completion-v1/towers/napalm_mine.png",
+    "columns": 8,
+    "rows": 8,
+    "prompt": "Correct the supplied tower animation atlas for precise game slicing. Keep exactly8 columns and8 rows,64 square cells on a square PNG. Preserve tower identity, eight rows of poses and all unique upgrades. BUT MAKE EVERY COMPLETE TOWER much smaller, maximum40percent of cell width AND height including antenna or tiny effects. Place each sprite exactly at center of its mathematical cell. Cell center percentages horizontally and vertically:6.25,18.75,31.25,43.75,56.25,68.75,81.25,93.75. Large30percent empty transparent margin on all4sides of EACH cell. No body, antenna, base or effect may enter adjacent cell. Ensure uniform grid spacing and identical central anchor. Draw tiny original towers with crisp details. Remove all smoke, surrounding haze, halos or broad effects; retain only solid machine and internal lights. True alpha0 background with no grid, text, captions or shadows. The source had overlapping cell boundaries: fix the grid and scale as top priority.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/towers/napalm_mine.png",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-ac60e2bf-86c6-4b9c-a6e4-b7249b5251f7.png",
+    "qa": "pending"
+  },
+  {
+    "id": "blood_shrine",
+    "category": "towers",
+    "path": "assets/animations/completion-v1/towers/blood_shrine.png",
+    "columns": 8,
+    "rows": 8,
+    "prompt": "Correct the supplied tower animation atlas for precise game slicing. Keep exactly8 columns and8 rows,64 square cells on a square PNG. Preserve tower identity, eight rows of poses and all unique upgrades. BUT MAKE EVERY COMPLETE TOWER much smaller, maximum40percent of cell width AND height including antenna or tiny effects. Place each sprite exactly at center of its mathematical cell. Cell center percentages horizontally and vertically:6.25,18.75,31.25,43.75,56.25,68.75,81.25,93.75. Large30percent empty transparent margin on all4sides of EACH cell. No body, antenna, base or effect may enter adjacent cell. Ensure uniform grid spacing and identical central anchor. Draw tiny original towers with crisp details. Remove all smoke, surrounding haze, halos or broad effects; retain only solid machine and internal lights. True alpha0 background with no grid, text, captions or shadows. The source had overlapping cell boundaries: fix the grid and scale as top priority.",
+    "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/towers/blood_shrine.png",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-1e47e5e4-58ec-4f86-8f0b-5083a6dc5735.png",
+    "qa": "pending"
+  }
+]

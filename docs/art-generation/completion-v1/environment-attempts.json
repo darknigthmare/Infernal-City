@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "generator": "built-in image_gen",
+  "attempts": [
+    {
+      "id": "acid-rain",
+      "attempt": 1,
+      "prompt": "Use case: stylized-concept. Asset type: production animation sprite atlas for Infernal City, dark techno-gothic tactical game. Create exactly 8 sequential animation frames in a strict 4 COLUMNS by 2 ROWS regular grid, wide 2:1 canvas, 8 equal SQUARE cells. Order is left to right then next row. No drawn grid or labels. Every effect occupies ONLY THE CENTRAL HALF of its own square cell; completely empty 25% transparent gutters on ALL sides of EVERY cell. Crisp detailed painted game VFX, readable at small size, actual transparent alpha outside the small effects. Only the specified isolated effect, no landscape, backdrop, surface, sky, fog, cloud, smoke, diffuse glow, broad halo, shadow, full-screen flash, text, borders, checkerboard or watermark. Clearly distinct consecutive frames, same camera and same stable anchor in every frame. Nothing touches adjacent cell. Subject: one small localized patch of sparse very fine cyan-green acid rain. Each frame has about 9 slender diagonal falling rain strokes of varied lengths and 3 tiny splashes near a consistent invisible ground anchor. Eight-frame looping cycle, droplets descend and are replaced, splashes flicker softly. Thin cool green/cyan colored lines, white highlight only in very tiny drop centers; no puddle, ground disk, ring, large splatter, texture, monster, symbol or neon bloom. Entire rain column bounded to central 50% width AND height in each cell.",
+      "originalPath": "/workspace/scratch/3c707a35b074/generated_images/exec-b69cc26f-4e08-4a21-bb9c-023b81aed89e.png",
+      "status": "rejected",
+      "rejectionReason": "Unwanted neon green aura"
+    },
+    {
+      "id": "ion-storm",
+      "attempt": 1,
+      "prompt": "Use case: stylized-concept. Asset type: production animation sprite atlas for Infernal City, dark techno-gothic tactical game. Create exactly 8 sequential animation frames in a strict 4 COLUMNS by 2 ROWS regular grid, wide 2:1 canvas, 8 equal SQUARE cells. Order is left to right then next row. No drawn grid or labels. Every effect occupies ONLY THE CENTRAL HALF of its own square cell; completely empty 25% transparent gutters on ALL sides of EVERY cell. Crisp detailed painted game VFX, readable at small size, actual transparent alpha outside the small effects. Only the specified isolated effect, no landscape, backdrop, surface, sky, fog, cloud, smoke, diffuse glow, broad halo, shadow, full-screen flash, text, borders, checkerboard or watermark. Clearly distinct consecutive frames, same camera and same stable anchor in every frame. Nothing touches adjacent cell. Subject: one small localized knot of 3 delicate short cyan and violet electrical arcs, all confined to a compact central region. Eight-frame gentle looping electrical flicker, arc branches and bends evolve fluidly, no huge bolt or explosive burst. Very narrow colored filaments with tiny bright cores, no surrounding haze or bloom, no cloud, no orb, no ring, no ground. Lighting intensity stays modest in all 8 frames, absolutely no full-screen white flash.",
+      "originalPath": "/workspace/scratch/3c707a35b074/generated_images/exec-30078c83-d561-48ec-bc02-99608a2914bf.png",
+      "status": "rejected",
+      "rejectionReason": "Nontransparent pale background"
+    },
+    {
+      "id": "debris-settle",
+      "attempt": 1,
+      "prompt": "Use case: stylized-concept. Asset type: production animation sprite atlas for Infernal City, dark techno-gothic tactical game. Create exactly 8 sequential animation frames in a strict 4 COLUMNS by 2 ROWS regular grid, wide 2:1 canvas, 8 equal SQUARE cells. Order is left to right then next row. No drawn grid or labels. Every effect occupies ONLY THE CENTRAL HALF of its own square cell; completely empty 25% transparent gutters on ALL sides of EVERY cell. Crisp detailed painted game VFX, readable at small size, actual transparent alpha outside the small effects. Only the specified isolated effect, no landscape, backdrop, surface, sky, fog, cloud, smoke, diffuse glow, broad halo, shadow, full-screen flash, text, borders, checkerboard or watermark. Clearly distinct consecutive frames, same camera and same stable anchor in every frame. Nothing touches adjacent cell. Subject: the SAME seven small dark metallic industrial fragments — two bent gunmetal plates, three angular dark steel chips, two tiny bronze rivets — falling and settling. Eight consecutive frames: 1 suspended compact cluster; 2 falling with slight tumbling; 3 falling lower; 4 contacting invisible ground near center-bottom of central region; 5 low bounce; 6 settling; 7 settled small pile; 8 stable settled pile. Keep all pieces confined to central 50% cell area. Detailed gunmetal and subdued bronze metal with thin cyan reflections, fully opaque shards, no dust, smoke, sparks, rubble floor, cast shadows, blood or fire. Camera elevated three-quarter view, tiny object sprites for tactical game.",
+      "originalPath": "/workspace/scratch/3c707a35b074/generated_images/exec-2179276d-0df7-459f-a72f-034ca799e0dc.png",
+      "status": "rejected",
+      "rejectionReason": "Motion trajectory too close to bottom of cells"
+    },
+    {
+      "id": "acid-rain",
+      "attempt": 2,
+      "reference": "/workspace/scratch/3c707a35b074/generated_images/exec-b69cc26f-4e08-4a21-bb9c-023b81aed89e.png",
+      "prompt": "Use case: precise-object-edit. This exact 4-column by 2-row 8-frame sprite sheet is an edit target. Remove ONLY the unwanted large neon green fuzzy splatters and noisy green aura that appear around droplets in frames 2,3,4,5. Keep every fine cyan-green rain stroke and the three tiny crown splashes at bottom, maintain all eight sequential frames and their exact locations. Return genuine alpha-zero transparency outside rain silhouettes, clean crisp narrow droplets with no speckles, haze, fog or diffuse glow. Keep 2:1 canvas, exactly 4x2 equal cells, wide 25% empty alpha gutters. No background, checkerboard, grid, text or borders.",
+      "originalPath": "/workspace/scratch/3c707a35b074/generated_images/exec-9f6e4f38-10f6-4f2f-a46b-04b00d0a1469.png",
+      "status": "candidate-visual-pass"
+    },
+    {
+      "id": "ion-storm",
+      "attempt": 2,
+      "reference": "/workspace/scratch/3c707a35b074/generated_images/exec-30078c83-d561-48ec-bc02-99608a2914bf.png",
+      "prompt": "Use case: background-extraction. This exact 4-column by 2-row 8-frame electrical effects sprite sheet is the edit target. REMOVE the entire white/light-gray background. Preserve only the very thin cyan/violet electrical branches in all 8 frames at exactly the same positions, shapes, sizes and colors. Return a PNG with actual alpha-zero transparency between and around all arcs. Each filament is narrow and clearly defined, no haze, shadows, diffuse glow, cloud, speckles or white film remaining. Preserve the exact 2:1 wide canvas and 4x2 layout; no other additions, text or grid.",
+      "originalPath": "/workspace/scratch/3c707a35b074/generated_images/exec-f59c33b1-5928-4153-ab19-6a9fd96a8f80.png",
+      "status": "rejected",
+      "rejectionReason": "Blue cloudy aura remained after background extraction"
+    },
+    {
+      "id": "debris-settle",
+      "attempt": 2,
+      "reference": "/workspace/scratch/3c707a35b074/generated_images/exec-2179276d-0df7-459f-a72f-034ca799e0dc.png",
+      "prompt": "Use case: precise-object-edit. This exact 4-column by 2-row 8-frame debris atlas is the edit target. Keep the same seven metallic fragments and animation progression, same 2:1 canvas, exact 4x2 regular grid. Change only framing: fit the COMPLETE 8-frame movement trajectory inside the central 50% width and central 50% height of EACH square cell, leaving at least 25% alpha-zero gutters on all four sides. Make fragments smaller as needed, with the final settled pile baseline at 70% of each cell height instead of near bottom. Each frame has identical stable local ground anchor and consistent scale. Preserve dark gunmetal plates, steel chips, bronze rivets, shapes, materials, subtle reflections and falling/tumbling/bounce/settle poses; no cloned frames. Remove stray colored edge noise and all shadows/background. Actual transparent alpha, no glow, smoke, dust, floor, text, grid or borders.",
+      "originalPath": "/workspace/scratch/3c707a35b074/generated_images/exec-19b78f1f-17f9-4130-bac9-9da26df6fdbb.png",
+      "status": "candidate-visual-pass"
+    },
+    {
+      "id": "ion-storm",
+      "attempt": 3,
+      "reference": "/workspace/scratch/3c707a35b074/generated_images/exec-f59c33b1-5928-4153-ab19-6a9fd96a8f80.png",
+      "prompt": "Use case: precise-object-edit. Edit this exact 4x2 eight-frame atlas of cyan/violet electrical arcs. REMOVE ALL BLUE/CYAN/PURPLE CLOUDY PATCHES, noisy filler areas and broad glow surrounding and between the narrow branching bolt LINES. Keep ONLY the actual thin jagged electrical filaments, maximum 2-4 pixels width, and their miniature branches. Every gap between the independent lines must be totally TRANSPARENT alpha-zero. No broad shape, no cloud or smoky blob, no halo or aura, no glow gradient. Maintain all eight frames at their original positions, exact sizes and different line shapes, same 2:1 canvas, 4 columns and 2 rows with very wide empty transparent gutters. Actual PNG alpha transparency, no background color, checkerboard, text or grid.",
+      "originalPath": "/workspace/scratch/3c707a35b074/generated_images/exec-2cb18121-d053-403e-b0b3-ce050e29bb4b.png",
+      "status": "candidate-visual-pass"
+    }
+  ]
+}
