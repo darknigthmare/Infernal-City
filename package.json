@@ -7,8 +7,9 @@
     "test": "node --test tests/*.test.js",
     "test:e2e": "playwright test",
     "audit:static": "node scripts/audit_static.cjs",
-    "check": "node --check vn-scenes.v1.js && node --check expansion.v1.js && node --check characters.v1.js && node --check enemy-legions.v1.js && node --check campaign-content.v1.js && node --check vn-expansion.v1.js && node --check adult-scenes.v1.js && node --check specialization-runtime.v1.js && node --check game.v9.js && node --check sprite-completion.v1.js && node --check sprite-completion-approved.v1.js && node --check sprite-completion-runtime.v1.js && node --check gameplay-professional.v1.js && node --check infinitum-runtime.v1.js && node --check enemy-legions-runtime.v1.js && node --check enemy-legions-professional.v1.js && node --check audio.v8.js && node --check pwa.v4.js && node --check sw.js && node scripts/audit_static.cjs && node --test tests/*.test.js",
-    "sprites:manifest": "node scripts/build-sprite-completion-manifest.cjs"
+    "check": "node --check vn-scenes.v1.js && node --check expansion.v1.js && node --check characters.v1.js && node --check enemy-legions.v1.js && node --check campaign-content.v1.js && node --check vn-expansion.v1.js && node --check adult-scenes.v1.js && node --check specialization-runtime.v1.js && node --check game.v9.js && node --check sprite-completion.v1.js && node --check sprite-completion-approved.v1.js && node --check sprite-completion-runtime.v1.js && node --check sprite-presentation.v1.js && node --check dlc-art.v1.js && node --check dlc-art-runtime.v1.js && node --check dlc-packs.v1.js && node --check gameplay-professional.v1.js && node --check infinitum-runtime.v1.js && node --check enemy-legions-runtime.v1.js && node --check enemy-legions-professional.v1.js && node --check audio.v8.js && node --check pwa.v4.js && node --check sw.js && node scripts/audit_static.cjs && node --test tests/*.test.js",
+    "sprites:manifest": "node scripts/build-sprite-completion-manifest.cjs",
+    "sprites:dlc": "node scripts/build-dlc-art-manifest.cjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.1"

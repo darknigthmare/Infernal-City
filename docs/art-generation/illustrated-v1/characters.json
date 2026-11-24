@@ -1,0 +1,1291 @@
+{
+  "schema": "infernal-city-character-native-art-v1",
+  "generatedWith": "built-in image_gen",
+  "baseCommit": "85bfec3adb18eacc810f8dcd28da2681c1f3f1cd",
+  "scope": "6 legacy + 13 first-design paid DLC characters + Architecte Zero; 11 other paid DLC characters owned by root in characters-root.json",
+  "expectedAssets": 20,
+  "completedApprovedAssets": 20,
+  "status": "complete",
+  "pendingIds": [],
+  "nativePngPolicy": "Byte-for-byte copies of image_gen PNGs; no crop, resize, compositing, recolor, atlas assembly, or alpha retouch. Mathematical runtime slicing only.",
+  "fidelityPolicy": "Legacy subjects preserve the referenced existing identity and extend its animation; new DLC subjects are first original designs from current authored metadata, palette and existing sprite-style references. No claim of pre-existing image identity for DLC first designs.",
+  "assets": [
+    {
+      "id": "architect_zero",
+      "name": "L’Architecte Zéro",
+      "kind": "bosses",
+      "packId": "free_eclipse_pact",
+      "biome": "zenith",
+      "path": "assets/dlc/illustrated-v1/bosses/architect_zero.png",
+      "columns": 8,
+      "rows": 8,
+      "states": [
+        "intro",
+        "phase_shift_2",
+        "phase_shift_3",
+        "phase_shift_4",
+        "heavy_telegraph",
+        "attack",
+        "defeat",
+        "idle"
+      ],
+      "reference": "assets/animations/enemies/enemy-atlas-01.png",
+      "referenceRole": "painted boss sprite material, camera and scale guide only; not identity",
+      "fidelity": "first original design from authored final-boss metadata and white/gold/antimatter faction palette",
+      "source": "dlc-packs.v1.js; docs/GAME_BIBLE.md",
+      "authoredCharacter": {
+        "id": "architect_zero",
+        "name": "L’Architecte Zéro",
+        "phases": 4,
+        "faction": "zenith_architecture"
+      },
+      "palette": {
+        "primary": "#f4f4ed",
+        "secondary": "#e8b850",
+        "antimatter": "#11101f"
+      },
+      "designBrief": "Towering faceless architectural golem with white porcelain plates, gold structural filigree, a black void face and chest core, and a compact segmented armillary ring around its shoulders. Two arms, two legs. Clearly distinct from the demon reference.",
+      "prompt": "LAYOUT OVERRIDE: Ignore the reference image's sprite size and grid. Your new sprites must be miniature within their own equal square cells, occupying at most 55% of cell height including the complete weapon and effect. Leave wide blank gutters on all sides. Use case: stylized-concept. Production animated final boss sprite atlas for Infernal City: L’Architecte Zéro of L’Architecture Zéro / Veilleurs du Zénith. FIRST ORIGINAL DESIGN. The attached atlas is only a guide to crisp illustrated sprite rendering, material depth, elevated three-quarter camera and tactical-game readability. Do not copy any demon, hound, insect or armored knight identity in it. New subject: towering faceless architectural golem with angular WHITE PORCELAIN full plates, GOLD structural filigree, BLACK ANTIMATTER face and chest core. Tall commanding silhouette with exactly two arms and two legs, monumental geometric shoulder plates, compact segmented armillary ring behind shoulders, small geometric hovering segments held close. No exposed human body. A single consistent design and front-three-quarter facing slightly right in every frame, camera locked. Crisp hand-painted fantasy sprite shading, small dark outlines, fine metal and ceramic texture, no photographic rendering, no pixel-art simplification.\nLayout: EXACTLY 8 columns and 8 rows, 64 equal square cells, square 2048×2048 transparent atlas. EXACTLY one complete sprite in each cell. Each body plus effects stays in central 55% width and 60% height, feet near 83% local height. Keep every head, foot, ring and particle inside its own cell with generous fully transparent gutters. No overlap or cropped pieces. No text, labels, drawn grid, background, floors, long beams or watermarks. Real transparent alpha.\nEight consecutive, distinct animation frames per row, left-to-right. Rows top-to-bottom: 1 intro: inert segments assemble into standing golem, visible core/remains in every frame; 2 phase_shift_2: gold circuitry lights and armillary segments rotate, same body; 3 phase_shift_3: porcelain plates separate slightly, compact black antimatter core energy grows, no new limbs; 4 phase_shift_4: final luminous white/gold corona and dark core pulse build strongly, compact within cell; 5 heavy_telegraph: slow imposing arm windup into concentrated golden-black charge, then recovery; 6 attack: controlled arm strike with short contained geometric shock, then reset; 7 defeat: golem kneels and its plates fragment into a compact visible architectural heap, non-graphic, no blood; 8 idle: subtle floating ring rotation and core pulse, consistent standing pose and height. Maintain coherent anatomy and costume through all rows; no costume replacements or duplicate bodies. STRICT GUTTERS: no haze, fog, dust, ambient glow clouds, floodlights or colored matte anywhere. Transparent empty space separates every frame on every side. Effects are narrow crisp rings, short streaks or tiny sparks, contained within the character's silhouette width whenever possible. No fade-out or white fog even in the outro: every frame remains a clean opaque character cutout. Do not enlarge the ultimate aura beyond the central 60% of a cell.",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-bd489f0f-2ed8-498f-98bd-f850341bb890.png",
+      "status": "approved",
+      "generator": "built-in image_gen",
+      "sha256": "bb7c88a057be8f5cd124d7c0feb5b999ac12a3197b252fb16b63f776575cdde6",
+      "qa": {
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGBA",
+        "columns": 8,
+        "rows": 8,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "populatedCells": 64,
+        "uniqueCells": 64,
+        "minVisibleMarginPx": 7,
+        "alphaThreshold": 24,
+        "blankCells": [],
+        "borderContacts": [],
+        "maxCellBorderAlpha": 4,
+        "nativeSha256Verified": true,
+        "medianVisibleBodyWidthRatio": 0.5384615384615384,
+        "medianVisibleBodyHeightRatio": 0.6751592356687898,
+        "visualReview": "Approved visually: coherent intended original identity and authored theme; exact state count and row order, complete framing, distinct motion and power progression; clean native alpha with no visible cell-border contact. Character-specific notes: Ophelia canopy now compact; Architecte Zero shows four power phases plus telegraph/attack/defeat/idle in white-gold antimatter armor."
+      }
+    },
+    {
+      "id": "archon_aurelien",
+      "name": "Archonte Aurélia-X",
+      "kind": "bosses",
+      "packId": "dlc_astral_cathedral",
+      "biome": "astral",
+      "path": "assets/dlc/illustrated-v1/bosses/archon_aurelien.png",
+      "columns": 8,
+      "rows": 6,
+      "states": [
+        "intro",
+        "phase_shift_2",
+        "phase_shift_3",
+        "heavy_telegraph",
+        "defeat",
+        "idle"
+      ],
+      "reference": "assets/characters/heroines/zahra-mille-ciels-atlas-v1.png",
+      "referenceRole": "style-camera-material guide only; not identity",
+      "fidelity": "first original design from authored DLC metadata and palette",
+      "source": "dlc-packs.v1.js",
+      "authoredCharacter": {
+        "id": "archon_aurelien",
+        "name": "Archonte Aurélia-X",
+        "age": 24,
+        "isAdult": true,
+        "phases": [
+          "Jugement de Verre",
+          "Éclipse Dorée",
+          "Effondrement d’Astrolabe"
+        ]
+      },
+      "palette": {
+        "bg": "#1e1b4b",
+        "primary": "#f59e0b",
+        "secondary": "#fef3c7",
+        "glow": "#38bdf8"
+      },
+      "designBrief": "Mature adult woman, imposing celestial regent, ivory and gold sculpted full plate over closed indigo robes, angular golden crown, pale silver hair. Compact armillary halo behind shoulders and astrolabe sceptre. Two arms and two legs; regal stern face.",
+      "prompt": "Edit this generated transparent sprite atlas. KEEP exactly the same character design, face, hair, outfit, weapon, painterly style, facing, animation poses, row order, and 8 columns × 6 rows. Correct ONLY CELL ISOLATION AND TRANSPARENCY. Reduce the sprite and all effects inside EACH CELL to fit the central 55% width and 65% height. Maintain the same per-cell center and feet baseline at 80% local height. Each sprite and every effect must be entirely within its own equal square cell, with at least 15% genuinely empty transparent margin on every side. REMOVE ALL haze, fog, dust clouds, ambient colored background halos and connected glow between sprites. Use compact sharply defined rings, sparks, ribbons only. The entire sheet background and every gutter MUST be true fully transparent. ALL characters in ALL frames, including the outro row, remain opaque and visible; no fade-to-white, no gradual wash-out, no vignette. Each sprite must remain an independent clean cutout. No frame touches another frame or the sheet edge. No text or grid lines. Do not change the grid or omit frames. The object at the center of each cell is the existing character and its compact effect, nothing else. Native alpha output, no matte. Exact canvas aspect 4:3.",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-e39caf0e-f207-42ce-a382-6cc1a50a773e.png",
+      "status": "approved",
+      "generator": "built-in image_gen",
+      "sha256": "5617f42a95adf1805d874ef1b42c8b5e2663f377313659dbab98d32fc5de5436",
+      "previousAttempts": [
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-f6ef857a-f34f-4c38-8b6f-009ea56c4c92.png",
+          "sha256": "5cafc59bec943b36f52dc595fa5049a85e239dacf0c97534f96904d30e070825",
+          "prompt": "Use case: stylized-concept. Production game sprite animation atlas for Infernal City. The attached atlas is a STYLE, SCALE, CAMERA and painterly-material reference only; invent the specified new character, do not copy the guide character or its costume. Match the existing illustrated dark-fantasy tactical sprite style: detailed crisp hand-painted surfaces, fine dark contours, directional highlights, believable adult anatomy, elevated three-quarter camera facing toward screen-right. Use the SAME camera, head, body proportions, outfit, weapon and scale consistently in every cell. Exactly one full character per cell, no clones inside a cell. All combat costumes fully opaque and closed, all characters plainly mature adults. True transparent alpha background, no floor, no background color, no contact shadow outside feet, no labels, typography, grid lines, watermarks or UI. Every action stays inside its own mathematically equal cell: body plus weapon plus particles must fit the central 65% width and 72% height; generous transparent margins on all four sides, absolutely no cropped hair, weapons, glows, or cross-cell overlap. Keep effects compact and attached to the character, no long projectile beams. Eight consecutive distinct animation frames left-to-right in EVERY row; exactly the listed number of rows, no extra rows, no missing or blank cells. Use tightly controlled movement arcs, no arbitrary view changes. Non-graphic defeat, never blood or gore.\nSubject: Archonte Aurélia-X, a new boss in \"Cathédrale Astrale & Nécropole Solaire\". Authored identity: Jugement de Verre / Éclipse Dorée / Effondrement d’Astrolabe. Visual domain: Gothique Sacré Doré, Marbre Blanc & Horlogerie Céleste. Palette: {\"bg\":\"#1e1b4b\",\"primary\":\"#f59e0b\",\"secondary\":\"#fef3c7\",\"glow\":\"#38bdf8\"}; background remains transparent regardless of palette bg. Design: Mature adult woman, imposing celestial regent, ivory and gold sculpted full plate over closed indigo robes, angular golden crown, pale silver hair. Compact armillary halo behind shoulders and astrolabe sceptre. Two arms and two legs; regal stern face.\nLayout: EXACTLY 8 columns by 6 rows, 48 equal square cells, 4:3 landscape 2048×1536 atlas. Bodies center at each cell's midpoint with the feet on a consistent local baseline around 83% cell height. Six rows from top to bottom: 1 intro, eight steps of imposing arrival and ready stance, character visible in all frames; 2 phase_shift_2, \"Éclipse Dorée\", escalating compact power activation while keeping same outfit and body; 3 phase_shift_3, \"Effondrement d’Astrolabe\", more intense compact aura and pose; 4 heavy_telegraph, clearly readable attack windup, held charge, strike-ready peak and recovery without long beam; 5 defeat, non-graphic stagger and kneeling collapse with compact dissolving motes, visible remains in all frames; 6 idle, breathing and subtle weapon/cloth loop.\nMaintain a single coherent identity across the entire sheet, same mature face and hairstyle. Readability at tactical game size is essential.",
+          "reason": "Rejected: effect overflow touches cell boundary; Beatrice outro also introduced connected pale haze."
+        }
+      ],
+      "inputEditNative": "/workspace/scratch/3c707a35b074/generated_images/exec-f6ef857a-f34f-4c38-8b6f-009ea56c4c92.png",
+      "qa": {
+        "width": 1448,
+        "height": 1086,
+        "mode": "RGBA",
+        "columns": 8,
+        "rows": 6,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "populatedCells": 48,
+        "uniqueCells": 48,
+        "minVisibleMarginPx": 25,
+        "alphaThreshold": 24,
+        "blankCells": [],
+        "borderContacts": [],
+        "nativeSha256Verified": true,
+        "medianVisibleBodyWidthRatio": 0.5359116022099447,
+        "medianVisibleBodyHeightRatio": 0.6187845303867403,
+        "visualReview": "Approved visually after isolation correction: distinct mature celestial regent, ivory/gold armor and astrolabe silhouette; six coherent phase and combat rows; complete body, compact effects and true alpha. No visible cell-border contact at alpha 24."
+      }
+    },
+    {
+      "id": "belladonna_glass",
+      "name": "Dame Belladonna",
+      "kind": "bosses",
+      "packId": "dlc_art_nouveau_garden",
+      "biome": "flora",
+      "path": "assets/dlc/illustrated-v1/bosses/belladonna_glass.png",
+      "columns": 8,
+      "rows": 6,
+      "states": [
+        "intro",
+        "phase_shift_2",
+        "phase_shift_3",
+        "heavy_telegraph",
+        "defeat",
+        "idle"
+      ],
+      "reference": "assets/characters/heroines/amara-verdigris-atlas-v1.png",
+      "referenceRole": "style-camera-material guide only; not identity",
+      "fidelity": "first original design from authored DLC metadata and palette",
+      "source": "dlc-packs.v1.js",
+      "authoredCharacter": {
+        "id": "belladonna_glass",
+        "name": "Dame Belladonna",
+        "age": 19,
+        "isAdult": true,
+        "phases": [
+          "Épines de Cristal",
+          "Sève Corrosive",
+          "Verrière Brisée"
+        ]
+      },
+      "palette": {
+        "bg": "#064e3b",
+        "primary": "#34d399",
+        "secondary": "#e11d48",
+        "glow": "#fbbf24"
+      },
+      "designBrief": "Mature adult woman with raven-black braid, high collar, burgundy opaque armored gown, green-black wrought-iron corset plate, boots and gloves. Small crystal thorn crown and compact dark glass staff. Poison-garden aristocrat, rose and emerald palette.",
+      "prompt": "Precise transparent sprite-sheet correction. KEEP exactly the existing Belladonna adult character, dark braid, burgundy full armored gown, crystal thorn crown and glass staff, painted style, facing and animation order. Preserve EXACTLY 8 columns × 6 rows, 48 equal square cells, 4:3 landscape. Independently reduce every complete sprite plus its effects by 25% relative to input, centered within its own cell. The phase-3 crystal growth in ROW 3 must be compact and close behind her, with no shard or glow crossing a cell boundary, especially columns 7 and 8. All full characters remain inside each cell with 15% fully transparent gutters on every side; maintain feet baseline locally. Actual transparent alpha=0 backdrop, no haze, clouds, floor, shadows, colored matte or stray pixels. No text, no grid, no new poses, no redesign, no omitted or additional frame. Preserve all six coherent state sequences.",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-42953fde-85ec-4318-8753-26509c9ea95f.png",
+      "status": "approved",
+      "generator": "built-in image_gen",
+      "sha256": "adb9270041473486e4bdf686d7397175f3ae84e10e1812e19f131306a79a10cb",
+      "inputEditNative": "/workspace/scratch/3c707a35b074/generated_images/exec-61608968-21b5-448b-a09b-8c3a7b1e0d33.png",
+      "previousAttempts": [
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-61608968-21b5-448b-a09b-8c3a7b1e0d33.png",
+          "sha256": "d7007bb367637abd77b956ffb88750a62d2d1ab8d3910d13de66ffa23921fd8f",
+          "prompt": "LAYOUT OVERRIDE: Ignore the reference image's sprite size and grid. Your new sprites must be miniature within their own equal square cells, occupying at most 55% of cell height including the complete weapon and effect. Leave wide blank gutters on all sides. Use case: stylized-concept. Production game sprite animation atlas for Infernal City. The attached atlas is a STYLE and CAMERA and painterly-material reference only; invent the specified new character, do not copy the guide character or its costume. Match the existing illustrated dark-fantasy tactical sprite style: detailed crisp hand-painted surfaces, fine dark contours, directional highlights, believable adult anatomy, elevated three-quarter camera facing toward screen-right. Use the SAME camera, head, body proportions, outfit, weapon and scale consistently in every cell. Exactly one full character per cell, no clones inside a cell. All combat costumes fully opaque and closed, all characters plainly mature adults. True transparent alpha background, no floor, no background color, no contact shadow outside feet, no labels, typography, grid lines, watermarks or UI. Every action stays inside its own mathematically equal cell: body plus weapon plus particles must fit the central 50% width and 55% height; generous transparent margins on all four sides, absolutely no cropped hair, weapons, glows, or cross-cell overlap. Keep effects compact and attached to the character, no long projectile beams. Eight consecutive distinct animation frames left-to-right in EVERY row; exactly the listed number of rows, no extra rows, no missing or blank cells. Use tightly controlled movement arcs, no arbitrary view changes. Non-graphic defeat, never blood or gore.\nSubject: Dame Belladonna, a new boss in \"Jardin de Cendre & Verrière Art Nouveau\". Authored identity: Épines de Cristal / Sève Corrosive / Verrière Brisée. Visual domain: Botanique Mutante, Fer Forgé Art Nouveau & Serres de Cristal. Palette: {\"bg\":\"#064e3b\",\"primary\":\"#34d399\",\"secondary\":\"#e11d48\",\"glow\":\"#fbbf24\"}; background remains transparent regardless of palette bg. Design: Mature adult woman with raven-black braid, high collar, burgundy opaque armored gown, green-black wrought-iron corset plate, boots and gloves. Small crystal thorn crown and compact dark glass staff. Poison-garden aristocrat, rose and emerald palette.\nLayout: EXACTLY 8 columns by 6 rows, 48 equal square cells, 4:3 landscape 2048×1536 atlas. Bodies center at each cell's midpoint with the feet on a consistent local baseline around 80% cell height. Six rows from top to bottom: 1 intro, eight steps of imposing arrival and ready stance, character visible in all frames; 2 phase_shift_2, \"Sève Corrosive\", escalating compact power activation while keeping same outfit and body; 3 phase_shift_3, \"Verrière Brisée\", more intense compact aura and pose; 4 heavy_telegraph, clearly readable attack windup, held charge, strike-ready peak and recovery without long beam; 5 defeat, non-graphic stagger and kneeling collapse with compact dissolving motes, visible remains in all frames; 6 idle, breathing and subtle weapon/cloth loop.\nMaintain a single coherent identity across the entire sheet, same mature face and hairstyle. Readability at tactical game size is essential. STRICT GUTTERS: no haze, fog, dust, ambient glow clouds, floodlights or colored matte anywhere. Transparent empty space separates every frame on every side. Effects are narrow crisp rings, short streaks or tiny sparks, contained within the character's silhouette width whenever possible. No fade-out or white fog even in the outro: every frame remains a clean opaque character cutout. Do not enlarge the ultimate aura beyond the central 60% of a cell.",
+          "reason": "Rejected: phase-3 crystal growth reaches adjacent cell boundary in row 3 columns 7–8."
+        }
+      ],
+      "qa": {
+        "width": 1448,
+        "height": 1086,
+        "mode": "RGBA",
+        "columns": 8,
+        "rows": 6,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "populatedCells": 48,
+        "uniqueCells": 48,
+        "minVisibleMarginPx": 7,
+        "alphaThreshold": 24,
+        "blankCells": [],
+        "borderContacts": [],
+        "maxCellBorderAlpha": 2,
+        "nativeSha256Verified": true,
+        "medianVisibleBodyWidthRatio": 0.43646408839779005,
+        "medianVisibleBodyHeightRatio": 0.6243093922651933,
+        "visualReview": "Approved after native margin correction: mature glass-thorn sovereign and six coherent state rows preserved; phase-3 crystals now fully contained, all 48 frames distinct, margin at least7px, boundary alpha max2."
+      }
+    },
+    {
+      "id": "celestia_bell",
+      "name": "Carillonneuse Célestia",
+      "kind": "bosses",
+      "packId": "dlc_astral_cathedral",
+      "biome": "astral",
+      "path": "assets/dlc/illustrated-v1/bosses/celestia_bell.png",
+      "columns": 8,
+      "rows": 6,
+      "states": [
+        "intro",
+        "phase_shift_2",
+        "phase_shift_3",
+        "heavy_telegraph",
+        "defeat",
+        "idle"
+      ],
+      "reference": "assets/characters/heroines/zahra-mille-ciels-atlas-v1.png",
+      "referenceRole": "style-camera-material guide only; not identity",
+      "fidelity": "first original design from authored DLC metadata and palette",
+      "source": "dlc-packs.v1.js",
+      "authoredCharacter": {
+        "id": "celestia_bell",
+        "name": "Carillonneuse Célestia",
+        "age": 20,
+        "isAdult": true,
+        "phases": [
+          "Résonance d’Or",
+          "Fissure de Vitrail",
+          "Dernier Carillon"
+        ]
+      },
+      "palette": {
+        "bg": "#1e1b4b",
+        "primary": "#f59e0b",
+        "secondary": "#fef3c7",
+        "glow": "#38bdf8"
+      },
+      "designBrief": "Mature adult woman, long silver braid, sculptural gold bell-shaped shoulder armor over a closed indigo armored gown with boots. Compact golden hand-bell sceptre and stained-glass collar. Stern cathedral carillonneur silhouette.",
+      "prompt": "Use case: stylized-concept. Production game sprite animation atlas for Infernal City. The attached atlas is a STYLE, SCALE, CAMERA and painterly-material reference only; invent the specified new character, do not copy the guide character or its costume. Match the existing illustrated dark-fantasy tactical sprite style: detailed crisp hand-painted surfaces, fine dark contours, directional highlights, believable adult anatomy, elevated three-quarter camera facing toward screen-right. Use the SAME camera, head, body proportions, outfit, weapon and scale consistently in every cell. Exactly one full character per cell, no clones inside a cell. All combat costumes fully opaque and closed, all characters plainly mature adults. True transparent alpha background, no floor, no background color, no contact shadow outside feet, no labels, typography, grid lines, watermarks or UI. Every action stays inside its own mathematically equal cell: body plus weapon plus particles must fit the central 55% width and 60% height; generous transparent margins on all four sides, absolutely no cropped hair, weapons, glows, or cross-cell overlap. Keep effects compact and attached to the character, no long projectile beams. Eight consecutive distinct animation frames left-to-right in EVERY row; exactly the listed number of rows, no extra rows, no missing or blank cells. Use tightly controlled movement arcs, no arbitrary view changes. Non-graphic defeat, never blood or gore.\nSubject: Carillonneuse Célestia, a new boss in \"Cathédrale Astrale & Nécropole Solaire\". Authored identity: Résonance d’Or / Fissure de Vitrail / Dernier Carillon. Visual domain: Gothique Sacré Doré, Marbre Blanc & Horlogerie Céleste. Palette: {\"bg\":\"#1e1b4b\",\"primary\":\"#f59e0b\",\"secondary\":\"#fef3c7\",\"glow\":\"#38bdf8\"}; background remains transparent regardless of palette bg. Design: Mature adult woman, long silver braid, sculptural gold bell-shaped shoulder armor over a closed indigo armored gown with boots. Compact golden hand-bell sceptre and stained-glass collar. Stern cathedral carillonneur silhouette.\nLayout: EXACTLY 8 columns by 6 rows, 48 equal square cells, 4:3 landscape 2048×1536 atlas. Bodies center at each cell's midpoint with the feet on a consistent local baseline around 80% cell height. Six rows from top to bottom: 1 intro, eight steps of imposing arrival and ready stance, character visible in all frames; 2 phase_shift_2, \"Fissure de Vitrail\", escalating compact power activation while keeping same outfit and body; 3 phase_shift_3, \"Dernier Carillon\", more intense compact aura and pose; 4 heavy_telegraph, clearly readable attack windup, held charge, strike-ready peak and recovery without long beam; 5 defeat, non-graphic stagger and kneeling collapse with compact dissolving motes, visible remains in all frames; 6 idle, breathing and subtle weapon/cloth loop.\nMaintain a single coherent identity across the entire sheet, same mature face and hairstyle. Readability at tactical game size is essential. STRICT GUTTERS: no haze, fog, dust, ambient glow clouds, floodlights or colored matte anywhere. Transparent empty space separates every frame on every side. Effects are narrow crisp rings, short streaks or tiny sparks, contained within the character's silhouette width whenever possible. No fade-out or white fog even in the outro: every frame remains a clean opaque character cutout. Do not enlarge the ultimate aura beyond the central 60% of a cell.",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-f9301117-13e9-48e3-bfcf-9a25d048d142.png",
+      "status": "approved",
+      "generator": "built-in image_gen",
+      "sha256": "9430c5e5dcdd3ab03fad4a7c1f50a9b340b05d984181854b3aa10fadd504ce82",
+      "qa": {
+        "width": 1448,
+        "height": 1086,
+        "mode": "RGBA",
+        "columns": 8,
+        "rows": 6,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "populatedCells": 48,
+        "uniqueCells": 48,
+        "minVisibleMarginPx": 3,
+        "alphaThreshold": 24,
+        "blankCells": [],
+        "borderContacts": [],
+        "maxCellBorderAlpha": 2,
+        "nativeSha256Verified": true,
+        "medianVisibleBodyWidthRatio": 0.6685082872928176,
+        "medianVisibleBodyHeightRatio": 0.8176795580110497,
+        "visualReview": "Approved visually: original cathedral bell sovereign with silver braid, bell sceptre and indigo/gold closed armor; six distinct intro/phase/telegraph/defeat/idle rows; all 48 full sprites isolated, native alpha preserved."
+      }
+    },
+    {
+      "id": "charybde",
+      "name": "Léviathane Charybde",
+      "kind": "bosses",
+      "packId": "dlc_bioluminescent_abyss",
+      "biome": "abyss",
+      "path": "assets/dlc/illustrated-v1/bosses/charybde.png",
+      "columns": 8,
+      "rows": 6,
+      "states": [
+        "intro",
+        "phase_shift_2",
+        "phase_shift_3",
+        "heavy_telegraph",
+        "defeat",
+        "idle"
+      ],
+      "reference": "assets/characters/heroines/freyja-rimeborne-atlas-v1.png",
+      "referenceRole": "style-camera-material guide only; not identity",
+      "fidelity": "first original design from authored DLC metadata and palette",
+      "source": "dlc-packs.v1.js",
+      "authoredCharacter": {
+        "id": "charybde",
+        "name": "Léviathane Charybde",
+        "age": 23,
+        "isAdult": true,
+        "phases": [
+          "Courant Noir",
+          "Essaim Médusaire",
+          "Pression Critique"
+        ]
+      },
+      "palette": {
+        "bg": "#042f2e",
+        "primary": "#2dd4bf",
+        "secondary": "#a855f7",
+        "glow": "#fb7185"
+      },
+      "designBrief": "Mature adult humanoid abyss queen, long indigo hair, mechanical coral fin crown, full dark teal and violet reef armor covering torso and legs, heavy boots. Compact coral trident held close. Bioluminescent turquoise and coral-red nodes. Two arms and two legs, no extra tentacle limbs.",
+      "prompt": "Use case: stylized-concept. Production game sprite animation atlas for Infernal City. The attached atlas is a STYLE, SCALE, CAMERA and painterly-material reference only; invent the specified new character, do not copy the guide character or its costume. Match the existing illustrated dark-fantasy tactical sprite style: detailed crisp hand-painted surfaces, fine dark contours, directional highlights, believable adult anatomy, elevated three-quarter camera facing toward screen-right. Use the SAME camera, head, body proportions, outfit, weapon and scale consistently in every cell. Exactly one full character per cell, no clones inside a cell. All combat costumes fully opaque and closed, all characters plainly mature adults. True transparent alpha background, no floor, no background color, no contact shadow outside feet, no labels, typography, grid lines, watermarks or UI. Every action stays inside its own mathematically equal cell: body plus weapon plus particles must fit the central 55% width and 60% height; generous transparent margins on all four sides, absolutely no cropped hair, weapons, glows, or cross-cell overlap. Keep effects compact and attached to the character, no long projectile beams. Eight consecutive distinct animation frames left-to-right in EVERY row; exactly the listed number of rows, no extra rows, no missing or blank cells. Use tightly controlled movement arcs, no arbitrary view changes. Non-graphic defeat, never blood or gore.\nSubject: Léviathane Charybde, a new boss in \"Abysses Bioluminescents\". Authored identity: Courant Noir / Essaim Médusaire / Pression Critique. Visual domain: Sous-Marin Abyssal, Récifs Mécaniques & Caustiques Lumineuses. Palette: {\"bg\":\"#042f2e\",\"primary\":\"#2dd4bf\",\"secondary\":\"#a855f7\",\"glow\":\"#fb7185\"}; background remains transparent regardless of palette bg. Design: Mature adult humanoid abyss queen, long indigo hair, mechanical coral fin crown, full dark teal and violet reef armor covering torso and legs, heavy boots. Compact coral trident held close. Bioluminescent turquoise and coral-red nodes. Two arms and two legs, no extra tentacle limbs.\nLayout: EXACTLY 8 columns by 6 rows, 48 equal square cells, 4:3 landscape 2048×1536 atlas. Bodies center at each cell's midpoint with the feet on a consistent local baseline around 80% cell height. Six rows from top to bottom: 1 intro, eight steps of imposing arrival and ready stance, character visible in all frames; 2 phase_shift_2, \"Essaim Médusaire\", escalating compact power activation while keeping same outfit and body; 3 phase_shift_3, \"Pression Critique\", more intense compact aura and pose; 4 heavy_telegraph, clearly readable attack windup, held charge, strike-ready peak and recovery without long beam; 5 defeat, non-graphic stagger and kneeling collapse with compact dissolving motes, visible remains in all frames; 6 idle, breathing and subtle weapon/cloth loop.\nMaintain a single coherent identity across the entire sheet, same mature face and hairstyle. Readability at tactical game size is essential. STRICT GUTTERS: no haze, fog, dust, ambient glow clouds, floodlights or colored matte anywhere. Transparent empty space separates every frame on every side. Effects are narrow crisp rings, short streaks or tiny sparks, contained within the character's silhouette width whenever possible. No fade-out or white fog even in the outro: every frame remains a clean opaque character cutout. Do not enlarge the ultimate aura beyond the central 60% of a cell.",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-660536ee-1f9e-48e9-9329-ff23aba0c69f.png",
+      "status": "approved",
+      "generator": "built-in image_gen",
+      "sha256": "f2de2fc29c10fe88bc4a388978a6eea90cd1d65c314e238a4d1862de12c23d70",
+      "qa": {
+        "width": 1448,
+        "height": 1086,
+        "mode": "RGBA",
+        "columns": 8,
+        "rows": 6,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "populatedCells": 48,
+        "uniqueCells": 48,
+        "minVisibleMarginPx": 12,
+        "alphaThreshold": 24,
+        "blankCells": [],
+        "borderContacts": [],
+        "maxCellBorderAlpha": 2,
+        "nativeSha256Verified": true,
+        "medianVisibleBodyWidthRatio": 0.7624309392265194,
+        "medianVisibleBodyHeightRatio": 0.8121546961325967,
+        "visualReview": "Approved visually: consistent original adult combatant, authored biome palette and distinctive weapon/costume silhouette; correct complete grid and state sequencing; no missing cell or visible border contact; native RGBA preserved."
+      }
+    },
+    {
+      "id": "noctiflora",
+      "name": "Reine Noctiflora",
+      "kind": "bosses",
+      "packId": "dlc_art_nouveau_garden",
+      "biome": "flora",
+      "path": "assets/dlc/illustrated-v1/bosses/noctiflora.png",
+      "columns": 8,
+      "rows": 6,
+      "states": [
+        "intro",
+        "phase_shift_2",
+        "phase_shift_3",
+        "heavy_telegraph",
+        "defeat",
+        "idle"
+      ],
+      "reference": "assets/characters/heroines/amara-verdigris-atlas-v1.png",
+      "referenceRole": "style-camera-material guide only; not identity",
+      "fidelity": "first original design from authored DLC metadata and palette",
+      "source": "dlc-packs.v1.js",
+      "authoredCharacter": {
+        "id": "noctiflora",
+        "name": "Reine Noctiflora",
+        "age": 22,
+        "isAdult": true,
+        "phases": [
+          "Pollen Hallucinogène",
+          "Lianes Étrangleuses",
+          "Floraison Finale"
+        ]
+      },
+      "palette": {
+        "bg": "#064e3b",
+        "primary": "#34d399",
+        "secondary": "#e11d48",
+        "glow": "#fbbf24"
+      },
+      "designBrief": "Mature adult queen, dark green hair, dramatic rose and thorn crown, crimson rose-petal armor over a closed full-length black-green battle gown and boots. Compact thorn sceptre, emerald vines and golden pollen. Two arms and two legs, no giant extra limbs.",
+      "prompt": "Use case: stylized-concept. Production game sprite animation atlas for Infernal City. The attached atlas is a STYLE, SCALE, CAMERA and painterly-material reference only; invent the specified new character, do not copy the guide character or its costume. Match the existing illustrated dark-fantasy tactical sprite style: detailed crisp hand-painted surfaces, fine dark contours, directional highlights, believable adult anatomy, elevated three-quarter camera facing toward screen-right. Use the SAME camera, head, body proportions, outfit, weapon and scale consistently in every cell. Exactly one full character per cell, no clones inside a cell. All combat costumes fully opaque and closed, all characters plainly mature adults. True transparent alpha background, no floor, no background color, no contact shadow outside feet, no labels, typography, grid lines, watermarks or UI. Every action stays inside its own mathematically equal cell: body plus weapon plus particles must fit the central 55% width and 60% height; generous transparent margins on all four sides, absolutely no cropped hair, weapons, glows, or cross-cell overlap. Keep effects compact and attached to the character, no long projectile beams. Eight consecutive distinct animation frames left-to-right in EVERY row; exactly the listed number of rows, no extra rows, no missing or blank cells. Use tightly controlled movement arcs, no arbitrary view changes. Non-graphic defeat, never blood or gore.\nSubject: Reine Noctiflora, a new boss in \"Jardin de Cendre & Verrière Art Nouveau\". Authored identity: Pollen Hallucinogène / Lianes Étrangleuses / Floraison Finale. Visual domain: Botanique Mutante, Fer Forgé Art Nouveau & Serres de Cristal. Palette: {\"bg\":\"#064e3b\",\"primary\":\"#34d399\",\"secondary\":\"#e11d48\",\"glow\":\"#fbbf24\"}; background remains transparent regardless of palette bg. Design: Mature adult queen, dark green hair, dramatic rose and thorn crown, crimson rose-petal armor over a closed full-length black-green battle gown and boots. Compact thorn sceptre, emerald vines and golden pollen. Two arms and two legs, no giant extra limbs.\nLayout: EXACTLY 8 columns by 6 rows, 48 equal square cells, 4:3 landscape 2048×1536 atlas. Bodies center at each cell's midpoint with the feet on a consistent local baseline around 80% cell height. Six rows from top to bottom: 1 intro, eight steps of imposing arrival and ready stance, character visible in all frames; 2 phase_shift_2, \"Lianes Étrangleuses\", escalating compact power activation while keeping same outfit and body; 3 phase_shift_3, \"Floraison Finale\", more intense compact aura and pose; 4 heavy_telegraph, clearly readable attack windup, held charge, strike-ready peak and recovery without long beam; 5 defeat, non-graphic stagger and kneeling collapse with compact dissolving motes, visible remains in all frames; 6 idle, breathing and subtle weapon/cloth loop.\nMaintain a single coherent identity across the entire sheet, same mature face and hairstyle. Readability at tactical game size is essential. STRICT GUTTERS: no haze, fog, dust, ambient glow clouds, floodlights or colored matte anywhere. Transparent empty space separates every frame on every side. Effects are narrow crisp rings, short streaks or tiny sparks, contained within the character's silhouette width whenever possible. No fade-out or white fog even in the outro: every frame remains a clean opaque character cutout. Do not enlarge the ultimate aura beyond the central 60% of a cell.",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-21f2db01-3e0e-4f64-8bee-3823ac10fcec.png",
+      "status": "approved",
+      "generator": "built-in image_gen",
+      "sha256": "f9a410134fc819cb70ddea2c76fbbdb4b112cdec8eec3def2ccb661e9a0db07a",
+      "qa": {
+        "width": 1448,
+        "height": 1086,
+        "mode": "RGBA",
+        "columns": 8,
+        "rows": 6,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "populatedCells": 48,
+        "uniqueCells": 48,
+        "minVisibleMarginPx": 12,
+        "alphaThreshold": 24,
+        "blankCells": [],
+        "borderContacts": [],
+        "maxCellBorderAlpha": 1,
+        "nativeSha256Verified": true,
+        "medianVisibleBodyWidthRatio": 0.6187845303867403,
+        "medianVisibleBodyHeightRatio": 0.8121546961325967,
+        "visualReview": "Approved visually: mature thorn-crowned rose queen, closed crimson/emerald gown and botanical phases consistent; all six rows contain complete non-overlapping frames, native alpha border max 1."
+      }
+    },
+    {
+      "id": "sirena_nautilus",
+      "name": "Siréna Nautilus",
+      "kind": "bosses",
+      "packId": "dlc_bioluminescent_abyss",
+      "biome": "abyss",
+      "path": "assets/dlc/illustrated-v1/bosses/sirena_nautilus.png",
+      "columns": 8,
+      "rows": 6,
+      "states": [
+        "intro",
+        "phase_shift_2",
+        "phase_shift_3",
+        "heavy_telegraph",
+        "defeat",
+        "idle"
+      ],
+      "reference": "assets/characters/heroines/freyja-rimeborne-atlas-v1.png",
+      "referenceRole": "style-camera-material guide only; not identity",
+      "fidelity": "first original design from authored DLC metadata and palette",
+      "source": "dlc-packs.v1.js",
+      "authoredCharacter": {
+        "id": "sirena_nautilus",
+        "name": "Siréna Nautilus",
+        "age": 19,
+        "isAdult": true,
+        "phases": [
+          "Chant Sonar",
+          "Brume Bioluminescente",
+          "Abysses Scellés"
+        ]
+      },
+      "palette": {
+        "bg": "#042f2e",
+        "primary": "#2dd4bf",
+        "secondary": "#a855f7",
+        "glow": "#fb7185"
+      },
+      "designBrief": "Mature adult woman, long violet hair, spiral nautilus helmet crest, opaque dark teal armored robe and boots, compact coiled-shell sonar staff. Turquoise and coral bioluminescent details. Underwater sovereign, two arms and two legs, no mermaid tail.",
+      "prompt": "Precise sprite atlas cell-margin repair. KEEP the existing adult Sirena Nautilus design exactly: purple hair, nautilus spiral helmet crest, teal full armor and robe, compact shell staff, colors, camera, animation poses and row order. Preserve EXACTLY 8 columns × 6 rows, 48 equally spaced square cells, overall 4:3 landscape ratio. Reduce every complete sprite and all its effects by 25% relative to the input, inside its own cell, keeping each centered horizontally and feet near 80% local cell height. Critical: the raised staff in row 4 columns 5 and 6 must stay entirely BELOW that row's top boundary with a generous transparent margin. Every hair, foot, staff and effect stays inside its cell with at least 15% empty transparent gutter. No cell overlaps another. Actual transparent alpha=0 background and gutters; no colored matte, smoke, haze, ambient aura clouds, floor or shadow. Retain only compact crisp thin sonar rings and small sparks. Fully clothed character, stable identity, no redesign, no blank cell, no extra columns/rows, no labels or drawn grid.",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-cd898d15-e762-4e93-a17d-7cdf8a72683d.png",
+      "status": "approved",
+      "generator": "built-in image_gen",
+      "sha256": "fc5ca06f697041c51519cccfb397b8468e9f2f2617b76b8350d8d8dccc4efc66",
+      "inputEditNative": "/workspace/scratch/3c707a35b074/generated_images/exec-6173ca33-bd20-4515-ac4c-1c7a5b80f8da.png",
+      "previousAttempts": [
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-6173ca33-bd20-4515-ac4c-1c7a5b80f8da.png",
+          "sha256": "220194e74bafb3c53c0728131fdedb288df6bd0a38da23a6fd5313ef1c685087",
+          "prompt": "Use case: stylized-concept. Production game sprite animation atlas for Infernal City. The attached atlas is a STYLE, SCALE, CAMERA and painterly-material reference only; invent the specified new character, do not copy the guide character or its costume. Match the existing illustrated dark-fantasy tactical sprite style: detailed crisp hand-painted surfaces, fine dark contours, directional highlights, believable adult anatomy, elevated three-quarter camera facing toward screen-right. Use the SAME camera, head, body proportions, outfit, weapon and scale consistently in every cell. Exactly one full character per cell, no clones inside a cell. All combat costumes fully opaque and closed, all characters plainly mature adults. True transparent alpha background, no floor, no background color, no contact shadow outside feet, no labels, typography, grid lines, watermarks or UI. Every action stays inside its own mathematically equal cell: body plus weapon plus particles must fit the central 55% width and 60% height; generous transparent margins on all four sides, absolutely no cropped hair, weapons, glows, or cross-cell overlap. Keep effects compact and attached to the character, no long projectile beams. Eight consecutive distinct animation frames left-to-right in EVERY row; exactly the listed number of rows, no extra rows, no missing or blank cells. Use tightly controlled movement arcs, no arbitrary view changes. Non-graphic defeat, never blood or gore.\nSubject: Siréna Nautilus, a new boss in \"Abysses Bioluminescents\". Authored identity: Chant Sonar / Brume Bioluminescente / Abysses Scellés. Visual domain: Sous-Marin Abyssal, Récifs Mécaniques & Caustiques Lumineuses. Palette: {\"bg\":\"#042f2e\",\"primary\":\"#2dd4bf\",\"secondary\":\"#a855f7\",\"glow\":\"#fb7185\"}; background remains transparent regardless of palette bg. Design: Mature adult woman, long violet hair, spiral nautilus helmet crest, opaque dark teal armored robe and boots, compact coiled-shell sonar staff. Turquoise and coral bioluminescent details. Underwater sovereign, two arms and two legs, no mermaid tail.\nLayout: EXACTLY 8 columns by 6 rows, 48 equal square cells, 4:3 landscape 2048×1536 atlas. Bodies center at each cell's midpoint with the feet on a consistent local baseline around 80% cell height. Six rows from top to bottom: 1 intro, eight steps of imposing arrival and ready stance, character visible in all frames; 2 phase_shift_2, \"Brume Bioluminescente\", escalating compact power activation while keeping same outfit and body; 3 phase_shift_3, \"Abysses Scellés\", more intense compact aura and pose; 4 heavy_telegraph, clearly readable attack windup, held charge, strike-ready peak and recovery without long beam; 5 defeat, non-graphic stagger and kneeling collapse with compact dissolving motes, visible remains in all frames; 6 idle, breathing and subtle weapon/cloth loop.\nMaintain a single coherent identity across the entire sheet, same mature face and hairstyle. Readability at tactical game size is essential. STRICT GUTTERS: no haze, fog, dust, ambient glow clouds, floodlights or colored matte anywhere. Transparent empty space separates every frame on every side. Effects are narrow crisp rings, short streaks or tiny sparks, contained within the character's silhouette width whenever possible. No fade-out or white fog even in the outro: every frame remains a clean opaque character cutout. Do not enlarge the ultimate aura beyond the central 60% of a cell.",
+          "reason": "Rejected: raised heavy-telegraph staff touches the upper cell boundary in row 4 columns 5–6."
+        }
+      ],
+      "qa": {
+        "width": 1448,
+        "height": 1086,
+        "mode": "RGBA",
+        "columns": 8,
+        "rows": 6,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "populatedCells": 48,
+        "uniqueCells": 48,
+        "minVisibleMarginPx": 24,
+        "alphaThreshold": 24,
+        "blankCells": [],
+        "borderContacts": [],
+        "maxCellBorderAlpha": 1,
+        "nativeSha256Verified": true,
+        "medianVisibleBodyWidthRatio": 0.5303867403314917,
+        "medianVisibleBodyHeightRatio": 0.574585635359116,
+        "visualReview": "Approved after native margin correction: exact first-design identity, costume and pose order preserved, authored abyss palette and pressure/sonar effects coherent, every complete frame isolated with true alpha and no visible boundary contact."
+      }
+    },
+    {
+      "id": "beatrice",
+      "name": "Béatrice Horologia",
+      "kind": "heroes",
+      "packId": "dlc_astral_cathedral",
+      "biome": "astral",
+      "path": "assets/dlc/illustrated-v1/heroes/beatrice.png",
+      "columns": 8,
+      "rows": 8,
+      "states": [
+        "intro",
+        "idle_respiration",
+        "attack",
+        "ability",
+        "ultimate",
+        "victory",
+        "defeat",
+        "outro"
+      ],
+      "reference": "assets/characters/heroines/zahra-mille-ciels-atlas-v1.png",
+      "referenceRole": "style-camera-material guide only; not identity",
+      "fidelity": "first original design from authored DLC metadata and palette",
+      "source": "dlc-packs.v1.js",
+      "authoredCharacter": {
+        "id": "beatrice",
+        "name": "Béatrice Horologia",
+        "age": 26,
+        "isAdult": true,
+        "title": "Maîtresse des Rouages",
+        "ability": "Ralentissement Astral",
+        "ultimate": "Minuit Solaire"
+      },
+      "palette": {
+        "bg": "#1e1b4b",
+        "primary": "#f59e0b",
+        "secondary": "#fef3c7",
+        "glow": "#38bdf8"
+      },
+      "designBrief": "Mature adult woman with dark brunette hair in a practical bun, mechanical monocle, tailored closed indigo and gold clockmaker combat coat, armored trousers and boots. Compact brass gear staff with a suspended pendulum. Precise confident horologist silhouette.",
+      "prompt": "Edit this generated transparent sprite atlas. KEEP exactly the same character design, face, hair, outfit, weapon, painterly style, facing, animation poses, row order, and 8 columns × 8 rows. Correct ONLY CELL ISOLATION AND TRANSPARENCY. Reduce the sprite and all effects inside EACH CELL to fit the central 55% width and 65% height. Maintain the same per-cell center and feet baseline at 80% local height. Each sprite and every effect must be entirely within its own equal square cell, with at least 15% genuinely empty transparent margin on every side. REMOVE ALL haze, fog, dust clouds, ambient colored background halos and connected glow between sprites. Use compact sharply defined rings, sparks, ribbons only. The entire sheet background and every gutter MUST be true fully transparent. ALL characters in ALL frames, including the outro row, remain opaque and visible; no fade-to-white, no gradual wash-out, no vignette. Each sprite must remain an independent clean cutout. No frame touches another frame or the sheet edge. No text or grid lines. Do not change the grid or omit frames. The object at the center of each cell is the existing character and its compact effect, nothing else. Native alpha output, no matte. Exact canvas aspect 1:1.",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-ee1ad9b1-73fa-46cd-9020-56fd129cae58.png",
+      "status": "approved",
+      "generator": "built-in image_gen",
+      "sha256": "cc51688350279c32b0a7ffc29dc72be5e5b355f9c632f641ff934cd45a1c315f",
+      "previousAttempts": [
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-9abe42ae-bddc-43b4-8341-5e957b7c0367.png",
+          "sha256": "3907445605ff0076138ef22dc96f897a4ec6620de702fb6ea383ef38ef64d59d",
+          "prompt": "Use case: stylized-concept. Production game sprite animation atlas for Infernal City. The attached atlas is a STYLE, SCALE, CAMERA and painterly-material reference only; invent the specified new character, do not copy the guide character or its costume. Match the existing illustrated dark-fantasy tactical sprite style: detailed crisp hand-painted surfaces, fine dark contours, directional highlights, believable adult anatomy, elevated three-quarter camera facing toward screen-right. Use the SAME camera, head, body proportions, outfit, weapon and scale consistently in every cell. Exactly one full character per cell, no clones inside a cell. All combat costumes fully opaque and closed, all characters plainly mature adults. True transparent alpha background, no floor, no background color, no contact shadow outside feet, no labels, typography, grid lines, watermarks or UI. Every action stays inside its own mathematically equal cell: body plus weapon plus particles must fit the central 65% width and 72% height; generous transparent margins on all four sides, absolutely no cropped hair, weapons, glows, or cross-cell overlap. Keep effects compact and attached to the character, no long projectile beams. Eight consecutive distinct animation frames left-to-right in EVERY row; exactly the listed number of rows, no extra rows, no missing or blank cells. Use tightly controlled movement arcs, no arbitrary view changes. Non-graphic defeat, never blood or gore.\nSubject: Béatrice Horologia, a new heroine in \"Cathédrale Astrale & Nécropole Solaire\". Authored identity: Maîtresse des Rouages. Visual domain: Gothique Sacré Doré, Marbre Blanc & Horlogerie Céleste. Palette: {\"bg\":\"#1e1b4b\",\"primary\":\"#f59e0b\",\"secondary\":\"#fef3c7\",\"glow\":\"#38bdf8\"}; background remains transparent regardless of palette bg. Design: Mature adult woman with dark brunette hair in a practical bun, mechanical monocle, tailored closed indigo and gold clockmaker combat coat, armored trousers and boots. Compact brass gear staff with a suspended pendulum. Precise confident horologist silhouette.\nLayout: EXACTLY 8 columns by 8 rows, 64 equal square cells, square 2048×2048 atlas. Bodies center at each cell's midpoint with the feet on a consistent local baseline around 83% cell height. Eight rows from top to bottom: 1 intro, eight steps of arrival and readying the weapon, character visible in all frames; 2 idle_respiration, subtle breathing loop with cloth motion; 3 attack, windup, strike, compact impact and recovery; 4 ability, \"Ralentissement Astral\", progressive compact thematic casting; 5 ultimate, \"Minuit Solaire\", stronger compact aura building and releasing without filling the cell margins; 6 victory, weapon salute and relaxed triumphant recovery; 7 defeat, damage reaction then non-graphic kneeling exhaustion, fully clothed, never disappearing; 8 outro, controlled departure/fading loop with a visible silhouette in every frame.\nMaintain a single coherent identity across the entire sheet, same mature face and hairstyle. Readability at tactical game size is essential.",
+          "reason": "Rejected: effect overflow touches cell boundary; Beatrice outro also introduced connected pale haze."
+        }
+      ],
+      "inputEditNative": "/workspace/scratch/3c707a35b074/generated_images/exec-9abe42ae-bddc-43b4-8341-5e957b7c0367.png",
+      "qa": {
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGBA",
+        "columns": 8,
+        "rows": 8,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "populatedCells": 64,
+        "uniqueCells": 64,
+        "minVisibleMarginPx": 18,
+        "alphaThreshold": 24,
+        "blankCells": [],
+        "borderContacts": [],
+        "nativeSha256Verified": true,
+        "medianVisibleBodyWidthRatio": 0.535031847133758,
+        "medianVisibleBodyHeightRatio": 0.6242038216560509,
+        "visualReview": "Approved visually after targeted isolation correction: coherent original clockmaker identity, eight state rows with distinct motion and opaque outro; true alpha and generous visible margins. Very low-alpha RGB fringes are ignored below alpha 24; no visible border contact."
+      }
+    },
+    {
+      "id": "nerea",
+      "name": "Néréa Kestrel",
+      "kind": "heroes",
+      "packId": "dlc_bioluminescent_abyss",
+      "biome": "abyss",
+      "path": "assets/dlc/illustrated-v1/heroes/nerea.png",
+      "columns": 8,
+      "rows": 8,
+      "states": [
+        "intro",
+        "idle_respiration",
+        "attack",
+        "ability",
+        "ultimate",
+        "victory",
+        "defeat",
+        "outro"
+      ],
+      "reference": "assets/characters/heroines/freyja-rimeborne-atlas-v1.png",
+      "referenceRole": "style-camera-material guide only; not identity",
+      "fidelity": "first original design from authored DLC metadata and palette",
+      "source": "dlc-packs.v1.js",
+      "authoredCharacter": {
+        "id": "nerea",
+        "name": "Néréa Kestrel",
+        "age": 19,
+        "isAdult": true,
+        "title": "Plongeuse Pression",
+        "ability": "Onde Sonar",
+        "ultimate": "Maelström Bathyal"
+      },
+      "palette": {
+        "bg": "#042f2e",
+        "primary": "#2dd4bf",
+        "secondary": "#a855f7",
+        "glow": "#fb7185"
+      },
+      "designBrief": "Mature adult woman with dark teal bob haircut, closed navy and teal tactical diving armor, opaque pressure suit, heavy boots and gauntlets, cyan oval sonar nodes and a compact forearm sonar emitter. Agile but clearly adult pressure-diver silhouette.",
+      "prompt": "Precise sprite-sheet correction. Preserve this exact character identity, face, hair, armor, weapon, painted style, facing, poses and animation order. Preserve EXACTLY eight columns × eight rows, 64 equal square cells. Make every complete sprite plus its effects 25% SMALLER THAN IN THIS INPUT, independently around the center of its own cell. All feet must stay within the cell at a consistent local baseline. Leave wide empty transparent gutters on ALL sides of EVERY frame. The attack flare in row 3 columns 5 and 6 must be especially short and stay close to the weapon, never cross a cell boundary. Ultimate and victory in rows 5 and 6 must also have room above and below; no extended weapon or halo touches any grid edge. True transparent alpha background, alpha=0 in all empty space. No atmosphere, fog, soft glow cloud, floor or shadows. Retain only compact crisp sparks, rings and short ribbons. Same fully clothed adult character throughout, no redesign, no extra characters, no omitted frame, no text or drawn grid. Do not fade the outro: keep the character opaque in all 64 cells. Output square native PNG. This is solely a cell-margin repair, not a new design.",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-6a4bf200-9a62-4091-b96e-65b4c61617ba.png",
+      "status": "approved",
+      "generator": "built-in image_gen",
+      "sha256": "45978a0ab9cb87910400acfc4b37a594bb65a76a9d078dab1f4792f9e30a8964",
+      "inputEditNative": "/workspace/scratch/3c707a35b074/generated_images/exec-633343b6-3415-4c08-9054-788bd2a81f1d.png",
+      "previousAttempts": [
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-633343b6-3415-4c08-9054-788bd2a81f1d.png",
+          "sha256": "48f43775daab3c427f954d9070d8c5504f6b767efbc27e908dadb4e5edb846f0",
+          "prompt": "Use case: stylized-concept. Production game sprite animation atlas for Infernal City. The attached atlas is a STYLE, SCALE, CAMERA and painterly-material reference only; invent the specified new character, do not copy the guide character or its costume. Match the existing illustrated dark-fantasy tactical sprite style: detailed crisp hand-painted surfaces, fine dark contours, directional highlights, believable adult anatomy, elevated three-quarter camera facing toward screen-right. Use the SAME camera, head, body proportions, outfit, weapon and scale consistently in every cell. Exactly one full character per cell, no clones inside a cell. All combat costumes fully opaque and closed, all characters plainly mature adults. True transparent alpha background, no floor, no background color, no contact shadow outside feet, no labels, typography, grid lines, watermarks or UI. Every action stays inside its own mathematically equal cell: body plus weapon plus particles must fit the central 55% width and 60% height; generous transparent margins on all four sides, absolutely no cropped hair, weapons, glows, or cross-cell overlap. Keep effects compact and attached to the character, no long projectile beams. Eight consecutive distinct animation frames left-to-right in EVERY row; exactly the listed number of rows, no extra rows, no missing or blank cells. Use tightly controlled movement arcs, no arbitrary view changes. Non-graphic defeat, never blood or gore.\nSubject: Néréa Kestrel, a new heroine in \"Abysses Bioluminescents\". Authored identity: Plongeuse Pression. Visual domain: Sous-Marin Abyssal, Récifs Mécaniques & Caustiques Lumineuses. Palette: {\"bg\":\"#042f2e\",\"primary\":\"#2dd4bf\",\"secondary\":\"#a855f7\",\"glow\":\"#fb7185\"}; background remains transparent regardless of palette bg. Design: Mature adult woman with dark teal bob haircut, closed navy and teal tactical diving armor, opaque pressure suit, heavy boots and gauntlets, cyan oval sonar nodes and a compact forearm sonar emitter. Agile but clearly adult pressure-diver silhouette.\nLayout: EXACTLY 8 columns by 8 rows, 64 equal square cells, square 2048×2048 atlas. Bodies center at each cell's midpoint with the feet on a consistent local baseline around 80% cell height. Eight rows from top to bottom: 1 intro, eight steps of arrival and readying the weapon, character visible in all frames; 2 idle_respiration, subtle breathing loop with cloth motion; 3 attack, windup, strike, compact impact and recovery; 4 ability, \"Onde Sonar\", progressive compact thematic casting; 5 ultimate, \"Maelström Bathyal\", stronger compact aura building and releasing without filling the cell margins; 6 victory, weapon salute and relaxed triumphant recovery; 7 defeat, damage reaction then non-graphic kneeling exhaustion, fully clothed, never disappearing; 8 outro, controlled departure step loop with a fully opaque visible character in every frame.\nMaintain a single coherent identity across the entire sheet, same mature face and hairstyle. Readability at tactical game size is essential. STRICT GUTTERS: no haze, fog, dust, ambient glow clouds, floodlights or colored matte anywhere. Transparent empty space separates every frame on every side. Effects are narrow crisp rings, short streaks or tiny sparks, contained within the character's silhouette width whenever possible. No fade-out or white fog even in the outro: every frame remains a clean opaque character cutout. Do not enlarge the ultimate aura beyond the central 60% of a cell.",
+          "reason": "Rejected: attack/ultimate or victory pixels touch a cell boundary."
+        }
+      ],
+      "qa": {
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGBA",
+        "columns": 8,
+        "rows": 8,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "populatedCells": 64,
+        "uniqueCells": 64,
+        "minVisibleMarginPx": 10,
+        "alphaThreshold": 24,
+        "blankCells": [],
+        "borderContacts": [],
+        "maxCellBorderAlpha": 1,
+        "nativeSha256Verified": true,
+        "medianVisibleBodyWidthRatio": 0.44871794871794873,
+        "medianVisibleBodyHeightRatio": 0.5796178343949044,
+        "visualReview": "Approved after native margin repair: consistent mature pressure diver, cyan nodes and coral sonar effects, all 64 state frames intact; compact attacks and clean alpha boundaries (max alpha 1). No source PNG transformation."
+      }
+    },
+    {
+      "id": "ophelia",
+      "name": "Ophélia Lierre",
+      "kind": "heroes",
+      "packId": "dlc_art_nouveau_garden",
+      "biome": "flora",
+      "path": "assets/dlc/illustrated-v1/heroes/ophelia.png",
+      "columns": 8,
+      "rows": 8,
+      "states": [
+        "intro",
+        "idle_respiration",
+        "attack",
+        "ability",
+        "ultimate",
+        "victory",
+        "defeat",
+        "outro"
+      ],
+      "reference": "assets/characters/heroines/amara-verdigris-atlas-v1.png",
+      "referenceRole": "style-camera-material guide only; not identity",
+      "fidelity": "first original design from authored DLC metadata and palette",
+      "source": "dlc-packs.v1.js",
+      "authoredCharacter": {
+        "id": "ophelia",
+        "name": "Ophélia Lierre",
+        "age": 24,
+        "isAdult": true,
+        "title": "Maîtresse des Serres",
+        "ability": "Nuage de Spores Dorées",
+        "ultimate": "Canopée d’Émeraude"
+      },
+      "palette": {
+        "bg": "#064e3b",
+        "primary": "#34d399",
+        "secondary": "#e11d48",
+        "glow": "#fbbf24"
+      },
+      "designBrief": "Mature adult woman, dark brown hair in a high bun, closed long emerald armored gardener's coat over trousers and boots, rose trim and amber pollen canisters. Compact wrought-iron staff with golden spore lantern. Calm greenhouse commander silhouette.",
+      "prompt": "Precise transparent sprite atlas cell-margin repair. KEEP exactly the existing mature Ophelia identity, brown bun, closed emerald armored coat, rose trim, golden pollen lantern staff, anatomy, poses, facing and state order. Preserve exactly 8 columns × 8 rows, 64 equal square cells. Independently reduce EVERY complete sprite AND its effects by 25% relative to this input, about each cell center. Leave at least 15% absolutely empty transparent margin around all four sides of each sprite. Critical: row 5 ultimate canopy must be short and narrow, not reach row 4 or row 6; no pollen cloud or canopy overlaps a neighboring cell. Row 6 victory weapon also stays completely within its frame. Remove diffuse ambient green haze, dust clouds and colored matte. Actual transparent alpha=0 background and gutters, only crisp compact foliage and fine sparks. Keep every character fully opaque including the outro. No redesign, no extra characters, no missing cells, no added rows or columns, no text or grid, no floor or shadow. Square native PNG.",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-65ac8e7e-7527-4223-8797-48a3fde7584e.png",
+      "status": "approved",
+      "generator": "built-in image_gen",
+      "sha256": "1208201984df35dae924ca314a67ce87b007e2f9f861ae24dfa439b0c64ec89b",
+      "inputEditNative": "/workspace/scratch/3c707a35b074/generated_images/exec-8845c2c3-3d14-4d3a-b8b1-6230c18e23c3.png",
+      "previousAttempts": [
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-8845c2c3-3d14-4d3a-b8b1-6230c18e23c3.png",
+          "sha256": "07143958523202cf360dbfa54cabc7b7d0b1e15d5c13132334089446a2ce1c8a",
+          "prompt": "Use case: stylized-concept. Production game sprite animation atlas for Infernal City. The attached atlas is a STYLE, SCALE, CAMERA and painterly-material reference only; invent the specified new character, do not copy the guide character or its costume. Match the existing illustrated dark-fantasy tactical sprite style: detailed crisp hand-painted surfaces, fine dark contours, directional highlights, believable adult anatomy, elevated three-quarter camera facing toward screen-right. Use the SAME camera, head, body proportions, outfit, weapon and scale consistently in every cell. Exactly one full character per cell, no clones inside a cell. All combat costumes fully opaque and closed, all characters plainly mature adults. True transparent alpha background, no floor, no background color, no contact shadow outside feet, no labels, typography, grid lines, watermarks or UI. Every action stays inside its own mathematically equal cell: body plus weapon plus particles must fit the central 55% width and 60% height; generous transparent margins on all four sides, absolutely no cropped hair, weapons, glows, or cross-cell overlap. Keep effects compact and attached to the character, no long projectile beams. Eight consecutive distinct animation frames left-to-right in EVERY row; exactly the listed number of rows, no extra rows, no missing or blank cells. Use tightly controlled movement arcs, no arbitrary view changes. Non-graphic defeat, never blood or gore.\nSubject: Ophélia Lierre, a new heroine in \"Jardin de Cendre & Verrière Art Nouveau\". Authored identity: Maîtresse des Serres. Visual domain: Botanique Mutante, Fer Forgé Art Nouveau & Serres de Cristal. Palette: {\"bg\":\"#064e3b\",\"primary\":\"#34d399\",\"secondary\":\"#e11d48\",\"glow\":\"#fbbf24\"}; background remains transparent regardless of palette bg. Design: Mature adult woman, dark brown hair in a high bun, closed long emerald armored gardener's coat over trousers and boots, rose trim and amber pollen canisters. Compact wrought-iron staff with golden spore lantern. Calm greenhouse commander silhouette.\nLayout: EXACTLY 8 columns by 8 rows, 64 equal square cells, square 2048×2048 atlas. Bodies center at each cell's midpoint with the feet on a consistent local baseline around 80% cell height. Eight rows from top to bottom: 1 intro, eight steps of arrival and readying the weapon, character visible in all frames; 2 idle_respiration, subtle breathing loop with cloth motion; 3 attack, windup, strike, compact impact and recovery; 4 ability, \"Nuage de Spores Dorées\", progressive compact thematic casting; 5 ultimate, \"Canopée d’Émeraude\", stronger compact aura building and releasing without filling the cell margins; 6 victory, weapon salute and relaxed triumphant recovery; 7 defeat, damage reaction then non-graphic kneeling exhaustion, fully clothed, never disappearing; 8 outro, controlled departure step loop with a fully opaque visible character in every frame.\nMaintain a single coherent identity across the entire sheet, same mature face and hairstyle. Readability at tactical game size is essential. STRICT GUTTERS: no haze, fog, dust, ambient glow clouds, floodlights or colored matte anywhere. Transparent empty space separates every frame on every side. Effects are narrow crisp rings, short streaks or tiny sparks, contained within the character's silhouette width whenever possible. No fade-out or white fog even in the outro: every frame remains a clean opaque character cutout. Do not enlarge the ultimate aura beyond the central 60% of a cell.",
+          "reason": "Rejected: ultimate canopy reaches adjacent rows, touching row 5/6 cell borders."
+        }
+      ],
+      "qa": {
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGBA",
+        "columns": 8,
+        "rows": 8,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "populatedCells": 64,
+        "uniqueCells": 64,
+        "minVisibleMarginPx": 15,
+        "alphaThreshold": 24,
+        "blankCells": [],
+        "borderContacts": [],
+        "maxCellBorderAlpha": 2,
+        "nativeSha256Verified": true,
+        "medianVisibleBodyWidthRatio": 0.47435897435897434,
+        "medianVisibleBodyHeightRatio": 0.6346153846153846,
+        "visualReview": "Approved visually: coherent intended original identity and authored theme; exact state count and row order, complete framing, distinct motion and power progression; clean native alpha with no visible cell-border contact. Character-specific notes: Ophelia canopy now compact; Architecte Zero shows four power phases plus telegraph/attack/defeat/idle in white-gold antimatter armor."
+      }
+    },
+    {
+      "id": "seraphine",
+      "name": "Séraphine Vesper-Sol",
+      "kind": "heroes",
+      "packId": "dlc_astral_cathedral",
+      "biome": "astral",
+      "path": "assets/dlc/illustrated-v1/heroes/seraphine.png",
+      "columns": 8,
+      "rows": 8,
+      "states": [
+        "intro",
+        "idle_respiration",
+        "attack",
+        "ability",
+        "ultimate",
+        "victory",
+        "defeat",
+        "outro"
+      ],
+      "reference": "assets/characters/heroines/zahra-mille-ciels-atlas-v1.png",
+      "referenceRole": "style-camera-material guide only; not identity",
+      "fidelity": "first original design from authored DLC metadata and palette",
+      "source": "dlc-packs.v1.js",
+      "authoredCharacter": {
+        "id": "seraphine",
+        "name": "Séraphine Vesper-Sol",
+        "age": 21,
+        "isAdult": true,
+        "title": "Garde du Méridien",
+        "ability": "Prisme Orbital",
+        "ultimate": "Zénith d’Or"
+      },
+      "palette": {
+        "bg": "#1e1b4b",
+        "primary": "#f59e0b",
+        "secondary": "#fef3c7",
+        "glow": "#38bdf8"
+      },
+      "designBrief": "Mature adult woman with warm auburn shoulder-length hair, ivory ceramic and gold solar plate armor over an opaque indigo tunic, boots and gloves. Compact golden prismatic lance held close, small sun-dial shoulder crest. Disciplined meridian guardian silhouette.",
+      "prompt": "Remove the pale background from this existing 8 columns × 8 rows sprite atlas. Keep the same solar heroine, auburn hair, ivory-gold armor and blue-prism lance, exact animation row order and poses. TRUE TRANSPARENT ALPHA background is mandatory: all empty space must be alpha=0. No pale backdrop, vignette, grey fog, floor, contact shadows or white haze anywhere. Each frame is an independent character cutout, unchanged facing. Restore full opaque color to the characters in the bottom row so none are washed out or fading white. Scale each whole sprite and its compact effect down within its existing equal square cell to central 55% width and 60% height; center X and feet near 80% local Y. Keep at least 15% completely empty transparent margin on all four sides of every cell. Exactly 8×8 =64 frames, no captions, no drawn grid, no overlaps, no cropping, no missing sprites. Preserve detailed painterly tactical sprite style, identity, costume, weapons and colors. Ultimate effects remain tight fine golden rings around the character, never background clouds. Output a square native PNG with actual transparent background.",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-cf71e535-27dc-43a5-a846-f605fc479ecb.png",
+      "status": "approved",
+      "generator": "built-in image_gen",
+      "sha256": "a25930669664da095ac1f3922094935ee064c0330d64b5fe08da8ceb229bc18a",
+      "inputEditNative": "/workspace/scratch/3c707a35b074/generated_images/exec-9cab1921-ba51-4ca7-aef9-beb759e554f0.png",
+      "previousAttempts": [
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-9cab1921-ba51-4ca7-aef9-beb759e554f0.png",
+          "sha256": "01a8e9e9708fe11d9ed8d3b28d27dce3e46148d1b1f94991b7681e422f9b7ce5",
+          "prompt": "Use case: stylized-concept. Production game sprite animation atlas for Infernal City. The attached atlas is a STYLE, SCALE, CAMERA and painterly-material reference only; invent the specified new character, do not copy the guide character or its costume. Match the existing illustrated dark-fantasy tactical sprite style: detailed crisp hand-painted surfaces, fine dark contours, directional highlights, believable adult anatomy, elevated three-quarter camera facing toward screen-right. Use the SAME camera, head, body proportions, outfit, weapon and scale consistently in every cell. Exactly one full character per cell, no clones inside a cell. All combat costumes fully opaque and closed, all characters plainly mature adults. True transparent alpha background, no floor, no background color, no contact shadow outside feet, no labels, typography, grid lines, watermarks or UI. Every action stays inside its own mathematically equal cell: body plus weapon plus particles must fit the central 65% width and 72% height; generous transparent margins on all four sides, absolutely no cropped hair, weapons, glows, or cross-cell overlap. Keep effects compact and attached to the character, no long projectile beams. Eight consecutive distinct animation frames left-to-right in EVERY row; exactly the listed number of rows, no extra rows, no missing or blank cells. Use tightly controlled movement arcs, no arbitrary view changes. Non-graphic defeat, never blood or gore.\nSubject: Séraphine Vesper-Sol, a new heroine in \"Cathédrale Astrale & Nécropole Solaire\". Authored identity: Garde du Méridien. Visual domain: Gothique Sacré Doré, Marbre Blanc & Horlogerie Céleste. Palette: {\"bg\":\"#1e1b4b\",\"primary\":\"#f59e0b\",\"secondary\":\"#fef3c7\",\"glow\":\"#38bdf8\"}; background remains transparent regardless of palette bg. Design: Mature adult woman with warm auburn shoulder-length hair, ivory ceramic and gold solar plate armor over an opaque indigo tunic, boots and gloves. Compact golden prismatic lance held close, small sun-dial shoulder crest. Disciplined meridian guardian silhouette.\nLayout: EXACTLY 8 columns by 8 rows, 64 equal square cells, square 2048×2048 atlas. Bodies center at each cell's midpoint with the feet on a consistent local baseline around 83% cell height. Eight rows from top to bottom: 1 intro, eight steps of arrival and readying the weapon, character visible in all frames; 2 idle_respiration, subtle breathing loop with cloth motion; 3 attack, windup, strike, compact impact and recovery; 4 ability, \"Prisme Orbital\", progressive compact thematic casting; 5 ultimate, \"Zénith d’Or\", stronger compact aura building and releasing without filling the cell margins; 6 victory, weapon salute and relaxed triumphant recovery; 7 defeat, damage reaction then non-graphic kneeling exhaustion, fully clothed, never disappearing; 8 outro, controlled departure/fading loop with a visible silhouette in every frame.\nMaintain a single coherent identity across the entire sheet, same mature face and hairstyle. Readability at tactical game size is essential.",
+          "reason": "Rejected: pale background matte has nonzero alpha across entire image and outro fades to white."
+        }
+      ],
+      "qa": {
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGBA",
+        "columns": 8,
+        "rows": 8,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "populatedCells": 64,
+        "uniqueCells": 64,
+        "minVisibleMarginPx": 1,
+        "alphaThreshold": 24,
+        "blankCells": [],
+        "borderContacts": [],
+        "maxCellBorderAlpha": 17,
+        "nativeSha256Verified": true,
+        "medianVisibleBodyWidthRatio": 0.6050955414012739,
+        "medianVisibleBodyHeightRatio": 0.7197452229299363,
+        "visualReview": "Approved after native background extraction: full coherent solar heroine and all eight state rows; opaque outro restored; no visible cell-boundary contact at alpha 24. Smallest strong-alpha effect margin is 1 px; maximum border alpha is 17/255 on a faint ultimate glow."
+      }
+    },
+    {
+      "id": "sheherazade",
+      "name": "Shéhérazade Solis",
+      "kind": "heroes",
+      "packId": "dlc_glass_desert",
+      "biome": "desert",
+      "path": "assets/dlc/illustrated-v1/heroes/sheherazade.png",
+      "columns": 8,
+      "rows": 8,
+      "states": [
+        "intro",
+        "idle_respiration",
+        "attack",
+        "ability",
+        "ultimate",
+        "victory",
+        "defeat",
+        "outro"
+      ],
+      "reference": "assets/characters/heroines/zahra-mille-ciels-atlas-v1.png",
+      "referenceRole": "style-camera-material guide only; not identity",
+      "fidelity": "first original design from authored DLC metadata and palette",
+      "source": "dlc-packs.v1.js",
+      "authoredCharacter": {
+        "id": "sheherazade",
+        "name": "Shéhérazade Solis",
+        "age": 21,
+        "isAdult": true,
+        "title": "Tisseuse de Mirages",
+        "ability": "Mirage Réfractaire",
+        "ultimate": "Soleil de Silice"
+      },
+      "palette": {
+        "bg": "#1c1917",
+        "primary": "#ea580c",
+        "secondary": "#fde68a",
+        "glow": "#1d4ed8"
+      },
+      "designBrief": "Mature adult woman with warm brown skin and long black braid, ivory and terracotta armored tunic and cape with lapis-blue geometric inlay, opaque trousers and boots. Compact golden glass prism fan. Dignified neo-Persian mirage weaver, practical closed combat costume.",
+      "prompt": "Fix the sprite-sheet GRID ALIGNMENT, preserving this exact mature Sheherazade character, black braid, gold/terracotta/lapis outfit, prism fan, poses, style, facing, effects and animation order. The image is EXACTLY eight columns by eight rows. The first two rows currently have feet that cross the mathematical horizontal cell edges. Independently make EVERY sprite and its complete effects 25% SMALLER than this input. Center each complete sprite within its own equal square cell. Place each character's feet at 75% of that cell's height, well ABOVE the bottom boundary, never on the boundary. All body parts and effects must fit inside the central 55% width and 55% height of each cell, with large truly empty gutters. Exactly 64 full characters, no missing or additional frames. Do not move a pose into a different cell. Keep all eight row sequences identical. Clear transparent alpha=0 background and gutters, no floor or shadow, no haze or extra pixels. No text or drawn grid. This is solely a native atlas scale and baseline repair. Every head, boot, cape, fan and glow must have generous empty space above and below. Square native transparent PNG.",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-62d0e323-e630-41c4-ac41-302e131db788.png",
+      "status": "approved",
+      "generator": "built-in image_gen",
+      "sha256": "acb8549e7495921f8c77374c1de827e2636ef3b255b3dd3fddb96610e2ec150e",
+      "inputEditNative": "/workspace/scratch/3c707a35b074/generated_images/exec-e29125af-f963-4dc4-9673-b625717adfd6.png",
+      "previousAttempts": [
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-e45f9fdb-4fb2-492a-8d30-2f6746878449.png",
+          "sha256": "169ab89ba5f20c0b716f1d0a99b74f8c26f06d65d28c5b98d65ea0e3b28b255d",
+          "prompt": "LAYOUT OVERRIDE: Ignore the reference image's sprite size and grid. Your new sprites must be miniature within their own equal square cells, occupying at most 55% of cell height including the complete weapon and effect. Leave wide blank gutters on all sides. Use case: stylized-concept. Production game sprite animation atlas for Infernal City. The attached atlas is a STYLE and CAMERA and painterly-material reference only; invent the specified new character, do not copy the guide character or its costume. Match the existing illustrated dark-fantasy tactical sprite style: detailed crisp hand-painted surfaces, fine dark contours, directional highlights, believable adult anatomy, elevated three-quarter camera facing toward screen-right. Use the SAME camera, head, body proportions, outfit, weapon and scale consistently in every cell. Exactly one full character per cell, no clones inside a cell. All combat costumes fully opaque and closed, all characters plainly mature adults. True transparent alpha background, no floor, no background color, no contact shadow outside feet, no labels, typography, grid lines, watermarks or UI. Every action stays inside its own mathematically equal cell: body plus weapon plus particles must fit the central 50% width and 55% height; generous transparent margins on all four sides, absolutely no cropped hair, weapons, glows, or cross-cell overlap. Keep effects compact and attached to the character, no long projectile beams. Eight consecutive distinct animation frames left-to-right in EVERY row; exactly the listed number of rows, no extra rows, no missing or blank cells. Use tightly controlled movement arcs, no arbitrary view changes. Non-graphic defeat, never blood or gore.\nSubject: Shéhérazade Solis, a new heroine in \"Mirage Chromatique & Cité des Sables de Verre\". Authored identity: Tisseuse de Mirages. Visual domain: Désert Solarpunk, Silice Vitrifiée & Architecture Néo-Perse. Palette: {\"bg\":\"#1c1917\",\"primary\":\"#ea580c\",\"secondary\":\"#fde68a\",\"glow\":\"#1d4ed8\"}; background remains transparent regardless of palette bg. Design: Mature adult woman with warm brown skin and long black braid, ivory and terracotta armored tunic and cape with lapis-blue geometric inlay, opaque trousers and boots. Compact golden glass prism fan. Dignified neo-Persian mirage weaver, practical closed combat costume.\nLayout: EXACTLY 8 columns by 8 rows, 64 equal square cells, square 2048×2048 atlas. Bodies center at each cell's midpoint with the feet on a consistent local baseline around 80% cell height. Eight rows from top to bottom: 1 intro, eight steps of arrival and readying the weapon, character visible in all frames; 2 idle_respiration, subtle breathing loop with cloth motion; 3 attack, windup, strike, compact impact and recovery; 4 ability, \"Mirage Réfractaire\", progressive compact thematic casting; 5 ultimate, \"Soleil de Silice\", stronger compact aura building and releasing without filling the cell margins; 6 victory, weapon salute and relaxed triumphant recovery; 7 defeat, damage reaction then non-graphic kneeling exhaustion, fully clothed, never disappearing; 8 outro, controlled departure step loop with a fully opaque visible character in every frame.\nMaintain a single coherent identity across the entire sheet, same mature face and hairstyle. Readability at tactical game size is essential. STRICT GUTTERS: no haze, fog, dust, ambient glow clouds, floodlights or colored matte anywhere. Transparent empty space separates every frame on every side. Effects are narrow crisp rings, short streaks or tiny sparks, contained within the character's silhouette width whenever possible. No fade-out or white fog even in the outro: every frame remains a clean opaque character cutout. Do not enlarge the ultimate aura beyond the central 60% of a cell.",
+          "reason": "Rejected: stray opaque gray background pixels cross cell boundaries in the first two rows."
+        },
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-e29125af-f963-4dc4-9673-b625717adfd6.png",
+          "sha256": "1ba33f1307497411a051f07895b3736d5e9e807331274221b62ac38b0fd67058",
+          "prompt": "Clean the transparent background of this exact Shéhérazade sprite atlas. Preserve her existing mature face, black braid, ivory/terracotta/lapis combat outfit, prism fan, all 64 poses and animation order. EXACTLY 8 columns × 8 rows, square canvas. CRITICAL: remove all stray opaque gray pixels, smudges and haze outside every sprite, especially throughout the first two rows; every gutter must be fully transparent alpha=0. No residual backdrop or outlines of erased pixels. Preserve the character's opaque colors and crisp edges. Compact her rings and effects so none spill between cells, leaving at least 15% completely clear transparent margin on all sides. Keep each sprite at its current small scale and cell position, only slightly shrink any effect that reaches a margin. No floor, cast shadow, ambient fog, floating background dust, matte, caption or grid lines. Do not fade any character or change outfit, camera, anatomy, weapon, pose, identity or state order. Return actual native PNG with a clean transparent background, 64 independent character cutouts.",
+          "reason": "Rejected: first-column foot baselines y159/315 cross grid cuts y156.75/313.5; previous background cleanup did not correct row alignment."
+        }
+      ],
+      "qa": {
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGBA",
+        "columns": 8,
+        "rows": 8,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "populatedCells": 64,
+        "uniqueCells": 64,
+        "minVisibleMarginPx": 8,
+        "alphaThreshold": 24,
+        "blankCells": [],
+        "borderContacts": [],
+        "maxCellBorderAlpha": 4,
+        "nativeSha256Verified": true,
+        "medianVisibleBodyWidthRatio": 0.4267515923566879,
+        "medianVisibleBodyHeightRatio": 0.47435897435897434,
+        "visualReview": "Approved after native grid-baseline repair: all 64 complete character poses now fit their cells, feet remain above horizontal cuts, original first-design prism fan and ivory/terracotta/lapis costume preserved; minimum visible margin8px, max border alpha4. No crop or programmatic image transformation."
+      }
+    },
+    {
+      "id": "sylva",
+      "name": "Sylva Rosier",
+      "kind": "heroes",
+      "packId": "dlc_art_nouveau_garden",
+      "biome": "flora",
+      "path": "assets/dlc/illustrated-v1/heroes/sylva.png",
+      "columns": 8,
+      "rows": 8,
+      "states": [
+        "intro",
+        "idle_respiration",
+        "attack",
+        "ability",
+        "ultimate",
+        "victory",
+        "defeat",
+        "outro"
+      ],
+      "reference": "assets/characters/heroines/amara-verdigris-atlas-v1.png",
+      "referenceRole": "style-camera-material guide only; not identity",
+      "fidelity": "first original design from authored DLC metadata and palette",
+      "source": "dlc-packs.v1.js",
+      "authoredCharacter": {
+        "id": "sylva",
+        "name": "Sylva Rosier",
+        "age": 20,
+        "isAdult": true,
+        "title": "Architecte Botanique",
+        "ability": "Mur de Ronces Cristallines",
+        "ultimate": "Éclosion Écarlate"
+      },
+      "palette": {
+        "bg": "#064e3b",
+        "primary": "#34d399",
+        "secondary": "#e11d48",
+        "glow": "#fbbf24"
+      },
+      "designBrief": "Mature adult woman, burgundy hair in practical braids, full emerald wrought-iron botanical armor with an opaque dark-green tunic, armored trousers and boots. Compact rose-crystal blade and Art Nouveau vine filigree. Botanical architect fighter silhouette.",
+      "prompt": "Use case: stylized-concept. Production game sprite animation atlas for Infernal City. The attached atlas is a STYLE, SCALE, CAMERA and painterly-material reference only; invent the specified new character, do not copy the guide character or its costume. Match the existing illustrated dark-fantasy tactical sprite style: detailed crisp hand-painted surfaces, fine dark contours, directional highlights, believable adult anatomy, elevated three-quarter camera facing toward screen-right. Use the SAME camera, head, body proportions, outfit, weapon and scale consistently in every cell. Exactly one full character per cell, no clones inside a cell. All combat costumes fully opaque and closed, all characters plainly mature adults. True transparent alpha background, no floor, no background color, no contact shadow outside feet, no labels, typography, grid lines, watermarks or UI. Every action stays inside its own mathematically equal cell: body plus weapon plus particles must fit the central 55% width and 60% height; generous transparent margins on all four sides, absolutely no cropped hair, weapons, glows, or cross-cell overlap. Keep effects compact and attached to the character, no long projectile beams. Eight consecutive distinct animation frames left-to-right in EVERY row; exactly the listed number of rows, no extra rows, no missing or blank cells. Use tightly controlled movement arcs, no arbitrary view changes. Non-graphic defeat, never blood or gore.\nSubject: Sylva Rosier, a new heroine in \"Jardin de Cendre & Verrière Art Nouveau\". Authored identity: Architecte Botanique. Visual domain: Botanique Mutante, Fer Forgé Art Nouveau & Serres de Cristal. Palette: {\"bg\":\"#064e3b\",\"primary\":\"#34d399\",\"secondary\":\"#e11d48\",\"glow\":\"#fbbf24\"}; background remains transparent regardless of palette bg. Design: Mature adult woman, burgundy hair in practical braids, full emerald wrought-iron botanical armor with an opaque dark-green tunic, armored trousers and boots. Compact rose-crystal blade and Art Nouveau vine filigree. Botanical architect fighter silhouette.\nLayout: EXACTLY 8 columns by 8 rows, 64 equal square cells, square 2048×2048 atlas. Bodies center at each cell's midpoint with the feet on a consistent local baseline around 80% cell height. Eight rows from top to bottom: 1 intro, eight steps of arrival and readying the weapon, character visible in all frames; 2 idle_respiration, subtle breathing loop with cloth motion; 3 attack, windup, strike, compact impact and recovery; 4 ability, \"Mur de Ronces Cristallines\", progressive compact thematic casting; 5 ultimate, \"Éclosion Écarlate\", stronger compact aura building and releasing without filling the cell margins; 6 victory, weapon salute and relaxed triumphant recovery; 7 defeat, damage reaction then non-graphic kneeling exhaustion, fully clothed, never disappearing; 8 outro, controlled departure step loop with a fully opaque visible character in every frame.\nMaintain a single coherent identity across the entire sheet, same mature face and hairstyle. Readability at tactical game size is essential. STRICT GUTTERS: no haze, fog, dust, ambient glow clouds, floodlights or colored matte anywhere. Transparent empty space separates every frame on every side. Effects are narrow crisp rings, short streaks or tiny sparks, contained within the character's silhouette width whenever possible. No fade-out or white fog even in the outro: every frame remains a clean opaque character cutout. Do not enlarge the ultimate aura beyond the central 60% of a cell.",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-7166d4ef-2837-481b-a290-b81c9e4e7da9.png",
+      "status": "approved",
+      "generator": "built-in image_gen",
+      "sha256": "3e70b24424bfe33c0d8b25b91b71a7ffc6179e9f15e3912fd631c3367d307a45",
+      "qa": {
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGBA",
+        "columns": 8,
+        "rows": 8,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "populatedCells": 64,
+        "uniqueCells": 64,
+        "minVisibleMarginPx": 6,
+        "alphaThreshold": 24,
+        "blankCells": [],
+        "borderContacts": [],
+        "maxCellBorderAlpha": 6,
+        "nativeSha256Verified": true,
+        "medianVisibleBodyWidthRatio": 0.5031847133757962,
+        "medianVisibleBodyHeightRatio": 0.7898089171974523,
+        "visualReview": "Approved visually: consistent original adult combatant, authored biome palette and distinctive weapon/costume silhouette; correct complete grid and state sequencing; no missing cell or visible border contact; native RGBA preserved."
+      }
+    },
+    {
+      "id": "thalassa",
+      "name": "Thalassa Vance",
+      "kind": "heroes",
+      "packId": "dlc_bioluminescent_abyss",
+      "biome": "abyss",
+      "path": "assets/dlc/illustrated-v1/heroes/thalassa.png",
+      "columns": 8,
+      "rows": 8,
+      "states": [
+        "intro",
+        "idle_respiration",
+        "attack",
+        "ability",
+        "ultimate",
+        "victory",
+        "defeat",
+        "outro"
+      ],
+      "reference": "assets/characters/heroines/freyja-rimeborne-atlas-v1.png",
+      "referenceRole": "style-camera-material guide only; not identity",
+      "fidelity": "first original design from authored DLC metadata and palette",
+      "source": "dlc-packs.v1.js",
+      "authoredCharacter": {
+        "id": "thalassa",
+        "name": "Thalassa Vance",
+        "age": 25,
+        "isAdult": true,
+        "title": "Commandante du Bathyscaphe",
+        "ability": "Harpon Cryo-Pression",
+        "ultimate": "Décompression Souveraine"
+      },
+      "palette": {
+        "bg": "#042f2e",
+        "primary": "#2dd4bf",
+        "secondary": "#a855f7",
+        "glow": "#fb7185"
+      },
+      "designBrief": "Mature adult woman with black braided hair, commanding navy naval coat over full pressure armor, brass-teal fittings and armored boots. Compact mechanical pressure harpoon held close, coral-red indicator lights. Bathyscaphe commander silhouette.",
+      "prompt": "Precise sprite-sheet correction. Preserve this exact character identity, face, hair, armor, weapon, painted style, facing, poses and animation order. Preserve EXACTLY eight columns × eight rows, 64 equal square cells. Make every complete sprite plus its effects 25% SMALLER THAN IN THIS INPUT, independently around the center of its own cell. All feet must stay within the cell at a consistent local baseline. Leave wide empty transparent gutters on ALL sides of EVERY frame. The attack flare in row 3 columns 5 and 6 must be especially short and stay close to the weapon, never cross a cell boundary. Ultimate and victory in rows 5 and 6 must also have room above and below; no extended weapon or halo touches any grid edge. True transparent alpha background, alpha=0 in all empty space. No atmosphere, fog, soft glow cloud, floor or shadows. Retain only compact crisp sparks, rings and short ribbons. Same fully clothed adult character throughout, no redesign, no extra characters, no omitted frame, no text or drawn grid. Do not fade the outro: keep the character opaque in all 64 cells. Output square native PNG. This is solely a cell-margin repair, not a new design.",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-ad5af036-2ee6-4a93-8d89-2d0623442f86.png",
+      "status": "approved",
+      "generator": "built-in image_gen",
+      "sha256": "abae3d3752dcb3b23ac394eb1ef896d8540574e65c0d1a9ba9ecbb7dfe81270b",
+      "inputEditNative": "/workspace/scratch/3c707a35b074/generated_images/exec-e462351f-194d-4ca1-a169-f1375e53fdc4.png",
+      "previousAttempts": [
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-e462351f-194d-4ca1-a169-f1375e53fdc4.png",
+          "sha256": "3a622ba611e94fa86593eea4a0ed8bdfb798515dcadb96586a0a71f9737d9922",
+          "prompt": "Use case: stylized-concept. Production game sprite animation atlas for Infernal City. The attached atlas is a STYLE, SCALE, CAMERA and painterly-material reference only; invent the specified new character, do not copy the guide character or its costume. Match the existing illustrated dark-fantasy tactical sprite style: detailed crisp hand-painted surfaces, fine dark contours, directional highlights, believable adult anatomy, elevated three-quarter camera facing toward screen-right. Use the SAME camera, head, body proportions, outfit, weapon and scale consistently in every cell. Exactly one full character per cell, no clones inside a cell. All combat costumes fully opaque and closed, all characters plainly mature adults. True transparent alpha background, no floor, no background color, no contact shadow outside feet, no labels, typography, grid lines, watermarks or UI. Every action stays inside its own mathematically equal cell: body plus weapon plus particles must fit the central 55% width and 60% height; generous transparent margins on all four sides, absolutely no cropped hair, weapons, glows, or cross-cell overlap. Keep effects compact and attached to the character, no long projectile beams. Eight consecutive distinct animation frames left-to-right in EVERY row; exactly the listed number of rows, no extra rows, no missing or blank cells. Use tightly controlled movement arcs, no arbitrary view changes. Non-graphic defeat, never blood or gore.\nSubject: Thalassa Vance, a new heroine in \"Abysses Bioluminescents\". Authored identity: Commandante du Bathyscaphe. Visual domain: Sous-Marin Abyssal, Récifs Mécaniques & Caustiques Lumineuses. Palette: {\"bg\":\"#042f2e\",\"primary\":\"#2dd4bf\",\"secondary\":\"#a855f7\",\"glow\":\"#fb7185\"}; background remains transparent regardless of palette bg. Design: Mature adult woman with black braided hair, commanding navy naval coat over full pressure armor, brass-teal fittings and armored boots. Compact mechanical pressure harpoon held close, coral-red indicator lights. Bathyscaphe commander silhouette.\nLayout: EXACTLY 8 columns by 8 rows, 64 equal square cells, square 2048×2048 atlas. Bodies center at each cell's midpoint with the feet on a consistent local baseline around 80% cell height. Eight rows from top to bottom: 1 intro, eight steps of arrival and readying the weapon, character visible in all frames; 2 idle_respiration, subtle breathing loop with cloth motion; 3 attack, windup, strike, compact impact and recovery; 4 ability, \"Harpon Cryo-Pression\", progressive compact thematic casting; 5 ultimate, \"Décompression Souveraine\", stronger compact aura building and releasing without filling the cell margins; 6 victory, weapon salute and relaxed triumphant recovery; 7 defeat, damage reaction then non-graphic kneeling exhaustion, fully clothed, never disappearing; 8 outro, controlled departure step loop with a fully opaque visible character in every frame.\nMaintain a single coherent identity across the entire sheet, same mature face and hairstyle. Readability at tactical game size is essential. STRICT GUTTERS: no haze, fog, dust, ambient glow clouds, floodlights or colored matte anywhere. Transparent empty space separates every frame on every side. Effects are narrow crisp rings, short streaks or tiny sparks, contained within the character's silhouette width whenever possible. No fade-out or white fog even in the outro: every frame remains a clean opaque character cutout. Do not enlarge the ultimate aura beyond the central 60% of a cell.",
+          "reason": "Rejected: attack/ultimate or victory pixels touch a cell boundary."
+        }
+      ],
+      "qa": {
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGBA",
+        "columns": 8,
+        "rows": 8,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "populatedCells": 64,
+        "uniqueCells": 64,
+        "minVisibleMarginPx": 5,
+        "alphaThreshold": 24,
+        "blankCells": [],
+        "borderContacts": [],
+        "maxCellBorderAlpha": 1,
+        "nativeSha256Verified": true,
+        "medianVisibleBodyWidthRatio": 0.5031847133757962,
+        "medianVisibleBodyHeightRatio": 0.6025641025641025,
+        "visualReview": "Approved after native margin correction: exact first-design identity, costume and pose order preserved, authored abyss palette and pressure/sonar effects coherent, every complete frame isolated with true alpha and no visible boundary contact."
+      }
+    },
+    {
+      "id": "brute",
+      "category": "enemies",
+      "reference": "assets/animations/enemies/enemy-atlas-01.png",
+      "referenceRow": 2,
+      "identity": "The THIRD ROW creature only: a stocky giant armored gorilla-like bipedal brute with two enormous fists, black heavy sci-fi plates, small recessed head and a bright circular purple chest reactor. Preserve exact armor plates, mass and proportions, purple light channels and original facing; not a knight.",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "move",
+        "attack",
+        "death_dissolve",
+        "shield_break"
+      ],
+      "path": "assets/animations/completion-v1/enemies/brute.png",
+      "fidelity": "Existing reference identity preserved",
+      "prompt": "Use case: stylized-concept. Asset: production transparent native animation atlas for Infernal City. Input image is an IDENTITY REFERENCE, not a layout to copy. Subject: The THIRD ROW creature only: a stocky giant armored gorilla-like bipedal brute with two enormous fists, black heavy sci-fi plates, small recessed head and a bright circular purple chest reactor. Preserve exact armor plates, mass and proportions, purple light channels and original facing; not a knight. Make ONE atlas containing ONLY this named subject. Match the exact original cyber-gothic painted anime game style, orthographic elevated three-quarter camera, material rendering and facing; faithful 1:1 design. STRICT GRID:8 columns x4 rows, 32 equal SQUARE cells, whole image 8:4 ratio. ROW1: eight coherent locomotion steps. ROW2: eight strike/attack phases, wind-up to lunge/strike to recovery, no long ranged beam. ROW3: eight compact non-gory dissolution phases, intact then crumbling into matching energy fragments, final cell faint localized debris that is still visible. ROW4: eight localized shield rupture and recovery phases, compact energy shards only, body fully intact. Every cell ONE whole subject, fixed central body anchor and consistent scale, at most60% of cell width and height including wings/horns/tail/weapon/effects. Keep20% EMPTY TRANSPARENT margin on all four sides of EVERY cell. Compact poses for reliable slicing; no part crosses a cell boundary. ALL 32 frames must be separately drawn with coherent small animation changes, not identical translated copies. Genuine transparent alpha background. No background, scene, platform, floor, drop shadow, haze, labels, text, grid lines, borders, frame numbers or watermark. No characters from other reference rows.",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-99a4ba4c-9bf3-4e99-a715-800ad087b1da.png",
+      "status": "approved",
+      "generator": "built-in image_gen",
+      "sha256": "a6ec7f25d8f0f0b98c1d3c9b3ae7094b475455573af474b3ef4ac7c8e386582a",
+      "qa": {
+        "width": 1774,
+        "height": 887,
+        "mode": "RGBA",
+        "columns": 8,
+        "rows": 4,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "populatedCells": 32,
+        "uniqueCells": 32,
+        "minVisibleMarginPx": 10,
+        "alphaThreshold": 24,
+        "nativeSha256Verified": true,
+        "visualReview": "Approved: reference silhouette, palette, costume and facing retained; distinct requested animation rows, full framing, transparent background, no text or grid lines."
+      }
+    },
+    {
+      "id": "carmilla",
+      "category": "bosses",
+      "reference": "assets/animations/enemies/enemy-atlas-02.png",
+      "referenceRow": 1,
+      "identity": "The SECOND ROW character only: Carmilla the mature adult vampire sorceress with flowing raven black hair, pale face, long elegant closed red-and-black Victorian gown, black corset armor and high cape collar, slender silver rapier and hovering crimson circular sigil near one hand. Preserve exact face, hair, dress, collar, weapon and red magic, fully clothed, no redesign.",
+      "columns": 8,
+      "rows": 6,
+      "states": [
+        "intro",
+        "phase_shift_2",
+        "phase_shift_3",
+        "heavy_telegraph",
+        "defeat",
+        "idle"
+      ],
+      "path": "assets/animations/completion-v1/bosses/carmilla.png",
+      "fidelity": "Existing reference identity preserved",
+      "prompt": "Use case: stylized-concept. Asset: production transparent native animation atlas for Infernal City. Input image is an IDENTITY REFERENCE, not a layout to copy. Subject: The SECOND ROW character only: Carmilla the mature adult vampire sorceress with flowing raven black hair, pale face, long elegant closed red-and-black Victorian gown, black corset armor and high cape collar, slender silver rapier and hovering crimson circular sigil near one hand. Preserve exact face, hair, dress, collar, weapon and red magic, fully clothed, no redesign. Make ONE atlas containing ONLY this named subject. Match the exact original cyber-gothic painted anime game style, orthographic elevated three-quarter camera, material rendering and facing; faithful 1:1 design. STRICT GRID:8 columns x6 rows, 48 equal SQUARE cells, whole image 8:6 ratio. ROW1: eight dramatic entrance poses, crouched/arrival through standing guard. ROW2: eight phase-two transformation poses, original anatomy and costume retained, compact internal energy awakening. ROW3: eight phase-three escalation poses, original anatomy and costume retained, stronger compact weapon glow. ROW4: eight heavy-attack warning/charge poses then readiness, weapon and tiny charge contained. ROW5: eight non-gory defeat poses, stagger then kneel, collapse or magical fading; no nudity, no injury detail. ROW6: eight subtle standing idle/breathing poses. Every cell ONE whole subject, fixed central body anchor and consistent scale, at most60% of cell width and height including wings/horns/tail/weapon/effects. Keep20% EMPTY TRANSPARENT margin on all four sides of EVERY cell. Compact poses for reliable slicing; no part crosses a cell boundary. ALL 48 frames must be separately drawn with coherent small animation changes, not identical translated copies. Genuine transparent alpha background. No background, scene, platform, floor, drop shadow, haze, labels, text, grid lines, borders, frame numbers or watermark. No characters from other reference rows.",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-788f0df6-c7d6-44f4-97dc-907d4937ae98.png",
+      "status": "approved",
+      "generator": "built-in image_gen",
+      "sha256": "896fbfbd0ff5e72319db0d2f4b2c7a6cb0422ffd402b3a4880d4181be4fd2456",
+      "qa": {
+        "width": 1448,
+        "height": 1086,
+        "mode": "RGBA",
+        "columns": 8,
+        "rows": 6,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "populatedCells": 48,
+        "uniqueCells": 48,
+        "minVisibleMarginPx": 12,
+        "alphaThreshold": 24,
+        "blankCells": [],
+        "borderContacts": [],
+        "nativeSha256Verified": true,
+        "medianVisibleBodyWidthRatio": 0.6740331491712708,
+        "medianVisibleBodyHeightRatio": 0.8121546961325967,
+        "visualReview": "Approved visually: original boss identity, face, hair, costume, polearm/rapier and crimson palette retained; six distinct rows with eight complete frames; compact non-graphic defeat; true alpha and clear cell margins."
+      }
+    },
+    {
+      "id": "hellwarden",
+      "category": "bosses",
+      "reference": "assets/animations/enemies/enemy-atlas-01.png",
+      "referenceRow": 3,
+      "identity": "The FOURTH / BOTTOM ROW character only: the full heavy black plate-armored demon knight with two tall curved horns, orange glowing helmet slit and chest vents, huge dark rectangular cleaver sword with orange etched edge. Preserve exact armor, horns, weapon, orange energy and original upright facing.",
+      "columns": 8,
+      "rows": 6,
+      "states": [
+        "intro",
+        "phase_shift_2",
+        "phase_shift_3",
+        "heavy_telegraph",
+        "defeat",
+        "idle"
+      ],
+      "path": "assets/animations/completion-v1/bosses/hellwarden.png",
+      "fidelity": "Existing reference identity preserved",
+      "prompt": "Use case: stylized-concept. Asset: production transparent native animation atlas for Infernal City. Input image is an IDENTITY REFERENCE, not a layout to copy. Subject: The FOURTH / BOTTOM ROW character only: the full heavy black plate-armored demon knight with two tall curved horns, orange glowing helmet slit and chest vents, huge dark rectangular cleaver sword with orange etched edge. Preserve exact armor, horns, weapon, orange energy and original upright facing. Make ONE atlas containing ONLY this named subject. Match the exact original cyber-gothic painted anime game style, orthographic elevated three-quarter camera, material rendering and facing; faithful 1:1 design. STRICT GRID:8 columns x6 rows, 48 equal SQUARE cells, whole image 8:6 ratio. ROW1: eight dramatic entrance poses, crouched/arrival through standing guard. ROW2: eight phase-two transformation poses, original anatomy and costume retained, compact internal energy awakening. ROW3: eight phase-three escalation poses, original anatomy and costume retained, stronger compact weapon glow. ROW4: eight heavy-attack warning/charge poses then readiness, weapon and tiny charge contained. ROW5: eight non-gory defeat poses, stagger then kneel, collapse or magical fading; no nudity, no injury detail. ROW6: eight subtle standing idle/breathing poses. Every cell ONE whole subject, fixed central body anchor and consistent scale, at most60% of cell width and height including wings/horns/tail/weapon/effects. Keep20% EMPTY TRANSPARENT margin on all four sides of EVERY cell. Compact poses for reliable slicing; no part crosses a cell boundary. ALL 48 frames must be separately drawn with coherent small animation changes, not identical translated copies. Genuine transparent alpha background. No background, scene, platform, floor, drop shadow, haze, labels, text, grid lines, borders, frame numbers or watermark. No characters from other reference rows.",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-e642250f-f762-42db-85d2-648c6cd11491.png",
+      "status": "approved",
+      "generator": "built-in image_gen",
+      "sha256": "0b55af3e2935b8bfe5fe6e930137078c8c0d435958ea3575c1795467f2036d87",
+      "qa": {
+        "width": 1448,
+        "height": 1086,
+        "mode": "RGBA",
+        "columns": 8,
+        "rows": 6,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "populatedCells": 48,
+        "uniqueCells": 48,
+        "minVisibleMarginPx": 5,
+        "alphaThreshold": 24,
+        "nativeSha256Verified": true,
+        "visualReview": "Approved: reference silhouette, palette, costume and facing retained; distinct requested animation rows, full framing, transparent background, no text or grid lines."
+      }
+    },
+    {
+      "id": "runner",
+      "category": "enemies",
+      "reference": "assets/animations/completion-v1/enemies/runner.png",
+      "referenceRow": 1,
+      "identity": "The SECOND ROW creature only: a sleek low elongated biomechanical insect/reptile runner, narrow black segmented body, long pointed snout facing right, pointed rear tail, four clawed legs and bright cyan oval energy nodes. Preserve the exact silhouette, armor panels, cyan eyes and original facing; not the red creature or purple brute.",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "move",
+        "attack",
+        "death_dissolve",
+        "shield_break"
+      ],
+      "path": "assets/animations/completion-v1/enemies/runner.png",
+      "fidelity": "Existing reference identity preserved",
+      "prompt": "Use case: precise-object-edit. Correct this Infernal City runner sprite atlas. Preserve the exact cyan biomechanical runner identity, armor, silhouette, 8 columns x4 rows, 32 equal square cells, existing action rows and transparent background. Only correct the attack and dissolve/shield effects: REMOVE all emitted projectile clouds, smoke, fog, long energy streams and broad halos. Any effect must be a few tiny isolated solid cyan shards within the central55percent of its cell. Keep all32 complete bodies small with at least20percent empty transparent space on every side of each exact cell. The second-row fifth-cell attack plume crossed its boundary: fix it decisively. Keep row1 eight walk frames, row2 eight bite/lunge frames without emitting any projectile, row3 eight compact local disintegration frames ending in a small visible debris pile, row4 compact shield fragments and recovery. No new elements, no weapons, no environment, no text, no grid, no shadow. True alpha0 empty background; keep the current2:1 canvas and exact regular8x4 arrangement.",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-c2495f76-3951-4a56-b60e-112de171dba0.png",
+      "status": "approved",
+      "generator": "built-in image_gen",
+      "sha256": "8d440c2f8162b9a6072ba19a690aaacf57b13bd4e25c51885c240f483206543c",
+      "attempt": 2,
+      "previousAttempts": [
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-266ea038-1c1a-4081-8be9-30df204fd96a.png",
+          "sha256": "6f934ae0ce6ad63f662d1a8035fd547ab0fbcda51c222a53231629cc960d002a",
+          "prompt": "Use case: stylized-concept. Asset: production transparent native animation atlas for Infernal City. Input image is an IDENTITY REFERENCE, not a layout to copy. Subject: The SECOND ROW creature only: a sleek low elongated biomechanical insect/reptile runner, narrow black segmented body, long pointed snout facing right, pointed rear tail, four clawed legs and bright cyan oval energy nodes. Preserve the exact silhouette, armor panels, cyan eyes and original facing; not the red creature or purple brute. Make ONE atlas containing ONLY this named subject. Match the exact original cyber-gothic painted anime game style, orthographic elevated three-quarter camera, material rendering and facing; faithful 1:1 design. STRICT GRID:8 columns x4 rows, 32 equal SQUARE cells, whole image 8:4 ratio. ROW1: eight coherent locomotion steps. ROW2: eight strike/attack phases, wind-up to lunge/strike to recovery, no long ranged beam. ROW3: eight compact non-gory dissolution phases, intact then crumbling into matching energy fragments, final cell faint localized debris that is still visible. ROW4: eight localized shield rupture and recovery phases, compact energy shards only, body fully intact. Every cell ONE whole subject, fixed central body anchor and consistent scale, at most60% of cell width and height including wings/horns/tail/weapon/effects. Keep20% EMPTY TRANSPARENT margin on all four sides of EVERY cell. Compact poses for reliable slicing; no part crosses a cell boundary. ALL 32 frames must be separately drawn with coherent small animation changes, not identical translated copies. Genuine transparent alpha background. No background, scene, platform, floor, drop shadow, haze, labels, text, grid lines, borders, frame numbers or watermark. No characters from other reference rows.",
+          "verdict": "rejected",
+          "reason": "A cyan attack effect touches the right border of row2 col5 at alpha24."
+        }
+      ],
+      "qa": {
+        "width": 1774,
+        "height": 887,
+        "mode": "RGBA",
+        "columns": 8,
+        "rows": 4,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "populatedCells": 32,
+        "uniqueCells": 32,
+        "minVisibleMarginPx": 28,
+        "alphaThreshold": 24,
+        "nativeSha256Verified": true,
+        "visualReview": "Approved: reference silhouette, palette, costume and facing retained; distinct requested animation rows, full framing, transparent background, no text or grid lines. Runner attack plume revised to keep a clean cell margin."
+      }
+    },
+    {
+      "id": "swarmer",
+      "category": "enemies",
+      "reference": "assets/animations/enemies/enemy-atlas-01.png",
+      "referenceRow": 0,
+      "identity": "The FIRST / TOP ROW creature only: a four-legged crouching black armored demon hound, sharp angular plates, bright magenta-red cracks, two short horns, pointed long head and jaws, small red wing fins. Preserve those exact armor panels, animal proportions, magenta eye, spikes and original facing.",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "move",
+        "attack",
+        "death_dissolve",
+        "shield_break"
+      ],
+      "path": "assets/animations/completion-v1/enemies/swarmer.png",
+      "fidelity": "Existing reference identity preserved",
+      "prompt": "Use case: stylized-concept. Asset: production transparent native animation atlas for Infernal City. Input image is an IDENTITY REFERENCE, not a layout to copy. Subject: The FIRST / TOP ROW creature only: a four-legged crouching black armored demon hound, sharp angular plates, bright magenta-red cracks, two short horns, pointed long head and jaws, small red wing fins. Preserve those exact armor panels, animal proportions, magenta eye, spikes and original facing. Make ONE atlas containing ONLY this named subject. Match the exact original cyber-gothic painted anime game style, orthographic elevated three-quarter camera, material rendering and facing; faithful 1:1 design. STRICT GRID:8 columns x4 rows, 32 equal SQUARE cells, whole image 8:4 ratio. ROW1: eight coherent locomotion steps. ROW2: eight strike/attack phases, wind-up to lunge/strike to recovery, no long ranged beam. ROW3: eight compact non-gory dissolution phases, intact then crumbling into matching energy fragments, final cell faint localized debris that is still visible. ROW4: eight localized shield rupture and recovery phases, compact energy shards only, body fully intact. Every cell ONE whole subject, fixed central body anchor and consistent scale, at most60% of cell width and height including wings/horns/tail/weapon/effects. Keep20% EMPTY TRANSPARENT margin on all four sides of EVERY cell. Compact poses for reliable slicing; no part crosses a cell boundary. ALL 32 frames must be separately drawn with coherent small animation changes, not identical translated copies. Genuine transparent alpha background. No background, scene, platform, floor, drop shadow, haze, labels, text, grid lines, borders, frame numbers or watermark. No characters from other reference rows.",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-f44b80c5-ba9b-47ce-a48a-8c051c73ebd8.png",
+      "status": "approved",
+      "generator": "built-in image_gen",
+      "sha256": "5274005fa438a685002cedf00efe9f3e9c136dd6e204a1292b1c203b2cb9af99",
+      "qa": {
+        "width": 1774,
+        "height": 887,
+        "mode": "RGBA",
+        "columns": 8,
+        "rows": 4,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "populatedCells": 32,
+        "uniqueCells": 32,
+        "minVisibleMarginPx": 6,
+        "alphaThreshold": 24,
+        "nativeSha256Verified": true,
+        "visualReview": "Approved: reference silhouette, palette, costume and facing retained; distinct requested animation rows, full framing, transparent background, no text or grid lines."
+      }
+    },
+    {
+      "id": "vespera",
+      "category": "bosses",
+      "reference": "assets/animations/enemies/enemy-atlas-02.png",
+      "referenceRow": 0,
+      "identity": "The FIRST / TOP ROW character only: Vespera the adult demonic warrior woman with long black hair, swept curled black horns, burgundy bat wings, dark black-red plate armor, fully clothed lower body, and long black double-ended infernal polearm with glowing red blade. Keep exactly her mature face, armor, wing shape, hair and weapon; no redesign and no change to skin exposure.",
+      "columns": 8,
+      "rows": 6,
+      "states": [
+        "intro",
+        "phase_shift_2",
+        "phase_shift_3",
+        "heavy_telegraph",
+        "defeat",
+        "idle"
+      ],
+      "path": "assets/animations/completion-v1/bosses/vespera.png",
+      "fidelity": "Existing reference identity preserved",
+      "prompt": "Use case: stylized-concept. Asset: production transparent native animation atlas for Infernal City. Input image is an IDENTITY REFERENCE, not a layout to copy. Subject: The FIRST / TOP ROW character only: Vespera the adult demonic warrior woman with long black hair, swept curled black horns, burgundy bat wings, dark black-red plate armor, fully clothed lower body, and long black double-ended infernal polearm with glowing red blade. Keep exactly her mature face, armor, wing shape, hair and weapon; no redesign and no change to skin exposure. Make ONE atlas containing ONLY this named subject. Match the exact original cyber-gothic painted anime game style, orthographic elevated three-quarter camera, material rendering and facing; faithful 1:1 design. STRICT GRID:8 columns x6 rows, 48 equal SQUARE cells, whole image 8:6 ratio. ROW1: eight dramatic entrance poses, crouched/arrival through standing guard. ROW2: eight phase-two transformation poses, original anatomy and costume retained, compact internal energy awakening. ROW3: eight phase-three escalation poses, original anatomy and costume retained, stronger compact weapon glow. ROW4: eight heavy-attack warning/charge poses then readiness, weapon and tiny charge contained. ROW5: eight non-gory defeat poses, stagger then kneel, collapse or magical fading; no nudity, no injury detail. ROW6: eight subtle standing idle/breathing poses. Every cell ONE whole subject, fixed central body anchor and consistent scale, at most60% of cell width and height including wings/horns/tail/weapon/effects. Keep20% EMPTY TRANSPARENT margin on all four sides of EVERY cell. Compact poses for reliable slicing; no part crosses a cell boundary. ALL 48 frames must be separately drawn with coherent small animation changes, not identical translated copies. Genuine transparent alpha background. No background, scene, platform, floor, drop shadow, haze, labels, text, grid lines, borders, frame numbers or watermark. No characters from other reference rows.",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-2e8cfa75-2c35-4cf0-a303-52d1123aa49f.png",
+      "status": "approved",
+      "generator": "built-in image_gen",
+      "sha256": "1ff47bd52dd93cff1d889a887c8e1600e4889af24762a9b6eabe86957dc00cf9",
+      "qa": {
+        "width": 1448,
+        "height": 1086,
+        "mode": "RGBA",
+        "columns": 8,
+        "rows": 6,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "populatedCells": 48,
+        "uniqueCells": 48,
+        "minVisibleMarginPx": 6,
+        "alphaThreshold": 24,
+        "blankCells": [],
+        "borderContacts": [],
+        "nativeSha256Verified": true,
+        "medianVisibleBodyWidthRatio": 0.7679558011049724,
+        "medianVisibleBodyHeightRatio": 0.8176795580110497,
+        "visualReview": "Approved visually: original boss identity, face, hair, costume, polearm/rapier and crimson palette retained; six distinct rows with eight complete frames; compact non-graphic defeat; true alpha and clear cell margins."
+      }
+    }
+  ]
+}

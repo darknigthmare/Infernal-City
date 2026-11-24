@@ -1,0 +1,57 @@
+{
+  "id": "vivienne",
+  "name": "Lady Vivienne Gearhart",
+  "kind": "heroes",
+  "packId": "dlc_brass_palace",
+  "biome": "brass",
+  "path": "assets/dlc/illustrated-v1/heroes/vivienne.png",
+  "columns": 8,
+  "rows": 8,
+  "states": [
+    "intro",
+    "idle_respiration",
+    "attack",
+    "ability",
+    "ultimate",
+    "victory",
+    "defeat",
+    "outro"
+  ],
+  "reference": "assets/characters/heroines/aurelia-brassheart-atlas-v1.png",
+  "referenceRole": "style-camera-material guide only; not identity",
+  "fidelity": "first original design from authored DLC metadata and palette",
+  "source": "dlc-packs.v1.js",
+  "authoredCharacter": {
+    "id": "vivienne",
+    "name": "Lady Vivienne Gearhart",
+    "age": 22,
+    "isAdult": true,
+    "title": "Ingénieure Impériale",
+    "ability": "Surcharge Vapeur",
+    "ultimate": "Pressurisation Totale"
+  },
+  "palette": {
+    "bg": "#27121b",
+    "primary": "#d97706",
+    "secondary": "#fbbf24",
+    "glow": "#881337"
+  },
+  "designBrief": "Mature adult woman with auburn hair in a bun and copper goggles, closed burgundy engineering coat with brass pauldrons, opaque trousers and tall boots. Steam-powered brass gauntlet and compact voltaic musket. Imperial engineer, dark purple cloth and warm copper.",
+  "prompt": "Edit this existing game sprite atlas to remove its entire gray/white background and all floor shadows. Preserve EXACTLY Vivienne's identity, face, auburn ponytail, goggles, burgundy coat, brass armor, weapon, illustrated finish, 64 distinct poses, 8 columns by 8 rows, and cell positions. Required deliverable: true transparent PNG alpha, with empty alpha-zero background and gutters around every separate character. Do not paint a white, gray or black background, do not draw a transparency checkerboard. Every character and weapon remains fully opaque, including the last row. Remove gray haze and drop shadows, retain only compact authored sparks. Keep each complete character plus effects inside the central 60% width and 70% height of its square cell, with at least 12% clear empty alpha on all four sides. Preserve the square 8x8 layout and all eight rows with no missing frames, no added labels or grid lines. Alpha-zero empty cutout sprite sheet; not a picture of a sheet on paper.",
+  "key": "heroes/vivienne",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-3fbab072-2420-43e6-b987-6e0aa3ecb18a.png",
+  "status": "pending-visual-review",
+  "generator": "built-in image_gen",
+  "nativeBytesPreserved": true,
+  "sha256": "5924fcbbcaca1719df1d91c49b46457217100f2ecb58390b19b8e8d6c4efef96",
+  "bytes": 1877749,
+  "width": 1254,
+  "height": 1254,
+  "mode": "RGBA",
+  "alphaExtrema": [
+    0,
+    255
+  ],
+  "revision": 2,
+  "inputEditNative": "/workspace/scratch/3c707a35b074/generated_images/exec-b4306dca-eb54-4be7-b4e9-c24884664f9c.png"
+}

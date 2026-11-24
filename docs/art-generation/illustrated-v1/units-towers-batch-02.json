@@ -1,0 +1,65 @@
+[
+  {
+    "id": "air_void_manta",
+    "name": "Manta du Néant",
+    "category": "enemies",
+    "columns": 8,
+    "rows": 4,
+    "states": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "reference": "assets/animations/enemy-legions/enemies/void_gravity_maw.webp",
+    "path": "assets/dlc/illustrated-v1/enemies/air_void_manta.png",
+    "prompt": "Use case: stylized-concept. Production transparent animation atlas for Infernal City. Input image is FACTION MATERIAL/STYLE reference only, not the requested anatomy. Create Manta du Néant: An airborne void manta ray with broad compact swept wings made from overlapping angular black obsidian armor, violet singularity core in its chest, tiny cyan edge conduits and a short tapered segmented tail. Ray-like streamlined body; preserve the Void reference faceted black armor and purple energy. No broad external vortex. Fixed elevated orthographic three-quarter camera matching the reference game, consistent facing down-left. STRICT CANVAS: landscape 2:1 PNG, EXACTLY 8 columns by 4 rows =32 equal square cells. Each cell holds one complete SMALL character including all wings, limbs, tail and effects, maximum50percent of cell width AND height; at least25percent empty transparent margin on each of4sides. Every sprite anchored at its exact cell center. Column centers6.25,18.75,31.25,43.75,56.25,68.75,81.25,93.75percent. Row1:8 distinct wingbeat/hover movement frames. Row2:8 distinct compact attack windup,strike,recoil,recovery frames, no long projectile. Row3:8 distinct death_dissolve frames, silhouette breaking into compact faction-colored fragments that stay inside cell; finalframe retains a small visible remnant. Row4:8 distinct shield_break frames: tiny cracked shield hug close to body then flinch and recover, not a giant aura. Same identity and scale in every cell; hand-drawn action changes, never rotated copies or sheet camera rotation. Crisp polished painted cyber-gothic anime game sprite quality matching attached style. Genuine alpha0 background, no scenery, floor, shadow, gradient, checkerboard, labels, numbers, text, separators, grid lines or watermark. No partial or cropped figure, no objects touching any cell border. Exactly32 sprites, no extra rows.",
+    "designStatus": "first-original-design-from-catalogue-and-faction-reference",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-6774d310-1fce-4652-8ae6-4d1af854b60d.png",
+    "qa": {
+      "status": "pending"
+    }
+  },
+  {
+    "id": "air_infernal_harpy",
+    "name": "Harpyie de Braise",
+    "category": "enemies",
+    "columns": 8,
+    "rows": 4,
+    "states": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "reference": "assets/animations/enemy-legions/enemies/infernal_gehenna_guard.webp",
+    "path": "assets/dlc/illustrated-v1/enemies/air_infernal_harpy.png",
+    "prompt": "Use case: stylized-concept. Production transparent animation atlas for Infernal City. Input image is FACTION MATERIAL/STYLE reference only, not the requested anatomy. Create Harpyie de Braise: A mature adult infernal harpy soldier in completely closed black basalt plate armor etched with orange lava seams, armored horned helmet, two compact folded batlike wings with ember membranes, armored arms and avian talon boots. No exposed breasts, no nudity, no sexual pose. Preserve the Infernal reference magma armor; narrow wingbeat contained inside each cell. Fixed elevated orthographic three-quarter camera matching the reference game, consistent facing down-left. STRICT CANVAS: landscape 2:1 PNG, EXACTLY 8 columns by 4 rows =32 equal square cells. Each cell holds one complete SMALL character including all wings, limbs, tail and effects, maximum50percent of cell width AND height; at least25percent empty transparent margin on each of4sides. Every sprite anchored at its exact cell center. Column centers6.25,18.75,31.25,43.75,56.25,68.75,81.25,93.75percent. Row1:8 distinct wingbeat/hover movement frames. Row2:8 distinct compact attack windup,strike,recoil,recovery frames, no long projectile. Row3:8 distinct death_dissolve frames, silhouette breaking into compact faction-colored fragments that stay inside cell; finalframe retains a small visible remnant. Row4:8 distinct shield_break frames: tiny cracked shield hug close to body then flinch and recover, not a giant aura. Same identity and scale in every cell; hand-drawn action changes, never rotated copies or sheet camera rotation. Crisp polished painted cyber-gothic anime game sprite quality matching attached style. Genuine alpha0 background, no scenery, floor, shadow, gradient, checkerboard, labels, numbers, text, separators, grid lines or watermark. No partial or cropped figure, no objects touching any cell border. Exactly32 sprites, no extra rows.",
+    "designStatus": "first-original-design-from-catalogue-and-faction-reference",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-4a0e357f-3a45-4536-9ee9-3aae3b4b6e30.png",
+    "qa": {
+      "status": "pending"
+    }
+  },
+  {
+    "id": "air_shadow_owl",
+    "name": "Chouette d’Éclipse",
+    "category": "enemies",
+    "columns": 8,
+    "rows": 4,
+    "states": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "reference": "assets/animations/enemy-legions/enemies/shadow_veil_specter.webp",
+    "path": "assets/dlc/illustrated-v1/enemies/air_shadow_owl.png",
+    "prompt": "Use case: stylized-concept. Production transparent animation atlas for Infernal City. Input image is FACTION MATERIAL/STYLE reference only, not the requested anatomy. Create Chouette d’Éclipse: A spectral owl with an ivory owl-face mask, purple luminous eyes, layered midnight-blue and black feathers edged in teal, a compact violet chest jewel and two taloned feet. Wings look like overlapping feathered shadow blades, not human arms. Preserve the reference Shadow palette and pale mask, no long trailing smoke. Fixed elevated orthographic three-quarter camera matching the reference game, consistent facing down-left. STRICT CANVAS: landscape 2:1 PNG, EXACTLY 8 columns by 4 rows =32 equal square cells. Each cell holds one complete SMALL character including all wings, limbs, tail and effects, maximum50percent of cell width AND height; at least25percent empty transparent margin on each of4sides. Every sprite anchored at its exact cell center. Column centers6.25,18.75,31.25,43.75,56.25,68.75,81.25,93.75percent. Row1:8 distinct wingbeat/hover movement frames. Row2:8 distinct compact attack windup,strike,recoil,recovery frames, no long projectile. Row3:8 distinct death_dissolve frames, silhouette breaking into compact faction-colored fragments that stay inside cell; finalframe retains a small visible remnant. Row4:8 distinct shield_break frames: tiny cracked shield hug close to body then flinch and recover, not a giant aura. Same identity and scale in every cell; hand-drawn action changes, never rotated copies or sheet camera rotation. Crisp polished painted cyber-gothic anime game sprite quality matching attached style. Genuine alpha0 background, no scenery, floor, shadow, gradient, checkerboard, labels, numbers, text, separators, grid lines or watermark. No partial or cropped figure, no objects touching any cell border. Exactly32 sprites, no extra rows.",
+    "designStatus": "first-original-design-from-catalogue-and-faction-reference",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-e09d5848-5a7d-4410-b5ba-0f429e718c92.png",
+    "qa": {
+      "status": "pending"
+    }
+  }
+]

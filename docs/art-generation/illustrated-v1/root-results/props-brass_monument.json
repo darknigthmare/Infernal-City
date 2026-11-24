@@ -1,0 +1,29 @@
+{
+  "key": "props/brass_monument",
+  "category": "props",
+  "id": "brass_monument",
+  "packId": "dlc_brass_palace",
+  "name": "Monument Palais Mécanique & Horlogerie de Cuivre",
+  "columns": 2,
+  "rows": 2,
+  "sequenceFrames": 4,
+  "transparent": true,
+  "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/map-western-wall.webp",
+  "prompt": "Use case: stylized-concept. Production environment sprite atlas for Infernal City. Input reference gives painted cyber-gothic game texture and elevated orthographic camera only. Subject: one ornate imperial brass-and-copper piston tower, a large clock face without numerals, purple enamel panels and compact steam vents. Exact domain Steampunk Impérial, Cuivre, Laiton, Velours Pourpre & Vapeur Dorée; palette {\"bg\":\"#27121b\",\"primary\":\"#d97706\",\"secondary\":\"#fbbf24\",\"glow\":\"#881337\"}. EXACT GRID 2 columns by 2 rows, four equal SQUARE cells on a SQUARE PNG. Four subtly different pulse/idle frames of the SAME complete monument. Centered fixed anchor, same camera and scale in every cell. Entire object and glow fit within central 60 percent of each cell; leave at least 20 percent completely transparent margin on every side. Isolated illustrated architecture prop, intricate textured materials, no ground platform extending to cell edges, no cast shadow, no surrounding scenery, no text, numbers, panel lines, grid or watermark. True alpha-zero transparent background. Four separate full monuments, no crossing into neighboring cells. First original interpretation of the written DLC domain.",
+  "path": "assets/dlc/illustrated-v1/props/brass_monument.png",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-e7c73ec9-e723-4a50-ac20-f57b6148e381.png",
+  "sha256": "b8daa12245bd9d0157e329eeff457e08f21470498a3579cd1b1867f506b00814",
+  "bytes": 1891190,
+  "width": 1254,
+  "height": 1254,
+  "mode": "RGBA",
+  "alphaExtrema": [
+    0,
+    255
+  ],
+  "method": "built-in image_gen",
+  "nativeBytesPreserved": true,
+  "qa": {
+    "status": "pending-visual-review"
+  }
+}

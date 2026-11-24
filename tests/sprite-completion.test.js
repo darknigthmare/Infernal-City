@@ -15,11 +15,12 @@ const runtimeSource = fs.readFileSync(path.join(ROOT, 'sprite-completion-runtime
 const legionSource = fs.readFileSync(path.join(ROOT, 'enemy-legions.v1.js'), 'utf8');
 
 function load(keys = [], { imageReady = true, dimensions = [1579, 1021] } = {}) {
-  const calls = [], requests = [], legacyCalls = [];
+  const calls = [], requests = [], legacyCalls = [], transforms = [];
   const heroData = { aria: { src: 'old-aria.png' }, nyx: { src: 'old-nyx.png' } };
   const enemyData = {
     bulwark: { src: 'old-bulwark.png', size: 76 },
-    xyra: { src: 'old-xyra.png', size: 118 }
+    xyra: { src: 'old-xyra.png', size: 118 },
+    leviathan: { src: 'old-leviathan.png', size: 188, rotate: true, rotationOffset: 0.25 }
   };
   const towerData = { vulcan_turret: { src: 'old-vulcan.png', size: 56, rotate: true } };
   class GameEngine {}
@@ -29,7 +30,13 @@ function load(keys = [], { imageReady = true, dimensions = [1579, 1021] } = {}) 
       this.drawAtlasFrame({}, { src: 'old-aura.png' }, 0, x, y, 150);
       return this.drawAtlasFrame({}, heroData[options.heroId || this.selectedHero.id], 0, x, y, 100);
     },
-    drawEnemy(enemy) { return this.drawAtlasFrame(this.enemySpriteImages[enemy.type], enemyData[enemy.type], 0, enemy.x, enemy.y, 76); },
+    drawEnemy(enemy) {
+      const sprite = enemyData[enemy.type];
+      return this.drawAtlasFrame(this.enemySpriteImages[enemy.type], sprite, 0, enemy.x, enemy.y, sprite.size, {
+        rotation: sprite.rotate ? (enemy.facingAngle || 0) + (sprite.rotationOffset || 0) : undefined,
+        flipX: !sprite.rotate && Math.cos(enemy.facingAngle || 0) < 0
+      });
+    },
     drawTower(tower) { return this.drawAtlasFrame({}, towerData[tower.id], 0, tower.x, tower.y, 56); },
     ensureHeroSprite() {}, ensureEnemySprite() {}, ensureTowerSprite() {},
     preloadSpriteAsset(src) {
@@ -89,23 +96,29 @@ function load(keys = [], { imageReady = true, dimensions = [1579, 1021] } = {}) 
     hasEnteredAdultExperience: true, selectedHero: { id: 'aria' }, heroAnimationState: 'idle',
     enemies: [], enemySpriteImages: {}, placedTowers: [], projectiles: [], particles: [],
     gameplaySeconds: 0, rewardCount: 0, coins: 0, canvas: { width: 1200, height: 800 },
-    ctx: { save() {}, restore() {}, translate() {}, rotate() {}, scale() {}, drawImage(...args) { calls.push(args); } }
+    ctx: { save() {}, restore() {}, translate() {},
+      rotate(angle) { transforms.push({ rotation: angle }); },
+      scale(x, y) { transforms.push({ scale: [x, y] }); },
+      drawImage(...args) { calls.push(args); } }
   });
-  return { engine, calls, requests, legacyCalls, window, context };
+  return { engine, calls, requests, legacyCalls, transforms, window, context };
 }
 
 function lastRow(call, rows) { return call[2] / (call[0].naturalHeight / rows); }
 function lastColumn(call, columns) { return call[1] / (call[0].naturalWidth / columns); }
 function enemy(options = {}) { return { type: 'bulwark', hp: 100, shield: 0, x: 20, y: 30, radius: 22, speed: 40, ...options }; }
 
-test('registry covers 105 combat atlases and 13 prepared assets, with no gallery-only Nova fighter', () => {
+test('registry covers 111 combat atlases and 13 presentation assets, with no gallery-only Nova fighter', () => {
   const { window } = load();
   const assets = Object.values(window.INFERNAL_CITY_SPRITE_COMPLETION.assets);
-  assert.equal(assets.length, 118);
+  assert.equal(assets.length, 124);
   const counts = Object.fromEntries(['heroes', 'bosses', 'enemies', 'towers', 'evolutions', 'portraits', 'environment']
     .map(group => [group, assets.filter(asset => asset.group === group).length]));
-  assert.deepEqual(counts, { heroes: 16, bosses: 11, enemies: 54, towers: 20, evolutions: 4, portraits: 10, environment: 3 });
-  assert.equal(assets.filter(asset => asset.preparedOnly === true).length, 13);
+  assert.deepEqual(counts, { heroes: 16, bosses: 14, enemies: 57, towers: 20, evolutions: 4, portraits: 10, environment: 3 });
+  assert.equal(assets.filter(asset => asset.preparedOnly === true).length, 0);
+  assert.equal(assets.filter(asset => asset.usage).length, 13);
+  for (const id of ['swarmer', 'runner', 'brute']) assert.ok(window.INFERNAL_CITY_SPRITE_COMPLETION.assets[`enemies/${id}`]);
+  for (const id of ['hellwarden', 'vespera', 'carmilla']) assert.ok(window.INFERNAL_CITY_SPRITE_COMPLETION.assets[`bosses/${id}`]);
   assert.equal(window.INFERNAL_CITY_SPRITE_COMPLETION.assets['heroes/nova'], undefined);
 });
 
@@ -295,7 +308,7 @@ test('tower build, levels, both specializations and successful recycling use the
   assert.equal(lastRow(calls.at(-1), 8), 5);
   engine.update(0.81);
   for (let level = 1; level <= 3; level++) {
-    tower.level = level; engine.drawTower(tower);
+    tower.level = level; tower.animationTimer = 0.34; engine.drawTower(tower);
     assert.equal(lastRow(calls.at(-1), 8), level - 1);
   }
   tower.specializationId = 'option_a'; engine.drawTower(tower);
@@ -306,6 +319,59 @@ test('tower build, levels, both specializations and successful recycling use the
   assert.equal(engine.sellDefense(tower).ok, false);
   assert.equal(engine.coins, 60);
   engine.render(); assert.equal(lastRow(calls.at(-1), 8), 6);
+});
+
+test('base tower idle loops use their authored row while resting upgrades retain their own silhouette', () => {
+  const { engine, calls } = load(['towers/vulcan_turret']);
+  const tower = { id: 'vulcan_turret', level: 1, x: 10, y: 20, animationTimer: 0 };
+  engine.drawTower(tower);
+  assert.equal(lastRow(calls.at(-1), 8), 7);
+  engine.update(0.25); engine.drawTower(tower);
+  assert.equal(lastColumn(calls.at(-1), 8), 2);
+  for (const level of [2, 3]) {
+    tower.level = level; engine.drawTower(tower);
+    assert.equal(lastRow(calls.at(-1), 8), level - 1);
+    assert.equal(lastColumn(calls.at(-1), 8), 0, 'idle never plays a firing sequence');
+  }
+  tower.specializationId = 'option_b'; engine.drawTower(tower);
+  assert.equal(lastRow(calls.at(-1), 8), 4);
+  assert.equal(lastColumn(calls.at(-1), 8), 0);
+  tower.specializationId = null; tower.level = 1; engine.prefersReducedMotion = true;
+  engine.drawTower(tower);
+  assert.equal(lastRow(calls.at(-1), 8), 7);
+  assert.equal(lastColumn(calls.at(-1), 8), 0);
+});
+
+test('rotating enemies keep their facing and source offset in their death animation', () => {
+  const { engine, calls, transforms } = load(['bosses/leviathan', 'bosses/xyra']);
+  const leviathan = enemy({ type: 'leviathan', isBoss: true, poseState: 'intro', facingAngle: 2.1 });
+  engine.enemies.push(leviathan); engine.drawEnemy(leviathan);
+  const aliveRotation = transforms.at(-1).rotation;
+  assert.equal(aliveRotation, 2.35);
+  const aliveSize = calls.at(-1)[8];
+  transforms.length = 0; engine.killEnemy(leviathan); engine.render();
+  assert.equal(transforms.at(-1).rotation, aliveRotation);
+  assert.equal(calls.at(-1)[8], aliveSize);
+  assert.equal(transforms.some(item => item.scale), false, 'rotating bodies are not mirrored a second time');
+  engine.update(1.5);
+  const upright = enemy({ type: 'xyra', isBoss: true, facingAngle: Math.PI });
+  engine.enemies.push(upright); transforms.length = 0;
+  engine.killEnemy(upright); engine.render();
+  assert.deepEqual(transforms.at(-1).scale, [-1, 1]);
+  assert.equal(transforms.some(item => 'rotation' in item), false, 'upright bosses stay billboarded');
+});
+
+test('placement preview uses the approved base silhouette and preserves the legacy fallback contract', () => {
+  const { engine, calls, requests } = load(['towers/vulcan_turret']);
+  assert.equal(engine.drawCompletedTowerPreview('vulcan_turret', 100, 200, 56, { alpha: 0.68 }), true);
+  assert.match(calls.at(-1)[0].src, /towers\/vulcan_turret\.png$/);
+  assert.equal(lastRow(calls.at(-1), 8), 0);
+  assert.equal(lastColumn(calls.at(-1), 8), 0);
+  assert.equal(requests.length, 1);
+  assert.equal(engine.drawCompletedTowerPreview('unapproved', 0, 0, 56), false);
+  const failed = load(['towers/vulcan_turret'], { imageReady: false });
+  assert.equal(failed.engine.drawCompletedTowerPreview('vulcan_turret', 0, 0, 56), false);
+  assert.equal(failed.calls.length, 0);
 });
 
 test('each evolved weapon receives its own artwork and basic shots remain unchanged', () => {

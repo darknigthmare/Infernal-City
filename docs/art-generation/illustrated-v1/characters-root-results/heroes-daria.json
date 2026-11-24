@@ -1,0 +1,55 @@
+{
+  "id": "daria",
+  "name": "Daria Al-Qamar",
+  "kind": "heroes",
+  "packId": "dlc_glass_desert",
+  "biome": "desert",
+  "path": "assets/dlc/illustrated-v1/heroes/daria.png",
+  "columns": 8,
+  "rows": 8,
+  "states": [
+    "intro",
+    "idle_respiration",
+    "attack",
+    "ability",
+    "ultimate",
+    "victory",
+    "defeat",
+    "outro"
+  ],
+  "reference": "assets/characters/heroines/zahra-mille-ciels-atlas-v1.png",
+  "referenceRole": "style-camera-material guide only; not identity",
+  "fidelity": "first original design from authored DLC metadata and palette",
+  "source": "dlc-packs.v1.js",
+  "authoredCharacter": {
+    "id": "daria",
+    "name": "Daria Al-Qamar",
+    "age": 25,
+    "isAdult": true,
+    "title": "Lancière des Dunes",
+    "ability": "Lance de Verre Fondu",
+    "ultimate": "Tempête d’Or"
+  },
+  "palette": {
+    "bg": "#1c1917",
+    "primary": "#ea580c",
+    "secondary": "#fde68a",
+    "glow": "#1d4ed8"
+  },
+  "designBrief": "Mature adult woman with warm olive skin and short black hair, white ceramic desert armor and long terracotta field coat, blue inlay, closed trousers and boots. Compact glass glaive held diagonally close to the body. Resolute dune lancer.",
+  "prompt": "Use case: stylized-concept. Production game sprite animation atlas for Infernal City. The attached atlas is a STYLE, CAMERA and painterly-material reference only; invent the specified new character, do not copy the guide character or its costume. Match the existing illustrated dark-fantasy tactical sprite style: detailed crisp hand-painted surfaces, fine dark contours, directional highlights, believable adult anatomy, elevated three-quarter camera facing toward screen-right. Use the SAME camera, head, body proportions, outfit, weapon and scale consistently in every cell. Exactly one full character per cell, no clones inside a cell. All combat costumes fully opaque and closed, all characters plainly mature adults. True transparent alpha background, no floor, no background color, no contact shadow outside feet, no labels, typography, grid lines, watermarks or UI. Every action stays inside its own mathematically equal cell: body plus weapon plus particles must fit the central 50% width and 60% height; generous transparent margins on all four sides, absolutely no cropped hair, weapons, glows, or cross-cell overlap. Keep effects compact and attached to the character, no long projectile beams. Eight consecutive distinct animation frames left-to-right in EVERY row; exactly the listed number of rows, no extra rows, no missing or blank cells. Use tightly controlled movement arcs, no arbitrary view changes. Non-graphic defeat, never blood or gore.\nSubject: Daria Al-Qamar, a new heroine in \"Mirage Chromatique & Cité des Sables de Verre\". Authored identity: Lancière des Dunes. Visual domain: Désert Solarpunk, Silice Vitrifiée & Architecture Néo-Perse. Palette: {\"bg\":\"#1c1917\",\"primary\":\"#ea580c\",\"secondary\":\"#fde68a\",\"glow\":\"#1d4ed8\"}; background remains transparent regardless of palette bg. Design: Mature adult woman with warm olive skin and short black hair, white ceramic desert armor and long terracotta field coat, blue inlay, closed trousers and boots. Compact glass glaive held diagonally close to the body. Resolute dune lancer.\nLayout: EXACTLY 8 columns by 8 rows, 64 equal square cells, square 2048×2048 atlas. Bodies center at each cell's midpoint with the feet on a consistent local baseline around 80% cell height. Eight rows from top to bottom: 1 intro, eight steps of arrival and readying the weapon, character visible in all frames; 2 idle_respiration, subtle breathing loop with cloth motion; 3 attack, windup, strike, compact impact and recovery; 4 ability, \"Lance de Verre Fondu\", progressive compact thematic casting; 5 ultimate, \"Tempête d’Or\", stronger compact aura building and releasing without filling the cell margins; 6 victory, weapon salute and relaxed triumphant recovery; 7 defeat, damage reaction then non-graphic kneeling exhaustion, fully clothed, never disappearing; 8 outro, controlled departure step loop with a fully opaque visible character in every frame.\nMaintain a single coherent identity across the entire sheet, same mature face and hairstyle. Readability at tactical game size is essential. STRICT GUTTERS: no haze, fog, dust, ambient glow clouds, floodlights or colored matte anywhere. Transparent empty space separates every frame on every side. Effects are narrow crisp rings, short streaks or tiny sparks, contained within the character's silhouette width whenever possible. No fade-out or white fog even in the outro: every frame remains a clean opaque character cutout. Do not enlarge the ultimate aura beyond the central 60% of a cell.\nIMPORTANT: ignore the relative size of the reference character inside its cell. Shrink the new sprite to leave at least 20% transparent empty margins on ALL four sides. A complete body plus any weapon or effect may occupy at most half the cell width, never touch a grid boundary. All background and gutters are genuinely alpha zero, no haze or washed-out white background. All sprites opaque and visible even in outro; no white fade.",
+  "key": "heroes/daria",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-7e35ef2a-fb69-44c4-9a3d-af97a9b148ed.png",
+  "status": "pending-visual-review",
+  "generator": "built-in image_gen",
+  "nativeBytesPreserved": true,
+  "sha256": "ff5773f4b20d3209e291c58273452452c8bbb2f2832b2594a12d9f0592f92889",
+  "bytes": 1561749,
+  "width": 1254,
+  "height": 1254,
+  "mode": "RGBA",
+  "alphaExtrema": [
+    0,
+    255
+  ]
+}

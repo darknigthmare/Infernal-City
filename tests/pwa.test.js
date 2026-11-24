@@ -56,6 +56,10 @@ test('le service worker precache uniquement des fichiers locaux existants', () =
     'les atlas de combat lourds doivent rester chargés à la demande'
   );
   assert.ok(
+    urls.every(relativePath => !relativePath.startsWith('assets/dlc/')),
+    'les illustrations DLC doivent rester chargées à la demande'
+  );
+  assert.ok(
     urls.every(relativePath => !relativePath.startsWith('assets/vn/cg/eros-time/')),
     'les 60 CG Eros Time doivent rester chargées à la demande'
   );
@@ -91,7 +95,7 @@ test('les actifs coeur 3.1 sont servis network first et le pack terrain reste ho
   assert.match(index, /game\.v9\.js/);
   assert.match(index, /pwa\.v4\.js/);
   assert.match(worker, /RELEASE_VERSION = '3\.1\.0'/);
-  assert.match(worker, /CACHE_REVISION = 'sprites-v1'/);
+  assert.match(worker, /CACHE_REVISION = 'sprites-20261124'/);
   assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}core-\$\{RELEASE_VERSION\}-\$\{CACHE_REVISION\}`/);
   assert.match(worker, /vn-scenes\.v1\.js/);
   assert.match(worker, /characters\.v1\.js/);
@@ -109,6 +113,7 @@ test('les atlas et médias narratifs utilisent un cache media cache-first', () =
   assert.match(worker, /MEDIA_CACHE_NAME = `\$\{CACHE_PREFIX\}media-\$\{RELEASE_VERSION\}-\$\{CACHE_REVISION\}`/);
   assert.match(worker, /MAX_MEDIA_CACHE_ENTRIES = 320/);
   assert.match(worker, /relativePath\.startsWith\('assets\/animations\/'\)/);
+  assert.match(worker, /relativePath\.startsWith\('assets\/dlc\/'\)/);
   assert.match(worker, /relativePath\.startsWith\('assets\/characters\/'\)/);
   assert.match(worker, /relativePath\.startsWith\('assets\/vn\/'\)/);
   assert.match(

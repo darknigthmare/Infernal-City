@@ -1,0 +1,55 @@
+{
+  "id": "katya",
+  "name": "Katya Moroz",
+  "kind": "heroes",
+  "packId": "dlc_cryo_brutalist",
+  "biome": "arctic",
+  "path": "assets/dlc/illustrated-v1/heroes/katya.png",
+  "columns": 8,
+  "rows": 8,
+  "states": [
+    "intro",
+    "idle_respiration",
+    "attack",
+    "ability",
+    "ultimate",
+    "victory",
+    "defeat",
+    "outro"
+  ],
+  "reference": "assets/characters/heroines/freyja-rimeborne-atlas-v1.png",
+  "referenceRole": "style-camera-material guide only; not identity",
+  "fidelity": "first original design from authored DLC metadata and palette",
+  "source": "dlc-packs.v1.js",
+  "authoredCharacter": {
+    "id": "katya",
+    "name": "Katya Moroz",
+    "age": 24,
+    "isAdult": true,
+    "title": "Sentinelle Boréale",
+    "ability": "Dôme Boréal",
+    "ultimate": "Nuit Polaire"
+  },
+  "palette": {
+    "bg": "#0f172a",
+    "primary": "#4ade80",
+    "secondary": "#e879f9",
+    "glow": "#e0f2fe"
+  },
+  "designBrief": "Mature adult woman with short brown hair and dark insulated fur cap, closed grey-blue officer coat over armored trousers and boots, ice-white plates and green/magenta aurora lights. Compact cryogenic beacon staff. Arctic sentinel silhouette.",
+  "prompt": "Use case: stylized-concept. Production game sprite animation atlas for Infernal City. The attached atlas is a STYLE, SCALE, CAMERA and painterly-material reference only; invent the specified new character, do not copy the guide character or its costume. Match the existing illustrated dark-fantasy tactical sprite style: detailed crisp hand-painted surfaces, fine dark contours, directional highlights, believable adult anatomy, elevated three-quarter camera facing toward screen-right. Use the SAME camera, head, body proportions, outfit, weapon and scale consistently in every cell. Exactly one full character per cell, no clones inside a cell. All combat costumes fully opaque and closed, all characters plainly mature adults. True transparent alpha background, no floor, no background color, no contact shadow outside feet, no labels, typography, grid lines, watermarks or UI. Every action stays inside its own mathematically equal cell: body plus weapon plus particles must fit the central 55% width and 60% height; generous transparent margins on all four sides, absolutely no cropped hair, weapons, glows, or cross-cell overlap. Keep effects compact and attached to the character, no long projectile beams. Eight consecutive distinct animation frames left-to-right in EVERY row; exactly the listed number of rows, no extra rows, no missing or blank cells. Use tightly controlled movement arcs, no arbitrary view changes. Non-graphic defeat, never blood or gore.\nSubject: Katya Moroz, a new heroine in \"Bastion Cryo-Brutaliste & Aurores Boréales\". Authored identity: Sentinelle Boréale. Visual domain: Monolithes Polaires Brutalistes, Glace Cristalline & Aurores Vert/Magenta. Palette: {\"bg\":\"#0f172a\",\"primary\":\"#4ade80\",\"secondary\":\"#e879f9\",\"glow\":\"#e0f2fe\"}; background remains transparent regardless of palette bg. Design: Mature adult woman with short brown hair and dark insulated fur cap, closed grey-blue officer coat over armored trousers and boots, ice-white plates and green/magenta aurora lights. Compact cryogenic beacon staff. Arctic sentinel silhouette.\nLayout: EXACTLY 8 columns by 8 rows, 64 equal square cells, square 2048×2048 atlas. Bodies center at each cell's midpoint with the feet on a consistent local baseline around 80% cell height. Eight rows from top to bottom: 1 intro, eight steps of arrival and readying the weapon, character visible in all frames; 2 idle_respiration, subtle breathing loop with cloth motion; 3 attack, windup, strike, compact impact and recovery; 4 ability, \"Dôme Boréal\", progressive compact thematic casting; 5 ultimate, \"Nuit Polaire\", stronger compact aura building and releasing without filling the cell margins; 6 victory, weapon salute and relaxed triumphant recovery; 7 defeat, damage reaction then non-graphic kneeling exhaustion, fully clothed, never disappearing; 8 outro, controlled departure step loop with a fully opaque visible character in every frame.\nMaintain a single coherent identity across the entire sheet, same mature face and hairstyle. Readability at tactical game size is essential. STRICT GUTTERS: no haze, fog, dust, ambient glow clouds, floodlights or colored matte anywhere. Transparent empty space separates every frame on every side. Effects are narrow crisp rings, short streaks or tiny sparks, contained within the character's silhouette width whenever possible. No fade-out or white fog even in the outro: every frame remains a clean opaque character cutout. Do not enlarge the ultimate aura beyond the central 60% of a cell.",
+  "key": "heroes/katya",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-3c0dfe5c-c4cf-419a-8741-1ae622e58504.png",
+  "status": "pending-visual-review",
+  "generator": "built-in image_gen",
+  "nativeBytesPreserved": true,
+  "sha256": "af52548e455cf45bdef83a8f8ca896847b0600fdb327aff84ba9c8fb52a3fa8b",
+  "bytes": 2589957,
+  "width": 1254,
+  "height": 1254,
+  "mode": "RGBA",
+  "alphaExtrema": [
+    0,
+    255
+  ]
+}

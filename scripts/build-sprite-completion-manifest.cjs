@@ -84,13 +84,15 @@ for (const [key, spec] of Object.entries(registry.assets)) {
   const previousScale = prior[key]?.sha256 === sha256 && prior[key]?.drawScaleSha256 === sha256
     ? prior[key].drawScale : 1;
   const requestedScale = measured?.drawScale ?? previousScale;
-  const drawScale = !spec.preparedOnly && Number.isFinite(requestedScale) && requestedScale >= 0.5 && requestedScale <= 2.5
+  const drawScale = !spec.preparedOnly && (!spec.usage || spec.usage === 'combat')
+    && Number.isFinite(requestedScale) && requestedScale >= 0.5 && requestedScale <= 2.5
     ? requestedScale : 1;
   const reviewed = !rejected.has(key) && (reviewedHashes.has(key)
     || (qa.replace !== true && prior[key]?.approved === true && prior[key].sha256 === sha256));
   const entry = { key, src: spec.src, width, height, columns: spec.columns, rows: spec.rows,
     states: spec.states, frameCount: spec.columns * spec.rows, bytes: bytes.length, sha256,
     sequenceFrames: spec.sequenceFrames || null, fps: spec.fps, preparedOnly: spec.preparedOnly === true,
+    usage: spec.usage || 'combat',
     drawScale, drawScaleSha256: sha256,
     approved: reviewed, source: 'built-in image_gen', nativeBytesPreserved: true };
   present.push(entry);

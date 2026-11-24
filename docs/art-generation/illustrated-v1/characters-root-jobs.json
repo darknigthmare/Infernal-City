@@ -1,0 +1,330 @@
+[
+  {
+    "id": "astrid",
+    "name": "Astrid Valen",
+    "kind": "heroes",
+    "packId": "dlc_cryo_brutalist",
+    "biome": "arctic",
+    "path": "assets/dlc/illustrated-v1/heroes/astrid.png",
+    "columns": 8,
+    "rows": 8,
+    "states": [
+      "intro",
+      "idle_respiration",
+      "attack",
+      "ability",
+      "ultimate",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "reference": "assets/characters/heroines/freyja-rimeborne-atlas-v1.png",
+    "referenceRole": "style-camera-material guide only; not identity",
+    "fidelity": "first original design from authored DLC metadata and palette",
+    "source": "dlc-packs.v1.js",
+    "authoredCharacter": {
+      "id": "astrid",
+      "name": "Astrid Valen",
+      "age": 20,
+      "isAdult": true,
+      "title": "Briseuse de Banquise",
+      "ability": "Bris de Banquise",
+      "ultimate": "Faille Glaciaire"
+    },
+    "palette": {
+      "bg": "#0f172a",
+      "primary": "#4ade80",
+      "secondary": "#e879f9",
+      "glow": "#e0f2fe"
+    },
+    "designBrief": "Mature adult woman with platinum braid, heavy gunmetal cryogenic plate armor and insulated blue coat, boots and gauntlets, bright green and magenta aurora emitters. Compact ice-forged war hammer held close. Strong arctic icebreaker silhouette.",
+    "prompt": "Use case: stylized-concept. Production game sprite animation atlas for Infernal City. The attached atlas is a STYLE, SCALE, CAMERA and painterly-material reference only; invent the specified new character, do not copy the guide character or its costume. Match the existing illustrated dark-fantasy tactical sprite style: detailed crisp hand-painted surfaces, fine dark contours, directional highlights, believable adult anatomy, elevated three-quarter camera facing toward screen-right. Use the SAME camera, head, body proportions, outfit, weapon and scale consistently in every cell. Exactly one full character per cell, no clones inside a cell. All combat costumes fully opaque and closed, all characters plainly mature adults. True transparent alpha background, no floor, no background color, no contact shadow outside feet, no labels, typography, grid lines, watermarks or UI. Every action stays inside its own mathematically equal cell: body plus weapon plus particles must fit the central 55% width and 60% height; generous transparent margins on all four sides, absolutely no cropped hair, weapons, glows, or cross-cell overlap. Keep effects compact and attached to the character, no long projectile beams. Eight consecutive distinct animation frames left-to-right in EVERY row; exactly the listed number of rows, no extra rows, no missing or blank cells. Use tightly controlled movement arcs, no arbitrary view changes. Non-graphic defeat, never blood or gore.\nSubject: Astrid Valen, a new heroine in \"Bastion Cryo-Brutaliste & Aurores Boréales\". Authored identity: Briseuse de Banquise. Visual domain: Monolithes Polaires Brutalistes, Glace Cristalline & Aurores Vert/Magenta. Palette: {\"bg\":\"#0f172a\",\"primary\":\"#4ade80\",\"secondary\":\"#e879f9\",\"glow\":\"#e0f2fe\"}; background remains transparent regardless of palette bg. Design: Mature adult woman with platinum braid, heavy gunmetal cryogenic plate armor and insulated blue coat, boots and gauntlets, bright green and magenta aurora emitters. Compact ice-forged war hammer held close. Strong arctic icebreaker silhouette.\nLayout: EXACTLY 8 columns by 8 rows, 64 equal square cells, square 2048×2048 atlas. Bodies center at each cell's midpoint with the feet on a consistent local baseline around 80% cell height. Eight rows from top to bottom: 1 intro, eight steps of arrival and readying the weapon, character visible in all frames; 2 idle_respiration, subtle breathing loop with cloth motion; 3 attack, windup, strike, compact impact and recovery; 4 ability, \"Bris de Banquise\", progressive compact thematic casting; 5 ultimate, \"Faille Glaciaire\", stronger compact aura building and releasing without filling the cell margins; 6 victory, weapon salute and relaxed triumphant recovery; 7 defeat, damage reaction then non-graphic kneeling exhaustion, fully clothed, never disappearing; 8 outro, controlled departure step loop with a fully opaque visible character in every frame.\nMaintain a single coherent identity across the entire sheet, same mature face and hairstyle. Readability at tactical game size is essential. STRICT GUTTERS: no haze, fog, dust, ambient glow clouds, floodlights or colored matte anywhere. Transparent empty space separates every frame on every side. Effects are narrow crisp rings, short streaks or tiny sparks, contained within the character's silhouette width whenever possible. No fade-out or white fog even in the outro: every frame remains a clean opaque character cutout. Do not enlarge the ultimate aura beyond the central 60% of a cell."
+  },
+  {
+    "id": "katya",
+    "name": "Katya Moroz",
+    "kind": "heroes",
+    "packId": "dlc_cryo_brutalist",
+    "biome": "arctic",
+    "path": "assets/dlc/illustrated-v1/heroes/katya.png",
+    "columns": 8,
+    "rows": 8,
+    "states": [
+      "intro",
+      "idle_respiration",
+      "attack",
+      "ability",
+      "ultimate",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "reference": "assets/characters/heroines/freyja-rimeborne-atlas-v1.png",
+    "referenceRole": "style-camera-material guide only; not identity",
+    "fidelity": "first original design from authored DLC metadata and palette",
+    "source": "dlc-packs.v1.js",
+    "authoredCharacter": {
+      "id": "katya",
+      "name": "Katya Moroz",
+      "age": 24,
+      "isAdult": true,
+      "title": "Sentinelle Boréale",
+      "ability": "Dôme Boréal",
+      "ultimate": "Nuit Polaire"
+    },
+    "palette": {
+      "bg": "#0f172a",
+      "primary": "#4ade80",
+      "secondary": "#e879f9",
+      "glow": "#e0f2fe"
+    },
+    "designBrief": "Mature adult woman with short brown hair and dark insulated fur cap, closed grey-blue officer coat over armored trousers and boots, ice-white plates and green/magenta aurora lights. Compact cryogenic beacon staff. Arctic sentinel silhouette.",
+    "prompt": "Use case: stylized-concept. Production game sprite animation atlas for Infernal City. The attached atlas is a STYLE, SCALE, CAMERA and painterly-material reference only; invent the specified new character, do not copy the guide character or its costume. Match the existing illustrated dark-fantasy tactical sprite style: detailed crisp hand-painted surfaces, fine dark contours, directional highlights, believable adult anatomy, elevated three-quarter camera facing toward screen-right. Use the SAME camera, head, body proportions, outfit, weapon and scale consistently in every cell. Exactly one full character per cell, no clones inside a cell. All combat costumes fully opaque and closed, all characters plainly mature adults. True transparent alpha background, no floor, no background color, no contact shadow outside feet, no labels, typography, grid lines, watermarks or UI. Every action stays inside its own mathematically equal cell: body plus weapon plus particles must fit the central 55% width and 60% height; generous transparent margins on all four sides, absolutely no cropped hair, weapons, glows, or cross-cell overlap. Keep effects compact and attached to the character, no long projectile beams. Eight consecutive distinct animation frames left-to-right in EVERY row; exactly the listed number of rows, no extra rows, no missing or blank cells. Use tightly controlled movement arcs, no arbitrary view changes. Non-graphic defeat, never blood or gore.\nSubject: Katya Moroz, a new heroine in \"Bastion Cryo-Brutaliste & Aurores Boréales\". Authored identity: Sentinelle Boréale. Visual domain: Monolithes Polaires Brutalistes, Glace Cristalline & Aurores Vert/Magenta. Palette: {\"bg\":\"#0f172a\",\"primary\":\"#4ade80\",\"secondary\":\"#e879f9\",\"glow\":\"#e0f2fe\"}; background remains transparent regardless of palette bg. Design: Mature adult woman with short brown hair and dark insulated fur cap, closed grey-blue officer coat over armored trousers and boots, ice-white plates and green/magenta aurora lights. Compact cryogenic beacon staff. Arctic sentinel silhouette.\nLayout: EXACTLY 8 columns by 8 rows, 64 equal square cells, square 2048×2048 atlas. Bodies center at each cell's midpoint with the feet on a consistent local baseline around 80% cell height. Eight rows from top to bottom: 1 intro, eight steps of arrival and readying the weapon, character visible in all frames; 2 idle_respiration, subtle breathing loop with cloth motion; 3 attack, windup, strike, compact impact and recovery; 4 ability, \"Dôme Boréal\", progressive compact thematic casting; 5 ultimate, \"Nuit Polaire\", stronger compact aura building and releasing without filling the cell margins; 6 victory, weapon salute and relaxed triumphant recovery; 7 defeat, damage reaction then non-graphic kneeling exhaustion, fully clothed, never disappearing; 8 outro, controlled departure step loop with a fully opaque visible character in every frame.\nMaintain a single coherent identity across the entire sheet, same mature face and hairstyle. Readability at tactical game size is essential. STRICT GUTTERS: no haze, fog, dust, ambient glow clouds, floodlights or colored matte anywhere. Transparent empty space separates every frame on every side. Effects are narrow crisp rings, short streaks or tiny sparks, contained within the character's silhouette width whenever possible. No fade-out or white fog even in the outro: every frame remains a clean opaque character cutout. Do not enlarge the ultimate aura beyond the central 60% of a cell."
+  },
+  {
+    "id": "cryo_valkyr",
+    "name": "Tsarine Cryo-Valkyr",
+    "kind": "bosses",
+    "packId": "dlc_cryo_brutalist",
+    "biome": "arctic",
+    "path": "assets/dlc/illustrated-v1/bosses/cryo_valkyr.png",
+    "columns": 8,
+    "rows": 6,
+    "states": [
+      "intro",
+      "phase_shift_2",
+      "phase_shift_3",
+      "heavy_telegraph",
+      "defeat",
+      "idle"
+    ],
+    "reference": "assets/characters/heroines/freyja-rimeborne-atlas-v1.png",
+    "referenceRole": "style-camera-material guide only; not identity",
+    "fidelity": "first original design from authored DLC metadata and palette",
+    "source": "dlc-packs.v1.js",
+    "authoredCharacter": {
+      "id": "cryo_valkyr",
+      "name": "Tsarine Cryo-Valkyr",
+      "age": 23,
+      "isAdult": true,
+      "phases": [
+        "Givre Absolu",
+        "Aurore Brisée",
+        "Zéro Polaire"
+      ]
+    },
+    "palette": {
+      "bg": "#0f172a",
+      "primary": "#4ade80",
+      "secondary": "#e879f9",
+      "glow": "#e0f2fe"
+    },
+    "designBrief": "Mature adult tsarina with silver bob hair, angular glacier crown, full white-grey cryogenic plate armor with closed deep-blue aurora cape, heavy boots. Compact crystalline ice blade, green/magenta seams. Brutalist ice monarch silhouette.",
+    "prompt": "Use case: stylized-concept. Production game sprite animation atlas for Infernal City. The attached atlas is a STYLE, SCALE, CAMERA and painterly-material reference only; invent the specified new character, do not copy the guide character or its costume. Match the existing illustrated dark-fantasy tactical sprite style: detailed crisp hand-painted surfaces, fine dark contours, directional highlights, believable adult anatomy, elevated three-quarter camera facing toward screen-right. Use the SAME camera, head, body proportions, outfit, weapon and scale consistently in every cell. Exactly one full character per cell, no clones inside a cell. All combat costumes fully opaque and closed, all characters plainly mature adults. True transparent alpha background, no floor, no background color, no contact shadow outside feet, no labels, typography, grid lines, watermarks or UI. Every action stays inside its own mathematically equal cell: body plus weapon plus particles must fit the central 55% width and 60% height; generous transparent margins on all four sides, absolutely no cropped hair, weapons, glows, or cross-cell overlap. Keep effects compact and attached to the character, no long projectile beams. Eight consecutive distinct animation frames left-to-right in EVERY row; exactly the listed number of rows, no extra rows, no missing or blank cells. Use tightly controlled movement arcs, no arbitrary view changes. Non-graphic defeat, never blood or gore.\nSubject: Tsarine Cryo-Valkyr, a new boss in \"Bastion Cryo-Brutaliste & Aurores Boréales\". Authored identity: Givre Absolu / Aurore Brisée / Zéro Polaire. Visual domain: Monolithes Polaires Brutalistes, Glace Cristalline & Aurores Vert/Magenta. Palette: {\"bg\":\"#0f172a\",\"primary\":\"#4ade80\",\"secondary\":\"#e879f9\",\"glow\":\"#e0f2fe\"}; background remains transparent regardless of palette bg. Design: Mature adult tsarina with silver bob hair, angular glacier crown, full white-grey cryogenic plate armor with closed deep-blue aurora cape, heavy boots. Compact crystalline ice blade, green/magenta seams. Brutalist ice monarch silhouette.\nLayout: EXACTLY 8 columns by 6 rows, 48 equal square cells, 4:3 landscape 2048×1536 atlas. Bodies center at each cell's midpoint with the feet on a consistent local baseline around 80% cell height. Six rows from top to bottom: 1 intro, eight steps of imposing arrival and ready stance, character visible in all frames; 2 phase_shift_2, \"Aurore Brisée\", escalating compact power activation while keeping same outfit and body; 3 phase_shift_3, \"Zéro Polaire\", more intense compact aura and pose; 4 heavy_telegraph, clearly readable attack windup, held charge, strike-ready peak and recovery without long beam; 5 defeat, non-graphic stagger and kneeling collapse with compact dissolving motes, visible remains in all frames; 6 idle, breathing and subtle weapon/cloth loop.\nMaintain a single coherent identity across the entire sheet, same mature face and hairstyle. Readability at tactical game size is essential. STRICT GUTTERS: no haze, fog, dust, ambient glow clouds, floodlights or colored matte anywhere. Transparent empty space separates every frame on every side. Effects are narrow crisp rings, short streaks or tiny sparks, contained within the character's silhouette width whenever possible. No fade-out or white fog even in the outro: every frame remains a clean opaque character cutout. Do not enlarge the ultimate aura beyond the central 60% of a cell."
+  },
+  {
+    "id": "skadi_prism",
+    "name": "Prêtresse Skadi",
+    "kind": "bosses",
+    "packId": "dlc_cryo_brutalist",
+    "biome": "arctic",
+    "path": "assets/dlc/illustrated-v1/bosses/skadi_prism.png",
+    "columns": 8,
+    "rows": 6,
+    "states": [
+      "intro",
+      "phase_shift_2",
+      "phase_shift_3",
+      "heavy_telegraph",
+      "defeat",
+      "idle"
+    ],
+    "reference": "assets/characters/heroines/freyja-rimeborne-atlas-v1.png",
+    "referenceRole": "style-camera-material guide only; not identity",
+    "fidelity": "first original design from authored DLC metadata and palette",
+    "source": "dlc-packs.v1.js",
+    "authoredCharacter": {
+      "id": "skadi_prism",
+      "name": "Prêtresse Skadi",
+      "age": 19,
+      "isAdult": true,
+      "phases": [
+        "Voile Boréal",
+        "Stalactites Plasma",
+        "Solstice Gelé"
+      ]
+    },
+    "palette": {
+      "bg": "#0f172a",
+      "primary": "#4ade80",
+      "secondary": "#e879f9",
+      "glow": "#e0f2fe"
+    },
+    "designBrief": "Mature adult woman with long red braid, grey-white fur collar and opaque full-length blue armored priestess robe with boots, angular ice prism crown. Compact crystal prism staff, pale ice and green/magenta aurora illumination.",
+    "prompt": "Use case: stylized-concept. Production game sprite animation atlas for Infernal City. The attached atlas is a STYLE, SCALE, CAMERA and painterly-material reference only; invent the specified new character, do not copy the guide character or its costume. Match the existing illustrated dark-fantasy tactical sprite style: detailed crisp hand-painted surfaces, fine dark contours, directional highlights, believable adult anatomy, elevated three-quarter camera facing toward screen-right. Use the SAME camera, head, body proportions, outfit, weapon and scale consistently in every cell. Exactly one full character per cell, no clones inside a cell. All combat costumes fully opaque and closed, all characters plainly mature adults. True transparent alpha background, no floor, no background color, no contact shadow outside feet, no labels, typography, grid lines, watermarks or UI. Every action stays inside its own mathematically equal cell: body plus weapon plus particles must fit the central 55% width and 60% height; generous transparent margins on all four sides, absolutely no cropped hair, weapons, glows, or cross-cell overlap. Keep effects compact and attached to the character, no long projectile beams. Eight consecutive distinct animation frames left-to-right in EVERY row; exactly the listed number of rows, no extra rows, no missing or blank cells. Use tightly controlled movement arcs, no arbitrary view changes. Non-graphic defeat, never blood or gore.\nSubject: Prêtresse Skadi, a new boss in \"Bastion Cryo-Brutaliste & Aurores Boréales\". Authored identity: Voile Boréal / Stalactites Plasma / Solstice Gelé. Visual domain: Monolithes Polaires Brutalistes, Glace Cristalline & Aurores Vert/Magenta. Palette: {\"bg\":\"#0f172a\",\"primary\":\"#4ade80\",\"secondary\":\"#e879f9\",\"glow\":\"#e0f2fe\"}; background remains transparent regardless of palette bg. Design: Mature adult woman with long red braid, grey-white fur collar and opaque full-length blue armored priestess robe with boots, angular ice prism crown. Compact crystal prism staff, pale ice and green/magenta aurora illumination.\nLayout: EXACTLY 8 columns by 6 rows, 48 equal square cells, 4:3 landscape 2048×1536 atlas. Bodies center at each cell's midpoint with the feet on a consistent local baseline around 80% cell height. Six rows from top to bottom: 1 intro, eight steps of imposing arrival and ready stance, character visible in all frames; 2 phase_shift_2, \"Stalactites Plasma\", escalating compact power activation while keeping same outfit and body; 3 phase_shift_3, \"Solstice Gelé\", more intense compact aura and pose; 4 heavy_telegraph, clearly readable attack windup, held charge, strike-ready peak and recovery without long beam; 5 defeat, non-graphic stagger and kneeling collapse with compact dissolving motes, visible remains in all frames; 6 idle, breathing and subtle weapon/cloth loop.\nMaintain a single coherent identity across the entire sheet, same mature face and hairstyle. Readability at tactical game size is essential. STRICT GUTTERS: no haze, fog, dust, ambient glow clouds, floodlights or colored matte anywhere. Transparent empty space separates every frame on every side. Effects are narrow crisp rings, short streaks or tiny sparks, contained within the character's silhouette width whenever possible. No fade-out or white fog even in the outro: every frame remains a clean opaque character cutout. Do not enlarge the ultimate aura beyond the central 60% of a cell."
+  },
+  {
+    "id": "vivienne",
+    "name": "Lady Vivienne Gearhart",
+    "kind": "heroes",
+    "packId": "dlc_brass_palace",
+    "biome": "brass",
+    "path": "assets/dlc/illustrated-v1/heroes/vivienne.png",
+    "columns": 8,
+    "rows": 8,
+    "states": [
+      "intro",
+      "idle_respiration",
+      "attack",
+      "ability",
+      "ultimate",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "reference": "assets/characters/heroines/aurelia-brassheart-atlas-v1.png",
+    "referenceRole": "style-camera-material guide only; not identity",
+    "fidelity": "first original design from authored DLC metadata and palette",
+    "source": "dlc-packs.v1.js",
+    "authoredCharacter": {
+      "id": "vivienne",
+      "name": "Lady Vivienne Gearhart",
+      "age": 22,
+      "isAdult": true,
+      "title": "Ingénieure Impériale",
+      "ability": "Surcharge Vapeur",
+      "ultimate": "Pressurisation Totale"
+    },
+    "palette": {
+      "bg": "#27121b",
+      "primary": "#d97706",
+      "secondary": "#fbbf24",
+      "glow": "#881337"
+    },
+    "designBrief": "Mature adult woman with auburn hair in a bun and copper goggles, closed burgundy engineering coat with brass pauldrons, opaque trousers and tall boots. Steam-powered brass gauntlet and compact voltaic musket. Imperial engineer, dark purple cloth and warm copper.",
+    "prompt": "Use case: stylized-concept. Production game sprite animation atlas for Infernal City. The attached atlas is a STYLE, SCALE, CAMERA and painterly-material reference only; invent the specified new character, do not copy the guide character or its costume. Match the existing illustrated dark-fantasy tactical sprite style: detailed crisp hand-painted surfaces, fine dark contours, directional highlights, believable adult anatomy, elevated three-quarter camera facing toward screen-right. Use the SAME camera, head, body proportions, outfit, weapon and scale consistently in every cell. Exactly one full character per cell, no clones inside a cell. All combat costumes fully opaque and closed, all characters plainly mature adults. True transparent alpha background, no floor, no background color, no contact shadow outside feet, no labels, typography, grid lines, watermarks or UI. Every action stays inside its own mathematically equal cell: body plus weapon plus particles must fit the central 55% width and 60% height; generous transparent margins on all four sides, absolutely no cropped hair, weapons, glows, or cross-cell overlap. Keep effects compact and attached to the character, no long projectile beams. Eight consecutive distinct animation frames left-to-right in EVERY row; exactly the listed number of rows, no extra rows, no missing or blank cells. Use tightly controlled movement arcs, no arbitrary view changes. Non-graphic defeat, never blood or gore.\nSubject: Lady Vivienne Gearhart, a new heroine in \"Palais Mécanique & Horlogerie de Cuivre\". Authored identity: Ingénieure Impériale. Visual domain: Steampunk Impérial, Cuivre, Laiton, Velours Pourpre & Vapeur Dorée. Palette: {\"bg\":\"#27121b\",\"primary\":\"#d97706\",\"secondary\":\"#fbbf24\",\"glow\":\"#881337\"}; background remains transparent regardless of palette bg. Design: Mature adult woman with auburn hair in a bun and copper goggles, closed burgundy engineering coat with brass pauldrons, opaque trousers and tall boots. Steam-powered brass gauntlet and compact voltaic musket. Imperial engineer, dark purple cloth and warm copper.\nLayout: EXACTLY 8 columns by 8 rows, 64 equal square cells, square 2048×2048 atlas. Bodies center at each cell's midpoint with the feet on a consistent local baseline around 80% cell height. Eight rows from top to bottom: 1 intro, eight steps of arrival and readying the weapon, character visible in all frames; 2 idle_respiration, subtle breathing loop with cloth motion; 3 attack, windup, strike, compact impact and recovery; 4 ability, \"Surcharge Vapeur\", progressive compact thematic casting; 5 ultimate, \"Pressurisation Totale\", stronger compact aura building and releasing without filling the cell margins; 6 victory, weapon salute and relaxed triumphant recovery; 7 defeat, damage reaction then non-graphic kneeling exhaustion, fully clothed, never disappearing; 8 outro, controlled departure step loop with a fully opaque visible character in every frame.\nMaintain a single coherent identity across the entire sheet, same mature face and hairstyle. Readability at tactical game size is essential. STRICT GUTTERS: no haze, fog, dust, ambient glow clouds, floodlights or colored matte anywhere. Transparent empty space separates every frame on every side. Effects are narrow crisp rings, short streaks or tiny sparks, contained within the character's silhouette width whenever possible. No fade-out or white fog even in the outro: every frame remains a clean opaque character cutout. Do not enlarge the ultimate aura beyond the central 60% of a cell."
+  },
+  {
+    "id": "clarisse",
+    "name": "Clarisse Pendule",
+    "kind": "heroes",
+    "packId": "dlc_brass_palace",
+    "biome": "brass",
+    "path": "assets/dlc/illustrated-v1/heroes/clarisse.png",
+    "columns": 8,
+    "rows": 8,
+    "states": [
+      "intro",
+      "idle_respiration",
+      "attack",
+      "ability",
+      "ultimate",
+      "victory",
+      "defeat",
+      "outro"
+    ],
+    "reference": "assets/characters/heroines/aurelia-brassheart-atlas-v1.png",
+    "referenceRole": "style-camera-material guide only; not identity",
+    "fidelity": "first original design from authored DLC metadata and palette",
+    "source": "dlc-packs.v1.js",
+    "authoredCharacter": {
+      "id": "clarisse",
+      "name": "Clarisse Pendule",
+      "age": 19,
+      "isAdult": true,
+      "title": "Horlogère de Combat",
+      "ability": "Griffe Mécanique",
+      "ultimate": "Carillon de Cuivre"
+    },
+    "palette": {
+      "bg": "#27121b",
+      "primary": "#d97706",
+      "secondary": "#fbbf24",
+      "glow": "#881337"
+    },
+    "designBrief": "Mature adult woman with short copper curls, closed purple combat tailcoat, brass chest plate over opaque clothes, trousers and boots. One brass mechanical claw gauntlet, compact gear dial held by the other hand. Nimble combat clockmaker.",
+    "prompt": "Use case: stylized-concept. Production game sprite animation atlas for Infernal City. The attached atlas is a STYLE, SCALE, CAMERA and painterly-material reference only; invent the specified new character, do not copy the guide character or its costume. Match the existing illustrated dark-fantasy tactical sprite style: detailed crisp hand-painted surfaces, fine dark contours, directional highlights, believable adult anatomy, elevated three-quarter camera facing toward screen-right. Use the SAME camera, head, body proportions, outfit, weapon and scale consistently in every cell. Exactly one full character per cell, no clones inside a cell. All combat costumes fully opaque and closed, all characters plainly mature adults. True transparent alpha background, no floor, no background color, no contact shadow outside feet, no labels, typography, grid lines, watermarks or UI. Every action stays inside its own mathematically equal cell: body plus weapon plus particles must fit the central 55% width and 60% height; generous transparent margins on all four sides, absolutely no cropped hair, weapons, glows, or cross-cell overlap. Keep effects compact and attached to the character, no long projectile beams. Eight consecutive distinct animation frames left-to-right in EVERY row; exactly the listed number of rows, no extra rows, no missing or blank cells. Use tightly controlled movement arcs, no arbitrary view changes. Non-graphic defeat, never blood or gore.\nSubject: Clarisse Pendule, a new heroine in \"Palais Mécanique & Horlogerie de Cuivre\". Authored identity: Horlogère de Combat. Visual domain: Steampunk Impérial, Cuivre, Laiton, Velours Pourpre & Vapeur Dorée. Palette: {\"bg\":\"#27121b\",\"primary\":\"#d97706\",\"secondary\":\"#fbbf24\",\"glow\":\"#881337\"}; background remains transparent regardless of palette bg. Design: Mature adult woman with short copper curls, closed purple combat tailcoat, brass chest plate over opaque clothes, trousers and boots. One brass mechanical claw gauntlet, compact gear dial held by the other hand. Nimble combat clockmaker.\nLayout: EXACTLY 8 columns by 8 rows, 64 equal square cells, square 2048×2048 atlas. Bodies center at each cell's midpoint with the feet on a consistent local baseline around 80% cell height. Eight rows from top to bottom: 1 intro, eight steps of arrival and readying the weapon, character visible in all frames; 2 idle_respiration, subtle breathing loop with cloth motion; 3 attack, windup, strike, compact impact and recovery; 4 ability, \"Griffe Mécanique\", progressive compact thematic casting; 5 ultimate, \"Carillon de Cuivre\", stronger compact aura building and releasing without filling the cell margins; 6 victory, weapon salute and relaxed triumphant recovery; 7 defeat, damage reaction then non-graphic kneeling exhaustion, fully clothed, never disappearing; 8 outro, controlled departure step loop with a fully opaque visible character in every frame.\nMaintain a single coherent identity across the entire sheet, same mature face and hairstyle. Readability at tactical game size is essential. STRICT GUTTERS: no haze, fog, dust, ambient glow clouds, floodlights or colored matte anywhere. Transparent empty space separates every frame on every side. Effects are narrow crisp rings, short streaks or tiny sparks, contained within the character's silhouette width whenever possible. No fade-out or white fog even in the outro: every frame remains a clean opaque character cutout. Do not enlarge the ultimate aura beyond the central 60% of a cell."
+  },
+  {
+    "id": "brass_queen",
+    "name": "Automate Brass-Queen",
+    "kind": "bosses",
+    "packId": "dlc_brass_palace",
+    "biome": "brass",
+    "path": "assets/dlc/illustrated-v1/bosses/brass_queen.png",
+    "columns": 8,
+    "rows": 6,
+    "states": [
+      "intro",
+      "phase_shift_2",
+      "phase_shift_3",
+      "heavy_telegraph",
+      "defeat",
+      "idle"
+    ],
+    "reference": "assets/characters/heroines/aurelia-brassheart-atlas-v1.png",
+    "referenceRole": "style-camera-material guide only; not identity",
+    "fidelity": "first original design from authored DLC metadata and palette",
+    "source": "dlc-packs.v1.js",
+    "authoredCharacter": {
+      "id": "brass_queen",
+      "name": "Automate Brass-Queen",
+      "age": 24,
+      "isAdult": true,
+      "phases": [
+        "Pression Nominale",
+        "Soupapes Ouvertes",
+        "Surchauffe Impériale"
+      ]
+    },
+    "palette": {
+      "bg": "#27121b",
+      "primary": "#d97706",
+      "secondary": "#fbbf24",
+      "glow": "#881337"
+    },
+    "designBrief": "Mature female automaton with adult porcelain face, copper curled metal hair, royal brass diadem, complete imperial brass plate and opaque purple robes with boots. Two mechanical arms and two legs; compact geared sceptre, warm steam valves, no extra limbs.",
+    "prompt": "Use case: stylized-concept. Production game sprite animation atlas for Infernal City. The attached atlas is a STYLE, SCALE, CAMERA and painterly-material reference only; invent the specified new character, do not copy the guide character or its costume. Match the existing illustrated dark-fantasy tactical sprite style: detailed crisp hand-painted surfaces, fine dark contours, directional highlights, believable adult anatomy, elevated three-quarter camera facing toward screen-right. Use the SAME camera, head, body proportions, outfit, weapon and scale consistently in every cell. Exactly one full character per cell, no clones inside a cell. All combat costumes fully opaque and closed, all characters plainly mature adults. True transparent alpha background, no floor, no background color, no contact shadow outside feet, no labels, typography, grid lines, watermarks or UI. Every action stays inside its own mathematically equal cell: body plus weapon plus particles must fit the central 55% width and 60% height; generous transparent margins on all four sides, absolutely no cropped hair, weapons, glows, or cross-cell overlap. Keep effects compact and attached to the character, no long projectile beams. Eight consecutive distinct animation frames left-to-right in EVERY row; exactly the listed number of rows, no extra rows, no missing or blank cells. Use tightly controlled movement arcs, no arbitrary view changes. Non-graphic defeat, never blood or gore.\nSubject: Automate Brass-Queen, a new boss in \"Palais Mécanique & Horlogerie de Cuivre\". Authored identity: Pression Nominale / Soupapes Ouvertes / Surchauffe Impériale. Visual domain: Steampunk Impérial, Cuivre, Laiton, Velours Pourpre & Vapeur Dorée. Palette: {\"bg\":\"#27121b\",\"primary\":\"#d97706\",\"secondary\":\"#fbbf24\",\"glow\":\"#881337\"}; background remains transparent regardless of palette bg. Design: Mature female automaton with adult porcelain face, copper curled metal hair, royal brass diadem, complete imperial brass plate and opaque purple robes with boots. Two mechanical arms and two legs; compact geared sceptre, warm steam valves, no extra limbs.\nLayout: EXACTLY 8 columns by 6 rows, 48 equal square cells, 4:3 landscape 2048×1536 atlas. Bodies center at each cell's midpoint with the feet on a consistent local baseline around 80% cell height. Six rows from top to bottom: 1 intro, eight steps of imposing arrival and ready stance, character visible in all frames; 2 phase_shift_2, \"Soupapes Ouvertes\", escalating compact power activation while keeping same outfit and body; 3 phase_shift_3, \"Surchauffe Impériale\", more intense compact aura and pose; 4 heavy_telegraph, clearly readable attack windup, held charge, strike-ready peak and recovery without long beam; 5 defeat, non-graphic stagger and kneeling collapse with compact dissolving motes, visible remains in all frames; 6 idle, breathing and subtle weapon/cloth loop.\nMaintain a single coherent identity across the entire sheet, same mature face and hairstyle. Readability at tactical game size is essential. STRICT GUTTERS: no haze, fog, dust, ambient glow clouds, floodlights or colored matte anywhere. Transparent empty space separates every frame on every side. Effects are narrow crisp rings, short streaks or tiny sparks, contained within the character's silhouette width whenever possible. No fade-out or white fog even in the outro: every frame remains a clean opaque character cutout. Do not enlarge the ultimate aura beyond the central 60% of a cell."
+  },
+  {
+    "id": "duchess_valva",
+    "name": "Duchesse Valva",
+    "kind": "bosses",
+    "packId": "dlc_brass_palace",
+    "biome": "brass",
+    "path": "assets/dlc/illustrated-v1/bosses/duchess_valva.png",
+    "columns": 8,
+    "rows": 6,
+    "states": [
+      "intro",
+      "phase_shift_2",
+      "phase_shift_3",
+      "heavy_telegraph",
+      "defeat",
+      "idle"
+    ],
+    "reference": "assets/characters/heroines/aurelia-brassheart-atlas-v1.png",
+    "referenceRole": "style-camera-material guide only; not identity",
+    "fidelity": "first original design from authored DLC metadata and palette",
+    "source": "dlc-packs.v1.js",
+    "authoredCharacter": {
+      "id": "duchess_valva",
+      "name": "Duchesse Valva",
+      "age": 21,
+      "isAdult": true,
+      "phases": [
+        "Piston Impérial",
+        "Nuage de Vapeur",
+        "Surchauffe Finale"
+      ]
+    },
+    "palette": {
+      "bg": "#27121b",
+      "primary": "#d97706",
+      "secondary": "#fbbf24",
+      "glow": "#881337"
+    },
+    "designBrief": "Mature adult duchess with warm brown skin, short auburn hair and brass monocle, broad brass shoulder plates, closed burgundy armored waistcoat, full purple trousers and boots. Compact piston hammer and valve gauntlet. Imposing imperial steam commander.",
+    "prompt": "Use case: stylized-concept. Production game sprite animation atlas for Infernal City. The attached atlas is a STYLE, SCALE, CAMERA and painterly-material reference only; invent the specified new character, do not copy the guide character or its costume. Match the existing illustrated dark-fantasy tactical sprite style: detailed crisp hand-painted surfaces, fine dark contours, directional highlights, believable adult anatomy, elevated three-quarter camera facing toward screen-right. Use the SAME camera, head, body proportions, outfit, weapon and scale consistently in every cell. Exactly one full character per cell, no clones inside a cell. All combat costumes fully opaque and closed, all characters plainly mature adults. True transparent alpha background, no floor, no background color, no contact shadow outside feet, no labels, typography, grid lines, watermarks or UI. Every action stays inside its own mathematically equal cell: body plus weapon plus particles must fit the central 55% width and 60% height; generous transparent margins on all four sides, absolutely no cropped hair, weapons, glows, or cross-cell overlap. Keep effects compact and attached to the character, no long projectile beams. Eight consecutive distinct animation frames left-to-right in EVERY row; exactly the listed number of rows, no extra rows, no missing or blank cells. Use tightly controlled movement arcs, no arbitrary view changes. Non-graphic defeat, never blood or gore.\nSubject: Duchesse Valva, a new boss in \"Palais Mécanique & Horlogerie de Cuivre\". Authored identity: Piston Impérial / Nuage de Vapeur / Surchauffe Finale. Visual domain: Steampunk Impérial, Cuivre, Laiton, Velours Pourpre & Vapeur Dorée. Palette: {\"bg\":\"#27121b\",\"primary\":\"#d97706\",\"secondary\":\"#fbbf24\",\"glow\":\"#881337\"}; background remains transparent regardless of palette bg. Design: Mature adult duchess with warm brown skin, short auburn hair and brass monocle, broad brass shoulder plates, closed burgundy armored waistcoat, full purple trousers and boots. Compact piston hammer and valve gauntlet. Imposing imperial steam commander.\nLayout: EXACTLY 8 columns by 6 rows, 48 equal square cells, 4:3 landscape 2048×1536 atlas. Bodies center at each cell's midpoint with the feet on a consistent local baseline around 80% cell height. Six rows from top to bottom: 1 intro, eight steps of imposing arrival and ready stance, character visible in all frames; 2 phase_shift_2, \"Nuage de Vapeur\", escalating compact power activation while keeping same outfit and body; 3 phase_shift_3, \"Surchauffe Finale\", more intense compact aura and pose; 4 heavy_telegraph, clearly readable attack windup, held charge, strike-ready peak and recovery without long beam; 5 defeat, non-graphic stagger and kneeling collapse with compact dissolving motes, visible remains in all frames; 6 idle, breathing and subtle weapon/cloth loop.\nMaintain a single coherent identity across the entire sheet, same mature face and hairstyle. Readability at tactical game size is essential. STRICT GUTTERS: no haze, fog, dust, ambient glow clouds, floodlights or colored matte anywhere. Transparent empty space separates every frame on every side. Effects are narrow crisp rings, short streaks or tiny sparks, contained within the character's silhouette width whenever possible. No fade-out or white fog even in the outro: every frame remains a clean opaque character cutout. Do not enlarge the ultimate aura beyond the central 60% of a cell."
+  }
+]

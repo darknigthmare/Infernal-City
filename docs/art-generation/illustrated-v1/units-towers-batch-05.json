@@ -1,0 +1,80 @@
+[
+  {
+    "id": "stasis_pendulum",
+    "name": "Pendule Stase",
+    "biome": "astral",
+    "category": "towers",
+    "columns": 8,
+    "rows": 8,
+    "states": [
+      "level1",
+      "level2",
+      "level3",
+      "charged",
+      "overdrive",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "reference": "assets/animations/towers/tower-atlas-02.png",
+    "path": "assets/dlc/illustrated-v1/towers/stasis_pendulum.png",
+    "prompt": "Use case: stylized-concept. Production transparent tower animation atlas for Infernal City. Input image is CAMERA/RENDERING STYLE reference only; create ONE new tower, Pendule Stase: A white-marble and golden astronomical stasis tower: sturdy compact arched brass frame around one suspended luminous cyan pendulum, concentric small clock rings and indigo enamel mechanism on an octagonal plinth. Recognizable suspended pendulum, no gun barrel. Same astral white/gold/indigo/cyan palette. Fixed elevated orthographic three-quarter camera matching existing game defenses, stable facing down-left. STRICT CANVAS: SQUARE PNG, EXACTLY8 columns by8 rows=64equal square cells. Every cell contains ONE COMPLETE SMALL tower including all attachments and tiny effects, maximum50percent of cell width AND height, at least25percent EMPTY alpha margin on EVERY side of EACH cell. Stable exact cell-center anchor. Column and row center percentages6.25,18.75,31.25,43.75,56.25,68.75,81.25,93.75. Row1 level1:8 phases rest,wake,aim,charge,fire,recoil,cool,rest. Row2 level2: same tower with modest extra reinforced armor and same8cycle phases. Row3 level3: same tower with stronger armor/energy conduits and same8cycle phases. Row4 charged: existing tower energized,8charging pulse poses; no new weapon or gameplay specialization. Row5 overdrive: same tower brightly energized internally,8overdrive cycle poses, no large aura or extra weapon. Row6 deploy:8stages from neatly folded compact machine to fully deployed. Row7 recycle:8stages retracting into compact salvage machine, finalframe still visibly present. Row8 idle:8subtle machinery/breathing-light poses of base tower. All64 sprites entirely contained in cells, same identity, fixed view, no camera orbit. Crisp painted cyber-gothic anime game art with detailed materials. NO large muzzle flash, surrounding halo, beam, smoke cloud or floor shadow; light confined to the solid machine. True transparent alpha0 background, no solid backdrop/checkerboard, no labels,text,numbers,grid,borders or watermark. Exactly8rows and8columns.",
+    "designStatus": "first-original-design-from-catalogue-and-biome-brief",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-f8c1ad73-2052-4576-a9aa-0bbd3f608354.png",
+    "qa": {
+      "status": "pending"
+    }
+  },
+  {
+    "id": "sonar_tower",
+    "name": "Tour Sonar",
+    "biome": "abyss",
+    "category": "towers",
+    "columns": 8,
+    "rows": 8,
+    "states": [
+      "level1",
+      "level2",
+      "level3",
+      "charged",
+      "overdrive",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "reference": "assets/animations/towers/tower-atlas-02.png",
+    "path": "assets/dlc/illustrated-v1/towers/sonar_tower.png",
+    "prompt": "Use case: stylized-concept. Production transparent tower animation atlas for Infernal City. Input image is CAMERA/RENDERING STYLE reference only; create ONE new tower, Tour Sonar: A pressurized deep-sea sonar installation: squat dark teal alloy pedestal, two small round sonar dishes and one central pearl-like turquoise resonator, reinforced pressure housings, purple bioluminescent tubes and restrained coral-pink indicators. Underwater naval engineering, #042f2e,#091526,#2dd4bf,#a855f7,#fb7185. No broad sonar rings outside the machine. Fixed elevated orthographic three-quarter camera matching existing game defenses, stable facing down-left. STRICT CANVAS: SQUARE PNG, EXACTLY8 columns by8 rows=64equal square cells. Every cell contains ONE COMPLETE SMALL tower including all attachments and tiny effects, maximum50percent of cell width AND height, at least25percent EMPTY alpha margin on EVERY side of EACH cell. Stable exact cell-center anchor. Column and row center percentages6.25,18.75,31.25,43.75,56.25,68.75,81.25,93.75. Row1 level1:8 phases rest,wake,aim,charge,fire,recoil,cool,rest. Row2 level2: same tower with modest extra reinforced armor and same8cycle phases. Row3 level3: same tower with stronger armor/energy conduits and same8cycle phases. Row4 charged: existing tower energized,8charging pulse poses; no new weapon or gameplay specialization. Row5 overdrive: same tower brightly energized internally,8overdrive cycle poses, no large aura or extra weapon. Row6 deploy:8stages from neatly folded compact machine to fully deployed. Row7 recycle:8stages retracting into compact salvage machine, finalframe still visibly present. Row8 idle:8subtle machinery/breathing-light poses of base tower. All64 sprites entirely contained in cells, same identity, fixed view, no camera orbit. Crisp painted cyber-gothic anime game art with detailed materials. NO large muzzle flash, surrounding halo, beam, smoke cloud or floor shadow; light confined to the solid machine. True transparent alpha0 background, no solid backdrop/checkerboard, no labels,text,numbers,grid,borders or watermark. Exactly8rows and8columns.",
+    "designStatus": "first-original-design-from-catalogue-and-biome-brief",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-87f9ca40-9c39-48bf-b53a-c29e613f41b5.png",
+    "qa": {
+      "status": "pending"
+    }
+  },
+  {
+    "id": "pressure_harpoon",
+    "name": "Harpon Pression",
+    "biome": "abyss",
+    "category": "towers",
+    "columns": 8,
+    "rows": 8,
+    "states": [
+      "level1",
+      "level2",
+      "level3",
+      "charged",
+      "overdrive",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "reference": "assets/animations/towers/tower-atlas-01.png",
+    "path": "assets/dlc/illustrated-v1/towers/pressure_harpoon.png",
+    "prompt": "Use case: stylized-concept. Production transparent tower animation atlas for Infernal City. Input image is CAMERA/RENDERING STYLE reference only; create ONE new tower, Harpon Pression: A heavy compact pressure-harpoon turret: dark abyssal teal cylindrical hydraulic gun with visible short steel harpoon tip, thick piston-driven recoil rails, pearl metal plates and bright turquoise pressure tubes on low circular armored base. Purple/coral-pink status lights; unmistakable harpoon launcher, no human operator. Fixed elevated orthographic three-quarter camera matching existing game defenses, stable facing down-left. STRICT CANVAS: SQUARE PNG, EXACTLY8 columns by8 rows=64equal square cells. Every cell contains ONE COMPLETE SMALL tower including all attachments and tiny effects, maximum50percent of cell width AND height, at least25percent EMPTY alpha margin on EVERY side of EACH cell. Stable exact cell-center anchor. Column and row center percentages6.25,18.75,31.25,43.75,56.25,68.75,81.25,93.75. Row1 level1:8 phases rest,wake,aim,charge,fire,recoil,cool,rest. Row2 level2: same tower with modest extra reinforced armor and same8cycle phases. Row3 level3: same tower with stronger armor/energy conduits and same8cycle phases. Row4 charged: existing tower energized,8charging pulse poses; no new weapon or gameplay specialization. Row5 overdrive: same tower brightly energized internally,8overdrive cycle poses, no large aura or extra weapon. Row6 deploy:8stages from neatly folded compact machine to fully deployed. Row7 recycle:8stages retracting into compact salvage machine, finalframe still visibly present. Row8 idle:8subtle machinery/breathing-light poses of base tower. All64 sprites entirely contained in cells, same identity, fixed view, no camera orbit. Crisp painted cyber-gothic anime game art with detailed materials. NO large muzzle flash, surrounding halo, beam, smoke cloud or floor shadow; light confined to the solid machine. True transparent alpha0 background, no solid backdrop/checkerboard, no labels,text,numbers,grid,borders or watermark. Exactly8rows and8columns.",
+    "designStatus": "first-original-design-from-catalogue-and-biome-brief",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-ec7d08a8-c496-4d22-9dc2-ac63ba67b784.png",
+    "qa": {
+      "status": "pending"
+    }
+  }
+]

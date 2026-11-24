@@ -193,7 +193,11 @@
     const index = options.findIndex(option => option.id === tower.specializationId);
     if (index === 0) return 'specialization_a';
     if (index === 1) return 'specialization_b';
-    return `level${Math.max(1, Math.min(3, Number(tower.level) || 1))}`;
+    const level = Math.max(1, Math.min(3, Number(tower.level) || 1));
+    // The authored idle row depicts the base defense. Upgraded defenses keep
+    // the first pose of their own row so resting never removes their armor.
+    if (level === 1 && !(tower.animationTimer > 0)) return 'idle';
+    return `level${level}`;
   }
 
   const baseTower = proto.drawTower;
@@ -210,11 +214,17 @@
     } else if (tower.animationTimer > 0) {
       elapsed = Math.max(0, 0.34 - tower.animationTimer);
       duration = 0.34;
-    } else if (TOWER_SPRITE_DATA[tower.id]?.ambient && !this.prefersReducedMotion) {
-      elapsed = (runtime(this).time % 0.8);
+    } else if (stateName === 'idle') {
+      elapsed = runtime(this).time + (Number(tower.animationPhase) || 0) / loaded.spec.fps;
     }
     return withContext(this, { originalSrc: TOWER_SPRITE_DATA[tower.id]?.src,
       loaded, stateName, elapsed, duration }, () => baseTower.call(this, tower, options));
+  };
+
+  proto.drawCompletedTowerPreview = function drawCompletedTowerPreview(id, x, y, size, options = {}) {
+    const loaded = approvedImage(this, `towers/${id}`);
+    if (!loaded) return false;
+    return drawState(this, loaded, 'level1', 0, x, y, size, options);
   };
 
   function pushTransient(engine, entry) {
@@ -240,12 +250,15 @@
     const state = runtime(engine);
     if (state.deaths.has(enemy)) return;
     state.deaths.add(enemy);
+    const sprite = ENEMY_SPRITE_DATA[enemy.type];
+    const facing = Number.isFinite(enemy.facingAngle) ? enemy.facingAngle : 0;
     pushTransient(engine, {
       key: `${enemy.isBoss ? 'bosses' : 'enemies'}/${enemy.type}`,
       stateName: enemy.isBoss ? 'defeat' : 'death_dissolve', x: enemy.x, y: enemy.y,
-      size: ENEMY_SPRITE_DATA[enemy.type]?.size || enemy.radius * 2,
+      size: sprite?.size || enemy.radius * 2,
       minSize: enemy.isBoss ? 52 : 26, duration: enemy.isBoss ? 1.4 : 0.8,
-      flipX: Math.cos(enemy.facingAngle || 0) < 0
+      rotation: sprite?.rotate ? facing + (sprite.rotationOffset || 0) : undefined,
+      flipX: !sprite?.rotate && Math.cos(facing) < 0
     });
   }
   proto.killEnemy = function killEnemyWithDeathPose(enemy) {

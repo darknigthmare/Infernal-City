@@ -1,0 +1,54 @@
+[
+  {
+    "id": "steam_gatling",
+    "name": "Gatling à Vapeur",
+    "biome": "brass",
+    "category": "towers",
+    "columns": 8,
+    "rows": 8,
+    "states": [
+      "level1",
+      "level2",
+      "level3",
+      "charged",
+      "overdrive",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "reference": "assets/animations/towers/tower-atlas-01.png",
+    "path": "assets/dlc/illustrated-v1/towers/steam_gatling.png",
+    "prompt": "Use case: stylized-concept. Production transparent tower animation atlas for Infernal City. Input image is CAMERA/RENDERING STYLE reference only; create ONE new tower, Gatling à Vapeur: An imperial steampunk Gatling defense: six short rotating dark-steel barrels in a polished copper casing, small brass boiler tank and two folded copper pressure pipes, rivets and burgundy enamel panels on a solid mechanical swivel base. Warm brass highlights, controlled tiny steam puffs only within cell. Palette copper #d97706,brass #fbbf24,burgundy #881337,smokedsteel #1e293b. Fixed elevated orthographic three-quarter camera matching existing game defenses, stable facing down-left. STRICT CANVAS: SQUARE PNG, EXACTLY8 columns by8 rows=64equal square cells. Every cell contains ONE COMPLETE SMALL tower including all attachments and tiny effects, maximum50percent of cell width AND height, at least25percent EMPTY alpha margin on EVERY side of EACH cell. Stable exact cell-center anchor. Column and row center percentages6.25,18.75,31.25,43.75,56.25,68.75,81.25,93.75. Row1 level1:8 phases rest,wake,aim,charge,fire,recoil,cool,rest. Row2 level2: same tower with modest extra reinforced armor and same8cycle phases. Row3 level3: same tower with stronger armor/energy conduits and same8cycle phases. Row4 charged: existing tower energized,8charging pulse poses; no new weapon or gameplay specialization. Row5 overdrive: same tower brightly energized internally,8overdrive cycle poses, no large aura or extra weapon. Row6 deploy:8stages from neatly folded compact machine to fully deployed. Row7 recycle:8stages retracting into compact salvage machine, finalframe still visibly present. Row8 idle:8subtle machinery/breathing-light poses of base tower. All64 sprites entirely contained in cells, same identity, fixed view, no camera orbit. Crisp painted cyber-gothic anime game art with detailed materials. NO large muzzle flash, surrounding halo, beam, smoke cloud or floor shadow; light confined to the solid machine. True transparent alpha0 background, no solid backdrop/checkerboard, no labels,text,numbers,grid,borders or watermark. Exactly8rows and8columns.",
+    "designStatus": "first-original-design-from-catalogue-and-biome-brief",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-260db635-c33f-44e6-aee3-328c461f019a.png",
+    "qa": {
+      "status": "pending"
+    }
+  },
+  {
+    "id": "copper_tesla",
+    "name": "Bobine Tesla Cuivre",
+    "biome": "brass",
+    "category": "towers",
+    "columns": 8,
+    "rows": 8,
+    "states": [
+      "level1",
+      "level2",
+      "level3",
+      "charged",
+      "overdrive",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "reference": "assets/animations/towers/tower-atlas-02.png",
+    "path": "assets/dlc/illustrated-v1/towers/copper_tesla.png",
+    "prompt": "Use case: stylized-concept. Production transparent tower animation atlas for Infernal City. Input image is CAMERA/RENDERING STYLE reference only; create ONE new tower, Bobine Tesla Cuivre: An imperial copper Tesla defense: compact brass pedestal with two copper induction coils wound around an upright smoked-steel core, small brass toroid cap, burgundy enamel plates and golden-white internal electric sparks. Ornate Victorian engineering, no huge external lightning. Palette copper/brass/burgundy/darksteel. Fixed elevated orthographic three-quarter camera matching existing game defenses, stable facing down-left. STRICT CANVAS: SQUARE PNG, EXACTLY8 columns by8 rows=64equal square cells. Every cell contains ONE COMPLETE SMALL tower including all attachments and tiny effects, maximum50percent of cell width AND height, at least25percent EMPTY alpha margin on EVERY side of EACH cell. Stable exact cell-center anchor. Column and row center percentages6.25,18.75,31.25,43.75,56.25,68.75,81.25,93.75. Row1 level1:8 phases rest,wake,aim,charge,fire,recoil,cool,rest. Row2 level2: same tower with modest extra reinforced armor and same8cycle phases. Row3 level3: same tower with stronger armor/energy conduits and same8cycle phases. Row4 charged: existing tower energized,8charging pulse poses; no new weapon or gameplay specialization. Row5 overdrive: same tower brightly energized internally,8overdrive cycle poses, no large aura or extra weapon. Row6 deploy:8stages from neatly folded compact machine to fully deployed. Row7 recycle:8stages retracting into compact salvage machine, finalframe still visibly present. Row8 idle:8subtle machinery/breathing-light poses of base tower. All64 sprites entirely contained in cells, same identity, fixed view, no camera orbit. Crisp painted cyber-gothic anime game art with detailed materials. NO large muzzle flash, surrounding halo, beam, smoke cloud or floor shadow; light confined to the solid machine. True transparent alpha0 background, no solid backdrop/checkerboard, no labels,text,numbers,grid,borders or watermark. Exactly8rows and8columns.",
+    "designStatus": "first-original-design-from-catalogue-and-biome-brief",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-1e433314-fcf8-462d-9d84-5194f2a45b13.png",
+    "qa": {
+      "status": "pending"
+    }
+  }
+]

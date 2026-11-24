@@ -2,8 +2,9 @@
 
 Ce pack produit les ressources artistiques décrites dans la section 15.1 du
 [cahier des charges](GAME_BIBLE.md#151-animations-de-sprites--suivi-de-production).
-Il contient **118 atlas PNG natifs, soit 4 376 cellules d’animation** :
-105 atlas de combat et 13 ressources préparées pour les portraits et l’environnement.
+Il contient **124 atlas PNG natifs, soit 4 616 cellules d’animation** :
+111 atlas de combat et 13 ressources de présentation intégrées au Studio,
+aux expressions VN neutres, à la météo et au recyclage.
 
 Les fichiers sont conservés exactement tels qu’ils ont été livrés par le générateur
 d’images. Aucune pose n’est obtenue par duplication, interpolation ou déformation
@@ -17,18 +18,24 @@ ont des coordonnées fractionnaires.
 |---|---:|---|---:|---|
 | Valkyries historiques | 6 | 8 × 8 | 384 | intro, respiration, attaque, compétence, ultime, victoire, défaite, sortie |
 | Valkyries Dix Trônes | 10 | 8 × 4 | 320 | intro, victoire, défaite, sortie ; leurs animations de combat existantes restent utilisées |
-| Boss | 11 | 8 × 6 | 528 | intro, phases 2 et 3, télégraphe, défaite, repos |
+| Boss | 14 | 8 × 6 | 672 | intro, phases 2 et 3, télégraphe, défaite, repos |
 | Ennemis des légions | 50 | 8 × 4 | 1 600 | déplacement, attaque, dissolution, rupture de bouclier |
 | Spécialistes | 4 | 8 × 4 | 128 | mêmes quatre états |
+| Ennemis historiques | 3 | 8 × 4 | 96 | Swarmer, Runner et Brute ; mêmes quatre états |
 | Tourelles | 20 | 8 × 8 | 1 280 | niveaux 1–3, spécialités A/B, déploiement, recyclage, repos |
 | Évolutions d’armes | 4 | 4 × 2 | 32 | huit images successives par effet |
 | Portraits Dix Trônes | 10 | 4 × 2 | 80 | respiration, clignement, sourire discret, retour au repos |
 | Environnement | 3 | 4 × 2 | 24 | pluie acide, arcs ioniques, retombée de débris |
-| **Total** | **118** | | **4 376** | |
+| **Total** | **124** | | **4 616** | |
 
 Les six Valkyries historiques réellement présentes dans le registre du jeu sont
 Aria, Kira, Rin, Selene, Vespera et Carmilla. Nova appartient à la galerie ; elle
 n’est pas ajoutée artificiellement au roster jouable.
+
+Les trois boss ajoutés le 24 novembre sont Hellwarden, Vespera et Carmilla.
+Les deux derniers utilisent leurs silhouettes de boss dans `enemy-atlas-02.png`,
+distinctes des héroïnes homonymes. Les trois ennemis historiques suivent leurs
+lignes respectives de `enemy-atlas-01.png`.
 
 Le format livré comporte huit poses dessinées par état. Le format de seize images
 proposé pour les héroïnes historiques dans le cahier des charges reste un objectif
@@ -56,20 +63,34 @@ les états à partir des événements déjà produits par le moteur.
 - Les projectiles des armes de base conservent leur rendu ; les quatre évolutions
   reçoivent leur propre effet. L’épaisseur du rayon reste indépendante de sa portée.
 - Le réglage de mouvement réduit fige les poses et évite les boucles supplémentaires.
+- La mort conserve l’orientation et le décalage de rotation du corps vivant.
+  Le repos de niveau 1 et l’aperçu de construction utilisent le même atlas de
+  tourelle que la défense placée ; les niveaux supérieurs conservent leur silhouette.
 
 Les animations de boss suivent les signaux disponibles. L’intro et le changement
 de phase ont priorité sur un télégraphe simultané. Le jeu ne possède pas de signal
 distinct pour une « attaque lourde » de chaque boss : le pack fournit ce dessin,
 mais n’invente pas un avertissement sur chaque tir normal.
 
-Les **10 portraits et 3 effets d’environnement** portent `preparedOnly: true`.
-Ils sont produits, contrôlés et consultables dans le lecteur. Leur intégration aux
-scènes Studio/VN et à une future météo dynamique est un chantier distinct. Ce pack
-ne change pas les dialogues, les choix de pose existants ou les règles météorologiques.
+## Portraits et environnement
 
-Les unités supplémentaires et les extensions envisagées dans les sections 15.3,
-16 et 17 du cahier des charges demandent leur propre conception et leur propre
-roster. Elles ne sont pas comptées comme des sprites du roster actuel.
+Les **10 portraits et 3 effets d’environnement sont intégrés** par
+`sprite-presentation.v1.js` ; aucune entrée ne reste `preparedOnly`.
+Le Studio propose « Portrait animé » aux dix héroïnes concernées. Dans les scènes
+VN, les poses neutres ou calmes peuvent respirer ; les autres émotions conservent
+leurs expressions 3 × 3. L’horloge d’interface continue pendant une pause de jeu,
+s’arrête lorsque la fenêtre est masquée ou la scène fermée, et respecte le
+mouvement réduit. Le portrait statique reste disponible jusqu’au décodage du PNG.
+
+La pluie acide et l’orage ionique suivent le cycle météo déjà présent dans le
+moteur. La retombée de débris accompagne uniquement un recyclage de défense
+réussi ; elle ne se déclenche pas sur les morts organiques. Ces effets temporaires
+sont bornés et ne changent pas les récompenses ni l’économie.
+
+Les ressources des entrées DLC nommées sont décrites séparément dans
+[DLC_ILLUSTRATED_ASSETS.md](DLC_ILLUSTRATED_ASSETS.md). Les annonces de contenu
+sans identité individuelle définie restent répertoriées dans
+[l’audit des besoins](ASSET_GAPS_20261124.md).
 
 ## Examiner les planches
 
@@ -87,12 +108,14 @@ l’ordre des lignes, du coin supérieur gauche au coin inférieur droit.
 
 Le [manifeste](../assets/animations/completion-v1/manifest.json) donne les chemins,
 dimensions, grilles, tailles et empreintes de chaque fichier. Il distingue les
-ressources validées, celles en revue et celles réservées à une intégration future.
+ressources validées et celles en revue, avec l’usage prévu de chaque entrée.
 
 ## Provenance et contrôle
 
 Les références, prompts et corrections sont consignés dans
 [`art-generation/completion-v1/`](art-generation/completion-v1/).
+Les six ajouts historiques sont documentés dans
+[`art-generation/illustrated-v1/characters.json`](art-generation/illustrated-v1/characters.json).
 Les rapports par lot conservent les empreintes des PNG finaux. Les tentatives
 écartées sont documentées ; elles ne sont pas utilisées comme sprites actifs.
 
@@ -118,18 +141,19 @@ reconstruire son entrée active.
 
 Les tests du moteur couvrent notamment le choix des lignes, le chargement différé,
 les échecs d’image, les états répétés, la rupture effective d’un bouclier, les morts,
-les résurrections, les améliorations et le recyclage. La vérification finale
-`npm run check` réussit : **235 tests sur 235**, sans échec. Les horloges des leurres,
-la priorité des compétences pendant le tir automatique et le redémarrage des
-télégraphes font également l’objet de tests de régression.
+les résurrections, les améliorations et le recyclage. Les horloges des leurres,
+la priorité des compétences pendant le tir automatique, le redémarrage des
+télégraphes, les rotations à la mort et les portraits pendant la pause font
+également l’objet de tests de régression.
 
 Le [résumé de l’audit technique](art-generation/completion-v1/technical-review-summary.md)
-confirme 118 fichiers identiques aux sorties natives et 4 376 cellules non vides.
+documente les 118 sorties du premier pack. Le rapport technique JSON courant
+couvre les 124 atlas et 4 616 cellules.
 Il conserve une réserve sur le bruit alpha très faible du fond d’Astarra ;
 l’identité et la grille ont été validées visuellement.
 
-Les contrôles en navigateur
-réel n’ont pas pu être exécutés dans l’environnement de production de ce pack :
-le lancement de Chromium est bloqué et le navigateur partagé ne peut pas accéder
-au serveur local isolé. Une revue visuelle en partie reste donc à effectuer avant
-fusion ; le lecteur est fourni pour la faciliter.
+Chromium local est bloqué par les restrictions de sockets de l’environnement.
+Les parcours navigateur sont donc exécutés dans GitHub Actions sur ordinateur,
+mobile portrait et mobile paysage. Le rapport Playwright conserve également
+des captures de la nouvelle galerie DLC. Le résultat de cette exécution figure
+dans les vérifications de la PR.

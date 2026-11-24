@@ -1,0 +1,30 @@
+{
+  "key": "evolutions/plasma_vine",
+  "category": "evolutions",
+  "id": "plasma_vine",
+  "packId": "dlc_art_nouveau_garden",
+  "name": "Couronne d’Épines",
+  "columns": 4,
+  "rows": 2,
+  "sequenceFrames": 8,
+  "transparent": true,
+  "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/dlc/illustrated-v1/evolutions/plasma_vine.png",
+  "prompt": "Use case: precise-object-edit. Correct ONLY isolation and size of the supplied Couronne d’Épines projectile atlas. Keep its exact emerald pointed organic core, golden vine filigree and crimson crystal thorns, right-facing orientation and eight coherent pulse frames. REMOVE the entire broad white/green/red cloudy halo and all surrounding haze. Keep only the solid thorn projectile and tiny internal light; no exterior glow clouds. SHRINK every complete object to fit inside central40percent of its mathematical cell width AND height. Perfect regular FOUR columns by TWO rows, eight SQUARE cells on a2:1 landscape PNG; centers at horizontal12.5,37.5,62.5,87.5 percent and vertical25,75percent. At least30percent alpha0 empty margin on EACH side of every cell. Same anchor and scale across frames. Preserve painterly cyber-gothic art and exact projectile identity. Genuine transparent alpha0 background outside each small projectile. No background rectangle, shadow, fog, grid, text, label, border or watermark. No effect may touch any cell boundary.",
+  "path": "assets/dlc/illustrated-v1/evolutions/plasma_vine.png",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-27161ec7-582d-4042-ae54-295ce06cb47d.png",
+  "sha256": "1f7bdf0a46ea5bb5112682e87da8c9c2d31ad7a9c83cf2c6e361b50cc112020e",
+  "bytes": 784739,
+  "width": 1774,
+  "height": 887,
+  "mode": "RGBA",
+  "alphaExtrema": [
+    0,
+    255
+  ],
+  "method": "built-in image_gen",
+  "nativeBytesPreserved": true,
+  "qa": {
+    "status": "pending-visual-review"
+  },
+  "revision": 2
+}

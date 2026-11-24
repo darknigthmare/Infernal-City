@@ -1,0 +1,29 @@
+{
+  "key": "evolutions/cryo_laser",
+  "category": "evolutions",
+  "id": "cryo_laser",
+  "packId": "dlc_cryo_brutalist",
+  "name": "Couronne Boréale",
+  "columns": 4,
+  "rows": 2,
+  "sequenceFrames": 8,
+  "transparent": true,
+  "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/evolutions/vulcan-cerberus.png",
+  "prompt": "Use case: stylized-concept. Production 2D projectile animation spritesheet for Infernal City. Reference gives exact game-art finish and isolated-frame layout, NOT projectile identity. Subject: a bright crystalline ice spear encircled by a compact green and magenta aurora crown, intense pale-blue core. Name for context only: Couronne Boréale. Domain: Monolithes Polaires Brutalistes, Glace Cristalline & Aurores Vert/Magenta; exact colors {\"bg\":\"#0f172a\",\"primary\":\"#4ade80\",\"secondary\":\"#e879f9\",\"glow\":\"#e0f2fe\"}. Strict layout FOUR columns by TWO rows, eight equal SQUARE cells, 2:1 landscape PNG. Reading order left to right then next row; eight distinct drawn pulse/trail frames of the same projectile. Stable center and scale; horizontal long axis, tip and travel facing RIGHT, tail LEFT. The complete projectile plus every glow or spark must fit within the CENTRAL FIFTY PERCENT of each cell, leaving at least 25 percent empty alpha margins on every side. Crisp painterly anime game VFX, no floor, shadow, scenery, text, numbers, border, grid or watermark. Genuine transparent alpha background. No weapons being held, no characters. This is a first original design of the named DLC projectile.",
+  "path": "assets/dlc/illustrated-v1/evolutions/cryo_laser.png",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-19ea7b11-cff3-46f3-b561-6936cebd7cb9.png",
+  "sha256": "f9497b1ec23d5114bfb8078cea318b9b8007a56d76978eae509bae99c372e7ee",
+  "bytes": 1162407,
+  "width": 1774,
+  "height": 887,
+  "mode": "RGBA",
+  "alphaExtrema": [
+    0,
+    255
+  ],
+  "method": "built-in image_gen",
+  "nativeBytesPreserved": true,
+  "qa": {
+    "status": "pending-visual-review"
+  }
+}

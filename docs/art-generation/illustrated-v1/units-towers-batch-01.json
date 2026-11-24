@@ -1,0 +1,44 @@
+[
+  {
+    "id": "air_bioforge_wasp",
+    "name": "Guêpe Bioforge",
+    "category": "enemies",
+    "columns": 8,
+    "rows": 4,
+    "states": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "reference": "assets/animations/enemy-legions/enemies/bioforge_scarab.webp",
+    "path": "assets/dlc/illustrated-v1/enemies/air_bioforge_wasp.png",
+    "prompt": "Use case: stylized-concept. Production transparent animation atlas for Infernal City. Input image is FACTION MATERIAL/STYLE reference only, not the requested anatomy. Create Guêpe Bioforge: A flying biomechanical wasp: ivory segmented chitin plated with black gunmetal, cyan nerve cables and small magenta compound eyes. Six compact hooked legs, four insect membrane wings and a short armored stinger. Preserve the Bioforge reference materials; this is a new airborne wasp, not the ground scarab. Fixed elevated orthographic three-quarter camera matching the reference game, consistent facing down-left. STRICT CANVAS: landscape 2:1 PNG, EXACTLY 8 columns by 4 rows =32 equal square cells. Each cell holds one complete SMALL character including all wings, limbs, tail and effects, maximum50percent of cell width AND height; at least25percent empty transparent margin on each of4sides. Every sprite anchored at its exact cell center. Column centers6.25,18.75,31.25,43.75,56.25,68.75,81.25,93.75percent. Row1:8 distinct wingbeat/hover movement frames. Row2:8 distinct compact attack windup,strike,recoil,recovery frames, no long projectile. Row3:8 distinct death_dissolve frames, silhouette breaking into compact faction-colored fragments that stay inside cell; finalframe retains a small visible remnant. Row4:8 distinct shield_break frames: tiny cracked shield hug close to body then flinch and recover, not a giant aura. Same identity and scale in every cell; hand-drawn action changes, never rotated copies or sheet camera rotation. Crisp polished painted cyber-gothic anime game sprite quality matching attached style. Genuine alpha0 background, no scenery, floor, shadow, gradient, checkerboard, labels, numbers, text, separators, grid lines or watermark. No partial or cropped figure, no objects touching any cell border. Exactly32 sprites, no extra rows.",
+    "designStatus": "first-original-design-from-catalogue-and-faction-reference",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-bed756f4-0d28-4a5c-9760-f6a26e5a51ac.png",
+    "qa": {
+      "status": "pending"
+    }
+  },
+  {
+    "id": "air_ossuary_crow",
+    "name": "Corbeau d’Os",
+    "category": "enemies",
+    "columns": 8,
+    "rows": 4,
+    "states": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "reference": "assets/animations/enemy-legions/enemies/ossuary_spine_archer.webp",
+    "path": "assets/dlc/illustrated-v1/enemies/air_ossuary_crow.png",
+    "prompt": "Use case: stylized-concept. Production transparent animation atlas for Infernal City. Input image is FACTION MATERIAL/STYLE reference only, not the requested anatomy. Create Corbeau d’Os: A large undead skeletal crow with an ivory bone beak, ribbed chest, articulated bone-feather wings, black torn membrane between flight bones, crimson eye pinpoints and restrained cyan necromantic seams. Compact bird proportions, two taloned feet; preserve Ossuary bone and ragged dark material language, no bow or human body. Fixed elevated orthographic three-quarter camera matching the reference game, consistent facing down-left. STRICT CANVAS: landscape 2:1 PNG, EXACTLY 8 columns by 4 rows =32 equal square cells. Each cell holds one complete SMALL character including all wings, limbs, tail and effects, maximum50percent of cell width AND height; at least25percent empty transparent margin on each of4sides. Every sprite anchored at its exact cell center. Column centers6.25,18.75,31.25,43.75,56.25,68.75,81.25,93.75percent. Row1:8 distinct wingbeat/hover movement frames. Row2:8 distinct compact attack windup,strike,recoil,recovery frames, no long projectile. Row3:8 distinct death_dissolve frames, silhouette breaking into compact faction-colored fragments that stay inside cell; finalframe retains a small visible remnant. Row4:8 distinct shield_break frames: tiny cracked shield hug close to body then flinch and recover, not a giant aura. Same identity and scale in every cell; hand-drawn action changes, never rotated copies or sheet camera rotation. Crisp polished painted cyber-gothic anime game sprite quality matching attached style. Genuine alpha0 background, no scenery, floor, shadow, gradient, checkerboard, labels, numbers, text, separators, grid lines or watermark. No partial or cropped figure, no objects touching any cell border. Exactly32 sprites, no extra rows.",
+    "designStatus": "first-original-design-from-catalogue-and-faction-reference",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-a3cacc5e-3396-4eed-adaf-2d25373ea8e5.png",
+    "qa": {
+      "status": "pending"
+    }
+  }
+]

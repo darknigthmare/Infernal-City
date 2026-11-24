@@ -230,3 +230,60 @@ test('une panne de stockage déclenche une alerte persistante et actionnable', a
   await expect(banner).toContainText(/stockage local|sauvegarde/i);
   await expect(page.locator('#btn-emergency-export')).toBeVisible();
 });
+
+test('les décors DLC se sélectionnent, les atlas s’animent à la demande et le choix persiste', async ({ page }, testInfo) => {
+  const dlcRequests = [];
+  page.on('request', request => {
+    if (request.url().includes('/assets/dlc/illustrated-v1/')) dlcRequests.push(request.url());
+  });
+  await beginCampaign(page);
+  expect(dlcRequests, 'aucun atlas DLC ne doit être chargé avant son utilisation').toEqual([]);
+
+  await page.locator('#btn-open-hq').click();
+  await page.locator('#btn-dlc-hub-toggle').click();
+  const modal = page.locator('#dlc-hub-modal');
+  await expect(modal).toHaveClass(/active/);
+  await expect(modal.locator('.dlc-art-map')).toHaveCount(12);
+  await expect(modal.locator('.dlc-art-sprite')).toHaveCount(0);
+  expect(dlcRequests.every(url => url.includes('/maps/'))).toBe(true);
+
+  const firstPack = page.locator('#dlc-paid-grid > .dlc-card').first();
+  const secondMap = firstPack.locator('.dlc-art-map button').nth(1);
+  const chosenName = await secondMap.innerText();
+  await secondMap.click();
+  await expect(firstPack.getByRole('button', { name: chosenName, exact: true })).toHaveAttribute('aria-pressed', 'true');
+  const savedChoice = await page.evaluate(() => {
+    const game = window.__INFERNAL_CITY_GAME__;
+    return { pack: game.activeDlcBiomeId, map: game.dlcMapSelections[game.activeDlcBiomeId] };
+  });
+
+  await firstPack.locator('.dlc-art-gallery summary').click();
+  await expect(firstPack.locator('.dlc-art-sprite')).toHaveCount(8);
+  const portrait = firstPack.locator('.dlc-art-sprite').first();
+  await expect.poll(async () => portrait.evaluate(canvas => {
+    const pixels = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data;
+    return pixels.some((value, index) => index % 4 === 3 && value > 24);
+  }), { message: 'la galerie doit afficher un sprite décodé dans son canvas' }).toBe(true);
+  const firstFrame = await portrait.evaluate(canvas => canvas.toDataURL());
+  await expect.poll(() => portrait.evaluate(canvas => canvas.toDataURL()), {
+    message: 'la galerie doit continuer son animation pendant la pause du QG'
+  }).not.toBe(firstFrame);
+  await testInfo.attach('galerie-dlc', { body: await page.screenshot(), contentType: 'image/png' });
+
+  const lastPack = page.locator('#dlc-paid-grid > .dlc-card').last();
+  await lastPack.locator('.dlc-art-map button').last().focus();
+  await page.keyboard.press('Tab');
+  await expect(lastPack.locator('.dlc-art-gallery summary')).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(lastPack.locator('.dlc-art-gallery')).toHaveAttribute('open', '');
+  const dimensions = await page.evaluate(() => ({ viewport: document.documentElement.clientWidth,
+    document: document.documentElement.scrollWidth }));
+  expect(dimensions.document).toBeLessThanOrEqual(dimensions.viewport + 1);
+
+  await page.reload();
+  await page.locator('#btn-enter-adult').click();
+  await expect.poll(() => page.evaluate(() => {
+    const game = window.__INFERNAL_CITY_GAME__;
+    return { pack: game.activeDlcBiomeId, map: game.dlcMapSelections[game.activeDlcBiomeId] };
+  })).toEqual(savedChoice);
+});

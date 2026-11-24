@@ -1,0 +1,1669 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "integrate_prepared_sprites",
+  "method": "Independent inspection of the native PNG and its identity/style reference with view_image, followed by read-only pixel measurements. Presence never implies approval. No images modified.",
+  "files": [
+    {
+      "key": "evolutions/cavitation_torpedo",
+      "path": "assets/dlc/illustrated-v1/evolutions/cavitation_torpedo.png",
+      "sha256": "eafbec04f72337a372c7b30c32676adc33e0470da318173a9a9f0df0f423bcf8",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/dlc/illustrated-v1/weapons/cavitation_torpedo.png",
+      "notes": [
+        "Replacement revision 2 inspected anew at its changed SHA and compared with the accepted cylindrical base torpedo. The evolved version preserves the pressure tube, rounded right-facing turquoise nose, two bands and rear stabilizers, adding a compact coiled water ribbon, violet bubbles and coral-pink sonar crescents.",
+        "The rejected Vulcan body is gone. Eight distinct animation phases preserve the new torpedo identity and stable anchoring. Broad haze has been removed; water, bubbles and sonar accents stay close to the full object within each cell."
+      ],
+      "technical": {
+        "dimensions": [
+          1774,
+          887
+        ],
+        "mode": "RGBA",
+        "columns": 4,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "transparencyRequested": true,
+        "alphaZeroFraction": 0.7961593555414613,
+        "alphaAtMost16Fraction": 0.9135889949909058,
+        "nonemptyCellsAlphaGt24": 8,
+        "distinctRGBAFrames": 8,
+        "minimumMarginsAlphaGt24": [
+          72,
+          70,
+          64,
+          64,
+          63,
+          69,
+          72,
+          73
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 1,
+        "internalBoundaryAlphaP99": 1
+      }
+    },
+    {
+      "key": "evolutions/cryo_laser",
+      "path": "assets/dlc/illustrated-v1/evolutions/cryo_laser.png",
+      "sha256": "52508f6dececf06f3123b9f321b56a7b62a05f16b85047e5628a685944994838",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/generated_images/exec-9dcd12ed-58ed-4ab8-81e2-707a859e95b1.png",
+      "notes": [
+        "Replacement revision 2 inspected anew and compared with the approved revised base laser. It preserves the same translucent faceted ice lance and narrow bright core, adding a compact crown of green and magenta crystalline aurora arcs.",
+        "The rejected mechanical Vulcan body is absent. Eight distinct pulses preserve the rightward lance orientation and coherent ice identity. Complete meaningful content stays within each frame, with no alpha>24 boundary contact; native image bytes are unchanged."
+      ],
+      "technical": {
+        "dimensions": [
+          1774,
+          887
+        ],
+        "mode": "RGBA",
+        "columns": 4,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "transparencyRequested": true,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "alphaZeroFraction": 0.7580662176572793,
+        "alphaAtMost16Fraction": 0.8693199655807486,
+        "nonemptyCellsAlphaGt24": 8,
+        "distinctRGBAFrames": 8,
+        "minimumMarginsAlphaGt24": [
+          73,
+          66,
+          62,
+          60,
+          55,
+          61,
+          69,
+          75
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 2,
+        "internalBoundaryAlphaP99": 1
+      }
+    },
+    {
+      "key": "evolutions/plasma_vine",
+      "path": "assets/dlc/illustrated-v1/evolutions/plasma_vine.png",
+      "sha256": "1f7bdf0a46ea5bb5112682e87da8c9c2d31ad7a9c83cf2c6e361b50cc112020e",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/dlc/illustrated-v1/evolutions/plasma_vine.png",
+      "notes": [
+        "Replacement revision 2 inspected anew at its changed SHA and compared with the rejected native version already viewed. The emerald organic core, gold vine filigree, crimson crystal-thorn crown and rightward orientation are preserved.",
+        "The previously cut broad white-green-red halo has been removed. Eight distinct compact pulse states now leave visible space around the entire projectile in every cell; measured alpha>24 content no longer touches any boundary. Native generation bytes are preserved."
+      ],
+      "technical": {
+        "dimensions": [
+          1774,
+          887
+        ],
+        "mode": "RGBA",
+        "columns": 4,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "transparencyRequested": true,
+        "alphaZeroFraction": 0.7583922345694861,
+        "alphaAtMost16Fraction": 0.9394720686758121,
+        "nonemptyCellsAlphaGt24": 8,
+        "distinctRGBAFrames": 8,
+        "minimumMarginsAlphaGt24": [
+          121,
+          113,
+          107,
+          89,
+          93,
+          112,
+          116,
+          120
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 1,
+        "internalBoundaryAlphaP99": 1
+      }
+    },
+    {
+      "key": "evolutions/seraphic_ray",
+      "path": "assets/dlc/illustrated-v1/evolutions/seraphic_ray.png",
+      "sha256": "97b799baf388edc3649ec8f8104be769e2cc2fe41370e98a71d493557c3dca56",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/evolutions/vulcan-cerberus.png",
+      "notes": [
+        "Native image inspected visually against the Vulcan Cerberus projectile reference and the recorded Chœur de Supernova brief. The right-pointing white-gold lance, three golden orbital rings, cyan core and leftward trail read as the requested evolved seraphic projectile.",
+        "Eight distinct pulses occupy the requested 4 by 2 grid with a stable direction and intact silhouette. The broad dark preview halo is checked separately by alpha-boundary measurements; no postprocessing was applied."
+      ],
+      "technical": {
+        "dimensions": [
+          1774,
+          887
+        ],
+        "mode": "RGBA",
+        "columns": 4,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "transparencyRequested": true,
+        "alphaZeroFraction": 0.3203608683107748,
+        "alphaAtMost16Fraction": 0.846536276848732,
+        "nonemptyCellsAlphaGt24": 8,
+        "distinctRGBAFrames": 8,
+        "minimumMarginsAlphaGt24": [
+          71,
+          63,
+          52,
+          37,
+          31,
+          53,
+          59,
+          64
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 2,
+        "internalBoundaryAlphaP99": 1
+      }
+    },
+    {
+      "key": "evolutions/solar_saber",
+      "path": "assets/dlc/illustrated-v1/evolutions/solar_saber.png",
+      "sha256": "a3118b43dc7898d9507462c3fb36f418a2af899081ead6c5a32ad20d3433540c",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/evolutions/vulcan-cerberus.png",
+      "notes": [
+        "Native image inspected visually against the finish reference and Éclat d’Obsidienne brief. A distinct black obsidian crescent has a white-hot orange-gold silica rim and small lapis refraction fragments; its leading point faces right and its open trailing arc faces left.",
+        "Eight distinct flame and refraction phases share a stable crescent body and scale. Halo boundary measurements are recorded separately to distinguish low-alpha preview noise from visible clipping. The sheet has no character, held weapon, scenery or labels."
+      ],
+      "technical": {
+        "dimensions": [
+          1774,
+          887
+        ],
+        "mode": "RGBA",
+        "columns": 4,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "transparencyRequested": true,
+        "alphaZeroFraction": 0.3727148629394397,
+        "alphaAtMost16Fraction": 0.8543683088682955,
+        "nonemptyCellsAlphaGt24": 8,
+        "distinctRGBAFrames": 8,
+        "minimumMarginsAlphaGt24": [
+          82,
+          72,
+          61,
+          40,
+          63,
+          72,
+          79,
+          81
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 3,
+        "internalBoundaryAlphaP99": 2
+      }
+    },
+    {
+      "key": "evolutions/voltaic_musket",
+      "path": "assets/dlc/illustrated-v1/evolutions/voltaic_musket.png",
+      "sha256": "2220c4cf48b129d01c7f2b4a26dd482b169ce64445b6ebd576514d53f651b532",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/evolutions/vulcan-cerberus.png",
+      "notes": [
+        "Native image inspected against the finish reference and Foudre Impériale brief. A heavier copper dart core is wrapped in braided gold lightning, purple enamel crown fins and violet arcs. The copper body and lightning filaments are drawn as an imperial evolution rather than retaining the reference's silver casing and three cyan bars.",
+        "Eight right-facing pulse states preserve the same dart and attached crown. The broad preview halo is checked by boundary-alpha measurements before approval; visible projectile content remains distinct and fully present in each cell."
+      ],
+      "technical": {
+        "dimensions": [
+          1774,
+          887
+        ],
+        "mode": "RGBA",
+        "columns": 4,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "transparencyRequested": true,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "alphaZeroFraction": 0.14530758075114805,
+        "alphaAtMost16Fraction": 0.8495193633709514,
+        "nonemptyCellsAlphaGt24": 8,
+        "distinctRGBAFrames": 8,
+        "minimumMarginsAlphaGt24": [
+          63,
+          57,
+          53,
+          31,
+          43,
+          52,
+          62,
+          62
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 3,
+        "internalBoundaryAlphaP99": 2
+      }
+    },
+    {
+      "key": "fx/duo_aria_astarra",
+      "path": "assets/dlc/illustrated-v1/fx/duo_aria_astarra.png",
+      "sha256": "96dc0fdb33ac7c5976266b4ab1d0f8cfd4452de2f0a1b3d98c57ead18833684f",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/evolutions/nova-cataclysm.png",
+      "notes": [
+        "Eight distinct cyan rampart rings interwoven with gold-orange embers. Elevated view, stable central anchor and contained silhouettes."
+      ],
+      "technical": {
+        "dimensions": [
+          1774,
+          887
+        ],
+        "columns": 4,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "alphaZeroFraction": 0.6163346547716039,
+        "alphaAtMost16Fraction": 0.8247802086762442,
+        "nonemptyCellsAlphaGt24": 8,
+        "distinctRGBAFrames": 8,
+        "minimumMarginsAlphaGt24": [
+          121,
+          108,
+          95,
+          84,
+          87,
+          100,
+          110,
+          121
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 1,
+        "internalBoundaryAlphaP99": 1
+      }
+    },
+    {
+      "key": "fx/duo_carmilla_ossuary",
+      "path": "assets/dlc/illustrated-v1/fx/duo_carmilla_ossuary.png",
+      "sha256": "e055d817f32739cf601083ea74ddc0178587a651125a0dff5cd5ec7df184a3f5",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/evolutions/nova-cataclysm.png",
+      "notes": [
+        "Eight distinct crimson-ivory ritual wreaths with rose petals and pale ornamental spikes. Low-alpha noise appears large in the black preview, but internal borders have alpha at most2; no visible part crosses a boundary."
+      ],
+      "technical": {
+        "dimensions": [
+          1774,
+          887
+        ],
+        "columns": 4,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "alphaZeroFraction": 0.07491906773144341,
+        "alphaAtMost16Fraction": 0.7681695643829384,
+        "nonemptyCellsAlphaGt24": 8,
+        "distinctRGBAFrames": 8,
+        "minimumMarginsAlphaGt24": [
+          91,
+          82,
+          75,
+          75,
+          73,
+          84,
+          89,
+          94
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 2,
+        "internalBoundaryAlphaP99": 2
+      }
+    },
+    {
+      "key": "fx/duo_freyja_vexara",
+      "path": "assets/dlc/illustrated-v1/fx/duo_freyja_vexara.png",
+      "sha256": "bda7a3ce5b232fdba3b42c189b5e8f0c246cee3a06ff4ad3bac160d2f1d6c3b4",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/evolutions/niflhel-breath.png",
+      "notes": [
+        "Eight distinct pale cyan and teal water-and-ice maelstrom pulses, with violet glints. Style and color continuity checked against Niflhel Breath; complete rings remain inside their cells."
+      ],
+      "technical": {
+        "dimensions": [
+          1774,
+          887
+        ],
+        "mode": "RGBA",
+        "columns": 4,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "transparencyRequested": true,
+        "alphaZeroFraction": 0.37255725632301223,
+        "alphaAtMost16Fraction": 0.8202744388759597,
+        "nonemptyCellsAlphaGt24": 8,
+        "distinctRGBAFrames": 8,
+        "minimumMarginsAlphaGt24": [
+          114,
+          97,
+          82,
+          76,
+          66,
+          85,
+          95,
+          102
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 2,
+        "internalBoundaryAlphaP99": 1
+      }
+    },
+    {
+      "key": "fx/duo_nyx_kalix",
+      "path": "assets/dlc/illustrated-v1/fx/duo_nyx_kalix.png",
+      "sha256": "028cd42b352ec1aa520a272a629b58b5088e217534a2003fa61f8280eefa55da",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/evolutions/nova-cataclysm.png",
+      "notes": [
+        "Eight distinct cyan-violet rift pulses with magenta shards and an open center. Circular identity and sheet layout match the brief."
+      ],
+      "technical": {
+        "dimensions": [
+          1774,
+          887
+        ],
+        "columns": 4,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "alphaZeroFraction": 0.6443244459301268,
+        "alphaAtMost16Fraction": 0.8403915253397122,
+        "nonemptyCellsAlphaGt24": 8,
+        "distinctRGBAFrames": 8,
+        "minimumMarginsAlphaGt24": [
+          115,
+          110,
+          103,
+          98,
+          100,
+          99,
+          105,
+          110
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 1,
+        "internalBoundaryAlphaP99": 1
+      }
+    },
+    {
+      "key": "fx/infernal_fog",
+      "path": "assets/dlc/illustrated-v1/fx/infernal_fog.png",
+      "sha256": "b03a44d47277e29cc184142326ffb4e719522b14371eb0005464e0bdeea0d468",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/environment/acid-rain.png",
+      "notes": [
+        "Eight distinct amber-brown low mist clouds; no scenery, no fire and no clipping. The complete clouds remain separated on a regular4×2grid."
+      ],
+      "technical": {
+        "dimensions": [
+          1774,
+          887
+        ],
+        "columns": 4,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "alphaZeroFraction": 0.5179620701883272,
+        "alphaAtMost16Fraction": 0.8815433755015767,
+        "nonemptyCellsAlphaGt24": 8,
+        "distinctRGBAFrames": 8,
+        "minimumMarginsAlphaGt24": [
+          86,
+          72,
+          69,
+          72,
+          72,
+          75,
+          70,
+          73
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 2,
+        "internalBoundaryAlphaP99": 1
+      }
+    },
+    {
+      "key": "maps/abyss_dome_bathyal",
+      "path": "assets/dlc/illustrated-v1/maps/abyss_dome_bathyal.png",
+      "sha256": "6027b3b5a26c1751be874ca2fa94a873c20480c900779f87571228e79f707adf",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/infernal-city-approach-terrain.webp",
+      "notes": [
+        "Native image inspected visually against the approach-terrain camera reference and the Dôme Bathyal brief. Riveted steel floor, ribbed glass viewing windows and teal ocean with coral-pink and violet bioluminescence identify the pressurized underwater dome.",
+        "Four broad approaches reach a large empty central plaza. Tall architectural ribs and marine scenery stay on the perimeter; there are no painted combat units, citadel, towers, text or UI. The near-top-down camera gives a continuous readable floor."
+      ],
+      "technical": {
+        "dimensions": [
+          1536,
+          1024
+        ],
+        "mode": "RGB",
+        "columns": 1,
+        "rows": 1,
+        "nativeBytesMatch": true,
+        "transparencyRequested": false,
+        "alphaZeroFraction": 0.0,
+        "alphaAtMost16Fraction": 0.0,
+        "nonemptyCellsAlphaGt24": 1,
+        "distinctRGBAFrames": 1,
+        "minimumMarginsAlphaGt24": null,
+        "boundaryPixelsAlphaGt24": null,
+        "internalBoundaryAlphaMax": null,
+        "internalBoundaryAlphaP99": null
+      }
+    },
+    {
+      "key": "maps/abyss_fosse_de_corail",
+      "path": "assets/dlc/illustrated-v1/maps/abyss_fosse_de_corail.png",
+      "sha256": "3000726f062f52c2999687517ef33c4c66a82e4abbef5127f39d07e6855413c2",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/infernal-city-approach-terrain.webp",
+      "notes": [
+        "Native image inspected visually against the approach-terrain camera reference and the Fosse de Corail brief. It presents a dark wet basalt research esplanade with turquoise mechanical coral, violet-pink bioluminescence and jellyfish confined to the outer trenches.",
+        "The broad central floor is clear and traversable-looking, with four open approaches and faint sonar rings. Architectural obstacles stay at the perimeter; there are no painted combat units, towers, central citadel, labels or UI."
+      ],
+      "technical": {
+        "dimensions": [
+          1536,
+          1024
+        ],
+        "mode": "RGB",
+        "columns": 1,
+        "rows": 1,
+        "nativeBytesMatch": true,
+        "transparencyRequested": false,
+        "alphaZeroFraction": 0.0,
+        "alphaAtMost16Fraction": 0.0,
+        "nonemptyCellsAlphaGt24": 1,
+        "distinctRGBAFrames": 1,
+        "minimumMarginsAlphaGt24": null,
+        "boundaryPixelsAlphaGt24": null,
+        "internalBoundaryAlphaMax": null,
+        "internalBoundaryAlphaP99": null
+      }
+    },
+    {
+      "key": "maps/arctic_banquise_fracturee",
+      "path": "assets/dlc/illustrated-v1/maps/arctic_banquise_fracturee.png",
+      "sha256": "2913d16984f61c7b6de2212ba2f6e6704f1f14fede01bcd93eea28f0a0954ddd",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/infernal-city-approach-terrain.webp",
+      "notes": [
+        "Native image inspected visually against the camera reference and Banquise Fracturée brief. A large stable pale-blue ice plate is surrounded by broken sea ice and brutalist corner outposts; green and magenta aurora reflections establish the polar domain.",
+        "Faint surface cracks leave the central plate continuously walkable-looking, with four broad ice approaches. Fractured open water, structures and tall formations remain peripheral; no unit, defense tower, central citadel, text or UI is painted in."
+      ],
+      "technical": {
+        "dimensions": [
+          1536,
+          1024
+        ],
+        "mode": "RGB",
+        "columns": 1,
+        "rows": 1,
+        "nativeBytesMatch": true,
+        "transparencyRequested": false,
+        "alphaZeroFraction": 0.0,
+        "alphaAtMost16Fraction": 0.0,
+        "nonemptyCellsAlphaGt24": 1,
+        "distinctRGBAFrames": 1,
+        "minimumMarginsAlphaGt24": null,
+        "boundaryPixelsAlphaGt24": null,
+        "internalBoundaryAlphaMax": null,
+        "internalBoundaryAlphaP99": null
+      }
+    },
+    {
+      "key": "maps/arctic_centrale_polaire",
+      "path": "assets/dlc/illustrated-v1/maps/arctic_centrale_polaire.png",
+      "sha256": "ef6f497199be3de2c4e7bef1b5359fc3a24dd2f4c0a297e92cae6848ddfec633",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/infernal-city-approach-terrain.webp",
+      "notes": [
+        "Native image inspected visually against the camera reference and Centrale Polaire brief. Brutalist concrete reactor walls enclose an icy steel courtyard; orange thermal conduits contrast with restrained green and magenta polar light at the edges.",
+        "The central metal-and-ice floor is broad and obstacle-free, with four readable approaches. Walls and crystalline scenery stay peripheral; no combat unit, turret, central citadel, text or UI is included."
+      ],
+      "technical": {
+        "dimensions": [
+          1536,
+          1024
+        ],
+        "mode": "RGB",
+        "columns": 1,
+        "rows": 1,
+        "nativeBytesMatch": true,
+        "transparencyRequested": false,
+        "alphaZeroFraction": 0.0,
+        "alphaAtMost16Fraction": 0.0,
+        "nonemptyCellsAlphaGt24": 1,
+        "distinctRGBAFrames": 1,
+        "minimumMarginsAlphaGt24": null,
+        "boundaryPixelsAlphaGt24": null,
+        "internalBoundaryAlphaMax": null,
+        "internalBoundaryAlphaP99": null
+      }
+    },
+    {
+      "key": "maps/astral_nef_d_horlogerie",
+      "path": "assets/dlc/illustrated-v1/maps/astral_nef_d_horlogerie.png",
+      "sha256": "bd325890e44136dfb9f8288dc33e9db208b9daa5cd76d9c1198add2c0ebfccb9",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/infernal-city-approach-terrain.webp",
+      "notes": [
+        "Native opaque clockwork cathedral battlefield matches the white-marble, gold, stained-glass and cyan stellar brief. Broad empty central floor and four approach directions; architecture stays around the perimeter, without painted combat units or a central citadel. Camera and surface finish compared to the existing approach terrain."
+      ],
+      "technical": {
+        "dimensions": [
+          1536,
+          1024
+        ],
+        "mode": "RGB",
+        "columns": 1,
+        "rows": 1,
+        "nativeBytesMatch": true,
+        "transparencyRequested": false,
+        "alphaZeroFraction": 0.0,
+        "alphaAtMost16Fraction": 0.0,
+        "nonemptyCellsAlphaGt24": 1,
+        "distinctRGBAFrames": 1,
+        "minimumMarginsAlphaGt24": null,
+        "boundaryPixelsAlphaGt24": null,
+        "internalBoundaryAlphaMax": null,
+        "internalBoundaryAlphaP99": null
+      }
+    },
+    {
+      "key": "maps/astral_parvis_solaire",
+      "path": "assets/dlc/illustrated-v1/maps/astral_parvis_solaire.png",
+      "sha256": "c9a9bed3618d613183c2954dc781a4b4295e8b80e5933cc06f5d83d1181d2eee",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/infernal-city-approach-terrain.webp",
+      "notes": [
+        "Native opaque solar marble courtyard with golden clouds and peripheral cathedral buttresses. Large uninterrupted center, four clear approach directions, no actors, HUD or central obstacle. Same elevated battlefield camera and painted finish as the reference."
+      ],
+      "technical": {
+        "dimensions": [
+          1536,
+          1024
+        ],
+        "mode": "RGB",
+        "columns": 1,
+        "rows": 1,
+        "nativeBytesMatch": true,
+        "transparencyRequested": false,
+        "alphaZeroFraction": 0.0,
+        "alphaAtMost16Fraction": 0.0,
+        "nonemptyCellsAlphaGt24": 1,
+        "distinctRGBAFrames": 1,
+        "minimumMarginsAlphaGt24": null,
+        "boundaryPixelsAlphaGt24": null,
+        "internalBoundaryAlphaMax": null,
+        "internalBoundaryAlphaP99": null
+      }
+    },
+    {
+      "key": "maps/brass_fonderie_imperiale",
+      "path": "assets/dlc/illustrated-v1/maps/brass_fonderie_imperiale.png",
+      "sha256": "d75f72f51d12699bd8aa298db41767db66b08699e0933ab1cf50620ace43a4fb",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/infernal-city-approach-terrain.webp",
+      "notes": [
+        "Native image inspected visually against the camera reference and Fonderie Impériale brief. Huge peripheral copper pistons, brass machinery, wrought balconies, low furnace light and distant purple banners give the imperial foundry its requested identity.",
+        "The riveted steel center is open and continuous, with four clear approaches and restrained brass seams. Furnaces, steam and machinery do not obstruct the playable-looking center; no combat units, central citadel, turret placements, text or UI are baked into the image."
+      ],
+      "technical": {
+        "dimensions": [
+          1536,
+          1024
+        ],
+        "mode": "RGB",
+        "columns": 1,
+        "rows": 1,
+        "nativeBytesMatch": true,
+        "transparencyRequested": false,
+        "alphaZeroFraction": 0.0,
+        "alphaAtMost16Fraction": 0.0,
+        "nonemptyCellsAlphaGt24": 1,
+        "distinctRGBAFrames": 1,
+        "minimumMarginsAlphaGt24": null,
+        "boundaryPixelsAlphaGt24": null,
+        "internalBoundaryAlphaMax": null,
+        "internalBoundaryAlphaP99": null
+      }
+    },
+    {
+      "key": "maps/brass_pont_des_dirigeables",
+      "path": "assets/dlc/illustrated-v1/maps/brass_pont_des_dirigeables.png",
+      "sha256": "e80a50cf7237a09612c65410fbe8bf03bff7e43e5c9385504d14c1bfec1ab08c",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/infernal-city-approach-terrain.webp",
+      "notes": [
+        "Native image inspected visually against the camera reference and Pont des Dirigeables brief. A copper-and-wood imperial mooring deck has brass railings, purple velvet banners, restrained inset gears, golden steam and airships beyond the perimeter over clouds.",
+        "The broad central deck and four approaches are clear of vehicles, people and obstacles. Airships and tall architecture remain outside the playable-looking floor; there are no painted combat units, central citadel, turret placements, text or UI."
+      ],
+      "technical": {
+        "dimensions": [
+          1536,
+          1024
+        ],
+        "mode": "RGB",
+        "columns": 1,
+        "rows": 1,
+        "nativeBytesMatch": true,
+        "transparencyRequested": false,
+        "alphaZeroFraction": 0.0,
+        "alphaAtMost16Fraction": 0.0,
+        "nonemptyCellsAlphaGt24": 1,
+        "distinctRGBAFrames": 1,
+        "minimumMarginsAlphaGt24": null,
+        "boundaryPixelsAlphaGt24": null,
+        "internalBoundaryAlphaMax": null,
+        "internalBoundaryAlphaP99": null
+      }
+    },
+    {
+      "key": "maps/desert_canyon_des_miroirs",
+      "path": "assets/dlc/illustrated-v1/maps/desert_canyon_des_miroirs.png",
+      "sha256": "0680d864671842b52145b82312705bc40b21448559a6224c3df24c7982cc4d39",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/infernal-city-approach-terrain.webp",
+      "notes": [
+        "Native image inspected visually against the camera reference and Canyon des Miroirs brief. Reflective obsidian and amber cliffs, gold Persian geometric inlays and restrained blue seams identify the vitrified solarpunk canyon.",
+        "A broad unoccupied glassy central avenue has four clear approaches. Large architecture and cliffs stay at the outer edge, with no central building, units, towers, text or UI."
+      ],
+      "technical": {
+        "dimensions": [
+          1536,
+          1024
+        ],
+        "mode": "RGB",
+        "columns": 1,
+        "rows": 1,
+        "nativeBytesMatch": true,
+        "transparencyRequested": false,
+        "alphaZeroFraction": 0.0,
+        "alphaAtMost16Fraction": 0.0,
+        "nonemptyCellsAlphaGt24": 1,
+        "distinctRGBAFrames": 1,
+        "minimumMarginsAlphaGt24": null,
+        "boundaryPixelsAlphaGt24": null,
+        "internalBoundaryAlphaMax": null,
+        "internalBoundaryAlphaP99": null
+      }
+    },
+    {
+      "key": "maps/desert_oasis_vitrifiee",
+      "path": "assets/dlc/illustrated-v1/maps/desert_oasis_vitrifiee.png",
+      "sha256": "67bf56a07c143584381a58d449c12b40668d7f456c304c93bb3efb1da5c321ec",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/infernal-city-approach-terrain.webp",
+      "notes": [
+        "Native image inspected visually against the camera reference and Oasis Vitrifiée brief. Gold-lit pale mosaic, lapis colonnades, peripheral pools and solar mirror arrays establish a distinct neo-Persian oasis.",
+        "The central mosaic is flat floor decoration rather than an obstacle, leaving a large open combat area and four approaches. Tall buildings and pools remain peripheral; there are no painted combat units, defensive towers, central citadel, labels or UI."
+      ],
+      "technical": {
+        "dimensions": [
+          1536,
+          1024
+        ],
+        "mode": "RGB",
+        "columns": 1,
+        "rows": 1,
+        "nativeBytesMatch": true,
+        "transparencyRequested": false,
+        "alphaZeroFraction": 0.0,
+        "alphaAtMost16Fraction": 0.0,
+        "nonemptyCellsAlphaGt24": 1,
+        "distinctRGBAFrames": 1,
+        "minimumMarginsAlphaGt24": null,
+        "boundaryPixelsAlphaGt24": null,
+        "internalBoundaryAlphaMax": null,
+        "internalBoundaryAlphaP99": null
+      }
+    },
+    {
+      "key": "maps/flora_grande_serre",
+      "path": "assets/dlc/illustrated-v1/maps/flora_grande_serre.png",
+      "sha256": "7e472e1f9f022acfd6b6e4a3e54b88f6c94c823399f59394041a476859e8d931",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/infernal-city-approach-terrain.webp",
+      "notes": [
+        "Native image inspected visually against the approach-terrain camera reference and the Grande Serre brief. Curving oxidized wrought iron, fractured emerald glazing, large mutant leaves and crimson roses give the requested Art Nouveau conservatory identity, with restrained amber lamps.",
+        "The mossy stone-and-glass central surface remains broad and unobstructed, with four readable approaches. Decorative architecture is peripheral; no combat unit, defense tower, central citadel, text or UI is baked into the background."
+      ],
+      "technical": {
+        "dimensions": [
+          1536,
+          1024
+        ],
+        "mode": "RGB",
+        "columns": 1,
+        "rows": 1,
+        "nativeBytesMatch": true,
+        "transparencyRequested": false,
+        "alphaZeroFraction": 0.0,
+        "alphaAtMost16Fraction": 0.0,
+        "nonemptyCellsAlphaGt24": 1,
+        "distinctRGBAFrames": 1,
+        "minimumMarginsAlphaGt24": null,
+        "boundaryPixelsAlphaGt24": null,
+        "internalBoundaryAlphaMax": null,
+        "internalBoundaryAlphaP99": null
+      }
+    },
+    {
+      "key": "maps/flora_racines_du_c_ur",
+      "path": "assets/dlc/illustrated-v1/maps/flora_racines_du_c_ur.png",
+      "sha256": "ab27137e66bb0254b111a8004ee33a3e412d0f4cbbec4899b9becac491656db7",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/infernal-city-approach-terrain.webp",
+      "notes": [
+        "Native image inspected visually against the approach-terrain camera reference and Racines du Cœur brief. Large biomechanical roots with emerald sap channels, crimson crystal blossoms and peripheral Art Nouveau ironwork distinguish the ancient botanical industrial plaza.",
+        "A wide, low-contrast stone center and four broad approach lanes remain free of painted obstacles. Roots, glasshouses and tall lighting stay at the outer border; there are no combat units, towers, central citadel, text or UI."
+      ],
+      "technical": {
+        "dimensions": [
+          1536,
+          1024
+        ],
+        "mode": "RGB",
+        "columns": 1,
+        "rows": 1,
+        "nativeBytesMatch": true,
+        "transparencyRequested": false,
+        "alphaZeroFraction": 0.0,
+        "alphaAtMost16Fraction": 0.0,
+        "nonemptyCellsAlphaGt24": 1,
+        "distinctRGBAFrames": 1,
+        "minimumMarginsAlphaGt24": null,
+        "boundaryPixelsAlphaGt24": null,
+        "internalBoundaryAlphaMax": null,
+        "internalBoundaryAlphaP99": null
+      }
+    },
+    {
+      "key": "props/abyss_monument",
+      "path": "assets/dlc/illustrated-v1/props/abyss_monument.png",
+      "sha256": "50eb8d0fb3680dd5ec0ad04341b6aeecdea3dd3058b46d891f355c365caed06a",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/map-western-wall.webp",
+      "notes": [
+        "Native image inspected visually against map-western-wall and the mechanical coral monolith brief. A dark ribbed titanium tower supports turquoise reef shelves with violet bioluminescent nodes and restrained coral-pink machinery.",
+        "The same complete monument keeps its footprint, scale and camera in four distinct lighting phases. Base and coral crown are fully framed in each 2 by 2 cell. There is no terrain rectangle, surrounding scenery, label or combat unit."
+      ],
+      "technical": {
+        "dimensions": [
+          1254,
+          1254
+        ],
+        "mode": "RGBA",
+        "columns": 2,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "transparencyRequested": true,
+        "alphaZeroFraction": 0.698796705407131,
+        "alphaAtMost16Fraction": 0.7670224023157793,
+        "nonemptyCellsAlphaGt24": 4,
+        "distinctRGBAFrames": 4,
+        "minimumMarginsAlphaGt24": [
+          55,
+          55,
+          55,
+          55
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 1,
+        "internalBoundaryAlphaP99": 1
+      }
+    },
+    {
+      "key": "props/arctic_monument",
+      "path": "assets/dlc/illustrated-v1/props/arctic_monument.png",
+      "sha256": "951e56bfa3b8125833cf0cdd645626ecdc9ff11f4a2b098f360580a48414ba98",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/map-western-wall.webp",
+      "notes": [
+        "Native image inspected visually against the architectural finish reference and polar-monolith brief. Stepped frosted dark concrete, a translucent ice spine and small green/magenta conduits give the requested cryo-brutalist identity.",
+        "Four distinct lighting phases preserve the complete monolith, footprint, camera and scale. The ice finial and full base remain within their cells, without ground scenery, text or a combat unit."
+      ],
+      "technical": {
+        "dimensions": [
+          1254,
+          1254
+        ],
+        "mode": "RGBA",
+        "columns": 2,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "transparencyRequested": true,
+        "alphaZeroFraction": 0.6877278196215492,
+        "alphaAtMost16Fraction": 0.7312784098858136,
+        "nonemptyCellsAlphaGt24": 4,
+        "distinctRGBAFrames": 4,
+        "minimumMarginsAlphaGt24": [
+          47,
+          47,
+          47,
+          47
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 1,
+        "internalBoundaryAlphaP99": 0
+      }
+    },
+    {
+      "key": "props/astral_monument",
+      "path": "assets/dlc/illustrated-v1/props/astral_monument.png",
+      "sha256": "641306cee118d456fe0e9ff15e4d8ba4c449291881585b9f75e6f4de0e479630",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/map-western-wall.webp",
+      "notes": [
+        "Native image inspected visually against the architectural rendering of map-western-wall and the Astral monument brief. The complete freestanding white marble and gold arch, solar astrolabe and cyan aperture are present.",
+        "The four cells share the same monument, ground anchor, camera and overall scale, with distinct astrolabe and aperture-light phases. Finials and base remain inside their cells; no terrain rectangle, text or unit is painted into the prop."
+      ],
+      "technical": {
+        "dimensions": [
+          1254,
+          1254
+        ],
+        "mode": "RGBA",
+        "columns": 2,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "transparencyRequested": true,
+        "alphaZeroFraction": 0.5516535284855607,
+        "alphaAtMost16Fraction": 0.7518111103480029,
+        "nonemptyCellsAlphaGt24": 4,
+        "distinctRGBAFrames": 4,
+        "minimumMarginsAlphaGt24": [
+          39,
+          39,
+          39,
+          39
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 1,
+        "internalBoundaryAlphaP99": 1
+      }
+    },
+    {
+      "key": "props/brass_monument",
+      "path": "assets/dlc/illustrated-v1/props/brass_monument.png",
+      "sha256": "b8daa12245bd9d0157e329eeff457e08f21470498a3579cd1b1867f506b00814",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/map-western-wall.webp",
+      "notes": [
+        "Native image inspected visually against the architectural finish reference and imperial piston-tower brief. An ornate brass-and-copper tower has a large clock face without numerals, purple enamel/velvet panels and compact steam vents.",
+        "Four distinct piston, clock-light and steam phases preserve the same complete structure, scale and ground anchor. The full base and top finial fit each cell; steam does not create a terrain rectangle or surrounding scene, and no labels or units appear."
+      ],
+      "technical": {
+        "dimensions": [
+          1254,
+          1254
+        ],
+        "mode": "RGBA",
+        "columns": 2,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "transparencyRequested": true,
+        "alphaZeroFraction": 0.2942443828870422,
+        "alphaAtMost16Fraction": 0.6447616431247758,
+        "nonemptyCellsAlphaGt24": 4,
+        "distinctRGBAFrames": 4,
+        "minimumMarginsAlphaGt24": [
+          31,
+          32,
+          32,
+          32
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 1,
+        "internalBoundaryAlphaP99": 1
+      }
+    },
+    {
+      "key": "props/desert_monument",
+      "path": "assets/dlc/illustrated-v1/props/desert_monument.png",
+      "sha256": "c20953994ddbccc94e449998b498ceaa1937898bae9ed44f1aefb65a30c332d3",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/map-western-wall.webp",
+      "notes": [
+        "Native image inspected visually against the architectural finish reference and neo-Persian monument brief. A gold-and-obsidian obelisk stands on a pale sand-colored geometric pedestal, with a lapis energy core and a large segmented solar mirror.",
+        "All four complete monuments preserve scale, camera and footprint while mirror reflections and the blue core pulse distinctly. Top finial and full pedestal remain framed; no terrain rectangle, surrounding scenery, text or unit is included."
+      ],
+      "technical": {
+        "dimensions": [
+          1254,
+          1254
+        ],
+        "mode": "RGBA",
+        "columns": 2,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "transparencyRequested": true,
+        "alphaZeroFraction": 0.7084691030170758,
+        "alphaAtMost16Fraction": 0.763641832579128,
+        "nonemptyCellsAlphaGt24": 4,
+        "distinctRGBAFrames": 4,
+        "minimumMarginsAlphaGt24": [
+          55,
+          55,
+          55,
+          55
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 1,
+        "internalBoundaryAlphaP99": 0
+      }
+    },
+    {
+      "key": "props/flora_monument",
+      "path": "assets/dlc/illustrated-v1/props/flora_monument.png",
+      "sha256": "eb1725381c02424ab2cd0d45604e8ec6d36f1132da74c075a08475ee8093dab9",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/map-western-wall.webp",
+      "notes": [
+        "Native image inspected visually against the architectural finish reference and garden arch brief. A freestanding Art Nouveau iron arch is entwined with emerald glass leaves and crimson roses, with an open transparent aperture and detailed complete feet.",
+        "Four distinct rose-and-leaf illumination phases preserve the same structure, scale, camera and ground anchor. No scenery rectangle, cast ground shadow, unit, text or grid is present."
+      ],
+      "technical": {
+        "dimensions": [
+          1254,
+          1254
+        ],
+        "mode": "RGBA",
+        "columns": 2,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "transparencyRequested": true,
+        "alphaZeroFraction": 0.658404111627481,
+        "alphaAtMost16Fraction": 0.791174143856088,
+        "nonemptyCellsAlphaGt24": 4,
+        "distinctRGBAFrames": 4,
+        "minimumMarginsAlphaGt24": [
+          57,
+          57,
+          57,
+          58
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 1,
+        "internalBoundaryAlphaP99": 1
+      }
+    },
+    {
+      "key": "weapons/cavitation_torpedo",
+      "path": "assets/dlc/illustrated-v1/weapons/cavitation_torpedo.png",
+      "sha256": "50d5cd2c5b8161c41ed7d9e3eac96418a9253000026542485070b11954f7adf7",
+      "verdict": "pass",
+      "reference": null,
+      "notes": [
+        "Replacement revision 2 inspected anew at its changed SHA. It now depicts a distinct cylindrical underwater torpedo with rounded turquoise nose, dark pressure tube, two circumferential cyan bands and short rear stabilizers; it no longer repeats the Vulcan dart body.",
+        "Eight distinct right-facing propulsion phases have violet bubbles trailing left and a turquoise cavitation envelope. Broad preview halos reach cell edges only at alpha 2–3; measurements show no alpha>24 boundary contact, with the readable projectile and wake contained. Native RGBA pixels are preserved without cleanup."
+      ],
+      "technical": {
+        "dimensions": [
+          1774,
+          887
+        ],
+        "mode": "RGBA",
+        "columns": 4,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "transparencyRequested": true,
+        "alphaZeroFraction": 0.30095110508929557,
+        "alphaAtMost16Fraction": 0.8189309695730259,
+        "nonemptyCellsAlphaGt24": 8,
+        "distinctRGBAFrames": 8,
+        "minimumMarginsAlphaGt24": [
+          56,
+          54,
+          50,
+          45,
+          39,
+          52,
+          56,
+          58
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 2,
+        "internalBoundaryAlphaP99": 2
+      }
+    },
+    {
+      "key": "weapons/cryo_laser",
+      "path": "assets/dlc/illustrated-v1/weapons/cryo_laser.png",
+      "sha256": "9d79e026e1a9640abce690be96dcd759c5d6791f5cf4da97b290ee4f8c7e6c31",
+      "verdict": "pass",
+      "reference": null,
+      "notes": [
+        "Replacement revision 2 inspected anew at its changed SHA. It now has a distinct transparent faceted ice-lance body, narrow white-cyan energy core and sparse green aurora sparkles, without the rejected mechanical Vulcan hull, fins, engine or triple bars.",
+        "Eight coherent pulses preserve the stepped crystalline silhouette and rightward leading point. The pulse envelope is assessed by the recorded boundary-alpha measurements; no cleanup, compositing or resampling was performed."
+      ],
+      "technical": {
+        "dimensions": [
+          1774,
+          887
+        ],
+        "mode": "RGBA",
+        "columns": 4,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "transparencyRequested": true,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "alphaZeroFraction": 0.4669814138584515,
+        "alphaAtMost16Fraction": 0.9053610398986234,
+        "nonemptyCellsAlphaGt24": 8,
+        "distinctRGBAFrames": 8,
+        "minimumMarginsAlphaGt24": [
+          72,
+          68,
+          64,
+          52,
+          47,
+          64,
+          66,
+          67
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 1,
+        "internalBoundaryAlphaP99": 1
+      }
+    },
+    {
+      "key": "weapons/plasma_vine",
+      "path": "assets/dlc/illustrated-v1/weapons/plasma_vine.png",
+      "sha256": "d321792dc7d41def6333ad7d76cd0ce672a22dd2b3d90a170874662099b6e62d",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/evolutions/vulcan-cerberus.png",
+      "notes": [
+        "Native image inspected visually against the finish reference and Liane Plasma brief. An emerald vine-energy bolt coils around a pointed crimson thorn with organic gold filaments and a leftward leaf-like trail, clearly distinct from the reference's mechanical dart.",
+        "Eight right-facing pulse phases occupy the intended 4 by 2 grid. The apparent broad halo in the preview only reaches the cell borders at alpha 1–2; the alpha>24 visible content is fully contained. No native pixels were altered."
+      ],
+      "technical": {
+        "dimensions": [
+          1774,
+          887
+        ],
+        "mode": "RGBA",
+        "columns": 4,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "transparencyRequested": true,
+        "alphaZeroFraction": 0.2758884755245822,
+        "alphaAtMost16Fraction": 0.8507611509858675,
+        "nonemptyCellsAlphaGt24": 8,
+        "distinctRGBAFrames": 8,
+        "minimumMarginsAlphaGt24": [
+          73,
+          67,
+          50,
+          36,
+          45,
+          55,
+          65,
+          70
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 2,
+        "internalBoundaryAlphaP99": 2
+      }
+    },
+    {
+      "key": "weapons/seraphic_ray",
+      "path": "assets/dlc/illustrated-v1/weapons/seraphic_ray.png",
+      "sha256": "033aecfbf5c1dc65ae55ab73d0ff3b5624a17e0b408c582ca89b2942abd0530b",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/evolutions/vulcan-cerberus.png",
+      "notes": [
+        "Native image inspected visually against the Vulcan Cerberus reference and Rayon Séraphique brief. The compact golden mechanical ray, cyan star core and halo segments preserve the rightward projectile convention while using the requested Astral identity.",
+        "Eight distinct charge and trail states remain centered and fully framed in the 4 by 2 grid, without text or unrelated scenery."
+      ],
+      "technical": {
+        "dimensions": [
+          1774,
+          887
+        ],
+        "mode": "RGBA",
+        "columns": 4,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "transparencyRequested": true,
+        "alphaZeroFraction": 0.5060132008251469,
+        "alphaAtMost16Fraction": 0.8885161972573906,
+        "nonemptyCellsAlphaGt24": 8,
+        "distinctRGBAFrames": 8,
+        "minimumMarginsAlphaGt24": [
+          88,
+          82,
+          80,
+          67,
+          56,
+          69,
+          81,
+          88
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 2,
+        "internalBoundaryAlphaP99": 1
+      }
+    },
+    {
+      "key": "weapons/solar_saber",
+      "path": "assets/dlc/illustrated-v1/weapons/solar_saber.png",
+      "sha256": "0ca7205d152ddf1fac85326523f4c275fdd340f4c3fd284010d7004a22c990f5",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/evolutions/vulcan-cerberus.png",
+      "notes": [
+        "Native image inspected visually against the finish reference and Sabre Solaire brief. A curved gold solar slash with a dark obsidian cutting edge, lapis energy seam and trailing solar core points right, without a character or held-weapon pose.",
+        "Eight distinct crescent-flame pulse states maintain a coherent scale and orientation, with contained silhouettes and ample separation between cells. The design uses its own curved saber body rather than copying the mechanical reference projectile."
+      ],
+      "technical": {
+        "dimensions": [
+          1774,
+          887
+        ],
+        "mode": "RGBA",
+        "columns": 4,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "transparencyRequested": true,
+        "alphaZeroFraction": 0.6404592707643539,
+        "alphaAtMost16Fraction": 0.8742610601078589,
+        "nonemptyCellsAlphaGt24": 8,
+        "distinctRGBAFrames": 8,
+        "minimumMarginsAlphaGt24": [
+          79,
+          80,
+          78,
+          70,
+          72,
+          77,
+          75,
+          81
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 1,
+        "internalBoundaryAlphaP99": 1
+      }
+    },
+    {
+      "key": "weapons/voltaic_musket",
+      "path": "assets/dlc/illustrated-v1/weapons/voltaic_musket.png",
+      "sha256": "76a451ac1b3e936db31bc32fe21461a48715110acf941be2c80a192aa1886d48",
+      "verdict": "pass",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/evolutions/vulcan-cerberus.png",
+      "notes": [
+        "Native image inspected against the finish reference and Mousquet Voltaïque brief. A pointed brass-cased energy slug has an engraved purple collar, gold lightning seams and a compact violet electrical wake; its bullet body is visibly distinct from the Vulcan guide.",
+        "Eight distinct right-facing pulse/trail phases retain a fixed slug silhouette, center and scale. No held weapon, character, terrain, grid, text or labels appear; each complete visible slug and wake remains isolated in its frame."
+      ],
+      "technical": {
+        "dimensions": [
+          1774,
+          887
+        ],
+        "mode": "RGBA",
+        "columns": 4,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "transparencyRequested": true,
+        "alphaExtrema": [
+          0,
+          255
+        ],
+        "alphaZeroFraction": 0.6568052376237498,
+        "alphaAtMost16Fraction": 0.9085964241092367,
+        "nonemptyCellsAlphaGt24": 8,
+        "distinctRGBAFrames": 8,
+        "minimumMarginsAlphaGt24": [
+          89,
+          83,
+          75,
+          72,
+          61,
+          72,
+          78,
+          88
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 1,
+        "internalBoundaryAlphaP99": 1
+      }
+    }
+  ],
+  "reviewedCount": 35,
+  "passedCount": 35,
+  "rejectedCount": 0,
+  "supersededReviews": [
+    {
+      "key": "weapons/cavitation_torpedo",
+      "path": "assets/dlc/illustrated-v1/weapons/cavitation_torpedo.png",
+      "sha256": "65e53d171deb1caf15c8efbfe1a9fd5fa42ea6a8073147e03578f2b462db39bb",
+      "verdict": "reject",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/evolutions/vulcan-cerberus.png",
+      "notes": [
+        "Native image and the supplied Vulcan Cerberus reference were both inspected visually. The projectile copies the reference body almost exactly: three parallel cyan bars, silver triangular nose and shell, magenta triangular fins, black rear assembly and overall arrowhead silhouette. The visible changes are a turquoise nose halo and violet bubble wake.",
+        "This fails the recorded brief's identity constraint that the reference supplies finish and isolated-frame layout, not projectile identity, and that the Torpille à Cavitation be an original design. The sprite is technically framed as eight distinct right-facing pulses, but a fresh torpedo body is needed before approval."
+      ],
+      "technical": {
+        "dimensions": [
+          1774,
+          887
+        ],
+        "mode": "RGBA",
+        "columns": 4,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "transparencyRequested": true,
+        "alphaZeroFraction": 0.6055398725674245,
+        "alphaAtMost16Fraction": 0.8602893606636763,
+        "nonemptyCellsAlphaGt24": 8,
+        "distinctRGBAFrames": 8,
+        "minimumMarginsAlphaGt24": [
+          79,
+          75,
+          65,
+          62,
+          62,
+          65,
+          68,
+          69
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 1,
+        "internalBoundaryAlphaP99": 1
+      }
+    },
+    {
+      "key": "evolutions/cavitation_torpedo",
+      "path": "assets/dlc/illustrated-v1/evolutions/cavitation_torpedo.png",
+      "sha256": "2d17d408bf31c7d2939ed26a79cb14d61ad503e5e9d60448ecb1b5dd4c67d7fd",
+      "verdict": "reject",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/evolutions/vulcan-cerberus.png",
+      "notes": [
+        "Native image and the supplied Vulcan Cerberus reference were inspected visually. As with the rejected base torpedo, this copies the reference projectile body: three cyan barrel bars, silver arrowhead shell, magenta fins and the same rear assembly. The turquoise vortex sheath and coral-pink sonar wave add effects without changing that identity.",
+        "The Vortex Abyssal brief explicitly requests a dark needle-like torpedo and says the reference is for finish rather than identity. A distinct coherent torpedo body for both base and evolution is required. The sheet otherwise has eight distinct right-facing pulses on the intended grid."
+      ],
+      "technical": {
+        "dimensions": [
+          1774,
+          887
+        ],
+        "mode": "RGBA",
+        "columns": 4,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "transparencyRequested": true,
+        "alphaZeroFraction": 0.6827791893173218,
+        "alphaAtMost16Fraction": 0.83871377748742,
+        "nonemptyCellsAlphaGt24": 8,
+        "distinctRGBAFrames": 8,
+        "minimumMarginsAlphaGt24": [
+          73,
+          58,
+          54,
+          31,
+          57,
+          48,
+          66,
+          63
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 1,
+        "internalBoundaryAlphaP99": 1
+      }
+    },
+    {
+      "key": "evolutions/plasma_vine",
+      "path": "assets/dlc/illustrated-v1/evolutions/plasma_vine.png",
+      "sha256": "37ced583dacfbc4379bf4a2fef13f9bc28ca6b3bd687187e250d1864dca6e7b7",
+      "verdict": "reject",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/evolutions/vulcan-cerberus.png",
+      "notes": [
+        "Native image inspected visually against the finish reference and Couronne d’Épines brief. The green energy lance has an ornate botanical body with gold vine filigree, a surrounding crown of crimson crystal thorns and amber pollen sparks, visibly distinct from the reference's mechanical Vulcan body.",
+        "Reject for halo clipping across cell boundaries: frames 3 and 4 have zero alpha>24 margin, with 58 and 205 boundary pixels above that threshold. The separator between those frames reaches alpha 27, while frame 4's outer-right edge reaches alpha 40 with 144 pixels above 24. This is materially stronger than the alpha 1–3 noise tolerated in other native atlases and will leave a cut halo when frames are extracted. Regenerate a compact glow; do not clean or crop the native PNG."
+      ],
+      "technical": {
+        "dimensions": [
+          1774,
+          887
+        ],
+        "mode": "RGBA",
+        "columns": 4,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "transparencyRequested": true,
+        "alphaZeroFraction": 0.11519709088690581,
+        "alphaAtMost16Fraction": 0.750619940541633,
+        "nonemptyCellsAlphaGt24": 8,
+        "distinctRGBAFrames": 8,
+        "minimumMarginsAlphaGt24": [
+          79,
+          64,
+          0,
+          0,
+          34,
+          67,
+          75,
+          79
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          58,
+          205,
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 27,
+        "internalBoundaryAlphaP99": 25
+      }
+    },
+    {
+      "key": "weapons/cryo_laser",
+      "path": "assets/dlc/illustrated-v1/weapons/cryo_laser.png",
+      "sha256": "1453ff6439f818c1e49a4f35abe01292c86c1f0144ebd1d8099d959b73ae1a47",
+      "verdict": "reject",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/evolutions/vulcan-cerberus.png",
+      "notes": [
+        "Native image inspected visually alongside the Vulcan Cerberus reference. It retains the reference's mechanical silver arrowhead carapace, three longitudinal luminous bars, magenta triangular fins and rear assembly, then adds an icy leading tip and aurora glow.",
+        "The Faisceau Cryo-Laser brief asks for a narrow pale-cyan laser lance with faceted ice segments and says the reference is for finish rather than projectile identity. The reused mechanical dart body does not satisfy that identity. Regenerate a distinct faceted ice/laser projectile; the frame layout alone is not grounds for approval."
+      ],
+      "technical": {
+        "dimensions": [
+          1774,
+          887
+        ],
+        "mode": "RGBA",
+        "columns": 4,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "transparencyRequested": true,
+        "alphaZeroFraction": 0.679075433831277,
+        "alphaAtMost16Fraction": 0.9002159464849276,
+        "nonemptyCellsAlphaGt24": 8,
+        "distinctRGBAFrames": 8,
+        "minimumMarginsAlphaGt24": [
+          83,
+          72,
+          72,
+          61,
+          60,
+          66,
+          80,
+          84
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 2,
+        "internalBoundaryAlphaP99": 1
+      }
+    },
+    {
+      "key": "evolutions/cryo_laser",
+      "path": "assets/dlc/illustrated-v1/evolutions/cryo_laser.png",
+      "sha256": "f9497b1ec23d5114bfb8078cea318b9b8007a56d76978eae509bae99c372e7ee",
+      "verdict": "reject",
+      "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/evolutions/vulcan-cerberus.png",
+      "notes": [
+        "Native image inspected visually alongside the Vulcan Cerberus reference and the rejected cryo base. It keeps the mechanical dart silhouette, silver chevron carapace, circular rear hub and matching wing/fins, adding green-magenta aurora ribbons and a brighter blue core.",
+        "The Couronne Boréale brief requests a crystalline ice spear with a compact aurora crown and prohibits using the reference for projectile identity. The remaining recognizably mechanical reference body is not a distinct ice-spear design. Regenerate base and evolution around one new faceted ice identity."
+      ],
+      "technical": {
+        "dimensions": [
+          1774,
+          887
+        ],
+        "mode": "RGBA",
+        "columns": 4,
+        "rows": 2,
+        "nativeBytesMatch": true,
+        "transparencyRequested": true,
+        "alphaZeroFraction": 0.6022441148545506,
+        "alphaAtMost16Fraction": 0.8532637915322032,
+        "nonemptyCellsAlphaGt24": 8,
+        "distinctRGBAFrames": 8,
+        "minimumMarginsAlphaGt24": [
+          75,
+          63,
+          57,
+          52,
+          51,
+          64,
+          66,
+          72
+        ],
+        "boundaryPixelsAlphaGt24": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "internalBoundaryAlphaMax": 1,
+        "internalBoundaryAlphaP99": 1
+      }
+    }
+  ]
+}

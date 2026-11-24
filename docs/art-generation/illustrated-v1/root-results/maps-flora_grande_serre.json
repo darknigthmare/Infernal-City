@@ -1,0 +1,25 @@
+{
+  "key": "maps/flora_grande_serre",
+  "category": "maps",
+  "id": "flora_grande_serre",
+  "packId": "dlc_art_nouveau_garden",
+  "name": "Grande Serre",
+  "columns": 1,
+  "rows": 1,
+  "transparent": false,
+  "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/infernal-city-approach-terrain.webp",
+  "prompt": "Use case: stylized-concept. Production battlefield background for the existing game Infernal City. Input reference is CAMERA, surface detail and painterly game-rendering style only; do not copy its dark palette. Create ONE seamless-looking complete landscape battlefield scene, 3:2 image. Subject: an immense Art Nouveau conservatory courtyard, oxidized green wrought-iron arches at the perimeter and broken emerald crystal glazing, mutant leaves and roses at the edges, a broad open mossy glass-and-stone central surface. Respect this exact visual domain: Botanique Mutante, Fer Forgé Art Nouveau & Serres de Cristal. Palette: {\"bg\":\"#064e3b\",\"primary\":\"#34d399\",\"secondary\":\"#e11d48\",\"glow\":\"#fbbf24\"}. Elevated nearly top-down orthographic 2.5D camera, no horizon or perspective vanishing point; match the reference's game-ready detailed surfaces. The central 65 percent of the image must be a calm empty unobstructed continuous walkable surface so the game can place its own characters, defense rings and citadel. Put tall architecture, spectacle and decoration in the outer 15 percent border only. Four subtle broad approach directions meet an empty central area; no painted obstacles crossing them. Elaborate illustrated materials and lighting, polished cyber-gothic dark fantasy game art, high resolution, no vector clip art. No characters, enemies, towers, weapons, central citadel, UI, text, lettering, labels, grids or watermark. Entire image opaque, no transparency. This is a FIRST original design following the written DLC brief, not a copied design.",
+  "path": "assets/dlc/illustrated-v1/maps/flora_grande_serre.png",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-6a5fa1dd-a955-42f9-a43c-e6c7e53753f4.png",
+  "sha256": "7e472e1f9f022acfd6b6e4a3e54b88f6c94c823399f59394041a476859e8d931",
+  "bytes": 3726381,
+  "width": 1536,
+  "height": 1024,
+  "mode": "RGB",
+  "alphaExtrema": null,
+  "method": "built-in image_gen",
+  "nativeBytesPreserved": true,
+  "qa": {
+    "status": "pending-visual-review"
+  }
+}

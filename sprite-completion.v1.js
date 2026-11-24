@@ -18,11 +18,11 @@
   const heroineIds = expansionHeroes.length ? expansionHeroes
     : ['nyx', 'aurelia', 'maris', 'zahra', 'mircalla', 'isolde', 'hana', 'freyja', 'vega', 'amara'];
   heroineIds.forEach(id => add('heroes', id, 8, ['intro', 'victory', 'defeat', 'outro']));
-  const bossIds = ['xyra', 'ossuary', 'nhalzara', 'astarra', 'umbrael', 'pestifera', 'vexara', 'kalix', 'malika', 'noctis', 'leviathan'];
+  const bossIds = ['xyra', 'ossuary', 'nhalzara', 'astarra', 'umbrael', 'pestifera', 'vexara', 'kalix', 'malika', 'noctis', 'leviathan', 'hellwarden', 'vespera', 'carmilla'];
   bossIds.forEach(id => add('bosses', id, 8,
     ['intro', 'phase_shift_2', 'phase_shift_3', 'heavy_telegraph', 'defeat', 'idle']));
   const legionIds = Object.keys(root.INFERNAL_CITY_ENEMY_LEGIONS?.enemies || {});
-  [...legionIds, 'flying', 'bulwark', 'artillery', 'splitter'].forEach(id => add('enemies', id, 8,
+  [...legionIds, 'flying', 'bulwark', 'artillery', 'splitter', 'swarmer', 'runner', 'brute'].forEach(id => add('enemies', id, 8,
     ['move', 'attack', 'death_dissolve', 'shield_break']));
   [
     'vulcan_turret', 'plasma_mortar', 'railgun_pylon', 'flame_trap', 'tesla_spire',
@@ -34,13 +34,12 @@
   ['vulcan-cerberus', 'nova-cataclysm', 'odin-lance', 'niflhel-breath'].forEach(id => add(
     'evolutions', id, 4, ['sequence_1', 'sequence_2'], { sequenceFrames: 8, fps: 16 }
   ));
-  // These additional authored assets are available in the review viewer.
-  // Their UI/weather wiring is deliberately separate from combat replacement.
+  // Presentation assets are wired separately from combat replacement.
   heroineIds.forEach(id => add('portraits', id, 4, ['portrait_loop_1', 'portrait_loop_2'],
-    { sequenceFrames: 8, fps: 4, preparedOnly: true }));
+    { sequenceFrames: 8, fps: 4, usage: 'vn-studio' }));
   ['acid-rain', 'ion-storm', 'debris-settle'].forEach(id => add(
     'environment', id, 4, ['sequence_1', 'sequence_2'],
-    { sequenceFrames: 8, fps: 10, preparedOnly: true }
+    { sequenceFrames: 8, fps: 10, usage: id === 'debris-settle' ? 'recycle' : 'weather' }
   ));
 
   root.INFERNAL_CITY_SPRITE_COMPLETION = Object.freeze({
@@ -52,7 +51,8 @@
       const entry = root.INFERNAL_CITY_SPRITE_COMPLETION_APPROVED?.assets?.[key];
       if (!spec || entry?.approved !== true || entry.src !== spec.src
         || !/^[a-f0-9]{64}$/.test(entry.sha256 || '')) return null;
-      const drawScale = !spec.preparedOnly && entry.drawScaleSha256 === entry.sha256
+      const drawScale = !spec.preparedOnly && (!spec.usage || spec.usage === 'combat')
+        && entry.drawScaleSha256 === entry.sha256
         && Number.isFinite(entry.drawScale) && entry.drawScale >= 0.5 && entry.drawScale <= 2.5
         ? entry.drawScale : 1;
       let approvedSpec = approvedSpecs.get(entry);

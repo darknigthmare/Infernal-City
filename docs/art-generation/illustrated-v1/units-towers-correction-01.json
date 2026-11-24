@@ -1,0 +1,28 @@
+{
+  "id": "copper_tesla",
+  "name": "Bobine Tesla Cuivre",
+  "biome": "brass",
+  "category": "towers",
+  "columns": 8,
+  "rows": 8,
+  "states": [
+    "level1",
+    "level2",
+    "level3",
+    "charged",
+    "overdrive",
+    "deploy",
+    "recycle",
+    "idle"
+  ],
+  "reference": "assets/dlc/illustrated-v1/towers/copper_tesla.png",
+  "path": "assets/dlc/illustrated-v1/towers/copper_tesla.png",
+  "prompt": "Edit the supplied Copper Tesla sprite atlas only to correct its grid placement. Preserve the same copper and brass Tesla coil tower identity, materials, silhouette, red burgundy armor, orange warm energy, dark round base and elevated three-quarter camera from the supplied reference. Deliver one native square PNG with real transparent alpha background and EXACTLY 8 equal columns by 8 equal rows, 64 individual frames. CRITICAL: the original last two rows drift vertically and overlap their cells; fix all 64 positions on an absolutely regular grid. Cell centers must be at (column+0.5)/8 width and (row+0.5)/8 height. Every entire tower including base, coil top, small arc and glow must fit inside the inner central 70% of its cell, leaving a clean 15% transparent margin on EVERY side of EVERY cell. Same stable anchor at 78% of each cell height. Do not make the final row drift upward. Eight rows top to bottom: level1, level2, level3, charged, overdrive, deploy, recycle, idle. Eight frame progressive animation within each row left to right. Row 6 deploy rises from compact base into complete tower. Row7 recycle collapses tower into compact base. Row8 idle complete tower. Retain native realistic hand-painted 2D game sprite rendering and the reference design, no perspective redesign, no new weapons or specializations, no labels, no text, no gridlines, no cast long shadows. Overdrive glow must remain small and fully inside each cell. Background must be exactly clear alpha, no smoke outside the cell silhouette, no colored haze across cells. Prioritize rigorous regular layout and roomy transparent gutters while retaining all eight frames per row.",
+  "designStatus": "first-original-design-from-catalogue-and-biome-brief",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-9cf61a8c-089f-47c2-bf75-be748acf390e.png",
+  "previousNative": "/workspace/scratch/3c707a35b074/generated_images/exec-1e433314-fcf8-462d-9d84-5194f2a45b13.png",
+  "correctionReason": "Rows 6 and 7 (zero based) showed significant alpha boundary contacts in the initial native output.",
+  "qa": {
+    "status": "pending"
+  }
+}

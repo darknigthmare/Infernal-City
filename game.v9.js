@@ -2101,6 +2101,11 @@ class GameEngine {
         if (typeof data.activeDlcBiomeId === 'string' || data.activeDlcBiomeId === null) {
           this.activeDlcBiomeId = data.activeDlcBiomeId;
         }
+        if (data.dlcMapSelections && typeof data.dlcMapSelections === 'object' && !Array.isArray(data.dlcMapSelections)) {
+          this.dlcMapSelections = Object.fromEntries(Object.entries(data.dlcMapSelections)
+            .filter(([packId, mapId]) => (DLC_PACKS.paidDlcs || []).some(pack => pack.id === packId)
+              && typeof mapId === 'string' && /^[a-z0-9_]{1,80}$/.test(mapId)).slice(0, 6));
+        }
         if (typeof data.activeDuoComboId === 'string' || data.activeDuoComboId === null) {
           this.activeDuoComboId = data.activeDuoComboId;
         }
@@ -2195,6 +2200,7 @@ class GameEngine {
         characterProgress,
         dlcResearchUnlocked: Array.isArray(this.dlcResearchUnlocked) ? this.dlcResearchUnlocked.slice(0, 16) : [],
         activeDlcBiomeId: this.activeDlcBiomeId || null,
+        dlcMapSelections: { ...(this.dlcMapSelections || {}) },
         activeDuoComboId: this.activeDuoComboId || null,
         dlcSiegesWon: Math.max(0, Math.floor(Number(this.dlcSiegesWon) || 0)),
         vnSceneProgress: {
@@ -8431,6 +8437,7 @@ class GameEngine {
         if (duo) {
           this.particles.push({
             type: 'gravity_ring',
+            dlcDuoId: duo.id,
             x: this.citadel.x,
             y: this.citadel.y,
             radius: 48,
@@ -12439,7 +12446,8 @@ class GameEngine {
     // Dynamic Tactical Weather Overlay (Acid Rain, Ion Storm, Infernal Fog)
     if (!this.prefersReducedMotion && this.waveActive) {
       const weather = this.getActiveTacticalWeather();
-      if (weather === 'acid_rain') {
+      const authoredWeather = this.drawCompletedTacticalWeather?.(weather, view) === true;
+      if (!authoredWeather && weather === 'acid_rain') {
         this.ctx.save();
         this.ctx.strokeStyle = 'rgba(52, 211, 153, 0.16)';
         this.ctx.lineWidth = 1.2;
@@ -12452,7 +12460,7 @@ class GameEngine {
           this.ctx.stroke();
         }
         this.ctx.restore();
-      } else if (weather === 'ion_storm') {
+      } else if (!authoredWeather && weather === 'ion_storm') {
         const flash = Math.pow(Math.max(0, Math.sin(this.animationClock * 2.3) * Math.sin(this.animationClock * 5.7)), 8);
         if (flash > 0.08) {
           this.ctx.save();
@@ -12460,7 +12468,7 @@ class GameEngine {
           this.ctx.fillRect(view.left, view.top, viewWidth, viewHeight);
           this.ctx.restore();
         }
-      } else if (weather === 'infernal_fog') {
+      } else if (!authoredWeather && weather === 'infernal_fog') {
         this.ctx.save();
         this.ctx.fillStyle = 'rgba(245, 158, 11, 0.045)';
         this.ctx.fillRect(view.left, view.top, viewWidth, viewHeight);
@@ -13011,19 +13019,17 @@ class GameEngine {
         const spriteData = TOWER_SPRITE_DATA[selectedTower.id];
         const sprite = this.towerSpriteImages?.[selectedTower.id];
         const previewSize = this.getReadableWorldSize(spriteData?.size || 46, MIN_TOWER_SCREEN_SIZE);
-        const holoDrawn = spriteData && this.drawAtlasFrame(
-          sprite,
-          spriteData,
-          0,
-          this.buildCursor.x,
-          this.buildCursor.y,
-          previewSize,
-          {
-            alpha: canPlace ? 0.68 : 0.36,
-            shadowColor: previewColor,
-            shadowBlur: 14
-          }
-        );
+        const previewOptions = {
+          alpha: canPlace ? 0.68 : 0.36,
+          shadowColor: previewColor,
+          shadowBlur: 14
+        };
+        const holoDrawn = this.drawCompletedTowerPreview?.(
+          selectedTower.id, this.buildCursor.x, this.buildCursor.y, previewSize, previewOptions
+        ) || (spriteData && this.drawAtlasFrame(
+          sprite, spriteData, 0,
+          this.buildCursor.x, this.buildCursor.y, previewSize, previewOptions
+        ));
         if (!holoDrawn) {
           this.ctx.font = `${this.getReadableWorldSize(16, 14)}px sans-serif`;
           this.ctx.textAlign = 'center';

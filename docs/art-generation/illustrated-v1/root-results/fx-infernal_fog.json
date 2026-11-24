@@ -1,0 +1,28 @@
+{
+  "key": "fx/infernal_fog",
+  "category": "fx",
+  "id": "infernal_fog",
+  "name": "Brouillard infernal",
+  "columns": 4,
+  "rows": 2,
+  "sequenceFrames": 8,
+  "transparent": true,
+  "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/environment/acid-rain.png",
+  "prompt": "Use case: stylized-concept. Production VFX animation atlas for Infernal City. Reference is finish and sprite-sheet layout only. Subject: a small low horizontal cloud of semi-transparent amber-brown infernal mist, smoky wisps flowing gently, no fire and no opaque silhouette; eight subtle shifting frames for a ground-level weather overlay. EXACT regular grid FOUR columns by TWO rows, eight SQUARE cells on a 2:1 landscape PNG. Each cell contains one complete effect centered on the exact same anchor at a stable scale; frame order left to right then lower row. Eight authored evolving frames, gently flowing looping motion. Effect and ALL particles strictly within central 50 percent of each cell, huge 25 percent completely empty transparent margin on all four sides. Painterly crisp cyber-gothic game VFX, with controlled translucent glow. Actual transparent alpha background, no dark/white rectangle, no scenery, no character, no floor, no lettering, labels, numbers, border, drawn grid or watermark. Do not let any particle or mist cross a cell boundary.",
+  "path": "assets/dlc/illustrated-v1/fx/infernal_fog.png",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-ac357b9d-7020-4060-8341-75e5405513d0.png",
+  "sha256": "b03a44d47277e29cc184142326ffb4e719522b14371eb0005464e0bdeea0d468",
+  "bytes": 1048159,
+  "width": 1774,
+  "height": 887,
+  "mode": "RGBA",
+  "alphaExtrema": [
+    0,
+    253
+  ],
+  "method": "built-in image_gen",
+  "nativeBytesPreserved": true,
+  "qa": {
+    "status": "pending-visual-review"
+  }
+}

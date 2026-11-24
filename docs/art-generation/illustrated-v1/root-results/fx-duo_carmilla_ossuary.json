@@ -1,0 +1,28 @@
+{
+  "key": "fx/duo_carmilla_ossuary",
+  "category": "fx",
+  "id": "duo_carmilla_ossuary",
+  "name": "Cour Écarlate",
+  "columns": 4,
+  "rows": 2,
+  "sequenceFrames": 8,
+  "transparent": true,
+  "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/evolutions/nova-cataclysm.png",
+  "prompt": "Use case: stylized-concept. Production VFX animation atlas for Infernal City. Reference is finish and sprite-sheet layout only. Subject: a circular CRIMSON and IVORY ritual energy wreath, elegant stylized rose petals and pale bone-like decorative spikes orbiting the ring, regal gothic magic without gore, eight pulse phases; no characters. EXACT regular grid FOUR columns by TWO rows, eight SQUARE cells on a 2:1 landscape PNG. Each cell contains one complete effect centered on the exact same anchor at a stable scale; frame order left to right then lower row. Eight authored evolving frames, gently flowing looping motion. Effect and ALL particles strictly within central 50 percent of each cell, huge 25 percent completely empty transparent margin on all four sides. Painterly crisp cyber-gothic game VFX, with controlled translucent glow. Actual transparent alpha background, no dark/white rectangle, no scenery, no character, no floor, no lettering, labels, numbers, border, drawn grid or watermark. Do not let any particle or mist cross a cell boundary.",
+  "path": "assets/dlc/illustrated-v1/fx/duo_carmilla_ossuary.png",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-adef184f-b8b8-4d1f-851c-65c3dfb90bd9.png",
+  "sha256": "e055d817f32739cf601083ea74ddc0178587a651125a0dff5cd5ec7df184a3f5",
+  "bytes": 2021708,
+  "width": 1774,
+  "height": 887,
+  "mode": "RGBA",
+  "alphaExtrema": [
+    0,
+    253
+  ],
+  "method": "built-in image_gen",
+  "nativeBytesPreserved": true,
+  "qa": {
+    "status": "pending-visual-review"
+  }
+}

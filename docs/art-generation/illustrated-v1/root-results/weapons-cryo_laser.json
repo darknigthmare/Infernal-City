@@ -1,0 +1,30 @@
+{
+  "key": "weapons/cryo_laser",
+  "category": "weapons",
+  "id": "cryo_laser",
+  "packId": "dlc_cryo_brutalist",
+  "name": "Faisceau Cryo-Laser",
+  "columns": 4,
+  "rows": 2,
+  "sequenceFrames": 8,
+  "transparent": true,
+  "reference": null,
+  "prompt": "Use case: stylized-concept. Production 2D projectile animation spritesheet for Infernal City. Subject: a narrow pale-cyan laser lance with faceted ice segments and tiny green aurora sparkles. Name for context only: Faisceau Cryo-Laser. Domain: Monolithes Polaires Brutalistes, Glace Cristalline & Aurores Vert/Magenta; exact colors {\"bg\":\"#0f172a\",\"primary\":\"#4ade80\",\"secondary\":\"#e879f9\",\"glow\":\"#e0f2fe\"}. Strict layout FOUR columns by TWO rows, eight equal SQUARE cells, 2:1 landscape PNG. Reading order left to right then next row; eight distinct drawn pulse/trail frames of the same projectile. Stable center and scale; horizontal long axis, tip and travel facing RIGHT, tail LEFT. The complete projectile plus every glow or spark must fit within the CENTRAL FIFTY PERCENT of each cell, leaving at least 25 percent empty alpha margins on every side. Crisp painterly anime game VFX, no floor, shadow, scenery, text, numbers, border, grid or watermark. Genuine transparent alpha background. No weapons being held, no characters. This is a first original design of the named DLC projectile. IDENTITY: an entirely crystalline pale-cyan ice laser lance: a long clean translucent icicle point, stepped faceted ice segments, brilliant narrow white core and sparse green aurora sparkles. The body is ice and light, never a mechanical missile. No metal casing, fins, engine, triple barrel, gun, armour plates or magenta metal. Eight consecutive distinct pulses, small isolated effects, central 50 percent of every cell; transparent gutters. Preserve sharp facets and painterly shading.",
+  "path": "assets/dlc/illustrated-v1/weapons/cryo_laser.png",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-9dcd12ed-58ed-4ab8-81e2-707a859e95b1.png",
+  "revision": 2,
+  "nativeBytesPreserved": true,
+  "method": "built-in image_gen",
+  "qa": {
+    "status": "pending-visual-review"
+  },
+  "sha256": "9d79e026e1a9640abce690be96dcd759c5d6791f5cf4da97b290ee4f8c7e6c31",
+  "bytes": 933523,
+  "width": 1774,
+  "height": 887,
+  "mode": "RGBA",
+  "alphaExtrema": [
+    0,
+    255
+  ]
+}

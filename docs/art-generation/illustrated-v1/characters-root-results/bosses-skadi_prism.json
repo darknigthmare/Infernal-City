@@ -1,0 +1,57 @@
+{
+  "id": "skadi_prism",
+  "name": "Prêtresse Skadi",
+  "kind": "bosses",
+  "packId": "dlc_cryo_brutalist",
+  "biome": "arctic",
+  "path": "assets/dlc/illustrated-v1/bosses/skadi_prism.png",
+  "columns": 8,
+  "rows": 6,
+  "states": [
+    "intro",
+    "phase_shift_2",
+    "phase_shift_3",
+    "heavy_telegraph",
+    "defeat",
+    "idle"
+  ],
+  "reference": "assets/characters/heroines/freyja-rimeborne-atlas-v1.png",
+  "referenceRole": "style-camera-material guide only; not identity",
+  "fidelity": "first original design from authored DLC metadata and palette",
+  "source": "dlc-packs.v1.js",
+  "authoredCharacter": {
+    "id": "skadi_prism",
+    "name": "Prêtresse Skadi",
+    "age": 19,
+    "isAdult": true,
+    "phases": [
+      "Voile Boréal",
+      "Stalactites Plasma",
+      "Solstice Gelé"
+    ]
+  },
+  "palette": {
+    "bg": "#0f172a",
+    "primary": "#4ade80",
+    "secondary": "#e879f9",
+    "glow": "#e0f2fe"
+  },
+  "designBrief": "Mature adult woman with long red braid, grey-white fur collar and opaque full-length blue armored priestess robe with boots, angular ice prism crown. Compact crystal prism staff, pale ice and green/magenta aurora illumination.",
+  "prompt": "Edit the supplied Prêtresse Skadi animation atlas. Preserve the EXACT existing identity, face, hair, outfit, weapon, painterly style, all poses, row order and grid of 8 columns by 6 rows. Correct cell isolation only. REDUCE every sprite, its weapon, and all effects inside each cell by 25 percent, keeping their local center and a consistent feet baseline at 78 percent of cell height. The ENTIRE body, hair, weapon, staff charge and effects must fit within the central 50 percent width and 60 percent height of each equal square cell. No content may touch any cell boundary, especially intro feet and charged weapons. Keep at least 15 percent empty alpha-zero margin around every pose. Remove broad haze, fog, floor shadows, any colored or white background, and cross-cell glow; retain small crisp effects only. All 48 characters remain fully opaque and visible. Do not omit or duplicate poses. No added text, frame lines, background, transparency checkerboard or paper. True transparent PNG with the original 4:3 landscape canvas aspect.",
+  "key": "bosses/skadi_prism",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-2e6def1a-f04a-498c-b406-6d968474654b.png",
+  "status": "pending-visual-review",
+  "generator": "built-in image_gen",
+  "nativeBytesPreserved": true,
+  "sha256": "281e0fafdeaa1139dd6896aa28f3a2f9b8f2f57991ebd04be571d85dd25601bd",
+  "bytes": 1049114,
+  "width": 1448,
+  "height": 1086,
+  "mode": "RGBA",
+  "alphaExtrema": [
+    0,
+    255
+  ],
+  "revision": 2,
+  "inputEditNative": "/workspace/scratch/3c707a35b074/generated_images/exec-cd706d46-0284-454a-a733-7a9fe9771fa9.png"
+}

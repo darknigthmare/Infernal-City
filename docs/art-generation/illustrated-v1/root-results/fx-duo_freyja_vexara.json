@@ -1,0 +1,28 @@
+{
+  "key": "fx/duo_freyja_vexara",
+  "category": "fx",
+  "id": "duo_freyja_vexara",
+  "name": "Maelström Polaire",
+  "columns": 4,
+  "rows": 2,
+  "sequenceFrames": 8,
+  "transparent": true,
+  "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/evolutions/niflhel-breath.png",
+  "prompt": "Use case: stylized-concept. Production VFX animation atlas for Infernal City. Reference is finish and sprite-sheet layout only. Subject: a circular PALE CYAN ice-and-TEAL sea maelstrom ring, small faceted ice shards and dark turquoise water ribbons, tiny violet glints, eight drawn swirling phases; no characters. EXACT regular grid FOUR columns by TWO rows, eight SQUARE cells on a 2:1 landscape PNG. Each cell contains one complete effect centered on the exact same anchor at a stable scale; frame order left to right then lower row. Eight authored evolving frames, gently flowing looping motion. Effect and ALL particles strictly within central 50 percent of each cell, huge 25 percent completely empty transparent margin on all four sides. Painterly crisp cyber-gothic game VFX, with controlled translucent glow. Actual transparent alpha background, no dark/white rectangle, no scenery, no character, no floor, no lettering, labels, numbers, border, drawn grid or watermark. Do not let any particle or mist cross a cell boundary.",
+  "path": "assets/dlc/illustrated-v1/fx/duo_freyja_vexara.png",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-59d6942c-e3f3-4cc9-afbf-69272d670331.png",
+  "sha256": "bda7a3ce5b232fdba3b42c189b5e8f0c246cee3a06ff4ad3bac160d2f1d6c3b4",
+  "bytes": 1489083,
+  "width": 1774,
+  "height": 887,
+  "mode": "RGBA",
+  "alphaExtrema": [
+    0,
+    253
+  ],
+  "method": "built-in image_gen",
+  "nativeBytesPreserved": true,
+  "qa": {
+    "status": "pending-visual-review"
+  }
+}

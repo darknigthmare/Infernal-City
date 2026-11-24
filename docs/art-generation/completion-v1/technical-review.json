@@ -55228,14 +55228,3032 @@
       ],
       "uniqueCellBytes": 64,
       "edgeContactCells": 0
+    },
+    {
+      "key": "bosses/carmilla",
+      "path": "assets/animations/completion-v1/bosses/carmilla.png",
+      "sha256": "896fbfbd0ff5e72319db0d2f4b2c7a6cb0422ffd402b3a4880d4181be4fd2456",
+      "bytes": 2109961,
+      "width": 1448,
+      "height": 1086,
+      "mode": "RGBA",
+      "columns": 8,
+      "rows": 6,
+      "frameCount": 48,
+      "cellAspectError": 0.0,
+      "visualApproval": false,
+      "alphaMin": 0,
+      "alphaMax": 255,
+      "transparentFraction": 0.35,
+      "nearTransparentFraction": 0.66731,
+      "issues": [],
+      "cells": [
+        {
+          "row": 0,
+          "col": 0,
+          "bboxAlpha96": [
+            32,
+            68,
+            151,
+            163
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "6cc4ba56e6c37d73b0c4fa620212bb7dd893270027c49156d46c0f0346f1e933"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "bboxAlpha96": [
+            31,
+            64,
+            151,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "80a0ac202dcbceeade42e9600211eac7a060f7b123abcd11c8d3289bbda46c0e"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "bboxAlpha96": [
+            29,
+            52,
+            149,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "4e157d7cacce8ccf72e5bdc6762e800bb02ab4d16c35695947048b11614eb028"
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "bboxAlpha96": [
+            30,
+            39,
+            149,
+            163
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "3c39597b12ae418ae6a3d748e2f32b4c84f54d0e2c8c3622a8d88ad3a982f878"
+        },
+        {
+          "row": 0,
+          "col": 4,
+          "bboxAlpha96": [
+            30,
+            26,
+            146,
+            161
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "a528782823e630a109bdf338fed6507bf78b6b4e03194130348e267b98c16653"
+        },
+        {
+          "row": 0,
+          "col": 5,
+          "bboxAlpha96": [
+            32,
+            17,
+            146,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "efd850fc4459b56ea15c858fabeda569cd6468e92feb076601ff12b6639f084d"
+        },
+        {
+          "row": 0,
+          "col": 6,
+          "bboxAlpha96": [
+            29,
+            13,
+            147,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "a592a2d5c4d7e493bba6a084833b041c54725d457a8ea9ad11183b6eaf279ff5"
+        },
+        {
+          "row": 0,
+          "col": 7,
+          "bboxAlpha96": [
+            34,
+            12,
+            138,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "85604217068dadf5e0f0d3a0bad8274f41e3e812190dd1418b611b1571e05d3b"
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "bboxAlpha96": [
+            34,
+            15,
+            138,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "c164f3fb901aa0fcfb52cb03c0f037d9db08b9bf432ee94204a28bdc33188133"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "bboxAlpha96": [
+            33,
+            15,
+            141,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "3b6432edf7cac62b7ad21f0c4448ad2ca84af34275f46877330a5355a7e62c7e"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "bboxAlpha96": [
+            27,
+            15,
+            143,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "a445e03d263f5260cbf2159ff01122b5fdef49cb8739860c0fd5a4e2fdb14501"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "bboxAlpha96": [
+            27,
+            15,
+            146,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "a6de35b1ed7ece456edd11fdf39c8fa5920b6e5988f613c4705a6df67a1c02d2"
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "bboxAlpha96": [
+            28,
+            15,
+            150,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "dc7fa0f61bcc549b836236bafd238d4d91d96ffcbb92e50d9d2dba542288bcf3"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "bboxAlpha96": [
+            24,
+            15,
+            152,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "22c3aed0abf55b30e800bb30f19b6b1fd3c561a4ed812c2690a43cebe89faef1"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "bboxAlpha96": [
+            22,
+            15,
+            153,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "daf196679542bd29930e00c6086abe1be2468313c8e36d8b40997a6d76ebe679"
+        },
+        {
+          "row": 1,
+          "col": 7,
+          "bboxAlpha96": [
+            23,
+            15,
+            154,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "2ce0bf9932907292bac9d45b373bca884c823eb4c4114bce72ab5d41dfb87849"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "bboxAlpha96": [
+            27,
+            16,
+            156,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "d16aac1853d14f08fa7f4c384feb3eafb9b090233bdcdb8050c18436a14d4a0c"
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "bboxAlpha96": [
+            26,
+            16,
+            159,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "d6d713c209c492a0c356dfb48401b0862bb0792dc5f192007fe114ceb8b29bed"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "bboxAlpha96": [
+            25,
+            16,
+            160,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "ab5b41a662cdbc3b289bbb49c2b3d1c43665e58211b1e8907c159c07469de6e4"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "bboxAlpha96": [
+            26,
+            16,
+            162,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "929a5339577a364081a40c9e224dc2cd2607de13ede3930c4889564590f5ed12"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "bboxAlpha96": [
+            21,
+            16,
+            161,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "44855565d6456a478511fb87de05ad4e7a77d4870709e94a9c30372601e5ca2f"
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "bboxAlpha96": [
+            21,
+            16,
+            155,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "aefed2f8015dadb2b7659767fdb4c03d34dad13233b3b0a5d9a6811f97a3d886"
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "bboxAlpha96": [
+            19,
+            13,
+            155,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "29bff6360180a55e647b452f4e72045c08fd6d43cc6933e0249161692697eb51"
+        },
+        {
+          "row": 2,
+          "col": 7,
+          "bboxAlpha96": [
+            20,
+            15,
+            157,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "688b25db6c9183139bee9f923344ef5cd45fef83ea93fd8cde4fd6c45d17a6a4"
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "bboxAlpha96": [
+            31,
+            15,
+            140,
+            161
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "e248d9a9393750536aa2a08cc7f0a28da17e5f33ef171846a527d4a0b5031dc3"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "bboxAlpha96": [
+            28,
+            17,
+            143,
+            161
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "ed03f00dd88a831610e8363cbc85e266f35a78f047e4b7e98081d415a386ca24"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "bboxAlpha96": [
+            24,
+            18,
+            144,
+            161
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "e06c65de0e0b6ef7108b740168664d569fbeb59f0dd0debbbef91ba5d2cffc0c"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "bboxAlpha96": [
+            23,
+            17,
+            156,
+            161
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "d5316808024435be6a7fb369a49059c22c9e03cf36622d7b1642aa9aa937702c"
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "bboxAlpha96": [
+            24,
+            16,
+            156,
+            161
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "095f1ca31043eafe1707e8089ad137efde7e0cb0faee2df213669ffed31342bd"
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "bboxAlpha96": [
+            20,
+            16,
+            154,
+            161
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "c14e300632b75db5302cd98e2ce72de09aa9e32f62ee8e431d9a91c0faa6252d"
+        },
+        {
+          "row": 3,
+          "col": 6,
+          "bboxAlpha96": [
+            24,
+            16,
+            149,
+            161
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "1cf5fa6de2633fc091ff66578890c6da5f3ca85e22c1109e56beb818938b0559"
+        },
+        {
+          "row": 3,
+          "col": 7,
+          "bboxAlpha96": [
+            29,
+            15,
+            138,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "a47da6695c658e4dd3af974ad7c7898ff87e3006c70dca59ea35427448d62420"
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "bboxAlpha96": [
+            35,
+            14,
+            139,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "e712a5cf91f89912fa77f267f484996ddb5bf19f5a1c7aa9b37177f2c1cde45d"
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "bboxAlpha96": [
+            31,
+            22,
+            148,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "ab29f758ad3bab8dd6fbb3ca62ed132bae6654beefda95319e78c83055dce472"
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "bboxAlpha96": [
+            26,
+            35,
+            146,
+            160
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "c86ef1a526d50b8b12121eb42da1ad5876909a8844a33d0ab6300643c0a45c11"
+        },
+        {
+          "row": 4,
+          "col": 3,
+          "bboxAlpha96": [
+            21,
+            55,
+            144,
+            160
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "ca1e50b93407939c1b35a507e013da29330dbb7c76d1346209da175ad0bf1f4e"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "bboxAlpha96": [
+            22,
+            66,
+            147,
+            158
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "3279ce0e6c36e3635030b8eece5b09bad6d07c3144014ffa734bc62a5592e81f"
+        },
+        {
+          "row": 4,
+          "col": 5,
+          "bboxAlpha96": [
+            18,
+            72,
+            149,
+            160
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "19135dab0dce2dff7407411ee8467ac9e68eed8e7c6000bc264df6e34860e4fd"
+        },
+        {
+          "row": 4,
+          "col": 6,
+          "bboxAlpha96": [
+            17,
+            77,
+            150,
+            161
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "7a5837e47b7fec1018f92efa154837c7c1724ac2dcbf14dcda1f16f333e8a654"
+        },
+        {
+          "row": 4,
+          "col": 7,
+          "bboxAlpha96": [
+            17,
+            90,
+            153,
+            159
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "3cc4c3fd9934d2c2334c7cf4bc36f9d237c7899acedf7ac6456a2013c522e509"
+        },
+        {
+          "row": 5,
+          "col": 0,
+          "bboxAlpha96": [
+            38,
+            16,
+            138,
+            163
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "654c7f96d5d763e769234bf878aa81b44603ec74aa342a04e622858058c4206d"
+        },
+        {
+          "row": 5,
+          "col": 1,
+          "bboxAlpha96": [
+            35,
+            16,
+            142,
+            163
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "c096215d557455f096fd583d25e188988c48d7d3fdee3bbdcae43bf930013567"
+        },
+        {
+          "row": 5,
+          "col": 2,
+          "bboxAlpha96": [
+            37,
+            17,
+            143,
+            163
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "f50b6ce9267dcd1eaa3cca34c3b875f497fcd840cb7c886ab11fe29decc6a983"
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "bboxAlpha96": [
+            33,
+            17,
+            140,
+            163
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "8d78114c2329e8bfd43e8e77017632cc4a210e7fc4c5a3c12cb13ab06a7eb2fc"
+        },
+        {
+          "row": 5,
+          "col": 4,
+          "bboxAlpha96": [
+            33,
+            16,
+            139,
+            163
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "a11c8905f9c33bf58efa49280cdf018508ef33ad81f2ca960458b30c6a3ae669"
+        },
+        {
+          "row": 5,
+          "col": 5,
+          "bboxAlpha96": [
+            33,
+            16,
+            139,
+            163
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "9d307440fd6da2ace60912d88707fb8593d6047b5a032a274d2dda8faa874433"
+        },
+        {
+          "row": 5,
+          "col": 6,
+          "bboxAlpha96": [
+            34,
+            17,
+            138,
+            163
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "33cedb157d362a6fea41717635e98c68be699cff67a15d9ed7049260104d2516"
+        },
+        {
+          "row": 5,
+          "col": 7,
+          "bboxAlpha96": [
+            35,
+            16,
+            139,
+            163
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "02c99931a4d72b30e836c5fcb3f74d9e13895f006f02381f71b88986ef3ac27e"
+        }
+      ],
+      "uniqueCellBytes": 48,
+      "edgeContactCells": 0
+    },
+    {
+      "key": "bosses/hellwarden",
+      "path": "assets/animations/completion-v1/bosses/hellwarden.png",
+      "sha256": "0b55af3e2935b8bfe5fe6e930137078c8c0d435958ea3575c1795467f2036d87",
+      "bytes": 2060168,
+      "width": 1448,
+      "height": 1086,
+      "mode": "RGBA",
+      "columns": 8,
+      "rows": 6,
+      "frameCount": 48,
+      "cellAspectError": 0.0,
+      "visualApproval": false,
+      "alphaMin": 0,
+      "alphaMax": 255,
+      "transparentFraction": 0.50434,
+      "nearTransparentFraction": 0.68777,
+      "issues": [],
+      "cells": [
+        {
+          "row": 0,
+          "col": 0,
+          "bboxAlpha96": [
+            28,
+            43,
+            172,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "61ea01a86f2222d6ddaf3c6559fea62402d6c98d7749765897611c5c00c97708"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "bboxAlpha96": [
+            37,
+            52,
+            173,
+            164
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "5ee6287aad18c0d17647211cde34518cccfc302b3600eea3c342e9e299404153"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "bboxAlpha96": [
+            31,
+            38,
+            170,
+            163
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "a0d14e6bdb596465b7c04a9f95d0246aeded6608f298050ba1085b5cb4ede84e"
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "bboxAlpha96": [
+            33,
+            26,
+            168,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "9a45112a9a4d65cd04f5b5655bbf037d09ae53bc18839ab523ce3ffd4adc978d"
+        },
+        {
+          "row": 0,
+          "col": 4,
+          "bboxAlpha96": [
+            33,
+            16,
+            167,
+            159
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "9936e769ef43d55847bfa231be4b958a195f8a92b233e935029cd42594e7b4f0"
+        },
+        {
+          "row": 0,
+          "col": 5,
+          "bboxAlpha96": [
+            31,
+            14,
+            167,
+            160
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "01f4e097e89d554c992aaa0d1c3afde27238c5c80501400a173f762a1c283f4b"
+        },
+        {
+          "row": 0,
+          "col": 6,
+          "bboxAlpha96": [
+            32,
+            12,
+            167,
+            160
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "a3ab365800fcb6c1e93093a570bbc3ee67783086bb33d86cbdc62acffdad0689"
+        },
+        {
+          "row": 0,
+          "col": 7,
+          "bboxAlpha96": [
+            31,
+            9,
+            167,
+            160
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "6e757b0e729300ce7ea0338c7dd29dc02cba8d24da502bddb915974451e932d2"
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "bboxAlpha96": [
+            33,
+            17,
+            167,
+            159
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "3268fab7a0246bbf57d7261f9ddc644e4c65207efd5451ebb9162e2eba1816cd"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "bboxAlpha96": [
+            34,
+            17,
+            167,
+            159
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "6258d709118e6e48ea707bc3b7ae9c18b31b062be05ea47ae045b195eba5ab12"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "bboxAlpha96": [
+            34,
+            15,
+            167,
+            159
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "b25ef612d54d19bb4fd195f1432d834dc8ce5f881690bccef2cb94e2476e3ece"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "bboxAlpha96": [
+            35,
+            14,
+            166,
+            159
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "2e30eb1ac6988449dcf466b3d1835b6c977afd725edac50e79b2c1fc0681a5f3"
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "bboxAlpha96": [
+            35,
+            12,
+            167,
+            159
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "1a75c6f139fe139f27a9be1f9b25cf0c58b5342e216f06e1068ba2815b11f70a"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "bboxAlpha96": [
+            36,
+            12,
+            167,
+            159
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "09864fb47a7dc1aa08c4a4604d9bf43a1f9347726bc2afc6a212d05a1eb129ff"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "bboxAlpha96": [
+            36,
+            11,
+            167,
+            159
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "f39a3a7c99c6a8fcdc9bb040ff639fcfacd0986d6c35ce668d3fe14c0dabd658"
+        },
+        {
+          "row": 1,
+          "col": 7,
+          "bboxAlpha96": [
+            36,
+            11,
+            167,
+            159
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "d1ee33704281c64a842b822deb5efbb30c851368c32bdaa3ac9e47e7d47b3f27"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "bboxAlpha96": [
+            34,
+            12,
+            167,
+            158
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "d49655d90768204fa596de918728a149401c5683dd68803a8526ccaea2bf2f52"
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "bboxAlpha96": [
+            34,
+            13,
+            167,
+            158
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "66f65f47e8d0d46f965f8506b143b21af35a695a9233047364aba81ce0d64d2e"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "bboxAlpha96": [
+            34,
+            13,
+            167,
+            158
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "674053b545ff9eaa5deb9b4b002b0f4c4a7014b753c40bf9679cb621e3ab5e27"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "bboxAlpha96": [
+            34,
+            13,
+            167,
+            158
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "446a170c1de03a19812d8a2e94ee37af044edd50d9cef6f0fa02fe8d10ac6be6"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "bboxAlpha96": [
+            34,
+            13,
+            168,
+            158
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "23b444300ac2860f3ce2f81868618ebc946b39081c0f3af3ca3dbb3ed6c715bf"
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "bboxAlpha96": [
+            35,
+            12,
+            168,
+            158
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "b05006b30d8b71da3bf8e91712e9b88e30365db8e8518ca1bea39880291edd74"
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "bboxAlpha96": [
+            35,
+            13,
+            169,
+            159
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "d1410db5eb938e253ed4de390c37ce0728b9b303a5f2f0095f6ec1c66c348c49"
+        },
+        {
+          "row": 2,
+          "col": 7,
+          "bboxAlpha96": [
+            34,
+            13,
+            168,
+            159
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "0786ce8e6b1453a2013f9a41c591573bed73c89b1970b593a0d268fab6a835f8"
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "bboxAlpha96": [
+            33,
+            17,
+            172,
+            157
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "529bc238fc11edec84033047f1c0146480f18bfdd60e620f705206121ec6f066"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "bboxAlpha96": [
+            32,
+            23,
+            172,
+            157
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "b10b5edb4ca823d0f92d2ab75eee7d6c7ea90dad68d2697329877a96f2772686"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "bboxAlpha96": [
+            38,
+            23,
+            162,
+            157
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "710c21b52eb566ececbafd6665f63e420a148a6d8b540f2639ad7d0d6db860f0"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "bboxAlpha96": [
+            33,
+            16,
+            160,
+            157
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "563d6abb511a49d8a9718e6e5ce266fc2fe1b89e9023e8214d8a738dce62dc98"
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "bboxAlpha96": [
+            38,
+            9,
+            159,
+            157
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "ecc0cd030b9e9ba5f3dddfcebd9e2d76d7e7b716b1f9ddd453e9be32f9b8ecdc"
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "bboxAlpha96": [
+            37,
+            7,
+            157,
+            157
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "5a6e20571332fa09ee5f15691760c7fad501b68d02d0a54951d7bd86c94d0021"
+        },
+        {
+          "row": 3,
+          "col": 6,
+          "bboxAlpha96": [
+            36,
+            16,
+            172,
+            157
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "6cd4fc1ced408fc61dcc4d87d5aa7e9f02bfc9ab2b0e722efb887b839dc0ebcd"
+        },
+        {
+          "row": 3,
+          "col": 7,
+          "bboxAlpha96": [
+            34,
+            15,
+            171,
+            157
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "d2b13e89836bf7aa304ad23ead81444957bec89be72b588bcf93eb27fe53a9b1"
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "bboxAlpha96": [
+            32,
+            15,
+            173,
+            158
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "9d7987eabf83bc37de8bcbbd2182104f795ead142eb7e3c312eab7ee9a0a63d6"
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "bboxAlpha96": [
+            34,
+            24,
+            173,
+            157
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "64c2774d84f24460c4153699b2218c313be9cedaff3265a2d0a1d8055bc7fc1b"
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "bboxAlpha96": [
+            40,
+            41,
+            169,
+            156
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "9db11d1776f4119ac39db05f27f0458f40dd07b867b7fea69fc1bd6c3ef1064e"
+        },
+        {
+          "row": 4,
+          "col": 3,
+          "bboxAlpha96": [
+            34,
+            54,
+            154,
+            157
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "464edd6b04b0fdc95dbcab8c632c2c9df8228c2341002c2dcdce9c3a18efc935"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "bboxAlpha96": [
+            28,
+            64,
+            154,
+            156
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "e05c3c6ab8503b6b6a043c7737c4f4ebf6d451784f119afdde98726a65a0a56b"
+        },
+        {
+          "row": 4,
+          "col": 5,
+          "bboxAlpha96": [
+            28,
+            69,
+            151,
+            156
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "7e448ca2017ab11f42ba313ecf5d181e7357909e5b542ce76ad35d41fc9148d8"
+        },
+        {
+          "row": 4,
+          "col": 6,
+          "bboxAlpha96": [
+            27,
+            50,
+            153,
+            155
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "e8cee5cda7cfd6a60713ed3802729eb071dc35bc28714f8c4f9dc3aac7148f40"
+        },
+        {
+          "row": 4,
+          "col": 7,
+          "bboxAlpha96": [
+            33,
+            50,
+            149,
+            151
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "707595a6b2c83d90e9db8b692014c10b387362d6bdaaca52f620fba1d3370672"
+        },
+        {
+          "row": 5,
+          "col": 0,
+          "bboxAlpha96": [
+            32,
+            12,
+            167,
+            159
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "3d98824289814d56d650981fc5c1d74e60cea4d5a77a481f3256a97a0fb10295"
+        },
+        {
+          "row": 5,
+          "col": 1,
+          "bboxAlpha96": [
+            33,
+            12,
+            167,
+            159
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "fe889975ab9a7a960a54c1f2400496e1963a15ab362df332bce5f1abb916b36f"
+        },
+        {
+          "row": 5,
+          "col": 2,
+          "bboxAlpha96": [
+            33,
+            12,
+            167,
+            159
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "f2ce93252c900b3f85560a4ae0884942660d5b1ae91b2523e4b7e74e7d66b306"
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "bboxAlpha96": [
+            33,
+            12,
+            167,
+            158
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "a1861f3d551422feaef61900694f02854c55b32964a5966785a1e1a56b6a9ef2"
+        },
+        {
+          "row": 5,
+          "col": 4,
+          "bboxAlpha96": [
+            33,
+            12,
+            167,
+            159
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "4e040c14e40dfe422c6fd1a5bd97e1737208981c594cf7ead8c796cb1553f474"
+        },
+        {
+          "row": 5,
+          "col": 5,
+          "bboxAlpha96": [
+            33,
+            12,
+            167,
+            159
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "84cb08d7c698952ed8071af89529b71948812360de5073f317ca213bea3bba09"
+        },
+        {
+          "row": 5,
+          "col": 6,
+          "bboxAlpha96": [
+            34,
+            12,
+            167,
+            159
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "22c2fe46b549beea675ff8f212b8fe1b1425fece2f8193b510dfa86a4493733c"
+        },
+        {
+          "row": 5,
+          "col": 7,
+          "bboxAlpha96": [
+            33,
+            11,
+            167,
+            159
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "1089b4da0b3a8fc645c983cf892ea3be1d5d5c772d9c1b769c6ecb6ff3ada37c"
+        }
+      ],
+      "uniqueCellBytes": 48,
+      "edgeContactCells": 0
+    },
+    {
+      "key": "bosses/vespera",
+      "path": "assets/animations/completion-v1/bosses/vespera.png",
+      "sha256": "1ff47bd52dd93cff1d889a887c8e1600e4889af24762a9b6eabe86957dc00cf9",
+      "bytes": 2221472,
+      "width": 1448,
+      "height": 1086,
+      "mode": "RGBA",
+      "columns": 8,
+      "rows": 6,
+      "frameCount": 48,
+      "cellAspectError": 0.0,
+      "visualApproval": false,
+      "alphaMin": 0,
+      "alphaMax": 255,
+      "transparentFraction": 0.50618,
+      "nearTransparentFraction": 0.68713,
+      "issues": [],
+      "cells": [
+        {
+          "row": 0,
+          "col": 0,
+          "bboxAlpha96": [
+            24,
+            71,
+            162,
+            164
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "858da4e478af1c58faca499bf596a234f70aff4e5b0a2fcf020f12abc30e0c8b"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "bboxAlpha96": [
+            22,
+            78,
+            160,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "d3b865281119bcb008121cd41c9c4b4407c8f1752e9244b7256200fed498b666"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "bboxAlpha96": [
+            26,
+            63,
+            155,
+            164
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "690137cc90fe1a8c57f448cdcc2a053a9576fc6f8e353d48cfe5a7c523123563"
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "bboxAlpha96": [
+            26,
+            47,
+            153,
+            163
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "81b882a399642a7266f3316f4c148783d00edaec45a9fc7cc44f8554840381df"
+        },
+        {
+          "row": 0,
+          "col": 4,
+          "bboxAlpha96": [
+            27,
+            32,
+            146,
+            164
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "9a7d55e00431b20534e9c650418f71f381929aaebe719872b708f7069f33fa8d"
+        },
+        {
+          "row": 0,
+          "col": 5,
+          "bboxAlpha96": [
+            29,
+            25,
+            154,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "8db60193e3c901bf3a1473e7f3f8e27f7aad95e3e7c5208230bbe1ca73267ad9"
+        },
+        {
+          "row": 0,
+          "col": 6,
+          "bboxAlpha96": [
+            29,
+            19,
+            158,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "b0d04ac1696d76f7d8c74aa348dfe619711253453b0892a95a9dde6176d0b495"
+        },
+        {
+          "row": 0,
+          "col": 7,
+          "bboxAlpha96": [
+            22,
+            16,
+            160,
+            164
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "b8aad083b0b478792490ee5faa06445d13119abf226d56806c3915a65388a3da"
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "bboxAlpha96": [
+            23,
+            18,
+            155,
+            166
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "8e0d85db269bd7c7fb9ff860f6a714b462bfecd78ebffeee7b70bf4b1e9080a9"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "bboxAlpha96": [
+            22,
+            19,
+            155,
+            166
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "abaa24cb6053d42c6f839357d11e2826fefe302448a8d0ddee871b4428956a67"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "bboxAlpha96": [
+            23,
+            18,
+            160,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "2459b98fb3ae2d4725a12e00de0ae25dd3a02ef2cd30bcf6717a893f8aa59308"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "bboxAlpha96": [
+            23,
+            18,
+            161,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "fec9e6b2d04256ffc7fcde94ea97a8def0966237b36b518598ec972b15fa3c4d"
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "bboxAlpha96": [
+            22,
+            17,
+            161,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "728521b887bda70d31efe5d67fb5d7f454801975c09090f8946671fe24e60c2d"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "bboxAlpha96": [
+            22,
+            17,
+            158,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "a01eca6e1afb30210d54721fe1f416f84a2256aacc4f1a85c2880841016b6b0a"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "bboxAlpha96": [
+            23,
+            17,
+            157,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "0bfaeaebcb36a21461498ab6362226da717685bea92b7198eade305950d5784b"
+        },
+        {
+          "row": 1,
+          "col": 7,
+          "bboxAlpha96": [
+            23,
+            17,
+            158,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "a4efe2f8b49b75afc461d86340cb85edfcaa54685737e6f20c3dd771d00d8e20"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "bboxAlpha96": [
+            24,
+            17,
+            165,
+            164
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "391cf22f5b790f12bad69c66e039141af2f276446c2ab127224143a5a64b11bc"
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "bboxAlpha96": [
+            24,
+            18,
+            167,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "e9caa58984a38bfc46663146298ce6ff5b323e30f8aa5c975c58c9fd326794de"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "bboxAlpha96": [
+            25,
+            18,
+            171,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "61ae4001c3efc8bb2ced4331c5605bf5cf287ae9e2ebd332c02cadd36f840dcb"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "bboxAlpha96": [
+            24,
+            18,
+            171,
+            164
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "4d92cfaf3bf5d8582b9bfb4d8f77a190f67f81035c5023930cfcd612ae9094d3"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "bboxAlpha96": [
+            24,
+            19,
+            171,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "71fd625bf7b0f8997335b6884a1acd4404c7d5da2a1d1957d986933861a1d063"
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "bboxAlpha96": [
+            24,
+            19,
+            173,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "7c7c79dac839bd51e078becf3f03c5becd6d482c6378c08d70a6cfa4c7cff8fc"
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "bboxAlpha96": [
+            26,
+            19,
+            171,
+            164
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "129f14dde8396ce697d85a577f378b36503914f66b46392a7d56833b1b2b82eb"
+        },
+        {
+          "row": 2,
+          "col": 7,
+          "bboxAlpha96": [
+            25,
+            17,
+            167,
+            164
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "7584c3000d2d88811de132dab23c9fca515799cb40660167a1a689109eb8a5aa"
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "bboxAlpha96": [
+            24,
+            22,
+            165,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "85a8e17c57e912983fb1aec030e35b96696c55063d210d0afc9fb1022c6f481d"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "bboxAlpha96": [
+            23,
+            24,
+            163,
+            164
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "73406a44a9224ef4b7e60ff0fff357387102dd5f5db26ae882785ad9ee5c1e12"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "bboxAlpha96": [
+            21,
+            25,
+            162,
+            164
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "9da24cb20b3c3e5b27c7774499694866a6a14df5c6546396b863919e59da2705"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "bboxAlpha96": [
+            21,
+            20,
+            161,
+            164
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "0f8e98b4f2cec88b0bbbafbf528647584c3926ffc7d2540562dde9c7949e4d59"
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "bboxAlpha96": [
+            19,
+            21,
+            174,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "50543ca69d5b3154cd39f8b622be80d64f8b8e87ae4b8eb9b958edf486dd64b9"
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "bboxAlpha96": [
+            26,
+            19,
+            174,
+            164
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "f9d88ededc9d374ec4152711400f4e6b766d2decbb3d1a87abfa4795e1c62d95"
+        },
+        {
+          "row": 3,
+          "col": 6,
+          "bboxAlpha96": [
+            28,
+            17,
+            162,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "052f9c99e9ca8e3fe1248394558a35bf60f993087ba743270b8bc62c82a54561"
+        },
+        {
+          "row": 3,
+          "col": 7,
+          "bboxAlpha96": [
+            27,
+            17,
+            160,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "a9d639dc3fb84d2996bbe3677b16552686acbc8737ec89662ef473d1f3a1308f"
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "bboxAlpha96": [
+            25,
+            18,
+            159,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "da98c44dd441974d6dbec1a3a7d435f1f4f0325518c539c24018df7a3c7c450f"
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "bboxAlpha96": [
+            22,
+            27,
+            161,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "658bf79d92ec7eb1c279013b820235aa4e057f1b28ec81582f61126dc52d3818"
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "bboxAlpha96": [
+            21,
+            42,
+            156,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "934e091d1b142e41b60b2d9d539d8c6502f3bd3dc3adda768294e2db69794067"
+        },
+        {
+          "row": 4,
+          "col": 3,
+          "bboxAlpha96": [
+            20,
+            53,
+            152,
+            164
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "1605fd0983162b6b3c397d9d3d458547c82336b7ecd4155732af0e2bca295f4d"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "bboxAlpha96": [
+            20,
+            63,
+            148,
+            164
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "8fc2499ed3cb4a92e25e7a439cbaffcd5d2e901a2a8514bcff28f07a138a0297"
+        },
+        {
+          "row": 4,
+          "col": 5,
+          "bboxAlpha96": [
+            19,
+            77,
+            147,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "47f481e724eb6d8f7fe426e39bc83406dcdcc9f0dd1084a77ce00d72fd05ee16"
+        },
+        {
+          "row": 4,
+          "col": 6,
+          "bboxAlpha96": [
+            19,
+            88,
+            154,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "2647f4dc32452d3fad4caab65e4dd048a4ae00224d300ae688f1cc84d768821c"
+        },
+        {
+          "row": 4,
+          "col": 7,
+          "bboxAlpha96": [
+            19,
+            98,
+            160,
+            164
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "8d6692bbc1f8685671cada0e3055097a7f0708ca5c6b5fa8e0d71b3a4610af5b"
+        },
+        {
+          "row": 5,
+          "col": 0,
+          "bboxAlpha96": [
+            24,
+            17,
+            158,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "3ad4b96534c27f16b46a7d2024f31bc6ab8b5f7355a576bcc71591706848bad2"
+        },
+        {
+          "row": 5,
+          "col": 1,
+          "bboxAlpha96": [
+            24,
+            17,
+            163,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "c8d0452204857f82b1a6053f98a9aca8ceb033d17607693689451e594cc945c5"
+        },
+        {
+          "row": 5,
+          "col": 2,
+          "bboxAlpha96": [
+            25,
+            17,
+            165,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "78b2cd5caa1684247b3cb271e85e7590f23d6cddf8bbd1ada6a682e619b70a61"
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "bboxAlpha96": [
+            24,
+            17,
+            165,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "154e0f324d85afd80d79842d0828d9e307f6082bc5b42a64ee77300925537085"
+        },
+        {
+          "row": 5,
+          "col": 4,
+          "bboxAlpha96": [
+            23,
+            17,
+            160,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "93ef0b48f1590641b29603be04126b967753bff8f1c820c091cdf2899c20f609"
+        },
+        {
+          "row": 5,
+          "col": 5,
+          "bboxAlpha96": [
+            23,
+            18,
+            155,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "091cabe2865ac7db9a32756f68d9eeed3f5ec3c02b8448b96e974690a982d921"
+        },
+        {
+          "row": 5,
+          "col": 6,
+          "bboxAlpha96": [
+            22,
+            19,
+            155,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "2e75206947d29578d9a7813a1fe1ca5eb7805f678dea7b60957d9d3c8a4f8323"
+        },
+        {
+          "row": 5,
+          "col": 7,
+          "bboxAlpha96": [
+            23,
+            18,
+            154,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "c19c5db642bf9b8dbc4210632dbd70a365395c4f80902cd086e45f36675bdb2a"
+        }
+      ],
+      "uniqueCellBytes": 48,
+      "edgeContactCells": 0
+    },
+    {
+      "key": "enemies/brute",
+      "path": "assets/animations/completion-v1/enemies/brute.png",
+      "sha256": "a6ec7f25d8f0f0b98c1d3c9b3ae7094b475455573af474b3ef4ac7c8e386582a",
+      "bytes": 1805127,
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "columns": 8,
+      "rows": 4,
+      "frameCount": 32,
+      "cellAspectError": 0.0,
+      "visualApproval": false,
+      "alphaMin": 0,
+      "alphaMax": 255,
+      "transparentFraction": 0.55979,
+      "nearTransparentFraction": 0.71175,
+      "issues": [],
+      "cells": [
+        {
+          "row": 0,
+          "col": 0,
+          "bboxAlpha96": [
+            37,
+            45,
+            186,
+            178
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "22f5c917029f87534e4b3ce48533bff99151e24eb9db48127447778042776109"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "bboxAlpha96": [
+            36,
+            44,
+            183,
+            178
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "20dbfb4da556545371905e73ef49bb900dee86a29240cd6452e7f001cef2acda"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "bboxAlpha96": [
+            37,
+            44,
+            191,
+            177
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "fd340af327718ea360272493765be74580b72877eeb7debcf9ddb422c46d5619"
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "bboxAlpha96": [
+            36,
+            44,
+            196,
+            179
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "cdb63da6b1e2a5153a17fc887f8bed2980df9a404163aa82db2c2ad4c6a741c5"
+        },
+        {
+          "row": 0,
+          "col": 4,
+          "bboxAlpha96": [
+            38,
+            44,
+            189,
+            179
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "0422ab02e1ebacd5fce5bfc0cdfcf7bfd80b305dac00ab7486ce230bb3794404"
+        },
+        {
+          "row": 0,
+          "col": 5,
+          "bboxAlpha96": [
+            40,
+            44,
+            193,
+            179
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "7c3ae49c751a498dda6fb3555f9246f82e93be522fb99ab41ceb6054f46cbfa4"
+        },
+        {
+          "row": 0,
+          "col": 6,
+          "bboxAlpha96": [
+            42,
+            45,
+            192,
+            180
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "53ccca8ba34ac7e0ec0e7066b7837159d0b358256368f5ae265de4af7a84f84e"
+        },
+        {
+          "row": 0,
+          "col": 7,
+          "bboxAlpha96": [
+            38,
+            44,
+            186,
+            178
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "6d265d035fb17c93ce25dd5dbeec5e5ce0aa2fbf744eae6741f9ff56ad4bb961"
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "bboxAlpha96": [
+            37,
+            45,
+            186,
+            177
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "1566e7c9f0609286f1299e0b8ed47d2bdd67ccb847b8a50c9ca3f513552e89e9"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "bboxAlpha96": [
+            36,
+            47,
+            187,
+            178
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "7e4e2809b49af72f681e699bee8fe3a0560259b44c23fbc799225fbb0c7a9489"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "bboxAlpha96": [
+            29,
+            38,
+            192,
+            176
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "9c4decc32bb687e758ece9d2f3beaf83dd807d86597c6b3f82aab293a3335dce"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "bboxAlpha96": [
+            18,
+            33,
+            196,
+            172
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "f675bacf13edd7c802085871bc6fe317828b11b4a2b7ad4819a3bd961954a728"
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "bboxAlpha96": [
+            14,
+            47,
+            197,
+            180
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "e6a2f81d4f24bed7cf38cdc25b9469fe5a0bb50f89ff81d9d74ce5f907010506"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "bboxAlpha96": [
+            14,
+            47,
+            207,
+            181
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "42a493964bcc4533aa71a289dce1e42493076e75d7ab0333920f71725f22d7bb"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "bboxAlpha96": [
+            29,
+            46,
+            211,
+            181
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "cd9ed064d07c37716ef825ddc0745fbbc2f6adeee336a2361068b8e168f7a18b"
+        },
+        {
+          "row": 1,
+          "col": 7,
+          "bboxAlpha96": [
+            36,
+            45,
+            192,
+            179
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "db0299a11baf4f30fd77187b4bc874aa24bf4c89a1d2046ddabf3b80a792c45a"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "bboxAlpha96": [
+            37,
+            44,
+            186,
+            177
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "ad7935c91e9ee5f9c8e42fb7e2be5e0f75cf25f7c90afb805c7b69c4840a8da6"
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "bboxAlpha96": [
+            37,
+            44,
+            185,
+            177
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "1a96eac68cd73ff535cef9886c5cf917d08e1f01160491359513fc4c3b21baaf"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "bboxAlpha96": [
+            30,
+            40,
+            186,
+            177
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "a0a16b15e352eebd8abdbc3516e40f2b7f4ea522b29bf72422406578a132ee96"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "bboxAlpha96": [
+            28,
+            42,
+            192,
+            177
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "5715d8efc913305f165f040ad6ad34affba2885afd2779cac58c1bbca48ccf49"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "bboxAlpha96": [
+            28,
+            40,
+            193,
+            177
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "8ca22639655d3bfdd951cca51de29e1b94f9d9348da18a4adc1d6cd006669801"
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "bboxAlpha96": [
+            29,
+            44,
+            190,
+            176
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "77d5208de9ab2b97747073117a6684a56ea002e80a1e871f754e03dc3e336649"
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "bboxAlpha96": [
+            33,
+            47,
+            189,
+            173
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "290c12873f910cf2e47258df54e8d53854aee0eae1d3a96f25b693bd8f395496"
+        },
+        {
+          "row": 2,
+          "col": 7,
+          "bboxAlpha96": [
+            54,
+            60,
+            164,
+            161
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "423c8c97e47246fac1cb292797d8c3cca26c8ea65ac1902074e43580325bf91c"
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "bboxAlpha96": [
+            37,
+            45,
+            185,
+            177
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "918c81b4780f2e292dd122442a5efce85adde186643157eb56907147b52a1336"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "bboxAlpha96": [
+            36,
+            45,
+            184,
+            177
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "1a5f019dfdd84fe24fee26b785d1ec2c87c55d2f511920c951d725ef49ea1808"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "bboxAlpha96": [
+            36,
+            44,
+            186,
+            177
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "1ac07dc35169de1016a8eaed06c79fcd258ba20c79782705ad9e347231f65c62"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "bboxAlpha96": [
+            28,
+            36,
+            191,
+            177
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "2c63a79b4199bd4744a66545c24ff016c8a98990b977e29ce0ea712d932214a0"
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "bboxAlpha96": [
+            25,
+            45,
+            190,
+            177
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "15a2acc90558a7e2f35cd858d2d9d040f04761dba7e6a44ed5e1cf74ec6db0d1"
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "bboxAlpha96": [
+            28,
+            45,
+            187,
+            177
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "4cac12c220740f6e77618f23b4f2cf2a667b382fcd032f58269ed8ff82196776"
+        },
+        {
+          "row": 3,
+          "col": 6,
+          "bboxAlpha96": [
+            37,
+            45,
+            184,
+            177
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "409f1d806789a9fb63c86b797059e0c460fc81393ea148d66ce29c1c2f9fe7d0"
+        },
+        {
+          "row": 3,
+          "col": 7,
+          "bboxAlpha96": [
+            37,
+            45,
+            185,
+            177
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "134a395061250b74a9bad73a04cb61f6a9cc6388563ce3bce8e7692ae63d8349"
+        }
+      ],
+      "uniqueCellBytes": 32,
+      "edgeContactCells": 0
+    },
+    {
+      "key": "enemies/runner",
+      "path": "assets/animations/completion-v1/enemies/runner.png",
+      "sha256": "8d440c2f8162b9a6072ba19a690aaacf57b13bd4e25c51885c240f483206543c",
+      "bytes": 954154,
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "columns": 8,
+      "rows": 4,
+      "frameCount": 32,
+      "cellAspectError": 0.0,
+      "visualApproval": false,
+      "alphaMin": 0,
+      "alphaMax": 255,
+      "transparentFraction": 0.77534,
+      "nearTransparentFraction": 0.87312,
+      "issues": [],
+      "cells": [
+        {
+          "row": 0,
+          "col": 0,
+          "bboxAlpha96": [
+            48,
+            75,
+            189,
+            170
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "5dd0cc4b957f9d07db4ab079779c4789609d646bf92bb3dbf243eb2fbaf71b7b"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "bboxAlpha96": [
+            47,
+            77,
+            187,
+            169
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "f1540d76230aafbcd3b00a43bfbec86906a86465be3429507895aaaf3903181b"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "bboxAlpha96": [
+            45,
+            77,
+            186,
+            167
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "88dec0bbb752f337672630ab71adef587ad9e170c11d64fb50b9df402789009e"
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "bboxAlpha96": [
+            43,
+            77,
+            191,
+            169
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "403d59454a89cbc648be828c0f9726a39036ddb9528f7e21fc1e593599125539"
+        },
+        {
+          "row": 0,
+          "col": 4,
+          "bboxAlpha96": [
+            41,
+            77,
+            188,
+            169
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "a6223f7a6247bfe01be8d2b7d403c9ce3da072c51f8dedfd0502f5deddd800cc"
+        },
+        {
+          "row": 0,
+          "col": 5,
+          "bboxAlpha96": [
+            45,
+            77,
+            185,
+            167
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "83cb959f6c50289be35e1477733b73f45dbfccfe65a74709910401892a3df5d9"
+        },
+        {
+          "row": 0,
+          "col": 6,
+          "bboxAlpha96": [
+            46,
+            77,
+            185,
+            169
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "346708df2f6582254646aba5c80abaeb2c15e34320cc856462a5fd90ce583d8e"
+        },
+        {
+          "row": 0,
+          "col": 7,
+          "bboxAlpha96": [
+            46,
+            76,
+            183,
+            170
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "222f4842968ab5b9da8a2e7a6db3ae13b7278fcc23a80abe099b7b2be8a02684"
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "bboxAlpha96": [
+            42,
+            76,
+            188,
+            167
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "71251de9e7dc71ce0018f8f8b45bcf719a5df0e1e777ca60f09e0bf06b2c638f"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "bboxAlpha96": [
+            42,
+            76,
+            187,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "f9c4ed44aafcfdba9bd3737dac7be4e49615b11480b844d3ee23ae98908d3b2c"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "bboxAlpha96": [
+            39,
+            76,
+            181,
+            166
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "92dab2cf85306d5905a537eb96637bf93b7b8654040dd932237632aa711ba13f"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "bboxAlpha96": [
+            34,
+            77,
+            188,
+            153
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "a586dcce9f693aa3f8d6f203358106490a5021ff569777d4c49359cf8c3c1c1c"
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "bboxAlpha96": [
+            29,
+            76,
+            183,
+            158
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "5ec4f9cec6ed060e7c7a098886175c72498151c609f43f9ecf991c3d8470c0da"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "bboxAlpha96": [
+            32,
+            78,
+            181,
+            156
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "14b7a7626de6b6e34f953735f6c1096f95737a2fbd2360e4fc54f983980cbdc6"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "bboxAlpha96": [
+            39,
+            75,
+            183,
+            157
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "0fde33486f4bf7ff50deaaa9e369517e22a51242d10207d723b0707e503611c2"
+        },
+        {
+          "row": 1,
+          "col": 7,
+          "bboxAlpha96": [
+            38,
+            75,
+            184,
+            166
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "90320e22013811f842dfa364b034cd5968e335f18e1028b7526047b77bfd786f"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "bboxAlpha96": [
+            42,
+            76,
+            187,
+            161
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "3180d55ca04fb97c8a84dee4e7ce2ec8811bb51864be1387fa41f761b24f7969"
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "bboxAlpha96": [
+            46,
+            77,
+            188,
+            160
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "a24e0e36696225483d29fe15e7067efa046e9d4885eceeaad7d8aac442ff53c1"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "bboxAlpha96": [
+            46,
+            76,
+            187,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "05ee43535407be6bac97b1506706193cd4a2d4dbde62c51739d2e3c229159ff6"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "bboxAlpha96": [
+            46,
+            76,
+            185,
+            161
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "ac2c3c8a25701ee528945a05399304cf24d8dc692e62f39f21d2b3a9d62f964a"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "bboxAlpha96": [
+            48,
+            76,
+            176,
+            154
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "d0f70c348aca5a24c4f42de715d79c2c1c135484fbd1eaa1ca1666670a3ff169"
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "bboxAlpha96": [
+            52,
+            81,
+            171,
+            149
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "0d2f36280b15b1883cbe47025b5af7a796bea52b25ad91a114146cbeb3b01d6b"
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "bboxAlpha96": [
+            63,
+            87,
+            170,
+            148
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "09e0956fc0bc84cc02aaab486ed06bd760ff857ba6e2534c613d3c7b5c525515"
+        },
+        {
+          "row": 2,
+          "col": 7,
+          "bboxAlpha96": [
+            73,
+            109,
+            153,
+            140
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "ade2cd7188e71ef63924875778b264de0054d001ef20e05fed33aecbe02de299"
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "bboxAlpha96": [
+            47,
+            79,
+            188,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "d03c60bdc6a1bdc73b97a536d0432a4301b3fe6537906abae6ef46dc1df4038b"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "bboxAlpha96": [
+            45,
+            74,
+            184,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "88a87e4bea578fc1f168c19c2ca777ebacac4dd4c7eebc36bf86fb7d65ad8ea6"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "bboxAlpha96": [
+            45,
+            67,
+            184,
+            167
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "2fcad9521c18f1dc6ca03b0dc4d323e3d3f5fc3490b8ccd50c9e3576ce3ea9e9"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "bboxAlpha96": [
+            43,
+            62,
+            184,
+            173
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "d2d55bef469820d3dfdcf942ce02e63c92a7207e41a7c54a59e1a817bfdb8c89"
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "bboxAlpha96": [
+            43,
+            62,
+            187,
+            170
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "9210b8ee2fca0f014e7334479e02571e03551eb37c19f2e303c7779e7f4a8c9a"
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "bboxAlpha96": [
+            45,
+            69,
+            183,
+            166
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "7b6f45e66be3e62e7fac2b4998e593b42edfb2ced868652aeae5e6be12e7b966"
+        },
+        {
+          "row": 3,
+          "col": 6,
+          "bboxAlpha96": [
+            45,
+            78,
+            183,
+            164
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "42fc7f7577c364258e6c90c06cebec86f8abefb8acba5fe73b5a26288348cb05"
+        },
+        {
+          "row": 3,
+          "col": 7,
+          "bboxAlpha96": [
+            44,
+            79,
+            187,
+            164
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "6500918543a0fb0455cdd569f07d1ebf6f352dcf96853982a9947096f33c39cf"
+        }
+      ],
+      "uniqueCellBytes": 32,
+      "edgeContactCells": 0
+    },
+    {
+      "key": "enemies/swarmer",
+      "path": "assets/animations/completion-v1/enemies/swarmer.png",
+      "sha256": "5274005fa438a685002cedf00efe9f3e9c136dd6e204a1292b1c203b2cb9af99",
+      "bytes": 1484726,
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "columns": 8,
+      "rows": 4,
+      "frameCount": 32,
+      "cellAspectError": 0.0,
+      "visualApproval": false,
+      "alphaMin": 0,
+      "alphaMax": 255,
+      "transparentFraction": 0.67339,
+      "nearTransparentFraction": 0.79878,
+      "issues": [],
+      "cells": [
+        {
+          "row": 0,
+          "col": 0,
+          "bboxAlpha96": [
+            32,
+            56,
+            186,
+            176
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "4ac5055fd86ac6248dd217d83e311f7dc2e0774ec680828df01c08e56b5eabbd"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "bboxAlpha96": [
+            31,
+            55,
+            190,
+            173
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "4e260fa6eefe4a25c87efd52b02fab315130ea3fb21328c744acb404b21a52c8"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "bboxAlpha96": [
+            31,
+            54,
+            193,
+            170
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "b788f2b8535bf01b3a0a871c60b947275ace65924ebabb029b80fcac803695c6"
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "bboxAlpha96": [
+            31,
+            56,
+            200,
+            175
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "837c7f1abecdde6ce7f5b9cfd882b0c24f56b977a2f93844d80b7febccc58ae4"
+        },
+        {
+          "row": 0,
+          "col": 4,
+          "bboxAlpha96": [
+            30,
+            49,
+            196,
+            173
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "7e3e70bcfc188c778b96fd6ca10f9425b9745ccf7ab466859d1df268d52704dc"
+        },
+        {
+          "row": 0,
+          "col": 5,
+          "bboxAlpha96": [
+            34,
+            52,
+            195,
+            177
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "7623061283b72360168788babab5b8a0c3a3f044a7224c8c9ebc4556ed832b16"
+        },
+        {
+          "row": 0,
+          "col": 6,
+          "bboxAlpha96": [
+            37,
+            51,
+            194,
+            176
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "96572f16e9f10effcc66288e99bcf592d55ccfbc5bbaab499c66cdc906bc9367"
+        },
+        {
+          "row": 0,
+          "col": 7,
+          "bboxAlpha96": [
+            37,
+            54,
+            193,
+            172
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "6177a8987803d5ae3870a6db9f8a7ce3e5d35f60a1afd96cc05f9580ce67bde5"
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "bboxAlpha96": [
+            34,
+            55,
+            189,
+            172
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "c08b82007a2acbc1aa16b3051dac149705988c5d0d30142332f22fa7a1494fec"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "bboxAlpha96": [
+            32,
+            54,
+            191,
+            162
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "1ff62da87a9448afd0a8bf6927c70548353e57a092ebac6e965d8333e3e78072"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "bboxAlpha96": [
+            30,
+            57,
+            191,
+            158
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "d4b22d3f77fd26c5d473ad88e2137d344eaaddbb7cf12f20039e4bb234e56df6"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "bboxAlpha96": [
+            29,
+            49,
+            195,
+            166
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "606f06e5047ed9e11c18d8dbb37eb820f43f5ec36a84526f6442f76b87d73172"
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "bboxAlpha96": [
+            29,
+            48,
+            210,
+            156
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "3ad10a18db55e8bb39c23f79890fc1056580e9657b1e45faa5433aef12139eb6"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "bboxAlpha96": [
+            30,
+            51,
+            206,
+            165
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "7886ba3933dc777a7361e0088ef7c904ec4c1737f6e5b99d2fb66fdfa7a3c8cb"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "bboxAlpha96": [
+            32,
+            56,
+            193,
+            171
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "eb5ea512b0ceb98c1629034b416bc5396347dd3d6835b46868b4ba0c3d01a725"
+        },
+        {
+          "row": 1,
+          "col": 7,
+          "bboxAlpha96": [
+            33,
+            55,
+            192,
+            173
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "26b6cbeac377e5bf2ae8aa452a5fdc1f7009b841077b47deeb623502865a49dd"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "bboxAlpha96": [
+            32,
+            56,
+            187,
+            175
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "801e64d0e358d7082d6f0e30e484f8edb8fc4b0c2e5c0a50087fdcaebd459fa5"
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "bboxAlpha96": [
+            31,
+            55,
+            189,
+            175
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "f6bd483f08ede42c3dba93e15d8b313c5c09d29e7ffddbcf6bb730c0dddee3b7"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "bboxAlpha96": [
+            30,
+            51,
+            189,
+            175
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "5ef16bc6f5c8684218cdae5883e7428317d762367733e2a5386d2b508f6969ff"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "bboxAlpha96": [
+            31,
+            52,
+            190,
+            175
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "3723e40f9ad07f93601e7966d343ba6a7da06399531883ba0128288e85a96990"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "bboxAlpha96": [
+            29,
+            52,
+            191,
+            175
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "b05d2f65f40be01bb5692f05241acae440fcaf99515d98505d8d6b79d4ae566e"
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "bboxAlpha96": [
+            34,
+            59,
+            186,
+            171
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "fba2677fce6f1314efddb837c4794f2a25f50977f1f66aa69e3355f77f459d80"
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "bboxAlpha96": [
+            41,
+            61,
+            187,
+            161
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "eded2a9140489658d2d807efffb44bb816b3d20bb8a47fe2a44dfc8e6de16716"
+        },
+        {
+          "row": 2,
+          "col": 7,
+          "bboxAlpha96": [
+            55,
+            68,
+            181,
+            152
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "f1beaf236e2d2dbee786093a0d7601102f7cf2788a32acef9d519ac70919c171"
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "bboxAlpha96": [
+            32,
+            56,
+            187,
+            173
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "8a8f964b8e3469601ab7f64cd28f2c750dd83e83bb89f9ab656d91d929e65cc0"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "bboxAlpha96": [
+            31,
+            57,
+            188,
+            173
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "e3a77d63338b4b694de2719846af08faa61f090157a9f5e2a9cc1ff029cf1493"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "bboxAlpha96": [
+            31,
+            50,
+            188,
+            173
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "6f32c40b22845e2976591143564c717b189210ce129af21781e112ed85a3b7be"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "bboxAlpha96": [
+            23,
+            45,
+            201,
+            177
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "20c80bdd73c50e61dd4531a2850b0c0248392a1458e3d0c93fa4e5be13c0572d"
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "bboxAlpha96": [
+            28,
+            37,
+            201,
+            181
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "4350e9c26c2a53fe0ab509e84fa4df0efcac343041a0f98cfaa5bb0a5bde3726"
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "bboxAlpha96": [
+            31,
+            57,
+            190,
+            174
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "b4eeaee9b332569dadb996f21775f840830b9f625349f907ae3bb63a6fb66ca4"
+        },
+        {
+          "row": 3,
+          "col": 6,
+          "bboxAlpha96": [
+            31,
+            57,
+            190,
+            174
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "9e898ef716d01cd5163596fd0666dba1caf7e5560318664c48eb38b6b2105711"
+        },
+        {
+          "row": 3,
+          "col": 7,
+          "bboxAlpha96": [
+            32,
+            57,
+            190,
+            174
+          ],
+          "edgeAlpha96Fraction": 0.0,
+          "rgbaSha256": "52402dfa8dc3b044661bf20b4fd54183f7ce6bed673fa9cb7d1073ec5f4cbb99"
+        }
+      ],
+      "uniqueCellBytes": 32,
+      "edgeContactCells": 0
     }
   ],
   "summary": {
-    "files": 118,
-    "frames": 4376,
+    "files": 124,
+    "frames": 4616,
     "countsByCategory": {
-      "bosses": 11,
-      "enemies": 54,
+      "bosses": 14,
+      "enemies": 57,
       "environment": 3,
       "evolutions": 4,
       "heroes": 16,
@@ -55243,8 +58261,8 @@
       "towers": 20
     },
     "expectedCountsByCategory": {
-      "bosses": 11,
-      "enemies": 54,
+      "bosses": 14,
+      "enemies": 57,
       "environment": 3,
       "evolutions": 4,
       "heroes": 16,
@@ -55252,17 +58270,17 @@
       "towers": 20
     },
     "countsMatch": true,
-    "rgbaFiles": 118,
-    "alphaZeroPresentFiles": 118,
-    "squareCellFiles": 118,
-    "nonemptyFramesAlpha96": 4376,
+    "rgbaFiles": 124,
+    "alphaZeroPresentFiles": 124,
+    "squareCellFiles": 124,
+    "nonemptyFramesAlpha96": 4616,
     "allCellByteHashesUniqueWithinEachAsset": true,
-    "uniqueFileSha256Count": 118,
+    "uniqueFileSha256Count": 124,
     "edgeContactCellsAboveFivePercentAlpha96": 0,
     "cellsWithAnyEdgeAlpha96": 59,
     "maximumCellEdgeAlpha96Fraction": 0.0433,
-    "declaredSha256MatchedFiles": 118,
-    "nativeBytesMatchedFiles": 118,
+    "declaredSha256MatchedFiles": 124,
+    "nativeBytesMatchedFiles": 124,
     "snapshotUnchangedFiles": 118,
     "blockingAnomalies": [],
     "warnings": [
@@ -55273,7 +58291,9 @@
         ]
       }
     ],
-    "disposition": "pass-with-documented-alpha-warning"
+    "disposition": "pass-with-documented-alpha-warning",
+    "nativeBytesRecheckedThisRun": 6,
+    "priorNativeVerificationRetainedFiles": 118
   },
   "provenanceChecks": [
     {
@@ -57115,6 +60135,96 @@
           "path": "/workspace/scratch/3c707a35b074/generated_images/exec-c7257c71-e567-4d5e-bda9-7233d25a823b.png"
         }
       ]
+    },
+    {
+      "key": "bosses/carmilla",
+      "declaredSha256Matched": true,
+      "nativeBytesMatched": true,
+      "checkedOn": "2026-11-24",
+      "matchingSha256Documents": [
+        "../illustrated-v1/characters.json"
+      ],
+      "matchingNativeSources": [
+        {
+          "document": "../illustrated-v1/characters.json",
+          "path": "/workspace/scratch/3c707a35b074/generated_images/exec-788f0df6-c7d6-44f4-97dc-907d4937ae98.png"
+        }
+      ]
+    },
+    {
+      "key": "bosses/hellwarden",
+      "declaredSha256Matched": true,
+      "nativeBytesMatched": true,
+      "checkedOn": "2026-11-24",
+      "matchingSha256Documents": [
+        "../illustrated-v1/characters.json"
+      ],
+      "matchingNativeSources": [
+        {
+          "document": "../illustrated-v1/characters.json",
+          "path": "/workspace/scratch/3c707a35b074/generated_images/exec-e642250f-f762-42db-85d2-648c6cd11491.png"
+        }
+      ]
+    },
+    {
+      "key": "bosses/vespera",
+      "declaredSha256Matched": true,
+      "nativeBytesMatched": true,
+      "checkedOn": "2026-11-24",
+      "matchingSha256Documents": [
+        "../illustrated-v1/characters.json"
+      ],
+      "matchingNativeSources": [
+        {
+          "document": "../illustrated-v1/characters.json",
+          "path": "/workspace/scratch/3c707a35b074/generated_images/exec-2e8cfa75-2c35-4cf0-a303-52d1123aa49f.png"
+        }
+      ]
+    },
+    {
+      "key": "enemies/brute",
+      "declaredSha256Matched": true,
+      "nativeBytesMatched": true,
+      "checkedOn": "2026-11-24",
+      "matchingSha256Documents": [
+        "../illustrated-v1/characters.json"
+      ],
+      "matchingNativeSources": [
+        {
+          "document": "../illustrated-v1/characters.json",
+          "path": "/workspace/scratch/3c707a35b074/generated_images/exec-99a4ba4c-9bf3-4e99-a715-800ad087b1da.png"
+        }
+      ]
+    },
+    {
+      "key": "enemies/runner",
+      "declaredSha256Matched": true,
+      "nativeBytesMatched": true,
+      "checkedOn": "2026-11-24",
+      "matchingSha256Documents": [
+        "../illustrated-v1/characters.json"
+      ],
+      "matchingNativeSources": [
+        {
+          "document": "../illustrated-v1/characters.json",
+          "path": "/workspace/scratch/3c707a35b074/generated_images/exec-c2495f76-3951-4a56-b60e-112de171dba0.png"
+        }
+      ]
+    },
+    {
+      "key": "enemies/swarmer",
+      "declaredSha256Matched": true,
+      "nativeBytesMatched": true,
+      "checkedOn": "2026-11-24",
+      "matchingSha256Documents": [
+        "../illustrated-v1/characters.json"
+      ],
+      "matchingNativeSources": [
+        {
+          "document": "../illustrated-v1/characters.json",
+          "path": "/workspace/scratch/3c707a35b074/generated_images/exec-f44b80c5-ba9b-47ce-a48a-8c051c73ebd8.png"
+        }
+      ]
     }
   ],
   "astarraAlphaReview": {
@@ -57159,5 +60269,6 @@
     "visualInspection": "Exact final atlas inspected through view_image. Queen identity and 8x6 grid preserved. Preview exposes low-alpha RGB speckling around shapes; internal grid boundaries contain only alpha 0-7 and no alpha >32. Existing visual approval by hero_boss_art is retained; no image alteration or regeneration performed.",
     "disposition": "Document the native low-alpha residual as warning, not a grid or silhouette failure.",
     "relatedApprovalDocument": "heroes-bosses.json"
-  }
+  },
+  "continuationNote": "The 118 prior technical entries are unchanged and their prior native-source verification is retained. Six new entries and native sources were verified on 2026-11-24. Prior native paths need not exist in a fresh checkout."
 }

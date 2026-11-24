@@ -1,0 +1,55 @@
+{
+  "id": "brass_queen",
+  "name": "Automate Brass-Queen",
+  "kind": "bosses",
+  "packId": "dlc_brass_palace",
+  "biome": "brass",
+  "path": "assets/dlc/illustrated-v1/bosses/brass_queen.png",
+  "columns": 8,
+  "rows": 6,
+  "states": [
+    "intro",
+    "phase_shift_2",
+    "phase_shift_3",
+    "heavy_telegraph",
+    "defeat",
+    "idle"
+  ],
+  "reference": "assets/characters/heroines/aurelia-brassheart-atlas-v1.png",
+  "referenceRole": "style-camera-material guide only; not identity",
+  "fidelity": "first original design from authored DLC metadata and palette",
+  "source": "dlc-packs.v1.js",
+  "authoredCharacter": {
+    "id": "brass_queen",
+    "name": "Automate Brass-Queen",
+    "age": 24,
+    "isAdult": true,
+    "phases": [
+      "Pression Nominale",
+      "Soupapes Ouvertes",
+      "Surchauffe Impériale"
+    ]
+  },
+  "palette": {
+    "bg": "#27121b",
+    "primary": "#d97706",
+    "secondary": "#fbbf24",
+    "glow": "#881337"
+  },
+  "designBrief": "Mature female automaton with adult porcelain face, copper curled metal hair, royal brass diadem, complete imperial brass plate and opaque purple robes with boots. Two mechanical arms and two legs; compact geared sceptre, warm steam valves, no extra limbs.",
+  "prompt": "Use case: stylized-concept. Production game sprite animation atlas for Infernal City. The attached atlas is a STYLE, SCALE, CAMERA and painterly-material reference only; invent the specified new character, do not copy the guide character or its costume. Match the existing illustrated dark-fantasy tactical sprite style: detailed crisp hand-painted surfaces, fine dark contours, directional highlights, believable adult anatomy, elevated three-quarter camera facing toward screen-right. Use the SAME camera, head, body proportions, outfit, weapon and scale consistently in every cell. Exactly one full character per cell, no clones inside a cell. All combat costumes fully opaque and closed, all characters plainly mature adults. True transparent alpha background, no floor, no background color, no contact shadow outside feet, no labels, typography, grid lines, watermarks or UI. Every action stays inside its own mathematically equal cell: body plus weapon plus particles must fit the central 55% width and 60% height; generous transparent margins on all four sides, absolutely no cropped hair, weapons, glows, or cross-cell overlap. Keep effects compact and attached to the character, no long projectile beams. Eight consecutive distinct animation frames left-to-right in EVERY row; exactly the listed number of rows, no extra rows, no missing or blank cells. Use tightly controlled movement arcs, no arbitrary view changes. Non-graphic defeat, never blood or gore.\nSubject: Automate Brass-Queen, a new boss in \"Palais Mécanique & Horlogerie de Cuivre\". Authored identity: Pression Nominale / Soupapes Ouvertes / Surchauffe Impériale. Visual domain: Steampunk Impérial, Cuivre, Laiton, Velours Pourpre & Vapeur Dorée. Palette: {\"bg\":\"#27121b\",\"primary\":\"#d97706\",\"secondary\":\"#fbbf24\",\"glow\":\"#881337\"}; background remains transparent regardless of palette bg. Design: Mature female automaton with adult porcelain face, copper curled metal hair, royal brass diadem, complete imperial brass plate and opaque purple robes with boots. Two mechanical arms and two legs; compact geared sceptre, warm steam valves, no extra limbs.\nLayout: EXACTLY 8 columns by 6 rows, 48 equal square cells, 4:3 landscape 2048×1536 atlas. Bodies center at each cell's midpoint with the feet on a consistent local baseline around 80% cell height. Six rows from top to bottom: 1 intro, eight steps of imposing arrival and ready stance, character visible in all frames; 2 phase_shift_2, \"Soupapes Ouvertes\", escalating compact power activation while keeping same outfit and body; 3 phase_shift_3, \"Surchauffe Impériale\", more intense compact aura and pose; 4 heavy_telegraph, clearly readable attack windup, held charge, strike-ready peak and recovery without long beam; 5 defeat, non-graphic stagger and kneeling collapse with compact dissolving motes, visible remains in all frames; 6 idle, breathing and subtle weapon/cloth loop.\nMaintain a single coherent identity across the entire sheet, same mature face and hairstyle. Readability at tactical game size is essential. STRICT GUTTERS: no haze, fog, dust, ambient glow clouds, floodlights or colored matte anywhere. Transparent empty space separates every frame on every side. Effects are narrow crisp rings, short streaks or tiny sparks, contained within the character's silhouette width whenever possible. No fade-out or white fog even in the outro: every frame remains a clean opaque character cutout. Do not enlarge the ultimate aura beyond the central 60% of a cell.",
+  "key": "bosses/brass_queen",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-8881316d-701a-48f2-9f5c-51929e0d2781.png",
+  "status": "pending-visual-review",
+  "generator": "built-in image_gen",
+  "nativeBytesPreserved": true,
+  "sha256": "4aaf1c076bbcb0e3d27cb09054b382f89d3226777c7da0365ac352e93e12f14a",
+  "bytes": 2204566,
+  "width": 1448,
+  "height": 1086,
+  "mode": "RGBA",
+  "alphaExtrema": [
+    0,
+    255
+  ]
+}
