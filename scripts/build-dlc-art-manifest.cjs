@@ -11,11 +11,19 @@ if (qaIndex < 0 || !process.argv[qaIndex + 1]) {
 }
 const review = JSON.parse(fs.readFileSync(path.resolve(process.argv[qaIndex + 1]), 'utf8'));
 const approvals = new Map();
+const drawScales = new Map();
 for (const item of review.approved || []) {
   if (!specs[item.key] || !/^[a-f0-9]{64}$/.test(item.sha256 || '') || approvals.has(item.key)) {
     throw new Error(`Invalid or duplicate visual approval: ${item.key}`);
   }
   approvals.set(item.key, item.sha256);
+  if (item.drawScale !== undefined) {
+    if (item.drawScaleSha256 !== item.sha256 || !Number.isFinite(item.drawScale)
+      || item.drawScale < 0.5 || item.drawScale > 2.5) {
+      throw new Error(`Invalid hash-bound display scale: ${item.key}`);
+    }
+    drawScales.set(item.key, { drawScale: item.drawScale, drawScaleSha256: item.drawScaleSha256 });
+  }
 }
 const assets = Object.create(null);
 const missing = [];
@@ -40,7 +48,7 @@ for (const [key, spec] of Object.entries(specs)) {
   const sha256 = crypto.createHash('sha256').update(bytes).digest('hex');
   if (!approvals.has(key)) { pending.push(key); continue; }
   if (approvals.get(key) !== sha256) throw new Error(`Visual approval hash mismatch: ${spec.src}`);
-  assets[key] = { ...spec, width, height, bytes: bytes.length, sha256, approved: true,
+  assets[key] = { ...spec, ...drawScales.get(key), width, height, bytes: bytes.length, sha256, approved: true,
     nativeBytesPreserved: true, source: 'built-in image_gen' };
 }
 if (process.argv.includes('--require-complete') && (missing.length || pending.length)) {

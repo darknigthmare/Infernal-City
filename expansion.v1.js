@@ -38,6 +38,37 @@
     };
   }
 
+  function havenLayout(id, name, description, tacticalNote, buildBounds) {
+    const terrainSrc = `assets/dlc/illustrated-v1/maps/${id}.png`;
+    return {
+      id, name, description, tacticalNote,
+      world: { ...WORLD },
+      terrainSrc,
+      previewSrc: terrainSrc,
+      dailyEligible: false,
+      clearBiomeOnSelect: true,
+      citadel: { x: 600, y: 400, radius: 76, facing: 'south' },
+      // The native 1536 x 1024 plate maps uniformly to this 1800 x 1200
+      // rectangle. Cardinal routes follow its four open entrances.
+      approachBounds: bounds(-300, -200, 1500, 1000),
+      buildBounds,
+      spawnRoutes: [
+        route(`${id}_north`, 'north', point(600, -180), [
+          point(600, -180), point(600, 40), point(600, 220), point(600, 400)
+        ], 0),
+        route(`${id}_east`, 'east', point(1480, 400), [
+          point(1480, 400), point(1160, 400), point(900, 400), point(600, 400)
+        ], 220),
+        route(`${id}_south`, 'south', point(600, 980), [
+          point(600, 980), point(600, 760), point(600, 580), point(600, 400)
+        ], 440),
+        route(`${id}_west`, 'west', point(-280, 400), [
+          point(-280, 400), point(40, 400), point(300, 400), point(600, 400)
+        ], 660)
+      ]
+    };
+  }
+
   const worldLayouts = {
     convergence: {
       id: 'convergence',
@@ -141,7 +172,36 @@
           point(690, 515), point(485, 485), point(310, 430), point(165, 400)
         ], 360)
       ]
-    }
+    },
+
+    haven_outer_port: havenLayout(
+      'haven_outer_port',
+      'Port Extérieur d’Haven',
+      'Les quatre voies du port convergent vers une esplanade de pierre au bord des quais fortifiés.',
+      'Couvrez les accès cardinaux depuis la surface centrale dégagée.',
+      bounds(70, 60, 1130, 740)
+    ),
+    haven_sunken_cathedral: havenLayout(
+      'haven_sunken_cathedral',
+      'Cathédrale Engloutie',
+      'Un parvis sombre entouré de galeries gothiques relie quatre entrées à la Citadelle centrale.',
+      'Les quatre axes restent ouverts ; répartissez les défenses de part et d’autre des voies.',
+      bounds(85, 65, 1115, 735)
+    ),
+    haven_abyssal_reactor: havenLayout(
+      'haven_abyssal_reactor',
+      'Réacteur Abyssal',
+      'Une plateforme circulaire bordée de machineries abyssales accueille les quatre voies d’approche.',
+      'Fortifiez la plateforme centrale et croisez les tirs sur les accès cardinaux.',
+      bounds(160, 100, 1040, 700)
+    ),
+    haven_inner_citadel: havenLayout(
+      'haven_inner_citadel',
+      'Citadelle Intérieure (Dernier Carré)',
+      'Les quatre portes de l’enceinte intérieure débouchent sur le dernier carré de la Citadelle.',
+      'Gardez les routes centrales libres et placez les défenses dans les quatre secteurs de la cour.',
+      bounds(110, 80, 1090, 720)
+    )
   };
 
   const enemyDefinitions = {
@@ -1120,7 +1180,7 @@
     const day = dateKey(value);
     const seed = hashString(`infernal-city:${VERSION}:${day}:${String(playerSalt)}`);
     const rng = createSeededRng(seed);
-    const layoutIds = Object.keys(worldLayouts);
+    const layoutIds = Object.keys(worldLayouts).filter(id => worldLayouts[id].dailyEligible !== false);
     const heroIds = Object.keys(heroKits);
     const defenseIds = Object.keys(defenseSpecializations);
     const shuffledMutators = rng.shuffle(infinitumMutators.map(mutator => mutator.id));

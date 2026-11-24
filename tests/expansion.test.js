@@ -67,10 +67,14 @@ test('expansion exposes the stable 2.3 browser contract', () => {
   assert.equal(Object.isFrozen(expansion), true);
 });
 
-test('four fixed-size layouts provide valid bounds, citadels and polylines', () => {
+test('eight fixed-size layouts provide valid bounds, citadels and polylines', () => {
   const { worldLayouts } = loadExpansion();
   assert.deepEqual(Object.keys(worldLayouts).sort(), [
     'convergence',
+    'haven_abyssal_reactor',
+    'haven_inner_citadel',
+    'haven_outer_port',
+    'haven_sunken_cathedral',
     'southern_watch',
     'twin_rift',
     'western_wall'
@@ -81,7 +85,7 @@ test('four fixed-size layouts provide valid bounds, citadels and polylines', () 
     assert.equal(layout.world.height, 800, `${layout.id} height`);
     assert.match(layout.name, /\S/);
     assert.match(layout.description, /\S/);
-    assert.match(layout.terrainSrc, /^assets\/environment\/.+\.webp$/);
+    assert.match(layout.terrainSrc, /^assets\/(environment\/.+\.webp|dlc\/illustrated-v1\/maps\/haven_[a-z_]+\.png)$/);
     assert.equal(fs.existsSync(path.join(ROOT, layout.terrainSrc)), true, `${layout.id} terrain`);
     assert.equal(fs.existsSync(path.join(ROOT, layout.previewSrc)), true, `${layout.id} preview`);
     assert.ok(layout.citadel.x >= 0 && layout.citadel.x <= 1200);

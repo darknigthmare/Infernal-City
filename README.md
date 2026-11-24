@@ -10,12 +10,18 @@
   VN neutres ; pluie acide, orage ionique et débris de recyclage utilisent leurs
   séquences dédiées. Les tailles des silhouettes, rotations et aperçus de
   construction sont conservés.
-- `illustrated-v1` ajoute 82 ressources : 70 atlas et 12 décors. Les six domaines
+- `illustrated-v1` contient 107 ressources : 91 atlas et 16 décors. Les six domaines
   ont deux cartes sélectionnables, un monument animé et une galerie de personnages
   et d’arsenal. Les quatre duos et le brouillard possèdent leurs effets propres.
-  Le choix de carte persiste après rechargement.
-- Les nouveaux personnages et arsenaux DLC sont consultables dans la galerie ;
-  leurs images ne créent pas de nouvelles unités jouables. Ils constituent les
+  Le choix de carte persiste après rechargement. Quatre terrains d’Haven nommés
+  dans la Bible rejoignent aussi le sélecteur tactique avec leurs routes.
+- Les dix unités aériennes rejoignent les emplacements aériens des vagues et
+  d’Infinitum, avec leurs PV/vitesses déjà déclarés et leurs quatre états animés.
+  Six projectiles et trois réactions élémentaires ont maintenant des effets
+  distincts en combat, avec impacts et variantes Overdrive.
+- Douze ennemis premium nommés dans la Bible rejoignent la galerie de leurs
+  trois domaines. Ces ennemis, les personnages et les arsenaux DLC encore sans
+  contrat de combat restent des ressources de catalogue. Ils constituent les
   premiers designs des entrées nommées du catalogue. Les visuels existants servent
   de références d’identité seulement pour les personnages déjà illustrés.
 - Les images natives sont chargées à la demande après l’entrée dans le jeu, avec
@@ -23,6 +29,7 @@
   en bloc par la PWA.
 - [Inventaire du jeu principal](docs/SPRITE_COMPLETION.md),
   [pack DLC illustré et validation](docs/DLC_ILLUSTRATED_ASSETS.md),
+  [suite des manquants et intégration](docs/SPRITE_CONTINUATION_20261124.md),
   [audit des besoins](docs/ASSET_GAPS_20261124.md) ;
   [lecteur des sprites](docs/sprite-completion-review.html) à ouvrir depuis un
   serveur HTTP local.

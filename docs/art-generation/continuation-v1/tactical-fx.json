@@ -1,0 +1,3908 @@
+{
+  "version": 1,
+  "date": "2026-11-24",
+  "generationTool": "built-in image_gen",
+  "scope": "Nine first interpretations of existing written gameplay effects; not a claim of pixel-exact identity replication. Native PNGs retained and copied byte-for-byte; no crop, resize or cleanup via scripts. Six projectile atlases (8×3) and three synergy atlases (8×4), 240 animation cells.",
+  "assets": [
+    {
+      "id": "flame_stream",
+      "key": "fx/flame_stream",
+      "name": "Jet de flammes Inferno",
+      "path": "assets/dlc/illustrated-v1/fx/flame_stream.png",
+      "columns": 8,
+      "rows": 3,
+      "states": [
+        "flight",
+        "impact",
+        "overload"
+      ],
+      "suggestedFps": 16,
+      "rotation": "Flight points right; rotate by atan2(vy,vx). Impact is centered and may remain unrotated.",
+      "identitySource": "Written gameplay effect and color in game.v9.js; supporting concepts in docs/GAME_BIBLE.md §15.5.",
+      "status": "approved",
+      "selectedAttempt": 3,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-3369945a-cb50-4604-9885-e93ad6284569.png",
+      "qa": {
+        "approved": true,
+        "review": "Approved after direct image inspection: orange/red flame with hot core, right-facing flight, eight distinct frames in each state, centered contained impact blooms, no clipping or labels, true alpha background. Minimum visible margin at alpha 24 is 52/256 px (20.3%)."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-bf57cd64-1035-4e69-92d4-bfcaa7097252.png",
+          "prompt": "Use case: stylized-concept. Asset type: native transparent game sprite atlas for Infernal City, high quality illustrated cyber-gothic tower-defense VFX. Create ONE complete atlas at landscape aspect ratio 8:3, preferably 2048×768 pixels, with EXACTLY 8 equal columns and 3 equal rows of square cells (24 animation frames). The invisible grid fills the entire image edge to edge; all cells equal; no grid lines, separators, labels, captions, numbers, UI, checkerboard, floor, background, watermark, weapon or character. Real transparent RGBA background, alpha zero outside each isolated sprite. All frames stay wholly within the central 60% width and 60% height of their own cell, leaving transparent margin of at least 20% on all four sides, even for sparks, smoke and impact fragments; never touch a cell edge. Fixed camera, fixed anchor at each exact cell center. Frames must differ visibly across each row with a fluid animation progression. Row 1 FLIGHT: 8 variations of the travelling projectile, always travelling left to right, nose pointing exactly right, tail extending left. Row 2 IMPACT: 8 chronological impact frames, small first flash then controlled expansion, fragmentation and fade, centered at the cell anchor. Row 3 OVERLOAD: 8 chronological energized/power pulse frames of the same identity, fully inside the same safe margins. Painterly sharp silhouettes and material detail, luminous interior core, restrained fine particles, clean readable shapes at small game size; no huge diffuse halos. This is a first authored visual interpretation of a written gameplay effect; consistency with the game's existing illustrated effects is the objective.\nSubject and color identity: A compact travelling tongue of infernal fire, orange-red (#ff6b35 / #ff2a5f), yellow-white hot core (#fef08a), curling sharp flame licks and tiny embers. An elongated fiery teardrop whose hot bulb/nose points right and its thin streaming tail points left, never a sphere, icon, torch, gun or scene. Impact row: short contained flower of orange flame, then cinders. Overload row: denser golden core with dark red flame rim, keeping the original flame identity. Pure flame only, no metal.",
+          "references": [],
+          "approved": false,
+          "qa": "Rejected: minimum margin 12 px at alpha 24; excessively wide overload tails.",
+          "sha256": "fe4ead1edc782eabec36ea89f82e9a8d26eeab2f2bec6d8573b91b22230e2cc8",
+          "nativeBytes": 1713998,
+          "dimensions": {
+            "width": 2048,
+            "height": 768,
+            "mode": "RGBA"
+          },
+          "alphaRange": [
+            0,
+            254
+          ],
+          "alphaZeroFraction": 0.734095
+        },
+        {
+          "attempt": 2,
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-45ff0139-d7b9-4404-9ade-177cc10445b6.png",
+          "prompt": "Use case: background-extraction with precise object size correction. This attached image is the EDIT TARGET, a 24-frame projectile atlas. Keep the same 2048×768 canvas, EXACTLY 8 columns × 3 rows, invisible equal 256×256 cells, the same projectile identity, colors, order and animation. Make ONLY these two production corrections: (1) Remove the entire background completely, including all gray/white/colored backing, grid lines, ambient fog and big soft halos. Output REAL TRANSPARENT RGBA; all empty space outside the isolated compact effect sprites must have alpha zero, not opaque black/white or a checkerboard. (2) Reduce each individual sprite and its small effect fragments to 65% of its current dimensions about its OWN cell center, keeping its center at cell center. Every sprite including all fragments and glow must lie within the central 60% width and 60% height of its cell, at least 20% transparent margin on each side. Do not change the sheet size, cell count, color identities or animation sequence. No text or decorations. The result is a clean game-ready transparent sprite atlas.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/generated_images/exec-bf57cd64-1035-4e69-92d4-bfcaa7097252.png",
+              "role": "Edit target; preserve identity and frame sequence, correct padding/transparency."
+            }
+          ],
+          "approved": false,
+          "qa": "Rejected: minimum margin 37 px at alpha 24, below 15%.",
+          "sha256": "b03fce2421c134cb58b9b8ff84c01b03eee75be6b131b10f3ce8fd0b686dbb90",
+          "nativeBytes": 1538172,
+          "dimensions": {
+            "width": 2048,
+            "height": 768,
+            "mode": "RGBA"
+          },
+          "alphaRange": [
+            0,
+            254
+          ],
+          "alphaZeroFraction": 0.853022
+        },
+        {
+          "attempt": 3,
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-3369945a-cb50-4604-9885-e93ad6284569.png",
+          "prompt": "Use case: background-extraction, precise object edit. The supplied image is the EDIT TARGET. Preserve its 2048×768 pixel dimensions, 8 columns and 3 rows of equal square animation cells, same projectile identity and colors, same 24 frames in same order. This is a sprite sheet for compositing over other game content, so the ENTIRE background MUST BE COMPLETELY TRANSPARENT alpha zero, including all diffuse backing, grid, fog, soft ambient clouds and any color beyond the sprite itself. There must be no visible background image at all. Keep clean isolated sprites with only a tiny local glow. Reduce EACH sprite and all particles around its own fixed cell center to 70% of their current size, keeping every frame centered on its exact 256×256 cell. The complete sprite plus glow must fit inside a 150×150 central rectangle within its cell; at least 53 empty transparent pixels to every edge. No other changes, no new objects, no grid, text, labels, white, black or checkerboard background. Preserve all distinct animation frames.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/generated_images/exec-45ff0139-d7b9-4404-9ade-177cc10445b6.png",
+              "role": "Edit target; retain identity, grid and frame order."
+            }
+          ],
+          "approved": true,
+          "qa": "Approved after direct image inspection: orange/red flame with hot core, right-facing flight, eight distinct frames in each state, centered contained impact blooms, no clipping or labels, true alpha background. Minimum visible margin at alpha 24 is 52/256 px (20.3%).",
+          "sha256": "ba40b666fd52e55bbf413d9f52b99ed95c9b28b5e4b9f343ba419d44c6ccb2e8",
+          "nativeBytes": 1475105,
+          "dimensions": {
+            "width": 2048,
+            "height": 768,
+            "mode": "RGBA"
+          },
+          "alphaRange": [
+            0,
+            254
+          ],
+          "alphaZeroFraction": 0.881528
+        }
+      ],
+      "sha256": "ba40b666fd52e55bbf413d9f52b99ed95c9b28b5e4b9f343ba419d44c6ccb2e8",
+      "nativeByteIdentical": true,
+      "dimensions": {
+        "width": 2048,
+        "height": 768,
+        "mode": "RGBA"
+      },
+      "technicalReview": {
+        "readOnlyInspection": true,
+        "imageEditsByScript": false,
+        "alphaThreshold": 24,
+        "alphaRange": [
+          0,
+          254
+        ],
+        "alphaZeroFraction": 0.881528,
+        "allFramesVisible": true,
+        "distinctVisibleFrameHashes": 24,
+        "minimumVisibleMarginRatio": 0.203125,
+        "cells": [
+          {
+            "row": 0,
+            "column": 0,
+            "visibleMarginsPx": [
+              87,
+              117,
+              79,
+              114
+            ],
+            "minimumMarginRatio": 0.308594,
+            "visiblePixels": 1066
+          },
+          {
+            "row": 0,
+            "column": 1,
+            "visibleMarginsPx": [
+              76,
+              112,
+              73,
+              109
+            ],
+            "minimumMarginRatio": 0.285156,
+            "visiblePixels": 1916
+          },
+          {
+            "row": 0,
+            "column": 2,
+            "visibleMarginsPx": [
+              69,
+              102,
+              67,
+              106
+            ],
+            "minimumMarginRatio": 0.261719,
+            "visiblePixels": 2714
+          },
+          {
+            "row": 0,
+            "column": 3,
+            "visibleMarginsPx": [
+              70,
+              100,
+              64,
+              102
+            ],
+            "minimumMarginRatio": 0.25,
+            "visiblePixels": 3077
+          },
+          {
+            "row": 0,
+            "column": 4,
+            "visibleMarginsPx": [
+              65,
+              94,
+              64,
+              100
+            ],
+            "minimumMarginRatio": 0.25,
+            "visiblePixels": 3513
+          },
+          {
+            "row": 0,
+            "column": 5,
+            "visibleMarginsPx": [
+              67,
+              97,
+              63,
+              100
+            ],
+            "minimumMarginRatio": 0.246094,
+            "visiblePixels": 3269
+          },
+          {
+            "row": 0,
+            "column": 6,
+            "visibleMarginsPx": [
+              67,
+              96,
+              62,
+              102
+            ],
+            "minimumMarginRatio": 0.242188,
+            "visiblePixels": 3295
+          },
+          {
+            "row": 0,
+            "column": 7,
+            "visibleMarginsPx": [
+              67,
+              97,
+              63,
+              103
+            ],
+            "minimumMarginRatio": 0.246094,
+            "visiblePixels": 3078
+          },
+          {
+            "row": 1,
+            "column": 0,
+            "visibleMarginsPx": [
+              115,
+              108,
+              108,
+              118
+            ],
+            "minimumMarginRatio": 0.421875,
+            "visiblePixels": 547
+          },
+          {
+            "row": 1,
+            "column": 1,
+            "visibleMarginsPx": [
+              101,
+              95,
+              96,
+              104
+            ],
+            "minimumMarginRatio": 0.371094,
+            "visiblePixels": 1774
+          },
+          {
+            "row": 1,
+            "column": 2,
+            "visibleMarginsPx": [
+              78,
+              78,
+              78,
+              89
+            ],
+            "minimumMarginRatio": 0.304688,
+            "visiblePixels": 4453
+          },
+          {
+            "row": 1,
+            "column": 3,
+            "visibleMarginsPx": [
+              72,
+              60,
+              69,
+              78
+            ],
+            "minimumMarginRatio": 0.234375,
+            "visiblePixels": 7098
+          },
+          {
+            "row": 1,
+            "column": 4,
+            "visibleMarginsPx": [
+              72,
+              64,
+              71,
+              80
+            ],
+            "minimumMarginRatio": 0.25,
+            "visiblePixels": 6054
+          },
+          {
+            "row": 1,
+            "column": 5,
+            "visibleMarginsPx": [
+              74,
+              63,
+              71,
+              81
+            ],
+            "minimumMarginRatio": 0.246094,
+            "visiblePixels": 3897
+          },
+          {
+            "row": 1,
+            "column": 6,
+            "visibleMarginsPx": [
+              82,
+              68,
+              75,
+              84
+            ],
+            "minimumMarginRatio": 0.265625,
+            "visiblePixels": 1441
+          },
+          {
+            "row": 1,
+            "column": 7,
+            "visibleMarginsPx": [
+              81,
+              75,
+              75,
+              82
+            ],
+            "minimumMarginRatio": 0.292969,
+            "visiblePixels": 764
+          },
+          {
+            "row": 2,
+            "column": 0,
+            "visibleMarginsPx": [
+              81,
+              102,
+              73,
+              118
+            ],
+            "minimumMarginRatio": 0.285156,
+            "visiblePixels": 1784
+          },
+          {
+            "row": 2,
+            "column": 1,
+            "visibleMarginsPx": [
+              70,
+              93,
+              68,
+              112
+            ],
+            "minimumMarginRatio": 0.265625,
+            "visiblePixels": 2846
+          },
+          {
+            "row": 2,
+            "column": 2,
+            "visibleMarginsPx": [
+              65,
+              84,
+              58,
+              101
+            ],
+            "minimumMarginRatio": 0.226562,
+            "visiblePixels": 4741
+          },
+          {
+            "row": 2,
+            "column": 3,
+            "visibleMarginsPx": [
+              61,
+              80,
+              52,
+              97
+            ],
+            "minimumMarginRatio": 0.203125,
+            "visiblePixels": 5538
+          },
+          {
+            "row": 2,
+            "column": 4,
+            "visibleMarginsPx": [
+              61,
+              79,
+              54,
+              95
+            ],
+            "minimumMarginRatio": 0.210938,
+            "visiblePixels": 5622
+          },
+          {
+            "row": 2,
+            "column": 5,
+            "visibleMarginsPx": [
+              66,
+              84,
+              56,
+              104
+            ],
+            "minimumMarginRatio": 0.21875,
+            "visiblePixels": 4122
+          },
+          {
+            "row": 2,
+            "column": 6,
+            "visibleMarginsPx": [
+              68,
+              89,
+              60,
+              108
+            ],
+            "minimumMarginRatio": 0.234375,
+            "visiblePixels": 3511
+          },
+          {
+            "row": 2,
+            "column": 7,
+            "visibleMarginsPx": [
+              70,
+              94,
+              65,
+              111
+            ],
+            "minimumMarginRatio": 0.253906,
+            "visiblePixels": 2764
+          }
+        ]
+      }
+    },
+    {
+      "id": "cryo_shard",
+      "key": "fx/cryo_shard",
+      "name": "Éclat du Canon Cryo",
+      "path": "assets/dlc/illustrated-v1/fx/cryo_shard.png",
+      "columns": 8,
+      "rows": 3,
+      "states": [
+        "flight",
+        "impact",
+        "overload"
+      ],
+      "suggestedFps": 16,
+      "rotation": "Flight points right; rotate by atan2(vy,vx). Impact is centered and may remain unrotated.",
+      "identitySource": "Written gameplay effect and color in game.v9.js; supporting concepts in docs/GAME_BIBLE.md §15.5.",
+      "status": "approved",
+      "selectedAttempt": 2,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-2342873c-86b6-4133-af36-beb33643caa1.png",
+      "qa": {
+        "approved": true,
+        "review": "Approved after direct image inspection: sharp cyan ice shard, right-facing flight, angular shatter impact, energized frost state, all 24 frames distinct. No grid remnants at visible alpha, no clipping. Minimum visible margin at alpha 24 is 55/256 px (21.5%)."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-9d0f4581-5ddf-49d0-8e44-3ae81f78d330.png",
+          "prompt": "Use case: stylized-concept. Asset type: native transparent game sprite atlas for Infernal City, high quality illustrated cyber-gothic tower-defense VFX. Create ONE complete atlas at landscape aspect ratio 8:3, preferably 2048×768 pixels, with EXACTLY 8 equal columns and 3 equal rows of square cells (24 animation frames). The invisible grid fills the entire image edge to edge; all cells equal; no grid lines, separators, labels, captions, numbers, UI, checkerboard, floor, background, watermark, weapon or character. Real transparent RGBA background, alpha zero outside each isolated sprite. All frames stay wholly within the central 60% width and 60% height of their own cell, leaving transparent margin of at least 20% on all four sides, even for sparks, smoke and impact fragments; never touch a cell edge. Fixed camera, fixed anchor at each exact cell center. Frames must differ visibly across each row with a fluid animation progression. Row 1 FLIGHT: 8 variations of the travelling projectile, always travelling left to right, nose pointing exactly right, tail extending left. Row 2 IMPACT: 8 chronological impact frames, small first flash then controlled expansion, fragmentation and fade, centered at the cell anchor. Row 3 OVERLOAD: 8 chronological energized/power pulse frames of the same identity, fully inside the same safe margins. Painterly sharp silhouettes and material detail, luminous interior core, restrained fine particles, clean readable shapes at small game size; no huge diffuse halos. This is a first authored visual interpretation of a written gameplay effect; consistency with the game's existing illustrated effects is the objective.\nSubject and color identity: A compact sharply faceted ice shard projectile of cyan frost (#67e8f9), pale white center, two or three tiny frosty splinters and a restrained pale blue trail. One slender crystalline spear points exactly right, tail vapor left. Readable hard angular ice geometry, not an orb or a snowflake icon. Impact row: shard strikes and breaks into six small angular ice chips, briefly blossoming frost then fading. Overload row: the same directional ice shard gleams and develops an electric cyan frost crest. No gun, mechanism or character.",
+          "references": [],
+          "approved": false,
+          "qa": "Rejected: grid residues at alpha 24 and insufficient safe margins.",
+          "sha256": "2c7c3a23b9de51920f43df986ec697f0f8f91835c10dd5b9f42700c53303785d",
+          "nativeBytes": 1790778,
+          "dimensions": {
+            "width": 2048,
+            "height": 768,
+            "mode": "RGBA"
+          },
+          "alphaRange": [
+            0,
+            253
+          ],
+          "alphaZeroFraction": 0.086235
+        },
+        {
+          "attempt": 2,
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-2342873c-86b6-4133-af36-beb33643caa1.png",
+          "prompt": "Use case: background-extraction with precise object size correction. This attached image is the EDIT TARGET, a 24-frame projectile atlas. Keep the same 2048×768 canvas, EXACTLY 8 columns × 3 rows, invisible equal 256×256 cells, the same projectile identity, colors, order and animation. Make ONLY these two production corrections: (1) Remove the entire background completely, including all gray/white/colored backing, grid lines, ambient fog and big soft halos. Output REAL TRANSPARENT RGBA; all empty space outside the isolated compact effect sprites must have alpha zero, not opaque black/white or a checkerboard. (2) Reduce each individual sprite and its small effect fragments to 65% of its current dimensions about its OWN cell center, keeping its center at cell center. Every sprite including all fragments and glow must lie within the central 60% width and 60% height of its cell, at least 20% transparent margin on each side. Do not change the sheet size, cell count, color identities or animation sequence. No text or decorations. The result is a clean game-ready transparent sprite atlas.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/generated_images/exec-9d0f4581-5ddf-49d0-8e44-3ae81f78d330.png",
+              "role": "Edit target; preserve identity and frame sequence, correct padding/transparency."
+            }
+          ],
+          "approved": true,
+          "qa": "Approved after direct image inspection: sharp cyan ice shard, right-facing flight, angular shatter impact, energized frost state, all 24 frames distinct. No grid remnants at visible alpha, no clipping. Minimum visible margin at alpha 24 is 55/256 px (21.5%).",
+          "sha256": "b1fc6ca9eac43458a36e4bc190e04dc363797ffffbe67acc5937c7508594c636",
+          "nativeBytes": 1504355,
+          "dimensions": {
+            "width": 2048,
+            "height": 768,
+            "mode": "RGBA"
+          },
+          "alphaRange": [
+            0,
+            254
+          ],
+          "alphaZeroFraction": 0.863326
+        }
+      ],
+      "sha256": "b1fc6ca9eac43458a36e4bc190e04dc363797ffffbe67acc5937c7508594c636",
+      "nativeByteIdentical": true,
+      "dimensions": {
+        "width": 2048,
+        "height": 768,
+        "mode": "RGBA"
+      },
+      "technicalReview": {
+        "readOnlyInspection": true,
+        "imageEditsByScript": false,
+        "alphaThreshold": 24,
+        "alphaRange": [
+          0,
+          254
+        ],
+        "alphaZeroFraction": 0.863326,
+        "allFramesVisible": true,
+        "distinctVisibleFrameHashes": 24,
+        "minimumVisibleMarginRatio": 0.214844,
+        "cells": [
+          {
+            "row": 0,
+            "column": 0,
+            "visibleMarginsPx": [
+              89,
+              111,
+              65,
+              102
+            ],
+            "minimumMarginRatio": 0.253906,
+            "visiblePixels": 1691
+          },
+          {
+            "row": 0,
+            "column": 1,
+            "visibleMarginsPx": [
+              89,
+              110,
+              63,
+              98
+            ],
+            "minimumMarginRatio": 0.246094,
+            "visiblePixels": 2001
+          },
+          {
+            "row": 0,
+            "column": 2,
+            "visibleMarginsPx": [
+              86,
+              98,
+              61,
+              95
+            ],
+            "minimumMarginRatio": 0.238281,
+            "visiblePixels": 2520
+          },
+          {
+            "row": 0,
+            "column": 3,
+            "visibleMarginsPx": [
+              82,
+              99,
+              60,
+              92
+            ],
+            "minimumMarginRatio": 0.234375,
+            "visiblePixels": 2683
+          },
+          {
+            "row": 0,
+            "column": 4,
+            "visibleMarginsPx": [
+              80,
+              100,
+              58,
+              90
+            ],
+            "minimumMarginRatio": 0.226562,
+            "visiblePixels": 2996
+          },
+          {
+            "row": 0,
+            "column": 5,
+            "visibleMarginsPx": [
+              82,
+              101,
+              58,
+              91
+            ],
+            "minimumMarginRatio": 0.226562,
+            "visiblePixels": 2954
+          },
+          {
+            "row": 0,
+            "column": 6,
+            "visibleMarginsPx": [
+              81,
+              101,
+              56,
+              91
+            ],
+            "minimumMarginRatio": 0.21875,
+            "visiblePixels": 3056
+          },
+          {
+            "row": 0,
+            "column": 7,
+            "visibleMarginsPx": [
+              84,
+              101,
+              56,
+              90
+            ],
+            "minimumMarginRatio": 0.21875,
+            "visiblePixels": 3008
+          },
+          {
+            "row": 1,
+            "column": 0,
+            "visibleMarginsPx": [
+              108,
+              98,
+              98,
+              109
+            ],
+            "minimumMarginRatio": 0.382812,
+            "visiblePixels": 1062
+          },
+          {
+            "row": 1,
+            "column": 1,
+            "visibleMarginsPx": [
+              94,
+              87,
+              86,
+              98
+            ],
+            "minimumMarginRatio": 0.335938,
+            "visiblePixels": 2447
+          },
+          {
+            "row": 1,
+            "column": 2,
+            "visibleMarginsPx": [
+              86,
+              75,
+              75,
+              89
+            ],
+            "minimumMarginRatio": 0.292969,
+            "visiblePixels": 4486
+          },
+          {
+            "row": 1,
+            "column": 3,
+            "visibleMarginsPx": [
+              68,
+              65,
+              61,
+              75
+            ],
+            "minimumMarginRatio": 0.238281,
+            "visiblePixels": 7336
+          },
+          {
+            "row": 1,
+            "column": 4,
+            "visibleMarginsPx": [
+              74,
+              70,
+              59,
+              79
+            ],
+            "minimumMarginRatio": 0.230469,
+            "visiblePixels": 4352
+          },
+          {
+            "row": 1,
+            "column": 5,
+            "visibleMarginsPx": [
+              87,
+              68,
+              58,
+              80
+            ],
+            "minimumMarginRatio": 0.226562,
+            "visiblePixels": 2686
+          },
+          {
+            "row": 1,
+            "column": 6,
+            "visibleMarginsPx": [
+              90,
+              73,
+              60,
+              82
+            ],
+            "minimumMarginRatio": 0.234375,
+            "visiblePixels": 1726
+          },
+          {
+            "row": 1,
+            "column": 7,
+            "visibleMarginsPx": [
+              92,
+              72,
+              59,
+              83
+            ],
+            "minimumMarginRatio": 0.230469,
+            "visiblePixels": 1564
+          },
+          {
+            "row": 2,
+            "column": 0,
+            "visibleMarginsPx": [
+              89,
+              108,
+              63,
+              103
+            ],
+            "minimumMarginRatio": 0.246094,
+            "visiblePixels": 1894
+          },
+          {
+            "row": 2,
+            "column": 1,
+            "visibleMarginsPx": [
+              85,
+              96,
+              61,
+              97
+            ],
+            "minimumMarginRatio": 0.238281,
+            "visiblePixels": 2801
+          },
+          {
+            "row": 2,
+            "column": 2,
+            "visibleMarginsPx": [
+              84,
+              95,
+              59,
+              94
+            ],
+            "minimumMarginRatio": 0.230469,
+            "visiblePixels": 3201
+          },
+          {
+            "row": 2,
+            "column": 3,
+            "visibleMarginsPx": [
+              82,
+              92,
+              58,
+              91
+            ],
+            "minimumMarginRatio": 0.226562,
+            "visiblePixels": 3547
+          },
+          {
+            "row": 2,
+            "column": 4,
+            "visibleMarginsPx": [
+              79,
+              90,
+              57,
+              89
+            ],
+            "minimumMarginRatio": 0.222656,
+            "visiblePixels": 4031
+          },
+          {
+            "row": 2,
+            "column": 5,
+            "visibleMarginsPx": [
+              78,
+              87,
+              56,
+              88
+            ],
+            "minimumMarginRatio": 0.21875,
+            "visiblePixels": 4081
+          },
+          {
+            "row": 2,
+            "column": 6,
+            "visibleMarginsPx": [
+              79,
+              91,
+              56,
+              88
+            ],
+            "minimumMarginRatio": 0.21875,
+            "visiblePixels": 3796
+          },
+          {
+            "row": 2,
+            "column": 7,
+            "visibleMarginsPx": [
+              80,
+              92,
+              55,
+              88
+            ],
+            "minimumMarginRatio": 0.214844,
+            "visiblePixels": 3619
+          }
+        ]
+      }
+    },
+    {
+      "id": "acid_glob",
+      "key": "fx/acid_glob",
+      "name": "Globule corrosif",
+      "path": "assets/dlc/illustrated-v1/fx/acid_glob.png",
+      "columns": 8,
+      "rows": 3,
+      "states": [
+        "flight",
+        "impact",
+        "overload"
+      ],
+      "suggestedFps": 16,
+      "rotation": "Flight points right; rotate by atan2(vy,vx). Impact is centered and may remain unrotated.",
+      "identitySource": "Written gameplay effect and color in game.v9.js; supporting concepts in docs/GAME_BIBLE.md §15.5.",
+      "status": "approved",
+      "selectedAttempt": 4,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-33fcbbb3-d527-4701-8f5f-6f92e5dc01bf.png",
+      "qa": {
+        "approved": true,
+        "review": "Approved after direct image inspection: viscous lime acid with droplet trails, contained liquid splash and bubbling overload, all 24 frames distinct and correctly ordered. Final extraction restores true alpha. Minimum visible margin at alpha 24 is 46/256 px (18.0%)."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-4d13be05-cfbf-4b18-8a78-9bc953f65cda.png",
+          "prompt": "Use case: stylized-concept. Asset type: native transparent game sprite atlas for Infernal City, high quality illustrated cyber-gothic tower-defense VFX. Create ONE complete atlas at landscape aspect ratio 8:3, preferably 2048×768 pixels, with EXACTLY 8 equal columns and 3 equal rows of square cells (24 animation frames). The invisible grid fills the entire image edge to edge; all cells equal; no grid lines, separators, labels, captions, numbers, UI, checkerboard, floor, background, watermark, weapon or character. Real transparent RGBA background, alpha zero outside each isolated sprite. All frames stay wholly within the central 60% width and 60% height of their own cell, leaving transparent margin of at least 20% on all four sides, even for sparks, smoke and impact fragments; never touch a cell edge. Fixed camera, fixed anchor at each exact cell center. Frames must differ visibly across each row with a fluid animation progression. Row 1 FLIGHT: 8 variations of the travelling projectile, always travelling left to right, nose pointing exactly right, tail extending left. Row 2 IMPACT: 8 chronological impact frames, small first flash then controlled expansion, fragmentation and fade, centered at the cell anchor. Row 3 OVERLOAD: 8 chronological energized/power pulse frames of the same identity, fully inside the same safe margins. Painterly sharp silhouettes and material detail, luminous interior core, restrained fine particles, clean readable shapes at small game size; no huge diffuse halos. This is a first authored visual interpretation of a written gameplay effect; consistency with the game's existing illustrated effects is the objective.\nSubject and color identity: A compact ballistic glob of corrosive acid, yellow-green (#84cc16) luminous core in translucent lime fluid, small dark green fluid folds and two tiny drops trailing to the left. The liquid bulb faces exactly right, droplets left. Organic viscous volume with fine specular glints, not a green crystal or orb icon. Impact row: a contained acid splash with uneven liquid lobes followed by shrinking bubbles and droplets; no ground plane. Overload row: brighter bubbling corrosive liquid with deeper green outer ripples and yellow core. Only acid projectile and splashes, no flask, syringe, turret or mechanism.",
+          "references": [],
+          "approved": false,
+          "qa": "Rejected: alpha minimum 132; no genuinely transparent background.",
+          "sha256": "347db06d2d55110a64e36dad9dbdfd37a482fc450258233fcc54d04fcb85e31b",
+          "nativeBytes": 2323398,
+          "dimensions": {
+            "width": 2048,
+            "height": 768,
+            "mode": "RGBA"
+          },
+          "alphaRange": [
+            132,
+            250
+          ],
+          "alphaZeroFraction": 0.0
+        },
+        {
+          "attempt": 2,
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-1b99ef7c-9495-4cf7-a006-f1613054a823.png",
+          "prompt": "Use case: background-extraction with precise object size correction. This attached image is the EDIT TARGET, a 24-frame projectile atlas. Keep the same 2048×768 canvas, EXACTLY 8 columns × 3 rows, invisible equal 256×256 cells, the same projectile identity, colors, order and animation. Make ONLY these two production corrections: (1) Remove the entire background completely, including all gray/white/colored backing, grid lines, ambient fog and big soft halos. Output REAL TRANSPARENT RGBA; all empty space outside the isolated compact effect sprites must have alpha zero, not opaque black/white or a checkerboard. (2) Reduce each individual sprite and its small effect fragments to 65% of its current dimensions about its OWN cell center, keeping its center at cell center. Every sprite including all fragments and glow must lie within the central 60% width and 60% height of its cell, at least 20% transparent margin on each side. Do not change the sheet size, cell count, color identities or animation sequence. No text or decorations. The result is a clean game-ready transparent sprite atlas.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/generated_images/exec-4d13be05-cfbf-4b18-8a78-9bc953f65cda.png",
+              "role": "Edit target; preserve identity and frame sequence, correct padding/transparency."
+            }
+          ],
+          "approved": false,
+          "qa": "Rejected: minimum visible margin 33 px, below 15%; alpha otherwise correct.",
+          "sha256": "96e37cf44d607e8a83655916191ea7c4bf77479d61a436744037865fc5076e3b",
+          "nativeBytes": 1643556,
+          "dimensions": {
+            "width": 2048,
+            "height": 768,
+            "mode": "RGBA"
+          },
+          "alphaRange": [
+            0,
+            254
+          ],
+          "alphaZeroFraction": 0.777432
+        },
+        {
+          "attempt": 3,
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-488a65e1-605f-4ff0-b0c2-67862fc9a0c3.png",
+          "prompt": "Use case: background-extraction, precise object edit. The supplied image is the EDIT TARGET. Preserve its 2048×768 pixel dimensions, 8 columns and 3 rows of equal square animation cells, same projectile identity and colors, same 24 frames in same order. This is a sprite sheet for compositing over other game content, so the ENTIRE background MUST BE COMPLETELY TRANSPARENT alpha zero, including all diffuse backing, grid, fog, soft ambient clouds and any color beyond the sprite itself. There must be no visible background image at all. Keep clean isolated sprites with only a tiny local glow. Reduce EACH sprite and all particles around its own fixed cell center to 70% of their current size, keeping every frame centered on its exact 256×256 cell. The complete sprite plus glow must fit inside a 150×150 central rectangle within its cell; at least 53 empty transparent pixels to every edge. No other changes, no new objects, no grid, text, labels, white, black or checkerboard background. Preserve all distinct animation frames.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/generated_images/exec-1b99ef7c-9495-4cf7-a006-f1613054a823.png",
+              "role": "Edit target; retain identity, grid and frame order."
+            }
+          ],
+          "approved": false,
+          "qa": "Rejected: background removal regressed to alpha minimum 22.",
+          "sha256": "11d34024bd3cd619e859de4d42c00888879aa38f50ef8be81122647aff9b6328",
+          "nativeBytes": 1817191,
+          "dimensions": {
+            "width": 2048,
+            "height": 768,
+            "mode": "RGBA"
+          },
+          "alphaRange": [
+            22,
+            251
+          ],
+          "alphaZeroFraction": 0.0
+        },
+        {
+          "attempt": 4,
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-33fcbbb3-d527-4701-8f5f-6f92e5dc01bf.png",
+          "prompt": "Remove the white background from this sprite sheet. Make the background fully transparent alpha zero. Keep all 24 green sprites and their tiny glow exactly where they are, with exactly the same shapes, sizes, colors, 8 columns, 3 rows, 2048×768 canvas. Do not add or move anything. Transparent PNG cutouts only, no backing color or shadows in empty space.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/generated_images/exec-488a65e1-605f-4ff0-b0c2-67862fc9a0c3.png",
+              "role": "Edit target; retain identity, grid and frame order."
+            }
+          ],
+          "approved": true,
+          "qa": "Approved after direct image inspection: viscous lime acid with droplet trails, contained liquid splash and bubbling overload, all 24 frames distinct and correctly ordered. Final extraction restores true alpha. Minimum visible margin at alpha 24 is 46/256 px (18.0%).",
+          "sha256": "ec8c1ea4ef3714acb033f85f0e3f2b3b828a8ec33880f9d76f4930cd51d84bce",
+          "nativeBytes": 1598455,
+          "dimensions": {
+            "width": 2048,
+            "height": 768,
+            "mode": "RGBA"
+          },
+          "alphaRange": [
+            0,
+            254
+          ],
+          "alphaZeroFraction": 0.757823
+        }
+      ],
+      "sha256": "ec8c1ea4ef3714acb033f85f0e3f2b3b828a8ec33880f9d76f4930cd51d84bce",
+      "nativeByteIdentical": true,
+      "dimensions": {
+        "width": 2048,
+        "height": 768,
+        "mode": "RGBA"
+      },
+      "technicalReview": {
+        "readOnlyInspection": true,
+        "imageEditsByScript": false,
+        "alphaThreshold": 24,
+        "alphaRange": [
+          0,
+          254
+        ],
+        "alphaZeroFraction": 0.757823,
+        "allFramesVisible": true,
+        "distinctVisibleFrameHashes": 24,
+        "minimumVisibleMarginRatio": 0.179688,
+        "cells": [
+          {
+            "row": 0,
+            "column": 0,
+            "visibleMarginsPx": [
+              72,
+              113,
+              70,
+              102
+            ],
+            "minimumMarginRatio": 0.273438,
+            "visiblePixels": 2371
+          },
+          {
+            "row": 0,
+            "column": 1,
+            "visibleMarginsPx": [
+              64,
+              110,
+              68,
+              97
+            ],
+            "minimumMarginRatio": 0.25,
+            "visiblePixels": 3128
+          },
+          {
+            "row": 0,
+            "column": 2,
+            "visibleMarginsPx": [
+              58,
+              106,
+              62,
+              95
+            ],
+            "minimumMarginRatio": 0.226562,
+            "visiblePixels": 4161
+          },
+          {
+            "row": 0,
+            "column": 3,
+            "visibleMarginsPx": [
+              55,
+              103,
+              59,
+              92
+            ],
+            "minimumMarginRatio": 0.214844,
+            "visiblePixels": 4902
+          },
+          {
+            "row": 0,
+            "column": 4,
+            "visibleMarginsPx": [
+              53,
+              99,
+              58,
+              89
+            ],
+            "minimumMarginRatio": 0.207031,
+            "visiblePixels": 5330
+          },
+          {
+            "row": 0,
+            "column": 5,
+            "visibleMarginsPx": [
+              50,
+              100,
+              58,
+              89
+            ],
+            "minimumMarginRatio": 0.195312,
+            "visiblePixels": 5549
+          },
+          {
+            "row": 0,
+            "column": 6,
+            "visibleMarginsPx": [
+              48,
+              99,
+              57,
+              89
+            ],
+            "minimumMarginRatio": 0.1875,
+            "visiblePixels": 5912
+          },
+          {
+            "row": 0,
+            "column": 7,
+            "visibleMarginsPx": [
+              46,
+              100,
+              56,
+              89
+            ],
+            "minimumMarginRatio": 0.179688,
+            "visiblePixels": 6098
+          },
+          {
+            "row": 1,
+            "column": 0,
+            "visibleMarginsPx": [
+              104,
+              98,
+              94,
+              103
+            ],
+            "minimumMarginRatio": 0.367188,
+            "visiblePixels": 1585
+          },
+          {
+            "row": 1,
+            "column": 1,
+            "visibleMarginsPx": [
+              82,
+              85,
+              90,
+              97
+            ],
+            "minimumMarginRatio": 0.320312,
+            "visiblePixels": 2813
+          },
+          {
+            "row": 1,
+            "column": 2,
+            "visibleMarginsPx": [
+              67,
+              68,
+              72,
+              80
+            ],
+            "minimumMarginRatio": 0.261719,
+            "visiblePixels": 5222
+          },
+          {
+            "row": 1,
+            "column": 3,
+            "visibleMarginsPx": [
+              54,
+              54,
+              58,
+              71
+            ],
+            "minimumMarginRatio": 0.210938,
+            "visiblePixels": 7407
+          },
+          {
+            "row": 1,
+            "column": 4,
+            "visibleMarginsPx": [
+              54,
+              54,
+              57,
+              72
+            ],
+            "minimumMarginRatio": 0.210938,
+            "visiblePixels": 7176
+          },
+          {
+            "row": 1,
+            "column": 5,
+            "visibleMarginsPx": [
+              68,
+              68,
+              63,
+              75
+            ],
+            "minimumMarginRatio": 0.246094,
+            "visiblePixels": 5223
+          },
+          {
+            "row": 1,
+            "column": 6,
+            "visibleMarginsPx": [
+              72,
+              76,
+              73,
+              82
+            ],
+            "minimumMarginRatio": 0.28125,
+            "visiblePixels": 2803
+          },
+          {
+            "row": 1,
+            "column": 7,
+            "visibleMarginsPx": [
+              77,
+              84,
+              80,
+              89
+            ],
+            "minimumMarginRatio": 0.300781,
+            "visiblePixels": 1435
+          },
+          {
+            "row": 2,
+            "column": 0,
+            "visibleMarginsPx": [
+              74,
+              94,
+              68,
+              101
+            ],
+            "minimumMarginRatio": 0.265625,
+            "visiblePixels": 3864
+          },
+          {
+            "row": 2,
+            "column": 1,
+            "visibleMarginsPx": [
+              65,
+              87,
+              68,
+              93
+            ],
+            "minimumMarginRatio": 0.253906,
+            "visiblePixels": 4896
+          },
+          {
+            "row": 2,
+            "column": 2,
+            "visibleMarginsPx": [
+              59,
+              79,
+              64,
+              87
+            ],
+            "minimumMarginRatio": 0.230469,
+            "visiblePixels": 6588
+          },
+          {
+            "row": 2,
+            "column": 3,
+            "visibleMarginsPx": [
+              57,
+              71,
+              61,
+              79
+            ],
+            "minimumMarginRatio": 0.222656,
+            "visiblePixels": 7840
+          },
+          {
+            "row": 2,
+            "column": 4,
+            "visibleMarginsPx": [
+              55,
+              68,
+              60,
+              78
+            ],
+            "minimumMarginRatio": 0.214844,
+            "visiblePixels": 8477
+          },
+          {
+            "row": 2,
+            "column": 5,
+            "visibleMarginsPx": [
+              58,
+              70,
+              62,
+              81
+            ],
+            "minimumMarginRatio": 0.226562,
+            "visiblePixels": 7603
+          },
+          {
+            "row": 2,
+            "column": 6,
+            "visibleMarginsPx": [
+              59,
+              79,
+              64,
+              92
+            ],
+            "minimumMarginRatio": 0.230469,
+            "visiblePixels": 6425
+          },
+          {
+            "row": 2,
+            "column": 7,
+            "visibleMarginsPx": [
+              64,
+              84,
+              68,
+              96
+            ],
+            "minimumMarginRatio": 0.25,
+            "visiblePixels": 5180
+          }
+        ]
+      }
+    },
+    {
+      "id": "siege_missile",
+      "key": "fx/siege_missile",
+      "name": "Roquette de siège",
+      "path": "assets/dlc/illustrated-v1/fx/siege_missile.png",
+      "columns": 8,
+      "rows": 3,
+      "states": [
+        "flight",
+        "impact",
+        "overload"
+      ],
+      "suggestedFps": 16,
+      "rotation": "Flight points right; rotate by atan2(vy,vx). Impact is centered and may remain unrotated.",
+      "identitySource": "Written gameplay effect and color in game.v9.js; supporting concepts in docs/GAME_BIBLE.md §15.5.",
+      "status": "approved",
+      "selectedAttempt": 3,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-1072b19b-fb2b-43e8-9d64-05b3f64c6b46.png",
+      "qa": {
+        "approved": true,
+        "review": "Approved after direct image inspection: actual right-facing metal rocket with rear orange exhaust, distinct explosion progression and energized seams, not a launcher body. All 24 frames fit with true transparency. Minimum visible margin at alpha 24 is 50/256 px (19.5%)."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-823d5f8a-4e40-4c91-b2a5-9d21f561eaf6.png",
+          "prompt": "Use case: stylized-concept. Asset type: native transparent game sprite atlas for Infernal City, high quality illustrated cyber-gothic tower-defense VFX. Create ONE complete atlas at landscape aspect ratio 8:3, preferably 2048×768 pixels, with EXACTLY 8 equal columns and 3 equal rows of square cells (24 animation frames). The invisible grid fills the entire image edge to edge; all cells equal; no grid lines, separators, labels, captions, numbers, UI, checkerboard, floor, background, watermark, weapon or character. Real transparent RGBA background, alpha zero outside each isolated sprite. All frames stay wholly within the central 45% width and 45% height of their own cell, leaving transparent margin of at least 27% on all four sides, even for sparks, smoke and impact fragments; never touch a cell edge. Fixed camera, fixed anchor at each exact cell center. Frames must differ visibly across each row with a fluid animation progression. Row 1 FLIGHT: 8 variations of the travelling projectile, always travelling left to right, nose pointing exactly right, tail extending left. Row 2 IMPACT: 8 chronological impact frames, small first flash then controlled expansion, fragmentation and fade, centered at the cell anchor. Row 3 OVERLOAD: 8 chronological energized/power pulse frames of the same identity, fully inside the same safe margins. Painterly sharp silhouettes and material detail, luminous interior core, restrained fine particles, clean readable shapes at small game size; no huge diffuse halos. This is a first authored visual interpretation of a written gameplay effect; consistency with the game's existing illustrated effects is the objective.\nSubject and color identity: A small cyber-gothic armor-piercing ROCKET projectile. A short dark gunmetal warhead with bronze bands, an angular pointed nose on the RIGHT and four small fins at the LEFT rear, orange-yellow rocket exhaust extending LEFT. View the flying rocket sideways/top-down at a fixed camera. It is ONE flying ammunition rocket, never a stationary launcher, gun, turret, tank, drone, mounted weapon or bullet magazine. Row 1: constant body size as short exhaust flickers. Row 2: a contained orange explosion, a few tiny dark metal fragments and a brief ember fade, no persistent rocket after detonation. Row 3: same rocket energized by orange emissive seams and stronger but short exhaust. Metals in charcoal and bronze, exhaust #f59e0b. Keep even the largest explosion visually small within the cell.",
+          "references": [],
+          "approved": false,
+          "qa": "Rejected: background alpha minimum 183.",
+          "sha256": "eb4dbc5496b3a5732cf28dc5e02eaf61b6ef2388d091fd66f0eb3eb86d10ae73",
+          "nativeBytes": 1447498,
+          "dimensions": {
+            "width": 2048,
+            "height": 768,
+            "mode": "RGBA"
+          },
+          "alphaRange": [
+            183,
+            251
+          ],
+          "alphaZeroFraction": 0.0
+        },
+        {
+          "attempt": 2,
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-2366645e-0727-43f1-b542-4dc9eecea83d.png",
+          "prompt": "Use case: background-extraction, precise object edit. The supplied image is the EDIT TARGET. Preserve its 2048×768 pixel dimensions, 8 columns and 3 rows of equal square animation cells, same projectile identity and colors, same 24 frames in same order. This is a sprite sheet for compositing over other game content, so the ENTIRE background MUST BE COMPLETELY TRANSPARENT alpha zero, including all diffuse backing, grid, fog, soft ambient clouds and any color beyond the sprite itself. There must be no visible background image at all. Keep clean isolated sprites with only a tiny local glow. Reduce EACH sprite and all particles around its own fixed cell center to 70% of their current size, keeping every frame centered on its exact 256×256 cell. The complete sprite plus glow must fit inside a 150×150 central rectangle within its cell; at least 53 empty transparent pixels to every edge. No other changes, no new objects, no grid, text, labels, white, black or checkerboard background. Preserve all distinct animation frames.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/generated_images/exec-823d5f8a-4e40-4c91-b2a5-9d21f561eaf6.png",
+              "role": "Edit target; retain identity, grid and frame order."
+            }
+          ],
+          "approved": false,
+          "qa": "Rejected: diffuse backing and residual alpha minimum 1.",
+          "sha256": "ac5f153ccd40d8d4567a64951bab3250bb16fd01764e65beadd35cb5b77a34ff",
+          "nativeBytes": 1725459,
+          "dimensions": {
+            "width": 2048,
+            "height": 768,
+            "mode": "RGBA"
+          },
+          "alphaRange": [
+            1,
+            251
+          ],
+          "alphaZeroFraction": 0.0
+        },
+        {
+          "attempt": 3,
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-1072b19b-fb2b-43e8-9d64-05b3f64c6b46.png",
+          "prompt": "Remove the white background from this sprite sheet. Make the entire empty background fully transparent alpha zero. Preserve all 24 rocket and explosion sprites exactly where they are, their shapes, sizes, colors, 8 columns, 3 rows, 2048×768 canvas. No moving or enlarging any sprite. Transparent PNG cutouts only, without any backing or fog outside the small explosion silhouettes.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/generated_images/exec-2366645e-0727-43f1-b542-4dc9eecea83d.png",
+              "role": "Edit target; retain identity, grid and frame order."
+            }
+          ],
+          "approved": true,
+          "qa": "Approved after direct image inspection: actual right-facing metal rocket with rear orange exhaust, distinct explosion progression and energized seams, not a launcher body. All 24 frames fit with true transparency. Minimum visible margin at alpha 24 is 50/256 px (19.5%).",
+          "sha256": "0bf20fa6fdbb8e8537bcd7d1a1a2097f16ddc66e7cc140a26011aaefd70a31fb",
+          "nativeBytes": 1439812,
+          "dimensions": {
+            "width": 2048,
+            "height": 768,
+            "mode": "RGBA"
+          },
+          "alphaRange": [
+            0,
+            254
+          ],
+          "alphaZeroFraction": 0.824942
+        }
+      ],
+      "sha256": "0bf20fa6fdbb8e8537bcd7d1a1a2097f16ddc66e7cc140a26011aaefd70a31fb",
+      "nativeByteIdentical": true,
+      "dimensions": {
+        "width": 2048,
+        "height": 768,
+        "mode": "RGBA"
+      },
+      "technicalReview": {
+        "readOnlyInspection": true,
+        "imageEditsByScript": false,
+        "alphaThreshold": 24,
+        "alphaRange": [
+          0,
+          254
+        ],
+        "alphaZeroFraction": 0.824942,
+        "allFramesVisible": true,
+        "distinctVisibleFrameHashes": 24,
+        "minimumVisibleMarginRatio": 0.195312,
+        "cells": [
+          {
+            "row": 0,
+            "column": 0,
+            "visibleMarginsPx": [
+              74,
+              109,
+              62,
+              107
+            ],
+            "minimumMarginRatio": 0.242188,
+            "visiblePixels": 2753
+          },
+          {
+            "row": 0,
+            "column": 1,
+            "visibleMarginsPx": [
+              69,
+              110,
+              62,
+              107
+            ],
+            "minimumMarginRatio": 0.242188,
+            "visiblePixels": 2926
+          },
+          {
+            "row": 0,
+            "column": 2,
+            "visibleMarginsPx": [
+              67,
+              110,
+              62,
+              107
+            ],
+            "minimumMarginRatio": 0.242188,
+            "visiblePixels": 3074
+          },
+          {
+            "row": 0,
+            "column": 3,
+            "visibleMarginsPx": [
+              60,
+              109,
+              62,
+              107
+            ],
+            "minimumMarginRatio": 0.234375,
+            "visiblePixels": 3351
+          },
+          {
+            "row": 0,
+            "column": 4,
+            "visibleMarginsPx": [
+              59,
+              109,
+              62,
+              107
+            ],
+            "minimumMarginRatio": 0.230469,
+            "visiblePixels": 3301
+          },
+          {
+            "row": 0,
+            "column": 5,
+            "visibleMarginsPx": [
+              62,
+              110,
+              61,
+              107
+            ],
+            "minimumMarginRatio": 0.238281,
+            "visiblePixels": 3103
+          },
+          {
+            "row": 0,
+            "column": 6,
+            "visibleMarginsPx": [
+              68,
+              110,
+              62,
+              107
+            ],
+            "minimumMarginRatio": 0.242188,
+            "visiblePixels": 2845
+          },
+          {
+            "row": 0,
+            "column": 7,
+            "visibleMarginsPx": [
+              74,
+              110,
+              61,
+              107
+            ],
+            "minimumMarginRatio": 0.238281,
+            "visiblePixels": 2673
+          },
+          {
+            "row": 1,
+            "column": 0,
+            "visibleMarginsPx": [
+              111,
+              108,
+              105,
+              112
+            ],
+            "minimumMarginRatio": 0.410156,
+            "visiblePixels": 744
+          },
+          {
+            "row": 1,
+            "column": 1,
+            "visibleMarginsPx": [
+              94,
+              93,
+              95,
+              98
+            ],
+            "minimumMarginRatio": 0.363281,
+            "visiblePixels": 2463
+          },
+          {
+            "row": 1,
+            "column": 2,
+            "visibleMarginsPx": [
+              85,
+              88,
+              84,
+              92
+            ],
+            "minimumMarginRatio": 0.328125,
+            "visiblePixels": 4328
+          },
+          {
+            "row": 1,
+            "column": 3,
+            "visibleMarginsPx": [
+              75,
+              76,
+              71,
+              85
+            ],
+            "minimumMarginRatio": 0.277344,
+            "visiblePixels": 6772
+          },
+          {
+            "row": 1,
+            "column": 4,
+            "visibleMarginsPx": [
+              71,
+              70,
+              69,
+              80
+            ],
+            "minimumMarginRatio": 0.269531,
+            "visiblePixels": 8136
+          },
+          {
+            "row": 1,
+            "column": 5,
+            "visibleMarginsPx": [
+              79,
+              74,
+              68,
+              82
+            ],
+            "minimumMarginRatio": 0.265625,
+            "visiblePixels": 5871
+          },
+          {
+            "row": 1,
+            "column": 6,
+            "visibleMarginsPx": [
+              83,
+              81,
+              77,
+              91
+            ],
+            "minimumMarginRatio": 0.300781,
+            "visiblePixels": 3956
+          },
+          {
+            "row": 1,
+            "column": 7,
+            "visibleMarginsPx": [
+              84,
+              84,
+              84,
+              94
+            ],
+            "minimumMarginRatio": 0.328125,
+            "visiblePixels": 2195
+          },
+          {
+            "row": 2,
+            "column": 0,
+            "visibleMarginsPx": [
+              69,
+              109,
+              62,
+              107
+            ],
+            "minimumMarginRatio": 0.242188,
+            "visiblePixels": 2983
+          },
+          {
+            "row": 2,
+            "column": 1,
+            "visibleMarginsPx": [
+              65,
+              109,
+              61,
+              107
+            ],
+            "minimumMarginRatio": 0.238281,
+            "visiblePixels": 3303
+          },
+          {
+            "row": 2,
+            "column": 2,
+            "visibleMarginsPx": [
+              62,
+              109,
+              61,
+              107
+            ],
+            "minimumMarginRatio": 0.238281,
+            "visiblePixels": 3465
+          },
+          {
+            "row": 2,
+            "column": 3,
+            "visibleMarginsPx": [
+              52,
+              107,
+              61,
+              106
+            ],
+            "minimumMarginRatio": 0.203125,
+            "visiblePixels": 3890
+          },
+          {
+            "row": 2,
+            "column": 4,
+            "visibleMarginsPx": [
+              50,
+              107,
+              61,
+              105
+            ],
+            "minimumMarginRatio": 0.195312,
+            "visiblePixels": 3991
+          },
+          {
+            "row": 2,
+            "column": 5,
+            "visibleMarginsPx": [
+              58,
+              109,
+              62,
+              107
+            ],
+            "minimumMarginRatio": 0.226562,
+            "visiblePixels": 3499
+          },
+          {
+            "row": 2,
+            "column": 6,
+            "visibleMarginsPx": [
+              66,
+              109,
+              61,
+              107
+            ],
+            "minimumMarginRatio": 0.238281,
+            "visiblePixels": 3041
+          },
+          {
+            "row": 2,
+            "column": 7,
+            "visibleMarginsPx": [
+              70,
+              109,
+              61,
+              107
+            ],
+            "minimumMarginRatio": 0.238281,
+            "visiblePixels": 2877
+          }
+        ]
+      }
+    },
+    {
+      "id": "drone_laser",
+      "key": "fx/drone_laser",
+      "name": "Impulsion du Drone Laser",
+      "path": "assets/dlc/illustrated-v1/fx/drone_laser.png",
+      "columns": 8,
+      "rows": 3,
+      "states": [
+        "flight",
+        "impact",
+        "overload"
+      ],
+      "suggestedFps": 16,
+      "rotation": "Flight points right; rotate by atan2(vy,vx). Impact is centered and may remain unrotated.",
+      "identitySource": "Written gameplay effect and color in game.v9.js; supporting concepts in docs/GAME_BIBLE.md §15.5.",
+      "status": "approved",
+      "selectedAttempt": 1,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-a36d22e2-d02d-474b-bba4-9b718e3ea735.png",
+      "qa": {
+        "approved": true,
+        "review": "Approved after direct image inspection: pure pink-white laser pulse, no mechanical drone body, directional flight and pink spark impacts, all 24 frames distinct. Minimum visible margin at alpha 24 is 47/256 px (18.4%)."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-a36d22e2-d02d-474b-bba4-9b718e3ea735.png",
+          "prompt": "Use case: stylized-concept. Asset type: native transparent game sprite atlas for Infernal City, high quality illustrated cyber-gothic tower-defense VFX. Create ONE complete atlas at landscape aspect ratio 8:3, preferably 2048×768 pixels, with EXACTLY 8 equal columns and 3 equal rows of square cells (24 animation frames). The invisible grid fills the entire image edge to edge; all cells equal; no grid lines, separators, labels, captions, numbers, UI, checkerboard, floor, background, watermark, weapon or character. Real transparent RGBA background, alpha zero outside each isolated sprite. All frames stay wholly within the central 45% width and 45% height of their own cell, leaving transparent margin of at least 27% on all four sides, even for sparks, smoke and impact fragments; never touch a cell edge. Fixed camera, fixed anchor at each exact cell center. Frames must differ visibly across each row with a fluid animation progression. Row 1 FLIGHT: 8 variations of the travelling projectile, always travelling left to right, nose pointing exactly right, tail extending left. Row 2 IMPACT: 8 chronological impact frames, small first flash then controlled expansion, fragmentation and fade, centered at the cell anchor. Row 3 OVERLOAD: 8 chronological energized/power pulse frames of the same identity, fully inside the same safe margins. Painterly sharp silhouettes and material detail, luminous interior core, restrained fine particles, clean readable shapes at small game size; no huge diffuse halos. This is a first authored visual interpretation of a written gameplay effect; consistency with the game's existing illustrated effects is the objective.\nSubject and color identity: One compact travelling LASER PULSE with a hot white-pink central needle, violet-pink outer contour (#f0abfc), two faint magenta electrical wisps and a short trailing ray on the left. The bright needle nose points exactly RIGHT. Pure emitted light/energy only: absolutely NO drone body, craft, gun, mechanical component, weapon or character. Row 1: a stable-sized narrow horizontal laser dart with subtle flickering contour. Row 2: a tiny sharp rose-white star flash with a few pink sparks, then an energy fade. Row 3: the same laser dart with intertwined short magenta energy filaments. Keep the total pulse width under HALF a cell; clean sharp silhouette and tiny restrained halos.",
+          "references": [],
+          "approved": true,
+          "qa": "Approved after direct image inspection: pure pink-white laser pulse, no mechanical drone body, directional flight and pink spark impacts, all 24 frames distinct. Minimum visible margin at alpha 24 is 47/256 px (18.4%).",
+          "sha256": "df0f3567a183a381793d638f25cc395d8761bde0d6e58f1cef445e534919514c",
+          "nativeBytes": 1465007,
+          "dimensions": {
+            "width": 2048,
+            "height": 768,
+            "mode": "RGBA"
+          },
+          "alphaRange": [
+            0,
+            253
+          ],
+          "alphaZeroFraction": 0.807653
+        }
+      ],
+      "sha256": "df0f3567a183a381793d638f25cc395d8761bde0d6e58f1cef445e534919514c",
+      "nativeByteIdentical": true,
+      "dimensions": {
+        "width": 2048,
+        "height": 768,
+        "mode": "RGBA"
+      },
+      "technicalReview": {
+        "readOnlyInspection": true,
+        "imageEditsByScript": false,
+        "alphaThreshold": 24,
+        "alphaRange": [
+          0,
+          253
+        ],
+        "alphaZeroFraction": 0.807653,
+        "allFramesVisible": true,
+        "distinctVisibleFrameHashes": 24,
+        "minimumVisibleMarginRatio": 0.183594,
+        "cells": [
+          {
+            "row": 0,
+            "column": 0,
+            "visibleMarginsPx": [
+              71,
+              111,
+              56,
+              109
+            ],
+            "minimumMarginRatio": 0.21875,
+            "visiblePixels": 2358
+          },
+          {
+            "row": 0,
+            "column": 1,
+            "visibleMarginsPx": [
+              71,
+              107,
+              56,
+              105
+            ],
+            "minimumMarginRatio": 0.21875,
+            "visiblePixels": 2487
+          },
+          {
+            "row": 0,
+            "column": 2,
+            "visibleMarginsPx": [
+              65,
+              106,
+              56,
+              101
+            ],
+            "minimumMarginRatio": 0.21875,
+            "visiblePixels": 2636
+          },
+          {
+            "row": 0,
+            "column": 3,
+            "visibleMarginsPx": [
+              69,
+              107,
+              55,
+              104
+            ],
+            "minimumMarginRatio": 0.214844,
+            "visiblePixels": 2528
+          },
+          {
+            "row": 0,
+            "column": 4,
+            "visibleMarginsPx": [
+              67,
+              109,
+              54,
+              105
+            ],
+            "minimumMarginRatio": 0.210938,
+            "visiblePixels": 2602
+          },
+          {
+            "row": 0,
+            "column": 5,
+            "visibleMarginsPx": [
+              65,
+              111,
+              55,
+              105
+            ],
+            "minimumMarginRatio": 0.214844,
+            "visiblePixels": 2545
+          },
+          {
+            "row": 0,
+            "column": 6,
+            "visibleMarginsPx": [
+              68,
+              110,
+              53,
+              106
+            ],
+            "minimumMarginRatio": 0.207031,
+            "visiblePixels": 2524
+          },
+          {
+            "row": 0,
+            "column": 7,
+            "visibleMarginsPx": [
+              63,
+              111,
+              54,
+              104
+            ],
+            "minimumMarginRatio": 0.210938,
+            "visiblePixels": 2505
+          },
+          {
+            "row": 1,
+            "column": 0,
+            "visibleMarginsPx": [
+              110,
+              107,
+              106,
+              110
+            ],
+            "minimumMarginRatio": 0.414062,
+            "visiblePixels": 687
+          },
+          {
+            "row": 1,
+            "column": 1,
+            "visibleMarginsPx": [
+              98,
+              91,
+              94,
+              95
+            ],
+            "minimumMarginRatio": 0.355469,
+            "visiblePixels": 1775
+          },
+          {
+            "row": 1,
+            "column": 2,
+            "visibleMarginsPx": [
+              82,
+              79,
+              74,
+              86
+            ],
+            "minimumMarginRatio": 0.289062,
+            "visiblePixels": 4353
+          },
+          {
+            "row": 1,
+            "column": 3,
+            "visibleMarginsPx": [
+              60,
+              54,
+              53,
+              65
+            ],
+            "minimumMarginRatio": 0.207031,
+            "visiblePixels": 10029
+          },
+          {
+            "row": 1,
+            "column": 4,
+            "visibleMarginsPx": [
+              55,
+              51,
+              49,
+              62
+            ],
+            "minimumMarginRatio": 0.191406,
+            "visiblePixels": 11199
+          },
+          {
+            "row": 1,
+            "column": 5,
+            "visibleMarginsPx": [
+              59,
+              54,
+              54,
+              63
+            ],
+            "minimumMarginRatio": 0.210938,
+            "visiblePixels": 5398
+          },
+          {
+            "row": 1,
+            "column": 6,
+            "visibleMarginsPx": [
+              59,
+              70,
+              60,
+              68
+            ],
+            "minimumMarginRatio": 0.230469,
+            "visiblePixels": 1771
+          },
+          {
+            "row": 1,
+            "column": 7,
+            "visibleMarginsPx": [
+              67,
+              86,
+              125,
+              78
+            ],
+            "minimumMarginRatio": 0.261719,
+            "visiblePixels": 333
+          },
+          {
+            "row": 2,
+            "column": 0,
+            "visibleMarginsPx": [
+              65,
+              109,
+              55,
+              107
+            ],
+            "minimumMarginRatio": 0.214844,
+            "visiblePixels": 2542
+          },
+          {
+            "row": 2,
+            "column": 1,
+            "visibleMarginsPx": [
+              59,
+              110,
+              53,
+              104
+            ],
+            "minimumMarginRatio": 0.207031,
+            "visiblePixels": 3318
+          },
+          {
+            "row": 2,
+            "column": 2,
+            "visibleMarginsPx": [
+              55,
+              105,
+              50,
+              98
+            ],
+            "minimumMarginRatio": 0.195312,
+            "visiblePixels": 4081
+          },
+          {
+            "row": 2,
+            "column": 3,
+            "visibleMarginsPx": [
+              53,
+              100,
+              47,
+              94
+            ],
+            "minimumMarginRatio": 0.183594,
+            "visiblePixels": 5587
+          },
+          {
+            "row": 2,
+            "column": 4,
+            "visibleMarginsPx": [
+              50,
+              99,
+              47,
+              92
+            ],
+            "minimumMarginRatio": 0.183594,
+            "visiblePixels": 6094
+          },
+          {
+            "row": 2,
+            "column": 5,
+            "visibleMarginsPx": [
+              55,
+              104,
+              50,
+              100
+            ],
+            "minimumMarginRatio": 0.195312,
+            "visiblePixels": 4280
+          },
+          {
+            "row": 2,
+            "column": 6,
+            "visibleMarginsPx": [
+              66,
+              105,
+              53,
+              99
+            ],
+            "minimumMarginRatio": 0.207031,
+            "visiblePixels": 3008
+          },
+          {
+            "row": 2,
+            "column": 7,
+            "visibleMarginsPx": [
+              69,
+              106,
+              54,
+              101
+            ],
+            "minimumMarginRatio": 0.210938,
+            "visiblePixels": 2641
+          }
+        ]
+      }
+    },
+    {
+      "id": "siphon_seed",
+      "key": "fx/siphon_seed",
+      "name": "Graine de Pique Siphon",
+      "path": "assets/dlc/illustrated-v1/fx/siphon_seed.png",
+      "columns": 8,
+      "rows": 3,
+      "states": [
+        "flight",
+        "impact",
+        "overload"
+      ],
+      "suggestedFps": 16,
+      "rotation": "Flight points right; rotate by atan2(vy,vx). Impact is centered and may remain unrotated.",
+      "identitySource": "Written gameplay effect and color in game.v9.js; supporting concepts in docs/GAME_BIBLE.md §15.5.",
+      "status": "approved",
+      "selectedAttempt": 4,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-c5acba73-ac88-4074-b284-e6e210fdc9fd.png",
+      "qa": {
+        "approved": true,
+        "review": "Approved after direct image inspection of the fresh fourth interpretation: emerald organic seed points right with short twin tails, leaflike energy impact fragments, golden overload motes, all 24 frames distinct, no opaque background or clipping. Minimum visible margin at alpha 24 is 44/256 px (17.2%). Earlier variants are rejected and not used."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-34c46714-7176-43b2-a317-33365875cc01.png",
+          "prompt": "Use case: stylized-concept. Asset type: native transparent game sprite atlas for Infernal City, high quality illustrated cyber-gothic tower-defense VFX. Create ONE complete atlas at landscape aspect ratio 8:3, preferably 2048×768 pixels, with EXACTLY 8 equal columns and 3 equal rows of square cells (24 animation frames). The invisible grid fills the entire image edge to edge; all cells equal; no grid lines, separators, labels, captions, numbers, UI, checkerboard, floor, background, watermark, weapon or character. Real transparent RGBA background, alpha zero outside each isolated sprite. All frames stay wholly within the central 45% width and 45% height of their own cell, leaving transparent margin of at least 27% on all four sides, even for sparks, smoke and impact fragments; never touch a cell edge. Fixed camera, fixed anchor at each exact cell center. Frames must differ visibly across each row with a fluid animation progression. Row 1 FLIGHT: 8 variations of the travelling projectile, always travelling left to right, nose pointing exactly right, tail extending left. Row 2 IMPACT: 8 chronological impact frames, small first flash then controlled expansion, fragmentation and fade, centered at the cell anchor. Row 3 OVERLOAD: 8 chronological energized/power pulse frames of the same identity, fully inside the same safe margins. Painterly sharp silhouettes and material detail, luminous interior core, restrained fine particles, clean readable shapes at small game size; no huge diffuse halos. This is a first authored visual interpretation of a written gameplay effect; consistency with the game's existing illustrated effects is the objective.\nSubject and color identity: A compact emerald bio-energy SEED projectile (#10b981) with a dark green organic pointed seed shell, a small luminous emerald core visible through slender leaflike veins, and two thin wisps of stolen-life energy trailing LEFT. The small teardrop seed nose points exactly RIGHT. Pure magical organic projectile: no plant pot, syringe, machine, turret, gun or character. Row 1: a constant-size seed dart with pulsing green inner veins. Row 2: the seed opens into a tiny symmetrical blossom of translucent emerald tendrils and a few motes that fade. Row 3: the same seed binds a brighter green core with fine amber life motes, never a fireball. Deep green, emerald and fine jade highlights, visibly distinct from yellow-green corrosive acid.",
+          "references": [],
+          "approved": false,
+          "qa": "Rejected: visible margin 33 px at alpha 24 and residual backdrop.",
+          "sha256": "ebb60bc22819ce7ac7b47b1e9ab350239cf150a8af999456a7e7ea54e3646225",
+          "nativeBytes": 1861037,
+          "dimensions": {
+            "width": 2048,
+            "height": 768,
+            "mode": "RGBA"
+          },
+          "alphaRange": [
+            0,
+            253
+          ],
+          "alphaZeroFraction": 0.00872
+        },
+        {
+          "attempt": 2,
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-0b62f9c7-ff42-40ae-ada6-b360ae9f3730.png",
+          "prompt": "This is the EDIT TARGET, an emerald life-siphon projectile sprite atlas. Keep its identity, the 8 columns × 3 rows and all 24 different frames in their same positions. Reduce each individual sprite and its effects to 70% of its current size about that cell's center, so every pixel of the effect stays within the central 140×140 pixels of its 256×256 cell. Keep the same 2048×768 canvas. Remove the complete gray-green background and all distant haze, leaving a fully transparent alpha-zero background everywhere except the isolated small sprites themselves. Preserve the emerald shell, bright green core, thin trailing tendrils and all unique impact frames. No text or new items. Output clean transparent PNG.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/generated_images/exec-34c46714-7176-43b2-a317-33365875cc01.png",
+              "role": "Edit target; retain identity, grid and frame order."
+            }
+          ],
+          "approved": false,
+          "qa": "Rejected: 35 px visible margin and excessive soft backdrop (only 39.5% alpha-zero pixels).",
+          "sha256": "cb0d7868a7b35a6c0ebb2bd983bcf1a1d354a7d6b3fa1fd963683d7810b989a6",
+          "nativeBytes": 1680848,
+          "dimensions": {
+            "width": 2048,
+            "height": 768,
+            "mode": "RGBA"
+          },
+          "alphaRange": [
+            0,
+            254
+          ],
+          "alphaZeroFraction": 0.395032
+        },
+        {
+          "attempt": 3,
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-df060e58-7932-4c5d-a77b-470da740c895.png",
+          "prompt": "Remove the entire gray-green background and all diffuse ambient light from this image. Keep only the 24 small emerald projectile sprites and their small impact splashes, fully cut out on a truly transparent alpha-zero background. Preserve their positions, sizes, shapes and colors. Preserve 2048×768 dimensions and 8 columns × 3 rows. Remove all shadow and glow beyond the compact individual sprite silhouettes, including gray-white backing around explosions; retain only tiny local light close to the green objects. No new items. Transparent PNG.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/generated_images/exec-0b62f9c7-ff42-40ae-ada6-b360ae9f3730.png",
+              "role": "Edit target; retain identity, grid and frame order."
+            }
+          ],
+          "approved": false,
+          "qa": "Rejected: extraction failed, only 0.16% fully transparent pixels; minimum visible margin 30 px.",
+          "sha256": "4183278d189986414244747100cf20cc703a1a6aba86afde38ac110842036520",
+          "nativeBytes": 1719212,
+          "dimensions": {
+            "width": 2048,
+            "height": 768,
+            "mode": "RGBA"
+          },
+          "alphaRange": [
+            0,
+            253
+          ],
+          "alphaZeroFraction": 0.00156
+        },
+        {
+          "attempt": 4,
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-c5acba73-ac88-4074-b284-e6e210fdc9fd.png",
+          "prompt": "A clean transparent PNG sprite sheet for a tower-defense game: EXACTLY 8 columns and 3 rows, 2048×768 landscape, 24 equal square cells. Every cell contains ONE tiny emerald-green life-drain seed projectile or its impact effect, centered precisely in the cell. All artwork fits inside the central 120×120 pixels of every 256×256 cell. Leave the rest of each cell completely empty and TRANSPARENT alpha zero. The seed is a crisp dark emerald pointed organic shell, luminous jade vein inside, nose RIGHT, two short crisp thin green tails trailing LEFT. Hand-painted sharp opaque forms with bright small highlights, NO diffuse glow or cast shadows. First row: eight different flight frames facing right at fixed size. Second row: eight impact frames, tiny jade leaflike energy bloom breaks into compact green motes and fades. Third row: eight stronger pulse frames, same right-facing seed, tiny golden motes close to its shell. No background, no gray/white/green backing, no fog, no lighting of the empty space, no floor, text, grid, weapon, gun or character. Real transparent background is essential. High quality illustrated sci-fi fantasy game asset; no scene.",
+          "references": [],
+          "approved": true,
+          "qa": "Approved after direct image inspection of the fresh fourth interpretation: emerald organic seed points right with short twin tails, leaflike energy impact fragments, golden overload motes, all 24 frames distinct, no opaque background or clipping. Minimum visible margin at alpha 24 is 44/256 px (17.2%). Earlier variants are rejected and not used.",
+          "sha256": "57c22c91d241475e982e4637049c46c02fa259b38e4b80cd41c44bc0c80aecbf",
+          "nativeBytes": 1515414,
+          "dimensions": {
+            "width": 2048,
+            "height": 768,
+            "mode": "RGBA"
+          },
+          "alphaRange": [
+            0,
+            254
+          ],
+          "alphaZeroFraction": 0.825451
+        }
+      ],
+      "sha256": "57c22c91d241475e982e4637049c46c02fa259b38e4b80cd41c44bc0c80aecbf",
+      "nativeByteIdentical": true,
+      "dimensions": {
+        "width": 2048,
+        "height": 768,
+        "mode": "RGBA"
+      },
+      "technicalReview": {
+        "readOnlyInspection": true,
+        "imageEditsByScript": false,
+        "alphaThreshold": 24,
+        "alphaRange": [
+          0,
+          254
+        ],
+        "alphaZeroFraction": 0.825451,
+        "allFramesVisible": true,
+        "distinctVisibleFrameHashes": 24,
+        "minimumVisibleMarginRatio": 0.171875,
+        "cells": [
+          {
+            "row": 0,
+            "column": 0,
+            "visibleMarginsPx": [
+              53,
+              100,
+              59,
+              100
+            ],
+            "minimumMarginRatio": 0.207031,
+            "visiblePixels": 3974
+          },
+          {
+            "row": 0,
+            "column": 1,
+            "visibleMarginsPx": [
+              51,
+              99,
+              59,
+              100
+            ],
+            "minimumMarginRatio": 0.199219,
+            "visiblePixels": 4038
+          },
+          {
+            "row": 0,
+            "column": 2,
+            "visibleMarginsPx": [
+              50,
+              98,
+              58,
+              100
+            ],
+            "minimumMarginRatio": 0.195312,
+            "visiblePixels": 4014
+          },
+          {
+            "row": 0,
+            "column": 3,
+            "visibleMarginsPx": [
+              49,
+              92,
+              58,
+              100
+            ],
+            "minimumMarginRatio": 0.191406,
+            "visiblePixels": 3990
+          },
+          {
+            "row": 0,
+            "column": 4,
+            "visibleMarginsPx": [
+              55,
+              89,
+              59,
+              100
+            ],
+            "minimumMarginRatio": 0.214844,
+            "visiblePixels": 3958
+          },
+          {
+            "row": 0,
+            "column": 5,
+            "visibleMarginsPx": [
+              51,
+              100,
+              58,
+              100
+            ],
+            "minimumMarginRatio": 0.199219,
+            "visiblePixels": 3974
+          },
+          {
+            "row": 0,
+            "column": 6,
+            "visibleMarginsPx": [
+              50,
+              101,
+              59,
+              100
+            ],
+            "minimumMarginRatio": 0.195312,
+            "visiblePixels": 4005
+          },
+          {
+            "row": 0,
+            "column": 7,
+            "visibleMarginsPx": [
+              51,
+              100,
+              60,
+              100
+            ],
+            "minimumMarginRatio": 0.199219,
+            "visiblePixels": 4056
+          },
+          {
+            "row": 1,
+            "column": 0,
+            "visibleMarginsPx": [
+              52,
+              82,
+              60,
+              90
+            ],
+            "minimumMarginRatio": 0.203125,
+            "visiblePixels": 4750
+          },
+          {
+            "row": 1,
+            "column": 1,
+            "visibleMarginsPx": [
+              64,
+              75,
+              63,
+              83
+            ],
+            "minimumMarginRatio": 0.246094,
+            "visiblePixels": 4661
+          },
+          {
+            "row": 1,
+            "column": 2,
+            "visibleMarginsPx": [
+              60,
+              58,
+              62,
+              66
+            ],
+            "minimumMarginRatio": 0.226562,
+            "visiblePixels": 5631
+          },
+          {
+            "row": 1,
+            "column": 3,
+            "visibleMarginsPx": [
+              63,
+              44,
+              63,
+              57
+            ],
+            "minimumMarginRatio": 0.171875,
+            "visiblePixels": 4414
+          },
+          {
+            "row": 1,
+            "column": 4,
+            "visibleMarginsPx": [
+              62,
+              56,
+              66,
+              67
+            ],
+            "minimumMarginRatio": 0.21875,
+            "visiblePixels": 2798
+          },
+          {
+            "row": 1,
+            "column": 5,
+            "visibleMarginsPx": [
+              63,
+              75,
+              73,
+              80
+            ],
+            "minimumMarginRatio": 0.246094,
+            "visiblePixels": 1201
+          },
+          {
+            "row": 1,
+            "column": 6,
+            "visibleMarginsPx": [
+              64,
+              86,
+              83,
+              101
+            ],
+            "minimumMarginRatio": 0.25,
+            "visiblePixels": 435
+          },
+          {
+            "row": 1,
+            "column": 7,
+            "visibleMarginsPx": [
+              83,
+              101,
+              97,
+              111
+            ],
+            "minimumMarginRatio": 0.324219,
+            "visiblePixels": 109
+          },
+          {
+            "row": 2,
+            "column": 0,
+            "visibleMarginsPx": [
+              52,
+              88,
+              59,
+              96
+            ],
+            "minimumMarginRatio": 0.203125,
+            "visiblePixels": 4341
+          },
+          {
+            "row": 2,
+            "column": 1,
+            "visibleMarginsPx": [
+              50,
+              86,
+              59,
+              94
+            ],
+            "minimumMarginRatio": 0.195312,
+            "visiblePixels": 4637
+          },
+          {
+            "row": 2,
+            "column": 2,
+            "visibleMarginsPx": [
+              51,
+              83,
+              58,
+              90
+            ],
+            "minimumMarginRatio": 0.199219,
+            "visiblePixels": 4843
+          },
+          {
+            "row": 2,
+            "column": 3,
+            "visibleMarginsPx": [
+              51,
+              80,
+              58,
+              88
+            ],
+            "minimumMarginRatio": 0.199219,
+            "visiblePixels": 5312
+          },
+          {
+            "row": 2,
+            "column": 4,
+            "visibleMarginsPx": [
+              54,
+              79,
+              58,
+              87
+            ],
+            "minimumMarginRatio": 0.210938,
+            "visiblePixels": 5592
+          },
+          {
+            "row": 2,
+            "column": 5,
+            "visibleMarginsPx": [
+              50,
+              84,
+              59,
+              92
+            ],
+            "minimumMarginRatio": 0.195312,
+            "visiblePixels": 4760
+          },
+          {
+            "row": 2,
+            "column": 6,
+            "visibleMarginsPx": [
+              49,
+              89,
+              59,
+              96
+            ],
+            "minimumMarginRatio": 0.191406,
+            "visiblePixels": 4403
+          },
+          {
+            "row": 2,
+            "column": 7,
+            "visibleMarginsPx": [
+              50,
+              97,
+              60,
+              101
+            ],
+            "minimumMarginRatio": 0.195312,
+            "visiblePixels": 4250
+          }
+        ]
+      }
+    },
+    {
+      "id": "choc_thermique",
+      "key": "fx/choc_thermique",
+      "name": "Choc thermique",
+      "path": "assets/dlc/illustrated-v1/fx/choc_thermique.png",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "cast",
+        "active",
+        "impact",
+        "fade"
+      ],
+      "suggestedFps": 12,
+      "rotation": "Centered effect; no directional rotation required.",
+      "identitySource": "Written gameplay effect and color in game.v9.js; supporting concepts in docs/GAME_BIBLE.md §15.5.",
+      "status": "approved",
+      "selectedAttempt": 2,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-5f309d7d-6d71-4705-8d19-36179fa372e5.png",
+      "qa": {
+        "approved": true,
+        "review": "Approved after direct image inspection: cyan frost and orange plasma form the same compact opposing vortex, cast/active/impact/fade each have eight unique frames, anchor stays stable within rows, restrained haze remains inside each cell, true alpha zero in gaps. Minimum visible margin at alpha 24 is 53 px (23.9% of a native cell)."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-fb7b90cd-eac9-4af2-9d58-eea0063039cb.png",
+          "prompt": "Use case: stylized-concept. Asset type: transparent illustrated game VFX sprite atlas for Infernal City. ONE image, 2048×1024 pixels, EXACTLY 8 equal columns × 4 equal rows of square cells, 32 frames in the invisible edge-to-edge grid. The supplied image is ONLY a supporting reference for painted luminous energy texture, not its subject, grid, camera, frame count or composition. Create the new effect described below. Fixed slightly elevated top-down game view, anchored at the exact center of every 256×256 cell. The full effect, including every spark, ring and wisp, must stay inside the central 140×140 area of each cell, at least 58 completely transparent pixels on ALL four sides. A large amount of empty transparent space between all sprites is mandatory. The entire canvas has real RGBA transparency alpha zero outside the isolated compact effects, no colored fog or ambient lighting in empty space. No black/white background, grid, checkerboard, floor, text, labels, captions, numbers, HUD, icons, guns, turrets or characters. Crisp hand-painted cyber-gothic VFX, high material detail, clear silhouettes, bright inner cores with only narrow restrained glow. No big soft halos. Four rows show FOUR distinct animation states, each with 8 distinct chronological frames: row 1 CAST, small initial sparks gathering to charge; row 2 ACTIVE, the fully formed small effect smoothly changes curls and pulses while keeping fixed overall size; row 3 IMPACT, a small core burst develops into a controlled shockwave then fragments, all within the 140×140 safe area; row 4 FADE, residual strands and particles slowly dissolve, last cell still has tiny visible remnants. No empty cells. This is a first visual interpretation of an existing written gameplay effect.\nEffect identity: Cryo + Plasma elemental synergy: an icy cyan (#38bdf8 / #67e8f9) fractured crystal bloom meeting orange-white plasma flame (#f59e0b), with a compact circular shock ring and a white central spark. Cyan ice shards occupy one curved half of the small swirling bloom, orange plasma ribbons the opposite curved half, interlocking in a stable compact circular vortex. The collision visibly fractures frost crystals into tiny contained cyan pieces, while short fiery curls condense and dissipate. Clean isolated two-temperature impact, no clockwork glyphs, no giant protective shield dome, no scene.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/Infernal-City/assets/dlc/illustrated-v1/fx/duo_aria_astarra.png",
+              "role": "Supporting painted-energy texture/style reference only; new identity from written effect."
+            }
+          ],
+          "approved": false,
+          "qa": "Rejected: insufficient safe margin at alpha 24 (approximately 12.7%).",
+          "sha256": "f7e92b4554534714cac15c385735ef68352c5163f7c47226f92b22893060748d",
+          "nativeBytes": 1380909,
+          "dimensions": {
+            "width": 1774,
+            "height": 887,
+            "mode": "RGBA"
+          },
+          "alphaRange": [
+            0,
+            255
+          ],
+          "alphaZeroFraction": 0.519632
+        },
+        {
+          "attempt": 2,
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-5f309d7d-6d71-4705-8d19-36179fa372e5.png",
+          "prompt": "Use case: precise object edit. The attached image is the EDIT TARGET. Keep the same named elemental synergy identity, its colors and textures, the 32 distinct animation frames, 8 columns × 4 rows and overall landscape 2:1 aspect ratio. Correct only the game atlas layout: shrink EACH individual effect and all its sparks to 65% of its current size, and place its anchor at the exact center of its mathematical cell. Invisible grid covers the whole image without outside padding. Column centers are at 6.25%, 18.75%, 31.25%, 43.75%, 56.25%, 68.75%, 81.25%, 93.75% of full image width. Row centers are at 12.5%, 37.5%, 62.5%, 87.5% of full image height. Every complete sprite, including glow and particles, stays within the central HALF of its cell, leaving at least 25% empty transparent margin on each side. Cleanly remove all colored background noise, all diffuse fog, halos outside the small sprites and all stray dots between cells. The background must be true transparent RGBA alpha zero; all empty space completely clear. No background color, checkerboard, drawn grid, text, labels or new objects. Preserve the animation order: cast, active, impact, fade. Small contained effects only, no edge clipping.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/generated_images/exec-fb7b90cd-eac9-4af2-9d58-eea0063039cb.png",
+              "role": "Edit target; retain identity, grid and frame order."
+            }
+          ],
+          "approved": true,
+          "qa": "Approved after direct image inspection: cyan frost and orange plasma form the same compact opposing vortex, cast/active/impact/fade each have eight unique frames, anchor stays stable within rows, restrained haze remains inside each cell, true alpha zero in gaps. Minimum visible margin at alpha 24 is 53 px (23.9% of a native cell).",
+          "sha256": "b6420d4933cca28e60f55f1968489423fa9b377855c7ce2c3e8b064a79990ed3",
+          "nativeBytes": 626407,
+          "dimensions": {
+            "width": 1774,
+            "height": 887,
+            "mode": "RGBA"
+          },
+          "alphaRange": [
+            0,
+            255
+          ],
+          "alphaZeroFraction": 0.848867
+        }
+      ],
+      "sha256": "b6420d4933cca28e60f55f1968489423fa9b377855c7ce2c3e8b064a79990ed3",
+      "nativeByteIdentical": true,
+      "dimensions": {
+        "width": 1774,
+        "height": 887,
+        "mode": "RGBA"
+      },
+      "technicalReview": {
+        "readOnlyInspection": true,
+        "imageEditsByScript": false,
+        "alphaThreshold": 24,
+        "alphaRange": [
+          0,
+          255
+        ],
+        "alphaZeroFraction": 0.848867,
+        "allFramesVisible": true,
+        "distinctVisibleFrameHashes": 32,
+        "minimumVisibleMarginRatio": 0.239819,
+        "cells": [
+          {
+            "row": 0,
+            "column": 0,
+            "visibleMarginsPx": [
+              90,
+              108,
+              89,
+              74
+            ],
+            "minimumMarginRatio": 0.333333,
+            "visiblePixels": 1145
+          },
+          {
+            "row": 0,
+            "column": 1,
+            "visibleMarginsPx": [
+              84,
+              104,
+              86,
+              71
+            ],
+            "minimumMarginRatio": 0.31982,
+            "visiblePixels": 1875
+          },
+          {
+            "row": 0,
+            "column": 2,
+            "visibleMarginsPx": [
+              80,
+              96,
+              81,
+              64
+            ],
+            "minimumMarginRatio": 0.289593,
+            "visiblePixels": 2747
+          },
+          {
+            "row": 0,
+            "column": 3,
+            "visibleMarginsPx": [
+              78,
+              92,
+              79,
+              62
+            ],
+            "minimumMarginRatio": 0.279279,
+            "visiblePixels": 3395
+          },
+          {
+            "row": 0,
+            "column": 4,
+            "visibleMarginsPx": [
+              75,
+              92,
+              75,
+              57
+            ],
+            "minimumMarginRatio": 0.256757,
+            "visiblePixels": 4164
+          },
+          {
+            "row": 0,
+            "column": 5,
+            "visibleMarginsPx": [
+              70,
+              87,
+              73,
+              57
+            ],
+            "minimumMarginRatio": 0.257919,
+            "visiblePixels": 4676
+          },
+          {
+            "row": 0,
+            "column": 6,
+            "visibleMarginsPx": [
+              69,
+              82,
+              69,
+              55
+            ],
+            "minimumMarginRatio": 0.247748,
+            "visiblePixels": 5266
+          },
+          {
+            "row": 0,
+            "column": 7,
+            "visibleMarginsPx": [
+              65,
+              82,
+              67,
+              54
+            ],
+            "minimumMarginRatio": 0.243243,
+            "visiblePixels": 5846
+          },
+          {
+            "row": 1,
+            "column": 0,
+            "visibleMarginsPx": [
+              64,
+              73,
+              65,
+              63
+            ],
+            "minimumMarginRatio": 0.283784,
+            "visiblePixels": 6151
+          },
+          {
+            "row": 1,
+            "column": 1,
+            "visibleMarginsPx": [
+              61,
+              73,
+              62,
+              62
+            ],
+            "minimumMarginRatio": 0.274775,
+            "visiblePixels": 6550
+          },
+          {
+            "row": 1,
+            "column": 2,
+            "visibleMarginsPx": [
+              62,
+              73,
+              61,
+              60
+            ],
+            "minimumMarginRatio": 0.271493,
+            "visiblePixels": 6665
+          },
+          {
+            "row": 1,
+            "column": 3,
+            "visibleMarginsPx": [
+              62,
+              69,
+              62,
+              59
+            ],
+            "minimumMarginRatio": 0.265766,
+            "visiblePixels": 6945
+          },
+          {
+            "row": 1,
+            "column": 4,
+            "visibleMarginsPx": [
+              62,
+              69,
+              61,
+              58
+            ],
+            "minimumMarginRatio": 0.261261,
+            "visiblePixels": 7085
+          },
+          {
+            "row": 1,
+            "column": 5,
+            "visibleMarginsPx": [
+              61,
+              68,
+              59,
+              58
+            ],
+            "minimumMarginRatio": 0.262443,
+            "visiblePixels": 7353
+          },
+          {
+            "row": 1,
+            "column": 6,
+            "visibleMarginsPx": [
+              61,
+              67,
+              59,
+              58
+            ],
+            "minimumMarginRatio": 0.261261,
+            "visiblePixels": 7415
+          },
+          {
+            "row": 1,
+            "column": 7,
+            "visibleMarginsPx": [
+              62,
+              67,
+              59,
+              58
+            ],
+            "minimumMarginRatio": 0.261261,
+            "visiblePixels": 7254
+          },
+          {
+            "row": 2,
+            "column": 0,
+            "visibleMarginsPx": [
+              61,
+              67,
+              62,
+              63
+            ],
+            "minimumMarginRatio": 0.276018,
+            "visiblePixels": 6903
+          },
+          {
+            "row": 2,
+            "column": 1,
+            "visibleMarginsPx": [
+              59,
+              68,
+              60,
+              60
+            ],
+            "minimumMarginRatio": 0.266968,
+            "visiblePixels": 7015
+          },
+          {
+            "row": 2,
+            "column": 2,
+            "visibleMarginsPx": [
+              61,
+              65,
+              60,
+              62
+            ],
+            "minimumMarginRatio": 0.271493,
+            "visiblePixels": 7009
+          },
+          {
+            "row": 2,
+            "column": 3,
+            "visibleMarginsPx": [
+              55,
+              64,
+              60,
+              57
+            ],
+            "minimumMarginRatio": 0.248869,
+            "visiblePixels": 7696
+          },
+          {
+            "row": 2,
+            "column": 4,
+            "visibleMarginsPx": [
+              57,
+              64,
+              59,
+              57
+            ],
+            "minimumMarginRatio": 0.257919,
+            "visiblePixels": 8088
+          },
+          {
+            "row": 2,
+            "column": 5,
+            "visibleMarginsPx": [
+              57,
+              64,
+              59,
+              53
+            ],
+            "minimumMarginRatio": 0.239819,
+            "visiblePixels": 7756
+          },
+          {
+            "row": 2,
+            "column": 6,
+            "visibleMarginsPx": [
+              56,
+              64,
+              61,
+              57
+            ],
+            "minimumMarginRatio": 0.253394,
+            "visiblePixels": 7636
+          },
+          {
+            "row": 2,
+            "column": 7,
+            "visibleMarginsPx": [
+              58,
+              65,
+              62,
+              63
+            ],
+            "minimumMarginRatio": 0.262443,
+            "visiblePixels": 7053
+          },
+          {
+            "row": 3,
+            "column": 0,
+            "visibleMarginsPx": [
+              64,
+              66,
+              69,
+              72
+            ],
+            "minimumMarginRatio": 0.288288,
+            "visiblePixels": 5522
+          },
+          {
+            "row": 3,
+            "column": 1,
+            "visibleMarginsPx": [
+              69,
+              70,
+              72,
+              77
+            ],
+            "minimumMarginRatio": 0.310811,
+            "visiblePixels": 4574
+          },
+          {
+            "row": 3,
+            "column": 2,
+            "visibleMarginsPx": [
+              71,
+              74,
+              74,
+              80
+            ],
+            "minimumMarginRatio": 0.321267,
+            "visiblePixels": 3753
+          },
+          {
+            "row": 3,
+            "column": 3,
+            "visibleMarginsPx": [
+              76,
+              77,
+              77,
+              81
+            ],
+            "minimumMarginRatio": 0.342342,
+            "visiblePixels": 3133
+          },
+          {
+            "row": 3,
+            "column": 4,
+            "visibleMarginsPx": [
+              82,
+              83,
+              81,
+              84
+            ],
+            "minimumMarginRatio": 0.364865,
+            "visiblePixels": 2349
+          },
+          {
+            "row": 3,
+            "column": 5,
+            "visibleMarginsPx": [
+              84,
+              87,
+              86,
+              83
+            ],
+            "minimumMarginRatio": 0.375566,
+            "visiblePixels": 1845
+          },
+          {
+            "row": 3,
+            "column": 6,
+            "visibleMarginsPx": [
+              89,
+              90,
+              88,
+              92
+            ],
+            "minimumMarginRatio": 0.396396,
+            "visiblePixels": 1315
+          },
+          {
+            "row": 3,
+            "column": 7,
+            "visibleMarginsPx": [
+              94,
+              94,
+              95,
+              99
+            ],
+            "minimumMarginRatio": 0.423423,
+            "visiblePixels": 693
+          }
+        ]
+      }
+    },
+    {
+      "id": "tempete_magnetique",
+      "key": "fx/tempete_magnetique",
+      "name": "Tempête magnétique",
+      "path": "assets/dlc/illustrated-v1/fx/tempete_magnetique.png",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "cast",
+        "active",
+        "impact",
+        "fade"
+      ],
+      "suggestedFps": 12,
+      "rotation": "Centered effect; no directional rotation required.",
+      "identitySource": "Written gameplay effect and color in game.v9.js; supporting concepts in docs/GAME_BIBLE.md §15.5.",
+      "status": "approved",
+      "selectedAttempt": 4,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-642716d4-482c-4e0e-8f46-4f0f9c6b8c8b.png",
+      "qa": {
+        "approved": true,
+        "review": "Approved after direct image inspection of the fourth interpretation: purple gravity swirl with magenta core, cyan electric filaments and small dark orbiting fragments; regular 8×4 grid follows the approved layout template. All 32 frames remain compact and distinct, fade visibly decreases. Minimum visible margin at alpha 24 is 45 px (20.3% of a native cell). Background alpha and alignment of the rejected predecessors are not reused."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-18d32d2d-4ee9-4d39-b5c4-d72df67d5cc7.png",
+          "prompt": "Use case: stylized-concept. Asset type: transparent illustrated game VFX sprite atlas for Infernal City. ONE image, 2048×1024 pixels, EXACTLY 8 equal columns × 4 equal rows of square cells, 32 frames in the invisible edge-to-edge grid. The supplied image is ONLY a supporting reference for painted luminous energy texture, not its subject, grid, camera, frame count or composition. Create the new effect described below. Fixed slightly elevated top-down game view, anchored at the exact center of every 256×256 cell. The full effect, including every spark, ring and wisp, must stay inside the central 140×140 area of each cell, at least 58 completely transparent pixels on ALL four sides. A large amount of empty transparent space between all sprites is mandatory. The entire canvas has real RGBA transparency alpha zero outside the isolated compact effects, no colored fog or ambient lighting in empty space. No black/white background, grid, checkerboard, floor, text, labels, captions, numbers, HUD, icons, guns, turrets or characters. Crisp hand-painted cyber-gothic VFX, high material detail, clear silhouettes, bright inner cores with only narrow restrained glow. No big soft halos. Four rows show FOUR distinct animation states, each with 8 distinct chronological frames: row 1 CAST, small initial sparks gathering to charge; row 2 ACTIVE, the fully formed small effect smoothly changes curls and pulses while keeping fixed overall size; row 3 IMPACT, a small core burst develops into a controlled shockwave then fragments, all within the 140×140 safe area; row 4 FADE, residual strands and particles slowly dissolve, last cell still has tiny visible remnants. No empty cells. This is a first visual interpretation of an existing written gameplay effect.\nEffect identity: Tesla + Gravity elemental synergy: a compact magnetic storm knot, violet (#c084fc / #a855f7) circular gravity lens with thin cyan-white lightning filaments (#38bdf8), three small dark metallic fragments pulled in tight orbit. The center is a compact violet luminous core, not an open black portal. Dynamic arcs loop inward around the core, sparks jump between tiny fragments, and a narrow lavender pressure ring ripples during impact. A contained electrical vortex, no large structure, no magical runes or text.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/Infernal-City/assets/dlc/illustrated-v1/fx/duo_nyx_kalix.png",
+              "role": "Supporting painted-energy texture/style reference only; new identity from written effect."
+            }
+          ],
+          "approved": false,
+          "qa": "Rejected: misaligned first rows and columns, small margins (under 4%), excessive backdrop.",
+          "sha256": "7bda30d94806ed49bd7fccaeade0854a1fc4b90f3b7d25033662ecb93d7a4fff",
+          "nativeBytes": 1730186,
+          "dimensions": {
+            "width": 1774,
+            "height": 887,
+            "mode": "RGBA"
+          },
+          "alphaRange": [
+            0,
+            255
+          ],
+          "alphaZeroFraction": 0.098804
+        },
+        {
+          "attempt": 2,
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-04cdf37d-a97b-48e7-b62a-1d38a73436d0.png",
+          "prompt": "Use case: precise object edit. The attached image is the EDIT TARGET. Keep the same named elemental synergy identity, its colors and textures, the 32 distinct animation frames, 8 columns × 4 rows and overall landscape 2:1 aspect ratio. Correct only the game atlas layout: shrink EACH individual effect and all its sparks to 65% of its current size, and place its anchor at the exact center of its mathematical cell. Invisible grid covers the whole image without outside padding. Column centers are at 6.25%, 18.75%, 31.25%, 43.75%, 56.25%, 68.75%, 81.25%, 93.75% of full image width. Row centers are at 12.5%, 37.5%, 62.5%, 87.5% of full image height. Every complete sprite, including glow and particles, stays within the central HALF of its cell, leaving at least 25% empty transparent margin on each side. Cleanly remove all colored background noise, all diffuse fog, halos outside the small sprites and all stray dots between cells. The background must be true transparent RGBA alpha zero; all empty space completely clear. No background color, checkerboard, drawn grid, text, labels or new objects. Preserve the animation order: cast, active, impact, fade. Small contained effects only, no edge clipping.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/generated_images/exec-18d32d2d-4ee9-4d39-b5c4-d72df67d5cc7.png",
+              "role": "Edit target; retain identity, grid and frame order."
+            }
+          ],
+          "approved": false,
+          "qa": "Rejected: background opacity alpha minimum 22.",
+          "sha256": "a198e589e125b6d8fc71ec337082376f74f6fea8c33350414dc159d257a72a77",
+          "nativeBytes": 2138481,
+          "dimensions": {
+            "width": 1774,
+            "height": 887,
+            "mode": "RGBA"
+          },
+          "alphaRange": [
+            22,
+            251
+          ],
+          "alphaZeroFraction": 0.0
+        },
+        {
+          "attempt": 3,
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-b13f7d8d-f32b-48e5-b3a3-90a53bbbd82d.png",
+          "prompt": "Create a production-ready transparent magnetic-storm sprite atlas from these two references. IMAGE 1 is the IDENTITY reference only: preserve its purple gravity lens, cyan lightning, magenta core and three tiny metallic orbiting shards, and the cast / active / impact / fade progression. IMAGE 2 is ONLY the LAYOUT TEMPLATE: use its regular exact 8 columns × 4 rows, small sprite sizes, clear spacing and centered cell positions. Do NOT copy the blue/orange fire-ice identity of image 2. Output 32 distinct violet magnetic-storm frames in this regular 8×4 invisible grid at a 2:1 landscape ratio. The sprite anchor is at the precise center of each cell; no extra sheet margins. Every sprite plus all glows fits inside the central 50% of its cell, with 25% completely transparent margin on all sides. Background must be truly transparent alpha zero everywhere outside the compact isolated effects, no white/gray backing, no purple fog, no background pixels. Preserve sharp details, limited local glow only. No text, labels, grid or UI.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/generated_images/exec-04cdf37d-a97b-48e7-b62a-1d38a73436d0.png",
+              "role": "Identity reference; rejected layout/background must not be copied."
+            },
+            {
+              "path": "/workspace/scratch/3c707a35b074/generated_images/exec-5f309d7d-6d71-4705-8d19-36179fa372e5.png",
+              "role": "Approved 8×4 layout and spacing template only."
+            }
+          ],
+          "approved": false,
+          "qa": "Rejected: alignment correction failed; minimum visible margin about 5.4%.",
+          "sha256": "856e06eaf2dedbd624421c3ea768585463e78f037f534f39c7b6afc52fa023d9",
+          "nativeBytes": 1107084,
+          "dimensions": {
+            "width": 1774,
+            "height": 887,
+            "mode": "RGBA"
+          },
+          "alphaRange": [
+            0,
+            253
+          ],
+          "alphaZeroFraction": 0.615117
+        },
+        {
+          "attempt": 4,
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-642716d4-482c-4e0e-8f46-4f0f9c6b8c8b.png",
+          "prompt": "This attached transparent 8×4 sprite atlas is the EDIT TARGET and exact layout template. Keep its canvas dimensions, transparent background, exact 32 sprite positions, small sizes, safe margins, frame order and four rows unchanged. Replace ONLY the content INSIDE each sprite silhouette: turn the blue-and-orange fire/ice swirl into a magnetic storm effect with a PURPLE gravity lens, bright MAGENTA core, thin CYAN lightning filaments and three tiny DARK METALLIC shards orbiting close to the core. No orange or ice fragments should remain. Keep all effects at their current small sizes and centers: do not shift or enlarge any sprite, do not change grid or spacing. First row charging, second row active, third row impact shockwave, fourth row fading, as in the supplied image. Preserve actual alpha-zero transparency in all empty space. No fog or diffuse glow outside each existing compact silhouette, no labels, grid, scene or new background.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/generated_images/exec-5f309d7d-6d71-4705-8d19-36179fa372e5.png",
+              "role": "Edit target and approved layout template; replace inner effect identity, retain position and transparency."
+            }
+          ],
+          "approved": true,
+          "qa": "Approved after direct image inspection of the fourth interpretation: purple gravity swirl with magenta core, cyan electric filaments and small dark orbiting fragments; regular 8×4 grid follows the approved layout template. All 32 frames remain compact and distinct, fade visibly decreases. Minimum visible margin at alpha 24 is 45 px (20.3% of a native cell). Background alpha and alignment of the rejected predecessors are not reused.",
+          "sha256": "d9749026d6bb0e0a9d30a6db15bd5e9cd9cacf4b3ab0c0af8349388ff1ce179a",
+          "nativeBytes": 626348,
+          "dimensions": {
+            "width": 1774,
+            "height": 887,
+            "mode": "RGBA"
+          },
+          "alphaRange": [
+            0,
+            253
+          ],
+          "alphaZeroFraction": 0.838173
+        }
+      ],
+      "sha256": "d9749026d6bb0e0a9d30a6db15bd5e9cd9cacf4b3ab0c0af8349388ff1ce179a",
+      "nativeByteIdentical": true,
+      "dimensions": {
+        "width": 1774,
+        "height": 887,
+        "mode": "RGBA"
+      },
+      "technicalReview": {
+        "readOnlyInspection": true,
+        "imageEditsByScript": false,
+        "alphaThreshold": 24,
+        "alphaRange": [
+          0,
+          253
+        ],
+        "alphaZeroFraction": 0.838173,
+        "allFramesVisible": true,
+        "distinctVisibleFrameHashes": 32,
+        "minimumVisibleMarginRatio": 0.202703,
+        "cells": [
+          {
+            "row": 0,
+            "column": 0,
+            "visibleMarginsPx": [
+              97,
+              113,
+              93,
+              79
+            ],
+            "minimumMarginRatio": 0.355856,
+            "visiblePixels": 769
+          },
+          {
+            "row": 0,
+            "column": 1,
+            "visibleMarginsPx": [
+              88,
+              105,
+              88,
+              72
+            ],
+            "minimumMarginRatio": 0.324324,
+            "visiblePixels": 1591
+          },
+          {
+            "row": 0,
+            "column": 2,
+            "visibleMarginsPx": [
+              82,
+              99,
+              82,
+              67
+            ],
+            "minimumMarginRatio": 0.303167,
+            "visiblePixels": 2536
+          },
+          {
+            "row": 0,
+            "column": 3,
+            "visibleMarginsPx": [
+              80,
+              95,
+              78,
+              62
+            ],
+            "minimumMarginRatio": 0.279279,
+            "visiblePixels": 3244
+          },
+          {
+            "row": 0,
+            "column": 4,
+            "visibleMarginsPx": [
+              75,
+              91,
+              74,
+              57
+            ],
+            "minimumMarginRatio": 0.256757,
+            "visiblePixels": 4250
+          },
+          {
+            "row": 0,
+            "column": 5,
+            "visibleMarginsPx": [
+              70,
+              88,
+              70,
+              53
+            ],
+            "minimumMarginRatio": 0.239819,
+            "visiblePixels": 5174
+          },
+          {
+            "row": 0,
+            "column": 6,
+            "visibleMarginsPx": [
+              65,
+              84,
+              64,
+              48
+            ],
+            "minimumMarginRatio": 0.216216,
+            "visiblePixels": 6335
+          },
+          {
+            "row": 0,
+            "column": 7,
+            "visibleMarginsPx": [
+              62,
+              83,
+              62,
+              45
+            ],
+            "minimumMarginRatio": 0.202703,
+            "visiblePixels": 7210
+          },
+          {
+            "row": 1,
+            "column": 0,
+            "visibleMarginsPx": [
+              63,
+              70,
+              58,
+              56
+            ],
+            "minimumMarginRatio": 0.252252,
+            "visiblePixels": 7371
+          },
+          {
+            "row": 1,
+            "column": 1,
+            "visibleMarginsPx": [
+              60,
+              69,
+              59,
+              55
+            ],
+            "minimumMarginRatio": 0.247748,
+            "visiblePixels": 7692
+          },
+          {
+            "row": 1,
+            "column": 2,
+            "visibleMarginsPx": [
+              60,
+              69,
+              58,
+              55
+            ],
+            "minimumMarginRatio": 0.248869,
+            "visiblePixels": 7748
+          },
+          {
+            "row": 1,
+            "column": 3,
+            "visibleMarginsPx": [
+              59,
+              68,
+              57,
+              54
+            ],
+            "minimumMarginRatio": 0.243243,
+            "visiblePixels": 8014
+          },
+          {
+            "row": 1,
+            "column": 4,
+            "visibleMarginsPx": [
+              58,
+              68,
+              58,
+              56
+            ],
+            "minimumMarginRatio": 0.252252,
+            "visiblePixels": 8099
+          },
+          {
+            "row": 1,
+            "column": 5,
+            "visibleMarginsPx": [
+              58,
+              68,
+              56,
+              55
+            ],
+            "minimumMarginRatio": 0.248869,
+            "visiblePixels": 8191
+          },
+          {
+            "row": 1,
+            "column": 6,
+            "visibleMarginsPx": [
+              59,
+              68,
+              57,
+              55
+            ],
+            "minimumMarginRatio": 0.247748,
+            "visiblePixels": 8229
+          },
+          {
+            "row": 1,
+            "column": 7,
+            "visibleMarginsPx": [
+              60,
+              69,
+              58,
+              55
+            ],
+            "minimumMarginRatio": 0.247748,
+            "visiblePixels": 8048
+          },
+          {
+            "row": 2,
+            "column": 0,
+            "visibleMarginsPx": [
+              61,
+              64,
+              59,
+              60
+            ],
+            "minimumMarginRatio": 0.266968,
+            "visiblePixels": 7810
+          },
+          {
+            "row": 2,
+            "column": 1,
+            "visibleMarginsPx": [
+              58,
+              64,
+              58,
+              59
+            ],
+            "minimumMarginRatio": 0.262443,
+            "visiblePixels": 7992
+          },
+          {
+            "row": 2,
+            "column": 2,
+            "visibleMarginsPx": [
+              59,
+              64,
+              57,
+              59
+            ],
+            "minimumMarginRatio": 0.257919,
+            "visiblePixels": 8006
+          },
+          {
+            "row": 2,
+            "column": 3,
+            "visibleMarginsPx": [
+              54,
+              61,
+              54,
+              56
+            ],
+            "minimumMarginRatio": 0.244344,
+            "visiblePixels": 9067
+          },
+          {
+            "row": 2,
+            "column": 4,
+            "visibleMarginsPx": [
+              55,
+              60,
+              53,
+              55
+            ],
+            "minimumMarginRatio": 0.239819,
+            "visiblePixels": 9267
+          },
+          {
+            "row": 2,
+            "column": 5,
+            "visibleMarginsPx": [
+              57,
+              62,
+              57,
+              56
+            ],
+            "minimumMarginRatio": 0.253394,
+            "visiblePixels": 8417
+          },
+          {
+            "row": 2,
+            "column": 6,
+            "visibleMarginsPx": [
+              58,
+              63,
+              59,
+              58
+            ],
+            "minimumMarginRatio": 0.262443,
+            "visiblePixels": 8241
+          },
+          {
+            "row": 2,
+            "column": 7,
+            "visibleMarginsPx": [
+              59,
+              63,
+              61,
+              60
+            ],
+            "minimumMarginRatio": 0.266968,
+            "visiblePixels": 7722
+          },
+          {
+            "row": 3,
+            "column": 0,
+            "visibleMarginsPx": [
+              67,
+              67,
+              67,
+              72
+            ],
+            "minimumMarginRatio": 0.301802,
+            "visiblePixels": 5807
+          },
+          {
+            "row": 3,
+            "column": 1,
+            "visibleMarginsPx": [
+              70,
+              72,
+              73,
+              76
+            ],
+            "minimumMarginRatio": 0.315315,
+            "visiblePixels": 4500
+          },
+          {
+            "row": 3,
+            "column": 2,
+            "visibleMarginsPx": [
+              72,
+              76,
+              74,
+              80
+            ],
+            "minimumMarginRatio": 0.325792,
+            "visiblePixels": 3640
+          },
+          {
+            "row": 3,
+            "column": 3,
+            "visibleMarginsPx": [
+              79,
+              81,
+              80,
+              85
+            ],
+            "minimumMarginRatio": 0.355856,
+            "visiblePixels": 2651
+          },
+          {
+            "row": 3,
+            "column": 4,
+            "visibleMarginsPx": [
+              86,
+              85,
+              85,
+              89
+            ],
+            "minimumMarginRatio": 0.382883,
+            "visiblePixels": 1914
+          },
+          {
+            "row": 3,
+            "column": 5,
+            "visibleMarginsPx": [
+              89,
+              90,
+              90,
+              92
+            ],
+            "minimumMarginRatio": 0.402715,
+            "visiblePixels": 1320
+          },
+          {
+            "row": 3,
+            "column": 6,
+            "visibleMarginsPx": [
+              94,
+              93,
+              94,
+              97
+            ],
+            "minimumMarginRatio": 0.418919,
+            "visiblePixels": 893
+          },
+          {
+            "row": 3,
+            "column": 7,
+            "visibleMarginsPx": [
+              99,
+              95,
+              97,
+              102
+            ],
+            "minimumMarginRatio": 0.427928,
+            "visiblePixels": 513
+          }
+        ]
+      }
+    },
+    {
+      "id": "embrasement_toxique",
+      "key": "fx/embrasement_toxique",
+      "name": "Embrasement toxique",
+      "path": "assets/dlc/illustrated-v1/fx/embrasement_toxique.png",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "cast",
+        "active",
+        "impact",
+        "fade"
+      ],
+      "suggestedFps": 12,
+      "rotation": "Centered effect; no directional rotation required.",
+      "identitySource": "Written gameplay effect and color in game.v9.js; supporting concepts in docs/GAME_BIBLE.md §15.5.",
+      "status": "approved",
+      "selectedAttempt": 2,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-780a02b7-2a35-4f76-8bdc-e28d11dc9400.png",
+      "qa": {
+        "approved": true,
+        "review": "Approved after direct image inspection: emerald chemical ignition with amber flame tips, clean cast/active/impact/fade progression, green shock ring and dissipating motes, all 32 frames distinct. True transparent gaps and no clipping. Minimum visible margin at alpha 24 is 54 px (24.4% of a native cell)."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-6c695511-2c84-4eec-b78e-8aa0bd32aa14.png",
+          "prompt": "Use case: stylized-concept. Asset type: transparent illustrated game VFX sprite atlas for Infernal City. ONE image, 2048×1024 pixels, EXACTLY 8 equal columns × 4 equal rows of square cells, 32 frames in the invisible edge-to-edge grid. The supplied image is ONLY a supporting reference for painted luminous energy texture, not its subject, grid, camera, frame count or composition. Create the new effect described below. Fixed slightly elevated top-down game view, anchored at the exact center of every 256×256 cell. The full effect, including every spark, ring and wisp, must stay inside the central 140×140 area of each cell, at least 58 completely transparent pixels on ALL four sides. A large amount of empty transparent space between all sprites is mandatory. The entire canvas has real RGBA transparency alpha zero outside the isolated compact effects, no colored fog or ambient lighting in empty space. No black/white background, grid, checkerboard, floor, text, labels, captions, numbers, HUD, icons, guns, turrets or characters. Crisp hand-painted cyber-gothic VFX, high material detail, clear silhouettes, bright inner cores with only narrow restrained glow. No big soft halos. Four rows show FOUR distinct animation states, each with 8 distinct chronological frames: row 1 CAST, small initial sparks gathering to charge; row 2 ACTIVE, the fully formed small effect smoothly changes curls and pulses while keeping fixed overall size; row 3 IMPACT, a small core burst develops into a controlled shockwave then fragments, all within the 140×140 safe area; row 4 FADE, residual strands and particles slowly dissolve, last cell still has tiny visible remnants. No empty cells. This is a first visual interpretation of an existing written gameplay effect.\nEffect identity: Flame + Bio Siphon elemental synergy: a compact green chemical ignition bloom, emerald (#34d399 / #10b981) toxic liquid vapor curling into a small crown of orange-yellow fire tips. The central luminous lime droplet ignites into a short emerald flame vortex with glowing amber edges, then produces a tight rippling green splash ring and tiny ember motes. Clearly readable green-orange combustion, not an acid flask, not an organic seed or ordinary orange fireball. Do not include any scenery, creatures or physical floor.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/Infernal-City/assets/dlc/illustrated-v1/fx/duo_aria_astarra.png",
+              "role": "Supporting painted-energy texture/style reference only; new identity from written effect."
+            }
+          ],
+          "approved": false,
+          "qa": "Rejected: minimum visible margin about 10.9%, below 15%.",
+          "sha256": "fbc8c431f15898ab63dd29e88905c632ee3c9f3affc42f9a5648b0e1d5ba007f",
+          "nativeBytes": 977631,
+          "dimensions": {
+            "width": 1774,
+            "height": 887,
+            "mode": "RGBA"
+          },
+          "alphaRange": [
+            0,
+            253
+          ],
+          "alphaZeroFraction": 0.705715
+        },
+        {
+          "attempt": 2,
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-780a02b7-2a35-4f76-8bdc-e28d11dc9400.png",
+          "prompt": "Use case: precise object edit. The attached image is the EDIT TARGET. Keep the same named elemental synergy identity, its colors and textures, the 32 distinct animation frames, 8 columns × 4 rows and overall landscape 2:1 aspect ratio. Correct only the game atlas layout: shrink EACH individual effect and all its sparks to 65% of its current size, and place its anchor at the exact center of its mathematical cell. Invisible grid covers the whole image without outside padding. Column centers are at 6.25%, 18.75%, 31.25%, 43.75%, 56.25%, 68.75%, 81.25%, 93.75% of full image width. Row centers are at 12.5%, 37.5%, 62.5%, 87.5% of full image height. Every complete sprite, including glow and particles, stays within the central HALF of its cell, leaving at least 25% empty transparent margin on each side. Cleanly remove all colored background noise, all diffuse fog, halos outside the small sprites and all stray dots between cells. The background must be true transparent RGBA alpha zero; all empty space completely clear. No background color, checkerboard, drawn grid, text, labels or new objects. Preserve the animation order: cast, active, impact, fade. Small contained effects only, no edge clipping.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/generated_images/exec-6c695511-2c84-4eec-b78e-8aa0bd32aa14.png",
+              "role": "Edit target; retain identity, grid and frame order."
+            }
+          ],
+          "approved": true,
+          "qa": "Approved after direct image inspection: emerald chemical ignition with amber flame tips, clean cast/active/impact/fade progression, green shock ring and dissipating motes, all 32 frames distinct. True transparent gaps and no clipping. Minimum visible margin at alpha 24 is 54 px (24.4% of a native cell).",
+          "sha256": "7f8aff74c6f8feabbf28aad2328908eac21f4a623b279eeeb90d71d12f480f6c",
+          "nativeBytes": 540733,
+          "dimensions": {
+            "width": 1774,
+            "height": 887,
+            "mode": "RGBA"
+          },
+          "alphaRange": [
+            0,
+            255
+          ],
+          "alphaZeroFraction": 0.868432
+        }
+      ],
+      "sha256": "7f8aff74c6f8feabbf28aad2328908eac21f4a623b279eeeb90d71d12f480f6c",
+      "nativeByteIdentical": true,
+      "dimensions": {
+        "width": 1774,
+        "height": 887,
+        "mode": "RGBA"
+      },
+      "technicalReview": {
+        "readOnlyInspection": true,
+        "imageEditsByScript": false,
+        "alphaThreshold": 24,
+        "alphaRange": [
+          0,
+          255
+        ],
+        "alphaZeroFraction": 0.868432,
+        "allFramesVisible": true,
+        "distinctVisibleFrameHashes": 32,
+        "minimumVisibleMarginRatio": 0.244344,
+        "cells": [
+          {
+            "row": 0,
+            "column": 0,
+            "visibleMarginsPx": [
+              96,
+              109,
+              88,
+              81
+            ],
+            "minimumMarginRatio": 0.364865,
+            "visiblePixels": 907
+          },
+          {
+            "row": 0,
+            "column": 1,
+            "visibleMarginsPx": [
+              86,
+              101,
+              87,
+              79
+            ],
+            "minimumMarginRatio": 0.355856,
+            "visiblePixels": 1473
+          },
+          {
+            "row": 0,
+            "column": 2,
+            "visibleMarginsPx": [
+              82,
+              96,
+              82,
+              74
+            ],
+            "minimumMarginRatio": 0.334842,
+            "visiblePixels": 2138
+          },
+          {
+            "row": 0,
+            "column": 3,
+            "visibleMarginsPx": [
+              79,
+              86,
+              79,
+              69
+            ],
+            "minimumMarginRatio": 0.310811,
+            "visiblePixels": 2874
+          },
+          {
+            "row": 0,
+            "column": 4,
+            "visibleMarginsPx": [
+              74,
+              85,
+              75,
+              66
+            ],
+            "minimumMarginRatio": 0.297297,
+            "visiblePixels": 3763
+          },
+          {
+            "row": 0,
+            "column": 5,
+            "visibleMarginsPx": [
+              73,
+              79,
+              73,
+              65
+            ],
+            "minimumMarginRatio": 0.294118,
+            "visiblePixels": 4378
+          },
+          {
+            "row": 0,
+            "column": 6,
+            "visibleMarginsPx": [
+              68,
+              75,
+              69,
+              63
+            ],
+            "minimumMarginRatio": 0.283784,
+            "visiblePixels": 5225
+          },
+          {
+            "row": 0,
+            "column": 7,
+            "visibleMarginsPx": [
+              65,
+              69,
+              66,
+              62
+            ],
+            "minimumMarginRatio": 0.279279,
+            "visiblePixels": 6018
+          },
+          {
+            "row": 1,
+            "column": 0,
+            "visibleMarginsPx": [
+              66,
+              71,
+              67,
+              65
+            ],
+            "minimumMarginRatio": 0.292793,
+            "visiblePixels": 5826
+          },
+          {
+            "row": 1,
+            "column": 1,
+            "visibleMarginsPx": [
+              65,
+              70,
+              68,
+              65
+            ],
+            "minimumMarginRatio": 0.292793,
+            "visiblePixels": 5795
+          },
+          {
+            "row": 1,
+            "column": 2,
+            "visibleMarginsPx": [
+              65,
+              71,
+              66,
+              65
+            ],
+            "minimumMarginRatio": 0.294118,
+            "visiblePixels": 5846
+          },
+          {
+            "row": 1,
+            "column": 3,
+            "visibleMarginsPx": [
+              62,
+              71,
+              67,
+              65
+            ],
+            "minimumMarginRatio": 0.279279,
+            "visiblePixels": 6086
+          },
+          {
+            "row": 1,
+            "column": 4,
+            "visibleMarginsPx": [
+              62,
+              71,
+              67,
+              65
+            ],
+            "minimumMarginRatio": 0.279279,
+            "visiblePixels": 6121
+          },
+          {
+            "row": 1,
+            "column": 5,
+            "visibleMarginsPx": [
+              64,
+              68,
+              65,
+              64
+            ],
+            "minimumMarginRatio": 0.289593,
+            "visiblePixels": 6154
+          },
+          {
+            "row": 1,
+            "column": 6,
+            "visibleMarginsPx": [
+              65,
+              69,
+              66,
+              64
+            ],
+            "minimumMarginRatio": 0.288288,
+            "visiblePixels": 6115
+          },
+          {
+            "row": 1,
+            "column": 7,
+            "visibleMarginsPx": [
+              65,
+              69,
+              66,
+              65
+            ],
+            "minimumMarginRatio": 0.292793,
+            "visiblePixels": 5946
+          },
+          {
+            "row": 2,
+            "column": 0,
+            "visibleMarginsPx": [
+              73,
+              74,
+              73,
+              64
+            ],
+            "minimumMarginRatio": 0.289593,
+            "visiblePixels": 4800
+          },
+          {
+            "row": 2,
+            "column": 1,
+            "visibleMarginsPx": [
+              65,
+              73,
+              72,
+              63
+            ],
+            "minimumMarginRatio": 0.285068,
+            "visiblePixels": 5456
+          },
+          {
+            "row": 2,
+            "column": 2,
+            "visibleMarginsPx": [
+              65,
+              70,
+              69,
+              64
+            ],
+            "minimumMarginRatio": 0.289593,
+            "visiblePixels": 5727
+          },
+          {
+            "row": 2,
+            "column": 3,
+            "visibleMarginsPx": [
+              56,
+              68,
+              57,
+              65
+            ],
+            "minimumMarginRatio": 0.253394,
+            "visiblePixels": 6788
+          },
+          {
+            "row": 2,
+            "column": 4,
+            "visibleMarginsPx": [
+              54,
+              66,
+              59,
+              65
+            ],
+            "minimumMarginRatio": 0.244344,
+            "visiblePixels": 7133
+          },
+          {
+            "row": 2,
+            "column": 5,
+            "visibleMarginsPx": [
+              57,
+              67,
+              59,
+              62
+            ],
+            "minimumMarginRatio": 0.257919,
+            "visiblePixels": 6827
+          },
+          {
+            "row": 2,
+            "column": 6,
+            "visibleMarginsPx": [
+              56,
+              69,
+              58,
+              65
+            ],
+            "minimumMarginRatio": 0.253394,
+            "visiblePixels": 6189
+          },
+          {
+            "row": 2,
+            "column": 7,
+            "visibleMarginsPx": [
+              61,
+              77,
+              68,
+              65
+            ],
+            "minimumMarginRatio": 0.276018,
+            "visiblePixels": 5281
+          },
+          {
+            "row": 3,
+            "column": 0,
+            "visibleMarginsPx": [
+              67,
+              79,
+              73,
+              71
+            ],
+            "minimumMarginRatio": 0.301802,
+            "visiblePixels": 4154
+          },
+          {
+            "row": 3,
+            "column": 1,
+            "visibleMarginsPx": [
+              72,
+              82,
+              77,
+              77
+            ],
+            "minimumMarginRatio": 0.324324,
+            "visiblePixels": 3193
+          },
+          {
+            "row": 3,
+            "column": 2,
+            "visibleMarginsPx": [
+              79,
+              83,
+              81,
+              78
+            ],
+            "minimumMarginRatio": 0.352941,
+            "visiblePixels": 2489
+          },
+          {
+            "row": 3,
+            "column": 3,
+            "visibleMarginsPx": [
+              84,
+              90,
+              84,
+              82
+            ],
+            "minimumMarginRatio": 0.369369,
+            "visiblePixels": 1579
+          },
+          {
+            "row": 3,
+            "column": 4,
+            "visibleMarginsPx": [
+              90,
+              87,
+              93,
+              84
+            ],
+            "minimumMarginRatio": 0.378378,
+            "visiblePixels": 1276
+          },
+          {
+            "row": 3,
+            "column": 5,
+            "visibleMarginsPx": [
+              89,
+              92,
+              92,
+              94
+            ],
+            "minimumMarginRatio": 0.402715,
+            "visiblePixels": 855
+          },
+          {
+            "row": 3,
+            "column": 6,
+            "visibleMarginsPx": [
+              92,
+              99,
+              100,
+              99
+            ],
+            "minimumMarginRatio": 0.414414,
+            "visiblePixels": 305
+          },
+          {
+            "row": 3,
+            "column": 7,
+            "visibleMarginsPx": [
+              94,
+              101,
+              96,
+              101
+            ],
+            "minimumMarginRatio": 0.423423,
+            "visiblePixels": 107
+          }
+        ]
+      }
+    }
+  ]
+}

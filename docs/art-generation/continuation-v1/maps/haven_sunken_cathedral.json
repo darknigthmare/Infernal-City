@@ -1,0 +1,26 @@
+{
+  "id": "haven_sunken_cathedral",
+  "name": "Cathédrale Engloutie",
+  "brief": "An immense half-submerged gothic cathedral floor within the Haven siege: central broad dry nave of worn charcoal marble with faint violet and cold cyan inlays, four clear broad aisles from each border; remnants of ornate pillars, broken pointed arches and a little luminous deep water arranged solely at the outer margins and corners. Small fractured stained-glass reflections glow along the peripheral floor, distant iron reliquaries at the extreme rim. The central two thirds is empty continuous dry walkable stone with low decorative geometric inlay, no pillars, no raised platforms, no holes. Ominous sacred ruined architecture, subtle aquatic caustics, restrained lighting.",
+  "prompt": "Use case: stylized-concept. Production battlefield background for the existing game Infernal City. Reference is CAMERA, illustrated material detail, dark cyber-gothic art direction only, NOT exact layout or content. Create one complete opaque landscape battlefield, exact 3:2 aspect ratio. Nearly overhead orthographic 2.5D camera, no horizon or perspective vanishing point. Detailed painterly game rendering. Calm continuous walkable surface throughout the central TWO THIRDS of BOTH image width and height: this inner rectangular area is the playfield and must stay unobstructed for units and towers. The very center must be empty for a separately drawn citadel. Border architecture and pools only in outer margins; four cardinal approaches meet the central field. No characters, enemies, towers, core building, UI, text, lettering, labels, grid or watermark. Do not render collision obstacles crossing the playable surface. All image pixels opaque. First original interpretation of an authored theatre name, not a pre-existing identity reconstruction. Theatre: Cathédrale Engloutie. An immense half-submerged gothic cathedral floor within the Haven siege: central broad dry nave of worn charcoal marble with faint violet and cold cyan inlays, four clear broad aisles from each border; remnants of ornate pillars, broken pointed arches and a little luminous deep water arranged solely at the outer margins and corners. Small fractured stained-glass reflections glow along the peripheral floor, distant iron reliquaries at the extreme rim. The central two thirds is empty continuous dry walkable stone with low decorative geometric inlay, no pillars, no raised platforms, no holes. Ominous sacred ruined architecture, subtle aquatic caustics, restrained lighting.",
+  "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/infernal-city-approach-terrain.png",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-2f607ac4-13e3-4547-be51-8f357826eef1.png",
+  "key": "maps/haven_sunken_cathedral",
+  "path": "assets/dlc/illustrated-v1/maps/haven_sunken_cathedral.png",
+  "columns": 1,
+  "rows": 1,
+  "transparent": false,
+  "referenceRole": "style, material and camera only",
+  "qa": {
+    "status": "pass",
+    "reviewer": "root visual review",
+    "notes": "Opaque native 3:2 terrain. Four cardinal accesses; center is calm and clear for gameplay. No characters, UI, textual labels or blocking painted props in the central build rectangle. Named theatre identity reads in the border architecture."
+  },
+  "sha256": "036c010b5b83659eaaa85cd9fa07fd4f023923c4edfbe76753b9bf0b14cc9f52",
+  "bytes": 3047771,
+  "width": 1536,
+  "height": 1024,
+  "mode": "RGB",
+  "nativeBytesPreserved": true,
+  "method": "built-in image_gen"
+}

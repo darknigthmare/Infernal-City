@@ -1,7 +1,7 @@
 'use strict';
 
 // The named catalogue is the source of truth. Counts without individual IDs
-// (future premium bestiaries, skins and chapters) are not invented here.
+// (the rest of the premium bestiaries, skins and chapters) are not invented here.
 const packs = require('../dlc-packs.v1.js');
 const prefix = 'assets/dlc/illustrated-v1/';
 const specs = Object.create(null);
@@ -20,6 +20,8 @@ for (const pack of packs.paidDlcs) {
     ['intro', 'phase_shift_2', 'phase_shift_3', 'heavy_telegraph', 'defeat', 'idle'], common);
   for (const tower of pack.towers) add('towers', tower.id, tower.name, 8,
     ['level1', 'level2', 'level3', 'charged', 'overdrive', 'deploy', 'recycle', 'idle'], common);
+  for (const enemy of pack.enemies || []) add('enemies', enemy.id, enemy.name, 8,
+    ['move', 'attack', 'death_dissolve', 'shield_break'], common);
   add('weapons', pack.weapon.id, pack.weapon.name, 4, ['sequence_1', 'sequence_2'],
     { ...common, sequenceFrames: 8, fps: 14 });
   add('evolutions', pack.weapon.id, pack.weapon.evolution, 4, ['sequence_1', 'sequence_2'],
@@ -32,7 +34,7 @@ for (const pack of packs.paidDlcs) {
 const aerial = packs.freeExpansions.find(pack => pack.id === 'free_aerial_horizon');
 for (const enemy of aerial.aerialLegionUnits) add('enemies', enemy.id, enemy.name, 8,
   ['move', 'attack', 'death_dissolve', 'shield_break'],
-  { packId: aerial.id, faction: enemy.faction, firstDesign: true });
+  { packId: aerial.id, faction: enemy.faction, firstDesign: true, usage: ['combat', 'catalogue'] });
 const pact = packs.freeExpansions.find(pack => pack.id === 'free_eclipse_pact');
 add('bosses', 'architect_zero', 'L’Architecte Zéro', 8,
   ['intro', 'phase_shift_2', 'phase_shift_3', 'phase_shift_4', 'heavy_telegraph', 'attack', 'defeat', 'idle'],
@@ -41,5 +43,22 @@ for (const duo of pact.duoCombos) add('fx', duo.id, duo.name, 4, ['sequence_1', 
   { packId: pact.id, sequenceFrames: 8, fps: 12, usage: ['combat', 'catalogue'] });
 add('fx', 'infernal_fog', 'Brouillard infernal', 4, ['sequence_1', 'sequence_2'],
   { packId: aerial.id, sequenceFrames: 8, fps: 4, usage: ['weather', 'catalogue'] });
+
+const haven = require('../expansion.v1.js');
+for (const layout of Object.values(haven.worldLayouts).filter(layout => layout.id.startsWith('haven_'))) {
+  add('maps', layout.id, layout.name, 1, ['scene'],
+    { packId: 'haven_theatres', firstDesign: true, opaque: true, fps: 0, usage: ['battlefield'] });
+}
+for (const [id, name] of Object.entries({
+  flame_stream: 'Jet de flammes', siege_missile: 'Missile de siège',
+  cryo_shard: 'Éclat cryogénique', acid_glob: 'Globule corrosif',
+  drone_laser: 'Trait laser du drone', siphon_seed: 'Graine de siphon'
+})) add('fx', id, name, 8, ['flight', 'impact', 'overload'],
+  { packId: 'haven_arsenal', firstDesign: true, fps: 16, usage: ['combat'] });
+for (const [id, name] of Object.entries({
+  choc_thermique: 'Choc Thermique', tempete_magnetique: 'Tempête Magnétique',
+  embrasement_toxique: 'Embrasement Toxique'
+})) add('fx', id, name, 8, ['cast', 'active', 'impact', 'fade'],
+  { packId: 'free_first_breach', firstDesign: true, fps: 12, usage: ['combat', 'catalogue'] });
 
 module.exports = { version: 1, prefix, specs, slug };

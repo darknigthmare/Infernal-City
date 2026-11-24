@@ -2,7 +2,7 @@
 
 const CACHE_PREFIX = 'infernal-city-';
 const RELEASE_VERSION = '3.1.0';
-const CACHE_REVISION = 'sprites-20261124';
+const CACHE_REVISION = 'sprites-20261124-continuation';
 const CACHE_NAME = `${CACHE_PREFIX}core-${RELEASE_VERSION}-${CACHE_REVISION}`;
 const MEDIA_CACHE_NAME = `${CACHE_PREFIX}media-${RELEASE_VERSION}-${CACHE_REVISION}`;
 const MAX_MEDIA_CACHE_ENTRIES = 320;
@@ -23,6 +23,8 @@ const ESSENTIAL_PRECACHE_URLS = [
   './audio.v8.js',
   './vn-scenes.v1.js',
   './expansion.v1.js',
+  './dlc-packs.v1.js',
+  './aerial-legions.v1.js',
   './characters.v1.js',
   './vn-expansion.v1.js',
   './adult-scenes.v1.js',
@@ -36,10 +38,12 @@ const ESSENTIAL_PRECACHE_URLS = [
   './enemy-legions-professional.v1.js',
   './sprite-completion-approved.v1.js',
   './sprite-completion.v1.js',
+  './aerial-legions-runtime.v1.js',
   './sprite-completion-runtime.v1.js',
   './dlc-art.v1.js',
   './sprite-presentation.v1.js',
   './dlc-art-runtime.v1.js',
+  './tactical-fx-runtime.v1.js',
   './pwa.v4.js',
   './assets/environment/infernal-city-approach-terrain.webp',
   './assets/environment/infernal-city-coastline.webp',

@@ -47,17 +47,20 @@ function load({ entered = true, imageReady = true, tamper } = {}) {
 }
 
 test('named DLC art catalogue covers every declared identity without inventing counted bestiaries', () => {
-  assert.equal(Object.keys(specs).length, 82);
+  assert.equal(Object.keys(specs).length, 107);
   for (const pack of packs.paidDlcs) {
     for (const hero of pack.heroines) assert.ok(specs[`heroes/${hero.id}`]);
     for (const boss of pack.bosses) assert.ok(specs[`bosses/${boss.id}`]);
     for (const tower of pack.towers) assert.ok(specs[`towers/${tower.id}`]);
+    for (const enemy of pack.enemies || []) assert.ok(specs[`enemies/${enemy.id}`]);
     assert.ok(specs[`weapons/${pack.weapon.id}`]);
     assert.ok(specs[`evolutions/${pack.weapon.id}`]);
     assert.equal(Object.values(specs).filter(spec => spec.packId === pack.id && spec.group === 'maps').length, 2);
   }
   assert.equal(specs['bosses/architect_zero'].rows, 8);
-  assert.equal(Object.values(specs).filter(spec => spec.group === 'enemies').length, 10);
+  assert.equal(Object.values(specs).filter(spec => spec.group === 'enemies').length, 22);
+  assert.equal(packs.paidDlcs.reduce((sum, pack) => sum + (pack.enemies?.length || 0), 0), 12);
+  assert.equal(Object.values(specs).filter(spec => spec.packId === 'haven_theatres').length, 4);
 });
 
 test('DLC map and effects make no image request before entry', () => {
@@ -136,8 +139,8 @@ test('published DLC art approvals match the exact native files', () => {
   const window = {};
   vm.runInNewContext(fs.readFileSync(path.join(ROOT, 'dlc-art.v1.js'), 'utf8'), { window });
   const art = window.INFERNAL_CITY_DLC_ART;
-  assert.equal(art.expected, 82);
-  assert.equal(art.approved, 82);
+  assert.equal(art.expected, 107);
+  assert.equal(art.approved, 107);
   assert.equal(art.missing.length, 0);
   assert.equal(art.pending.length, 0);
   for (const [key, item] of Object.entries(art.assets)) {

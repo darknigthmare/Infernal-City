@@ -1,0 +1,26 @@
+{
+  "id": "haven_inner_citadel",
+  "name": "Citadelle Intérieure (Dernier Carré)",
+  "brief": "The inner defensive courtyard of Haven in a desperate last stand, armored cyber-gothic black stone and dark brushed steel. Three concentric layers of fortification should be suggested by FLAT inlaid circular bronze-and-steel floor bands around a large EMPTY central plaza, with repeated low inset cyan status lamps. Four broad cardinal entry corridors cross these rings. The central two thirds remains entirely unobstructed and level for gameplay. Actual tall crenellated fortress walls, buttresses, shield conduits and damaged gates stand solely at the extreme outer edges and corners; no walls crossing the central build rectangle. Restrained royal purple, cold cyan and warm ember accents on blue-black stone. The separately rendered central citadel is NOT part of this plate; no building/pit/altar at the center.",
+  "prompt": "Use case: stylized-concept. Production battlefield background for the existing game Infernal City. Reference is CAMERA, illustrated material detail, dark cyber-gothic art direction only, NOT exact layout or content. Create one complete opaque landscape battlefield, exact 3:2 aspect ratio. Nearly overhead orthographic 2.5D camera, no horizon or perspective vanishing point. Detailed painterly game rendering. Calm continuous walkable surface throughout the central TWO THIRDS of BOTH image width and height: this inner rectangular area is the playfield and must stay unobstructed for units and towers. The very center must be empty for a separately drawn citadel. Border architecture and pools only in outer margins; four cardinal approaches meet the central field. No characters, enemies, towers, core building, UI, text, lettering, labels, grid or watermark. Do not render collision obstacles crossing the playable surface. All image pixels opaque. First original interpretation of an authored theatre name, not a pre-existing identity reconstruction. Theatre: Citadelle Intérieure (Dernier Carré). The inner defensive courtyard of Haven in a desperate last stand, armored cyber-gothic black stone and dark brushed steel. Three concentric layers of fortification should be suggested by FLAT inlaid circular bronze-and-steel floor bands around a large EMPTY central plaza, with repeated low inset cyan status lamps. Four broad cardinal entry corridors cross these rings. The central two thirds remains entirely unobstructed and level for gameplay. Actual tall crenellated fortress walls, buttresses, shield conduits and damaged gates stand solely at the extreme outer edges and corners; no walls crossing the central build rectangle. Restrained royal purple, cold cyan and warm ember accents on blue-black stone. The separately rendered central citadel is NOT part of this plate; no building/pit/altar at the center.",
+  "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/infernal-city-approach-terrain.png",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-04428c3b-2c7d-4883-b0e9-8af30a96cff9.png",
+  "key": "maps/haven_inner_citadel",
+  "path": "assets/dlc/illustrated-v1/maps/haven_inner_citadel.png",
+  "columns": 1,
+  "rows": 1,
+  "transparent": false,
+  "referenceRole": "style, material and camera only",
+  "qa": {
+    "status": "pass",
+    "reviewer": "root visual review",
+    "notes": "Opaque native 3:2 terrain. Four radial accesses with flush decorative floor rings; center remains empty for the runtime citadel. Border machinery/fortifications readable, no UI, text, characters or raised obstacles in the build rectangle."
+  },
+  "sha256": "66d8b5557997ed6795ab4a702bb782058544fb7c7d3bf0ea178d32b3eaa8a561",
+  "bytes": 3462528,
+  "width": 1536,
+  "height": 1024,
+  "mode": "RGB",
+  "nativeBytesPreserved": true,
+  "method": "built-in image_gen"
+}

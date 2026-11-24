@@ -194,7 +194,8 @@
     });
     (root.INFERNAL_CITY_DLCS?.freeExpansions || []).forEach((pack, index) => {
       addGallery(engine, free.children[index], all.filter(spec => spec.packId === pack.id),
-        pack.id === 'free_aerial_horizon' ? 'Voir les unités aériennes et la météo' : 'Voir les visuels du Pacte');
+        pack.id === 'free_aerial_horizon' ? 'Voir les unités aériennes et la météo'
+          : pack.id === 'free_first_breach' ? 'Voir les réactions élémentaires' : 'Voir les visuels du Pacte');
     });
     const reset = document.getElementById('btn-dlc-reset-biome');
     if (reset && typeof reset.onclick === 'function') {

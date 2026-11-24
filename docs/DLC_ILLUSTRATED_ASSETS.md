@@ -1,13 +1,14 @@
 # Domaines DLC illustrés — 24 novembre 2026
 
 Ce pack poursuit `main` au commit `85bfec3adb18eacc810f8dcd28da2681c1f3f1cd`,
-après la fusion du premier pack de sprites. Il apporte **82 PNG natifs** dans
-`assets/dlc/illustrated-v1/` : **70 atlas animés et 12 décors**. Six atlas
+après la fusion du premier pack de sprites. Il apporte **107 PNG natifs** dans
+`assets/dlc/illustrated-v1/` : **91 atlas animés et 16 décors**. Six atlas
 historiques supplémentaires rejoignent séparément `completion-v1`.
 
-La livraison ajoute donc **88 fichiers d’image**. Les deux packs réunissent
-206 PNG : 194 atlas, 7 272 cellules d’animation et 12 scènes de décor.
-Les 118 images du premier pack conservent leurs octets et leurs SHA-256.
+La PR ajoute donc **113 fichiers d’image** : 88 dans son premier lot, puis 25
+dans [la continuation](SPRITE_CONTINUATION_20261124.md). Les deux packs réunissent
+231 PNG : 215 atlas, 7 896 cellules d’animation et 16 scènes de décor.
+Les 206 images déjà livrées avant cette continuation conservent leurs octets.
 
 ## Couverture exacte
 
@@ -17,15 +18,20 @@ Les 118 images du premier pack conservent leurs octets et leurs SHA-256.
 | Boss des six domaines | 12 | 8 × 6 | 576 | Galerie du domaine |
 | Architecte Zéro | 1 | 8 × 8 | 64 | Galerie du Pacte, quatre phases représentées |
 | Tourelles | 12 | 8 × 8 | 768 | Galerie du domaine |
-| Unités aériennes | 10 | 8 × 4 | 320 | Galerie Horizons Aériens |
+| Unités aériennes | 10 | 8 × 4 | 320 | Combat générique, Infinitum et galerie |
+| Ennemis premium nommés | 12 | 8 × 4 | 384 | Galeries Astrale, Abyssale et Botanique |
 | Projectiles | 6 | 4 × 2 | 48 | Galerie du domaine |
 | Évolutions | 6 | 4 × 2 | 48 | Galerie du domaine |
 | Effets des quatre duos et brouillard | 5 | 4 × 2 | 40 | Combat, météo et galerie |
+| Projectiles tactiques | 6 | 8 × 3 | 144 | Vol, impacts et Overdrive en combat |
+| Réactions élémentaires | 3 | 8 × 4 | 96 | Combat et galerie Première Brèche |
 | Monuments de biome | 6 | 2 × 2 | 24 | Décoration du champ de bataille |
 | Cartes illustrées | 12 | scène entière | 12 | Deux décors sélectionnables par domaine |
-| **Total DLC** | **82** | | **2 668** | **2 656 cellules animées + 12 scènes** |
+| Théâtres Haven | 4 | scène entière | 4 | Sélecteur tactique et rotation, routes dédiées |
+| **Total illustré** | **107** | | **3 296** | **3 280 cellules animées + 16 scènes** |
 
-Les noms, IDs, palettes et rôles proviennent de `dlc-packs.v1.js`. Le détail des
+Les noms, IDs, palettes et rôles proviennent de `dlc-packs.v1.js`, du moteur et
+des sections 15.4 et 17.1–17.3 de la Bible. Le détail des
 entrées et des références est conservé dans [l’inventaire initial](ASSET_GAPS_20261124.md)
 et dans `scripts/dlc-art-spec.cjs`. Le manifeste généré contient les dimensions,
 grilles, états, usages, tailles et empreintes exactes.
@@ -40,23 +46,41 @@ rapport d’aspect ; les monuments animés accompagnent le décor hors de l’ar
 Ces images habillent le terrain existant, sans créer de nouvelles collisions,
 routes, missions ou règles de déplacement.
 
+Les quatre nouvelles scènes Haven sont enregistrées séparément comme terrains
+de combat : elles se choisissent dans **Configuration tactique**, avec leurs
+accès cardinaux et zones de construction. Un choix Haven remet l’ancien
+habillage DLC à zéro ; un habillage DLC sélectionné volontairement après reste
+possible et persistant. Le défi quotidien garde ses quatre terrains historiques.
+
 La rubrique **Voir les personnages et l’arsenal** ouvre une galerie de sprites
-animés. Les atlas ne sont demandés qu’à son ouverture, après l’entrée dans le jeu.
+animés. L’ouverture charge à la demande les atlas de galerie encore nécessaires,
+après l’entrée dans le jeu ; les aériens et effets peuvent déjà être chargés en combat.
 L’animation d’interface continue lorsque le QG met la partie en pause, et cesse
 quand la galerie ou la fenêtre est masquée. Le réglage de mouvement réduit garde
-une image fixe. Les deux extensions gratuites concernées présentent également
-les unités aériennes, les effets de duo et l’Architecte Zéro.
+une image fixe. Les extensions gratuites concernées présentent également les
+unités aériennes, les réactions élémentaires, les effets de duo et l’Architecte Zéro.
+
+Les douze ennemis premium nommés rejoignent les galeries de leurs domaines.
+Les dix unités aériennes sont également raccordées aux emplacements `flying`
+des vagues génériques et au fallback Infinitum, avec leurs PV et vitesses déjà
+définis. Leurs atlas ne sont pas régénérés ; les quatre états existants sont
+lus par le runtime de combat avec une échelle fixe mesurée.
 
 Les quatre particules de duo déjà émises par le moteur portent désormais leur
 ID propre ; le rendu leur associe leur atlas. Les anneaux ordinaires conservent
 leur comportement. Le brouillard utilise son atlas dans le cycle météo existant,
 aux côtés de la pluie acide et de l’orage ionique du pack principal.
 
-Les personnages, tours et armes DLC sont **des ressources de catalogue prêtes à
+Six nouveaux effets différencient les projectiles tactiques et leurs impacts.
+Les trois synergies élémentaires conservent leurs dégâts et temps de recharge,
+avec un atlas distinct par réaction. Le mouvement réduit et les effets évolués
+déjà en place gardent leur priorité ; voir le rapport de continuation.
+
+Les personnages, tours, armes et douze ennemis premium DLC sont **des ressources de catalogue prêtes à
 être utilisées par une future intégration de gameplay**. Le pack ne leur attribue
 pas artificiellement de dégâts, coûts, talents, vagues ou conditions de déblocage.
 Les noms annoncés sans conception individuelle complète restent explicitement
-répertoriés dans l’inventaire : comptes d’ennemis premium, généraux, mini-boss,
+répertoriés dans l’inventaire : 36 autres ennemis premium, généraux, mini-boss,
 variantes et certains ensembles de tenues/scènes. Ils ne sont pas présentés comme
 des sprites terminés.
 
@@ -99,7 +123,11 @@ Les rapports se trouvent dans `docs/art-generation/illustrated-v1/` :
 - `characters-root-results/`, `characters-root.json` et
   `characters-root-independent-review.json` : les autres personnages DLC,
   avec revue indépendante ;
-- `qa-review.json` : liste finale des 82 approbations liées à leur SHA-256 exact.
+- `qa-review.json` : liste cumulative des 107 approbations liées à leur SHA-256 exact.
+
+Le répertoire voisin `continuation-v1/` conserve les journaux des douze ennemis,
+des neuf effets et des quatre terrains, ainsi que les mesures d’échelle des
+aériens. Il complète les rapports du premier lot sans en supprimer l’historique.
 
 Les prompts, références, dimensions natives, empreintes et motifs des corrections
 sont conservés. Les anciennes tentatives rejetées sont décrites dans les rapports
@@ -122,7 +150,8 @@ npm run check
 
 Le premier script refuse les IDs inconnus, doublons, approbations sans SHA,
 fichiers modifiés, images absentes et grilles incompatibles. `--require-complete`
-exige les 82 entrées validées. Le runtime n’utilise que les chemins approuvés.
+exige les 107 entrées validées. Les échelles optionnelles doivent aussi être
+liées au même SHA-256. Le runtime n’utilise que les chemins approuvés.
 
 Les tests couvrent le chargement après entrée, l’absence de requête pour une
 ressource non approuvée, les images lentes ou indisponibles, l’appartenance des

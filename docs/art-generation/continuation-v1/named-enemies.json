@@ -1,0 +1,3449 @@
+{
+  "schemaVersion": 1,
+  "created": "2026-11-24",
+  "generator": "built-in image_gen.imagegen",
+  "nativePolicy": "Original generator PNG copied byte-for-byte; no image transformations or programmatic edits.",
+  "identityNote": "8 first visual designs for enemies explicitly named in GAME_BIBLE sections 17.1–17.2; style references are already delivered faction art. Four Flora enemies are recorded separately in named-enemies-flora.json.",
+  "assets": [
+    {
+      "id": "astral_cherub_automaton",
+      "name": "Chérubin Automaton",
+      "biome": "astral",
+      "sourceDefinition": "docs/GAME_BIBLE.md sections 17.1–17.3",
+      "identityStatus": "first visual identity; style continuity, no prior individual identity reference",
+      "path": "assets/dlc/illustrated-v1/enemies/astral_cherub_automaton.png",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "move",
+        "attack",
+        "death_dissolve",
+        "shield_break"
+      ],
+      "references": [
+        {
+          "path": "assets/dlc/illustrated-v1/props/astral_monument.png",
+          "role": "material and ornament style reference"
+        },
+        {
+          "path": "assets/dlc/illustrated-v1/towers/stasis_pendulum.png",
+          "role": "shading, detail and energy style reference"
+        },
+        {
+          "path": "assets/dlc/illustrated-v1/maps/astral_nef_d_horlogerie.png",
+          "role": "faction palette and atmosphere reference"
+        }
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: production enemy animation sprite atlas for Infernal City. Create ONE new raster PNG atlas, wide 2:1 canvas, target 2048×1024, genuine transparent RGBA background. Exactly 8 equal-width columns × 4 equal-height rows, 32 distinct animation frames, no gutters or drawn grid. Each invisible cell contains exactly one creature pose centered on the same pivot, with at least 15% completely transparent padding on ALL FOUR sides, including effects, weapons and fragments. Maximum pose extent is 68% of cell width and 68% of cell height. Camera fixed three-quarter game view, facing slightly toward the lower-right, no camera turns, fixed scale and anchor across frames. Painterly high-detail 2.5D fantasy science-fiction rendering matching the provided project's material and light treatment, readable clean silhouettes; no pixel art. The input images are STYLE REFERENCES ONLY: image 1 supplies materials/ornament, image 2 shading/detail/energy design, image 3 faction palette and atmosphere. Do not reproduce their structures or layouts. This is the first visual design for a named enemy in the Bible; preserve this new creature identity consistently in every frame. Row 1 is MOVE: 8 unique smooth movement/swim/hover cycle poses with meaningful limb/wing/appendage changes, first and last adjacent phases but not duplicates. Row 2 is ATTACK: 8 unique phases of anticipation, wind-up, strike/emission, follow-through, recovery. Row 3 is DEATH_DISSOLVE: 8 unique stages from intact struck pose through collapse, material fragmentation and nearly vanished dust; final frame retains a few visible motes. Row 4 is SHIELD_BREAK: 8 unique intact-creature recoil poses with a thin faction-colored energy shell cracking progressively and breaking into small shards, then a clear recovered final pose. Shield/effects must not obscure the body. No injury/gore. NO text, labels, letters, numbers, cell borders, checkerboard, black/white backdrop, floor, scenery, drop shadow or watermark. Every cell uses empty alpha outside the subject; no bloom across cell boundaries.\nSubject: Chérubin Automaton. A small threatening winged clockwork automaton shaped as a compact porcelain and white-marble celestial sentinel, ornate gold mechanical feather wings, indigo joint cavities, one bright cyan lens within a smooth mask, tiny articulated armored limbs. This is an entirely mechanical construct, no human child or skin. Angular guardian silhouette with mechanical wings. Attack launches a little cyan solar dart. Death separates clockwork feathers and dissolves into restrained gold motes.\nColor palette: White alabaster #fef3c7, polished gold #f59e0b, deep indigo #312e81, cyan energy #38bdf8.",
+      "status": "generated_qa_pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-d8b04227-2852-48f5-85fe-b83449abe792.png",
+      "attempts": [
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-6f54633c-9085-4e0f-a984-9c6b6e46312f.png",
+          "prompt": "Use case: stylized-concept. Asset type: production enemy animation sprite atlas for Infernal City. Create ONE new raster PNG atlas, wide 2:1 canvas, target 2048×1024, genuine transparent RGBA background. Exactly 8 equal-width columns × 4 equal-height rows, 32 distinct animation frames, no gutters or drawn grid. Each invisible cell contains exactly one creature pose centered on the same pivot, with at least 15% completely transparent padding on ALL FOUR sides, including effects, weapons and fragments. Maximum pose extent is 68% of cell width and 68% of cell height. Camera fixed three-quarter game view, facing slightly toward the lower-right, no camera turns, fixed scale and anchor across frames. Painterly high-detail 2.5D fantasy science-fiction rendering matching the provided project's material and light treatment, readable clean silhouettes; no pixel art. The input images are STYLE REFERENCES ONLY: image 1 supplies materials/ornament, image 2 shading/detail/energy design, image 3 faction palette and atmosphere. Do not reproduce their structures or layouts. This is the first visual design for a named enemy in the Bible; preserve this new creature identity consistently in every frame. Row 1 is MOVE: 8 unique smooth movement/swim/hover cycle poses with meaningful limb/wing/appendage changes, first and last adjacent phases but not duplicates. Row 2 is ATTACK: 8 unique phases of anticipation, wind-up, strike/emission, follow-through, recovery. Row 3 is DEATH_DISSOLVE: 8 unique stages from intact struck pose through collapse, material fragmentation and nearly vanished dust; final frame retains a few visible motes. Row 4 is SHIELD_BREAK: 8 unique intact-creature recoil poses with a thin faction-colored energy shell cracking progressively and breaking into small shards, then a clear recovered final pose. Shield/effects must not obscure the body. No injury/gore. NO text, labels, letters, numbers, cell borders, checkerboard, black/white backdrop, floor, scenery, drop shadow or watermark. Every cell uses empty alpha outside the subject; no bloom across cell boundaries.\nSubject: Chérubin Automaton. A small threatening winged clockwork automaton shaped as a compact porcelain and white-marble celestial sentinel, ornate gold mechanical feather wings, indigo joint cavities, one bright cyan lens within a smooth mask, tiny articulated armored limbs. This is an entirely mechanical construct, no human child or skin. Angular guardian silhouette with mechanical wings. Attack launches a little cyan solar dart. Death separates clockwork feathers and dissolves into restrained gold motes.\nColor palette: White alabaster #fef3c7, polished gold #f59e0b, deep indigo #312e81, cyan energy #38bdf8.",
+          "references": [
+            {
+              "path": "assets/dlc/illustrated-v1/props/astral_monument.png",
+              "role": "material and ornament style reference"
+            },
+            {
+              "path": "assets/dlc/illustrated-v1/towers/stasis_pendulum.png",
+              "role": "shading, detail and energy style reference"
+            },
+            {
+              "path": "assets/dlc/illustrated-v1/maps/astral_nef_d_horlogerie.png",
+              "role": "faction palette and atmosphere reference"
+            }
+          ],
+          "iteration": 1,
+          "sha256": "f641dd3b21da471d5a71ead0c8b2ed15afb1b6a3713ff3bc7cded69f50e524e5"
+        },
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-7c7297f5-d687-4a33-9be8-0dcfa6c9a46a.png",
+          "prompt": "Use case: precise-object-edit. Correct this existing sprite atlas while preserving the SAME enemy identity, palette, 8 columns × 4 rows, exact state sequence and all 32 distinct poses. This is a production sprite-sheet correction, not a redesign. Change only: (1) make the entire background fully transparent and keep the solid body opaque, remove ALL background veil, diffuse haze, stray speckles, and any shadow; (2) shrink each individual sprite/effect within its SAME cell so the complete silhouette including wings, weapons, projectile, shield, rubble and glow fits inside the central 52% of BOTH cell width and cell height. Thus at least 24% of EVERY CELL on all four sides is completely EMPTY TRANSPARENT margin. Center each sprite in its original cell; maintain equal fixed cell grid and anchor. NO floor, no colored background, no checkerboard, no grid lines, labels or text. Do not expand body parts into empty margin. Transparent PNG RGBA; outside shapes alpha is zero; solid surfaces fully opaque. Faint glow must stay immediately at the edge, within the central 52% box. Wide 2:1 image. Keep the beautiful detailed fantasy rendering and the same visual identity throughout. Animation rows remain MOVE, ATTACK, DEATH_DISSOLVE, SHIELD_BREAK in that order; 8 frames each. All 32 cells populated, even final dissolve uses a few central motes.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/generated_images/exec-6f54633c-9085-4e0f-a984-9c6b6e46312f.png",
+              "role": "previous generated atlas; identity-preserving alpha/padding correction"
+            }
+          ],
+          "iteration": 2,
+          "sha256": "4b99d89ef461bdbf459ee5c0c183b596f39f347fff389d0a01946b8d9ac4b0f9"
+        },
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-e24b66e3-8cff-47ae-96db-3b2dd484a0b6.png",
+          "prompt": "Edit this exact 8-column 4-row transparent creature sprite sheet. Preserve its identity and all poses exactly. Only correct cells 5 and 6 of row 2: remove the long dart/beam/projectile extending to the right; replace it with a tiny cyan sphere held immediately in front of the automaton's hand, wholly inside the same silhouette width as the wings. Both modified cells must have at least 20% transparent margin on all four sides. Keep every other cell unchanged. Keep the existing clean transparent background, make it actual alpha zero. Do not add new shapes, glow, shadows, words, grid or borders. 32 poses total, same size, same 8×4 structure, fixed same pivots. Native transparent PNG.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/generated_images/exec-7c7297f5-d687-4a33-9be8-0dcfa6c9a46a.png",
+              "role": "previous generated atlas; identity-preserving alpha/padding correction"
+            }
+          ],
+          "iteration": 3,
+          "sha256": "efa39b57eeedf7a5bd98bbe916e35f60435c11ed323044e5324270c0386d1e9b"
+        },
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-d8b04227-2852-48f5-85fe-b83449abe792.png",
+          "prompt": "Use case: precise-object-edit. This is a production correction of the supplied enemy sprite atlas. Preserve the SAME creature identity, all 32 distinct animation poses, same colors/materials, same wide 2:1 canvas, and EXACTLY eight equal columns by four equal rows. Preserve the four row states (movement, attack, dissolve, shield break). Reduce EVERY individual sprite inside its own grid cell by 35%, while keeping its center at the cell center; do NOT resize the full sheet. Every body, limb, weapon, shield, attack effect and death fragment together must now fit within the CENTRAL 40% of BOTH cell width and height. Each of the four margins of each cell must be broad, totally empty and transparent (30% cell dimension each). Remove all diffuse background haze, sparse stray pixels and decorative glow outside the actual creature. Solid body opaque; background actual alpha zero. Do not add any background/checkerboard, grid, lettering, numbers, floor or shadows. Keep attack effects tiny and attached to the creature's hand/body, no projectile extending beyond its silhouette. Transparent PNG. Keep detailed material shading and exact distinctive silhouette within the smaller well-isolated sprite. All 32 cells populated, last dissolve just a few motes at the cell center.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/generated_images/exec-e24b66e3-8cff-47ae-96db-3b2dd484a0b6.png",
+              "role": "previous generated atlas; identity-preserving alpha/padding correction"
+            }
+          ],
+          "iteration": 4,
+          "sha256": "e01a5808a54af10374ce0d251632cc74ac9a299b00d5f21b9dda6afe7706fe10",
+          "result": "generated_qa_pass"
+        }
+      ],
+      "visualQA": {
+        "inspected": true,
+        "identityConsistent": true,
+        "statesObserved": [
+          "move",
+          "attack",
+          "death_dissolve",
+          "shield_break"
+        ],
+        "all32CellsPopulated": true,
+        "visibleDifferentPoses": true,
+        "noPrintedTextOrGrid": true,
+        "noBodyClipping": true,
+        "notes": "Inspected each built-in generated output. New named enemy identity derived from GAME_BIBLE; matching faction materials and palette. No existing individual sprite claimed as 1:1 identity reference."
+      },
+      "numericQA": {
+        "mode": "RGBA",
+        "dimensions": [
+          1774,
+          887
+        ],
+        "grid": [
+          8,
+          4
+        ],
+        "usefulAlphaThreshold": 24,
+        "minUsefulCellMargin": 0.22972972972972974,
+        "fullyTransparentPixelRatio": 0.7346495604173525,
+        "visiblePixelRatio": 0.09519566734327356,
+        "nearOpaquePixelRatio": 0.05474923389203184,
+        "uniqueFrameHashes": 32,
+        "cells": [
+          {
+            "row": 0,
+            "column": 0,
+            "usefulMargins": [
+              0.2895927601809955,
+              0.37104072398190047,
+              0.248868778280543,
+              0.27149321266968324
+            ]
+          },
+          {
+            "row": 0,
+            "column": 1,
+            "usefulMargins": [
+              0.26576576576576577,
+              0.37104072398190047,
+              0.2702702702702703,
+              0.27149321266968324
+            ]
+          },
+          {
+            "row": 0,
+            "column": 2,
+            "usefulMargins": [
+              0.24324324324324326,
+              0.3257918552036199,
+              0.22972972972972974,
+              0.2579185520361991
+            ]
+          },
+          {
+            "row": 0,
+            "column": 3,
+            "usefulMargins": [
+              0.2702702702702703,
+              0.3755656108597285,
+              0.2702702702702703,
+              0.27601809954751133
+            ]
+          },
+          {
+            "row": 0,
+            "column": 4,
+            "usefulMargins": [
+              0.29411764705882354,
+              0.37104072398190047,
+              0.2579185520361991,
+              0.27149321266968324
+            ]
+          },
+          {
+            "row": 0,
+            "column": 5,
+            "usefulMargins": [
+              0.2882882882882883,
+              0.3936651583710407,
+              0.25675675675675674,
+              0.24434389140271492
+            ]
+          },
+          {
+            "row": 0,
+            "column": 6,
+            "usefulMargins": [
+              0.25675675675675674,
+              0.38461538461538464,
+              0.25225225225225223,
+              0.2579185520361991
+            ]
+          },
+          {
+            "row": 0,
+            "column": 7,
+            "usefulMargins": [
+              0.25225225225225223,
+              0.37104072398190047,
+              0.27927927927927926,
+              0.27149321266968324
+            ]
+          },
+          {
+            "row": 1,
+            "column": 0,
+            "usefulMargins": [
+              0.2895927601809955,
+              0.3783783783783784,
+              0.25339366515837103,
+              0.2747747747747748
+            ]
+          },
+          {
+            "row": 1,
+            "column": 1,
+            "usefulMargins": [
+              0.2702702702702703,
+              0.3783783783783784,
+              0.25675675675675674,
+              0.2702702702702703
+            ]
+          },
+          {
+            "row": 1,
+            "column": 2,
+            "usefulMargins": [
+              0.25675675675675674,
+              0.3783783783783784,
+              0.23873873873873874,
+              0.26576576576576577
+            ]
+          },
+          {
+            "row": 1,
+            "column": 3,
+            "usefulMargins": [
+              0.26126126126126126,
+              0.38288288288288286,
+              0.22972972972972974,
+              0.2702702702702703
+            ]
+          },
+          {
+            "row": 1,
+            "column": 4,
+            "usefulMargins": [
+              0.2579185520361991,
+              0.38288288288288286,
+              0.248868778280543,
+              0.25675675675675674
+            ]
+          },
+          {
+            "row": 1,
+            "column": 5,
+            "usefulMargins": [
+              0.24774774774774774,
+              0.38288288288288286,
+              0.27927927927927926,
+              0.26576576576576577
+            ]
+          },
+          {
+            "row": 1,
+            "column": 6,
+            "usefulMargins": [
+              0.24324324324324326,
+              0.38288288288288286,
+              0.24774774774774774,
+              0.26126126126126126
+            ]
+          },
+          {
+            "row": 1,
+            "column": 7,
+            "usefulMargins": [
+              0.26576576576576577,
+              0.38288288288288286,
+              0.27927927927927926,
+              0.2702702702702703
+            ]
+          },
+          {
+            "row": 2,
+            "column": 0,
+            "usefulMargins": [
+              0.2850678733031674,
+              0.3738738738738739,
+              0.25339366515837103,
+              0.2927927927927928
+            ]
+          },
+          {
+            "row": 2,
+            "column": 1,
+            "usefulMargins": [
+              0.2702702702702703,
+              0.3783783783783784,
+              0.25675675675675674,
+              0.2882882882882883
+            ]
+          },
+          {
+            "row": 2,
+            "column": 2,
+            "usefulMargins": [
+              0.26126126126126126,
+              0.3783783783783784,
+              0.25675675675675674,
+              0.2927927927927928
+            ]
+          },
+          {
+            "row": 2,
+            "column": 3,
+            "usefulMargins": [
+              0.2882882882882883,
+              0.3783783783783784,
+              0.2747747747747748,
+              0.2927927927927928
+            ]
+          },
+          {
+            "row": 2,
+            "column": 4,
+            "usefulMargins": [
+              0.29411764705882354,
+              0.36486486486486486,
+              0.2895927601809955,
+              0.28378378378378377
+            ]
+          },
+          {
+            "row": 2,
+            "column": 5,
+            "usefulMargins": [
+              0.32432432432432434,
+              0.3783783783783784,
+              0.2972972972972973,
+              0.27927927927927926
+            ]
+          },
+          {
+            "row": 2,
+            "column": 6,
+            "usefulMargins": [
+              0.33783783783783783,
+              0.3918918918918919,
+              0.3333333333333333,
+              0.3108108108108108
+            ]
+          },
+          {
+            "row": 2,
+            "column": 7,
+            "usefulMargins": [
+              0.3783783783783784,
+              0.4774774774774775,
+              0.38738738738738737,
+              0.40540540540540543
+            ]
+          },
+          {
+            "row": 3,
+            "column": 0,
+            "usefulMargins": [
+              0.2986425339366516,
+              0.32882882882882886,
+              0.25339366515837103,
+              0.24324324324324326
+            ]
+          },
+          {
+            "row": 3,
+            "column": 1,
+            "usefulMargins": [
+              0.2972972972972973,
+              0.3333333333333333,
+              0.26576576576576577,
+              0.24324324324324326
+            ]
+          },
+          {
+            "row": 3,
+            "column": 2,
+            "usefulMargins": [
+              0.2882882882882883,
+              0.34234234234234234,
+              0.2747747747747748,
+              0.24324324324324326
+            ]
+          },
+          {
+            "row": 3,
+            "column": 3,
+            "usefulMargins": [
+              0.2927927927927928,
+              0.34234234234234234,
+              0.28378378378378377,
+              0.24774774774774774
+            ]
+          },
+          {
+            "row": 3,
+            "column": 4,
+            "usefulMargins": [
+              0.28054298642533937,
+              0.3738738738738739,
+              0.28054298642533937,
+              0.28378378378378377
+            ]
+          },
+          {
+            "row": 3,
+            "column": 5,
+            "usefulMargins": [
+              0.2747747747747748,
+              0.3783783783783784,
+              0.27927927927927926,
+              0.27927927927927926
+            ]
+          },
+          {
+            "row": 3,
+            "column": 6,
+            "usefulMargins": [
+              0.27927927927927926,
+              0.3783783783783784,
+              0.27927927927927926,
+              0.28378378378378377
+            ]
+          },
+          {
+            "row": 3,
+            "column": 7,
+            "usefulMargins": [
+              0.27927927927927926,
+              0.3783783783783784,
+              0.2882882882882883,
+              0.28378378378378377
+            ]
+          }
+        ],
+        "weakAlphaNote": "Native generated alpha may include weak fringes below24; useful margin excludes these. No thresholding or other image transformation was applied."
+      },
+      "sha256": "e01a5808a54af10374ce0d251632cc74ac9a299b00d5f21b9dda6afe7706fe10",
+      "byteForByteNativeCopyVerified": true
+    },
+    {
+      "id": "astral_censer_bearer",
+      "name": "Porte-Encensoir",
+      "biome": "astral",
+      "sourceDefinition": "docs/GAME_BIBLE.md sections 17.1–17.3",
+      "identityStatus": "first visual identity; style continuity, no prior individual identity reference",
+      "path": "assets/dlc/illustrated-v1/enemies/astral_censer_bearer.png",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "move",
+        "attack",
+        "death_dissolve",
+        "shield_break"
+      ],
+      "references": [
+        {
+          "path": "assets/dlc/illustrated-v1/props/astral_monument.png",
+          "role": "material and ornament style reference"
+        },
+        {
+          "path": "assets/dlc/illustrated-v1/towers/stasis_pendulum.png",
+          "role": "shading, detail and energy style reference"
+        },
+        {
+          "path": "assets/dlc/illustrated-v1/maps/astral_nef_d_horlogerie.png",
+          "role": "faction palette and atmosphere reference"
+        }
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: production enemy animation sprite atlas for Infernal City. Create ONE new raster PNG atlas, wide 2:1 canvas, target 2048×1024, genuine transparent RGBA background. Exactly 8 equal-width columns × 4 equal-height rows, 32 distinct animation frames, no gutters or drawn grid. Each invisible cell contains exactly one creature pose centered on the same pivot, with at least 15% completely transparent padding on ALL FOUR sides, including effects, weapons and fragments. Maximum pose extent is 68% of cell width and 68% of cell height. Camera fixed three-quarter game view, facing slightly toward the lower-right, no camera turns, fixed scale and anchor across frames. Painterly high-detail 2.5D fantasy science-fiction rendering matching the provided project's material and light treatment, readable clean silhouettes; no pixel art. The input images are STYLE REFERENCES ONLY: image 1 supplies materials/ornament, image 2 shading/detail/energy design, image 3 faction palette and atmosphere. Do not reproduce their structures or layouts. This is the first visual design for a named enemy in the Bible; preserve this new creature identity consistently in every frame. Row 1 is MOVE: 8 unique smooth movement/swim/hover cycle poses with meaningful limb/wing/appendage changes, first and last adjacent phases but not duplicates. Row 2 is ATTACK: 8 unique phases of anticipation, wind-up, strike/emission, follow-through, recovery. Row 3 is DEATH_DISSOLVE: 8 unique stages from intact struck pose through collapse, material fragmentation and nearly vanished dust; final frame retains a few visible motes. Row 4 is SHIELD_BREAK: 8 unique intact-creature recoil poses with a thin faction-colored energy shell cracking progressively and breaking into small shards, then a clear recovered final pose. Shield/effects must not obscure the body. No injury/gore. NO text, labels, letters, numbers, cell borders, checkerboard, black/white backdrop, floor, scenery, drop shadow or watermark. Every cell uses empty alpha outside the subject; no bloom across cell boundaries.\nSubject: Porte-Encensoir. A tall faceless clockwork temple servant with an indigo armored robe, white-marble shoulder carapace and ornate gold ribs; carries a large gold censer on a short swinging chain. No human skin. Slender but sturdy articulated legs. Cyan incense curls closely around the censer. Attack swings the censer across the body and releases one compact cyan-gold puff. Death crumbles into marble and gold dust.\nColor palette: White alabaster #fef3c7, polished gold #f59e0b, deep indigo #312e81, cyan energy #38bdf8.",
+      "status": "generated_qa_pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-f8e93cb1-295f-48ba-bdb9-e05b97ae0946.png",
+      "attempts": [
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-8c8d67c8-fe7f-463c-94fc-09482c97865d.png",
+          "prompt": "Use case: stylized-concept. Asset type: production enemy animation sprite atlas for Infernal City. Create ONE new raster PNG atlas, wide 2:1 canvas, target 2048×1024, genuine transparent RGBA background. Exactly 8 equal-width columns × 4 equal-height rows, 32 distinct animation frames, no gutters or drawn grid. Each invisible cell contains exactly one creature pose centered on the same pivot, with at least 15% completely transparent padding on ALL FOUR sides, including effects, weapons and fragments. Maximum pose extent is 68% of cell width and 68% of cell height. Camera fixed three-quarter game view, facing slightly toward the lower-right, no camera turns, fixed scale and anchor across frames. Painterly high-detail 2.5D fantasy science-fiction rendering matching the provided project's material and light treatment, readable clean silhouettes; no pixel art. The input images are STYLE REFERENCES ONLY: image 1 supplies materials/ornament, image 2 shading/detail/energy design, image 3 faction palette and atmosphere. Do not reproduce their structures or layouts. This is the first visual design for a named enemy in the Bible; preserve this new creature identity consistently in every frame. Row 1 is MOVE: 8 unique smooth movement/swim/hover cycle poses with meaningful limb/wing/appendage changes, first and last adjacent phases but not duplicates. Row 2 is ATTACK: 8 unique phases of anticipation, wind-up, strike/emission, follow-through, recovery. Row 3 is DEATH_DISSOLVE: 8 unique stages from intact struck pose through collapse, material fragmentation and nearly vanished dust; final frame retains a few visible motes. Row 4 is SHIELD_BREAK: 8 unique intact-creature recoil poses with a thin faction-colored energy shell cracking progressively and breaking into small shards, then a clear recovered final pose. Shield/effects must not obscure the body. No injury/gore. NO text, labels, letters, numbers, cell borders, checkerboard, black/white backdrop, floor, scenery, drop shadow or watermark. Every cell uses empty alpha outside the subject; no bloom across cell boundaries.\nSubject: Porte-Encensoir. A tall faceless clockwork temple servant with an indigo armored robe, white-marble shoulder carapace and ornate gold ribs; carries a large gold censer on a short swinging chain. No human skin. Slender but sturdy articulated legs. Cyan incense curls closely around the censer. Attack swings the censer across the body and releases one compact cyan-gold puff. Death crumbles into marble and gold dust.\nColor palette: White alabaster #fef3c7, polished gold #f59e0b, deep indigo #312e81, cyan energy #38bdf8.",
+          "references": [
+            {
+              "path": "assets/dlc/illustrated-v1/props/astral_monument.png",
+              "role": "material and ornament style reference"
+            },
+            {
+              "path": "assets/dlc/illustrated-v1/towers/stasis_pendulum.png",
+              "role": "shading, detail and energy style reference"
+            },
+            {
+              "path": "assets/dlc/illustrated-v1/maps/astral_nef_d_horlogerie.png",
+              "role": "faction palette and atmosphere reference"
+            }
+          ],
+          "iteration": 1,
+          "sha256": "c362eac0581f5ec5f20b508dd49ac85c9ecb2207137510d4a6cf3601f2d83f65"
+        },
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-d970cc8d-1b13-4dc3-aab6-d7efee503127.png",
+          "prompt": "Use case: precise-object-edit. Correct this existing sprite atlas while preserving the SAME enemy identity, palette, 8 columns × 4 rows, exact state sequence and all 32 distinct poses. This is a production sprite-sheet correction, not a redesign. Change only: (1) make the entire background fully transparent and keep the solid body opaque, remove ALL background veil, diffuse haze, stray speckles, and any shadow; (2) shrink each individual sprite/effect within its SAME cell so the complete silhouette including wings, weapons, projectile, shield, rubble and glow fits inside the central 52% of BOTH cell width and cell height. Thus at least 24% of EVERY CELL on all four sides is completely EMPTY TRANSPARENT margin. Center each sprite in its original cell; maintain equal fixed cell grid and anchor. NO floor, no colored background, no checkerboard, no grid lines, labels or text. Do not expand body parts into empty margin. Transparent PNG RGBA; outside shapes alpha is zero; solid surfaces fully opaque. Faint glow must stay immediately at the edge, within the central 52% box. Wide 2:1 image. Keep the beautiful detailed fantasy rendering and the same visual identity throughout. Animation rows remain MOVE, ATTACK, DEATH_DISSOLVE, SHIELD_BREAK in that order; 8 frames each. All 32 cells populated, even final dissolve uses a few central motes.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/generated_images/exec-8c8d67c8-fe7f-463c-94fc-09482c97865d.png",
+              "role": "previous generated atlas; identity-preserving alpha/padding correction"
+            }
+          ],
+          "iteration": 2,
+          "sha256": "96e3306dcf115cede6221285fd1d2156826350593029816295a354f57df8d810"
+        },
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-f8e93cb1-295f-48ba-bdb9-e05b97ae0946.png",
+          "prompt": "Edit this exact 8-column 4-row transparent creature sprite sheet. Preserve identity, all 32 poses, colors, shapes, animation states and fixed pivots. Change ONLY the size of each individual character inside its own cell: reduce every sprite and its effect by an additional 22%, keeping the sprite centered in exactly the same cell. Do not resize the whole sheet or change the grid. There must be at least 24% empty transparent padding on ALL FOUR sides of each cell. Preserve clean alpha-zero transparent background, solid body opaque. No text, labels, background, grids, floor, shadow or added elements. Native transparent PNG, wide 2:1.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/generated_images/exec-d970cc8d-1b13-4dc3-aab6-d7efee503127.png",
+              "role": "previous generated atlas; identity-preserving alpha/padding correction"
+            }
+          ],
+          "iteration": 3,
+          "sha256": "96d71978fe7fa9a029eac0f55526a7c7934c5e91825bcc3042312264fa64801e",
+          "result": "generated_qa_pass"
+        }
+      ],
+      "visualQA": {
+        "inspected": true,
+        "identityConsistent": true,
+        "statesObserved": [
+          "move",
+          "attack",
+          "death_dissolve",
+          "shield_break"
+        ],
+        "all32CellsPopulated": true,
+        "visibleDifferentPoses": true,
+        "noPrintedTextOrGrid": true,
+        "noBodyClipping": true,
+        "notes": "Inspected each built-in generated output. New named enemy identity derived from GAME_BIBLE; matching faction materials and palette. No existing individual sprite claimed as 1:1 identity reference."
+      },
+      "numericQA": {
+        "mode": "RGBA",
+        "dimensions": [
+          1774,
+          887
+        ],
+        "grid": [
+          8,
+          4
+        ],
+        "usefulAlphaThreshold": 24,
+        "minUsefulCellMargin": 0.23529411764705882,
+        "fullyTransparentPixelRatio": 0.8478181016283052,
+        "visiblePixelRatio": 0.06916515521074165,
+        "nearOpaquePixelRatio": 0.01673744135826399,
+        "uniqueFrameHashes": 32,
+        "cells": [
+          {
+            "row": 0,
+            "column": 0,
+            "usefulMargins": [
+              0.37104072398190047,
+              0.35294117647058826,
+              0.29411764705882354,
+              0.26244343891402716
+            ]
+          },
+          {
+            "row": 0,
+            "column": 1,
+            "usefulMargins": [
+              0.36486486486486486,
+              0.35294117647058826,
+              0.30180180180180183,
+              0.25339366515837103
+            ]
+          },
+          {
+            "row": 0,
+            "column": 2,
+            "usefulMargins": [
+              0.36036036036036034,
+              0.34841628959276016,
+              0.30180180180180183,
+              0.25339366515837103
+            ]
+          },
+          {
+            "row": 0,
+            "column": 3,
+            "usefulMargins": [
+              0.32432432432432434,
+              0.34841628959276016,
+              0.30180180180180183,
+              0.25339366515837103
+            ]
+          },
+          {
+            "row": 0,
+            "column": 4,
+            "usefulMargins": [
+              0.3212669683257919,
+              0.3574660633484163,
+              0.2850678733031674,
+              0.2579185520361991
+            ]
+          },
+          {
+            "row": 0,
+            "column": 5,
+            "usefulMargins": [
+              0.32432432432432434,
+              0.34841628959276016,
+              0.30180180180180183,
+              0.25339366515837103
+            ]
+          },
+          {
+            "row": 0,
+            "column": 6,
+            "usefulMargins": [
+              0.32882882882882886,
+              0.3574660633484163,
+              0.3063063063063063,
+              0.2579185520361991
+            ]
+          },
+          {
+            "row": 0,
+            "column": 7,
+            "usefulMargins": [
+              0.3333333333333333,
+              0.3574660633484163,
+              0.3153153153153153,
+              0.25339366515837103
+            ]
+          },
+          {
+            "row": 1,
+            "column": 0,
+            "usefulMargins": [
+              0.35294117647058826,
+              0.34234234234234234,
+              0.2895927601809955,
+              0.2702702702702703
+            ]
+          },
+          {
+            "row": 1,
+            "column": 1,
+            "usefulMargins": [
+              0.33783783783783783,
+              0.33783783783783783,
+              0.2882882882882883,
+              0.26126126126126126
+            ]
+          },
+          {
+            "row": 1,
+            "column": 2,
+            "usefulMargins": [
+              0.3333333333333333,
+              0.3333333333333333,
+              0.30180180180180183,
+              0.2882882882882883
+            ]
+          },
+          {
+            "row": 1,
+            "column": 3,
+            "usefulMargins": [
+              0.3153153153153153,
+              0.3333333333333333,
+              0.2747747747747748,
+              0.2702702702702703
+            ]
+          },
+          {
+            "row": 1,
+            "column": 4,
+            "usefulMargins": [
+              0.2986425339366516,
+              0.33783783783783783,
+              0.23529411764705882,
+              0.26576576576576577
+            ]
+          },
+          {
+            "row": 1,
+            "column": 5,
+            "usefulMargins": [
+              0.31981981981981983,
+              0.34234234234234234,
+              0.24324324324324326,
+              0.26576576576576577
+            ]
+          },
+          {
+            "row": 1,
+            "column": 6,
+            "usefulMargins": [
+              0.3063063063063063,
+              0.34234234234234234,
+              0.3063063063063063,
+              0.2702702702702703
+            ]
+          },
+          {
+            "row": 1,
+            "column": 7,
+            "usefulMargins": [
+              0.34684684684684686,
+              0.3333333333333333,
+              0.3108108108108108,
+              0.27927927927927926
+            ]
+          },
+          {
+            "row": 2,
+            "column": 0,
+            "usefulMargins": [
+              0.3574660633484163,
+              0.3333333333333333,
+              0.2986425339366516,
+              0.30180180180180183
+            ]
+          },
+          {
+            "row": 2,
+            "column": 1,
+            "usefulMargins": [
+              0.3738738738738739,
+              0.33783783783783783,
+              0.30180180180180183,
+              0.30180180180180183
+            ]
+          },
+          {
+            "row": 2,
+            "column": 2,
+            "usefulMargins": [
+              0.35585585585585583,
+              0.34234234234234234,
+              0.31981981981981983,
+              0.3108108108108108
+            ]
+          },
+          {
+            "row": 2,
+            "column": 3,
+            "usefulMargins": [
+              0.36486486486486486,
+              0.33783783783783783,
+              0.3153153153153153,
+              0.3333333333333333
+            ]
+          },
+          {
+            "row": 2,
+            "column": 4,
+            "usefulMargins": [
+              0.35294117647058826,
+              0.36036036036036034,
+              0.3393665158371041,
+              0.3333333333333333
+            ]
+          },
+          {
+            "row": 2,
+            "column": 5,
+            "usefulMargins": [
+              0.36036036036036034,
+              0.3783783783783784,
+              0.34684684684684686,
+              0.3333333333333333
+            ]
+          },
+          {
+            "row": 2,
+            "column": 6,
+            "usefulMargins": [
+              0.36936936936936937,
+              0.40540540540540543,
+              0.32882882882882886,
+              0.3738738738738739
+            ]
+          },
+          {
+            "row": 2,
+            "column": 7,
+            "usefulMargins": [
+              0.43243243243243246,
+              0.42792792792792794,
+              0.36936936936936937,
+              0.4009009009009009
+            ]
+          },
+          {
+            "row": 3,
+            "column": 0,
+            "usefulMargins": [
+              0.35294117647058826,
+              0.3333333333333333,
+              0.29411764705882354,
+              0.32432432432432434
+            ]
+          },
+          {
+            "row": 3,
+            "column": 1,
+            "usefulMargins": [
+              0.35135135135135137,
+              0.3333333333333333,
+              0.2972972972972973,
+              0.32882882882882886
+            ]
+          },
+          {
+            "row": 3,
+            "column": 2,
+            "usefulMargins": [
+              0.35585585585585583,
+              0.3333333333333333,
+              0.30180180180180183,
+              0.32432432432432434
+            ]
+          },
+          {
+            "row": 3,
+            "column": 3,
+            "usefulMargins": [
+              0.3333333333333333,
+              0.3333333333333333,
+              0.3063063063063063,
+              0.31981981981981983
+            ]
+          },
+          {
+            "row": 3,
+            "column": 4,
+            "usefulMargins": [
+              0.3393665158371041,
+              0.33783783783783783,
+              0.3167420814479638,
+              0.32432432432432434
+            ]
+          },
+          {
+            "row": 3,
+            "column": 5,
+            "usefulMargins": [
+              0.32882882882882886,
+              0.3333333333333333,
+              0.3153153153153153,
+              0.32432432432432434
+            ]
+          },
+          {
+            "row": 3,
+            "column": 6,
+            "usefulMargins": [
+              0.34234234234234234,
+              0.33783783783783783,
+              0.31981981981981983,
+              0.31981981981981983
+            ]
+          },
+          {
+            "row": 3,
+            "column": 7,
+            "usefulMargins": [
+              0.34234234234234234,
+              0.3333333333333333,
+              0.31981981981981983,
+              0.31981981981981983
+            ]
+          }
+        ],
+        "weakAlphaNote": "Native generated alpha may include weak fringes below24; useful margin excludes these. No thresholding or other image transformation was applied."
+      },
+      "sha256": "96d71978fe7fa9a029eac0f55526a7c7934c5e91825bcc3042312264fa64801e",
+      "byteForByteNativeCopyVerified": true
+    },
+    {
+      "id": "astral_alabaster_golem",
+      "name": "Golem d’Albâtre",
+      "biome": "astral",
+      "sourceDefinition": "docs/GAME_BIBLE.md sections 17.1–17.3",
+      "identityStatus": "first visual identity; style continuity, no prior individual identity reference",
+      "path": "assets/dlc/illustrated-v1/enemies/astral_alabaster_golem.png",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "move",
+        "attack",
+        "death_dissolve",
+        "shield_break"
+      ],
+      "references": [
+        {
+          "path": "assets/dlc/illustrated-v1/props/astral_monument.png",
+          "role": "material and ornament style reference"
+        },
+        {
+          "path": "assets/dlc/illustrated-v1/towers/stasis_pendulum.png",
+          "role": "shading, detail and energy style reference"
+        },
+        {
+          "path": "assets/dlc/illustrated-v1/maps/astral_nef_d_horlogerie.png",
+          "role": "faction palette and atmosphere reference"
+        }
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: production enemy animation sprite atlas for Infernal City. Create ONE new raster PNG atlas, wide 2:1 canvas, target 2048×1024, genuine transparent RGBA background. Exactly 8 equal-width columns × 4 equal-height rows, 32 distinct animation frames, no gutters or drawn grid. Each invisible cell contains exactly one creature pose centered on the same pivot, with at least 15% completely transparent padding on ALL FOUR sides, including effects, weapons and fragments. Maximum pose extent is 68% of cell width and 68% of cell height. Camera fixed three-quarter game view, facing slightly toward the lower-right, no camera turns, fixed scale and anchor across frames. Painterly high-detail 2.5D fantasy science-fiction rendering matching the provided project's material and light treatment, readable clean silhouettes; no pixel art. The input images are STYLE REFERENCES ONLY: image 1 supplies materials/ornament, image 2 shading/detail/energy design, image 3 faction palette and atmosphere. Do not reproduce their structures or layouts. This is the first visual design for a named enemy in the Bible; preserve this new creature identity consistently in every frame. Row 1 is MOVE: 8 unique smooth movement/swim/hover cycle poses with meaningful limb/wing/appendage changes, first and last adjacent phases but not duplicates. Row 2 is ATTACK: 8 unique phases of anticipation, wind-up, strike/emission, follow-through, recovery. Row 3 is DEATH_DISSOLVE: 8 unique stages from intact struck pose through collapse, material fragmentation and nearly vanished dust; final frame retains a few visible motes. Row 4 is SHIELD_BREAK: 8 unique intact-creature recoil poses with a thin faction-colored energy shell cracking progressively and breaking into small shards, then a clear recovered final pose. Shield/effects must not obscure the body. No injury/gore. NO text, labels, letters, numbers, cell borders, checkerboard, black/white backdrop, floor, scenery, drop shadow or watermark. Every cell uses empty alpha outside the subject; no bloom across cell boundaries.\nSubject: Golem d’Albâtre. A broad squat heavy alabaster golem with faceted white-marble block armor, gold filigree joint bands, indigo recesses and a cyan circular core. Two massive asymmetric stone fists and short powerful legs, no weapon. Attack winds up and slams a stone fist. Death progressively cracks and disassembles into pale stone chips and restrained golden motes. Clear chunky silhouette.\nColor palette: White alabaster #fef3c7, polished gold #f59e0b, deep indigo #312e81, cyan energy #38bdf8.",
+      "status": "generated_qa_pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-2cc4bf0e-0a8a-4992-a925-8ae76de656ad.png",
+      "attempts": [
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-146fa06c-b266-4a56-bdfa-ebf7fb0db8aa.png",
+          "prompt": "Use case: stylized-concept. Asset type: production enemy animation sprite atlas for Infernal City. Create ONE new raster PNG atlas, wide 2:1 canvas, target 2048×1024, genuine transparent RGBA background. Exactly 8 equal-width columns × 4 equal-height rows, 32 distinct animation frames, no gutters or drawn grid. Each invisible cell contains exactly one creature pose centered on the same pivot, with at least 15% completely transparent padding on ALL FOUR sides, including effects, weapons and fragments. Maximum pose extent is 68% of cell width and 68% of cell height. Camera fixed three-quarter game view, facing slightly toward the lower-right, no camera turns, fixed scale and anchor across frames. Painterly high-detail 2.5D fantasy science-fiction rendering matching the provided project's material and light treatment, readable clean silhouettes; no pixel art. The input images are STYLE REFERENCES ONLY: image 1 supplies materials/ornament, image 2 shading/detail/energy design, image 3 faction palette and atmosphere. Do not reproduce their structures or layouts. This is the first visual design for a named enemy in the Bible; preserve this new creature identity consistently in every frame. Row 1 is MOVE: 8 unique smooth movement/swim/hover cycle poses with meaningful limb/wing/appendage changes, first and last adjacent phases but not duplicates. Row 2 is ATTACK: 8 unique phases of anticipation, wind-up, strike/emission, follow-through, recovery. Row 3 is DEATH_DISSOLVE: 8 unique stages from intact struck pose through collapse, material fragmentation and nearly vanished dust; final frame retains a few visible motes. Row 4 is SHIELD_BREAK: 8 unique intact-creature recoil poses with a thin faction-colored energy shell cracking progressively and breaking into small shards, then a clear recovered final pose. Shield/effects must not obscure the body. No injury/gore. NO text, labels, letters, numbers, cell borders, checkerboard, black/white backdrop, floor, scenery, drop shadow or watermark. Every cell uses empty alpha outside the subject; no bloom across cell boundaries.\nSubject: Golem d’Albâtre. A broad squat heavy alabaster golem with faceted white-marble block armor, gold filigree joint bands, indigo recesses and a cyan circular core. Two massive asymmetric stone fists and short powerful legs, no weapon. Attack winds up and slams a stone fist. Death progressively cracks and disassembles into pale stone chips and restrained golden motes. Clear chunky silhouette.\nColor palette: White alabaster #fef3c7, polished gold #f59e0b, deep indigo #312e81, cyan energy #38bdf8.",
+          "references": [
+            {
+              "path": "assets/dlc/illustrated-v1/props/astral_monument.png",
+              "role": "material and ornament style reference"
+            },
+            {
+              "path": "assets/dlc/illustrated-v1/towers/stasis_pendulum.png",
+              "role": "shading, detail and energy style reference"
+            },
+            {
+              "path": "assets/dlc/illustrated-v1/maps/astral_nef_d_horlogerie.png",
+              "role": "faction palette and atmosphere reference"
+            }
+          ],
+          "iteration": 1,
+          "sha256": "785ba9c6a10835862862792e3b6c2f1a8e0b074f17a1fe3c29703806961fab14"
+        },
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-2cc4bf0e-0a8a-4992-a925-8ae76de656ad.png",
+          "prompt": "Use case: precise-object-edit. Correct this existing sprite atlas while preserving the SAME enemy identity, palette, 8 columns × 4 rows, exact state sequence and all 32 distinct poses. This is a production sprite-sheet correction, not a redesign. Change only: (1) make the entire background fully transparent and keep the solid body opaque, remove ALL background veil, diffuse haze, stray speckles, and any shadow; (2) shrink each individual sprite/effect within its SAME cell so the complete silhouette including wings, weapons, projectile, shield, rubble and glow fits inside the central 52% of BOTH cell width and cell height. Thus at least 24% of EVERY CELL on all four sides is completely EMPTY TRANSPARENT margin. Center each sprite in its original cell; maintain equal fixed cell grid and anchor. NO floor, no colored background, no checkerboard, no grid lines, labels or text. Do not expand body parts into empty margin. Transparent PNG RGBA; outside shapes alpha is zero; solid surfaces fully opaque. Faint glow must stay immediately at the edge, within the central 52% box. Wide 2:1 image. Keep the beautiful detailed fantasy rendering and the same visual identity throughout. Animation rows remain MOVE, ATTACK, DEATH_DISSOLVE, SHIELD_BREAK in that order; 8 frames each. All 32 cells populated, even final dissolve uses a few central motes.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/generated_images/exec-146fa06c-b266-4a56-bdfa-ebf7fb0db8aa.png",
+              "role": "previous generated atlas; identity-preserving alpha/padding correction"
+            }
+          ],
+          "iteration": 2,
+          "sha256": "99c77112b97e3f862a4b5587225dd8bf09f9baa2db2ccaa5d660faba9b6c76fa",
+          "result": "generated_qa_pass"
+        }
+      ],
+      "visualQA": {
+        "inspected": true,
+        "identityConsistent": true,
+        "statesObserved": [
+          "move",
+          "attack",
+          "death_dissolve",
+          "shield_break"
+        ],
+        "all32CellsPopulated": true,
+        "visibleDifferentPoses": true,
+        "noPrintedTextOrGrid": true,
+        "noBodyClipping": true,
+        "notes": "Inspected each built-in generated output. New named enemy identity derived from GAME_BIBLE; matching faction materials and palette. No existing individual sprite claimed as 1:1 identity reference."
+      },
+      "sha256": "99c77112b97e3f862a4b5587225dd8bf09f9baa2db2ccaa5d660faba9b6c76fa",
+      "numericQA": {
+        "mode": "RGBA",
+        "dimensions": [
+          1774,
+          887
+        ],
+        "grid": [
+          8,
+          4
+        ],
+        "usefulAlphaThreshold": 24,
+        "minUsefulCellMargin": 0.17117117117117117,
+        "fullyTransparentPixelRatio": 0.771889843143286,
+        "visiblePixelRatio": 0.12440055467360814,
+        "nearOpaquePixelRatio": 0.09043188025964419,
+        "uniqueFrameHashes": 32,
+        "cells": [
+          {
+            "row": 0,
+            "column": 0,
+            "usefulMargins": [
+              0.28054298642533937,
+              0.4117647058823529,
+              0.20361990950226244,
+              0.19457013574660634
+            ]
+          },
+          {
+            "row": 0,
+            "column": 1,
+            "usefulMargins": [
+              0.27927927927927926,
+              0.4072398190045249,
+              0.21171171171171171,
+              0.19004524886877827
+            ]
+          },
+          {
+            "row": 0,
+            "column": 2,
+            "usefulMargins": [
+              0.25225225225225223,
+              0.4072398190045249,
+              0.21171171171171171,
+              0.18552036199095023
+            ]
+          },
+          {
+            "row": 0,
+            "column": 3,
+            "usefulMargins": [
+              0.24774774774774774,
+              0.40271493212669685,
+              0.22522522522522523,
+              0.19004524886877827
+            ]
+          },
+          {
+            "row": 0,
+            "column": 4,
+            "usefulMargins": [
+              0.23076923076923078,
+              0.4072398190045249,
+              0.22624434389140272,
+              0.17647058823529413
+            ]
+          },
+          {
+            "row": 0,
+            "column": 5,
+            "usefulMargins": [
+              0.24324324324324326,
+              0.4253393665158371,
+              0.22972972972972974,
+              0.18099547511312217
+            ]
+          },
+          {
+            "row": 0,
+            "column": 6,
+            "usefulMargins": [
+              0.24324324324324326,
+              0.416289592760181,
+              0.22522522522522523,
+              0.19457013574660634
+            ]
+          },
+          {
+            "row": 0,
+            "column": 7,
+            "usefulMargins": [
+              0.24774774774774774,
+              0.416289592760181,
+              0.22972972972972974,
+              0.19457013574660634
+            ]
+          },
+          {
+            "row": 1,
+            "column": 0,
+            "usefulMargins": [
+              0.27149321266968324,
+              0.3783783783783784,
+              0.20361990950226244,
+              0.22072072072072071
+            ]
+          },
+          {
+            "row": 1,
+            "column": 1,
+            "usefulMargins": [
+              0.25675675675675674,
+              0.38738738738738737,
+              0.20270270270270271,
+              0.21171171171171171
+            ]
+          },
+          {
+            "row": 1,
+            "column": 2,
+            "usefulMargins": [
+              0.24324324324324326,
+              0.36486486486486486,
+              0.2072072072072072,
+              0.1981981981981982
+            ]
+          },
+          {
+            "row": 1,
+            "column": 3,
+            "usefulMargins": [
+              0.18468468468468469,
+              0.2972972972972973,
+              0.22522522522522523,
+              0.1981981981981982
+            ]
+          },
+          {
+            "row": 1,
+            "column": 4,
+            "usefulMargins": [
+              0.2171945701357466,
+              0.38288288288288286,
+              0.2171945701357466,
+              0.1891891891891892
+            ]
+          },
+          {
+            "row": 1,
+            "column": 5,
+            "usefulMargins": [
+              0.22072072072072071,
+              0.44144144144144143,
+              0.23873873873873874,
+              0.17117117117117117
+            ]
+          },
+          {
+            "row": 1,
+            "column": 6,
+            "usefulMargins": [
+              0.22072072072072071,
+              0.42342342342342343,
+              0.23423423423423423,
+              0.17567567567567569
+            ]
+          },
+          {
+            "row": 1,
+            "column": 7,
+            "usefulMargins": [
+              0.25225225225225223,
+              0.3963963963963964,
+              0.22972972972972974,
+              0.20270270270270271
+            ]
+          },
+          {
+            "row": 2,
+            "column": 0,
+            "usefulMargins": [
+              0.27149321266968324,
+              0.2972972972972973,
+              0.19909502262443438,
+              0.28378378378378377
+            ]
+          },
+          {
+            "row": 2,
+            "column": 1,
+            "usefulMargins": [
+              0.26126126126126126,
+              0.3108108108108108,
+              0.20270270270270271,
+              0.2747747747747748
+            ]
+          },
+          {
+            "row": 2,
+            "column": 2,
+            "usefulMargins": [
+              0.26576576576576577,
+              0.2927927927927928,
+              0.21621621621621623,
+              0.2747747747747748
+            ]
+          },
+          {
+            "row": 2,
+            "column": 3,
+            "usefulMargins": [
+              0.25675675675675674,
+              0.2747747747747748,
+              0.23423423423423423,
+              0.27927927927927926
+            ]
+          },
+          {
+            "row": 2,
+            "column": 4,
+            "usefulMargins": [
+              0.26244343891402716,
+              0.30180180180180183,
+              0.2669683257918552,
+              0.2882882882882883
+            ]
+          },
+          {
+            "row": 2,
+            "column": 5,
+            "usefulMargins": [
+              0.27927927927927926,
+              0.32882882882882886,
+              0.28378378378378377,
+              0.30180180180180183
+            ]
+          },
+          {
+            "row": 2,
+            "column": 6,
+            "usefulMargins": [
+              0.30180180180180183,
+              0.36936936936936937,
+              0.3108108108108108,
+              0.3333333333333333
+            ]
+          },
+          {
+            "row": 2,
+            "column": 7,
+            "usefulMargins": [
+              0.3333333333333333,
+              0.4144144144144144,
+              0.3333333333333333,
+              0.35135135135135137
+            ]
+          },
+          {
+            "row": 3,
+            "column": 0,
+            "usefulMargins": [
+              0.28054298642533937,
+              0.26576576576576577,
+              0.20361990950226244,
+              0.25675675675675674
+            ]
+          },
+          {
+            "row": 3,
+            "column": 1,
+            "usefulMargins": [
+              0.25675675675675674,
+              0.26126126126126126,
+              0.2072072072072072,
+              0.2747747747747748
+            ]
+          },
+          {
+            "row": 3,
+            "column": 2,
+            "usefulMargins": [
+              0.25675675675675674,
+              0.2702702702702703,
+              0.22072072072072071,
+              0.27927927927927926
+            ]
+          },
+          {
+            "row": 3,
+            "column": 3,
+            "usefulMargins": [
+              0.22522522522522523,
+              0.25675675675675674,
+              0.23873873873873874,
+              0.28378378378378377
+            ]
+          },
+          {
+            "row": 3,
+            "column": 4,
+            "usefulMargins": [
+              0.23076923076923078,
+              0.2747747747747748,
+              0.2579185520361991,
+              0.2927927927927928
+            ]
+          },
+          {
+            "row": 3,
+            "column": 5,
+            "usefulMargins": [
+              0.22522522522522523,
+              0.3063063063063063,
+              0.25675675675675674,
+              0.2972972972972973
+            ]
+          },
+          {
+            "row": 3,
+            "column": 6,
+            "usefulMargins": [
+              0.24774774774774774,
+              0.3063063063063063,
+              0.26126126126126126,
+              0.2972972972972973
+            ]
+          },
+          {
+            "row": 3,
+            "column": 7,
+            "usefulMargins": [
+              0.25225225225225223,
+              0.30180180180180183,
+              0.25675675675675674,
+              0.3063063063063063
+            ]
+          }
+        ],
+        "weakAlphaNote": "Native generated alpha may include weak fringes below24; useful margin excludes these. No thresholding or other image transformation was applied."
+      },
+      "byteForByteNativeCopyVerified": true
+    },
+    {
+      "id": "astral_siege_pendulum",
+      "name": "Pendulier de Siège",
+      "biome": "astral",
+      "sourceDefinition": "docs/GAME_BIBLE.md sections 17.1–17.3",
+      "identityStatus": "first visual identity; style continuity, no prior individual identity reference",
+      "path": "assets/dlc/illustrated-v1/enemies/astral_siege_pendulum.png",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "move",
+        "attack",
+        "death_dissolve",
+        "shield_break"
+      ],
+      "references": [
+        {
+          "path": "assets/dlc/illustrated-v1/props/astral_monument.png",
+          "role": "material and ornament style reference"
+        },
+        {
+          "path": "assets/dlc/illustrated-v1/towers/stasis_pendulum.png",
+          "role": "shading, detail and energy style reference"
+        },
+        {
+          "path": "assets/dlc/illustrated-v1/maps/astral_nef_d_horlogerie.png",
+          "role": "faction palette and atmosphere reference"
+        }
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: production enemy animation sprite atlas for Infernal City. Create ONE new raster PNG atlas, wide 2:1 canvas, target 2048×1024, genuine transparent RGBA background. Exactly 8 equal-width columns × 4 equal-height rows, 32 distinct animation frames, no gutters or drawn grid. Each invisible cell contains exactly one creature pose centered on the same pivot, with at least 27% completely transparent padding on ALL FOUR sides, including effects, weapons and fragments. Maximum pose extent is 45% of cell width and 45% of cell height. Camera fixed three-quarter game view, facing slightly toward the lower-right, no camera turns, fixed scale and anchor across frames. Painterly high-detail 2.5D fantasy science-fiction rendering matching the provided project's material and light treatment, readable clean silhouettes; no pixel art. The input images are STYLE REFERENCES ONLY: image 1 supplies materials/ornament, image 2 shading/detail/energy design, image 3 faction palette and atmosphere. Do not reproduce their structures or layouts. This is the first visual design for a named enemy in the Bible; preserve this new creature identity consistently in every frame. Row 1 is MOVE: 8 unique smooth movement/swim/hover cycle poses with meaningful limb/wing/appendage changes, first and last adjacent phases but not duplicates. Row 2 is ATTACK: 8 unique phases of anticipation, wind-up, strike/emission, follow-through, recovery. Row 3 is DEATH_DISSOLVE: 8 unique stages from intact struck pose through collapse, material fragmentation and nearly vanished dust; final frame retains a few visible motes. Row 4 is SHIELD_BREAK: 8 unique intact-creature recoil poses with a thin faction-colored energy shell cracking progressively and breaking into small shards, then a clear recovered final pose. Shield/effects must not obscure the body. No injury/gore. NO text, labels, letters, numbers, cell borders, checkerboard, black/white backdrop, floor, scenery, drop shadow or watermark. Every cell uses empty alpha outside the subject; no bloom across cell boundaries.\nSubject: Pendulier de Siège. A compact four-legged mechanical siege walker built around an upright gold astrolabe cage and suspended heavy white-marble pendulum hammer, indigo and gold chassis, cyan clockwork energy. No tall tower base: a mobile creature with visible articulated gold crablike walking legs. Attack swings the weighted pendulum hammer forward. Death drops broken astrolabe rings and dissolves gold sparks.\nColor palette: White alabaster #fef3c7, polished gold #f59e0b, deep indigo #312e81, cyan energy #38bdf8.\nCritical delivery constraint: CLEAN invisible background at alpha 0, solid body opaque. Do not copy the input transparency noise or any colored halos. All effects tiny and close to body. Fill less than HALF of each cell, including attack motion and shield shell. There must be broad empty transparent space between every adjacent cell.",
+      "status": "generated_qa_pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-e6677b0c-ab13-4b71-8b70-4f8a999ba2bc.png",
+      "attempts": [
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-15ea7020-dfbc-428e-9428-30e82bc5000c.png",
+          "prompt": "Use case: stylized-concept. Asset type: production enemy animation sprite atlas for Infernal City. Create ONE new raster PNG atlas, wide 2:1 canvas, target 2048×1024, genuine transparent RGBA background. Exactly 8 equal-width columns × 4 equal-height rows, 32 distinct animation frames, no gutters or drawn grid. Each invisible cell contains exactly one creature pose centered on the same pivot, with at least 27% completely transparent padding on ALL FOUR sides, including effects, weapons and fragments. Maximum pose extent is 45% of cell width and 45% of cell height. Camera fixed three-quarter game view, facing slightly toward the lower-right, no camera turns, fixed scale and anchor across frames. Painterly high-detail 2.5D fantasy science-fiction rendering matching the provided project's material and light treatment, readable clean silhouettes; no pixel art. The input images are STYLE REFERENCES ONLY: image 1 supplies materials/ornament, image 2 shading/detail/energy design, image 3 faction palette and atmosphere. Do not reproduce their structures or layouts. This is the first visual design for a named enemy in the Bible; preserve this new creature identity consistently in every frame. Row 1 is MOVE: 8 unique smooth movement/swim/hover cycle poses with meaningful limb/wing/appendage changes, first and last adjacent phases but not duplicates. Row 2 is ATTACK: 8 unique phases of anticipation, wind-up, strike/emission, follow-through, recovery. Row 3 is DEATH_DISSOLVE: 8 unique stages from intact struck pose through collapse, material fragmentation and nearly vanished dust; final frame retains a few visible motes. Row 4 is SHIELD_BREAK: 8 unique intact-creature recoil poses with a thin faction-colored energy shell cracking progressively and breaking into small shards, then a clear recovered final pose. Shield/effects must not obscure the body. No injury/gore. NO text, labels, letters, numbers, cell borders, checkerboard, black/white backdrop, floor, scenery, drop shadow or watermark. Every cell uses empty alpha outside the subject; no bloom across cell boundaries.\nSubject: Pendulier de Siège. A compact four-legged mechanical siege walker built around an upright gold astrolabe cage and suspended heavy white-marble pendulum hammer, indigo and gold chassis, cyan clockwork energy. No tall tower base: a mobile creature with visible articulated gold crablike walking legs. Attack swings the weighted pendulum hammer forward. Death drops broken astrolabe rings and dissolves gold sparks.\nColor palette: White alabaster #fef3c7, polished gold #f59e0b, deep indigo #312e81, cyan energy #38bdf8.\nCritical delivery constraint: CLEAN invisible background at alpha 0, solid body opaque. Do not copy the input transparency noise or any colored halos. All effects tiny and close to body. Fill less than HALF of each cell, including attack motion and shield shell. There must be broad empty transparent space between every adjacent cell.",
+          "references": [
+            {
+              "path": "assets/dlc/illustrated-v1/props/astral_monument.png",
+              "role": "material and ornament style reference"
+            },
+            {
+              "path": "assets/dlc/illustrated-v1/towers/stasis_pendulum.png",
+              "role": "shading, detail and energy style reference"
+            },
+            {
+              "path": "assets/dlc/illustrated-v1/maps/astral_nef_d_horlogerie.png",
+              "role": "faction palette and atmosphere reference"
+            }
+          ],
+          "iteration": 1,
+          "sha256": "6b13583a530b4395099b3d905ab62bad61637db96011d93b7e064f1512f3766a"
+        },
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-e6677b0c-ab13-4b71-8b70-4f8a999ba2bc.png",
+          "prompt": "Use case: precise-object-edit. This is a production correction of the supplied enemy sprite atlas. Preserve the SAME creature identity, all 32 distinct animation poses, same colors/materials, same wide 2:1 canvas, and EXACTLY eight equal columns by four equal rows. Preserve the four row states (movement, attack, dissolve, shield break). Reduce EVERY individual sprite inside its own grid cell by 35%, while keeping its center at the cell center; do NOT resize the full sheet. Every body, limb, weapon, shield, attack effect and death fragment together must now fit within the CENTRAL 40% of BOTH cell width and height. Each of the four margins of each cell must be broad, totally empty and transparent (30% cell dimension each). Remove all diffuse background haze, sparse stray pixels and decorative glow outside the actual creature. Solid body opaque; background actual alpha zero. Do not add any background/checkerboard, grid, lettering, numbers, floor or shadows. Keep attack effects tiny and attached to the creature's hand/body, no projectile extending beyond its silhouette. Transparent PNG. Keep detailed material shading and exact distinctive silhouette within the smaller well-isolated sprite. All 32 cells populated, last dissolve just a few motes at the cell center.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/generated_images/exec-15ea7020-dfbc-428e-9428-30e82bc5000c.png",
+              "role": "previous generated atlas; identity-preserving alpha/padding correction"
+            }
+          ],
+          "iteration": 2,
+          "sha256": "9ca66804b31410eba7ba48304a5ccb21738c2fb1d8ebf28aeba07623a7d82d51",
+          "result": "generated_qa_pass"
+        }
+      ],
+      "visualQA": {
+        "inspected": true,
+        "identityConsistent": true,
+        "statesObserved": [
+          "move",
+          "attack",
+          "death_dissolve",
+          "shield_break"
+        ],
+        "all32CellsPopulated": true,
+        "visibleDifferentPoses": true,
+        "noPrintedTextOrGrid": true,
+        "noBodyClipping": true,
+        "notes": "Inspected each built-in generated output. New named enemy identity derived from GAME_BIBLE; matching faction materials and palette. No existing individual sprite claimed as 1:1 identity reference."
+      },
+      "numericQA": {
+        "mode": "RGBA",
+        "dimensions": [
+          1774,
+          887
+        ],
+        "grid": [
+          8,
+          4
+        ],
+        "usefulAlphaThreshold": 24,
+        "minUsefulCellMargin": 0.17194570135746606,
+        "fullyTransparentPixelRatio": 0.7132563687689779,
+        "visiblePixelRatio": 0.10535049042349152,
+        "nearOpaquePixelRatio": 0.07455110712292935,
+        "uniqueFrameHashes": 32,
+        "cells": [
+          {
+            "row": 0,
+            "column": 0,
+            "usefulMargins": [
+              0.31221719457013575,
+              0.3755656108597285,
+              0.3031674208144796,
+              0.18552036199095023
+            ]
+          },
+          {
+            "row": 0,
+            "column": 1,
+            "usefulMargins": [
+              0.3063063063063063,
+              0.3755656108597285,
+              0.2972972972972973,
+              0.19004524886877827
+            ]
+          },
+          {
+            "row": 0,
+            "column": 2,
+            "usefulMargins": [
+              0.3063063063063063,
+              0.3665158371040724,
+              0.2702702702702703,
+              0.19004524886877827
+            ]
+          },
+          {
+            "row": 0,
+            "column": 3,
+            "usefulMargins": [
+              0.2927927927927928,
+              0.37104072398190047,
+              0.26576576576576577,
+              0.22171945701357465
+            ]
+          },
+          {
+            "row": 0,
+            "column": 4,
+            "usefulMargins": [
+              0.29411764705882354,
+              0.3755656108597285,
+              0.29411764705882354,
+              0.2081447963800905
+            ]
+          },
+          {
+            "row": 0,
+            "column": 5,
+            "usefulMargins": [
+              0.30180180180180183,
+              0.3755656108597285,
+              0.2972972972972973,
+              0.17194570135746606
+            ]
+          },
+          {
+            "row": 0,
+            "column": 6,
+            "usefulMargins": [
+              0.3108108108108108,
+              0.3755656108597285,
+              0.2972972972972973,
+              0.17194570135746606
+            ]
+          },
+          {
+            "row": 0,
+            "column": 7,
+            "usefulMargins": [
+              0.3153153153153153,
+              0.3755656108597285,
+              0.30180180180180183,
+              0.18552036199095023
+            ]
+          },
+          {
+            "row": 1,
+            "column": 0,
+            "usefulMargins": [
+              0.31221719457013575,
+              0.38288288288288286,
+              0.2986425339366516,
+              0.18468468468468469
+            ]
+          },
+          {
+            "row": 1,
+            "column": 1,
+            "usefulMargins": [
+              0.3108108108108108,
+              0.3918918918918919,
+              0.3063063063063063,
+              0.18468468468468469
+            ]
+          },
+          {
+            "row": 1,
+            "column": 2,
+            "usefulMargins": [
+              0.3108108108108108,
+              0.35585585585585583,
+              0.3063063063063063,
+              0.20270270270270271
+            ]
+          },
+          {
+            "row": 1,
+            "column": 3,
+            "usefulMargins": [
+              0.2927927927927928,
+              0.3783783783783784,
+              0.26576576576576577,
+              0.2072072072072072
+            ]
+          },
+          {
+            "row": 1,
+            "column": 4,
+            "usefulMargins": [
+              0.2895927601809955,
+              0.3918918918918919,
+              0.248868778280543,
+              0.18468468468468469
+            ]
+          },
+          {
+            "row": 1,
+            "column": 5,
+            "usefulMargins": [
+              0.30180180180180183,
+              0.38738738738738737,
+              0.2972972972972973,
+              0.18468468468468469
+            ]
+          },
+          {
+            "row": 1,
+            "column": 6,
+            "usefulMargins": [
+              0.3153153153153153,
+              0.38738738738738737,
+              0.30180180180180183,
+              0.18468468468468469
+            ]
+          },
+          {
+            "row": 1,
+            "column": 7,
+            "usefulMargins": [
+              0.3153153153153153,
+              0.38288288288288286,
+              0.3063063063063063,
+              0.18468468468468469
+            ]
+          },
+          {
+            "row": 2,
+            "column": 0,
+            "usefulMargins": [
+              0.31221719457013575,
+              0.3738738738738739,
+              0.29411764705882354,
+              0.21171171171171171
+            ]
+          },
+          {
+            "row": 2,
+            "column": 1,
+            "usefulMargins": [
+              0.3063063063063063,
+              0.3738738738738739,
+              0.28378378378378377,
+              0.21171171171171171
+            ]
+          },
+          {
+            "row": 2,
+            "column": 2,
+            "usefulMargins": [
+              0.3108108108108108,
+              0.38738738738738737,
+              0.2972972972972973,
+              0.22072072072072071
+            ]
+          },
+          {
+            "row": 2,
+            "column": 3,
+            "usefulMargins": [
+              0.32882882882882886,
+              0.3963963963963964,
+              0.27927927927927926,
+              0.23873873873873874
+            ]
+          },
+          {
+            "row": 2,
+            "column": 4,
+            "usefulMargins": [
+              0.3257918552036199,
+              0.4099099099099099,
+              0.2986425339366516,
+              0.25675675675675674
+            ]
+          },
+          {
+            "row": 2,
+            "column": 5,
+            "usefulMargins": [
+              0.36036036036036034,
+              0.44144144144144143,
+              0.32432432432432434,
+              0.2747747747747748
+            ]
+          },
+          {
+            "row": 2,
+            "column": 6,
+            "usefulMargins": [
+              0.38738738738738737,
+              0.45045045045045046,
+              0.35135135135135137,
+              0.31981981981981983
+            ]
+          },
+          {
+            "row": 2,
+            "column": 7,
+            "usefulMargins": [
+              0.4099099099099099,
+              0.481981981981982,
+              0.4009009009009009,
+              0.36486486486486486
+            ]
+          },
+          {
+            "row": 3,
+            "column": 0,
+            "usefulMargins": [
+              0.29411764705882354,
+              0.34684684684684686,
+              0.26244343891402716,
+              0.21621621621621623
+            ]
+          },
+          {
+            "row": 3,
+            "column": 1,
+            "usefulMargins": [
+              0.2972972972972973,
+              0.34684684684684686,
+              0.26126126126126126,
+              0.21621621621621623
+            ]
+          },
+          {
+            "row": 3,
+            "column": 2,
+            "usefulMargins": [
+              0.2927927927927928,
+              0.35135135135135137,
+              0.26576576576576577,
+              0.21621621621621623
+            ]
+          },
+          {
+            "row": 3,
+            "column": 3,
+            "usefulMargins": [
+              0.2882882882882883,
+              0.35585585585585583,
+              0.26576576576576577,
+              0.22072072072072071
+            ]
+          },
+          {
+            "row": 3,
+            "column": 4,
+            "usefulMargins": [
+              0.3031674208144796,
+              0.36036036036036034,
+              0.27601809954751133,
+              0.22072072072072071
+            ]
+          },
+          {
+            "row": 3,
+            "column": 5,
+            "usefulMargins": [
+              0.3108108108108108,
+              0.36036036036036034,
+              0.2972972972972973,
+              0.21171171171171171
+            ]
+          },
+          {
+            "row": 3,
+            "column": 6,
+            "usefulMargins": [
+              0.3153153153153153,
+              0.36036036036036034,
+              0.3063063063063063,
+              0.21621621621621623
+            ]
+          },
+          {
+            "row": 3,
+            "column": 7,
+            "usefulMargins": [
+              0.3153153153153153,
+              0.36036036036036034,
+              0.3063063063063063,
+              0.21621621621621623
+            ]
+          }
+        ],
+        "weakAlphaNote": "Native generated alpha may include weak fringes below24; useful margin excludes these. No thresholding or other image transformation was applied."
+      },
+      "sha256": "9ca66804b31410eba7ba48304a5ccb21738c2fb1d8ebf28aeba07623a7d82d51",
+      "byteForByteNativeCopyVerified": true
+    },
+    {
+      "id": "abyss_armored_nautilus",
+      "name": "Nautile Blindé",
+      "biome": "abyss",
+      "sourceDefinition": "docs/GAME_BIBLE.md sections 17.1–17.3",
+      "identityStatus": "first visual identity; style continuity, no prior individual identity reference",
+      "path": "assets/dlc/illustrated-v1/enemies/abyss_armored_nautilus.png",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "move",
+        "attack",
+        "death_dissolve",
+        "shield_break"
+      ],
+      "references": [
+        {
+          "path": "assets/dlc/illustrated-v1/props/abyss_monument.png",
+          "role": "material and ornament style reference"
+        },
+        {
+          "path": "assets/dlc/illustrated-v1/towers/sonar_tower.png",
+          "role": "shading, detail and energy style reference"
+        },
+        {
+          "path": "assets/dlc/illustrated-v1/maps/abyss_dome_bathyal.png",
+          "role": "faction palette and atmosphere reference"
+        }
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: production enemy animation sprite atlas for Infernal City. Create ONE new raster PNG atlas, wide 2:1 canvas, target 2048×1024, genuine transparent RGBA background. Exactly 8 equal-width columns × 4 equal-height rows, 32 distinct animation frames, no gutters or drawn grid. Each invisible cell contains exactly one creature pose centered on the same pivot, with at least 27% completely transparent padding on ALL FOUR sides, including effects, weapons and fragments. Maximum pose extent is 45% of cell width and 45% of cell height. Camera fixed three-quarter game view, facing slightly toward the lower-right, no camera turns, fixed scale and anchor across frames. Painterly high-detail 2.5D fantasy science-fiction rendering matching the provided project's material and light treatment, readable clean silhouettes; no pixel art. The input images are STYLE REFERENCES ONLY: image 1 supplies materials/ornament, image 2 shading/detail/energy design, image 3 faction palette and atmosphere. Do not reproduce their structures or layouts. This is the first visual design for a named enemy in the Bible; preserve this new creature identity consistently in every frame. Row 1 is MOVE: 8 unique smooth movement/swim/hover cycle poses with meaningful limb/wing/appendage changes, first and last adjacent phases but not duplicates. Row 2 is ATTACK: 8 unique phases of anticipation, wind-up, strike/emission, follow-through, recovery. Row 3 is DEATH_DISSOLVE: 8 unique stages from intact struck pose through collapse, material fragmentation and nearly vanished dust; final frame retains a few visible motes. Row 4 is SHIELD_BREAK: 8 unique intact-creature recoil poses with a thin faction-colored energy shell cracking progressively and breaking into small shards, then a clear recovered final pose. Shield/effects must not obscure the body. No injury/gore. NO text, labels, letters, numbers, cell borders, checkerboard, black/white backdrop, floor, scenery, drop shadow or watermark. Every cell uses empty alpha outside the subject; no bloom across cell boundaries.\nSubject: Nautile Blindé. An armored deep-ocean nautilus enemy with a very clear tightly coiled spiral shell encased in navy-blue and oxidized-teal metal plates, a few small coral-red armor fins, bright turquoise seams and short violet-tipped tentacles under the shell. Compact hovering/swimming animal machine, not a submarine or human. Attack tentacles thrust forward and a small turquoise pressure pulse exits the mouth. Death shell cracks into pieces and dissolves in blue bubbles.\nColor palette: Abyss navy #091526, dark teal #042f2e, bioluminescent turquoise #2dd4bf, violet #a855f7, sparse coral #fb7185.\nCritical delivery constraint: CLEAN invisible background at alpha 0, solid body opaque. Do not copy the input transparency noise or any colored halos. All effects tiny and close to body. Fill less than HALF of each cell, including attack motion and shield shell. There must be broad empty transparent space between every adjacent cell.",
+      "status": "generated_qa_pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-836c5a60-d5ba-408d-a7c5-c571557ebb13.png",
+      "attempts": [
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-13d21fac-d75c-4f37-9a87-49b934ce924d.png",
+          "prompt": "Use case: stylized-concept. Asset type: production enemy animation sprite atlas for Infernal City. Create ONE new raster PNG atlas, wide 2:1 canvas, target 2048×1024, genuine transparent RGBA background. Exactly 8 equal-width columns × 4 equal-height rows, 32 distinct animation frames, no gutters or drawn grid. Each invisible cell contains exactly one creature pose centered on the same pivot, with at least 27% completely transparent padding on ALL FOUR sides, including effects, weapons and fragments. Maximum pose extent is 45% of cell width and 45% of cell height. Camera fixed three-quarter game view, facing slightly toward the lower-right, no camera turns, fixed scale and anchor across frames. Painterly high-detail 2.5D fantasy science-fiction rendering matching the provided project's material and light treatment, readable clean silhouettes; no pixel art. The input images are STYLE REFERENCES ONLY: image 1 supplies materials/ornament, image 2 shading/detail/energy design, image 3 faction palette and atmosphere. Do not reproduce their structures or layouts. This is the first visual design for a named enemy in the Bible; preserve this new creature identity consistently in every frame. Row 1 is MOVE: 8 unique smooth movement/swim/hover cycle poses with meaningful limb/wing/appendage changes, first and last adjacent phases but not duplicates. Row 2 is ATTACK: 8 unique phases of anticipation, wind-up, strike/emission, follow-through, recovery. Row 3 is DEATH_DISSOLVE: 8 unique stages from intact struck pose through collapse, material fragmentation and nearly vanished dust; final frame retains a few visible motes. Row 4 is SHIELD_BREAK: 8 unique intact-creature recoil poses with a thin faction-colored energy shell cracking progressively and breaking into small shards, then a clear recovered final pose. Shield/effects must not obscure the body. No injury/gore. NO text, labels, letters, numbers, cell borders, checkerboard, black/white backdrop, floor, scenery, drop shadow or watermark. Every cell uses empty alpha outside the subject; no bloom across cell boundaries.\nSubject: Nautile Blindé. An armored deep-ocean nautilus enemy with a very clear tightly coiled spiral shell encased in navy-blue and oxidized-teal metal plates, a few small coral-red armor fins, bright turquoise seams and short violet-tipped tentacles under the shell. Compact hovering/swimming animal machine, not a submarine or human. Attack tentacles thrust forward and a small turquoise pressure pulse exits the mouth. Death shell cracks into pieces and dissolves in blue bubbles.\nColor palette: Abyss navy #091526, dark teal #042f2e, bioluminescent turquoise #2dd4bf, violet #a855f7, sparse coral #fb7185.\nCritical delivery constraint: CLEAN invisible background at alpha 0, solid body opaque. Do not copy the input transparency noise or any colored halos. All effects tiny and close to body. Fill less than HALF of each cell, including attack motion and shield shell. There must be broad empty transparent space between every adjacent cell.",
+          "references": [
+            {
+              "path": "assets/dlc/illustrated-v1/props/abyss_monument.png",
+              "role": "material and ornament style reference"
+            },
+            {
+              "path": "assets/dlc/illustrated-v1/towers/sonar_tower.png",
+              "role": "shading, detail and energy style reference"
+            },
+            {
+              "path": "assets/dlc/illustrated-v1/maps/abyss_dome_bathyal.png",
+              "role": "faction palette and atmosphere reference"
+            }
+          ],
+          "iteration": 1,
+          "sha256": "ed09ef96d56b3b15026f45d46e99b6bb929598dae1306b47981d4af8a5a2eeca"
+        },
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-836c5a60-d5ba-408d-a7c5-c571557ebb13.png",
+          "prompt": "Use case: precise-object-edit. This is a production correction of the supplied enemy sprite atlas. Preserve the SAME creature identity, all 32 distinct animation poses, same colors/materials, same wide 2:1 canvas, and EXACTLY eight equal columns by four equal rows. Preserve the four row states (movement, attack, dissolve, shield break). Reduce EVERY individual sprite inside its own grid cell by 35%, while keeping its center at the cell center; do NOT resize the full sheet. Every body, limb, weapon, shield, attack effect and death fragment together must now fit within the CENTRAL 40% of BOTH cell width and height. Each of the four margins of each cell must be broad, totally empty and transparent (30% cell dimension each). Remove all diffuse background haze, sparse stray pixels and decorative glow outside the actual creature. Solid body opaque; background actual alpha zero. Do not add any background/checkerboard, grid, lettering, numbers, floor or shadows. Keep attack effects tiny and attached to the creature's hand/body, no projectile extending beyond its silhouette. Transparent PNG. Keep detailed material shading and exact distinctive silhouette within the smaller well-isolated sprite. All 32 cells populated, last dissolve just a few motes at the cell center.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/generated_images/exec-13d21fac-d75c-4f37-9a87-49b934ce924d.png",
+              "role": "previous generated atlas; identity-preserving alpha/padding correction"
+            }
+          ],
+          "iteration": 2,
+          "sha256": "3dbe313b6780df370acef8f13192f0f38758300ddf8ba6958c4fa0640b17ec2e",
+          "result": "generated_qa_pass"
+        }
+      ],
+      "visualQA": {
+        "inspected": true,
+        "identityConsistent": true,
+        "statesObserved": [
+          "move",
+          "attack",
+          "death_dissolve",
+          "shield_break"
+        ],
+        "all32CellsPopulated": true,
+        "visibleDifferentPoses": true,
+        "noPrintedTextOrGrid": true,
+        "noBodyClipping": true,
+        "notes": "Inspected each built-in generated output. New named enemy identity derived from GAME_BIBLE; matching faction materials and palette. No existing individual sprite claimed as 1:1 identity reference."
+      },
+      "numericQA": {
+        "mode": "RGBA",
+        "dimensions": [
+          1774,
+          887
+        ],
+        "grid": [
+          8,
+          4
+        ],
+        "usefulAlphaThreshold": 24,
+        "minUsefulCellMargin": 0.19909502262443438,
+        "fullyTransparentPixelRatio": 0.8607736197028607,
+        "visiblePixelRatio": 0.08574308342092787,
+        "nearOpaquePixelRatio": 0.05536949218893983,
+        "uniqueFrameHashes": 32,
+        "cells": [
+          {
+            "row": 0,
+            "column": 0,
+            "usefulMargins": [
+              0.3574660633484163,
+              0.416289592760181,
+              0.2850678733031674,
+              0.248868778280543
+            ]
+          },
+          {
+            "row": 0,
+            "column": 1,
+            "usefulMargins": [
+              0.36936936936936937,
+              0.4117647058823529,
+              0.27927927927927926,
+              0.248868778280543
+            ]
+          },
+          {
+            "row": 0,
+            "column": 2,
+            "usefulMargins": [
+              0.36036036036036034,
+              0.3936651583710407,
+              0.23873873873873874,
+              0.2398190045248869
+            ]
+          },
+          {
+            "row": 0,
+            "column": 3,
+            "usefulMargins": [
+              0.35135135135135137,
+              0.3936651583710407,
+              0.22972972972972974,
+              0.22624434389140272
+            ]
+          },
+          {
+            "row": 0,
+            "column": 4,
+            "usefulMargins": [
+              0.35294117647058826,
+              0.38461538461538464,
+              0.22171945701357465,
+              0.24434389140271492
+            ]
+          },
+          {
+            "row": 0,
+            "column": 5,
+            "usefulMargins": [
+              0.35135135135135137,
+              0.3936651583710407,
+              0.28378378378378377,
+              0.248868778280543
+            ]
+          },
+          {
+            "row": 0,
+            "column": 6,
+            "usefulMargins": [
+              0.34684684684684686,
+              0.416289592760181,
+              0.28378378378378377,
+              0.248868778280543
+            ]
+          },
+          {
+            "row": 0,
+            "column": 7,
+            "usefulMargins": [
+              0.34684684684684686,
+              0.4253393665158371,
+              0.3108108108108108,
+              0.248868778280543
+            ]
+          },
+          {
+            "row": 1,
+            "column": 0,
+            "usefulMargins": [
+              0.3574660633484163,
+              0.4099099099099099,
+              0.2895927601809955,
+              0.26126126126126126
+            ]
+          },
+          {
+            "row": 1,
+            "column": 1,
+            "usefulMargins": [
+              0.35585585585585583,
+              0.4099099099099099,
+              0.2747747747747748,
+              0.26576576576576577
+            ]
+          },
+          {
+            "row": 1,
+            "column": 2,
+            "usefulMargins": [
+              0.34684684684684686,
+              0.3963963963963964,
+              0.22522522522522523,
+              0.2702702702702703
+            ]
+          },
+          {
+            "row": 1,
+            "column": 3,
+            "usefulMargins": [
+              0.34684684684684686,
+              0.4009009009009009,
+              0.22072072072072071,
+              0.26576576576576577
+            ]
+          },
+          {
+            "row": 1,
+            "column": 4,
+            "usefulMargins": [
+              0.3393665158371041,
+              0.3963963963963964,
+              0.19909502262443438,
+              0.26576576576576577
+            ]
+          },
+          {
+            "row": 1,
+            "column": 5,
+            "usefulMargins": [
+              0.34234234234234234,
+              0.40540540540540543,
+              0.21621621621621623,
+              0.26576576576576577
+            ]
+          },
+          {
+            "row": 1,
+            "column": 6,
+            "usefulMargins": [
+              0.34684684684684686,
+              0.4099099099099099,
+              0.22522522522522523,
+              0.25675675675675674
+            ]
+          },
+          {
+            "row": 1,
+            "column": 7,
+            "usefulMargins": [
+              0.34684684684684686,
+              0.4189189189189189,
+              0.3108108108108108,
+              0.26576576576576577
+            ]
+          },
+          {
+            "row": 2,
+            "column": 0,
+            "usefulMargins": [
+              0.3574660633484163,
+              0.4009009009009009,
+              0.2895927601809955,
+              0.2747747747747748
+            ]
+          },
+          {
+            "row": 2,
+            "column": 1,
+            "usefulMargins": [
+              0.36486486486486486,
+              0.4009009009009009,
+              0.28378378378378377,
+              0.2747747747747748
+            ]
+          },
+          {
+            "row": 2,
+            "column": 2,
+            "usefulMargins": [
+              0.36036036036036034,
+              0.3918918918918919,
+              0.28378378378378377,
+              0.27927927927927926
+            ]
+          },
+          {
+            "row": 2,
+            "column": 3,
+            "usefulMargins": [
+              0.35585585585585583,
+              0.3783783783783784,
+              0.28378378378378377,
+              0.27927927927927926
+            ]
+          },
+          {
+            "row": 2,
+            "column": 4,
+            "usefulMargins": [
+              0.33031674208144796,
+              0.3738738738738739,
+              0.29411764705882354,
+              0.27927927927927926
+            ]
+          },
+          {
+            "row": 2,
+            "column": 5,
+            "usefulMargins": [
+              0.3333333333333333,
+              0.3783783783783784,
+              0.32432432432432434,
+              0.2747747747747748
+            ]
+          },
+          {
+            "row": 2,
+            "column": 6,
+            "usefulMargins": [
+              0.34684684684684686,
+              0.3783783783783784,
+              0.33783783783783783,
+              0.27927927927927926
+            ]
+          },
+          {
+            "row": 2,
+            "column": 7,
+            "usefulMargins": [
+              0.43243243243243246,
+              0.4774774774774775,
+              0.42342342342342343,
+              0.3783783783783784
+            ]
+          },
+          {
+            "row": 3,
+            "column": 0,
+            "usefulMargins": [
+              0.3212669683257919,
+              0.35585585585585583,
+              0.2850678733031674,
+              0.28378378378378377
+            ]
+          },
+          {
+            "row": 3,
+            "column": 1,
+            "usefulMargins": [
+              0.32882882882882886,
+              0.36036036036036034,
+              0.28378378378378377,
+              0.28378378378378377
+            ]
+          },
+          {
+            "row": 3,
+            "column": 2,
+            "usefulMargins": [
+              0.33783783783783783,
+              0.35585585585585583,
+              0.2882882882882883,
+              0.2927927927927928
+            ]
+          },
+          {
+            "row": 3,
+            "column": 3,
+            "usefulMargins": [
+              0.32882882882882886,
+              0.35585585585585583,
+              0.2747747747747748,
+              0.2927927927927928
+            ]
+          },
+          {
+            "row": 3,
+            "column": 4,
+            "usefulMargins": [
+              0.31221719457013575,
+              0.35585585585585583,
+              0.2850678733031674,
+              0.2882882882882883
+            ]
+          },
+          {
+            "row": 3,
+            "column": 5,
+            "usefulMargins": [
+              0.27927927927927926,
+              0.35135135135135137,
+              0.2882882882882883,
+              0.28378378378378377
+            ]
+          },
+          {
+            "row": 3,
+            "column": 6,
+            "usefulMargins": [
+              0.30180180180180183,
+              0.36036036036036034,
+              0.2927927927927928,
+              0.27927927927927926
+            ]
+          },
+          {
+            "row": 3,
+            "column": 7,
+            "usefulMargins": [
+              0.34684684684684686,
+              0.3963963963963964,
+              0.3108108108108108,
+              0.28378378378378377
+            ]
+          }
+        ],
+        "weakAlphaNote": "Native generated alpha may include weak fringes below24; useful margin excludes these. No thresholding or other image transformation was applied."
+      },
+      "sha256": "3dbe313b6780df370acef8f13192f0f38758300ddf8ba6958c4fa0640b17ec2e",
+      "byteForByteNativeCopyVerified": true
+    },
+    {
+      "id": "abyss_emp_jellyfish",
+      "name": "Méduse EMP",
+      "biome": "abyss",
+      "sourceDefinition": "docs/GAME_BIBLE.md sections 17.1–17.3",
+      "identityStatus": "first visual identity; style continuity, no prior individual identity reference",
+      "path": "assets/dlc/illustrated-v1/enemies/abyss_emp_jellyfish.png",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "move",
+        "attack",
+        "death_dissolve",
+        "shield_break"
+      ],
+      "references": [
+        {
+          "path": "assets/dlc/illustrated-v1/props/abyss_monument.png",
+          "role": "material and ornament style reference"
+        },
+        {
+          "path": "assets/dlc/illustrated-v1/towers/sonar_tower.png",
+          "role": "shading, detail and energy style reference"
+        },
+        {
+          "path": "assets/dlc/illustrated-v1/maps/abyss_dome_bathyal.png",
+          "role": "faction palette and atmosphere reference"
+        }
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: production enemy animation sprite atlas for Infernal City. Create ONE new raster PNG atlas, wide 2:1 canvas, target 2048×1024, genuine transparent RGBA background. Exactly 8 equal-width columns × 4 equal-height rows, 32 distinct animation frames, no gutters or drawn grid. Each invisible cell contains exactly one creature pose centered on the same pivot, with at least 27% completely transparent padding on ALL FOUR sides, including effects, weapons and fragments. Maximum pose extent is 45% of cell width and 45% of cell height. Camera fixed three-quarter game view, facing slightly toward the lower-right, no camera turns, fixed scale and anchor across frames. Painterly high-detail 2.5D fantasy science-fiction rendering matching the provided project's material and light treatment, readable clean silhouettes; no pixel art. The input images are STYLE REFERENCES ONLY: image 1 supplies materials/ornament, image 2 shading/detail/energy design, image 3 faction palette and atmosphere. Do not reproduce their structures or layouts. This is the first visual design for a named enemy in the Bible; preserve this new creature identity consistently in every frame. Row 1 is MOVE: 8 unique smooth movement/swim/hover cycle poses with meaningful limb/wing/appendage changes, first and last adjacent phases but not duplicates. Row 2 is ATTACK: 8 unique phases of anticipation, wind-up, strike/emission, follow-through, recovery. Row 3 is DEATH_DISSOLVE: 8 unique stages from intact struck pose through collapse, material fragmentation and nearly vanished dust; final frame retains a few visible motes. Row 4 is SHIELD_BREAK: 8 unique intact-creature recoil poses with a thin faction-colored energy shell cracking progressively and breaking into small shards, then a clear recovered final pose. Shield/effects must not obscure the body. No injury/gore. NO text, labels, letters, numbers, cell borders, checkerboard, black/white backdrop, floor, scenery, drop shadow or watermark. Every cell uses empty alpha outside the subject; no bloom across cell boundaries.\nSubject: Méduse EMP. A floating deep-ocean electromagnetic jellyfish with a dark blue translucent armored bell, segmented teal rim, glowing violet core, six readable cyan bioluminescent trailing tentacles, tiny coral-red lights. Rounded upper dome and delicate tapered tentacle silhouette. Attack tentacles flare and emit a compact turquoise-violet electromagnetic corona. Death bell contracts, fragments into bioluminescent blue motes and bubbles.\nColor palette: Abyss navy #091526, dark teal #042f2e, bioluminescent turquoise #2dd4bf, violet #a855f7, sparse coral #fb7185.\nCritical delivery constraint: CLEAN invisible background at alpha 0, solid body opaque. Do not copy the input transparency noise or any colored halos. All effects tiny and close to body. Fill less than HALF of each cell, including attack motion and shield shell. There must be broad empty transparent space between every adjacent cell.",
+      "status": "generated_qa_pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-b654de4a-c33b-478b-88d1-fc6dcff23d8a.png",
+      "attempts": [
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-4b5b815c-dff3-4509-a179-04d240f003a7.png",
+          "prompt": "Use case: stylized-concept. Asset type: production enemy animation sprite atlas for Infernal City. Create ONE new raster PNG atlas, wide 2:1 canvas, target 2048×1024, genuine transparent RGBA background. Exactly 8 equal-width columns × 4 equal-height rows, 32 distinct animation frames, no gutters or drawn grid. Each invisible cell contains exactly one creature pose centered on the same pivot, with at least 27% completely transparent padding on ALL FOUR sides, including effects, weapons and fragments. Maximum pose extent is 45% of cell width and 45% of cell height. Camera fixed three-quarter game view, facing slightly toward the lower-right, no camera turns, fixed scale and anchor across frames. Painterly high-detail 2.5D fantasy science-fiction rendering matching the provided project's material and light treatment, readable clean silhouettes; no pixel art. The input images are STYLE REFERENCES ONLY: image 1 supplies materials/ornament, image 2 shading/detail/energy design, image 3 faction palette and atmosphere. Do not reproduce their structures or layouts. This is the first visual design for a named enemy in the Bible; preserve this new creature identity consistently in every frame. Row 1 is MOVE: 8 unique smooth movement/swim/hover cycle poses with meaningful limb/wing/appendage changes, first and last adjacent phases but not duplicates. Row 2 is ATTACK: 8 unique phases of anticipation, wind-up, strike/emission, follow-through, recovery. Row 3 is DEATH_DISSOLVE: 8 unique stages from intact struck pose through collapse, material fragmentation and nearly vanished dust; final frame retains a few visible motes. Row 4 is SHIELD_BREAK: 8 unique intact-creature recoil poses with a thin faction-colored energy shell cracking progressively and breaking into small shards, then a clear recovered final pose. Shield/effects must not obscure the body. No injury/gore. NO text, labels, letters, numbers, cell borders, checkerboard, black/white backdrop, floor, scenery, drop shadow or watermark. Every cell uses empty alpha outside the subject; no bloom across cell boundaries.\nSubject: Méduse EMP. A floating deep-ocean electromagnetic jellyfish with a dark blue translucent armored bell, segmented teal rim, glowing violet core, six readable cyan bioluminescent trailing tentacles, tiny coral-red lights. Rounded upper dome and delicate tapered tentacle silhouette. Attack tentacles flare and emit a compact turquoise-violet electromagnetic corona. Death bell contracts, fragments into bioluminescent blue motes and bubbles.\nColor palette: Abyss navy #091526, dark teal #042f2e, bioluminescent turquoise #2dd4bf, violet #a855f7, sparse coral #fb7185.\nCritical delivery constraint: CLEAN invisible background at alpha 0, solid body opaque. Do not copy the input transparency noise or any colored halos. All effects tiny and close to body. Fill less than HALF of each cell, including attack motion and shield shell. There must be broad empty transparent space between every adjacent cell.",
+          "references": [
+            {
+              "path": "assets/dlc/illustrated-v1/props/abyss_monument.png",
+              "role": "material and ornament style reference"
+            },
+            {
+              "path": "assets/dlc/illustrated-v1/towers/sonar_tower.png",
+              "role": "shading, detail and energy style reference"
+            },
+            {
+              "path": "assets/dlc/illustrated-v1/maps/abyss_dome_bathyal.png",
+              "role": "faction palette and atmosphere reference"
+            }
+          ],
+          "iteration": 1,
+          "sha256": "9de245fab4c2522568ea30b48aecf31be846654e13a7e3c7ed70020e2e19741f"
+        },
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-b654de4a-c33b-478b-88d1-fc6dcff23d8a.png",
+          "prompt": "Use case: precise-object-edit. This is a production correction of the supplied enemy sprite atlas. Preserve the SAME creature identity, all 32 distinct animation poses, same colors/materials, same wide 2:1 canvas, and EXACTLY eight equal columns by four equal rows. Preserve the four row states (movement, attack, dissolve, shield break). Reduce EVERY individual sprite inside its own grid cell by 35%, while keeping its center at the cell center; do NOT resize the full sheet. Every body, limb, weapon, shield, attack effect and death fragment together must now fit within the CENTRAL 40% of BOTH cell width and height. Each of the four margins of each cell must be broad, totally empty and transparent (30% cell dimension each). Remove all diffuse background haze, sparse stray pixels and decorative glow outside the actual creature. Solid body opaque; background actual alpha zero. Do not add any background/checkerboard, grid, lettering, numbers, floor or shadows. Keep attack effects tiny and attached to the creature's body, no projectile extending beyond its silhouette. Transparent PNG. Keep detailed material shading and exact distinctive silhouette within the smaller well-isolated sprite. All 32 cells populated, last dissolve just a few motes at the cell center.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/generated_images/exec-4b5b815c-dff3-4509-a179-04d240f003a7.png",
+              "role": "previous generated atlas; identity-preserving alpha/padding correction"
+            }
+          ],
+          "iteration": 2,
+          "sha256": "2f6007e57117f664b764e0da97c6930c36150b1b5cc43f02d02c9aa82f688bfc",
+          "result": "generated_qa_pass"
+        }
+      ],
+      "visualQA": {
+        "inspected": true,
+        "identityConsistent": true,
+        "statesObserved": [
+          "move",
+          "attack",
+          "death_dissolve",
+          "shield_break"
+        ],
+        "all32CellsPopulated": true,
+        "visibleDifferentPoses": true,
+        "noPrintedTextOrGrid": true,
+        "noBodyClipping": true,
+        "notes": "Inspected each built-in generated output. New named enemy identity derived from GAME_BIBLE; matching faction materials and palette. No existing individual sprite claimed as 1:1 identity reference."
+      },
+      "numericQA": {
+        "mode": "RGBA",
+        "dimensions": [
+          1774,
+          887
+        ],
+        "grid": [
+          8,
+          4
+        ],
+        "usefulAlphaThreshold": 24,
+        "minUsefulCellMargin": 0.18468468468468469,
+        "fullyTransparentPixelRatio": 0.7960227207731876,
+        "visiblePixelRatio": 0.09562908553844902,
+        "nearOpaquePixelRatio": 0.05488523314975552,
+        "uniqueFrameHashes": 32,
+        "cells": [
+          {
+            "row": 0,
+            "column": 0,
+            "usefulMargins": [
+              0.3438914027149321,
+              0.36199095022624433,
+              0.22171945701357465,
+              0.2171945701357466
+            ]
+          },
+          {
+            "row": 0,
+            "column": 1,
+            "usefulMargins": [
+              0.3783783783783784,
+              0.3393665158371041,
+              0.22522522522522523,
+              0.2081447963800905
+            ]
+          },
+          {
+            "row": 0,
+            "column": 2,
+            "usefulMargins": [
+              0.36936936936936937,
+              0.3257918552036199,
+              0.23423423423423423,
+              0.2171945701357466
+            ]
+          },
+          {
+            "row": 0,
+            "column": 3,
+            "usefulMargins": [
+              0.3063063063063063,
+              0.3167420814479638,
+              0.24324324324324326,
+              0.2669683257918552
+            ]
+          },
+          {
+            "row": 0,
+            "column": 4,
+            "usefulMargins": [
+              0.27149321266968324,
+              0.3212669683257919,
+              0.25339366515837103,
+              0.2579185520361991
+            ]
+          },
+          {
+            "row": 0,
+            "column": 5,
+            "usefulMargins": [
+              0.25675675675675674,
+              0.3438914027149321,
+              0.2702702702702703,
+              0.2398190045248869
+            ]
+          },
+          {
+            "row": 0,
+            "column": 6,
+            "usefulMargins": [
+              0.2747747747747748,
+              0.3665158371040724,
+              0.27927927927927926,
+              0.2171945701357466
+            ]
+          },
+          {
+            "row": 0,
+            "column": 7,
+            "usefulMargins": [
+              0.2972972972972973,
+              0.3665158371040724,
+              0.2882882882882883,
+              0.2171945701357466
+            ]
+          },
+          {
+            "row": 1,
+            "column": 0,
+            "usefulMargins": [
+              0.3393665158371041,
+              0.36036036036036034,
+              0.23076923076923078,
+              0.21621621621621623
+            ]
+          },
+          {
+            "row": 1,
+            "column": 1,
+            "usefulMargins": [
+              0.3333333333333333,
+              0.35135135135135137,
+              0.23873873873873874,
+              0.20270270270270271
+            ]
+          },
+          {
+            "row": 1,
+            "column": 2,
+            "usefulMargins": [
+              0.32882882882882886,
+              0.3333333333333333,
+              0.25675675675675674,
+              0.23873873873873874
+            ]
+          },
+          {
+            "row": 1,
+            "column": 3,
+            "usefulMargins": [
+              0.27927927927927926,
+              0.32432432432432434,
+              0.26126126126126126,
+              0.22972972972972974
+            ]
+          },
+          {
+            "row": 1,
+            "column": 4,
+            "usefulMargins": [
+              0.25339366515837103,
+              0.32432432432432434,
+              0.25339366515837103,
+              0.22972972972972974
+            ]
+          },
+          {
+            "row": 1,
+            "column": 5,
+            "usefulMargins": [
+              0.26576576576576577,
+              0.34684684684684686,
+              0.26126126126126126,
+              0.21171171171171171
+            ]
+          },
+          {
+            "row": 1,
+            "column": 6,
+            "usefulMargins": [
+              0.26576576576576577,
+              0.36486486486486486,
+              0.30180180180180183,
+              0.19369369369369369
+            ]
+          },
+          {
+            "row": 1,
+            "column": 7,
+            "usefulMargins": [
+              0.26576576576576577,
+              0.36936936936936937,
+              0.3108108108108108,
+              0.18468468468468469
+            ]
+          },
+          {
+            "row": 2,
+            "column": 0,
+            "usefulMargins": [
+              0.35294117647058826,
+              0.3333333333333333,
+              0.23529411764705882,
+              0.22972972972972974
+            ]
+          },
+          {
+            "row": 2,
+            "column": 1,
+            "usefulMargins": [
+              0.3333333333333333,
+              0.3333333333333333,
+              0.24324324324324326,
+              0.23423423423423423
+            ]
+          },
+          {
+            "row": 2,
+            "column": 2,
+            "usefulMargins": [
+              0.34684684684684686,
+              0.3153153153153153,
+              0.25225225225225223,
+              0.26126126126126126
+            ]
+          },
+          {
+            "row": 2,
+            "column": 3,
+            "usefulMargins": [
+              0.3108108108108108,
+              0.3153153153153153,
+              0.2702702702702703,
+              0.24774774774774774
+            ]
+          },
+          {
+            "row": 2,
+            "column": 4,
+            "usefulMargins": [
+              0.2850678733031674,
+              0.30180180180180183,
+              0.2850678733031674,
+              0.28378378378378377
+            ]
+          },
+          {
+            "row": 2,
+            "column": 5,
+            "usefulMargins": [
+              0.3063063063063063,
+              0.34684684684684686,
+              0.3153153153153153,
+              0.2927927927927928
+            ]
+          },
+          {
+            "row": 2,
+            "column": 6,
+            "usefulMargins": [
+              0.3108108108108108,
+              0.36936936936936937,
+              0.36486486486486486,
+              0.2882882882882883
+            ]
+          },
+          {
+            "row": 2,
+            "column": 7,
+            "usefulMargins": [
+              0.3738738738738739,
+              0.44144144144144143,
+              0.4369369369369369,
+              0.3738738738738739
+            ]
+          },
+          {
+            "row": 3,
+            "column": 0,
+            "usefulMargins": [
+              0.334841628959276,
+              0.30180180180180183,
+              0.21266968325791855,
+              0.25225225225225223
+            ]
+          },
+          {
+            "row": 3,
+            "column": 1,
+            "usefulMargins": [
+              0.3333333333333333,
+              0.30180180180180183,
+              0.22522522522522523,
+              0.24774774774774774
+            ]
+          },
+          {
+            "row": 3,
+            "column": 2,
+            "usefulMargins": [
+              0.3108108108108108,
+              0.2927927927927928,
+              0.22972972972972974,
+              0.24324324324324326
+            ]
+          },
+          {
+            "row": 3,
+            "column": 3,
+            "usefulMargins": [
+              0.2882882882882883,
+              0.28378378378378377,
+              0.26126126126126126,
+              0.23873873873873874
+            ]
+          },
+          {
+            "row": 3,
+            "column": 4,
+            "usefulMargins": [
+              0.26244343891402716,
+              0.2882882882882883,
+              0.2669683257918552,
+              0.24324324324324326
+            ]
+          },
+          {
+            "row": 3,
+            "column": 5,
+            "usefulMargins": [
+              0.2927927927927928,
+              0.31981981981981983,
+              0.2927927927927928,
+              0.24324324324324326
+            ]
+          },
+          {
+            "row": 3,
+            "column": 6,
+            "usefulMargins": [
+              0.3063063063063063,
+              0.3333333333333333,
+              0.3063063063063063,
+              0.24324324324324326
+            ]
+          },
+          {
+            "row": 3,
+            "column": 7,
+            "usefulMargins": [
+              0.2927927927927928,
+              0.3333333333333333,
+              0.31981981981981983,
+              0.24774774774774774
+            ]
+          }
+        ],
+        "weakAlphaNote": "Native generated alpha may include weak fringes below24; useful margin excludes these. No thresholding or other image transformation was applied."
+      },
+      "sha256": "2f6007e57117f664b764e0da97c6930c36150b1b5cc43f02d02c9aa82f688bfc",
+      "byteForByteNativeCopyVerified": true
+    },
+    {
+      "id": "abyss_stealth_ray",
+      "name": "Raie Furtive",
+      "biome": "abyss",
+      "sourceDefinition": "docs/GAME_BIBLE.md sections 17.1–17.3",
+      "identityStatus": "first visual identity; style continuity, no prior individual identity reference",
+      "path": "assets/dlc/illustrated-v1/enemies/abyss_stealth_ray.png",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "move",
+        "attack",
+        "death_dissolve",
+        "shield_break"
+      ],
+      "references": [
+        {
+          "path": "assets/dlc/illustrated-v1/props/abyss_monument.png",
+          "role": "material and ornament style reference"
+        },
+        {
+          "path": "assets/dlc/illustrated-v1/towers/sonar_tower.png",
+          "role": "shading, detail and energy style reference"
+        },
+        {
+          "path": "assets/dlc/illustrated-v1/maps/abyss_dome_bathyal.png",
+          "role": "faction palette and atmosphere reference"
+        }
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: production enemy animation sprite atlas for Infernal City. Create ONE new raster PNG atlas, wide 2:1 canvas, target 2048×1024, genuine transparent RGBA background. Exactly 8 equal-width columns × 4 equal-height rows, 32 distinct animation frames, no gutters or drawn grid. Each invisible cell contains exactly one creature pose centered on the same pivot, with at least 27% completely transparent padding on ALL FOUR sides, including effects, weapons and fragments. Maximum pose extent is 45% of cell width and 45% of cell height. Camera fixed three-quarter game view, facing slightly toward the lower-right, no camera turns, fixed scale and anchor across frames. Painterly high-detail 2.5D fantasy science-fiction rendering matching the provided project's material and light treatment, readable clean silhouettes; no pixel art. The input images are STYLE REFERENCES ONLY: image 1 supplies materials/ornament, image 2 shading/detail/energy design, image 3 faction palette and atmosphere. Do not reproduce their structures or layouts. This is the first visual design for a named enemy in the Bible; preserve this new creature identity consistently in every frame. Row 1 is MOVE: 8 unique smooth movement/swim/hover cycle poses with meaningful limb/wing/appendage changes, first and last adjacent phases but not duplicates. Row 2 is ATTACK: 8 unique phases of anticipation, wind-up, strike/emission, follow-through, recovery. Row 3 is DEATH_DISSOLVE: 8 unique stages from intact struck pose through collapse, material fragmentation and nearly vanished dust; final frame retains a few visible motes. Row 4 is SHIELD_BREAK: 8 unique intact-creature recoil poses with a thin faction-colored energy shell cracking progressively and breaking into small shards, then a clear recovered final pose. Shield/effects must not obscure the body. No injury/gore. NO text, labels, letters, numbers, cell borders, checkerboard, black/white backdrop, floor, scenery, drop shadow or watermark. Every cell uses empty alpha outside the subject; no bloom across cell boundaries.\nSubject: Raie Furtive. A stealth deep-ocean manta ray enemy with broad low triangular swept dark navy fins, smooth black-teal armored upper body, two tiny turquoise eyes and sparse bioluminescent cyan trim, violet underside accents, a long short-enough curved tail entirely contained in each cell. No human rider. Attack folds fins and lunges with a subtle cyan blade edge. Death fins dissolve into blue-purple bioluminescent fragments and bubbles.\nColor palette: Abyss navy #091526, dark teal #042f2e, bioluminescent turquoise #2dd4bf, violet #a855f7, sparse coral #fb7185.\nCritical delivery constraint: CLEAN invisible background at alpha 0, solid body opaque. Do not copy the input transparency noise or any colored halos. All effects tiny and close to body. Fill less than HALF of each cell, including attack motion and shield shell. There must be broad empty transparent space between every adjacent cell.",
+      "status": "generated_qa_pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-c07b037f-7230-413f-815e-0e4036f77a40.png",
+      "attempts": [
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-3c198476-217d-4a08-b90d-031c1ad27779.png",
+          "prompt": "Use case: stylized-concept. Asset type: production enemy animation sprite atlas for Infernal City. Create ONE new raster PNG atlas, wide 2:1 canvas, target 2048×1024, genuine transparent RGBA background. Exactly 8 equal-width columns × 4 equal-height rows, 32 distinct animation frames, no gutters or drawn grid. Each invisible cell contains exactly one creature pose centered on the same pivot, with at least 27% completely transparent padding on ALL FOUR sides, including effects, weapons and fragments. Maximum pose extent is 45% of cell width and 45% of cell height. Camera fixed three-quarter game view, facing slightly toward the lower-right, no camera turns, fixed scale and anchor across frames. Painterly high-detail 2.5D fantasy science-fiction rendering matching the provided project's material and light treatment, readable clean silhouettes; no pixel art. The input images are STYLE REFERENCES ONLY: image 1 supplies materials/ornament, image 2 shading/detail/energy design, image 3 faction palette and atmosphere. Do not reproduce their structures or layouts. This is the first visual design for a named enemy in the Bible; preserve this new creature identity consistently in every frame. Row 1 is MOVE: 8 unique smooth movement/swim/hover cycle poses with meaningful limb/wing/appendage changes, first and last adjacent phases but not duplicates. Row 2 is ATTACK: 8 unique phases of anticipation, wind-up, strike/emission, follow-through, recovery. Row 3 is DEATH_DISSOLVE: 8 unique stages from intact struck pose through collapse, material fragmentation and nearly vanished dust; final frame retains a few visible motes. Row 4 is SHIELD_BREAK: 8 unique intact-creature recoil poses with a thin faction-colored energy shell cracking progressively and breaking into small shards, then a clear recovered final pose. Shield/effects must not obscure the body. No injury/gore. NO text, labels, letters, numbers, cell borders, checkerboard, black/white backdrop, floor, scenery, drop shadow or watermark. Every cell uses empty alpha outside the subject; no bloom across cell boundaries.\nSubject: Raie Furtive. A stealth deep-ocean manta ray enemy with broad low triangular swept dark navy fins, smooth black-teal armored upper body, two tiny turquoise eyes and sparse bioluminescent cyan trim, violet underside accents, a long short-enough curved tail entirely contained in each cell. No human rider. Attack folds fins and lunges with a subtle cyan blade edge. Death fins dissolve into blue-purple bioluminescent fragments and bubbles.\nColor palette: Abyss navy #091526, dark teal #042f2e, bioluminescent turquoise #2dd4bf, violet #a855f7, sparse coral #fb7185.\nCritical delivery constraint: CLEAN invisible background at alpha 0, solid body opaque. Do not copy the input transparency noise or any colored halos. All effects tiny and close to body. Fill less than HALF of each cell, including attack motion and shield shell. There must be broad empty transparent space between every adjacent cell.",
+          "references": [
+            {
+              "path": "assets/dlc/illustrated-v1/props/abyss_monument.png",
+              "role": "material and ornament style reference"
+            },
+            {
+              "path": "assets/dlc/illustrated-v1/towers/sonar_tower.png",
+              "role": "shading, detail and energy style reference"
+            },
+            {
+              "path": "assets/dlc/illustrated-v1/maps/abyss_dome_bathyal.png",
+              "role": "faction palette and atmosphere reference"
+            }
+          ],
+          "iteration": 1,
+          "sha256": "7b2f3931e8b7ffc3b4923274380a73251e060a764f6ddff906a2bb1d563a385a"
+        },
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-c07b037f-7230-413f-815e-0e4036f77a40.png",
+          "prompt": "Use case: precise-object-edit. This is a production correction of the supplied enemy sprite atlas. Preserve the SAME creature identity, all 32 distinct animation poses, same colors/materials, same wide 2:1 canvas, and EXACTLY eight equal columns by four equal rows. Preserve the four row states (movement, attack, dissolve, shield break). Reduce EVERY individual sprite inside its own grid cell by 35%, while keeping its center at the cell center; do NOT resize the full sheet. Every body, limb, weapon, shield, attack effect and death fragment together must now fit within the CENTRAL 40% of BOTH cell width and height. Each of the four margins of each cell must be broad, totally empty and transparent (30% cell dimension each). Remove all diffuse background haze, sparse stray pixels and decorative glow outside the actual creature. Solid body opaque; background actual alpha zero. Do not add any background/checkerboard, grid, lettering, numbers, floor or shadows. Keep attack effects tiny and attached to the creature's body, no projectile extending beyond its silhouette. Transparent PNG. Keep detailed material shading and exact distinctive silhouette within the smaller well-isolated sprite. All 32 cells populated, last dissolve just a few motes at the cell center.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/generated_images/exec-3c198476-217d-4a08-b90d-031c1ad27779.png",
+              "role": "previous generated atlas; identity-preserving alpha/padding correction"
+            }
+          ],
+          "iteration": 2,
+          "sha256": "c84e3af7d5fecfe1bb3b90f46d8c2d1a8bd12fdea43a0a8caae095c309a2e60d",
+          "result": "generated_qa_pass"
+        }
+      ],
+      "visualQA": {
+        "inspected": true,
+        "identityConsistent": true,
+        "statesObserved": [
+          "move",
+          "attack",
+          "death_dissolve",
+          "shield_break"
+        ],
+        "all32CellsPopulated": true,
+        "visibleDifferentPoses": true,
+        "noPrintedTextOrGrid": true,
+        "noBodyClipping": true,
+        "notes": "Inspected each built-in generated output. New named enemy identity derived from GAME_BIBLE; matching faction materials and palette. No existing individual sprite claimed as 1:1 identity reference."
+      },
+      "numericQA": {
+        "mode": "RGBA",
+        "dimensions": [
+          1774,
+          887
+        ],
+        "grid": [
+          8,
+          4
+        ],
+        "usefulAlphaThreshold": 24,
+        "minUsefulCellMargin": 0.23423423423423423,
+        "fullyTransparentPixelRatio": 0.8241040254509265,
+        "visiblePixelRatio": 0.06595392040103258,
+        "nearOpaquePixelRatio": 0.0382774359437141,
+        "uniqueFrameHashes": 32,
+        "cells": [
+          {
+            "row": 0,
+            "column": 0,
+            "usefulMargins": [
+              0.27149321266968324,
+              0.4298642533936652,
+              0.248868778280543,
+              0.31221719457013575
+            ]
+          },
+          {
+            "row": 0,
+            "column": 1,
+            "usefulMargins": [
+              0.2882882882882883,
+              0.4298642533936652,
+              0.24324324324324326,
+              0.3167420814479638
+            ]
+          },
+          {
+            "row": 0,
+            "column": 2,
+            "usefulMargins": [
+              0.2927927927927928,
+              0.42081447963800905,
+              0.25225225225225223,
+              0.28054298642533937
+            ]
+          },
+          {
+            "row": 0,
+            "column": 3,
+            "usefulMargins": [
+              0.3333333333333333,
+              0.42081447963800905,
+              0.26576576576576577,
+              0.23529411764705882
+            ]
+          },
+          {
+            "row": 0,
+            "column": 4,
+            "usefulMargins": [
+              0.31221719457013575,
+              0.4343891402714932,
+              0.2579185520361991,
+              0.2850678733031674
+            ]
+          },
+          {
+            "row": 0,
+            "column": 5,
+            "usefulMargins": [
+              0.26126126126126126,
+              0.4343891402714932,
+              0.24324324324324326,
+              0.31221719457013575
+            ]
+          },
+          {
+            "row": 0,
+            "column": 6,
+            "usefulMargins": [
+              0.26126126126126126,
+              0.4343891402714932,
+              0.23873873873873874,
+              0.31221719457013575
+            ]
+          },
+          {
+            "row": 0,
+            "column": 7,
+            "usefulMargins": [
+              0.2747747747747748,
+              0.4343891402714932,
+              0.23873873873873874,
+              0.31221719457013575
+            ]
+          },
+          {
+            "row": 1,
+            "column": 0,
+            "usefulMargins": [
+              0.2669683257918552,
+              0.42792792792792794,
+              0.24434389140271492,
+              0.3063063063063063
+            ]
+          },
+          {
+            "row": 1,
+            "column": 1,
+            "usefulMargins": [
+              0.30180180180180183,
+              0.42342342342342343,
+              0.25225225225225223,
+              0.2972972972972973
+            ]
+          },
+          {
+            "row": 1,
+            "column": 2,
+            "usefulMargins": [
+              0.3783783783783784,
+              0.4189189189189189,
+              0.2702702702702703,
+              0.28378378378378377
+            ]
+          },
+          {
+            "row": 1,
+            "column": 3,
+            "usefulMargins": [
+              0.3738738738738739,
+              0.4009009009009009,
+              0.3108108108108108,
+              0.23423423423423423
+            ]
+          },
+          {
+            "row": 1,
+            "column": 4,
+            "usefulMargins": [
+              0.35294117647058826,
+              0.40540540540540543,
+              0.28054298642533937,
+              0.23423423423423423
+            ]
+          },
+          {
+            "row": 1,
+            "column": 5,
+            "usefulMargins": [
+              0.34234234234234234,
+              0.42342342342342343,
+              0.26126126126126126,
+              0.25675675675675674
+            ]
+          },
+          {
+            "row": 1,
+            "column": 6,
+            "usefulMargins": [
+              0.28378378378378377,
+              0.42342342342342343,
+              0.24324324324324326,
+              0.3063063063063063
+            ]
+          },
+          {
+            "row": 1,
+            "column": 7,
+            "usefulMargins": [
+              0.2747747747747748,
+              0.42792792792792794,
+              0.24324324324324326,
+              0.3063063063063063
+            ]
+          },
+          {
+            "row": 2,
+            "column": 0,
+            "usefulMargins": [
+              0.27601809954751133,
+              0.42342342342342343,
+              0.248868778280543,
+              0.3108108108108108
+            ]
+          },
+          {
+            "row": 2,
+            "column": 1,
+            "usefulMargins": [
+              0.2972972972972973,
+              0.42342342342342343,
+              0.24324324324324326,
+              0.3108108108108108
+            ]
+          },
+          {
+            "row": 2,
+            "column": 2,
+            "usefulMargins": [
+              0.30180180180180183,
+              0.4189189189189189,
+              0.23873873873873874,
+              0.3063063063063063
+            ]
+          },
+          {
+            "row": 2,
+            "column": 3,
+            "usefulMargins": [
+              0.32432432432432434,
+              0.4144144144144144,
+              0.26126126126126126,
+              0.3063063063063063
+            ]
+          },
+          {
+            "row": 2,
+            "column": 4,
+            "usefulMargins": [
+              0.3257918552036199,
+              0.4144144144144144,
+              0.27149321266968324,
+              0.3108108108108108
+            ]
+          },
+          {
+            "row": 2,
+            "column": 5,
+            "usefulMargins": [
+              0.34684684684684686,
+              0.40540540540540543,
+              0.2972972972972973,
+              0.3108108108108108
+            ]
+          },
+          {
+            "row": 2,
+            "column": 6,
+            "usefulMargins": [
+              0.36036036036036034,
+              0.4144144144144144,
+              0.3108108108108108,
+              0.3108108108108108
+            ]
+          },
+          {
+            "row": 2,
+            "column": 7,
+            "usefulMargins": [
+              0.40540540540540543,
+              0.42792792792792794,
+              0.34684684684684686,
+              0.32432432432432434
+            ]
+          },
+          {
+            "row": 3,
+            "column": 0,
+            "usefulMargins": [
+              0.27149321266968324,
+              0.38288288288288286,
+              0.24434389140271492,
+              0.27927927927927926
+            ]
+          },
+          {
+            "row": 3,
+            "column": 1,
+            "usefulMargins": [
+              0.27927927927927926,
+              0.38288288288288286,
+              0.24774774774774774,
+              0.2747747747747748
+            ]
+          },
+          {
+            "row": 3,
+            "column": 2,
+            "usefulMargins": [
+              0.2747747747747748,
+              0.38288288288288286,
+              0.24324324324324326,
+              0.2747747747747748
+            ]
+          },
+          {
+            "row": 3,
+            "column": 3,
+            "usefulMargins": [
+              0.2747747747747748,
+              0.38288288288288286,
+              0.25225225225225223,
+              0.2702702702702703
+            ]
+          },
+          {
+            "row": 3,
+            "column": 4,
+            "usefulMargins": [
+              0.28054298642533937,
+              0.3738738738738739,
+              0.2579185520361991,
+              0.28378378378378377
+            ]
+          },
+          {
+            "row": 3,
+            "column": 5,
+            "usefulMargins": [
+              0.28378378378378377,
+              0.3918918918918919,
+              0.25675675675675674,
+              0.28378378378378377
+            ]
+          },
+          {
+            "row": 3,
+            "column": 6,
+            "usefulMargins": [
+              0.27927927927927926,
+              0.42342342342342343,
+              0.24324324324324326,
+              0.3108108108108108
+            ]
+          },
+          {
+            "row": 3,
+            "column": 7,
+            "usefulMargins": [
+              0.2747747747747748,
+              0.42342342342342343,
+              0.24324324324324326,
+              0.3108108108108108
+            ]
+          }
+        ],
+        "weakAlphaNote": "Native generated alpha may include weak fringes below24; useful margin excludes these. No thresholding or other image transformation was applied."
+      },
+      "sha256": "c84e3af7d5fecfe1bb3b90f46d8c2d1a8bd12fdea43a0a8caae095c309a2e60d",
+      "byteForByteNativeCopyVerified": true
+    },
+    {
+      "id": "abyss_drill_crab",
+      "name": "Crabe Foreur",
+      "biome": "abyss",
+      "sourceDefinition": "docs/GAME_BIBLE.md sections 17.1–17.3",
+      "identityStatus": "first visual identity; style continuity, no prior individual identity reference",
+      "path": "assets/dlc/illustrated-v1/enemies/abyss_drill_crab.png",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "move",
+        "attack",
+        "death_dissolve",
+        "shield_break"
+      ],
+      "references": [
+        {
+          "path": "assets/dlc/illustrated-v1/props/abyss_monument.png",
+          "role": "material and ornament style reference"
+        },
+        {
+          "path": "assets/dlc/illustrated-v1/towers/sonar_tower.png",
+          "role": "shading, detail and energy style reference"
+        },
+        {
+          "path": "assets/dlc/illustrated-v1/maps/abyss_dome_bathyal.png",
+          "role": "faction palette and atmosphere reference"
+        }
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: production enemy animation sprite atlas for Infernal City. Create ONE new raster PNG atlas, wide 2:1 canvas, target 2048×1024, genuine transparent RGBA background. Exactly 8 equal-width columns × 4 equal-height rows, 32 distinct animation frames, no gutters or drawn grid. Each invisible cell contains exactly one creature pose centered on the same pivot, with at least 27% completely transparent padding on ALL FOUR sides, including effects, weapons and fragments. Maximum pose extent is 45% of cell width and 45% of cell height. Camera fixed three-quarter game view, facing slightly toward the lower-right, no camera turns, fixed scale and anchor across frames. Painterly high-detail 2.5D fantasy science-fiction rendering matching the provided project's material and light treatment, readable clean silhouettes; no pixel art. The input images are STYLE REFERENCES ONLY: image 1 supplies materials/ornament, image 2 shading/detail/energy design, image 3 faction palette and atmosphere. Do not reproduce their structures or layouts. This is the first visual design for a named enemy in the Bible; preserve this new creature identity consistently in every frame. Row 1 is MOVE: 8 unique smooth movement/swim/hover cycle poses with meaningful limb/wing/appendage changes, first and last adjacent phases but not duplicates. Row 2 is ATTACK: 8 unique phases of anticipation, wind-up, strike/emission, follow-through, recovery. Row 3 is DEATH_DISSOLVE: 8 unique stages from intact struck pose through collapse, material fragmentation and nearly vanished dust; final frame retains a few visible motes. Row 4 is SHIELD_BREAK: 8 unique intact-creature recoil poses with a thin faction-colored energy shell cracking progressively and breaking into small shards, then a clear recovered final pose. Shield/effects must not obscure the body. No injury/gore. NO text, labels, letters, numbers, cell borders, checkerboard, black/white backdrop, floor, scenery, drop shadow or watermark. Every cell uses empty alpha outside the subject; no bloom across cell boundaries.\nSubject: Crabe Foreur. A low wide armored abyssal crab with dark navy and teal segmented shell, six compact articulated legs, one ordinary armored pincer and one unmistakable conical metallic drilling claw with turquoise spiral highlights. Coral-red warning marks and violet bioluminescent joints. Attack braced legs and rotating drill claw thrust. Death shell breaks apart and dissolves into teal metal fragments and bubbles.\nColor palette: Abyss navy #091526, dark teal #042f2e, bioluminescent turquoise #2dd4bf, violet #a855f7, sparse coral #fb7185.\nCritical delivery constraint: CLEAN invisible background at alpha 0, solid body opaque. Do not copy the input transparency noise or any colored halos. All effects tiny and close to body. Fill less than HALF of each cell, including attack motion and shield shell. There must be broad empty transparent space between every adjacent cell.",
+      "status": "generated_qa_pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-369a82a4-4804-456b-88d7-d1a85c47ccfd.png",
+      "attempts": [
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-072fd6aa-fd07-427e-a853-eee9a2ce73a1.png",
+          "prompt": "Use case: stylized-concept. Asset type: production enemy animation sprite atlas for Infernal City. Create ONE new raster PNG atlas, wide 2:1 canvas, target 2048×1024, genuine transparent RGBA background. Exactly 8 equal-width columns × 4 equal-height rows, 32 distinct animation frames, no gutters or drawn grid. Each invisible cell contains exactly one creature pose centered on the same pivot, with at least 27% completely transparent padding on ALL FOUR sides, including effects, weapons and fragments. Maximum pose extent is 45% of cell width and 45% of cell height. Camera fixed three-quarter game view, facing slightly toward the lower-right, no camera turns, fixed scale and anchor across frames. Painterly high-detail 2.5D fantasy science-fiction rendering matching the provided project's material and light treatment, readable clean silhouettes; no pixel art. The input images are STYLE REFERENCES ONLY: image 1 supplies materials/ornament, image 2 shading/detail/energy design, image 3 faction palette and atmosphere. Do not reproduce their structures or layouts. This is the first visual design for a named enemy in the Bible; preserve this new creature identity consistently in every frame. Row 1 is MOVE: 8 unique smooth movement/swim/hover cycle poses with meaningful limb/wing/appendage changes, first and last adjacent phases but not duplicates. Row 2 is ATTACK: 8 unique phases of anticipation, wind-up, strike/emission, follow-through, recovery. Row 3 is DEATH_DISSOLVE: 8 unique stages from intact struck pose through collapse, material fragmentation and nearly vanished dust; final frame retains a few visible motes. Row 4 is SHIELD_BREAK: 8 unique intact-creature recoil poses with a thin faction-colored energy shell cracking progressively and breaking into small shards, then a clear recovered final pose. Shield/effects must not obscure the body. No injury/gore. NO text, labels, letters, numbers, cell borders, checkerboard, black/white backdrop, floor, scenery, drop shadow or watermark. Every cell uses empty alpha outside the subject; no bloom across cell boundaries.\nSubject: Crabe Foreur. A low wide armored abyssal crab with dark navy and teal segmented shell, six compact articulated legs, one ordinary armored pincer and one unmistakable conical metallic drilling claw with turquoise spiral highlights. Coral-red warning marks and violet bioluminescent joints. Attack braced legs and rotating drill claw thrust. Death shell breaks apart and dissolves into teal metal fragments and bubbles.\nColor palette: Abyss navy #091526, dark teal #042f2e, bioluminescent turquoise #2dd4bf, violet #a855f7, sparse coral #fb7185.\nCritical delivery constraint: CLEAN invisible background at alpha 0, solid body opaque. Do not copy the input transparency noise or any colored halos. All effects tiny and close to body. Fill less than HALF of each cell, including attack motion and shield shell. There must be broad empty transparent space between every adjacent cell.",
+          "references": [
+            {
+              "path": "assets/dlc/illustrated-v1/props/abyss_monument.png",
+              "role": "material and ornament style reference"
+            },
+            {
+              "path": "assets/dlc/illustrated-v1/towers/sonar_tower.png",
+              "role": "shading, detail and energy style reference"
+            },
+            {
+              "path": "assets/dlc/illustrated-v1/maps/abyss_dome_bathyal.png",
+              "role": "faction palette and atmosphere reference"
+            }
+          ],
+          "iteration": 1,
+          "sha256": "4ea9e01813273137091faaa4a49aa8d3f8ae307726391f5f9d00307de51c0cbc",
+          "result": "needs_padding_revision"
+        },
+        {
+          "native": "/workspace/scratch/3c707a35b074/generated_images/exec-369a82a4-4804-456b-88d7-d1a85c47ccfd.png",
+          "prompt": "Use case: precise-object-edit. This is a production correction of the supplied armored drill-crab enemy sprite atlas. Preserve SAME crab identity including coral shell, cyan spiral drill pincer and 6 legs, all 32 distinct animation poses, same colors/materials, same wide 2:1 canvas, and EXACTLY eight equal columns by four equal rows. Preserve four row states (movement, drill attack, dissolve, shield break). Reduce EVERY individual sprite inside its own grid cell by 35%, keeping center at cell center; do NOT resize the full sheet. Every body, leg, drill, shield, attack effect and death fragment together must now fit within the CENTRAL 40% of BOTH cell width and height. Each of the four margins of every cell must be broad, empty and transparent (30% cell dimension each). Remove all diffuse background haze, stray pixels and decorative glow outside actual crab. Solid body opaque; background actual alpha zero. Do not add background/checkerboard, grid, lettering, numbers, floor or shadows. Keep drill attack effects compact and hugging the drill, no ray/projectile extending beyond its silhouette. Transparent PNG. Keep detailed material shading and exact distinctive silhouette within smaller well-isolated sprite. All 32 cells populated; final dissolve has just a few motes at cell center.",
+          "references": [
+            {
+              "path": "/workspace/scratch/3c707a35b074/generated_images/exec-072fd6aa-fd07-427e-a853-eee9a2ce73a1.png",
+              "role": "previous generated atlas; identity-preserving padding correction"
+            }
+          ],
+          "iteration": 2,
+          "sha256": "41129ee7b6aa3805491fbb256d45fdda861f755d9ee1dca145f2af99387e90fd",
+          "result": "generated_qa_pass"
+        }
+      ],
+      "visualQA": {
+        "inspected": true,
+        "identityConsistent": true,
+        "statesObserved": [
+          "move",
+          "attack",
+          "death_dissolve",
+          "shield_break"
+        ],
+        "all32CellsPopulated": true,
+        "visibleDifferentPoses": true,
+        "noPrintedTextOrGrid": true,
+        "noBodyClipping": true,
+        "notes": "Inspected each built-in generated output. New named enemy identity derived from GAME_BIBLE; matching faction materials and palette. No existing individual sprite claimed as 1:1 identity reference."
+      },
+      "numericQA": {
+        "mode": "RGBA",
+        "dimensions": [
+          1774,
+          887
+        ],
+        "grid": [
+          8,
+          4
+        ],
+        "usefulAlphaThreshold": 24,
+        "minUsefulCellMargin": 0.19909502262443438,
+        "fullyTransparentPixelRatio": 0.7489854074067483,
+        "visiblePixelRatio": 0.09104959651435174,
+        "nearOpaquePixelRatio": 0.06304963718702694,
+        "uniqueFrameHashes": 32,
+        "cells": [
+          {
+            "row": 0,
+            "column": 0,
+            "usefulMargins": [
+              0.2895927601809955,
+              0.3891402714932127,
+              0.26244343891402716,
+              0.3076923076923077
+            ]
+          },
+          {
+            "row": 0,
+            "column": 1,
+            "usefulMargins": [
+              0.2927927927927928,
+              0.3891402714932127,
+              0.26126126126126126,
+              0.3076923076923077
+            ]
+          },
+          {
+            "row": 0,
+            "column": 2,
+            "usefulMargins": [
+              0.28378378378378377,
+              0.3891402714932127,
+              0.26576576576576577,
+              0.3076923076923077
+            ]
+          },
+          {
+            "row": 0,
+            "column": 3,
+            "usefulMargins": [
+              0.27927927927927926,
+              0.3891402714932127,
+              0.25675675675675674,
+              0.3031674208144796
+            ]
+          },
+          {
+            "row": 0,
+            "column": 4,
+            "usefulMargins": [
+              0.2895927601809955,
+              0.3891402714932127,
+              0.26244343891402716,
+              0.3031674208144796
+            ]
+          },
+          {
+            "row": 0,
+            "column": 5,
+            "usefulMargins": [
+              0.2972972972972973,
+              0.3891402714932127,
+              0.26126126126126126,
+              0.3167420814479638
+            ]
+          },
+          {
+            "row": 0,
+            "column": 6,
+            "usefulMargins": [
+              0.2927927927927928,
+              0.38461538461538464,
+              0.26576576576576577,
+              0.3212669683257919
+            ]
+          },
+          {
+            "row": 0,
+            "column": 7,
+            "usefulMargins": [
+              0.2927927927927928,
+              0.3936651583710407,
+              0.26576576576576577,
+              0.31221719457013575
+            ]
+          },
+          {
+            "row": 1,
+            "column": 0,
+            "usefulMargins": [
+              0.2895927601809955,
+              0.4009009009009009,
+              0.26244343891402716,
+              0.3108108108108108
+            ]
+          },
+          {
+            "row": 1,
+            "column": 1,
+            "usefulMargins": [
+              0.2882882882882883,
+              0.4009009009009009,
+              0.26126126126126126,
+              0.3108108108108108
+            ]
+          },
+          {
+            "row": 1,
+            "column": 2,
+            "usefulMargins": [
+              0.2882882882882883,
+              0.38738738738738737,
+              0.24774774774774774,
+              0.3108108108108108
+            ]
+          },
+          {
+            "row": 1,
+            "column": 3,
+            "usefulMargins": [
+              0.26126126126126126,
+              0.3738738738738739,
+              0.21171171171171171,
+              0.3153153153153153
+            ]
+          },
+          {
+            "row": 1,
+            "column": 4,
+            "usefulMargins": [
+              0.2669683257918552,
+              0.3918918918918919,
+              0.19909502262443438,
+              0.3108108108108108
+            ]
+          },
+          {
+            "row": 1,
+            "column": 5,
+            "usefulMargins": [
+              0.2882882882882883,
+              0.3918918918918919,
+              0.20270270270270271,
+              0.3108108108108108
+            ]
+          },
+          {
+            "row": 1,
+            "column": 6,
+            "usefulMargins": [
+              0.28378378378378377,
+              0.4009009009009009,
+              0.26576576576576577,
+              0.3108108108108108
+            ]
+          },
+          {
+            "row": 1,
+            "column": 7,
+            "usefulMargins": [
+              0.2972972972972973,
+              0.3963963963963964,
+              0.26576576576576577,
+              0.3063063063063063
+            ]
+          },
+          {
+            "row": 2,
+            "column": 0,
+            "usefulMargins": [
+              0.2895927601809955,
+              0.4009009009009009,
+              0.26244343891402716,
+              0.3063063063063063
+            ]
+          },
+          {
+            "row": 2,
+            "column": 1,
+            "usefulMargins": [
+              0.2882882882882883,
+              0.3918918918918919,
+              0.26126126126126126,
+              0.3108108108108108
+            ]
+          },
+          {
+            "row": 2,
+            "column": 2,
+            "usefulMargins": [
+              0.28378378378378377,
+              0.35135135135135137,
+              0.26126126126126126,
+              0.3108108108108108
+            ]
+          },
+          {
+            "row": 2,
+            "column": 3,
+            "usefulMargins": [
+              0.2747747747747748,
+              0.33783783783783783,
+              0.26126126126126126,
+              0.3063063063063063
+            ]
+          },
+          {
+            "row": 2,
+            "column": 4,
+            "usefulMargins": [
+              0.2850678733031674,
+              0.33783783783783783,
+              0.26244343891402716,
+              0.3063063063063063
+            ]
+          },
+          {
+            "row": 2,
+            "column": 5,
+            "usefulMargins": [
+              0.2927927927927928,
+              0.36486486486486486,
+              0.2927927927927928,
+              0.3063063063063063
+            ]
+          },
+          {
+            "row": 2,
+            "column": 6,
+            "usefulMargins": [
+              0.34234234234234234,
+              0.38288288288288286,
+              0.31981981981981983,
+              0.33783783783783783
+            ]
+          },
+          {
+            "row": 2,
+            "column": 7,
+            "usefulMargins": [
+              0.3918918918918919,
+              0.4144144144144144,
+              0.42342342342342343,
+              0.38288288288288286
+            ]
+          },
+          {
+            "row": 3,
+            "column": 0,
+            "usefulMargins": [
+              0.2850678733031674,
+              0.36486486486486486,
+              0.26244343891402716,
+              0.3108108108108108
+            ]
+          },
+          {
+            "row": 3,
+            "column": 1,
+            "usefulMargins": [
+              0.28378378378378377,
+              0.36036036036036034,
+              0.26126126126126126,
+              0.3108108108108108
+            ]
+          },
+          {
+            "row": 3,
+            "column": 2,
+            "usefulMargins": [
+              0.28378378378378377,
+              0.36036036036036034,
+              0.26576576576576577,
+              0.3153153153153153
+            ]
+          },
+          {
+            "row": 3,
+            "column": 3,
+            "usefulMargins": [
+              0.27927927927927926,
+              0.36036036036036034,
+              0.26576576576576577,
+              0.3153153153153153
+            ]
+          },
+          {
+            "row": 3,
+            "column": 4,
+            "usefulMargins": [
+              0.2850678733031674,
+              0.34684684684684686,
+              0.2579185520361991,
+              0.3153153153153153
+            ]
+          },
+          {
+            "row": 3,
+            "column": 5,
+            "usefulMargins": [
+              0.2927927927927928,
+              0.35585585585585583,
+              0.25675675675675674,
+              0.3153153153153153
+            ]
+          },
+          {
+            "row": 3,
+            "column": 6,
+            "usefulMargins": [
+              0.28378378378378377,
+              0.3963963963963964,
+              0.26126126126126126,
+              0.31981981981981983
+            ]
+          },
+          {
+            "row": 3,
+            "column": 7,
+            "usefulMargins": [
+              0.2882882882882883,
+              0.3963963963963964,
+              0.26576576576576577,
+              0.3153153153153153
+            ]
+          }
+        ],
+        "weakAlphaNote": "Native generated alpha may include weak fringes below24; useful margin excludes these. No thresholding or other image transformation was applied."
+      },
+      "sha256": "41129ee7b6aa3805491fbb256d45fdda861f755d9ee1dca145f2af99387e90fd",
+      "byteForByteNativeCopyVerified": true
+    }
+  ],
+  "completed": "2026-11-24",
+  "totalAssets": 8,
+  "totalFrames": 256
+}

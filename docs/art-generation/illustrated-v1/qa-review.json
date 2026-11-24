@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "pack": "illustrated-v1",
   "catalogue": "scripts/dlc-art-spec.cjs",
-  "expectedAssets": 82,
+  "expectedAssets": 107,
   "status": "complete",
-  "consolidatedAtUtc": "2026-11-24T10:09:04.194463+00:00",
-  "method": "Consolidation of explicit current pass/approved verdicts only. Every approval SHA is checked against the final PNG, generation-result metadata, and original native PNG when present. File presence never creates approval. Superseded reviews do not grant approval.",
+  "consolidatedAtUtc": "2026-11-24T12:01:23.684847+00:00",
+  "method": "Explicit visual approvals only. Prior PNG hashes retained; 25 continuation approvals independently reviewed and compared byte-for-byte with their referenced image_gen natives. Ten aerial display scales are measured and bound to unchanged PNG hashes.",
   "approved": [
     {
       "key": "bosses/architect_zero",
@@ -274,6 +274,58 @@
       }
     },
     {
+      "key": "enemies/abyss_armored_nautilus",
+      "sha256": "3dbe313b6780df370acef8f13192f0f38758300ddf8ba6958c4fa0640b17ec2e",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/named-enemies.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-836c5a60-d5ba-408d-a7c5-c571557ebb13.png",
+      "nativeExists": true,
+      "nativeSha256": "3dbe313b6780df370acef8f13192f0f38758300ddf8ba6958c4fa0640b17ec2e",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "enemies/abyss_drill_crab",
+      "sha256": "41129ee7b6aa3805491fbb256d45fdda861f755d9ee1dca145f2af99387e90fd",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/named-enemies.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-369a82a4-4804-456b-88d7-d1a85c47ccfd.png",
+      "nativeExists": true,
+      "nativeSha256": "41129ee7b6aa3805491fbb256d45fdda861f755d9ee1dca145f2af99387e90fd",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "enemies/abyss_emp_jellyfish",
+      "sha256": "2f6007e57117f664b764e0da97c6930c36150b1b5cc43f02d02c9aa82f688bfc",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/named-enemies.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-b654de4a-c33b-478b-88d1-fc6dcff23d8a.png",
+      "nativeExists": true,
+      "nativeSha256": "2f6007e57117f664b764e0da97c6930c36150b1b5cc43f02d02c9aa82f688bfc",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "enemies/abyss_stealth_ray",
+      "sha256": "c84e3af7d5fecfe1bb3b90f46d8c2d1a8bd12fdea43a0a8caae095c309a2e60d",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/named-enemies.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-c07b037f-7230-413f-815e-0e4036f77a40.png",
+      "nativeExists": true,
+      "nativeSha256": "c84e3af7d5fecfe1bb3b90f46d8c2d1a8bd12fdea43a0a8caae095c309a2e60d",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
       "key": "enemies/air_ash_ifrit",
       "path": "assets/dlc/illustrated-v1/enemies/air_ash_ifrit.png",
       "sha256": "334dd929a78cb593be621d0096edc442f039a1e7d7f5c3e5ef2c4c911dc82248",
@@ -291,7 +343,10 @@
         "value": "approved",
         "selector": "enemies/air_ash_ifrit",
         "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
-      }
+      },
+      "drawScale": 1.333592,
+      "drawScaleSha256": "334dd929a78cb593be621d0096edc442f039a1e7d7f5c3e5ef2c4c911dc82248",
+      "drawScaleSource": "docs/art-generation/continuation-v1/aerial-draw-scales.json"
     },
     {
       "key": "enemies/air_bioforge_wasp",
@@ -311,7 +366,10 @@
         "value": "approved",
         "selector": "enemies/air_bioforge_wasp",
         "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
-      }
+      },
+      "drawScale": 1.482954,
+      "drawScaleSha256": "b643212c55335e7879d89a6adee046424bba3f5d80a5d3bd543ae967e1ad6cb4",
+      "drawScaleSource": "docs/art-generation/continuation-v1/aerial-draw-scales.json"
     },
     {
       "key": "enemies/air_dreadtide_albatross",
@@ -331,7 +389,10 @@
         "value": "approved",
         "selector": "enemies/air_dreadtide_albatross",
         "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
-      }
+      },
+      "drawScale": 1.482118,
+      "drawScaleSha256": "d2618c4f66fa157f654ad672aee3096178b3809579f4b3ace2b6a67cde15c281",
+      "drawScaleSource": "docs/art-generation/continuation-v1/aerial-draw-scales.json"
     },
     {
       "key": "enemies/air_infernal_harpy",
@@ -351,7 +412,10 @@
         "value": "approved",
         "selector": "enemies/air_infernal_harpy",
         "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
-      }
+      },
+      "drawScale": 1.36301,
+      "drawScaleSha256": "440795f98d3bd5a3a2f89faa1499a382e3fc805c578d8652610e4fe02135d975",
+      "drawScaleSource": "docs/art-generation/continuation-v1/aerial-draw-scales.json"
     },
     {
       "key": "enemies/air_nightmare_moth",
@@ -371,7 +435,10 @@
         "value": "approved",
         "selector": "enemies/air_nightmare_moth",
         "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
-      }
+      },
+      "drawScale": 1.35306,
+      "drawScaleSha256": "9659ce9f75ac029520ebc63112637c7759ed151330e32c23a286395abf0394be",
+      "drawScaleSource": "docs/art-generation/continuation-v1/aerial-draw-scales.json"
     },
     {
       "key": "enemies/air_ossuary_crow",
@@ -391,7 +458,10 @@
         "value": "approved",
         "selector": "enemies/air_ossuary_crow",
         "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
-      }
+      },
+      "drawScale": 1.35306,
+      "drawScaleSha256": "88c4c98043b59e49b96d85474899b08b7d07f67519f056a1646c69ca4b39053b",
+      "drawScaleSource": "docs/art-generation/continuation-v1/aerial-draw-scales.json"
     },
     {
       "key": "enemies/air_plague_locust",
@@ -411,7 +481,10 @@
         "value": "approved",
         "selector": "enemies/air_plague_locust",
         "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
-      }
+      },
+      "drawScale": 1.305417,
+      "drawScaleSha256": "968520fe728c804d2138801abb5757dbd9f381120a04c722a44b505b908385be",
+      "drawScaleSource": "docs/art-generation/continuation-v1/aerial-draw-scales.json"
     },
     {
       "key": "enemies/air_quantum_glider",
@@ -431,7 +504,10 @@
         "value": "approved",
         "selector": "enemies/air_quantum_glider",
         "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
-      }
+      },
+      "drawScale": 1.180695,
+      "drawScaleSha256": "176c8ca16266396f34cc75796fb36dabaf9b060db8b75c0215b47f11dace05c7",
+      "drawScaleSource": "docs/art-generation/continuation-v1/aerial-draw-scales.json"
     },
     {
       "key": "enemies/air_shadow_owl",
@@ -451,7 +527,10 @@
         "value": "approved",
         "selector": "enemies/air_shadow_owl",
         "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
-      }
+      },
+      "drawScale": 1.415033,
+      "drawScaleSha256": "1d6298f94c1c193e5a33e5fd257a3df3ba12a52cb4498c1660ce4c07b3d3d2cb",
+      "drawScaleSource": "docs/art-generation/continuation-v1/aerial-draw-scales.json"
     },
     {
       "key": "enemies/air_void_manta",
@@ -471,7 +550,114 @@
         "value": "approved",
         "selector": "enemies/air_void_manta",
         "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
-      }
+      },
+      "drawScale": 1.1303,
+      "drawScaleSha256": "f06bfbaf023ae46a9ec701db9d65ed8be0ec7111bc33138b934286a0bf5dfef7",
+      "drawScaleSource": "docs/art-generation/continuation-v1/aerial-draw-scales.json"
+    },
+    {
+      "key": "enemies/astral_alabaster_golem",
+      "sha256": "99c77112b97e3f862a4b5587225dd8bf09f9baa2db2ccaa5d660faba9b6c76fa",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/named-enemies.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-2cc4bf0e-0a8a-4992-a925-8ae76de656ad.png",
+      "nativeExists": true,
+      "nativeSha256": "99c77112b97e3f862a4b5587225dd8bf09f9baa2db2ccaa5d660faba9b6c76fa",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "enemies/astral_censer_bearer",
+      "sha256": "96d71978fe7fa9a029eac0f55526a7c7934c5e91825bcc3042312264fa64801e",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/named-enemies.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-f8e93cb1-295f-48ba-bdb9-e05b97ae0946.png",
+      "nativeExists": true,
+      "nativeSha256": "96d71978fe7fa9a029eac0f55526a7c7934c5e91825bcc3042312264fa64801e",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "enemies/astral_cherub_automaton",
+      "sha256": "e01a5808a54af10374ce0d251632cc74ac9a299b00d5f21b9dda6afe7706fe10",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/named-enemies.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-d8b04227-2852-48f5-85fe-b83449abe792.png",
+      "nativeExists": true,
+      "nativeSha256": "e01a5808a54af10374ce0d251632cc74ac9a299b00d5f21b9dda6afe7706fe10",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "enemies/astral_siege_pendulum",
+      "sha256": "9ca66804b31410eba7ba48304a5ccb21738c2fb1d8ebf28aeba07623a7d82d51",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/named-enemies.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-e6677b0c-ab13-4b71-8b70-4f8a999ba2bc.png",
+      "nativeExists": true,
+      "nativeSha256": "9ca66804b31410eba7ba48304a5ccb21738c2fb1d8ebf28aeba07623a7d82d51",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "enemies/flora_crystal_wasp",
+      "sha256": "cb0bfd6937866c290ba222cf4a78e6614aca331f7300b400a5320286ca6fb5b3",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/named-enemies-flora.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-417975de-13ce-4b2a-aff0-eadfd1c5c858.png",
+      "nativeExists": true,
+      "nativeSha256": "cb0bfd6937866c290ba222cf4a78e6614aca331f7300b400a5320286ca6fb5b3",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "enemies/flora_ivy_crawler",
+      "sha256": "2ff1f837fa2ad2d08a0840fec4a291927c64089c32e3047f6be2ddad733a6ac1",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/named-enemies-flora.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-6857cc44-ad16-474b-8569-c149b7976789.png",
+      "nativeExists": true,
+      "nativeSha256": "2ff1f837fa2ad2d08a0840fec4a291927c64089c32e3047f6be2ddad733a6ac1",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "enemies/flora_mortar_flower",
+      "sha256": "b0f9f95afaabbb1800dd616afe750299d03f14360f2b404771f67182c697058d",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/named-enemies-flora.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-a13da66e-2688-424b-8896-2967fe610be2.png",
+      "nativeExists": true,
+      "nativeSha256": "b0f9f95afaabbb1800dd616afe750299d03f14360f2b404771f67182c697058d",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "enemies/flora_steel_treant",
+      "sha256": "fe8549891f2bbcc7c2c5d0e7a77260839cd742c51719c07f111142f6de17695d",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/named-enemies-flora.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-710f2099-c5a6-42e7-9b6b-e8b44eb5eb77.png",
+      "nativeExists": true,
+      "nativeSha256": "fe8549891f2bbcc7c2c5d0e7a77260839cd742c51719c07f111142f6de17695d",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
     },
     {
       "key": "evolutions/cavitation_torpedo",
@@ -600,6 +786,58 @@
       }
     },
     {
+      "key": "fx/acid_glob",
+      "sha256": "ec8c1ea4ef3714acb033f85f0e3f2b3b828a8ec33880f9d76f4930cd51d84bce",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/tactical-fx.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-33fcbbb3-d527-4701-8f5f-6f92e5dc01bf.png",
+      "nativeExists": true,
+      "nativeSha256": "ec8c1ea4ef3714acb033f85f0e3f2b3b828a8ec33880f9d76f4930cd51d84bce",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "fx/choc_thermique",
+      "sha256": "b6420d4933cca28e60f55f1968489423fa9b377855c7ce2c3e8b064a79990ed3",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/tactical-fx.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-5f309d7d-6d71-4705-8d19-36179fa372e5.png",
+      "nativeExists": true,
+      "nativeSha256": "b6420d4933cca28e60f55f1968489423fa9b377855c7ce2c3e8b064a79990ed3",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "fx/cryo_shard",
+      "sha256": "b1fc6ca9eac43458a36e4bc190e04dc363797ffffbe67acc5937c7508594c636",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/tactical-fx.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-2342873c-86b6-4133-af36-beb33643caa1.png",
+      "nativeExists": true,
+      "nativeSha256": "b1fc6ca9eac43458a36e4bc190e04dc363797ffffbe67acc5937c7508594c636",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "fx/drone_laser",
+      "sha256": "df0f3567a183a381793d638f25cc395d8761bde0d6e58f1cef445e534919514c",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/tactical-fx.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-a36d22e2-d02d-474b-bba4-9b718e3ea735.png",
+      "nativeExists": true,
+      "nativeSha256": "df0f3567a183a381793d638f25cc395d8761bde0d6e58f1cef445e534919514c",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
       "key": "fx/duo_aria_astarra",
       "path": "assets/dlc/illustrated-v1/fx/duo_aria_astarra.png",
       "sha256": "96dc0fdb33ac7c5976266b4ab1d0f8cfd4452de2f0a1b3d98c57ead18833684f",
@@ -684,6 +922,32 @@
       }
     },
     {
+      "key": "fx/embrasement_toxique",
+      "sha256": "7f8aff74c6f8feabbf28aad2328908eac21f4a623b279eeeb90d71d12f480f6c",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/tactical-fx.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-780a02b7-2a35-4f76-8bdc-e28d11dc9400.png",
+      "nativeExists": true,
+      "nativeSha256": "7f8aff74c6f8feabbf28aad2328908eac21f4a623b279eeeb90d71d12f480f6c",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "fx/flame_stream",
+      "sha256": "ba40b666fd52e55bbf413d9f52b99ed95c9b28b5e4b9f343ba419d44c6ccb2e8",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/tactical-fx.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-3369945a-cb50-4604-9885-e93ad6284569.png",
+      "nativeExists": true,
+      "nativeSha256": "ba40b666fd52e55bbf413d9f52b99ed95c9b28b5e4b9f343ba419d44c6ccb2e8",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
       "key": "fx/infernal_fog",
       "path": "assets/dlc/illustrated-v1/fx/infernal_fog.png",
       "sha256": "b03a44d47277e29cc184142326ffb4e719522b14371eb0005464e0bdeea0d468",
@@ -703,6 +967,45 @@
         "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
         "reviewedSha256": "b03a44d47277e29cc184142326ffb4e719522b14371eb0005464e0bdeea0d468"
       }
+    },
+    {
+      "key": "fx/siege_missile",
+      "sha256": "0bf20fa6fdbb8e8537bcd7d1a1a2097f16ddc66e7cc140a26011aaefd70a31fb",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/tactical-fx.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-1072b19b-fb2b-43e8-9d64-05b3f64c6b46.png",
+      "nativeExists": true,
+      "nativeSha256": "0bf20fa6fdbb8e8537bcd7d1a1a2097f16ddc66e7cc140a26011aaefd70a31fb",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "fx/siphon_seed",
+      "sha256": "57c22c91d241475e982e4637049c46c02fa259b38e4b80cd41c44bc0c80aecbf",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/tactical-fx.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-c5acba73-ac88-4074-b284-e6e210fdc9fd.png",
+      "nativeExists": true,
+      "nativeSha256": "57c22c91d241475e982e4637049c46c02fa259b38e4b80cd41c44bc0c80aecbf",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "fx/tempete_magnetique",
+      "sha256": "d9749026d6bb0e0a9d30a6db15bd5e9cd9cacf4b3ab0c0af8349388ff1ce179a",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/tactical-fx.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-642716d4-482c-4e0e-8f46-4f0f9c6b8c8b.png",
+      "nativeExists": true,
+      "nativeSha256": "d9749026d6bb0e0a9d30a6db15bd5e9cd9cacf4b3ab0c0af8349388ff1ce179a",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
     },
     {
       "key": "heroes/astrid",
@@ -1200,6 +1503,58 @@
         "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
         "reviewedSha256": "ab27137e66bb0254b111a8004ee33a3e412d0f4cbbec4899b9becac491656db7"
       }
+    },
+    {
+      "key": "maps/haven_abyssal_reactor",
+      "sha256": "91a97b3b813c3cf212ed0df6c29bb1615dc16f7e7eb3f3c59b944c3be669271d",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/maps/haven_abyssal_reactor.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-9620a273-6042-4113-a852-6327b5a28bc0.png",
+      "nativeExists": true,
+      "nativeSha256": "91a97b3b813c3cf212ed0df6c29bb1615dc16f7e7eb3f3c59b944c3be669271d",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "maps/haven_inner_citadel",
+      "sha256": "66d8b5557997ed6795ab4a702bb782058544fb7c7d3bf0ea178d32b3eaa8a561",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/maps/haven_inner_citadel.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-04428c3b-2c7d-4883-b0e9-8af30a96cff9.png",
+      "nativeExists": true,
+      "nativeSha256": "66d8b5557997ed6795ab4a702bb782058544fb7c7d3bf0ea178d32b3eaa8a561",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "maps/haven_outer_port",
+      "sha256": "f90e06a85d6332d73713f0242e44c015bd94de48b6c649d7f2b421a020decd41",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/maps/haven_outer_port.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-5e66c903-a3b3-4bc8-8599-1b47767a2231.png",
+      "nativeExists": true,
+      "nativeSha256": "f90e06a85d6332d73713f0242e44c015bd94de48b6c649d7f2b421a020decd41",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "maps/haven_sunken_cathedral",
+      "sha256": "036c010b5b83659eaaa85cd9fa07fd4f023923c4edfbe76753b9bf0b14cc9f52",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/maps/haven_sunken_cathedral.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-2f607ac4-13e3-4547-be51-8f357826eef1.png",
+      "nativeExists": true,
+      "nativeSha256": "036c010b5b83659eaaa85cd9fa07fd4f023923c4edfbe76753b9bf0b14cc9f52",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
     },
     {
       "key": "props/abyss_monument",
@@ -1948,5 +2303,6 @@
       "sha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb",
       "byteLength": 91947
     }
-  }
+  },
+  "continuationSource": "docs/art-generation/continuation-v1/root-review.json"
 }

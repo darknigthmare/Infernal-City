@@ -4,8 +4,8 @@
   root.INFERNAL_CITY_DLC_ART = {
   "version": 1,
   "prefix": "assets/dlc/illustrated-v1/",
-  "expected": 82,
-  "approved": 82,
+  "expected": 107,
+  "approved": 107,
   "missing": [],
   "pending": [],
   "assets": {
@@ -199,6 +199,122 @@
       "height": 1254,
       "bytes": 2375529,
       "sha256": "b183916b436233dc55622ca59f214cb3ba35e395124797056ff20bb768284eec",
+      "approved": true,
+      "nativeBytesPreserved": true,
+      "source": "built-in image_gen"
+    },
+    "enemies/astral_cherub_automaton": {
+      "key": "enemies/astral_cherub_automaton",
+      "group": "enemies",
+      "id": "astral_cherub_automaton",
+      "name": "Chérubin Automaton",
+      "src": "assets/dlc/illustrated-v1/enemies/astral_cherub_automaton.png",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "move",
+        "attack",
+        "death_dissolve",
+        "shield_break"
+      ],
+      "fps": 8,
+      "usage": [
+        "catalogue"
+      ],
+      "packId": "dlc_astral_cathedral",
+      "biomeKey": "astral",
+      "firstDesign": true,
+      "width": 1774,
+      "height": 887,
+      "bytes": 843843,
+      "sha256": "e01a5808a54af10374ce0d251632cc74ac9a299b00d5f21b9dda6afe7706fe10",
+      "approved": true,
+      "nativeBytesPreserved": true,
+      "source": "built-in image_gen"
+    },
+    "enemies/astral_censer_bearer": {
+      "key": "enemies/astral_censer_bearer",
+      "group": "enemies",
+      "id": "astral_censer_bearer",
+      "name": "Porte-Encensoir",
+      "src": "assets/dlc/illustrated-v1/enemies/astral_censer_bearer.png",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "move",
+        "attack",
+        "death_dissolve",
+        "shield_break"
+      ],
+      "fps": 8,
+      "usage": [
+        "catalogue"
+      ],
+      "packId": "dlc_astral_cathedral",
+      "biomeKey": "astral",
+      "firstDesign": true,
+      "width": 1774,
+      "height": 887,
+      "bytes": 639199,
+      "sha256": "96d71978fe7fa9a029eac0f55526a7c7934c5e91825bcc3042312264fa64801e",
+      "approved": true,
+      "nativeBytesPreserved": true,
+      "source": "built-in image_gen"
+    },
+    "enemies/astral_alabaster_golem": {
+      "key": "enemies/astral_alabaster_golem",
+      "group": "enemies",
+      "id": "astral_alabaster_golem",
+      "name": "Golem d’Albâtre",
+      "src": "assets/dlc/illustrated-v1/enemies/astral_alabaster_golem.png",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "move",
+        "attack",
+        "death_dissolve",
+        "shield_break"
+      ],
+      "fps": 8,
+      "usage": [
+        "catalogue"
+      ],
+      "packId": "dlc_astral_cathedral",
+      "biomeKey": "astral",
+      "firstDesign": true,
+      "width": 1774,
+      "height": 887,
+      "bytes": 1027101,
+      "sha256": "99c77112b97e3f862a4b5587225dd8bf09f9baa2db2ccaa5d660faba9b6c76fa",
+      "approved": true,
+      "nativeBytesPreserved": true,
+      "source": "built-in image_gen"
+    },
+    "enemies/astral_siege_pendulum": {
+      "key": "enemies/astral_siege_pendulum",
+      "group": "enemies",
+      "id": "astral_siege_pendulum",
+      "name": "Pendulier de Siège",
+      "src": "assets/dlc/illustrated-v1/enemies/astral_siege_pendulum.png",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "move",
+        "attack",
+        "death_dissolve",
+        "shield_break"
+      ],
+      "fps": 8,
+      "usage": [
+        "catalogue"
+      ],
+      "packId": "dlc_astral_cathedral",
+      "biomeKey": "astral",
+      "firstDesign": true,
+      "width": 1774,
+      "height": 887,
+      "bytes": 926669,
+      "sha256": "9ca66804b31410eba7ba48304a5ccb21738c2fb1d8ebf28aeba07623a7d82d51",
       "approved": true,
       "nativeBytesPreserved": true,
       "source": "built-in image_gen"
@@ -538,6 +654,122 @@
       "nativeBytesPreserved": true,
       "source": "built-in image_gen"
     },
+    "enemies/abyss_armored_nautilus": {
+      "key": "enemies/abyss_armored_nautilus",
+      "group": "enemies",
+      "id": "abyss_armored_nautilus",
+      "name": "Nautile Blindé",
+      "src": "assets/dlc/illustrated-v1/enemies/abyss_armored_nautilus.png",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "move",
+        "attack",
+        "death_dissolve",
+        "shield_break"
+      ],
+      "fps": 8,
+      "usage": [
+        "catalogue"
+      ],
+      "packId": "dlc_bioluminescent_abyss",
+      "biomeKey": "abyss",
+      "firstDesign": true,
+      "width": 1774,
+      "height": 887,
+      "bytes": 643098,
+      "sha256": "3dbe313b6780df370acef8f13192f0f38758300ddf8ba6958c4fa0640b17ec2e",
+      "approved": true,
+      "nativeBytesPreserved": true,
+      "source": "built-in image_gen"
+    },
+    "enemies/abyss_emp_jellyfish": {
+      "key": "enemies/abyss_emp_jellyfish",
+      "group": "enemies",
+      "id": "abyss_emp_jellyfish",
+      "name": "Méduse EMP",
+      "src": "assets/dlc/illustrated-v1/enemies/abyss_emp_jellyfish.png",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "move",
+        "attack",
+        "death_dissolve",
+        "shield_break"
+      ],
+      "fps": 8,
+      "usage": [
+        "catalogue"
+      ],
+      "packId": "dlc_bioluminescent_abyss",
+      "biomeKey": "abyss",
+      "firstDesign": true,
+      "width": 1774,
+      "height": 887,
+      "bytes": 900976,
+      "sha256": "2f6007e57117f664b764e0da97c6930c36150b1b5cc43f02d02c9aa82f688bfc",
+      "approved": true,
+      "nativeBytesPreserved": true,
+      "source": "built-in image_gen"
+    },
+    "enemies/abyss_stealth_ray": {
+      "key": "enemies/abyss_stealth_ray",
+      "group": "enemies",
+      "id": "abyss_stealth_ray",
+      "name": "Raie Furtive",
+      "src": "assets/dlc/illustrated-v1/enemies/abyss_stealth_ray.png",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "move",
+        "attack",
+        "death_dissolve",
+        "shield_break"
+      ],
+      "fps": 8,
+      "usage": [
+        "catalogue"
+      ],
+      "packId": "dlc_bioluminescent_abyss",
+      "biomeKey": "abyss",
+      "firstDesign": true,
+      "width": 1774,
+      "height": 887,
+      "bytes": 628206,
+      "sha256": "c84e3af7d5fecfe1bb3b90f46d8c2d1a8bd12fdea43a0a8caae095c309a2e60d",
+      "approved": true,
+      "nativeBytesPreserved": true,
+      "source": "built-in image_gen"
+    },
+    "enemies/abyss_drill_crab": {
+      "key": "enemies/abyss_drill_crab",
+      "group": "enemies",
+      "id": "abyss_drill_crab",
+      "name": "Crabe Foreur",
+      "src": "assets/dlc/illustrated-v1/enemies/abyss_drill_crab.png",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "move",
+        "attack",
+        "death_dissolve",
+        "shield_break"
+      ],
+      "fps": 8,
+      "usage": [
+        "catalogue"
+      ],
+      "packId": "dlc_bioluminescent_abyss",
+      "biomeKey": "abyss",
+      "firstDesign": true,
+      "width": 1774,
+      "height": 887,
+      "bytes": 845473,
+      "sha256": "41129ee7b6aa3805491fbb256d45fdda861f755d9ee1dca145f2af99387e90fd",
+      "approved": true,
+      "nativeBytesPreserved": true,
+      "source": "built-in image_gen"
+    },
     "weapons/cavitation_torpedo": {
       "key": "weapons/cavitation_torpedo",
       "group": "weapons",
@@ -869,6 +1101,122 @@
       "height": 1254,
       "bytes": 2231957,
       "sha256": "6d90b60b35fc643d815011817d0d9ffbb5b764b2fec7cae2618cce232a7845fd",
+      "approved": true,
+      "nativeBytesPreserved": true,
+      "source": "built-in image_gen"
+    },
+    "enemies/flora_crystal_wasp": {
+      "key": "enemies/flora_crystal_wasp",
+      "group": "enemies",
+      "id": "flora_crystal_wasp",
+      "name": "Guêpe Cristalline",
+      "src": "assets/dlc/illustrated-v1/enemies/flora_crystal_wasp.png",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "move",
+        "attack",
+        "death_dissolve",
+        "shield_break"
+      ],
+      "fps": 8,
+      "usage": [
+        "catalogue"
+      ],
+      "packId": "dlc_art_nouveau_garden",
+      "biomeKey": "flora",
+      "firstDesign": true,
+      "width": 1774,
+      "height": 887,
+      "bytes": 637982,
+      "sha256": "cb0bfd6937866c290ba222cf4a78e6614aca331f7300b400a5320286ca6fb5b3",
+      "approved": true,
+      "nativeBytesPreserved": true,
+      "source": "built-in image_gen"
+    },
+    "enemies/flora_steel_treant": {
+      "key": "enemies/flora_steel_treant",
+      "group": "enemies",
+      "id": "flora_steel_treant",
+      "name": "Tréant d’Acier",
+      "src": "assets/dlc/illustrated-v1/enemies/flora_steel_treant.png",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "move",
+        "attack",
+        "death_dissolve",
+        "shield_break"
+      ],
+      "fps": 8,
+      "usage": [
+        "catalogue"
+      ],
+      "packId": "dlc_art_nouveau_garden",
+      "biomeKey": "flora",
+      "firstDesign": true,
+      "width": 1774,
+      "height": 887,
+      "bytes": 662032,
+      "sha256": "fe8549891f2bbcc7c2c5d0e7a77260839cd742c51719c07f111142f6de17695d",
+      "approved": true,
+      "nativeBytesPreserved": true,
+      "source": "built-in image_gen"
+    },
+    "enemies/flora_mortar_flower": {
+      "key": "enemies/flora_mortar_flower",
+      "group": "enemies",
+      "id": "flora_mortar_flower",
+      "name": "Fleur Mortier",
+      "src": "assets/dlc/illustrated-v1/enemies/flora_mortar_flower.png",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "move",
+        "attack",
+        "death_dissolve",
+        "shield_break"
+      ],
+      "fps": 8,
+      "usage": [
+        "catalogue"
+      ],
+      "packId": "dlc_art_nouveau_garden",
+      "biomeKey": "flora",
+      "firstDesign": true,
+      "width": 1774,
+      "height": 887,
+      "bytes": 570690,
+      "sha256": "b0f9f95afaabbb1800dd616afe750299d03f14360f2b404771f67182c697058d",
+      "approved": true,
+      "nativeBytesPreserved": true,
+      "source": "built-in image_gen"
+    },
+    "enemies/flora_ivy_crawler": {
+      "key": "enemies/flora_ivy_crawler",
+      "group": "enemies",
+      "id": "flora_ivy_crawler",
+      "name": "Rampeur de Lierre",
+      "src": "assets/dlc/illustrated-v1/enemies/flora_ivy_crawler.png",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "move",
+        "attack",
+        "death_dissolve",
+        "shield_break"
+      ],
+      "fps": 8,
+      "usage": [
+        "catalogue"
+      ],
+      "packId": "dlc_art_nouveau_garden",
+      "biomeKey": "flora",
+      "firstDesign": true,
+      "width": 1774,
+      "height": 887,
+      "bytes": 783095,
+      "sha256": "2ff1f837fa2ad2d08a0840fec4a291927c64089c32e3047f6be2ddad733a6ac1",
       "approved": true,
       "nativeBytesPreserved": true,
       "source": "built-in image_gen"
@@ -2035,11 +2383,14 @@
       ],
       "fps": 8,
       "usage": [
+        "combat",
         "catalogue"
       ],
       "packId": "free_aerial_horizon",
       "faction": "bioforge",
       "firstDesign": true,
+      "drawScale": 1.482954,
+      "drawScaleSha256": "b643212c55335e7879d89a6adee046424bba3f5d80a5d3bd543ae967e1ad6cb4",
       "width": 1774,
       "height": 887,
       "bytes": 1681977,
@@ -2064,11 +2415,14 @@
       ],
       "fps": 8,
       "usage": [
+        "combat",
         "catalogue"
       ],
       "packId": "free_aerial_horizon",
       "faction": "ossuary",
       "firstDesign": true,
+      "drawScale": 1.35306,
+      "drawScaleSha256": "88c4c98043b59e49b96d85474899b08b7d07f67519f056a1646c69ca4b39053b",
       "width": 1774,
       "height": 887,
       "bytes": 1312550,
@@ -2093,11 +2447,14 @@
       ],
       "fps": 8,
       "usage": [
+        "combat",
         "catalogue"
       ],
       "packId": "free_aerial_horizon",
       "faction": "void",
       "firstDesign": true,
+      "drawScale": 1.1303,
+      "drawScaleSha256": "f06bfbaf023ae46a9ec701db9d65ed8be0ec7111bc33138b934286a0bf5dfef7",
       "width": 1774,
       "height": 887,
       "bytes": 1300809,
@@ -2122,11 +2479,14 @@
       ],
       "fps": 8,
       "usage": [
+        "combat",
         "catalogue"
       ],
       "packId": "free_aerial_horizon",
       "faction": "infernal",
       "firstDesign": true,
+      "drawScale": 1.36301,
+      "drawScaleSha256": "440795f98d3bd5a3a2f89faa1499a382e3fc805c578d8652610e4fe02135d975",
       "width": 1774,
       "height": 887,
       "bytes": 1566428,
@@ -2151,11 +2511,14 @@
       ],
       "fps": 8,
       "usage": [
+        "combat",
         "catalogue"
       ],
       "packId": "free_aerial_horizon",
       "faction": "shadow",
       "firstDesign": true,
+      "drawScale": 1.415033,
+      "drawScaleSha256": "1d6298f94c1c193e5a33e5fd257a3df3ba12a52cb4498c1660ce4c07b3d3d2cb",
       "width": 1774,
       "height": 887,
       "bytes": 2022070,
@@ -2180,11 +2543,14 @@
       ],
       "fps": 8,
       "usage": [
+        "combat",
         "catalogue"
       ],
       "packId": "free_aerial_horizon",
       "faction": "plague",
       "firstDesign": true,
+      "drawScale": 1.305417,
+      "drawScaleSha256": "968520fe728c804d2138801abb5757dbd9f381120a04c722a44b505b908385be",
       "width": 1774,
       "height": 887,
       "bytes": 1656741,
@@ -2209,11 +2575,14 @@
       ],
       "fps": 8,
       "usage": [
+        "combat",
         "catalogue"
       ],
       "packId": "free_aerial_horizon",
       "faction": "dreadtide",
       "firstDesign": true,
+      "drawScale": 1.482118,
+      "drawScaleSha256": "d2618c4f66fa157f654ad672aee3096178b3809579f4b3ace2b6a67cde15c281",
       "width": 1773,
       "height": 887,
       "bytes": 1768523,
@@ -2238,11 +2607,14 @@
       ],
       "fps": 8,
       "usage": [
+        "combat",
         "catalogue"
       ],
       "packId": "free_aerial_horizon",
       "faction": "quantum",
       "firstDesign": true,
+      "drawScale": 1.180695,
+      "drawScaleSha256": "176c8ca16266396f34cc75796fb36dabaf9b060db8b75c0215b47f11dace05c7",
       "width": 1774,
       "height": 887,
       "bytes": 1324235,
@@ -2267,11 +2639,14 @@
       ],
       "fps": 8,
       "usage": [
+        "combat",
         "catalogue"
       ],
       "packId": "free_aerial_horizon",
       "faction": "ash",
       "firstDesign": true,
+      "drawScale": 1.333592,
+      "drawScaleSha256": "334dd929a78cb593be621d0096edc442f039a1e7d7f5c3e5ef2c4c911dc82248",
       "width": 1774,
       "height": 887,
       "bytes": 1362654,
@@ -2296,11 +2671,14 @@
       ],
       "fps": 8,
       "usage": [
+        "combat",
         "catalogue"
       ],
       "packId": "free_aerial_horizon",
       "faction": "nightmare",
       "firstDesign": true,
+      "drawScale": 1.35306,
+      "drawScaleSha256": "9659ce9f75ac029520ebc63112637c7759ed151330e32c23a286395abf0394be",
       "width": 1774,
       "height": 887,
       "bytes": 3003307,
@@ -2472,6 +2850,359 @@
       "height": 887,
       "bytes": 1048159,
       "sha256": "b03a44d47277e29cc184142326ffb4e719522b14371eb0005464e0bdeea0d468",
+      "approved": true,
+      "nativeBytesPreserved": true,
+      "source": "built-in image_gen"
+    },
+    "maps/haven_outer_port": {
+      "key": "maps/haven_outer_port",
+      "group": "maps",
+      "id": "haven_outer_port",
+      "name": "Port Extérieur d’Haven",
+      "src": "assets/dlc/illustrated-v1/maps/haven_outer_port.png",
+      "columns": 1,
+      "rows": 1,
+      "states": [
+        "scene"
+      ],
+      "fps": 0,
+      "usage": [
+        "battlefield"
+      ],
+      "packId": "haven_theatres",
+      "firstDesign": true,
+      "opaque": true,
+      "width": 1536,
+      "height": 1024,
+      "bytes": 3142830,
+      "sha256": "f90e06a85d6332d73713f0242e44c015bd94de48b6c649d7f2b421a020decd41",
+      "approved": true,
+      "nativeBytesPreserved": true,
+      "source": "built-in image_gen"
+    },
+    "maps/haven_sunken_cathedral": {
+      "key": "maps/haven_sunken_cathedral",
+      "group": "maps",
+      "id": "haven_sunken_cathedral",
+      "name": "Cathédrale Engloutie",
+      "src": "assets/dlc/illustrated-v1/maps/haven_sunken_cathedral.png",
+      "columns": 1,
+      "rows": 1,
+      "states": [
+        "scene"
+      ],
+      "fps": 0,
+      "usage": [
+        "battlefield"
+      ],
+      "packId": "haven_theatres",
+      "firstDesign": true,
+      "opaque": true,
+      "width": 1536,
+      "height": 1024,
+      "bytes": 3047771,
+      "sha256": "036c010b5b83659eaaa85cd9fa07fd4f023923c4edfbe76753b9bf0b14cc9f52",
+      "approved": true,
+      "nativeBytesPreserved": true,
+      "source": "built-in image_gen"
+    },
+    "maps/haven_abyssal_reactor": {
+      "key": "maps/haven_abyssal_reactor",
+      "group": "maps",
+      "id": "haven_abyssal_reactor",
+      "name": "Réacteur Abyssal",
+      "src": "assets/dlc/illustrated-v1/maps/haven_abyssal_reactor.png",
+      "columns": 1,
+      "rows": 1,
+      "states": [
+        "scene"
+      ],
+      "fps": 0,
+      "usage": [
+        "battlefield"
+      ],
+      "packId": "haven_theatres",
+      "firstDesign": true,
+      "opaque": true,
+      "width": 1536,
+      "height": 1024,
+      "bytes": 3366139,
+      "sha256": "91a97b3b813c3cf212ed0df6c29bb1615dc16f7e7eb3f3c59b944c3be669271d",
+      "approved": true,
+      "nativeBytesPreserved": true,
+      "source": "built-in image_gen"
+    },
+    "maps/haven_inner_citadel": {
+      "key": "maps/haven_inner_citadel",
+      "group": "maps",
+      "id": "haven_inner_citadel",
+      "name": "Citadelle Intérieure (Dernier Carré)",
+      "src": "assets/dlc/illustrated-v1/maps/haven_inner_citadel.png",
+      "columns": 1,
+      "rows": 1,
+      "states": [
+        "scene"
+      ],
+      "fps": 0,
+      "usage": [
+        "battlefield"
+      ],
+      "packId": "haven_theatres",
+      "firstDesign": true,
+      "opaque": true,
+      "width": 1536,
+      "height": 1024,
+      "bytes": 3462528,
+      "sha256": "66d8b5557997ed6795ab4a702bb782058544fb7c7d3bf0ea178d32b3eaa8a561",
+      "approved": true,
+      "nativeBytesPreserved": true,
+      "source": "built-in image_gen"
+    },
+    "fx/flame_stream": {
+      "key": "fx/flame_stream",
+      "group": "fx",
+      "id": "flame_stream",
+      "name": "Jet de flammes",
+      "src": "assets/dlc/illustrated-v1/fx/flame_stream.png",
+      "columns": 8,
+      "rows": 3,
+      "states": [
+        "flight",
+        "impact",
+        "overload"
+      ],
+      "fps": 16,
+      "usage": [
+        "combat"
+      ],
+      "packId": "haven_arsenal",
+      "firstDesign": true,
+      "width": 2048,
+      "height": 768,
+      "bytes": 1475105,
+      "sha256": "ba40b666fd52e55bbf413d9f52b99ed95c9b28b5e4b9f343ba419d44c6ccb2e8",
+      "approved": true,
+      "nativeBytesPreserved": true,
+      "source": "built-in image_gen"
+    },
+    "fx/siege_missile": {
+      "key": "fx/siege_missile",
+      "group": "fx",
+      "id": "siege_missile",
+      "name": "Missile de siège",
+      "src": "assets/dlc/illustrated-v1/fx/siege_missile.png",
+      "columns": 8,
+      "rows": 3,
+      "states": [
+        "flight",
+        "impact",
+        "overload"
+      ],
+      "fps": 16,
+      "usage": [
+        "combat"
+      ],
+      "packId": "haven_arsenal",
+      "firstDesign": true,
+      "width": 2048,
+      "height": 768,
+      "bytes": 1439812,
+      "sha256": "0bf20fa6fdbb8e8537bcd7d1a1a2097f16ddc66e7cc140a26011aaefd70a31fb",
+      "approved": true,
+      "nativeBytesPreserved": true,
+      "source": "built-in image_gen"
+    },
+    "fx/cryo_shard": {
+      "key": "fx/cryo_shard",
+      "group": "fx",
+      "id": "cryo_shard",
+      "name": "Éclat cryogénique",
+      "src": "assets/dlc/illustrated-v1/fx/cryo_shard.png",
+      "columns": 8,
+      "rows": 3,
+      "states": [
+        "flight",
+        "impact",
+        "overload"
+      ],
+      "fps": 16,
+      "usage": [
+        "combat"
+      ],
+      "packId": "haven_arsenal",
+      "firstDesign": true,
+      "width": 2048,
+      "height": 768,
+      "bytes": 1504355,
+      "sha256": "b1fc6ca9eac43458a36e4bc190e04dc363797ffffbe67acc5937c7508594c636",
+      "approved": true,
+      "nativeBytesPreserved": true,
+      "source": "built-in image_gen"
+    },
+    "fx/acid_glob": {
+      "key": "fx/acid_glob",
+      "group": "fx",
+      "id": "acid_glob",
+      "name": "Globule corrosif",
+      "src": "assets/dlc/illustrated-v1/fx/acid_glob.png",
+      "columns": 8,
+      "rows": 3,
+      "states": [
+        "flight",
+        "impact",
+        "overload"
+      ],
+      "fps": 16,
+      "usage": [
+        "combat"
+      ],
+      "packId": "haven_arsenal",
+      "firstDesign": true,
+      "width": 2048,
+      "height": 768,
+      "bytes": 1598455,
+      "sha256": "ec8c1ea4ef3714acb033f85f0e3f2b3b828a8ec33880f9d76f4930cd51d84bce",
+      "approved": true,
+      "nativeBytesPreserved": true,
+      "source": "built-in image_gen"
+    },
+    "fx/drone_laser": {
+      "key": "fx/drone_laser",
+      "group": "fx",
+      "id": "drone_laser",
+      "name": "Trait laser du drone",
+      "src": "assets/dlc/illustrated-v1/fx/drone_laser.png",
+      "columns": 8,
+      "rows": 3,
+      "states": [
+        "flight",
+        "impact",
+        "overload"
+      ],
+      "fps": 16,
+      "usage": [
+        "combat"
+      ],
+      "packId": "haven_arsenal",
+      "firstDesign": true,
+      "width": 2048,
+      "height": 768,
+      "bytes": 1465007,
+      "sha256": "df0f3567a183a381793d638f25cc395d8761bde0d6e58f1cef445e534919514c",
+      "approved": true,
+      "nativeBytesPreserved": true,
+      "source": "built-in image_gen"
+    },
+    "fx/siphon_seed": {
+      "key": "fx/siphon_seed",
+      "group": "fx",
+      "id": "siphon_seed",
+      "name": "Graine de siphon",
+      "src": "assets/dlc/illustrated-v1/fx/siphon_seed.png",
+      "columns": 8,
+      "rows": 3,
+      "states": [
+        "flight",
+        "impact",
+        "overload"
+      ],
+      "fps": 16,
+      "usage": [
+        "combat"
+      ],
+      "packId": "haven_arsenal",
+      "firstDesign": true,
+      "width": 2048,
+      "height": 768,
+      "bytes": 1515414,
+      "sha256": "57c22c91d241475e982e4637049c46c02fa259b38e4b80cd41c44bc0c80aecbf",
+      "approved": true,
+      "nativeBytesPreserved": true,
+      "source": "built-in image_gen"
+    },
+    "fx/choc_thermique": {
+      "key": "fx/choc_thermique",
+      "group": "fx",
+      "id": "choc_thermique",
+      "name": "Choc Thermique",
+      "src": "assets/dlc/illustrated-v1/fx/choc_thermique.png",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "cast",
+        "active",
+        "impact",
+        "fade"
+      ],
+      "fps": 12,
+      "usage": [
+        "combat",
+        "catalogue"
+      ],
+      "packId": "free_first_breach",
+      "firstDesign": true,
+      "width": 1774,
+      "height": 887,
+      "bytes": 626407,
+      "sha256": "b6420d4933cca28e60f55f1968489423fa9b377855c7ce2c3e8b064a79990ed3",
+      "approved": true,
+      "nativeBytesPreserved": true,
+      "source": "built-in image_gen"
+    },
+    "fx/tempete_magnetique": {
+      "key": "fx/tempete_magnetique",
+      "group": "fx",
+      "id": "tempete_magnetique",
+      "name": "Tempête Magnétique",
+      "src": "assets/dlc/illustrated-v1/fx/tempete_magnetique.png",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "cast",
+        "active",
+        "impact",
+        "fade"
+      ],
+      "fps": 12,
+      "usage": [
+        "combat",
+        "catalogue"
+      ],
+      "packId": "free_first_breach",
+      "firstDesign": true,
+      "width": 1774,
+      "height": 887,
+      "bytes": 626348,
+      "sha256": "d9749026d6bb0e0a9d30a6db15bd5e9cd9cacf4b3ab0c0af8349388ff1ce179a",
+      "approved": true,
+      "nativeBytesPreserved": true,
+      "source": "built-in image_gen"
+    },
+    "fx/embrasement_toxique": {
+      "key": "fx/embrasement_toxique",
+      "group": "fx",
+      "id": "embrasement_toxique",
+      "name": "Embrasement Toxique",
+      "src": "assets/dlc/illustrated-v1/fx/embrasement_toxique.png",
+      "columns": 8,
+      "rows": 4,
+      "states": [
+        "cast",
+        "active",
+        "impact",
+        "fade"
+      ],
+      "fps": 12,
+      "usage": [
+        "combat",
+        "catalogue"
+      ],
+      "packId": "free_first_breach",
+      "firstDesign": true,
+      "width": 1774,
+      "height": 887,
+      "bytes": 540733,
+      "sha256": "7f8aff74c6f8feabbf28aad2328908eac21f4a623b279eeeb90d71d12f480f6c",
       "approved": true,
       "nativeBytesPreserved": true,
       "source": "built-in image_gen"

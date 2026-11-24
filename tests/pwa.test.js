@@ -95,7 +95,7 @@ test('les actifs coeur 3.1 sont servis network first et le pack terrain reste ho
   assert.match(index, /game\.v9\.js/);
   assert.match(index, /pwa\.v4\.js/);
   assert.match(worker, /RELEASE_VERSION = '3\.1\.0'/);
-  assert.match(worker, /CACHE_REVISION = 'sprites-20261124'/);
+  assert.match(worker, /CACHE_REVISION = 'sprites-20261124-continuation'/);
   assert.match(worker, /CACHE_NAME = `\$\{CACHE_PREFIX\}core-\$\{RELEASE_VERSION\}-\$\{CACHE_REVISION\}`/);
   assert.match(worker, /vn-scenes\.v1\.js/);
   assert.match(worker, /characters\.v1\.js/);

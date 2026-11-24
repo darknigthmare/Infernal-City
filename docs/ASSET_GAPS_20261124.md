@@ -12,6 +12,25 @@ ne prétend pas couvrir les chemins construits dynamiquement.
 Les besoins ci-dessous décrivent **l’état avant le pack `illustrated-v1`**.
 Les manifestes et rapports de ce nouveau pack font foi pour sa livraison.
 
+## Complément de l’audit et deuxième lot
+
+La relecture des sections 17.1 à 17.3 de la Bible a retrouvé **douze noms
+individuels** parmi les 48 ennemis premium annoncés. Ils n’étaient pas inscrits
+dans `dlc-packs.v1.js` lors de l’audit initial ; ils le sont maintenant, avec
+leurs atlas de catalogue :
+
+| Domaine | Identités nommées |
+|---|---|
+| Astral | Chérubin Automaton, Porte-Encensoir, Golem d’Albâtre, Pendulier de Siège |
+| Abyssal | Nautile Blindé, Méduse EMP, Raie Furtive, Crabe Foreur |
+| Botanique | Guêpe Cristalline, Tréant d’Acier, Fleur Mortier, Rampeur de Lierre |
+
+Cette suite ajoute aussi quatre terrains Haven illustrés et enregistrés, six
+projectiles différenciés et les trois réactions élémentaires existantes. Les
+dix aériens précédemment illustrés rejoignent les vagues qui possédaient déjà
+des emplacements `flying`, ainsi que le fallback Infinitum. Le détail des usages
+et des limites figure dans [le rapport de continuation](SPRITE_CONTINUATION_20261124.md).
+
 ## Animations absentes pour des unités déjà utilisées
 
 Les types suivants sont encore invoqués par `chooseFallbackEnemyType()` et
@@ -93,8 +112,10 @@ servent de références de matériaux et de palette, pas de silhouette à copier
 
 ## Conceptions encore incomplètes dans le catalogue
 
-- Les 48 ennemis premium sont annoncés par six comptes de huit unités, sans
-  liste complète d’IDs, de silhouettes ou de comportements individuels.
+- Les 48 ennemis premium sont annoncés par six comptes de huit unités. Douze
+  possèdent les noms retrouvés ci-dessus et leurs premières illustrations ; les
+  **36 autres** n’ont pas de noms individuels dans ces sections. Les statistiques
+  et comportements de ce bestiaire premium restent à définir.
 - Les quatre mini-boss possèdent des vagues `[4, 8, 12, 14]`, mais aucun nom
   individuel ni design canonique.
 - Le Zénith annonce 12 unités et trois généraux par comptes. Seul
@@ -104,9 +125,11 @@ servent de références de matériaux et de palette, pas de silhouette à copier
 - Les tenues historiques, chapitres préquelle/Aftermath et packs VN premium
   restent partiellement décrits par nombres ; ils ne constituent pas une liste
   complète d’images individuelles à produire.
-- Les quatre autres théâtres de la Bible — Port Extérieur, Cathédrale Engloutie,
-  Réacteur Abyssal et Citadelle Intérieure — ne sont pas des cartes jouables
-  enregistrées dans cette version de départ.
+- Les quatre théâtres de la Bible — Port Extérieur, Cathédrale Engloutie,
+  Réacteur Abyssal et Citadelle Intérieure — sont maintenant sélectionnables,
+  avec décors, routes et zones de construction. Les ponts destructibles, piliers
+  bloquant la ligne de vue, anneaux mobiles, chaleur et étages décrits dans la
+  Bible ne sont pas des mécaniques de cette livraison.
 
 L’existence d’une illustration ne signifie pas à elle seule qu’un nouveau
 personnage, une carte ou une mécanique est jouable. Les registres et les tests

@@ -60,8 +60,9 @@ les états à partir des événements déjà produits par le moteur.
 - Une mort confirmée ou un recyclage réussi crée seulement une animation visuelle
   temporaire. Le nombre de ces animations est borné ; une résurrection ne crée pas
   une seconde récompense ni une fausse animation de mort.
-- Les projectiles des armes de base conservent leur rendu ; les quatre évolutions
-  reçoivent leur propre effet. L’épaisseur du rayon reste indépendante de sa portée.
+- Ce pack fournit un effet propre aux quatre évolutions. L’épaisseur du rayon
+  reste indépendante de sa portée. La [continuation](SPRITE_CONTINUATION_20261124.md)
+  ajoute les effets tactiques des projectiles ordinaires, dont la flamme.
 - Le réglage de mouvement réduit fige les poses et évite les boucles supplémentaires.
 - La mort conserve l’orientation et le décalage de rotation du corps vivant.
   Le repos de niveau 1 et l’aperçu de construction utilisent le même atlas de

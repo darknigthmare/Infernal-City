@@ -1,0 +1,396 @@
+{
+  "schemaVersion": 1,
+  "method": "Read-only alpha>=96 first move-frame envelope. Fixed per-atlas display scale matches the visible span of the established flying specialist; no PNG is modified.",
+  "entries": [
+    {
+      "key": "enemies/air_ash_ifrit",
+      "sha256": "334dd929a78cb593be621d0096edc442f039a1e7d7f5c3e5ef2c4c911dc82248",
+      "drawScale": 1.333592,
+      "reference": {
+        "src": "assets/animations/smooth/enemy-specialist-smooth.png",
+        "sha256": "e0eee96caac37f1cb61ae9cb559cd41dc5e7138ac45346ccf41a85f6c06bb4ba",
+        "columns": 16,
+        "rows": 4,
+        "row": 0,
+        "column": 0,
+        "cellWidth": 128.0,
+        "cellHeight": 128.0,
+        "bboxAlpha96": [
+          11,
+          15,
+          118,
+          113
+        ],
+        "coverage": 0.835938
+      },
+      "native": {
+        "src": "assets/dlc/illustrated-v1/enemies/air_ash_ifrit.png",
+        "sha256": "334dd929a78cb593be621d0096edc442f039a1e7d7f5c3e5ef2c4c911dc82248",
+        "columns": 8,
+        "rows": 4,
+        "row": 0,
+        "column": 0,
+        "cellWidth": 221.75,
+        "cellHeight": 221.75,
+        "bboxAlpha96": [
+          56,
+          47,
+          177,
+          186
+        ],
+        "coverage": 0.626832
+      }
+    },
+    {
+      "key": "enemies/air_bioforge_wasp",
+      "sha256": "b643212c55335e7879d89a6adee046424bba3f5d80a5d3bd543ae967e1ad6cb4",
+      "drawScale": 1.482954,
+      "reference": {
+        "src": "assets/animations/smooth/enemy-specialist-smooth.png",
+        "sha256": "e0eee96caac37f1cb61ae9cb559cd41dc5e7138ac45346ccf41a85f6c06bb4ba",
+        "columns": 16,
+        "rows": 4,
+        "row": 0,
+        "column": 0,
+        "cellWidth": 128.0,
+        "cellHeight": 128.0,
+        "bboxAlpha96": [
+          11,
+          15,
+          118,
+          113
+        ],
+        "coverage": 0.835938
+      },
+      "native": {
+        "src": "assets/dlc/illustrated-v1/enemies/air_bioforge_wasp.png",
+        "sha256": "b643212c55335e7879d89a6adee046424bba3f5d80a5d3bd543ae967e1ad6cb4",
+        "columns": 8,
+        "rows": 4,
+        "row": 0,
+        "column": 0,
+        "cellWidth": 221.75,
+        "cellHeight": 221.75,
+        "bboxAlpha96": [
+          54,
+          54,
+          179,
+          165
+        ],
+        "coverage": 0.563698
+      }
+    },
+    {
+      "key": "enemies/air_dreadtide_albatross",
+      "sha256": "d2618c4f66fa157f654ad672aee3096178b3809579f4b3ace2b6a67cde15c281",
+      "drawScale": 1.482118,
+      "reference": {
+        "src": "assets/animations/smooth/enemy-specialist-smooth.png",
+        "sha256": "e0eee96caac37f1cb61ae9cb559cd41dc5e7138ac45346ccf41a85f6c06bb4ba",
+        "columns": 16,
+        "rows": 4,
+        "row": 0,
+        "column": 0,
+        "cellWidth": 128.0,
+        "cellHeight": 128.0,
+        "bboxAlpha96": [
+          11,
+          15,
+          118,
+          113
+        ],
+        "coverage": 0.835938
+      },
+      "native": {
+        "src": "assets/dlc/illustrated-v1/enemies/air_dreadtide_albatross.png",
+        "sha256": "d2618c4f66fa157f654ad672aee3096178b3809579f4b3ace2b6a67cde15c281",
+        "columns": 8,
+        "rows": 4,
+        "row": 0,
+        "column": 0,
+        "cellWidth": 221.625,
+        "cellHeight": 221.75,
+        "bboxAlpha96": [
+          57,
+          73,
+          182,
+          179
+        ],
+        "coverage": 0.564016
+      }
+    },
+    {
+      "key": "enemies/air_infernal_harpy",
+      "sha256": "440795f98d3bd5a3a2f89faa1499a382e3fc805c578d8652610e4fe02135d975",
+      "drawScale": 1.36301,
+      "reference": {
+        "src": "assets/animations/smooth/enemy-specialist-smooth.png",
+        "sha256": "e0eee96caac37f1cb61ae9cb559cd41dc5e7138ac45346ccf41a85f6c06bb4ba",
+        "columns": 16,
+        "rows": 4,
+        "row": 0,
+        "column": 0,
+        "cellWidth": 128.0,
+        "cellHeight": 128.0,
+        "bboxAlpha96": [
+          11,
+          15,
+          118,
+          113
+        ],
+        "coverage": 0.835938
+      },
+      "native": {
+        "src": "assets/dlc/illustrated-v1/enemies/air_infernal_harpy.png",
+        "sha256": "440795f98d3bd5a3a2f89faa1499a382e3fc805c578d8652610e4fe02135d975",
+        "columns": 8,
+        "rows": 4,
+        "row": 0,
+        "column": 0,
+        "cellWidth": 221.75,
+        "cellHeight": 221.75,
+        "bboxAlpha96": [
+          71,
+          46,
+          168,
+          182
+        ],
+        "coverage": 0.613303
+      }
+    },
+    {
+      "key": "enemies/air_nightmare_moth",
+      "sha256": "9659ce9f75ac029520ebc63112637c7759ed151330e32c23a286395abf0394be",
+      "drawScale": 1.35306,
+      "reference": {
+        "src": "assets/animations/smooth/enemy-specialist-smooth.png",
+        "sha256": "e0eee96caac37f1cb61ae9cb559cd41dc5e7138ac45346ccf41a85f6c06bb4ba",
+        "columns": 16,
+        "rows": 4,
+        "row": 0,
+        "column": 0,
+        "cellWidth": 128.0,
+        "cellHeight": 128.0,
+        "bboxAlpha96": [
+          11,
+          15,
+          118,
+          113
+        ],
+        "coverage": 0.835938
+      },
+      "native": {
+        "src": "assets/dlc/illustrated-v1/enemies/air_nightmare_moth.png",
+        "sha256": "9659ce9f75ac029520ebc63112637c7759ed151330e32c23a286395abf0394be",
+        "columns": 8,
+        "rows": 4,
+        "row": 0,
+        "column": 0,
+        "cellWidth": 221.75,
+        "cellHeight": 221.75,
+        "bboxAlpha96": [
+          47,
+          58,
+          184,
+          169
+        ],
+        "coverage": 0.617813
+      }
+    },
+    {
+      "key": "enemies/air_ossuary_crow",
+      "sha256": "88c4c98043b59e49b96d85474899b08b7d07f67519f056a1646c69ca4b39053b",
+      "drawScale": 1.35306,
+      "reference": {
+        "src": "assets/animations/smooth/enemy-specialist-smooth.png",
+        "sha256": "e0eee96caac37f1cb61ae9cb559cd41dc5e7138ac45346ccf41a85f6c06bb4ba",
+        "columns": 16,
+        "rows": 4,
+        "row": 0,
+        "column": 0,
+        "cellWidth": 128.0,
+        "cellHeight": 128.0,
+        "bboxAlpha96": [
+          11,
+          15,
+          118,
+          113
+        ],
+        "coverage": 0.835938
+      },
+      "native": {
+        "src": "assets/dlc/illustrated-v1/enemies/air_ossuary_crow.png",
+        "sha256": "88c4c98043b59e49b96d85474899b08b7d07f67519f056a1646c69ca4b39053b",
+        "columns": 8,
+        "rows": 4,
+        "row": 0,
+        "column": 0,
+        "cellWidth": 221.75,
+        "cellHeight": 221.75,
+        "bboxAlpha96": [
+          45,
+          83,
+          182,
+          188
+        ],
+        "coverage": 0.617813
+      }
+    },
+    {
+      "key": "enemies/air_plague_locust",
+      "sha256": "968520fe728c804d2138801abb5757dbd9f381120a04c722a44b505b908385be",
+      "drawScale": 1.305417,
+      "reference": {
+        "src": "assets/animations/smooth/enemy-specialist-smooth.png",
+        "sha256": "e0eee96caac37f1cb61ae9cb559cd41dc5e7138ac45346ccf41a85f6c06bb4ba",
+        "columns": 16,
+        "rows": 4,
+        "row": 0,
+        "column": 0,
+        "cellWidth": 128.0,
+        "cellHeight": 128.0,
+        "bboxAlpha96": [
+          11,
+          15,
+          118,
+          113
+        ],
+        "coverage": 0.835938
+      },
+      "native": {
+        "src": "assets/dlc/illustrated-v1/enemies/air_plague_locust.png",
+        "sha256": "968520fe728c804d2138801abb5757dbd9f381120a04c722a44b505b908385be",
+        "columns": 8,
+        "rows": 4,
+        "row": 0,
+        "column": 0,
+        "cellWidth": 221.75,
+        "cellHeight": 221.75,
+        "bboxAlpha96": [
+          44,
+          78,
+          186,
+          180
+        ],
+        "coverage": 0.640361
+      }
+    },
+    {
+      "key": "enemies/air_quantum_glider",
+      "sha256": "176c8ca16266396f34cc75796fb36dabaf9b060db8b75c0215b47f11dace05c7",
+      "drawScale": 1.180695,
+      "reference": {
+        "src": "assets/animations/smooth/enemy-specialist-smooth.png",
+        "sha256": "e0eee96caac37f1cb61ae9cb559cd41dc5e7138ac45346ccf41a85f6c06bb4ba",
+        "columns": 16,
+        "rows": 4,
+        "row": 0,
+        "column": 0,
+        "cellWidth": 128.0,
+        "cellHeight": 128.0,
+        "bboxAlpha96": [
+          11,
+          15,
+          118,
+          113
+        ],
+        "coverage": 0.835938
+      },
+      "native": {
+        "src": "assets/dlc/illustrated-v1/enemies/air_quantum_glider.png",
+        "sha256": "176c8ca16266396f34cc75796fb36dabaf9b060db8b75c0215b47f11dace05c7",
+        "columns": 8,
+        "rows": 4,
+        "row": 0,
+        "column": 0,
+        "cellWidth": 221.75,
+        "cellHeight": 221.75,
+        "bboxAlpha96": [
+          41,
+          77,
+          198,
+          154
+        ],
+        "coverage": 0.708005
+      }
+    },
+    {
+      "key": "enemies/air_shadow_owl",
+      "sha256": "1d6298f94c1c193e5a33e5fd257a3df3ba12a52cb4498c1660ce4c07b3d3d2cb",
+      "drawScale": 1.415033,
+      "reference": {
+        "src": "assets/animations/smooth/enemy-specialist-smooth.png",
+        "sha256": "e0eee96caac37f1cb61ae9cb559cd41dc5e7138ac45346ccf41a85f6c06bb4ba",
+        "columns": 16,
+        "rows": 4,
+        "row": 0,
+        "column": 0,
+        "cellWidth": 128.0,
+        "cellHeight": 128.0,
+        "bboxAlpha96": [
+          11,
+          15,
+          118,
+          113
+        ],
+        "coverage": 0.835938
+      },
+      "native": {
+        "src": "assets/dlc/illustrated-v1/enemies/air_shadow_owl.png",
+        "sha256": "1d6298f94c1c193e5a33e5fd257a3df3ba12a52cb4498c1660ce4c07b3d3d2cb",
+        "columns": 8,
+        "rows": 4,
+        "row": 0,
+        "column": 0,
+        "cellWidth": 221.75,
+        "cellHeight": 221.75,
+        "bboxAlpha96": [
+          52,
+          64,
+          183,
+          185
+        ],
+        "coverage": 0.590755
+      }
+    },
+    {
+      "key": "enemies/air_void_manta",
+      "sha256": "f06bfbaf023ae46a9ec701db9d65ed8be0ec7111bc33138b934286a0bf5dfef7",
+      "drawScale": 1.1303,
+      "reference": {
+        "src": "assets/animations/smooth/enemy-specialist-smooth.png",
+        "sha256": "e0eee96caac37f1cb61ae9cb559cd41dc5e7138ac45346ccf41a85f6c06bb4ba",
+        "columns": 16,
+        "rows": 4,
+        "row": 0,
+        "column": 0,
+        "cellWidth": 128.0,
+        "cellHeight": 128.0,
+        "bboxAlpha96": [
+          11,
+          15,
+          118,
+          113
+        ],
+        "coverage": 0.835938
+      },
+      "native": {
+        "src": "assets/dlc/illustrated-v1/enemies/air_void_manta.png",
+        "sha256": "f06bfbaf023ae46a9ec701db9d65ed8be0ec7111bc33138b934286a0bf5dfef7",
+        "columns": 8,
+        "rows": 4,
+        "row": 0,
+        "column": 0,
+        "cellWidth": 221.75,
+        "cellHeight": 221.75,
+        "bboxAlpha96": [
+          31,
+          75,
+          195,
+          165
+        ],
+        "coverage": 0.739572
+      }
+    }
+  ]
+}

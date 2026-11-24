@@ -258,7 +258,7 @@ test('les décors DLC se sélectionnent, les atlas s’animent à la demande et 
   });
 
   await firstPack.locator('.dlc-art-gallery summary').click();
-  await expect(firstPack.locator('.dlc-art-sprite')).toHaveCount(8);
+  await expect(firstPack.locator('.dlc-art-sprite')).toHaveCount(12);
   const portrait = firstPack.locator('.dlc-art-sprite').first();
   await expect.poll(async () => portrait.evaluate(canvas => {
     const pixels = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data;
@@ -286,4 +286,54 @@ test('les décors DLC se sélectionnent, les atlas s’animent à la demande et 
     const game = window.__INFERNAL_CITY_GAME__;
     return { pack: game.activeDlcBiomeId, map: game.dlcMapSelections[game.activeDlcBiomeId] };
   })).toEqual(savedChoice);
+});
+
+test('un terrain Haven, une unité aérienne et les effets tactiques utilisent leurs PNG en combat', async ({ page }, testInfo) => {
+  await openBriefing(page);
+  const layouts = page.locator('#layout-select');
+  for (const id of ['haven_outer_port', 'haven_sunken_cathedral', 'haven_abyssal_reactor', 'haven_inner_citadel']) {
+    await expect(layouts.locator(`option[value="${id}"]`)).toHaveCount(1);
+  }
+  await layouts.selectOption('haven_abyssal_reactor');
+  const tutorial = page.locator('#guided-tutorial-toggle');
+  if (await tutorial.isChecked()) await tutorial.uncheck();
+  await page.locator('#btn-start-campaign').click();
+  await expect.poll(() => page.evaluate(() => {
+    const game = window.__INFERNAL_CITY_GAME__;
+    const image = game.approachTerrainImage;
+    return game.isSpriteReady(image) && image.src.endsWith('/haven_abyssal_reactor.png');
+  })).toBe(true);
+
+  await page.evaluate(() => {
+    const game = window.__INFERNAL_CITY_GAME__;
+    game.isPaused = true;
+    window.__tacticalDrawProof = new Set();
+    const original = game.ctx.drawImage.bind(game.ctx);
+    game.ctx.drawImage = (image, ...args) => {
+      if (image.src) window.__tacticalDrawProof.add(image.src.split('/').at(-1));
+      return original(image, ...args);
+    };
+    const enemy = game.spawnEnemy('air_bioforge_wasp', 0, { suppressCinematic: true });
+    Object.assign(enemy, { x: 640, y: 250, facingAngle: 0 });
+    game.projectiles.push(
+      { type: 'bullet', sourceDefense: { type: 'cryo' }, x: 490, y: 300, vx: 200, vy: 0, radius: 7 },
+      { type: 'plasma_mortar', sourceDefense: { type: 'missile' }, x: 700, y: 380, vx: 200, vy: 0, radius: 8 }
+    );
+    game.particles.push({ type: 'gravity_ring', synergyId: 'choc_thermique', x: 680, y: 520,
+      radius: 10, maxRadius: 56, life: 0.16, maxLife: 0.34 });
+  });
+  await expect.poll(() => page.evaluate(() => {
+    return ['air_bioforge_wasp.png', 'cryo_shard.png', 'siege_missile.png', 'choc_thermique.png']
+      .every(name => window.__tacticalDrawProof.has(name));
+  }), { timeout: 15_000, message: 'les nouveaux atlas doivent être décodés et réellement dessinés' }).toBe(true);
+  const geometry = await page.evaluate(() => {
+    const game = window.__INFERNAL_CITY_GAME__;
+    const bounds = game.worldLayout.approachBounds;
+    return { image: game.approachTerrainImage.naturalWidth / game.approachTerrainImage.naturalHeight,
+      world: bounds.width / bounds.height, selected: game.selectedLayoutId };
+  });
+  expect(geometry.image).toBe(1.5);
+  expect(geometry.world).toBe(geometry.image);
+  expect(geometry.selected).toBe('haven_abyssal_reactor');
+  await testInfo.attach('haven-aerien-effets-tactiques', { body: await page.screenshot(), contentType: 'image/png' });
 });
