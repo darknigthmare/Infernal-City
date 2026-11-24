@@ -124,10 +124,14 @@
       palette: { bg: '#1e1b4b', primary: '#f59e0b', secondary: '#fef3c7', glow: '#38bdf8' },
       maps: ['Parvis Solaire', 'Nef d’Horlogerie'],
       heroines: [
-        { id: 'seraphine', name: 'Séraphine Vesper-Sol', age: 29, isAdult: true, title: 'Garde du Méridien', ability: 'Prisme Orbital', ultimate: 'Zénith d’Or' },
-        { id: 'beatrice', name: 'Béatrice Horologia', age: 33, isAdult: true, title: 'Maîtresse des Rouages', ability: 'Ralentissement Astral', ultimate: 'Minuit Solaire' }
+        { id: 'seraphine', name: 'Séraphine Vesper-Sol', age: 21, isAdult: true, title: 'Garde du Méridien', ability: 'Prisme Orbital', ultimate: 'Zénith d’Or' },
+        { id: 'beatrice', name: 'Béatrice Horologia', age: 26, isAdult: true, title: 'Maîtresse des Rouages', ability: 'Ralentissement Astral', ultimate: 'Minuit Solaire' }
       ],
-      boss: { id: 'archon_aurelien', name: 'Archonte Aurélien-X', phases: ['Jugement de Verre', 'Éclipse Dorée', 'Effondrement d’Astrolabe'] },
+      boss: { id: 'archon_aurelien', name: 'Archonte Aurélia-X', age: 24, isAdult: true, phases: ['Jugement de Verre', 'Éclipse Dorée', 'Effondrement d’Astrolabe'] },
+      bosses: [
+        { id: 'archon_aurelien', name: 'Archonte Aurélia-X', age: 24, isAdult: true, phases: ['Jugement de Verre', 'Éclipse Dorée', 'Effondrement d’Astrolabe'] },
+        { id: 'celestia_bell', name: 'Carillonneuse Célestia', age: 20, isAdult: true, phases: ['Résonance d’Or', 'Fissure de Vitrail', 'Dernier Carillon'] }
+      ],
       towers: [
         { id: 'solar_organ', name: 'Orgue Solaire', cost: 110, role: 'beam' },
         { id: 'stasis_pendulum', name: 'Pendule Stase', cost: 95, role: 'chrono' }
@@ -149,10 +153,14 @@
       palette: { bg: '#042f2e', primary: '#2dd4bf', secondary: '#a855f7', glow: '#fb7185' },
       maps: ['Fosse de Corail', 'Dôme Bathyal'],
       heroines: [
-        { id: 'nerea', name: 'Néréa Kestrel', age: 28, isAdult: true, title: 'Plongeuse Pression', ability: 'Onde Sonar', ultimate: 'Maelström Bathyal' },
-        { id: 'thalassa', name: 'Thalassa Vance', age: 35, isAdult: true, title: 'Commandante du Bathyscaphe', ability: 'Harpon Cryo-Pression', ultimate: 'Décompression Souveraine' }
+        { id: 'nerea', name: 'Néréa Kestrel', age: 19, isAdult: true, title: 'Plongeuse Pression', ability: 'Onde Sonar', ultimate: 'Maelström Bathyal' },
+        { id: 'thalassa', name: 'Thalassa Vance', age: 25, isAdult: true, title: 'Commandante du Bathyscaphe', ability: 'Harpon Cryo-Pression', ultimate: 'Décompression Souveraine' }
       ],
-      boss: { id: 'charybde', name: 'Léviathane Charybde', phases: ['Courant Noir', 'Essaim Médusaire', 'Pression Critique'] },
+      boss: { id: 'charybde', name: 'Léviathane Charybde', age: 23, isAdult: true, phases: ['Courant Noir', 'Essaim Médusaire', 'Pression Critique'] },
+      bosses: [
+        { id: 'charybde', name: 'Léviathane Charybde', age: 23, isAdult: true, phases: ['Courant Noir', 'Essaim Médusaire', 'Pression Critique'] },
+        { id: 'sirena_nautilus', name: 'Siréna Nautilus', age: 19, isAdult: true, phases: ['Chant Sonar', 'Brume Bioluminescente', 'Abysses Scellés'] }
+      ],
       towers: [
         { id: 'sonar_tower', name: 'Tour Sonar', cost: 90, role: 'anti_stealth' },
         { id: 'pressure_harpoon', name: 'Harpon Pression', cost: 115, role: 'anti_armor' }
@@ -174,10 +182,14 @@
       palette: { bg: '#064e3b', primary: '#34d399', secondary: '#e11d48', glow: '#fbbf24' },
       maps: ['Grande Serre', 'Racines du Cœur'],
       heroines: [
-        { id: 'sylva', name: 'Sylva Rosier', age: 31, isAdult: true, title: 'Architecte Botanique', ability: 'Mur de Ronces Cristallines', ultimate: 'Éclosion Écarlate' },
-        { id: 'ophelia', name: 'Ophélia Lierre', age: 37, isAdult: true, title: 'Maîtresse des Serres', ability: 'Nuage de Spores Dorées', ultimate: 'Canopée d’Émeraude' }
+        { id: 'sylva', name: 'Sylva Rosier', age: 20, isAdult: true, title: 'Architecte Botanique', ability: 'Mur de Ronces Cristallines', ultimate: 'Éclosion Écarlate' },
+        { id: 'ophelia', name: 'Ophélia Lierre', age: 24, isAdult: true, title: 'Maîtresse des Serres', ability: 'Nuage de Spores Dorées', ultimate: 'Canopée d’Émeraude' }
       ],
-      boss: { id: 'noctiflora', name: 'Reine Noctiflora', phases: ['Pollen Hallucinogène', 'Lianes Étrangleuses', 'Floraison Finale'] },
+      boss: { id: 'noctiflora', name: 'Reine Noctiflora', age: 22, isAdult: true, phases: ['Pollen Hallucinogène', 'Lianes Étrangleuses', 'Floraison Finale'] },
+      bosses: [
+        { id: 'noctiflora', name: 'Reine Noctiflora', age: 22, isAdult: true, phases: ['Pollen Hallucinogène', 'Lianes Étrangleuses', 'Floraison Finale'] },
+        { id: 'belladonna_glass', name: 'Dame Belladonna', age: 19, isAdult: true, phases: ['Épines de Cristal', 'Sève Corrosive', 'Verrière Brisée'] }
+      ],
       towers: [
         { id: 'spore_hive', name: 'Ruche de Spores', cost: 100, role: 'swarm' },
         { id: 'botanic_prism', name: 'Prisme Botanique', cost: 110, role: 'refract_laser' }
@@ -199,10 +211,14 @@
       palette: { bg: '#1c1917', primary: '#ea580c', secondary: '#fde68a', glow: '#1d4ed8' },
       maps: ['Oasis Vitrifiée', 'Canyon des Miroirs'],
       heroines: [
-        { id: 'sheherazade', name: 'Shéhérazade Solis', age: 30, isAdult: true, title: 'Tisseuse de Mirages', ability: 'Mirage Réfractaire', ultimate: 'Soleil de Silice' },
-        { id: 'daria', name: 'Daria Al-Qamar', age: 34, isAdult: true, title: 'Lancière des Dunes', ability: 'Lance de Verre Fondu', ultimate: 'Tempête d’Or' }
+        { id: 'sheherazade', name: 'Shéhérazade Solis', age: 21, isAdult: true, title: 'Tisseuse de Mirages', ability: 'Mirage Réfractaire', ultimate: 'Soleil de Silice' },
+        { id: 'daria', name: 'Daria Al-Qamar', age: 25, isAdult: true, title: 'Lancière des Dunes', ability: 'Lance de Verre Fondu', ultimate: 'Tempête d’Or' }
       ],
-      boss: { id: 'ignis_rah', name: 'Sultane Ignis-Rah', phases: ['Vitrification', 'Mirage Triple', 'Zénith Ardent'] },
+      boss: { id: 'ignis_rah', name: 'Sultane Ignis-Rah', age: 23, isAdult: true, phases: ['Vitrification', 'Mirage Triple', 'Zénith Ardent'] },
+      bosses: [
+        { id: 'ignis_rah', name: 'Sultane Ignis-Rah', age: 23, isAdult: true, phases: ['Vitrification', 'Mirage Triple', 'Zénith Ardent'] },
+        { id: 'miraj_obsidian', name: 'Danseuse Miraj', age: 20, isAdult: true, phases: ['Reflet Brûlant', 'Lames de Silice', 'Tempête de Verre'] }
+      ],
       towers: [
         { id: 'helios_mirror', name: 'Tour Miroir Hélios', cost: 105, role: 'solar_amp' },
         { id: 'silica_mortar', name: 'Mortier Silice', cost: 120, role: 'aoe_glass' }
@@ -224,10 +240,14 @@
       palette: { bg: '#0f172a', primary: '#4ade80', secondary: '#e879f9', glow: '#e0f2fe' },
       maps: ['Banquise Fracturée', 'Centrale Polaire'],
       heroines: [
-        { id: 'astrid', name: 'Astrid Valen', age: 32, isAdult: true, title: 'Briseuse de Banquise', ability: 'Bris de Banquise', ultimate: 'Faille Glaciaire' },
-        { id: 'katya', name: 'Katya Moroz', age: 36, isAdult: true, title: 'Sentinelle Boréale', ability: 'Dôme Boréal', ultimate: 'Nuit Polaire' }
+        { id: 'astrid', name: 'Astrid Valen', age: 20, isAdult: true, title: 'Briseuse de Banquise', ability: 'Bris de Banquise', ultimate: 'Faille Glaciaire' },
+        { id: 'katya', name: 'Katya Moroz', age: 24, isAdult: true, title: 'Sentinelle Boréale', ability: 'Dôme Boréal', ultimate: 'Nuit Polaire' }
       ],
-      boss: { id: 'cryo_valkyr', name: 'Tsarine Cryo-Valkyr', phases: ['Givre Absolu', 'Aurore Brisée', 'Zéro Polaire'] },
+      boss: { id: 'cryo_valkyr', name: 'Tsarine Cryo-Valkyr', age: 23, isAdult: true, phases: ['Givre Absolu', 'Aurore Brisée', 'Zéro Polaire'] },
+      bosses: [
+        { id: 'cryo_valkyr', name: 'Tsarine Cryo-Valkyr', age: 23, isAdult: true, phases: ['Givre Absolu', 'Aurore Brisée', 'Zéro Polaire'] },
+        { id: 'skadi_prism', name: 'Prêtresse Skadi', age: 19, isAdult: true, phases: ['Voile Boréal', 'Stalactites Plasma', 'Solstice Gelé'] }
+      ],
       towers: [
         { id: 'icebreaker_cannon', name: 'Canon Brise-Glace', cost: 115, role: 'heavy_cryo' },
         { id: 'boreal_beacon', name: 'Balise Boréale', cost: 95, role: 'aura_buff' }
@@ -249,10 +269,14 @@
       palette: { bg: '#27121b', primary: '#d97706', secondary: '#fbbf24', glow: '#881337' },
       maps: ['Fonderie Impériale', 'Pont des Dirigeables'],
       heroines: [
-        { id: 'vivienne', name: 'Lady Vivienne Gearhart', age: 33, isAdult: true, title: 'Ingénieure Impériale', ability: 'Surcharge Vapeur', ultimate: 'Pressurisation Totale' },
-        { id: 'clarisse', name: 'Clarisse Pendule', age: 29, isAdult: true, title: 'Horlogère de Combat', ability: 'Griffe Mécanique', ultimate: 'Carillon de Cuivre' }
+        { id: 'vivienne', name: 'Lady Vivienne Gearhart', age: 22, isAdult: true, title: 'Ingénieure Impériale', ability: 'Surcharge Vapeur', ultimate: 'Pressurisation Totale' },
+        { id: 'clarisse', name: 'Clarisse Pendule', age: 19, isAdult: true, title: 'Horlogère de Combat', ability: 'Griffe Mécanique', ultimate: 'Carillon de Cuivre' }
       ],
-      boss: { id: 'brass_queen', name: 'Automate Brass-Queen', phases: ['Pression Nominale', 'Soupapes Ouvertes', 'Surchauffe Impériale'] },
+      boss: { id: 'brass_queen', name: 'Automate Brass-Queen', age: 24, isAdult: true, phases: ['Pression Nominale', 'Soupapes Ouvertes', 'Surchauffe Impériale'] },
+      bosses: [
+        { id: 'brass_queen', name: 'Automate Brass-Queen', age: 24, isAdult: true, phases: ['Pression Nominale', 'Soupapes Ouvertes', 'Surchauffe Impériale'] },
+        { id: 'duchess_valva', name: 'Duchesse Valva', age: 21, isAdult: true, phases: ['Piston Impérial', 'Nuage de Vapeur', 'Surchauffe Finale'] }
+      ],
       towers: [
         { id: 'steam_gatling', name: 'Gatling à Vapeur', cost: 95, role: 'rapid_steam' },
         { id: 'copper_tesla', name: 'Bobine Tesla Cuivre', cost: 110, role: 'arc_copper' }
@@ -264,8 +288,8 @@
   ];
 
   const CONTRACT = deepFreeze({
-    version: '1.0.0',
-    adultMinimumAge: 27,
+    version: '1.1.0',
+    adultMinimumAge: 18,
     loreChoicesAreNarrativeOnly: true,
     freeExpansions: FREE_EXPANSIONS,
     paidDlcs: PAID_DLCS,

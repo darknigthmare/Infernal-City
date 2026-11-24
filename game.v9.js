@@ -4497,6 +4497,9 @@ class GameEngine {
       '#10b981'
     );
     audio.playWaveClear?.();
+    if (this.dlcResearchUnlocked?.includes('res_repair_drones')) {
+      this.healCitadel(12);
+    }
     if (!this.prefersReducedMotion && this.particles.length < 220) {
       this.particles.push({
         type: 'gravity_ring',
@@ -7035,7 +7038,10 @@ class GameEngine {
     if (!this.citadel || !Number.isFinite(amount) || amount <= 0) return 0;
     const before = Math.max(0, Number(this.citadel.hp) || 0);
     const minimumHp = Number.isFinite(options.minimumHp) ? Math.max(0, options.minimumHp) : 0;
-    this.citadel.hp = Math.max(minimumHp, before - amount);
+    const effectiveAmount = this.dlcResearchUnlocked?.includes('res_aegis_capacitor')
+      ? amount * 0.88
+      : amount;
+    this.citadel.hp = Math.max(minimumHp, before - effectiveAmount);
     const damage = Math.max(0, before - this.citadel.hp);
     if (damage > 0) {
       this.citadelUntouchedThisRun = false;
@@ -7243,6 +7249,7 @@ class GameEngine {
       }
 
       if (synergyLabel) {
+        if (this.dlcResearchUnlocked?.includes('res_synergy_amp')) adjustedDamage *= 1.1;
         enemy.lastSynergyTime = this.animationClock;
         audio.playSynergyCombo?.();
         if ((this.animationClock - (this.lastSynergyBannerClock || -9)) > 1.4) {
@@ -12032,6 +12039,8 @@ class GameEngine {
       };
     }
 
+    if (!Array.isArray(this.dlcResearchUnlocked)) this.dlcResearchUnlocked = [];
+
     freeGrid.innerHTML = '';
     (DLC_PACKS.freeExpansions || []).forEach(ext => {
       const card = document.createElement('article');
@@ -12044,6 +12053,62 @@ class GameEngine {
             ? `${ext.aerialLegionUnits.length} aériens de légion · ${ext.researchTree.length} recherches Bastion`
             : `${ext.operations.length} Opérations Mémoires · ${ext.synergies.length} synergies actives`));
       card.innerHTML = `<span class="dlc-badge">${ext.code} · GRATUIT</span><h3>${ext.name}</h3><p>${ext.tagline}</p><p style="color:#67e8f9;">${detail}</p>`;
+
+      if (ext.researchTree) {
+        const resWrap = document.createElement('div');
+        resWrap.style.display = 'flex';
+        resWrap.style.flexDirection = 'column';
+        resWrap.style.gap = '6px';
+        ext.researchTree.forEach(node => {
+          const owned = this.dlcResearchUnlocked.includes(node.id);
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = owned ? 'btn-primary' : 'btn-secondary';
+          btn.style.fontSize = '0.74rem';
+          btn.textContent = owned ? `✓ ${node.name} (${node.bonus})` : `${node.name} · ${node.cost} ◆ (${node.bonus})`;
+          btn.disabled = owned || (this.metaCoins || 0) < node.cost;
+          btn.onclick = () => {
+            if (owned || (this.metaCoins || 0) < node.cost) return;
+            this.metaCoins -= node.cost;
+            this.dlcResearchUnlocked.push(node.id);
+            if (node.id === 'res_wall_plating' && this.citadel) {
+              const boost = Math.round(this.citadel.maxHp * 0.1);
+              this.citadel.maxHp += boost;
+              this.citadel.hp += boost;
+            }
+            audio.playTowerUpgrade?.();
+            this.showFeedback(`Recherche débloquée : ${node.name}`, '#38bdf8');
+            this.saveProgress?.();
+            this.updateHUD();
+            this.openDlcHubModal();
+          };
+          resWrap.appendChild(btn);
+        });
+        card.appendChild(resWrap);
+      }
+
+      if (ext.modeType === 'reverse_tower_defense') {
+        const siegeBtn = document.createElement('button');
+        siegeBtn.type = 'button';
+        siegeBtn.className = 'btn-primary';
+        siegeBtn.textContent = 'LANCER ASSAUT INVERSÉ (SIMULATEUR POV BOSS)';
+        siegeBtn.onclick = () => {
+          const bossIdx = Math.floor(Math.random() * ext.playableBosses.length);
+          const bossId = ext.playableBosses[bossIdx];
+          audio.playBossAlert?.();
+          this.showTacticalBanner(
+            'ASSAUT INVERSÉ · POV BOSS',
+            `TRÔNE ${String(bossId).toUpperCase()} DÉPLOYÉ`,
+            'Escouades abyssales engagées contre les remparts d’Haven',
+            'danger',
+            3000
+          );
+          this.metaCoins += 10;
+          this.showFeedback(`Assaut POV (${bossId}) simulé : +10 ◆ Crédits Haven`, '#ff2a5f');
+          this.updateHUD();
+        };
+        card.appendChild(siegeBtn);
+      }
       freeGrid.appendChild(card);
     });
 
@@ -12053,7 +12118,8 @@ class GameEngine {
       const isActive = this.activeDlcBiomeId === dlc.id;
       card.className = `dlc-card${isActive ? ' is-active' : ''}`;
       const heroNames = dlc.heroines.map(h => `${h.name} (${h.age} ans)`).join(' & ');
-      card.innerHTML = `<span class="dlc-badge" style="color:${dlc.palette.primary};">${dlc.code} · ${dlc.radioLabel}</span><h3>${dlc.name}</h3><p>${dlc.visualDomain}</p><p style="color:#fde68a;">Valkyries : ${heroNames} · Boss : ${dlc.boss.name}</p><p style="color:#94a3b8;">Cartes : ${dlc.maps.join(' / ')} · Tourelles : ${dlc.towers.map(t => t.name).join(', ')}</p>`;
+      const bossNames = (dlc.bosses || [dlc.boss]).map(b => `${b.name} (${b.age || 20} ans)`).join(' & ');
+      card.innerHTML = `<span class="dlc-badge" style="color:${dlc.palette.primary};">${dlc.code} · ${dlc.radioLabel}</span><h3>${dlc.name}</h3><p>${dlc.visualDomain}</p><p style="color:#fde68a;">Valkyries (18+) : ${heroNames}</p><p style="color:#fda4af;">Boss (18+) : ${bossNames}</p><p style="color:#94a3b8;">Cartes : ${dlc.maps.join(' / ')} · Tourelles : ${dlc.towers.map(t => t.name).join(', ')}</p>`;
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = isActive ? 'btn-primary' : 'btn-secondary';
