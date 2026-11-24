@@ -2095,6 +2095,18 @@ class GameEngine {
             if (HERO_CLASSES[heroId]) HERO_CLASSES[heroId].unlocked = true;
           });
         }
+        if (Array.isArray(data.dlcResearchUnlocked)) {
+          this.dlcResearchUnlocked = data.dlcResearchUnlocked.filter(id => typeof id === 'string').slice(0, 16);
+        }
+        if (typeof data.activeDlcBiomeId === 'string' || data.activeDlcBiomeId === null) {
+          this.activeDlcBiomeId = data.activeDlcBiomeId;
+        }
+        if (typeof data.activeDuoComboId === 'string' || data.activeDuoComboId === null) {
+          this.activeDuoComboId = data.activeDuoComboId;
+        }
+        if (Number.isFinite(Number(data.dlcSiegesWon))) {
+          this.dlcSiegesWon = Math.max(0, Math.floor(Number(data.dlcSiegesWon)));
+        }
         if (data.characterProgress && typeof data.characterProgress === 'object') {
           Object.values(HERO_CLASSES).forEach(hero => {
             const progress = data.characterProgress[hero.id];
@@ -2181,6 +2193,10 @@ class GameEngine {
         achievements,
         unlockedHeroIds,
         characterProgress,
+        dlcResearchUnlocked: Array.isArray(this.dlcResearchUnlocked) ? this.dlcResearchUnlocked.slice(0, 16) : [],
+        activeDlcBiomeId: this.activeDlcBiomeId || null,
+        activeDuoComboId: this.activeDuoComboId || null,
+        dlcSiegesWon: Math.max(0, Math.floor(Number(this.dlcSiegesWon) || 0)),
         vnSceneProgress: {
           dataVersion: this.vnSceneProgress.dataVersion,
           flags: [...this.vnSceneProgress.flags],
@@ -8409,6 +8425,23 @@ class GameEngine {
         maxLife: 0.55,
         color: '#f59e0b'
       });
+      if (this.activeDuoComboId) {
+        const pact = (DLC_PACKS.freeExpansions || []).find(e => e.id === 'free_eclipse_pact');
+        const duo = pact?.duoCombos?.find(d => d.id === this.activeDuoComboId);
+        if (duo) {
+          this.particles.push({
+            type: 'gravity_ring',
+            x: this.citadel.x,
+            y: this.citadel.y,
+            radius: 48,
+            maxRadius: 340,
+            life: 0.68,
+            maxLife: 0.68,
+            color: '#ec4899'
+          });
+          this.addFloatingText?.(`DUO · ${duo.name.toUpperCase()} !`, this.citadel.x, this.citadel.y - 102, '#ec4899');
+        }
+      }
     }
     this.enemies.forEach(enemy => {
       if (!enemy || enemy.hp <= 0) return;
@@ -12088,26 +12121,86 @@ class GameEngine {
       }
 
       if (ext.modeType === 'reverse_tower_defense') {
-        const siegeBtn = document.createElement('button');
-        siegeBtn.type = 'button';
-        siegeBtn.className = 'btn-primary';
-        siegeBtn.textContent = 'LANCER ASSAUT INVERSÉ (SIMULATEUR POV BOSS)';
-        siegeBtn.onclick = () => {
-          const bossIdx = Math.floor(Math.random() * ext.playableBosses.length);
-          const bossId = ext.playableBosses[bossIdx];
-          audio.playBossAlert?.();
-          this.showTacticalBanner(
-            'ASSAUT INVERSÉ · POV BOSS',
-            `TRÔNE ${String(bossId).toUpperCase()} DÉPLOYÉ`,
-            'Escouades abyssales engagées contre les remparts d’Haven',
-            'danger',
-            3000
-          );
-          this.metaCoins += 10;
-          this.showFeedback(`Assaut POV (${bossId}) simulé : +10 ◆ Crédits Haven`, '#ff2a5f');
-          this.updateHUD();
-        };
-        card.appendChild(siegeBtn);
+        if (!this.dlcSiegeState) {
+          this.dlcSiegeState = { bossId: ext.playableBosses[0], essence: 120, targetHp: 300, maxHp: 300 };
+        }
+        const st = this.dlcSiegeState;
+        const siegeBox = document.createElement('div');
+        siegeBox.style.cssText = 'display:flex; flex-direction:column; gap:6px; padding:8px; border:1px solid rgba(255,42,95,0.35); border-radius:8px; background:rgba(30,10,20,0.55);';
+
+        const sel = document.createElement('select');
+        sel.setAttribute('aria-label', 'Choisir le Boss à incarner');
+        sel.style.cssText = 'background:#0f172a; color:#fda4af; border:1px solid rgba(255,42,95,0.45); border-radius:6px; padding:4px 6px; font-size:0.78rem;';
+        ext.playableBosses.forEach(bId => {
+          const opt = document.createElement('option');
+          opt.value = bId;
+          opt.textContent = `TRÔNE · ${String(bId).toUpperCase()}`;
+          if (st.bossId === bId) opt.selected = true;
+          sel.appendChild(opt);
+        });
+        sel.onchange = () => { st.bossId = sel.value; };
+        siegeBox.appendChild(sel);
+
+        const meter = document.createElement('p');
+        meter.style.cssText = 'font-size:0.76rem; color:#fda4af; margin:0;';
+        meter.textContent = `Citadelle cible : ${st.targetHp}/${st.maxHp} PV · Essence : ${st.essence} · Sièges gagnés : ${this.dlcSiegesWon || 0}`;
+        siegeBox.appendChild(meter);
+
+        const sqRow = document.createElement('div');
+        sqRow.style.cssText = 'display:flex; flex-wrap:wrap; gap:5px;';
+        ext.squadCards.forEach(sq => {
+          const sqBtn = document.createElement('button');
+          sqBtn.type = 'button';
+          sqBtn.className = 'btn-secondary';
+          sqBtn.style.fontSize = '0.7rem';
+          sqBtn.textContent = `${sq.name} (${sq.essenceCost})`;
+          sqBtn.disabled = st.essence < sq.essenceCost;
+          sqBtn.onclick = () => {
+            if (st.essence < sq.essenceCost) return;
+            st.essence -= sq.essenceCost;
+            const dmg = sq.role === 'boss' ? 120 : (sq.role === 'siege' ? 65 : 42);
+            st.targetHp = Math.max(0, st.targetHp - dmg);
+            audio.playBossAttack?.();
+            if (st.targetHp <= 0) {
+              this.dlcSiegesWon = (this.dlcSiegesWon || 0) + 1;
+              this.metaCoins += 35;
+              audio.playVictoryFanfare?.();
+              this.showTacticalBanner('CITADELLE RENVERSEE', `${String(st.bossId).toUpperCase()} VICTORIEUX`, '+35 Crédits Haven · Siège POV accompli', 'danger', 2800);
+              this.showFeedback(`Siège POV remporté (${st.bossId}) : +35 ◆`, '#ff2a5f');
+              st.targetHp = st.maxHp;
+              st.essence = 120;
+              this.saveProgress?.();
+            } else {
+              st.essence = Math.min(150, st.essence + 20);
+            }
+            this.updateHUD();
+            this.openDlcHubModal();
+          };
+          sqRow.appendChild(sqBtn);
+        });
+        siegeBox.appendChild(sqRow);
+        card.appendChild(siegeBox);
+      }
+
+      if (ext.duoCombos) {
+        const duoWrap = document.createElement('div');
+        duoWrap.style.cssText = 'display:flex; flex-wrap:wrap; gap:5px;';
+        ext.duoCombos.forEach(duo => {
+          const active = this.activeDuoComboId === duo.id;
+          const dBtn = document.createElement('button');
+          dBtn.type = 'button';
+          dBtn.className = active ? 'btn-primary' : 'btn-secondary';
+          dBtn.style.fontSize = '0.72rem';
+          dBtn.textContent = active ? `✓ ${duo.name}` : `DUO · ${duo.name}`;
+          dBtn.onclick = () => {
+            this.activeDuoComboId = active ? null : duo.id;
+            this.saveProgress?.();
+            this.showFeedback(this.activeDuoComboId ? `Duo Overdrive actif : ${duo.name}` : 'Duo Overdrive désactivé.', '#ec4899');
+            this.openDlcHubModal();
+          };
+          duoWrap.appendChild(dBtn);
+        });
+        card.appendChild(duoWrap);
       }
       freeGrid.appendChild(card);
     });
@@ -13040,6 +13133,19 @@ class GameEngine {
     const coins = document.getElementById('hud-coins-txt'); if (coins) coins.textContent = `${this.coins} 🪙`;
     const metaCoins = document.getElementById('hud-meta-coins-txt'); if (metaCoins) metaCoins.textContent = `${this.metaCoins} ◆`;
     const score = document.getElementById('hud-score-txt'); if (score) score.textContent = this.score;
+    const weatherEl = document.getElementById('hud-weather-txt');
+    if (weatherEl) {
+      const wState = this.getActiveTacticalWeather?.() || 'clear';
+      const wLabels = {
+        clear: ['Nominal', '#38bdf8'],
+        acid_rain: ['Pluie Acide', '#34d399'],
+        ion_storm: ['Ionique · [Q]+15%', '#67e8f9'],
+        infernal_fog: ['Brume Infernale', '#f59e0b']
+      };
+      const [label, col] = wLabels[wState] || wLabels.clear;
+      weatherEl.textContent = label;
+      weatherEl.style.color = col;
+    }
     const waveProgress = document.getElementById('hud-wave-progress-txt');
     if (waveProgress) {
       waveProgress.textContent = this.waveActive
