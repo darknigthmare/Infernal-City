@@ -1,0 +1,57 @@
+{
+  "id": "clarisse",
+  "name": "Clarisse Pendule",
+  "kind": "heroes",
+  "packId": "dlc_brass_palace",
+  "biome": "brass",
+  "path": "assets/dlc/illustrated-v1/heroes/clarisse.png",
+  "columns": 8,
+  "rows": 8,
+  "states": [
+    "intro",
+    "idle_respiration",
+    "attack",
+    "ability",
+    "ultimate",
+    "victory",
+    "defeat",
+    "outro"
+  ],
+  "reference": "assets/characters/heroines/aurelia-brassheart-atlas-v1.png",
+  "referenceRole": "style-camera-material guide only; not identity",
+  "fidelity": "first original design from authored DLC metadata and palette",
+  "source": "dlc-packs.v1.js",
+  "authoredCharacter": {
+    "id": "clarisse",
+    "name": "Clarisse Pendule",
+    "age": 19,
+    "isAdult": true,
+    "title": "Horlogère de Combat",
+    "ability": "Griffe Mécanique",
+    "ultimate": "Carillon de Cuivre"
+  },
+  "palette": {
+    "bg": "#27121b",
+    "primary": "#d97706",
+    "secondary": "#fbbf24",
+    "glow": "#881337"
+  },
+  "designBrief": "Mature adult woman with short copper curls, closed purple combat tailcoat, brass chest plate over opaque clothes, trousers and boots. One brass mechanical claw gauntlet, compact gear dial held by the other hand. Nimble combat clockmaker.",
+  "prompt": "Edit the supplied Clarisse Pendule animation atlas. Preserve the EXACT existing identity, face, hair, outfit, weapon, painterly style, all poses, row order and grid of 8 columns by 8 rows. Correct cell isolation only. REDUCE every sprite, its weapon, and all effects inside each cell by 25 percent, keeping their local center and a consistent feet baseline at 78 percent of cell height. The ENTIRE body, hair, weapon, staff charge and effects must fit within the central 50 percent width and 60 percent height of each equal square cell. No content may touch any cell boundary, especially intro feet and charged weapons. Keep at least 15 percent empty alpha-zero margin around every pose. Remove broad haze, fog, floor shadows, any colored or white background, and cross-cell glow; retain small crisp effects only. All 64 characters remain fully opaque and visible. Do not omit or duplicate poses. No added text, frame lines, background, transparency checkerboard or paper. True transparent PNG with the original square canvas aspect.",
+  "key": "heroes/clarisse",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-2b67fd4d-d760-45ab-a2d8-edcb388a76bc.png",
+  "status": "pending-visual-review",
+  "generator": "built-in image_gen",
+  "nativeBytesPreserved": true,
+  "sha256": "25f2b9a6033456c642ab014601bed6e6a5390c9e0861eb5561a8c1954282a681",
+  "bytes": 1142712,
+  "width": 1254,
+  "height": 1254,
+  "mode": "RGBA",
+  "alphaExtrema": [
+    0,
+    255
+  ],
+  "revision": 2,
+  "inputEditNative": "/workspace/scratch/3c707a35b074/generated_images/exec-e85f8ded-80df-4614-92b3-9709c5450a21.png"
+}

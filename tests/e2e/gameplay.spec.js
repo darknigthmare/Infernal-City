@@ -230,3 +230,110 @@ test('une panne de stockage déclenche une alerte persistante et actionnable', a
   await expect(banner).toContainText(/stockage local|sauvegarde/i);
   await expect(page.locator('#btn-emergency-export')).toBeVisible();
 });
+
+test('les décors DLC se sélectionnent, les atlas s’animent à la demande et le choix persiste', async ({ page }, testInfo) => {
+  const dlcRequests = [];
+  page.on('request', request => {
+    if (request.url().includes('/assets/dlc/illustrated-v1/')) dlcRequests.push(request.url());
+  });
+  await beginCampaign(page);
+  expect(dlcRequests, 'aucun atlas DLC ne doit être chargé avant son utilisation').toEqual([]);
+
+  await page.locator('#btn-open-hq').click();
+  await page.locator('#btn-dlc-hub-toggle').click();
+  const modal = page.locator('#dlc-hub-modal');
+  await expect(modal).toHaveClass(/active/);
+  await expect(modal.locator('.dlc-art-map')).toHaveCount(12);
+  await expect(modal.locator('.dlc-art-sprite')).toHaveCount(0);
+  expect(dlcRequests.every(url => url.includes('/maps/'))).toBe(true);
+
+  const firstPack = page.locator('#dlc-paid-grid > .dlc-card').first();
+  const secondMap = firstPack.locator('.dlc-art-map button').nth(1);
+  const chosenName = await secondMap.innerText();
+  await secondMap.click();
+  await expect(firstPack.getByRole('button', { name: chosenName, exact: true })).toHaveAttribute('aria-pressed', 'true');
+  const savedChoice = await page.evaluate(() => {
+    const game = window.__INFERNAL_CITY_GAME__;
+    return { pack: game.activeDlcBiomeId, map: game.dlcMapSelections[game.activeDlcBiomeId] };
+  });
+
+  await firstPack.locator('.dlc-art-gallery summary').click();
+  await expect(firstPack.locator('.dlc-art-sprite')).toHaveCount(12);
+  const portrait = firstPack.locator('.dlc-art-sprite').first();
+  await expect.poll(async () => portrait.evaluate(canvas => {
+    const pixels = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data;
+    return pixels.some((value, index) => index % 4 === 3 && value > 24);
+  }), { message: 'la galerie doit afficher un sprite décodé dans son canvas' }).toBe(true);
+  const firstFrame = await portrait.evaluate(canvas => canvas.toDataURL());
+  await expect.poll(() => portrait.evaluate(canvas => canvas.toDataURL()), {
+    message: 'la galerie doit continuer son animation pendant la pause du QG'
+  }).not.toBe(firstFrame);
+  await testInfo.attach('galerie-dlc', { body: await page.screenshot(), contentType: 'image/png' });
+
+  const lastPack = page.locator('#dlc-paid-grid > .dlc-card').last();
+  await lastPack.locator('.dlc-art-map button').last().focus();
+  await page.keyboard.press('Tab');
+  await expect(lastPack.locator('.dlc-art-gallery summary')).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(lastPack.locator('.dlc-art-gallery')).toHaveAttribute('open', '');
+  const dimensions = await page.evaluate(() => ({ viewport: document.documentElement.clientWidth,
+    document: document.documentElement.scrollWidth }));
+  expect(dimensions.document).toBeLessThanOrEqual(dimensions.viewport + 1);
+
+  await page.reload();
+  await page.locator('#btn-enter-adult').click();
+  await expect.poll(() => page.evaluate(() => {
+    const game = window.__INFERNAL_CITY_GAME__;
+    return { pack: game.activeDlcBiomeId, map: game.dlcMapSelections[game.activeDlcBiomeId] };
+  })).toEqual(savedChoice);
+});
+
+test('un terrain Haven, une unité aérienne et les effets tactiques utilisent leurs PNG en combat', async ({ page }, testInfo) => {
+  await openBriefing(page);
+  const layouts = page.locator('#layout-select');
+  for (const id of ['haven_outer_port', 'haven_sunken_cathedral', 'haven_abyssal_reactor', 'haven_inner_citadel']) {
+    await expect(layouts.locator(`option[value="${id}"]`)).toHaveCount(1);
+  }
+  await layouts.selectOption('haven_abyssal_reactor');
+  const tutorial = page.locator('#guided-tutorial-toggle');
+  if (await tutorial.isChecked()) await tutorial.uncheck();
+  await page.locator('#btn-start-campaign').click();
+  await expect.poll(() => page.evaluate(() => {
+    const game = window.__INFERNAL_CITY_GAME__;
+    const image = game.approachTerrainImage;
+    return game.isSpriteReady(image) && image.src.endsWith('/haven_abyssal_reactor.png');
+  })).toBe(true);
+
+  await page.evaluate(() => {
+    const game = window.__INFERNAL_CITY_GAME__;
+    game.isPaused = true;
+    window.__tacticalDrawProof = new Set();
+    const original = game.ctx.drawImage.bind(game.ctx);
+    game.ctx.drawImage = (image, ...args) => {
+      if (image.src) window.__tacticalDrawProof.add(image.src.split('/').at(-1));
+      return original(image, ...args);
+    };
+    const enemy = game.spawnEnemy('air_bioforge_wasp', 0, { suppressCinematic: true });
+    Object.assign(enemy, { x: 640, y: 250, facingAngle: 0 });
+    game.projectiles.push(
+      { type: 'bullet', sourceDefense: { type: 'cryo' }, x: 490, y: 300, vx: 200, vy: 0, radius: 7 },
+      { type: 'plasma_mortar', sourceDefense: { type: 'missile' }, x: 700, y: 380, vx: 200, vy: 0, radius: 8 }
+    );
+    game.particles.push({ type: 'gravity_ring', synergyId: 'choc_thermique', x: 680, y: 520,
+      radius: 10, maxRadius: 56, life: 0.16, maxLife: 0.34 });
+  });
+  await expect.poll(() => page.evaluate(() => {
+    return ['air_bioforge_wasp.png', 'cryo_shard.png', 'siege_missile.png', 'choc_thermique.png']
+      .every(name => window.__tacticalDrawProof.has(name));
+  }), { timeout: 15_000, message: 'les nouveaux atlas doivent être décodés et réellement dessinés' }).toBe(true);
+  const geometry = await page.evaluate(() => {
+    const game = window.__INFERNAL_CITY_GAME__;
+    const bounds = game.worldLayout.approachBounds;
+    return { image: game.approachTerrainImage.naturalWidth / game.approachTerrainImage.naturalHeight,
+      world: bounds.width / bounds.height, selected: game.selectedLayoutId };
+  });
+  expect(geometry.image).toBe(1.5);
+  expect(geometry.world).toBe(geometry.image);
+  expect(geometry.selected).toBe('haven_abyssal_reactor');
+  await testInfo.attach('haven-aerien-effets-tactiques', { body: await page.screenshot(), contentType: 'image/png' });
+});

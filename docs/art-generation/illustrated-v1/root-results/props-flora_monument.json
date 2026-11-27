@@ -1,0 +1,29 @@
+{
+  "key": "props/flora_monument",
+  "category": "props",
+  "id": "flora_monument",
+  "packId": "dlc_art_nouveau_garden",
+  "name": "Monument Jardin de Cendre & Verrière Art Nouveau",
+  "columns": 2,
+  "rows": 2,
+  "sequenceFrames": 4,
+  "transparent": true,
+  "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/map-western-wall.webp",
+  "prompt": "Use case: stylized-concept. Production environment sprite atlas for Infernal City. Input reference gives painted cyber-gothic game texture and elevated orthographic camera only. Subject: one freestanding Art Nouveau wrought-iron garden arch entwined with emerald glass leaves and crimson crystal roses. Exact domain Botanique Mutante, Fer Forgé Art Nouveau & Serres de Cristal; palette {\"bg\":\"#064e3b\",\"primary\":\"#34d399\",\"secondary\":\"#e11d48\",\"glow\":\"#fbbf24\"}. EXACT GRID 2 columns by 2 rows, four equal SQUARE cells on a SQUARE PNG. Four subtly different pulse/idle frames of the SAME complete monument. Centered fixed anchor, same camera and scale in every cell. Entire object and glow fit within central 60 percent of each cell; leave at least 20 percent completely transparent margin on every side. Isolated illustrated architecture prop, intricate textured materials, no ground platform extending to cell edges, no cast shadow, no surrounding scenery, no text, numbers, panel lines, grid or watermark. True alpha-zero transparent background. Four separate full monuments, no crossing into neighboring cells. First original interpretation of the written DLC domain.",
+  "path": "assets/dlc/illustrated-v1/props/flora_monument.png",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-5b503dfa-74fb-445b-a286-cfaa1996804f.png",
+  "sha256": "eb1725381c02424ab2cd0d45604e8ec6d36f1132da74c075a08475ee8093dab9",
+  "bytes": 1387128,
+  "width": 1254,
+  "height": 1254,
+  "mode": "RGBA",
+  "alphaExtrema": [
+    0,
+    255
+  ],
+  "method": "built-in image_gen",
+  "nativeBytesPreserved": true,
+  "qa": {
+    "status": "pending-visual-review"
+  }
+}

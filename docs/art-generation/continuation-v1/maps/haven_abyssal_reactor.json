@@ -1,0 +1,26 @@
+{
+  "id": "haven_abyssal_reactor",
+  "name": "Réacteur Abyssal",
+  "brief": "The floor of a vast submerged cyber-gothic industrial reactor chamber. A broad flat metal circular arena fills the central two thirds, etched with three concentric FLUSH brass and dark iron maintenance tracks, no raised walls on tracks. Four broad dry radial access routes cut through the outer machine ring from each cardinal edge. At the extreme perimeter: huge turbine sockets, riveted cooling pipes, cyan glass pressure cells, purple energy conduits and restrained orange heat vents. Center fully EMPTY, no reactor column/core/pit. The reactor machinery frames the playable floor from outside only. A cool blue-black steel palette with cyan energy and amber heating accents, careful tactile industrial materials, concentric-circle composition.",
+  "prompt": "Use case: stylized-concept. Production battlefield background for the existing game Infernal City. Reference is CAMERA, illustrated material detail, dark cyber-gothic art direction only, NOT exact layout or content. Create one complete opaque landscape battlefield, exact 3:2 aspect ratio. Nearly overhead orthographic 2.5D camera, no horizon or perspective vanishing point. Detailed painterly game rendering. Calm continuous walkable surface throughout the central TWO THIRDS of BOTH image width and height: this inner rectangular area is the playfield and must stay unobstructed for units and towers. The very center must be empty for a separately drawn citadel. Border architecture and pools only in outer margins; four cardinal approaches meet the central field. No characters, enemies, towers, core building, UI, text, lettering, labels, grid or watermark. Do not render collision obstacles crossing the playable surface. All image pixels opaque. First original interpretation of an authored theatre name, not a pre-existing identity reconstruction. Theatre: Réacteur Abyssal. The floor of a vast submerged cyber-gothic industrial reactor chamber. A broad flat metal circular arena fills the central two thirds, etched with three concentric FLUSH brass and dark iron maintenance tracks, no raised walls on tracks. Four broad dry radial access routes cut through the outer machine ring from each cardinal edge. At the extreme perimeter: huge turbine sockets, riveted cooling pipes, cyan glass pressure cells, purple energy conduits and restrained orange heat vents. Center fully EMPTY, no reactor column/core/pit. The reactor machinery frames the playable floor from outside only. A cool blue-black steel palette with cyan energy and amber heating accents, careful tactile industrial materials, concentric-circle composition.",
+  "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/infernal-city-approach-terrain.png",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-9620a273-6042-4113-a852-6327b5a28bc0.png",
+  "key": "maps/haven_abyssal_reactor",
+  "path": "assets/dlc/illustrated-v1/maps/haven_abyssal_reactor.png",
+  "columns": 1,
+  "rows": 1,
+  "transparent": false,
+  "referenceRole": "style, material and camera only",
+  "qa": {
+    "status": "pass",
+    "reviewer": "root visual review",
+    "notes": "Opaque native 3:2 terrain. Four radial accesses with flush decorative floor rings; center remains empty for the runtime citadel. Border machinery/fortifications readable, no UI, text, characters or raised obstacles in the build rectangle."
+  },
+  "sha256": "91a97b3b813c3cf212ed0df6c29bb1615dc16f7e7eb3f3c59b944c3be669271d",
+  "bytes": 3366139,
+  "width": 1536,
+  "height": 1024,
+  "mode": "RGB",
+  "nativeBytesPreserved": true,
+  "method": "built-in image_gen"
+}

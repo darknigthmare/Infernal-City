@@ -138,6 +138,13 @@
       ],
       weapon: { id: 'seraphic_ray', name: 'Rayon Séraphique', evolution: 'Chœur de Supernova' },
       enemiesCount: 8,
+      // Individual names authored in GAME_BIBLE §17.1. Combat stats are not yet authored.
+      enemies: [
+        { id: 'astral_cherub_automaton', name: 'Chérubin Automaton' },
+        { id: 'astral_censer_bearer', name: 'Porte-Encensoir' },
+        { id: 'astral_alabaster_golem', name: 'Golem d’Albâtre' },
+        { id: 'astral_siege_pendulum', name: 'Pendulier de Siège' }
+      ],
       vnPack: { name: 'Sanctuaire Solaire', chapters: 6, skins: 4, adultConsentContract: true }
     },
     {
@@ -167,6 +174,12 @@
       ],
       weapon: { id: 'cavitation_torpedo', name: 'Torpille à Cavitation', evolution: 'Vortex Abyssal' },
       enemiesCount: 8,
+      enemies: [
+        { id: 'abyss_armored_nautilus', name: 'Nautile Blindé' },
+        { id: 'abyss_emp_jellyfish', name: 'Méduse EMP' },
+        { id: 'abyss_stealth_ray', name: 'Raie Furtive' },
+        { id: 'abyss_drill_crab', name: 'Crabe Foreur' }
+      ],
       vnPack: { name: 'Observatoire Sous-Marin', chapters: 6, skins: 4, adultConsentContract: true }
     },
     {
@@ -196,6 +209,12 @@
       ],
       weapon: { id: 'plasma_vine', name: 'Liane Plasma', evolution: 'Couronne d’Épines' },
       enemiesCount: 8,
+      enemies: [
+        { id: 'flora_crystal_wasp', name: 'Guêpe Cristalline' },
+        { id: 'flora_steel_treant', name: 'Tréant d’Acier' },
+        { id: 'flora_mortar_flower', name: 'Fleur Mortier' },
+        { id: 'flora_ivy_crawler', name: 'Rampeur de Lierre' }
+      ],
       vnPack: { name: 'Serre Privée au Clair de Lune', chapters: 6, skins: 4, adultConsentContract: true }
     },
     {

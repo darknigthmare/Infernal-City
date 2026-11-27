@@ -1,0 +1,55 @@
+{
+  "id": "duchess_valva",
+  "name": "Duchesse Valva",
+  "kind": "bosses",
+  "packId": "dlc_brass_palace",
+  "biome": "brass",
+  "path": "assets/dlc/illustrated-v1/bosses/duchess_valva.png",
+  "columns": 8,
+  "rows": 6,
+  "states": [
+    "intro",
+    "phase_shift_2",
+    "phase_shift_3",
+    "heavy_telegraph",
+    "defeat",
+    "idle"
+  ],
+  "reference": "assets/characters/heroines/aurelia-brassheart-atlas-v1.png",
+  "referenceRole": "style-camera-material guide only; not identity",
+  "fidelity": "first original design from authored DLC metadata and palette",
+  "source": "dlc-packs.v1.js",
+  "authoredCharacter": {
+    "id": "duchess_valva",
+    "name": "Duchesse Valva",
+    "age": 21,
+    "isAdult": true,
+    "phases": [
+      "Piston Impérial",
+      "Nuage de Vapeur",
+      "Surchauffe Finale"
+    ]
+  },
+  "palette": {
+    "bg": "#27121b",
+    "primary": "#d97706",
+    "secondary": "#fbbf24",
+    "glow": "#881337"
+  },
+  "designBrief": "Mature adult duchess with warm brown skin, short auburn hair and brass monocle, broad brass shoulder plates, closed burgundy armored waistcoat, full purple trousers and boots. Compact piston hammer and valve gauntlet. Imposing imperial steam commander.",
+  "prompt": "Use case: stylized-concept. Production game sprite animation atlas for Infernal City. The attached atlas is a STYLE, SCALE, CAMERA and painterly-material reference only; invent the specified new character, do not copy the guide character or its costume. Match the existing illustrated dark-fantasy tactical sprite style: detailed crisp hand-painted surfaces, fine dark contours, directional highlights, believable adult anatomy, elevated three-quarter camera facing toward screen-right. Use the SAME camera, head, body proportions, outfit, weapon and scale consistently in every cell. Exactly one full character per cell, no clones inside a cell. All combat costumes fully opaque and closed, all characters plainly mature adults. True transparent alpha background, no floor, no background color, no contact shadow outside feet, no labels, typography, grid lines, watermarks or UI. Every action stays inside its own mathematically equal cell: body plus weapon plus particles must fit the central 55% width and 60% height; generous transparent margins on all four sides, absolutely no cropped hair, weapons, glows, or cross-cell overlap. Keep effects compact and attached to the character, no long projectile beams. Eight consecutive distinct animation frames left-to-right in EVERY row; exactly the listed number of rows, no extra rows, no missing or blank cells. Use tightly controlled movement arcs, no arbitrary view changes. Non-graphic defeat, never blood or gore.\nSubject: Duchesse Valva, a new boss in \"Palais Mécanique & Horlogerie de Cuivre\". Authored identity: Piston Impérial / Nuage de Vapeur / Surchauffe Finale. Visual domain: Steampunk Impérial, Cuivre, Laiton, Velours Pourpre & Vapeur Dorée. Palette: {\"bg\":\"#27121b\",\"primary\":\"#d97706\",\"secondary\":\"#fbbf24\",\"glow\":\"#881337\"}; background remains transparent regardless of palette bg. Design: Mature adult duchess with warm brown skin, short auburn hair and brass monocle, broad brass shoulder plates, closed burgundy armored waistcoat, full purple trousers and boots. Compact piston hammer and valve gauntlet. Imposing imperial steam commander.\nLayout: EXACTLY 8 columns by 6 rows, 48 equal square cells, 4:3 landscape 2048×1536 atlas. Bodies center at each cell's midpoint with the feet on a consistent local baseline around 80% cell height. Six rows from top to bottom: 1 intro, eight steps of imposing arrival and ready stance, character visible in all frames; 2 phase_shift_2, \"Nuage de Vapeur\", escalating compact power activation while keeping same outfit and body; 3 phase_shift_3, \"Surchauffe Finale\", more intense compact aura and pose; 4 heavy_telegraph, clearly readable attack windup, held charge, strike-ready peak and recovery without long beam; 5 defeat, non-graphic stagger and kneeling collapse with compact dissolving motes, visible remains in all frames; 6 idle, breathing and subtle weapon/cloth loop.\nMaintain a single coherent identity across the entire sheet, same mature face and hairstyle. Readability at tactical game size is essential. STRICT GUTTERS: no haze, fog, dust, ambient glow clouds, floodlights or colored matte anywhere. Transparent empty space separates every frame on every side. Effects are narrow crisp rings, short streaks or tiny sparks, contained within the character's silhouette width whenever possible. No fade-out or white fog even in the outro: every frame remains a clean opaque character cutout. Do not enlarge the ultimate aura beyond the central 60% of a cell.",
+  "key": "bosses/duchess_valva",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-d65878cc-9d5e-400d-89dc-dbe49908a3d0.png",
+  "status": "pending-visual-review",
+  "generator": "built-in image_gen",
+  "nativeBytesPreserved": true,
+  "sha256": "d7b3df156af8f08ed6ed2e11c8b229d715a116c42c935e8fe5a12c7dc2d1f0c0",
+  "bytes": 1847775,
+  "width": 1448,
+  "height": 1086,
+  "mode": "RGBA",
+  "alphaExtrema": [
+    0,
+    255
+  ]
+}

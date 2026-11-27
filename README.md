@@ -1,14 +1,36 @@
 # Infernal City: Valkyrie Sweeper
 
-## Sprites complémentaires — completion-v1
+## Sprites intégrés et domaines illustrés — 24 novembre 2026
 
-- 118 atlas PNG natifs, soit 4 376 cellules : héroïnes, boss, légions,
-  spécialistes, niveaux et spécialisations des tourelles, armes évoluées,
-  portraits animés et effets d’environnement.
-- 105 atlas de combat reliés aux états du moteur, avec chargement à la demande
-  et retour au rendu existant en cas d’échec. Les 13 ressources de portraits et
-  d’environnement sont préparées pour leur intégration ultérieure.
-- [Inventaire, intégration et validation](docs/SPRITE_COMPLETION.md) ;
+- `completion-v1` contient maintenant 124 atlas PNG natifs, soit 4 616 cellules :
+  111 atlas de combat et 13 ressources de présentation intégrées. Les unités
+  historiques Swarmer, Runner, Brute, Hellwarden et les versions boss de Vespera
+  et Carmilla rejoignent le pack.
+- Les dix portraits animés sont disponibles dans le Studio et pour les expressions
+  VN neutres ; pluie acide, orage ionique et débris de recyclage utilisent leurs
+  séquences dédiées. Les tailles des silhouettes, rotations et aperçus de
+  construction sont conservés.
+- `illustrated-v1` contient 107 ressources : 91 atlas et 16 décors. Les six domaines
+  ont deux cartes sélectionnables, un monument animé et une galerie de personnages
+  et d’arsenal. Les quatre duos et le brouillard possèdent leurs effets propres.
+  Le choix de carte persiste après rechargement. Quatre terrains d’Haven nommés
+  dans la Bible rejoignent aussi le sélecteur tactique avec leurs routes.
+- Les dix unités aériennes rejoignent les emplacements aériens des vagues et
+  d’Infinitum, avec leurs PV/vitesses déjà déclarés et leurs quatre états animés.
+  Six projectiles et trois réactions élémentaires ont maintenant des effets
+  distincts en combat, avec impacts et variantes Overdrive.
+- Douze ennemis premium nommés dans la Bible rejoignent la galerie de leurs
+  trois domaines. Ces ennemis, les personnages et les arsenaux DLC encore sans
+  contrat de combat restent des ressources de catalogue. Ils constituent les
+  premiers designs des entrées nommées du catalogue. Les visuels existants servent
+  de références d’identité seulement pour les personnages déjà illustrés.
+- Les images natives sont chargées à la demande après l’entrée dans le jeu, avec
+  rendu de secours et respect du mouvement réduit. Elles ne sont pas précachées
+  en bloc par la PWA.
+- [Inventaire du jeu principal](docs/SPRITE_COMPLETION.md),
+  [pack DLC illustré et validation](docs/DLC_ILLUSTRATED_ASSETS.md),
+  [suite des manquants et intégration](docs/SPRITE_CONTINUATION_20261124.md),
+  [audit des besoins](docs/ASSET_GAPS_20261124.md) ;
   [lecteur des sprites](docs/sprite-completion-review.html) à ouvrir depuis un
   serveur HTTP local.
 

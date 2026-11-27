@@ -1,0 +1,2308 @@
+{
+  "schemaVersion": 1,
+  "pack": "illustrated-v1",
+  "catalogue": "scripts/dlc-art-spec.cjs",
+  "expectedAssets": 107,
+  "status": "complete",
+  "consolidatedAtUtc": "2026-11-24T12:01:23.684847+00:00",
+  "method": "Explicit visual approvals only. Prior PNG hashes retained; 25 continuation approvals independently reviewed and compared byte-for-byte with their referenced image_gen natives. Ten aerial display scales are measured and bound to unchanged PNG hashes.",
+  "approved": [
+    {
+      "key": "bosses/architect_zero",
+      "path": "assets/dlc/illustrated-v1/bosses/architect_zero.png",
+      "sha256": "bb7c88a057be8f5cd124d7c0feb5b999ac12a3197b252fb16b63f776575cdde6",
+      "byteLength": 2125497,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-bd489f0f-2ed8-498f-98bd-f850341bb890.png",
+      "nativeExists": true,
+      "nativeSha256": "bb7c88a057be8f5cd124d7c0feb5b999ac12a3197b252fb16b63f776575cdde6",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/characters.json",
+        "collection": "assets",
+        "field": "status",
+        "value": "approved",
+        "selector": "bosses/architect_zero",
+        "sourceReportSha256": "8040be6e9f2342eb5078374ab0bdee4971d4c961a0c671eeab63fb9066914cb4"
+      }
+    },
+    {
+      "key": "bosses/archon_aurelien",
+      "path": "assets/dlc/illustrated-v1/bosses/archon_aurelien.png",
+      "sha256": "5617f42a95adf1805d874ef1b42c8b5e2663f377313659dbab98d32fc5de5436",
+      "byteLength": 1809407,
+      "width": 1448,
+      "height": 1086,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-e39caf0e-f207-42ce-a382-6cc1a50a773e.png",
+      "nativeExists": true,
+      "nativeSha256": "5617f42a95adf1805d874ef1b42c8b5e2663f377313659dbab98d32fc5de5436",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/characters.json",
+        "collection": "assets",
+        "field": "status",
+        "value": "approved",
+        "selector": "bosses/archon_aurelien",
+        "sourceReportSha256": "8040be6e9f2342eb5078374ab0bdee4971d4c961a0c671eeab63fb9066914cb4"
+      }
+    },
+    {
+      "key": "bosses/belladonna_glass",
+      "path": "assets/dlc/illustrated-v1/bosses/belladonna_glass.png",
+      "sha256": "adb9270041473486e4bdf686d7397175f3ae84e10e1812e19f131306a79a10cb",
+      "byteLength": 1533498,
+      "width": 1448,
+      "height": 1086,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-42953fde-85ec-4318-8753-26509c9ea95f.png",
+      "nativeExists": true,
+      "nativeSha256": "adb9270041473486e4bdf686d7397175f3ae84e10e1812e19f131306a79a10cb",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/characters.json",
+        "collection": "assets",
+        "field": "status",
+        "value": "approved",
+        "selector": "bosses/belladonna_glass",
+        "sourceReportSha256": "8040be6e9f2342eb5078374ab0bdee4971d4c961a0c671eeab63fb9066914cb4"
+      }
+    },
+    {
+      "key": "bosses/brass_queen",
+      "path": "assets/dlc/illustrated-v1/bosses/brass_queen.png",
+      "sha256": "4aaf1c076bbcb0e3d27cb09054b382f89d3226777c7da0365ac352e93e12f14a",
+      "byteLength": 2204566,
+      "width": 1448,
+      "height": 1086,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-8881316d-701a-48f2-9f5c-51929e0d2781.png",
+      "nativeExists": true,
+      "nativeSha256": "4aaf1c076bbcb0e3d27cb09054b382f89d3226777c7da0365ac352e93e12f14a",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/characters-root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "bosses/brass_queen",
+        "sourceReportSha256": "b292feec8ec6daebddf321fe218040e5b0710879ab85f1e7630beb54b040132f",
+        "reviewedSha256": "4aaf1c076bbcb0e3d27cb09054b382f89d3226777c7da0365ac352e93e12f14a"
+      }
+    },
+    {
+      "key": "bosses/celestia_bell",
+      "path": "assets/dlc/illustrated-v1/bosses/celestia_bell.png",
+      "sha256": "9430c5e5dcdd3ab03fad4a7c1f50a9b340b05d984181854b3aa10fadd504ce82",
+      "byteLength": 2279760,
+      "width": 1448,
+      "height": 1086,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-f9301117-13e9-48e3-bfcf-9a25d048d142.png",
+      "nativeExists": true,
+      "nativeSha256": "9430c5e5dcdd3ab03fad4a7c1f50a9b340b05d984181854b3aa10fadd504ce82",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/characters.json",
+        "collection": "assets",
+        "field": "status",
+        "value": "approved",
+        "selector": "bosses/celestia_bell",
+        "sourceReportSha256": "8040be6e9f2342eb5078374ab0bdee4971d4c961a0c671eeab63fb9066914cb4"
+      }
+    },
+    {
+      "key": "bosses/charybde",
+      "path": "assets/dlc/illustrated-v1/bosses/charybde.png",
+      "sha256": "f2de2fc29c10fe88bc4a388978a6eea90cd1d65c314e238a4d1862de12c23d70",
+      "byteLength": 2400676,
+      "width": 1448,
+      "height": 1086,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-660536ee-1f9e-48e9-9329-ff23aba0c69f.png",
+      "nativeExists": true,
+      "nativeSha256": "f2de2fc29c10fe88bc4a388978a6eea90cd1d65c314e238a4d1862de12c23d70",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/characters.json",
+        "collection": "assets",
+        "field": "status",
+        "value": "approved",
+        "selector": "bosses/charybde",
+        "sourceReportSha256": "8040be6e9f2342eb5078374ab0bdee4971d4c961a0c671eeab63fb9066914cb4"
+      }
+    },
+    {
+      "key": "bosses/cryo_valkyr",
+      "path": "assets/dlc/illustrated-v1/bosses/cryo_valkyr.png",
+      "sha256": "0af56085dcea32cabf025f365503da1886bf97cf791d974a7cfba340536f9f82",
+      "byteLength": 2317888,
+      "width": 1448,
+      "height": 1086,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-62d9af63-450a-4b7d-a47a-2df476affe60.png",
+      "nativeExists": true,
+      "nativeSha256": "0af56085dcea32cabf025f365503da1886bf97cf791d974a7cfba340536f9f82",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/characters-root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "bosses/cryo_valkyr",
+        "sourceReportSha256": "b292feec8ec6daebddf321fe218040e5b0710879ab85f1e7630beb54b040132f",
+        "reviewedSha256": "0af56085dcea32cabf025f365503da1886bf97cf791d974a7cfba340536f9f82"
+      }
+    },
+    {
+      "key": "bosses/duchess_valva",
+      "path": "assets/dlc/illustrated-v1/bosses/duchess_valva.png",
+      "sha256": "d7b3df156af8f08ed6ed2e11c8b229d715a116c42c935e8fe5a12c7dc2d1f0c0",
+      "byteLength": 1847775,
+      "width": 1448,
+      "height": 1086,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-d65878cc-9d5e-400d-89dc-dbe49908a3d0.png",
+      "nativeExists": true,
+      "nativeSha256": "d7b3df156af8f08ed6ed2e11c8b229d715a116c42c935e8fe5a12c7dc2d1f0c0",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/characters-root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "bosses/duchess_valva",
+        "sourceReportSha256": "b292feec8ec6daebddf321fe218040e5b0710879ab85f1e7630beb54b040132f",
+        "reviewedSha256": "d7b3df156af8f08ed6ed2e11c8b229d715a116c42c935e8fe5a12c7dc2d1f0c0"
+      }
+    },
+    {
+      "key": "bosses/ignis_rah",
+      "path": "assets/dlc/illustrated-v1/bosses/ignis_rah.png",
+      "sha256": "dcf63e7eb9a225bfb4afcda7634b58eec18e12b6f680c49afa84c2d20e6e8fa7",
+      "byteLength": 2203603,
+      "width": 1448,
+      "height": 1086,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-b8d547c3-a6cb-4f7e-afff-84f20f5c634c.png",
+      "nativeExists": true,
+      "nativeSha256": "dcf63e7eb9a225bfb4afcda7634b58eec18e12b6f680c49afa84c2d20e6e8fa7",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/characters-root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "bosses/ignis_rah",
+        "sourceReportSha256": "b292feec8ec6daebddf321fe218040e5b0710879ab85f1e7630beb54b040132f",
+        "reviewedSha256": "dcf63e7eb9a225bfb4afcda7634b58eec18e12b6f680c49afa84c2d20e6e8fa7"
+      }
+    },
+    {
+      "key": "bosses/miraj_obsidian",
+      "path": "assets/dlc/illustrated-v1/bosses/miraj_obsidian.png",
+      "sha256": "169ce575a51129cfda05cbb7d8267d7f694d3c70972f57d15c3fa92b8bf0656e",
+      "byteLength": 2165147,
+      "width": 1448,
+      "height": 1086,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-77b0cc6e-fb54-4bef-beb6-1ff942dfaa76.png",
+      "nativeExists": true,
+      "nativeSha256": "169ce575a51129cfda05cbb7d8267d7f694d3c70972f57d15c3fa92b8bf0656e",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/characters-root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "bosses/miraj_obsidian",
+        "sourceReportSha256": "b292feec8ec6daebddf321fe218040e5b0710879ab85f1e7630beb54b040132f",
+        "reviewedSha256": "169ce575a51129cfda05cbb7d8267d7f694d3c70972f57d15c3fa92b8bf0656e"
+      }
+    },
+    {
+      "key": "bosses/noctiflora",
+      "path": "assets/dlc/illustrated-v1/bosses/noctiflora.png",
+      "sha256": "f9a410134fc819cb70ddea2c76fbbdb4b112cdec8eec3def2ccb661e9a0db07a",
+      "byteLength": 2034365,
+      "width": 1448,
+      "height": 1086,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-21f2db01-3e0e-4f64-8bee-3823ac10fcec.png",
+      "nativeExists": true,
+      "nativeSha256": "f9a410134fc819cb70ddea2c76fbbdb4b112cdec8eec3def2ccb661e9a0db07a",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/characters.json",
+        "collection": "assets",
+        "field": "status",
+        "value": "approved",
+        "selector": "bosses/noctiflora",
+        "sourceReportSha256": "8040be6e9f2342eb5078374ab0bdee4971d4c961a0c671eeab63fb9066914cb4"
+      }
+    },
+    {
+      "key": "bosses/sirena_nautilus",
+      "path": "assets/dlc/illustrated-v1/bosses/sirena_nautilus.png",
+      "sha256": "fc5ca06f697041c51519cccfb397b8468e9f2f2617b76b8350d8d8dccc4efc66",
+      "byteLength": 1271824,
+      "width": 1448,
+      "height": 1086,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-cd898d15-e762-4e93-a17d-7cdf8a72683d.png",
+      "nativeExists": true,
+      "nativeSha256": "fc5ca06f697041c51519cccfb397b8468e9f2f2617b76b8350d8d8dccc4efc66",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/characters.json",
+        "collection": "assets",
+        "field": "status",
+        "value": "approved",
+        "selector": "bosses/sirena_nautilus",
+        "sourceReportSha256": "8040be6e9f2342eb5078374ab0bdee4971d4c961a0c671eeab63fb9066914cb4"
+      }
+    },
+    {
+      "key": "bosses/skadi_prism",
+      "path": "assets/dlc/illustrated-v1/bosses/skadi_prism.png",
+      "sha256": "281e0fafdeaa1139dd6896aa28f3a2f9b8f2f57991ebd04be571d85dd25601bd",
+      "byteLength": 1049114,
+      "width": 1448,
+      "height": 1086,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-2e6def1a-f04a-498c-b406-6d968474654b.png",
+      "nativeExists": true,
+      "nativeSha256": "281e0fafdeaa1139dd6896aa28f3a2f9b8f2f57991ebd04be571d85dd25601bd",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/characters-root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "bosses/skadi_prism",
+        "sourceReportSha256": "b292feec8ec6daebddf321fe218040e5b0710879ab85f1e7630beb54b040132f",
+        "reviewedSha256": "281e0fafdeaa1139dd6896aa28f3a2f9b8f2f57991ebd04be571d85dd25601bd"
+      }
+    },
+    {
+      "key": "enemies/abyss_armored_nautilus",
+      "sha256": "3dbe313b6780df370acef8f13192f0f38758300ddf8ba6958c4fa0640b17ec2e",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/named-enemies.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-836c5a60-d5ba-408d-a7c5-c571557ebb13.png",
+      "nativeExists": true,
+      "nativeSha256": "3dbe313b6780df370acef8f13192f0f38758300ddf8ba6958c4fa0640b17ec2e",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "enemies/abyss_drill_crab",
+      "sha256": "41129ee7b6aa3805491fbb256d45fdda861f755d9ee1dca145f2af99387e90fd",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/named-enemies.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-369a82a4-4804-456b-88d7-d1a85c47ccfd.png",
+      "nativeExists": true,
+      "nativeSha256": "41129ee7b6aa3805491fbb256d45fdda861f755d9ee1dca145f2af99387e90fd",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "enemies/abyss_emp_jellyfish",
+      "sha256": "2f6007e57117f664b764e0da97c6930c36150b1b5cc43f02d02c9aa82f688bfc",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/named-enemies.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-b654de4a-c33b-478b-88d1-fc6dcff23d8a.png",
+      "nativeExists": true,
+      "nativeSha256": "2f6007e57117f664b764e0da97c6930c36150b1b5cc43f02d02c9aa82f688bfc",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "enemies/abyss_stealth_ray",
+      "sha256": "c84e3af7d5fecfe1bb3b90f46d8c2d1a8bd12fdea43a0a8caae095c309a2e60d",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/named-enemies.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-c07b037f-7230-413f-815e-0e4036f77a40.png",
+      "nativeExists": true,
+      "nativeSha256": "c84e3af7d5fecfe1bb3b90f46d8c2d1a8bd12fdea43a0a8caae095c309a2e60d",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "enemies/air_ash_ifrit",
+      "path": "assets/dlc/illustrated-v1/enemies/air_ash_ifrit.png",
+      "sha256": "334dd929a78cb593be621d0096edc442f039a1e7d7f5c3e5ef2c4c911dc82248",
+      "byteLength": 1362654,
+      "width": 1774,
+      "height": 887,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-9ffbc229-6cb3-4d98-b7a5-0b9d21d8953b.png",
+      "nativeExists": true,
+      "nativeSha256": "334dd929a78cb593be621d0096edc442f039a1e7d7f5c3e5ef2c4c911dc82248",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/units-towers.json",
+        "collection": "assets",
+        "field": "qa.status",
+        "value": "approved",
+        "selector": "enemies/air_ash_ifrit",
+        "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
+      },
+      "drawScale": 1.333592,
+      "drawScaleSha256": "334dd929a78cb593be621d0096edc442f039a1e7d7f5c3e5ef2c4c911dc82248",
+      "drawScaleSource": "docs/art-generation/continuation-v1/aerial-draw-scales.json"
+    },
+    {
+      "key": "enemies/air_bioforge_wasp",
+      "path": "assets/dlc/illustrated-v1/enemies/air_bioforge_wasp.png",
+      "sha256": "b643212c55335e7879d89a6adee046424bba3f5d80a5d3bd543ae967e1ad6cb4",
+      "byteLength": 1681977,
+      "width": 1774,
+      "height": 887,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-bed756f4-0d28-4a5c-9760-f6a26e5a51ac.png",
+      "nativeExists": true,
+      "nativeSha256": "b643212c55335e7879d89a6adee046424bba3f5d80a5d3bd543ae967e1ad6cb4",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/units-towers.json",
+        "collection": "assets",
+        "field": "qa.status",
+        "value": "approved",
+        "selector": "enemies/air_bioforge_wasp",
+        "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
+      },
+      "drawScale": 1.482954,
+      "drawScaleSha256": "b643212c55335e7879d89a6adee046424bba3f5d80a5d3bd543ae967e1ad6cb4",
+      "drawScaleSource": "docs/art-generation/continuation-v1/aerial-draw-scales.json"
+    },
+    {
+      "key": "enemies/air_dreadtide_albatross",
+      "path": "assets/dlc/illustrated-v1/enemies/air_dreadtide_albatross.png",
+      "sha256": "d2618c4f66fa157f654ad672aee3096178b3809579f4b3ace2b6a67cde15c281",
+      "byteLength": 1768523,
+      "width": 1773,
+      "height": 887,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-20349ec5-24b0-46dd-8668-9f0f3a24a007.png",
+      "nativeExists": true,
+      "nativeSha256": "d2618c4f66fa157f654ad672aee3096178b3809579f4b3ace2b6a67cde15c281",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/units-towers.json",
+        "collection": "assets",
+        "field": "qa.status",
+        "value": "approved",
+        "selector": "enemies/air_dreadtide_albatross",
+        "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
+      },
+      "drawScale": 1.482118,
+      "drawScaleSha256": "d2618c4f66fa157f654ad672aee3096178b3809579f4b3ace2b6a67cde15c281",
+      "drawScaleSource": "docs/art-generation/continuation-v1/aerial-draw-scales.json"
+    },
+    {
+      "key": "enemies/air_infernal_harpy",
+      "path": "assets/dlc/illustrated-v1/enemies/air_infernal_harpy.png",
+      "sha256": "440795f98d3bd5a3a2f89faa1499a382e3fc805c578d8652610e4fe02135d975",
+      "byteLength": 1566428,
+      "width": 1774,
+      "height": 887,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-4a0e357f-3a45-4536-9ee9-3aae3b4b6e30.png",
+      "nativeExists": true,
+      "nativeSha256": "440795f98d3bd5a3a2f89faa1499a382e3fc805c578d8652610e4fe02135d975",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/units-towers.json",
+        "collection": "assets",
+        "field": "qa.status",
+        "value": "approved",
+        "selector": "enemies/air_infernal_harpy",
+        "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
+      },
+      "drawScale": 1.36301,
+      "drawScaleSha256": "440795f98d3bd5a3a2f89faa1499a382e3fc805c578d8652610e4fe02135d975",
+      "drawScaleSource": "docs/art-generation/continuation-v1/aerial-draw-scales.json"
+    },
+    {
+      "key": "enemies/air_nightmare_moth",
+      "path": "assets/dlc/illustrated-v1/enemies/air_nightmare_moth.png",
+      "sha256": "9659ce9f75ac029520ebc63112637c7759ed151330e32c23a286395abf0394be",
+      "byteLength": 3003307,
+      "width": 1774,
+      "height": 887,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-2df939b7-773e-46cb-9ef7-38017da23f51.png",
+      "nativeExists": true,
+      "nativeSha256": "9659ce9f75ac029520ebc63112637c7759ed151330e32c23a286395abf0394be",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/units-towers.json",
+        "collection": "assets",
+        "field": "qa.status",
+        "value": "approved",
+        "selector": "enemies/air_nightmare_moth",
+        "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
+      },
+      "drawScale": 1.35306,
+      "drawScaleSha256": "9659ce9f75ac029520ebc63112637c7759ed151330e32c23a286395abf0394be",
+      "drawScaleSource": "docs/art-generation/continuation-v1/aerial-draw-scales.json"
+    },
+    {
+      "key": "enemies/air_ossuary_crow",
+      "path": "assets/dlc/illustrated-v1/enemies/air_ossuary_crow.png",
+      "sha256": "88c4c98043b59e49b96d85474899b08b7d07f67519f056a1646c69ca4b39053b",
+      "byteLength": 1312550,
+      "width": 1774,
+      "height": 887,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-a3cacc5e-3396-4eed-adaf-2d25373ea8e5.png",
+      "nativeExists": true,
+      "nativeSha256": "88c4c98043b59e49b96d85474899b08b7d07f67519f056a1646c69ca4b39053b",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/units-towers.json",
+        "collection": "assets",
+        "field": "qa.status",
+        "value": "approved",
+        "selector": "enemies/air_ossuary_crow",
+        "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
+      },
+      "drawScale": 1.35306,
+      "drawScaleSha256": "88c4c98043b59e49b96d85474899b08b7d07f67519f056a1646c69ca4b39053b",
+      "drawScaleSource": "docs/art-generation/continuation-v1/aerial-draw-scales.json"
+    },
+    {
+      "key": "enemies/air_plague_locust",
+      "path": "assets/dlc/illustrated-v1/enemies/air_plague_locust.png",
+      "sha256": "968520fe728c804d2138801abb5757dbd9f381120a04c722a44b505b908385be",
+      "byteLength": 1656741,
+      "width": 1774,
+      "height": 887,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-ea283792-f389-47e2-9889-14f7033c1853.png",
+      "nativeExists": true,
+      "nativeSha256": "968520fe728c804d2138801abb5757dbd9f381120a04c722a44b505b908385be",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/units-towers.json",
+        "collection": "assets",
+        "field": "qa.status",
+        "value": "approved",
+        "selector": "enemies/air_plague_locust",
+        "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
+      },
+      "drawScale": 1.305417,
+      "drawScaleSha256": "968520fe728c804d2138801abb5757dbd9f381120a04c722a44b505b908385be",
+      "drawScaleSource": "docs/art-generation/continuation-v1/aerial-draw-scales.json"
+    },
+    {
+      "key": "enemies/air_quantum_glider",
+      "path": "assets/dlc/illustrated-v1/enemies/air_quantum_glider.png",
+      "sha256": "176c8ca16266396f34cc75796fb36dabaf9b060db8b75c0215b47f11dace05c7",
+      "byteLength": 1324235,
+      "width": 1774,
+      "height": 887,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-7a263bc4-7b6c-48c8-8c52-f44894f3ce05.png",
+      "nativeExists": true,
+      "nativeSha256": "176c8ca16266396f34cc75796fb36dabaf9b060db8b75c0215b47f11dace05c7",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/units-towers.json",
+        "collection": "assets",
+        "field": "qa.status",
+        "value": "approved",
+        "selector": "enemies/air_quantum_glider",
+        "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
+      },
+      "drawScale": 1.180695,
+      "drawScaleSha256": "176c8ca16266396f34cc75796fb36dabaf9b060db8b75c0215b47f11dace05c7",
+      "drawScaleSource": "docs/art-generation/continuation-v1/aerial-draw-scales.json"
+    },
+    {
+      "key": "enemies/air_shadow_owl",
+      "path": "assets/dlc/illustrated-v1/enemies/air_shadow_owl.png",
+      "sha256": "1d6298f94c1c193e5a33e5fd257a3df3ba12a52cb4498c1660ce4c07b3d3d2cb",
+      "byteLength": 2022070,
+      "width": 1774,
+      "height": 887,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-e09d5848-5a7d-4410-b5ba-0f429e718c92.png",
+      "nativeExists": true,
+      "nativeSha256": "1d6298f94c1c193e5a33e5fd257a3df3ba12a52cb4498c1660ce4c07b3d3d2cb",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/units-towers.json",
+        "collection": "assets",
+        "field": "qa.status",
+        "value": "approved",
+        "selector": "enemies/air_shadow_owl",
+        "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
+      },
+      "drawScale": 1.415033,
+      "drawScaleSha256": "1d6298f94c1c193e5a33e5fd257a3df3ba12a52cb4498c1660ce4c07b3d3d2cb",
+      "drawScaleSource": "docs/art-generation/continuation-v1/aerial-draw-scales.json"
+    },
+    {
+      "key": "enemies/air_void_manta",
+      "path": "assets/dlc/illustrated-v1/enemies/air_void_manta.png",
+      "sha256": "f06bfbaf023ae46a9ec701db9d65ed8be0ec7111bc33138b934286a0bf5dfef7",
+      "byteLength": 1300809,
+      "width": 1774,
+      "height": 887,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-6774d310-1fce-4652-8ae6-4d1af854b60d.png",
+      "nativeExists": true,
+      "nativeSha256": "f06bfbaf023ae46a9ec701db9d65ed8be0ec7111bc33138b934286a0bf5dfef7",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/units-towers.json",
+        "collection": "assets",
+        "field": "qa.status",
+        "value": "approved",
+        "selector": "enemies/air_void_manta",
+        "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
+      },
+      "drawScale": 1.1303,
+      "drawScaleSha256": "f06bfbaf023ae46a9ec701db9d65ed8be0ec7111bc33138b934286a0bf5dfef7",
+      "drawScaleSource": "docs/art-generation/continuation-v1/aerial-draw-scales.json"
+    },
+    {
+      "key": "enemies/astral_alabaster_golem",
+      "sha256": "99c77112b97e3f862a4b5587225dd8bf09f9baa2db2ccaa5d660faba9b6c76fa",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/named-enemies.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-2cc4bf0e-0a8a-4992-a925-8ae76de656ad.png",
+      "nativeExists": true,
+      "nativeSha256": "99c77112b97e3f862a4b5587225dd8bf09f9baa2db2ccaa5d660faba9b6c76fa",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "enemies/astral_censer_bearer",
+      "sha256": "96d71978fe7fa9a029eac0f55526a7c7934c5e91825bcc3042312264fa64801e",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/named-enemies.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-f8e93cb1-295f-48ba-bdb9-e05b97ae0946.png",
+      "nativeExists": true,
+      "nativeSha256": "96d71978fe7fa9a029eac0f55526a7c7934c5e91825bcc3042312264fa64801e",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "enemies/astral_cherub_automaton",
+      "sha256": "e01a5808a54af10374ce0d251632cc74ac9a299b00d5f21b9dda6afe7706fe10",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/named-enemies.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-d8b04227-2852-48f5-85fe-b83449abe792.png",
+      "nativeExists": true,
+      "nativeSha256": "e01a5808a54af10374ce0d251632cc74ac9a299b00d5f21b9dda6afe7706fe10",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "enemies/astral_siege_pendulum",
+      "sha256": "9ca66804b31410eba7ba48304a5ccb21738c2fb1d8ebf28aeba07623a7d82d51",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/named-enemies.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-e6677b0c-ab13-4b71-8b70-4f8a999ba2bc.png",
+      "nativeExists": true,
+      "nativeSha256": "9ca66804b31410eba7ba48304a5ccb21738c2fb1d8ebf28aeba07623a7d82d51",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "enemies/flora_crystal_wasp",
+      "sha256": "cb0bfd6937866c290ba222cf4a78e6614aca331f7300b400a5320286ca6fb5b3",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/named-enemies-flora.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-417975de-13ce-4b2a-aff0-eadfd1c5c858.png",
+      "nativeExists": true,
+      "nativeSha256": "cb0bfd6937866c290ba222cf4a78e6614aca331f7300b400a5320286ca6fb5b3",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "enemies/flora_ivy_crawler",
+      "sha256": "2ff1f837fa2ad2d08a0840fec4a291927c64089c32e3047f6be2ddad733a6ac1",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/named-enemies-flora.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-6857cc44-ad16-474b-8569-c149b7976789.png",
+      "nativeExists": true,
+      "nativeSha256": "2ff1f837fa2ad2d08a0840fec4a291927c64089c32e3047f6be2ddad733a6ac1",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "enemies/flora_mortar_flower",
+      "sha256": "b0f9f95afaabbb1800dd616afe750299d03f14360f2b404771f67182c697058d",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/named-enemies-flora.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-a13da66e-2688-424b-8896-2967fe610be2.png",
+      "nativeExists": true,
+      "nativeSha256": "b0f9f95afaabbb1800dd616afe750299d03f14360f2b404771f67182c697058d",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "enemies/flora_steel_treant",
+      "sha256": "fe8549891f2bbcc7c2c5d0e7a77260839cd742c51719c07f111142f6de17695d",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/named-enemies-flora.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-710f2099-c5a6-42e7-9b6b-e8b44eb5eb77.png",
+      "nativeExists": true,
+      "nativeSha256": "fe8549891f2bbcc7c2c5d0e7a77260839cd742c51719c07f111142f6de17695d",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "evolutions/cavitation_torpedo",
+      "path": "assets/dlc/illustrated-v1/evolutions/cavitation_torpedo.png",
+      "sha256": "eafbec04f72337a372c7b30c32676adc33e0470da318173a9a9f0df0f423bcf8",
+      "byteLength": 635760,
+      "width": 1774,
+      "height": 887,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-619db130-1611-47b7-a5d9-acb66ad9d8f8.png",
+      "nativeExists": true,
+      "nativeSha256": "eafbec04f72337a372c7b30c32676adc33e0470da318173a9a9f0df0f423bcf8",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "evolutions/cavitation_torpedo",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "eafbec04f72337a372c7b30c32676adc33e0470da318173a9a9f0df0f423bcf8"
+      }
+    },
+    {
+      "key": "evolutions/cryo_laser",
+      "path": "assets/dlc/illustrated-v1/evolutions/cryo_laser.png",
+      "sha256": "52508f6dececf06f3123b9f321b56a7b62a05f16b85047e5628a685944994838",
+      "byteLength": 867443,
+      "width": 1774,
+      "height": 887,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-24f72534-8151-4114-a297-d0f0fe795b51.png",
+      "nativeExists": true,
+      "nativeSha256": "52508f6dececf06f3123b9f321b56a7b62a05f16b85047e5628a685944994838",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "evolutions/cryo_laser",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "52508f6dececf06f3123b9f321b56a7b62a05f16b85047e5628a685944994838"
+      }
+    },
+    {
+      "key": "evolutions/plasma_vine",
+      "path": "assets/dlc/illustrated-v1/evolutions/plasma_vine.png",
+      "sha256": "1f7bdf0a46ea5bb5112682e87da8c9c2d31ad7a9c83cf2c6e361b50cc112020e",
+      "byteLength": 784739,
+      "width": 1774,
+      "height": 887,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-27161ec7-582d-4042-ae54-295ce06cb47d.png",
+      "nativeExists": true,
+      "nativeSha256": "1f7bdf0a46ea5bb5112682e87da8c9c2d31ad7a9c83cf2c6e361b50cc112020e",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "evolutions/plasma_vine",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "1f7bdf0a46ea5bb5112682e87da8c9c2d31ad7a9c83cf2c6e361b50cc112020e"
+      }
+    },
+    {
+      "key": "evolutions/seraphic_ray",
+      "path": "assets/dlc/illustrated-v1/evolutions/seraphic_ray.png",
+      "sha256": "97b799baf388edc3649ec8f8104be769e2cc2fe41370e98a71d493557c3dca56",
+      "byteLength": 1431904,
+      "width": 1774,
+      "height": 887,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-495c7212-551f-4e74-b806-e6e073836f58.png",
+      "nativeExists": true,
+      "nativeSha256": "97b799baf388edc3649ec8f8104be769e2cc2fe41370e98a71d493557c3dca56",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "evolutions/seraphic_ray",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "97b799baf388edc3649ec8f8104be769e2cc2fe41370e98a71d493557c3dca56"
+      }
+    },
+    {
+      "key": "evolutions/solar_saber",
+      "path": "assets/dlc/illustrated-v1/evolutions/solar_saber.png",
+      "sha256": "a3118b43dc7898d9507462c3fb36f418a2af899081ead6c5a32ad20d3433540c",
+      "byteLength": 1466902,
+      "width": 1774,
+      "height": 887,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-cc659c59-e698-4b3e-8a2f-6ae730bd67c9.png",
+      "nativeExists": true,
+      "nativeSha256": "a3118b43dc7898d9507462c3fb36f418a2af899081ead6c5a32ad20d3433540c",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "evolutions/solar_saber",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "a3118b43dc7898d9507462c3fb36f418a2af899081ead6c5a32ad20d3433540c"
+      }
+    },
+    {
+      "key": "evolutions/voltaic_musket",
+      "path": "assets/dlc/illustrated-v1/evolutions/voltaic_musket.png",
+      "sha256": "2220c4cf48b129d01c7f2b4a26dd482b169ce64445b6ebd576514d53f651b532",
+      "byteLength": 1625660,
+      "width": 1774,
+      "height": 887,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-c8011953-d5c3-4003-bb5c-dc41f92613a4.png",
+      "nativeExists": true,
+      "nativeSha256": "2220c4cf48b129d01c7f2b4a26dd482b169ce64445b6ebd576514d53f651b532",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "evolutions/voltaic_musket",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "2220c4cf48b129d01c7f2b4a26dd482b169ce64445b6ebd576514d53f651b532"
+      }
+    },
+    {
+      "key": "fx/acid_glob",
+      "sha256": "ec8c1ea4ef3714acb033f85f0e3f2b3b828a8ec33880f9d76f4930cd51d84bce",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/tactical-fx.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-33fcbbb3-d527-4701-8f5f-6f92e5dc01bf.png",
+      "nativeExists": true,
+      "nativeSha256": "ec8c1ea4ef3714acb033f85f0e3f2b3b828a8ec33880f9d76f4930cd51d84bce",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "fx/choc_thermique",
+      "sha256": "b6420d4933cca28e60f55f1968489423fa9b377855c7ce2c3e8b064a79990ed3",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/tactical-fx.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-5f309d7d-6d71-4705-8d19-36179fa372e5.png",
+      "nativeExists": true,
+      "nativeSha256": "b6420d4933cca28e60f55f1968489423fa9b377855c7ce2c3e8b064a79990ed3",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "fx/cryo_shard",
+      "sha256": "b1fc6ca9eac43458a36e4bc190e04dc363797ffffbe67acc5937c7508594c636",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/tactical-fx.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-2342873c-86b6-4133-af36-beb33643caa1.png",
+      "nativeExists": true,
+      "nativeSha256": "b1fc6ca9eac43458a36e4bc190e04dc363797ffffbe67acc5937c7508594c636",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "fx/drone_laser",
+      "sha256": "df0f3567a183a381793d638f25cc395d8761bde0d6e58f1cef445e534919514c",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/tactical-fx.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-a36d22e2-d02d-474b-bba4-9b718e3ea735.png",
+      "nativeExists": true,
+      "nativeSha256": "df0f3567a183a381793d638f25cc395d8761bde0d6e58f1cef445e534919514c",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "fx/duo_aria_astarra",
+      "path": "assets/dlc/illustrated-v1/fx/duo_aria_astarra.png",
+      "sha256": "96dc0fdb33ac7c5976266b4ab1d0f8cfd4452de2f0a1b3d98c57ead18833684f",
+      "byteLength": 1218439,
+      "width": 1774,
+      "height": 887,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-0d6b13b2-a785-4c6e-8f20-694743515372.png",
+      "nativeExists": true,
+      "nativeSha256": "96dc0fdb33ac7c5976266b4ab1d0f8cfd4452de2f0a1b3d98c57ead18833684f",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "fx/duo_aria_astarra",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "96dc0fdb33ac7c5976266b4ab1d0f8cfd4452de2f0a1b3d98c57ead18833684f"
+      }
+    },
+    {
+      "key": "fx/duo_carmilla_ossuary",
+      "path": "assets/dlc/illustrated-v1/fx/duo_carmilla_ossuary.png",
+      "sha256": "e055d817f32739cf601083ea74ddc0178587a651125a0dff5cd5ec7df184a3f5",
+      "byteLength": 2021708,
+      "width": 1774,
+      "height": 887,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-adef184f-b8b8-4d1f-851c-65c3dfb90bd9.png",
+      "nativeExists": true,
+      "nativeSha256": "e055d817f32739cf601083ea74ddc0178587a651125a0dff5cd5ec7df184a3f5",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "fx/duo_carmilla_ossuary",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "e055d817f32739cf601083ea74ddc0178587a651125a0dff5cd5ec7df184a3f5"
+      }
+    },
+    {
+      "key": "fx/duo_freyja_vexara",
+      "path": "assets/dlc/illustrated-v1/fx/duo_freyja_vexara.png",
+      "sha256": "bda7a3ce5b232fdba3b42c189b5e8f0c246cee3a06ff4ad3bac160d2f1d6c3b4",
+      "byteLength": 1489083,
+      "width": 1774,
+      "height": 887,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-59d6942c-e3f3-4cc9-afbf-69272d670331.png",
+      "nativeExists": true,
+      "nativeSha256": "bda7a3ce5b232fdba3b42c189b5e8f0c246cee3a06ff4ad3bac160d2f1d6c3b4",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "fx/duo_freyja_vexara",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "bda7a3ce5b232fdba3b42c189b5e8f0c246cee3a06ff4ad3bac160d2f1d6c3b4"
+      }
+    },
+    {
+      "key": "fx/duo_nyx_kalix",
+      "path": "assets/dlc/illustrated-v1/fx/duo_nyx_kalix.png",
+      "sha256": "028cd42b352ec1aa520a272a629b58b5088e217534a2003fa61f8280eefa55da",
+      "byteLength": 1026632,
+      "width": 1774,
+      "height": 887,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-e515fc55-6fd4-4c35-bbcd-66ac879174c8.png",
+      "nativeExists": true,
+      "nativeSha256": "028cd42b352ec1aa520a272a629b58b5088e217534a2003fa61f8280eefa55da",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "fx/duo_nyx_kalix",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "028cd42b352ec1aa520a272a629b58b5088e217534a2003fa61f8280eefa55da"
+      }
+    },
+    {
+      "key": "fx/embrasement_toxique",
+      "sha256": "7f8aff74c6f8feabbf28aad2328908eac21f4a623b279eeeb90d71d12f480f6c",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/tactical-fx.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-780a02b7-2a35-4f76-8bdc-e28d11dc9400.png",
+      "nativeExists": true,
+      "nativeSha256": "7f8aff74c6f8feabbf28aad2328908eac21f4a623b279eeeb90d71d12f480f6c",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "fx/flame_stream",
+      "sha256": "ba40b666fd52e55bbf413d9f52b99ed95c9b28b5e4b9f343ba419d44c6ccb2e8",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/tactical-fx.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-3369945a-cb50-4604-9885-e93ad6284569.png",
+      "nativeExists": true,
+      "nativeSha256": "ba40b666fd52e55bbf413d9f52b99ed95c9b28b5e4b9f343ba419d44c6ccb2e8",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "fx/infernal_fog",
+      "path": "assets/dlc/illustrated-v1/fx/infernal_fog.png",
+      "sha256": "b03a44d47277e29cc184142326ffb4e719522b14371eb0005464e0bdeea0d468",
+      "byteLength": 1048159,
+      "width": 1774,
+      "height": 887,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-ac357b9d-7020-4060-8341-75e5405513d0.png",
+      "nativeExists": true,
+      "nativeSha256": "b03a44d47277e29cc184142326ffb4e719522b14371eb0005464e0bdeea0d468",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "fx/infernal_fog",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "b03a44d47277e29cc184142326ffb4e719522b14371eb0005464e0bdeea0d468"
+      }
+    },
+    {
+      "key": "fx/siege_missile",
+      "sha256": "0bf20fa6fdbb8e8537bcd7d1a1a2097f16ddc66e7cc140a26011aaefd70a31fb",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/tactical-fx.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-1072b19b-fb2b-43e8-9d64-05b3f64c6b46.png",
+      "nativeExists": true,
+      "nativeSha256": "0bf20fa6fdbb8e8537bcd7d1a1a2097f16ddc66e7cc140a26011aaefd70a31fb",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "fx/siphon_seed",
+      "sha256": "57c22c91d241475e982e4637049c46c02fa259b38e4b80cd41c44bc0c80aecbf",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/tactical-fx.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-c5acba73-ac88-4074-b284-e6e210fdc9fd.png",
+      "nativeExists": true,
+      "nativeSha256": "57c22c91d241475e982e4637049c46c02fa259b38e4b80cd41c44bc0c80aecbf",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "fx/tempete_magnetique",
+      "sha256": "d9749026d6bb0e0a9d30a6db15bd5e9cd9cacf4b3ab0c0af8349388ff1ce179a",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/tactical-fx.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-642716d4-482c-4e0e-8f46-4f0f9c6b8c8b.png",
+      "nativeExists": true,
+      "nativeSha256": "d9749026d6bb0e0a9d30a6db15bd5e9cd9cacf4b3ab0c0af8349388ff1ce179a",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "heroes/astrid",
+      "path": "assets/dlc/illustrated-v1/heroes/astrid.png",
+      "sha256": "e5d4a94625bdbfe6cee1539927db0b639d13c1998a94370ccfb5b7d5ec68a7b2",
+      "byteLength": 1759440,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-6f48c82b-d054-4c51-ac0f-ae3e55c3ab37.png",
+      "nativeExists": true,
+      "nativeSha256": "e5d4a94625bdbfe6cee1539927db0b639d13c1998a94370ccfb5b7d5ec68a7b2",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/characters-root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "heroes/astrid",
+        "sourceReportSha256": "b292feec8ec6daebddf321fe218040e5b0710879ab85f1e7630beb54b040132f",
+        "reviewedSha256": "e5d4a94625bdbfe6cee1539927db0b639d13c1998a94370ccfb5b7d5ec68a7b2"
+      }
+    },
+    {
+      "key": "heroes/beatrice",
+      "path": "assets/dlc/illustrated-v1/heroes/beatrice.png",
+      "sha256": "cc51688350279c32b0a7ffc29dc72be5e5b355f9c632f641ff934cd45a1c315f",
+      "byteLength": 1845449,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-ee1ad9b1-73fa-46cd-9020-56fd129cae58.png",
+      "nativeExists": true,
+      "nativeSha256": "cc51688350279c32b0a7ffc29dc72be5e5b355f9c632f641ff934cd45a1c315f",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/characters.json",
+        "collection": "assets",
+        "field": "status",
+        "value": "approved",
+        "selector": "heroes/beatrice",
+        "sourceReportSha256": "8040be6e9f2342eb5078374ab0bdee4971d4c961a0c671eeab63fb9066914cb4"
+      }
+    },
+    {
+      "key": "heroes/clarisse",
+      "path": "assets/dlc/illustrated-v1/heroes/clarisse.png",
+      "sha256": "25f2b9a6033456c642ab014601bed6e6a5390c9e0861eb5561a8c1954282a681",
+      "byteLength": 1142712,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-2b67fd4d-d760-45ab-a2d8-edcb388a76bc.png",
+      "nativeExists": true,
+      "nativeSha256": "25f2b9a6033456c642ab014601bed6e6a5390c9e0861eb5561a8c1954282a681",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/characters-root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "heroes/clarisse",
+        "sourceReportSha256": "b292feec8ec6daebddf321fe218040e5b0710879ab85f1e7630beb54b040132f",
+        "reviewedSha256": "25f2b9a6033456c642ab014601bed6e6a5390c9e0861eb5561a8c1954282a681"
+      }
+    },
+    {
+      "key": "heroes/daria",
+      "path": "assets/dlc/illustrated-v1/heroes/daria.png",
+      "sha256": "ff5773f4b20d3209e291c58273452452c8bbb2f2832b2594a12d9f0592f92889",
+      "byteLength": 1561749,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-7e35ef2a-fb69-44c4-9a3d-af97a9b148ed.png",
+      "nativeExists": true,
+      "nativeSha256": "ff5773f4b20d3209e291c58273452452c8bbb2f2832b2594a12d9f0592f92889",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/characters-root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "heroes/daria",
+        "sourceReportSha256": "b292feec8ec6daebddf321fe218040e5b0710879ab85f1e7630beb54b040132f",
+        "reviewedSha256": "ff5773f4b20d3209e291c58273452452c8bbb2f2832b2594a12d9f0592f92889"
+      }
+    },
+    {
+      "key": "heroes/katya",
+      "path": "assets/dlc/illustrated-v1/heroes/katya.png",
+      "sha256": "e5228517c140a997588759dd521603fcd87b09e0363c2e81cb731fea328a1e4f",
+      "byteLength": 1553077,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-11b50cdf-dc10-4fb9-93d5-da275ce07984.png",
+      "nativeExists": true,
+      "nativeSha256": "e5228517c140a997588759dd521603fcd87b09e0363c2e81cb731fea328a1e4f",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/characters-root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "heroes/katya",
+        "sourceReportSha256": "b292feec8ec6daebddf321fe218040e5b0710879ab85f1e7630beb54b040132f",
+        "reviewedSha256": "e5228517c140a997588759dd521603fcd87b09e0363c2e81cb731fea328a1e4f"
+      }
+    },
+    {
+      "key": "heroes/nerea",
+      "path": "assets/dlc/illustrated-v1/heroes/nerea.png",
+      "sha256": "45978a0ab9cb87910400acfc4b37a594bb65a76a9d078dab1f4792f9e30a8964",
+      "byteLength": 1176910,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-6a4bf200-9a62-4091-b96e-65b4c61617ba.png",
+      "nativeExists": true,
+      "nativeSha256": "45978a0ab9cb87910400acfc4b37a594bb65a76a9d078dab1f4792f9e30a8964",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/characters.json",
+        "collection": "assets",
+        "field": "status",
+        "value": "approved",
+        "selector": "heroes/nerea",
+        "sourceReportSha256": "8040be6e9f2342eb5078374ab0bdee4971d4c961a0c671eeab63fb9066914cb4"
+      }
+    },
+    {
+      "key": "heroes/ophelia",
+      "path": "assets/dlc/illustrated-v1/heroes/ophelia.png",
+      "sha256": "1208201984df35dae924ca314a67ce87b007e2f9f861ae24dfa439b0c64ec89b",
+      "byteLength": 1747552,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-65ac8e7e-7527-4223-8797-48a3fde7584e.png",
+      "nativeExists": true,
+      "nativeSha256": "1208201984df35dae924ca314a67ce87b007e2f9f861ae24dfa439b0c64ec89b",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/characters.json",
+        "collection": "assets",
+        "field": "status",
+        "value": "approved",
+        "selector": "heroes/ophelia",
+        "sourceReportSha256": "8040be6e9f2342eb5078374ab0bdee4971d4c961a0c671eeab63fb9066914cb4"
+      }
+    },
+    {
+      "key": "heroes/seraphine",
+      "path": "assets/dlc/illustrated-v1/heroes/seraphine.png",
+      "sha256": "a25930669664da095ac1f3922094935ee064c0330d64b5fe08da8ceb229bc18a",
+      "byteLength": 2263230,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-cf71e535-27dc-43a5-a846-f605fc479ecb.png",
+      "nativeExists": true,
+      "nativeSha256": "a25930669664da095ac1f3922094935ee064c0330d64b5fe08da8ceb229bc18a",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/characters.json",
+        "collection": "assets",
+        "field": "status",
+        "value": "approved",
+        "selector": "heroes/seraphine",
+        "sourceReportSha256": "8040be6e9f2342eb5078374ab0bdee4971d4c961a0c671eeab63fb9066914cb4"
+      }
+    },
+    {
+      "key": "heroes/sheherazade",
+      "path": "assets/dlc/illustrated-v1/heroes/sheherazade.png",
+      "sha256": "acb8549e7495921f8c77374c1de827e2636ef3b255b3dd3fddb96610e2ec150e",
+      "byteLength": 1695056,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-62d0e323-e630-41c4-ac41-302e131db788.png",
+      "nativeExists": true,
+      "nativeSha256": "acb8549e7495921f8c77374c1de827e2636ef3b255b3dd3fddb96610e2ec150e",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/characters.json",
+        "collection": "assets",
+        "field": "status",
+        "value": "approved",
+        "selector": "heroes/sheherazade",
+        "sourceReportSha256": "8040be6e9f2342eb5078374ab0bdee4971d4c961a0c671eeab63fb9066914cb4"
+      }
+    },
+    {
+      "key": "heroes/sylva",
+      "path": "assets/dlc/illustrated-v1/heroes/sylva.png",
+      "sha256": "3e70b24424bfe33c0d8b25b91b71a7ffc6179e9f15e3912fd631c3367d307a45",
+      "byteLength": 2300001,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-7166d4ef-2837-481b-a290-b81c9e4e7da9.png",
+      "nativeExists": true,
+      "nativeSha256": "3e70b24424bfe33c0d8b25b91b71a7ffc6179e9f15e3912fd631c3367d307a45",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/characters.json",
+        "collection": "assets",
+        "field": "status",
+        "value": "approved",
+        "selector": "heroes/sylva",
+        "sourceReportSha256": "8040be6e9f2342eb5078374ab0bdee4971d4c961a0c671eeab63fb9066914cb4"
+      }
+    },
+    {
+      "key": "heroes/thalassa",
+      "path": "assets/dlc/illustrated-v1/heroes/thalassa.png",
+      "sha256": "abae3d3752dcb3b23ac394eb1ef896d8540574e65c0d1a9ba9ecbb7dfe81270b",
+      "byteLength": 1290676,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-ad5af036-2ee6-4a93-8d89-2d0623442f86.png",
+      "nativeExists": true,
+      "nativeSha256": "abae3d3752dcb3b23ac394eb1ef896d8540574e65c0d1a9ba9ecbb7dfe81270b",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/characters.json",
+        "collection": "assets",
+        "field": "status",
+        "value": "approved",
+        "selector": "heroes/thalassa",
+        "sourceReportSha256": "8040be6e9f2342eb5078374ab0bdee4971d4c961a0c671eeab63fb9066914cb4"
+      }
+    },
+    {
+      "key": "heroes/vivienne",
+      "path": "assets/dlc/illustrated-v1/heroes/vivienne.png",
+      "sha256": "5924fcbbcaca1719df1d91c49b46457217100f2ecb58390b19b8e8d6c4efef96",
+      "byteLength": 1877749,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-3fbab072-2420-43e6-b987-6e0aa3ecb18a.png",
+      "nativeExists": true,
+      "nativeSha256": "5924fcbbcaca1719df1d91c49b46457217100f2ecb58390b19b8e8d6c4efef96",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/characters-root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "heroes/vivienne",
+        "sourceReportSha256": "b292feec8ec6daebddf321fe218040e5b0710879ab85f1e7630beb54b040132f",
+        "reviewedSha256": "5924fcbbcaca1719df1d91c49b46457217100f2ecb58390b19b8e8d6c4efef96"
+      }
+    },
+    {
+      "key": "maps/abyss_dome_bathyal",
+      "path": "assets/dlc/illustrated-v1/maps/abyss_dome_bathyal.png",
+      "sha256": "6027b3b5a26c1751be874ca2fa94a873c20480c900779f87571228e79f707adf",
+      "byteLength": 3129276,
+      "width": 1536,
+      "height": 1024,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-bb922222-13db-405f-a016-9e6adc0564a1.png",
+      "nativeExists": true,
+      "nativeSha256": "6027b3b5a26c1751be874ca2fa94a873c20480c900779f87571228e79f707adf",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "maps/abyss_dome_bathyal",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "6027b3b5a26c1751be874ca2fa94a873c20480c900779f87571228e79f707adf"
+      }
+    },
+    {
+      "key": "maps/abyss_fosse_de_corail",
+      "path": "assets/dlc/illustrated-v1/maps/abyss_fosse_de_corail.png",
+      "sha256": "3000726f062f52c2999687517ef33c4c66a82e4abbef5127f39d07e6855413c2",
+      "byteLength": 2970338,
+      "width": 1536,
+      "height": 1024,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-9eb2d490-294c-4c54-a61a-e6316f39f397.png",
+      "nativeExists": true,
+      "nativeSha256": "3000726f062f52c2999687517ef33c4c66a82e4abbef5127f39d07e6855413c2",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "maps/abyss_fosse_de_corail",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "3000726f062f52c2999687517ef33c4c66a82e4abbef5127f39d07e6855413c2"
+      }
+    },
+    {
+      "key": "maps/arctic_banquise_fracturee",
+      "path": "assets/dlc/illustrated-v1/maps/arctic_banquise_fracturee.png",
+      "sha256": "2913d16984f61c7b6de2212ba2f6e6704f1f14fede01bcd93eea28f0a0954ddd",
+      "byteLength": 2867159,
+      "width": 1536,
+      "height": 1024,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-ae2346ec-f4c0-44a9-b3f9-6c9e851d2a49.png",
+      "nativeExists": true,
+      "nativeSha256": "2913d16984f61c7b6de2212ba2f6e6704f1f14fede01bcd93eea28f0a0954ddd",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "maps/arctic_banquise_fracturee",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "2913d16984f61c7b6de2212ba2f6e6704f1f14fede01bcd93eea28f0a0954ddd"
+      }
+    },
+    {
+      "key": "maps/arctic_centrale_polaire",
+      "path": "assets/dlc/illustrated-v1/maps/arctic_centrale_polaire.png",
+      "sha256": "ef6f497199be3de2c4e7bef1b5359fc3a24dd2f4c0a297e92cae6848ddfec633",
+      "byteLength": 3249993,
+      "width": 1536,
+      "height": 1024,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-b15bc7a6-eb12-48cb-89f6-bc394aed02ec.png",
+      "nativeExists": true,
+      "nativeSha256": "ef6f497199be3de2c4e7bef1b5359fc3a24dd2f4c0a297e92cae6848ddfec633",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "maps/arctic_centrale_polaire",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "ef6f497199be3de2c4e7bef1b5359fc3a24dd2f4c0a297e92cae6848ddfec633"
+      }
+    },
+    {
+      "key": "maps/astral_nef_d_horlogerie",
+      "path": "assets/dlc/illustrated-v1/maps/astral_nef_d_horlogerie.png",
+      "sha256": "bd325890e44136dfb9f8288dc33e9db208b9daa5cd76d9c1198add2c0ebfccb9",
+      "byteLength": 3318464,
+      "width": 1536,
+      "height": 1024,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-c0f5f72c-5981-4549-8228-fa7d49c79540.png",
+      "nativeExists": true,
+      "nativeSha256": "bd325890e44136dfb9f8288dc33e9db208b9daa5cd76d9c1198add2c0ebfccb9",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "maps/astral_nef_d_horlogerie",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "bd325890e44136dfb9f8288dc33e9db208b9daa5cd76d9c1198add2c0ebfccb9"
+      }
+    },
+    {
+      "key": "maps/astral_parvis_solaire",
+      "path": "assets/dlc/illustrated-v1/maps/astral_parvis_solaire.png",
+      "sha256": "c9a9bed3618d613183c2954dc781a4b4295e8b80e5933cc06f5d83d1181d2eee",
+      "byteLength": 3179064,
+      "width": 1536,
+      "height": 1024,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-0f49b78c-0250-462c-a273-31384d464b02.png",
+      "nativeExists": true,
+      "nativeSha256": "c9a9bed3618d613183c2954dc781a4b4295e8b80e5933cc06f5d83d1181d2eee",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "maps/astral_parvis_solaire",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "c9a9bed3618d613183c2954dc781a4b4295e8b80e5933cc06f5d83d1181d2eee"
+      }
+    },
+    {
+      "key": "maps/brass_fonderie_imperiale",
+      "path": "assets/dlc/illustrated-v1/maps/brass_fonderie_imperiale.png",
+      "sha256": "d75f72f51d12699bd8aa298db41767db66b08699e0933ab1cf50620ace43a4fb",
+      "byteLength": 2899949,
+      "width": 1536,
+      "height": 1024,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-9082b635-3ebc-411e-b24f-7de8641bd003.png",
+      "nativeExists": true,
+      "nativeSha256": "d75f72f51d12699bd8aa298db41767db66b08699e0933ab1cf50620ace43a4fb",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "maps/brass_fonderie_imperiale",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "d75f72f51d12699bd8aa298db41767db66b08699e0933ab1cf50620ace43a4fb"
+      }
+    },
+    {
+      "key": "maps/brass_pont_des_dirigeables",
+      "path": "assets/dlc/illustrated-v1/maps/brass_pont_des_dirigeables.png",
+      "sha256": "e80a50cf7237a09612c65410fbe8bf03bff7e43e5c9385504d14c1bfec1ab08c",
+      "byteLength": 2944456,
+      "width": 1536,
+      "height": 1024,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-d6a57688-5c1d-418d-b7af-75c7d85396e6.png",
+      "nativeExists": true,
+      "nativeSha256": "e80a50cf7237a09612c65410fbe8bf03bff7e43e5c9385504d14c1bfec1ab08c",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "maps/brass_pont_des_dirigeables",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "e80a50cf7237a09612c65410fbe8bf03bff7e43e5c9385504d14c1bfec1ab08c"
+      }
+    },
+    {
+      "key": "maps/desert_canyon_des_miroirs",
+      "path": "assets/dlc/illustrated-v1/maps/desert_canyon_des_miroirs.png",
+      "sha256": "0680d864671842b52145b82312705bc40b21448559a6224c3df24c7982cc4d39",
+      "byteLength": 2824468,
+      "width": 1536,
+      "height": 1024,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-a819b48d-fd5b-4342-a858-eac7ca760ddb.png",
+      "nativeExists": true,
+      "nativeSha256": "0680d864671842b52145b82312705bc40b21448559a6224c3df24c7982cc4d39",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "maps/desert_canyon_des_miroirs",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "0680d864671842b52145b82312705bc40b21448559a6224c3df24c7982cc4d39"
+      }
+    },
+    {
+      "key": "maps/desert_oasis_vitrifiee",
+      "path": "assets/dlc/illustrated-v1/maps/desert_oasis_vitrifiee.png",
+      "sha256": "67bf56a07c143584381a58d449c12b40668d7f456c304c93bb3efb1da5c321ec",
+      "byteLength": 3923797,
+      "width": 1536,
+      "height": 1024,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-097208aa-f0ae-4d47-99e2-e2435dc39165.png",
+      "nativeExists": true,
+      "nativeSha256": "67bf56a07c143584381a58d449c12b40668d7f456c304c93bb3efb1da5c321ec",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "maps/desert_oasis_vitrifiee",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "67bf56a07c143584381a58d449c12b40668d7f456c304c93bb3efb1da5c321ec"
+      }
+    },
+    {
+      "key": "maps/flora_grande_serre",
+      "path": "assets/dlc/illustrated-v1/maps/flora_grande_serre.png",
+      "sha256": "7e472e1f9f022acfd6b6e4a3e54b88f6c94c823399f59394041a476859e8d931",
+      "byteLength": 3726381,
+      "width": 1536,
+      "height": 1024,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-6a5fa1dd-a955-42f9-a43c-e6c7e53753f4.png",
+      "nativeExists": true,
+      "nativeSha256": "7e472e1f9f022acfd6b6e4a3e54b88f6c94c823399f59394041a476859e8d931",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "maps/flora_grande_serre",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "7e472e1f9f022acfd6b6e4a3e54b88f6c94c823399f59394041a476859e8d931"
+      }
+    },
+    {
+      "key": "maps/flora_racines_du_c_ur",
+      "path": "assets/dlc/illustrated-v1/maps/flora_racines_du_c_ur.png",
+      "sha256": "ab27137e66bb0254b111a8004ee33a3e412d0f4cbbec4899b9becac491656db7",
+      "byteLength": 3424662,
+      "width": 1536,
+      "height": 1024,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-a07a9ed1-e25f-4e74-8d4d-8455e54eaf02.png",
+      "nativeExists": true,
+      "nativeSha256": "ab27137e66bb0254b111a8004ee33a3e412d0f4cbbec4899b9becac491656db7",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "maps/flora_racines_du_c_ur",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "ab27137e66bb0254b111a8004ee33a3e412d0f4cbbec4899b9becac491656db7"
+      }
+    },
+    {
+      "key": "maps/haven_abyssal_reactor",
+      "sha256": "91a97b3b813c3cf212ed0df6c29bb1615dc16f7e7eb3f3c59b944c3be669271d",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/maps/haven_abyssal_reactor.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-9620a273-6042-4113-a852-6327b5a28bc0.png",
+      "nativeExists": true,
+      "nativeSha256": "91a97b3b813c3cf212ed0df6c29bb1615dc16f7e7eb3f3c59b944c3be669271d",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "maps/haven_inner_citadel",
+      "sha256": "66d8b5557997ed6795ab4a702bb782058544fb7c7d3bf0ea178d32b3eaa8a561",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/maps/haven_inner_citadel.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-04428c3b-2c7d-4883-b0e9-8af30a96cff9.png",
+      "nativeExists": true,
+      "nativeSha256": "66d8b5557997ed6795ab4a702bb782058544fb7c7d3bf0ea178d32b3eaa8a561",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "maps/haven_outer_port",
+      "sha256": "f90e06a85d6332d73713f0242e44c015bd94de48b6c649d7f2b421a020decd41",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/maps/haven_outer_port.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-5e66c903-a3b3-4bc8-8599-1b47767a2231.png",
+      "nativeExists": true,
+      "nativeSha256": "f90e06a85d6332d73713f0242e44c015bd94de48b6c649d7f2b421a020decd41",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "maps/haven_sunken_cathedral",
+      "sha256": "036c010b5b83659eaaa85cd9fa07fd4f023923c4edfbe76753b9bf0b14cc9f52",
+      "reviewSource": "docs/art-generation/continuation-v1/root-review.json",
+      "generationSource": "docs/art-generation/continuation-v1/maps/haven_sunken_cathedral.json",
+      "verdict": "pass",
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-2f607ac4-13e3-4547-be51-8f357826eef1.png",
+      "nativeExists": true,
+      "nativeSha256": "036c010b5b83659eaaa85cd9fa07fd4f023923c4edfbe76753b9bf0b14cc9f52",
+      "nativeBytesPreserved": true,
+      "reviewer": "root independent visual and native-byte review",
+      "firstDesign": true
+    },
+    {
+      "key": "props/abyss_monument",
+      "path": "assets/dlc/illustrated-v1/props/abyss_monument.png",
+      "sha256": "50eb8d0fb3680dd5ec0ad04341b6aeecdea3dd3058b46d891f355c365caed06a",
+      "byteLength": 1293412,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-d97cab7e-54b8-4341-889b-c15122274d6f.png",
+      "nativeExists": true,
+      "nativeSha256": "50eb8d0fb3680dd5ec0ad04341b6aeecdea3dd3058b46d891f355c365caed06a",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "props/abyss_monument",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "50eb8d0fb3680dd5ec0ad04341b6aeecdea3dd3058b46d891f355c365caed06a"
+      }
+    },
+    {
+      "key": "props/arctic_monument",
+      "path": "assets/dlc/illustrated-v1/props/arctic_monument.png",
+      "sha256": "951e56bfa3b8125833cf0cdd645626ecdc9ff11f4a2b098f360580a48414ba98",
+      "byteLength": 1230808,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-cbaa5cee-1d55-4770-8246-7c66105c831e.png",
+      "nativeExists": true,
+      "nativeSha256": "951e56bfa3b8125833cf0cdd645626ecdc9ff11f4a2b098f360580a48414ba98",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "props/arctic_monument",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "951e56bfa3b8125833cf0cdd645626ecdc9ff11f4a2b098f360580a48414ba98"
+      }
+    },
+    {
+      "key": "props/astral_monument",
+      "path": "assets/dlc/illustrated-v1/props/astral_monument.png",
+      "sha256": "641306cee118d456fe0e9ff15e4d8ba4c449291881585b9f75e6f4de0e479630",
+      "byteLength": 1657717,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-b8a097cb-90a6-4ddd-9171-de17a4930bc5.png",
+      "nativeExists": true,
+      "nativeSha256": "641306cee118d456fe0e9ff15e4d8ba4c449291881585b9f75e6f4de0e479630",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "props/astral_monument",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "641306cee118d456fe0e9ff15e4d8ba4c449291881585b9f75e6f4de0e479630"
+      }
+    },
+    {
+      "key": "props/brass_monument",
+      "path": "assets/dlc/illustrated-v1/props/brass_monument.png",
+      "sha256": "b8daa12245bd9d0157e329eeff457e08f21470498a3579cd1b1867f506b00814",
+      "byteLength": 1891190,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-e7c73ec9-e723-4a50-ac20-f57b6148e381.png",
+      "nativeExists": true,
+      "nativeSha256": "b8daa12245bd9d0157e329eeff457e08f21470498a3579cd1b1867f506b00814",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "props/brass_monument",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "b8daa12245bd9d0157e329eeff457e08f21470498a3579cd1b1867f506b00814"
+      }
+    },
+    {
+      "key": "props/desert_monument",
+      "path": "assets/dlc/illustrated-v1/props/desert_monument.png",
+      "sha256": "c20953994ddbccc94e449998b498ceaa1937898bae9ed44f1aefb65a30c332d3",
+      "byteLength": 1377582,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-c1286fb1-c524-4c91-a57f-e7684d77aa38.png",
+      "nativeExists": true,
+      "nativeSha256": "c20953994ddbccc94e449998b498ceaa1937898bae9ed44f1aefb65a30c332d3",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "props/desert_monument",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "c20953994ddbccc94e449998b498ceaa1937898bae9ed44f1aefb65a30c332d3"
+      }
+    },
+    {
+      "key": "props/flora_monument",
+      "path": "assets/dlc/illustrated-v1/props/flora_monument.png",
+      "sha256": "eb1725381c02424ab2cd0d45604e8ec6d36f1132da74c075a08475ee8093dab9",
+      "byteLength": 1387128,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-5b503dfa-74fb-445b-a286-cfaa1996804f.png",
+      "nativeExists": true,
+      "nativeSha256": "eb1725381c02424ab2cd0d45604e8ec6d36f1132da74c075a08475ee8093dab9",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "props/flora_monument",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "eb1725381c02424ab2cd0d45604e8ec6d36f1132da74c075a08475ee8093dab9"
+      }
+    },
+    {
+      "key": "towers/boreal_beacon",
+      "path": "assets/dlc/illustrated-v1/towers/boreal_beacon.png",
+      "sha256": "7f6eeed9ddae4957299527e05bfa2bfc4bd8283f72c10ef65395be792311efb2",
+      "byteLength": 1976599,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-092deefe-6612-4167-a2e3-98bea41340f7.png",
+      "nativeExists": true,
+      "nativeSha256": "7f6eeed9ddae4957299527e05bfa2bfc4bd8283f72c10ef65395be792311efb2",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/units-towers.json",
+        "collection": "assets",
+        "field": "qa.status",
+        "value": "approved",
+        "selector": "towers/boreal_beacon",
+        "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
+      }
+    },
+    {
+      "key": "towers/botanic_prism",
+      "path": "assets/dlc/illustrated-v1/towers/botanic_prism.png",
+      "sha256": "6d90b60b35fc643d815011817d0d9ffbb5b764b2fec7cae2618cce232a7845fd",
+      "byteLength": 2231957,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-f57b6725-272f-4502-aef6-6fa81372fd19.png",
+      "nativeExists": true,
+      "nativeSha256": "6d90b60b35fc643d815011817d0d9ffbb5b764b2fec7cae2618cce232a7845fd",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/units-towers.json",
+        "collection": "assets",
+        "field": "qa.status",
+        "value": "approved",
+        "selector": "towers/botanic_prism",
+        "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
+      }
+    },
+    {
+      "key": "towers/copper_tesla",
+      "path": "assets/dlc/illustrated-v1/towers/copper_tesla.png",
+      "sha256": "372f969683407eab6c942595dab5f8b7dd871bea04654a89708ad06e021a4baf",
+      "byteLength": 1721523,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-9cf61a8c-089f-47c2-bf75-be748acf390e.png",
+      "nativeExists": true,
+      "nativeSha256": "372f969683407eab6c942595dab5f8b7dd871bea04654a89708ad06e021a4baf",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/units-towers.json",
+        "collection": "assets",
+        "field": "qa.status",
+        "value": "approved",
+        "selector": "towers/copper_tesla",
+        "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
+      }
+    },
+    {
+      "key": "towers/helios_mirror",
+      "path": "assets/dlc/illustrated-v1/towers/helios_mirror.png",
+      "sha256": "cc75e4d1f8526455a31544eb3c9255b3ea3d63f6cb34c2a4261ecf7e3ea6692e",
+      "byteLength": 1952540,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-c35a6858-405b-4300-8ddf-abeb6b12a003.png",
+      "nativeExists": true,
+      "nativeSha256": "cc75e4d1f8526455a31544eb3c9255b3ea3d63f6cb34c2a4261ecf7e3ea6692e",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/units-towers.json",
+        "collection": "assets",
+        "field": "qa.status",
+        "value": "approved",
+        "selector": "towers/helios_mirror",
+        "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
+      }
+    },
+    {
+      "key": "towers/icebreaker_cannon",
+      "path": "assets/dlc/illustrated-v1/towers/icebreaker_cannon.png",
+      "sha256": "11b5921b2f7f1288e65cf70411ce7b4faaef2afb8e8a4f67962af7024914c930",
+      "byteLength": 2422805,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-dd89bb01-c94b-4cca-a043-0825d116f473.png",
+      "nativeExists": true,
+      "nativeSha256": "11b5921b2f7f1288e65cf70411ce7b4faaef2afb8e8a4f67962af7024914c930",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/units-towers.json",
+        "collection": "assets",
+        "field": "qa.status",
+        "value": "approved",
+        "selector": "towers/icebreaker_cannon",
+        "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
+      }
+    },
+    {
+      "key": "towers/pressure_harpoon",
+      "path": "assets/dlc/illustrated-v1/towers/pressure_harpoon.png",
+      "sha256": "0caf03a35a42f2d5a786daac8b082915d7897179a18b70f9482b6a15155d9631",
+      "byteLength": 2228805,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-ec7d08a8-c496-4d22-9dc2-ac63ba67b784.png",
+      "nativeExists": true,
+      "nativeSha256": "0caf03a35a42f2d5a786daac8b082915d7897179a18b70f9482b6a15155d9631",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/units-towers.json",
+        "collection": "assets",
+        "field": "qa.status",
+        "value": "approved",
+        "selector": "towers/pressure_harpoon",
+        "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
+      }
+    },
+    {
+      "key": "towers/silica_mortar",
+      "path": "assets/dlc/illustrated-v1/towers/silica_mortar.png",
+      "sha256": "4f054529fcef1c691998c55c7a109432b899353af55c20ddbfbfff129e170521",
+      "byteLength": 2087000,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-35d5d029-40dc-456a-bd3c-93775df2c16d.png",
+      "nativeExists": true,
+      "nativeSha256": "4f054529fcef1c691998c55c7a109432b899353af55c20ddbfbfff129e170521",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/units-towers.json",
+        "collection": "assets",
+        "field": "qa.status",
+        "value": "approved",
+        "selector": "towers/silica_mortar",
+        "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
+      }
+    },
+    {
+      "key": "towers/solar_organ",
+      "path": "assets/dlc/illustrated-v1/towers/solar_organ.png",
+      "sha256": "edc2a5c50df215ebfa9aa206a61ff1b713eaaac15f442ac1f2c7aab75e1014d3",
+      "byteLength": 2311305,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-17e25cbd-c61f-4d15-a35b-6107851cc704.png",
+      "nativeExists": true,
+      "nativeSha256": "edc2a5c50df215ebfa9aa206a61ff1b713eaaac15f442ac1f2c7aab75e1014d3",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/units-towers.json",
+        "collection": "assets",
+        "field": "qa.status",
+        "value": "approved",
+        "selector": "towers/solar_organ",
+        "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
+      }
+    },
+    {
+      "key": "towers/sonar_tower",
+      "path": "assets/dlc/illustrated-v1/towers/sonar_tower.png",
+      "sha256": "aed55b309c341cd82cf0fad6931b7adcf44514ad79993a077c47fe9882cafd6a",
+      "byteLength": 1797753,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-87f9ca40-9c39-48bf-b53a-c29e613f41b5.png",
+      "nativeExists": true,
+      "nativeSha256": "aed55b309c341cd82cf0fad6931b7adcf44514ad79993a077c47fe9882cafd6a",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/units-towers.json",
+        "collection": "assets",
+        "field": "qa.status",
+        "value": "approved",
+        "selector": "towers/sonar_tower",
+        "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
+      }
+    },
+    {
+      "key": "towers/spore_hive",
+      "path": "assets/dlc/illustrated-v1/towers/spore_hive.png",
+      "sha256": "1ee1d8d7cebdb5abe8272fc4082f757c7c82a9806d713910c77a000672142814",
+      "byteLength": 2305092,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-ff7e6774-7979-4c6a-b493-c0e4d04a33a1.png",
+      "nativeExists": true,
+      "nativeSha256": "1ee1d8d7cebdb5abe8272fc4082f757c7c82a9806d713910c77a000672142814",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/units-towers.json",
+        "collection": "assets",
+        "field": "qa.status",
+        "value": "approved",
+        "selector": "towers/spore_hive",
+        "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
+      }
+    },
+    {
+      "key": "towers/stasis_pendulum",
+      "path": "assets/dlc/illustrated-v1/towers/stasis_pendulum.png",
+      "sha256": "b183916b436233dc55622ca59f214cb3ba35e395124797056ff20bb768284eec",
+      "byteLength": 2375529,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-f8c1ad73-2052-4576-a9aa-0bbd3f608354.png",
+      "nativeExists": true,
+      "nativeSha256": "b183916b436233dc55622ca59f214cb3ba35e395124797056ff20bb768284eec",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/units-towers.json",
+        "collection": "assets",
+        "field": "qa.status",
+        "value": "approved",
+        "selector": "towers/stasis_pendulum",
+        "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
+      }
+    },
+    {
+      "key": "towers/steam_gatling",
+      "path": "assets/dlc/illustrated-v1/towers/steam_gatling.png",
+      "sha256": "150b8476b22f40283072baeeeb15bee192b878124e07cf4e0fa3ea942298c8c0",
+      "byteLength": 2166308,
+      "width": 1254,
+      "height": 1254,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-260db635-c33f-44e6-aee3-328c461f019a.png",
+      "nativeExists": true,
+      "nativeSha256": "150b8476b22f40283072baeeeb15bee192b878124e07cf4e0fa3ea942298c8c0",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/units-towers.json",
+        "collection": "assets",
+        "field": "qa.status",
+        "value": "approved",
+        "selector": "towers/steam_gatling",
+        "sourceReportSha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb"
+      }
+    },
+    {
+      "key": "weapons/cavitation_torpedo",
+      "path": "assets/dlc/illustrated-v1/weapons/cavitation_torpedo.png",
+      "sha256": "50d5cd2c5b8161c41ed7d9e3eac96418a9253000026542485070b11954f7adf7",
+      "byteLength": 1418949,
+      "width": 1774,
+      "height": 887,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-d0be3057-dd37-444b-9ae7-1219e477ba80.png",
+      "nativeExists": true,
+      "nativeSha256": "50d5cd2c5b8161c41ed7d9e3eac96418a9253000026542485070b11954f7adf7",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "weapons/cavitation_torpedo",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "50d5cd2c5b8161c41ed7d9e3eac96418a9253000026542485070b11954f7adf7"
+      }
+    },
+    {
+      "key": "weapons/cryo_laser",
+      "path": "assets/dlc/illustrated-v1/weapons/cryo_laser.png",
+      "sha256": "9d79e026e1a9640abce690be96dcd759c5d6791f5cf4da97b290ee4f8c7e6c31",
+      "byteLength": 933523,
+      "width": 1774,
+      "height": 887,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-9dcd12ed-58ed-4ab8-81e2-707a859e95b1.png",
+      "nativeExists": true,
+      "nativeSha256": "9d79e026e1a9640abce690be96dcd759c5d6791f5cf4da97b290ee4f8c7e6c31",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "weapons/cryo_laser",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "9d79e026e1a9640abce690be96dcd759c5d6791f5cf4da97b290ee4f8c7e6c31"
+      }
+    },
+    {
+      "key": "weapons/plasma_vine",
+      "path": "assets/dlc/illustrated-v1/weapons/plasma_vine.png",
+      "sha256": "d321792dc7d41def6333ad7d76cd0ce672a22dd2b3d90a170874662099b6e62d",
+      "byteLength": 1486967,
+      "width": 1774,
+      "height": 887,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-98cfeb4b-d4fe-41cb-937a-ceda9bf746a4.png",
+      "nativeExists": true,
+      "nativeSha256": "d321792dc7d41def6333ad7d76cd0ce672a22dd2b3d90a170874662099b6e62d",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "weapons/plasma_vine",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "d321792dc7d41def6333ad7d76cd0ce672a22dd2b3d90a170874662099b6e62d"
+      }
+    },
+    {
+      "key": "weapons/seraphic_ray",
+      "path": "assets/dlc/illustrated-v1/weapons/seraphic_ray.png",
+      "sha256": "033aecfbf5c1dc65ae55ab73d0ff3b5624a17e0b408c582ca89b2942abd0530b",
+      "byteLength": 1110704,
+      "width": 1774,
+      "height": 887,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-b86dd7ab-ef5f-4c9f-bd36-f96bbcb47825.png",
+      "nativeExists": true,
+      "nativeSha256": "033aecfbf5c1dc65ae55ab73d0ff3b5624a17e0b408c582ca89b2942abd0530b",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "weapons/seraphic_ray",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "033aecfbf5c1dc65ae55ab73d0ff3b5624a17e0b408c582ca89b2942abd0530b"
+      }
+    },
+    {
+      "key": "weapons/solar_saber",
+      "path": "assets/dlc/illustrated-v1/weapons/solar_saber.png",
+      "sha256": "0ca7205d152ddf1fac85326523f4c275fdd340f4c3fd284010d7004a22c990f5",
+      "byteLength": 1104388,
+      "width": 1774,
+      "height": 887,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-0c18533a-9585-4690-b86b-a59ec368552e.png",
+      "nativeExists": true,
+      "nativeSha256": "0ca7205d152ddf1fac85326523f4c275fdd340f4c3fd284010d7004a22c990f5",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "weapons/solar_saber",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "0ca7205d152ddf1fac85326523f4c275fdd340f4c3fd284010d7004a22c990f5"
+      }
+    },
+    {
+      "key": "weapons/voltaic_musket",
+      "path": "assets/dlc/illustrated-v1/weapons/voltaic_musket.png",
+      "sha256": "76a451ac1b3e936db31bc32fe21461a48715110acf941be2c80a192aa1886d48",
+      "byteLength": 833722,
+      "width": 1774,
+      "height": 887,
+      "native": "/workspace/scratch/3c707a35b074/generated_images/exec-9448223f-42ab-4e84-b25b-6053e56e9c4c.png",
+      "nativeExists": true,
+      "nativeSha256": "76a451ac1b3e936db31bc32fe21461a48715110acf941be2c80a192aa1886d48",
+      "nativeBytesMatch": true,
+      "approval": {
+        "source": "docs/art-generation/illustrated-v1/root-independent-review.json",
+        "collection": "files",
+        "field": "verdict",
+        "value": "pass",
+        "selector": "weapons/voltaic_musket",
+        "sourceReportSha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+        "reviewedSha256": "76a451ac1b3e936db31bc32fe21461a48715110acf941be2c80a192aa1886d48"
+      }
+    }
+  ],
+  "pending": [],
+  "inconsistencies": [],
+  "excludedOutsideDlcCatalogue": [
+    {
+      "id": "brute",
+      "path": "assets/animations/completion-v1/enemies/brute.png",
+      "source": "docs/art-generation/illustrated-v1/characters.json",
+      "reason": "outside the 82-entry DLC catalogue"
+    },
+    {
+      "id": "carmilla",
+      "path": "assets/animations/completion-v1/bosses/carmilla.png",
+      "source": "docs/art-generation/illustrated-v1/characters.json",
+      "reason": "outside the 82-entry DLC catalogue"
+    },
+    {
+      "id": "hellwarden",
+      "path": "assets/animations/completion-v1/bosses/hellwarden.png",
+      "source": "docs/art-generation/illustrated-v1/characters.json",
+      "reason": "outside the 82-entry DLC catalogue"
+    },
+    {
+      "id": "runner",
+      "path": "assets/animations/completion-v1/enemies/runner.png",
+      "source": "docs/art-generation/illustrated-v1/characters.json",
+      "reason": "outside the 82-entry DLC catalogue"
+    },
+    {
+      "id": "swarmer",
+      "path": "assets/animations/completion-v1/enemies/swarmer.png",
+      "source": "docs/art-generation/illustrated-v1/characters.json",
+      "reason": "outside the 82-entry DLC catalogue"
+    },
+    {
+      "id": "vespera",
+      "path": "assets/animations/completion-v1/bosses/vespera.png",
+      "source": "docs/art-generation/illustrated-v1/characters.json",
+      "reason": "outside the 82-entry DLC catalogue"
+    }
+  ],
+  "verificationSummary": {
+    "approvedCount": 82,
+    "pendingCount": 0,
+    "finalPngHashMatches": 82,
+    "availableNativeHashMatches": 82,
+    "nativeUnavailableCount": 0,
+    "approvalsBySource": {
+      "docs/art-generation/illustrated-v1/root-independent-review.json": 35,
+      "docs/art-generation/illustrated-v1/characters-root-independent-review.json": 11,
+      "docs/art-generation/illustrated-v1/characters.json": 14,
+      "docs/art-generation/illustrated-v1/units-towers.json": 22
+    }
+  },
+  "sourceReports": {
+    "docs/art-generation/illustrated-v1/root-independent-review.json": {
+      "sha256": "2304f3211749c1670e1fd0d13efe0edb2bf25ee30959ed80271318acf723f106",
+      "byteLength": 62620
+    },
+    "docs/art-generation/illustrated-v1/root-results/evolutions-cavitation_torpedo.json": {
+      "sha256": "f423c0ca921801c54c809b64b2aa8e4b0c39ff02119897f40a2dcaf6e246caae",
+      "byteLength": 2067
+    },
+    "docs/art-generation/illustrated-v1/root-results/evolutions-cryo_laser.json": {
+      "sha256": "dd8da0918071a491451fc66763907f4278fb3dc7b58573d80441c84d35a537b1",
+      "byteLength": 1865
+    },
+    "docs/art-generation/illustrated-v1/root-results/evolutions-plasma_vine.json": {
+      "sha256": "17d20947e8df6c7ade16dfee22335b956ad974958e8d5103efd75494a899f1e5",
+      "byteLength": 1924
+    },
+    "docs/art-generation/illustrated-v1/root-results/evolutions-seraphic_ray.json": {
+      "sha256": "dd70742af4aca7fd4533b7301b8fd4219d497ec3ece22fe1bb856b4b3af82460",
+      "byteLength": 2121
+    },
+    "docs/art-generation/illustrated-v1/root-results/evolutions-solar_saber.json": {
+      "sha256": "f783c88b42cf0a9b10d10689200a53fb946024385673cc4ca82feac98678d38e",
+      "byteLength": 2082
+    },
+    "docs/art-generation/illustrated-v1/root-results/evolutions-voltaic_musket.json": {
+      "sha256": "e562cc8ef30ee4659d21ed76a21c540c2eea03d7ac4b67a533cf75e1e4a91df5",
+      "byteLength": 2090
+    },
+    "docs/art-generation/illustrated-v1/root-results/fx-duo_aria_astarra.json": {
+      "sha256": "2dfa0c88427560c57ef83e81cdb4631d9a8e1827df3ae9551d7a6d2124368572",
+      "byteLength": 1878
+    },
+    "docs/art-generation/illustrated-v1/root-results/fx-duo_carmilla_ossuary.json": {
+      "sha256": "14dbe94eeca3c8028003c8c7e02475c625f483c683a6c22cf9859f26869d6e60",
+      "byteLength": 1884
+    },
+    "docs/art-generation/illustrated-v1/root-results/fx-duo_freyja_vexara.json": {
+      "sha256": "06f8bdbb9a804409230a8e134a607160c0ddc98fd4e67e9270b329210fc902d9",
+      "byteLength": 1852
+    },
+    "docs/art-generation/illustrated-v1/root-results/fx-duo_nyx_kalix.json": {
+      "sha256": "63085c19e9d1efb39790360cae7e6d8c789e6f2525f16f173254ec6c75560f66",
+      "byteLength": 1861
+    },
+    "docs/art-generation/illustrated-v1/root-results/fx-infernal_fog.json": {
+      "sha256": "7fc5ff2690e96ea8f251c6bb645baf0a7502513f19d43ad6830a19f97469a72f",
+      "byteLength": 1860
+    },
+    "docs/art-generation/illustrated-v1/root-results/maps-abyss_dome_bathyal.json": {
+      "sha256": "cc14468ad4431e7daae2fe7d4554802eb9f69a8335e8a13ec4185be66805f0e7",
+      "byteLength": 2402
+    },
+    "docs/art-generation/illustrated-v1/root-results/maps-abyss_fosse_de_corail.json": {
+      "sha256": "a60520023cc83471dbd7b7d6f3d1c7e7cbacf69240804c053044a9273abfdc96",
+      "byteLength": 2425
+    },
+    "docs/art-generation/illustrated-v1/root-results/maps-arctic_banquise_fracturee.json": {
+      "sha256": "c527331d4f2f1c15d90d997ecc5ff9c986ed6b5fa441f1e0a534bf489de8557a",
+      "byteLength": 2422
+    },
+    "docs/art-generation/illustrated-v1/root-results/maps-arctic_centrale_polaire.json": {
+      "sha256": "60053a2a2dfb5927c9b5c3f63eca5a08abf9d3f3a84c414615e47f4502fbd837",
+      "byteLength": 2420
+    },
+    "docs/art-generation/illustrated-v1/root-results/maps-astral_nef_d_horlogerie.json": {
+      "sha256": "4c5865fd4cee178f2e2a37b57d40ada5b1199487619cab930d12cbe24e296c7b",
+      "byteLength": 2401
+    },
+    "docs/art-generation/illustrated-v1/root-results/maps-astral_parvis_solaire.json": {
+      "sha256": "e16e095c1003bd15fa2f50a1da49cf810dd4bd610cb2f6c95430e0867e01215c",
+      "byteLength": 2395
+    },
+    "docs/art-generation/illustrated-v1/root-results/maps-brass_fonderie_imperiale.json": {
+      "sha256": "fe43a5cab1d8d0d9be48e311d0330a866e102ff951241b9069463fe164f61c0b",
+      "byteLength": 2452
+    },
+    "docs/art-generation/illustrated-v1/root-results/maps-brass_pont_des_dirigeables.json": {
+      "sha256": "f70469726e81262ae225119c5e3964bb5950a6592ed1a8da36a0ce85269b59e3",
+      "byteLength": 2429
+    },
+    "docs/art-generation/illustrated-v1/root-results/maps-desert_canyon_des_miroirs.json": {
+      "sha256": "7413b3040afb1d45cdc7d3b70f6aae97d84ca74b2ffe37498a3e300309d22293",
+      "byteLength": 2415
+    },
+    "docs/art-generation/illustrated-v1/root-results/maps-desert_oasis_vitrifiee.json": {
+      "sha256": "2ffa286c559f3c6db6eb0f155c60590cfe42389e6aea0273ef1acc724232ccbf",
+      "byteLength": 2388
+    },
+    "docs/art-generation/illustrated-v1/root-results/maps-flora_grande_serre.json": {
+      "sha256": "d490661a7717051f5997d8312b3c993806c56672cee9de082cdc7708fe8b18fe",
+      "byteLength": 2395
+    },
+    "docs/art-generation/illustrated-v1/root-results/maps-flora_racines_du_c_ur.json": {
+      "sha256": "740b01b2fe3d60d3deb69debf5144f45a759e47d5a4f053be736904a92894a51",
+      "byteLength": 2389
+    },
+    "docs/art-generation/illustrated-v1/root-results/props-abyss_monument.json": {
+      "sha256": "482acc6189354a6c657f64748564afdef6105eb81c3b65206c6b2ef9d7888a91",
+      "byteLength": 2048
+    },
+    "docs/art-generation/illustrated-v1/root-results/props-arctic_monument.json": {
+      "sha256": "7811cff984460e3282d05b25352ed2af297c5acdc392c3bdcbe2621212bc0233",
+      "byteLength": 2075
+    },
+    "docs/art-generation/illustrated-v1/root-results/props-astral_monument.json": {
+      "sha256": "a38dc7f440d9dfd1ffd67033723fd017e28478a19437a999256baf336e946106",
+      "byteLength": 2043
+    },
+    "docs/art-generation/illustrated-v1/root-results/props-brass_monument.json": {
+      "sha256": "868396007d04976bf76f878a9f33fbc90afbafc3fe7cd2ca65dccd7b4fe56f72",
+      "byteLength": 2075
+    },
+    "docs/art-generation/illustrated-v1/root-results/props-desert_monument.json": {
+      "sha256": "b5a4892c4df21efe0e6e0201b58731939d7842ef7ea940167fc6c5681ca0333f",
+      "byteLength": 2056
+    },
+    "docs/art-generation/illustrated-v1/root-results/props-flora_monument.json": {
+      "sha256": "961aeb6050a4fced932ca4b6312b702e8386d111bb84ace0c76df9759af1b8c2",
+      "byteLength": 2056
+    },
+    "docs/art-generation/illustrated-v1/root-results/weapons-cavitation_torpedo.json": {
+      "sha256": "79e558dc62fdbd8a65cb62ae34c972fedc2e2a642cc54aa8908970c071531d3b",
+      "byteLength": 2110
+    },
+    "docs/art-generation/illustrated-v1/root-results/weapons-cryo_laser.json": {
+      "sha256": "eb2a1469917ca077288777b139ae1416452470e7c16e5806f105809847ed6363",
+      "byteLength": 2357
+    },
+    "docs/art-generation/illustrated-v1/root-results/weapons-plasma_vine.json": {
+      "sha256": "21faa0aca92d8066864289c7a0792e97237946579a4575bdb78174fb6eb10442",
+      "byteLength": 2056
+    },
+    "docs/art-generation/illustrated-v1/root-results/weapons-seraphic_ray.json": {
+      "sha256": "d199c2721150d4019451cee37ae955f9f3140dfb6afc41fa41274d5fee1aca31",
+      "byteLength": 2083
+    },
+    "docs/art-generation/illustrated-v1/root-results/weapons-solar_saber.json": {
+      "sha256": "4c14ba705f2c91afecc320cae8ed3613f9f135890452d1284d597e3998a9903a",
+      "byteLength": 2054
+    },
+    "docs/art-generation/illustrated-v1/root-results/weapons-voltaic_musket.json": {
+      "sha256": "32fa551e092f65c038f0ad92dc22962abf7101dddb2398883d2ca89efa39d6b8",
+      "byteLength": 2070
+    },
+    "docs/art-generation/illustrated-v1/characters-root-independent-review.json": {
+      "sha256": "b292feec8ec6daebddf321fe218040e5b0710879ab85f1e7630beb54b040132f",
+      "byteLength": 56363
+    },
+    "docs/art-generation/illustrated-v1/characters-root-results/bosses-brass_queen.json": {
+      "sha256": "e67771b2979ed145abb51e88f4ae182e34cda3c1b7c48890eecbf585732e5853",
+      "byteLength": 5215
+    },
+    "docs/art-generation/illustrated-v1/characters-root-results/bosses-cryo_valkyr.json": {
+      "sha256": "90c96e89a3f519b2cce90af2a371fa88ed98c36f90bc18bf3c850cb463cbce85",
+      "byteLength": 5142
+    },
+    "docs/art-generation/illustrated-v1/characters-root-results/bosses-duchess_valva.json": {
+      "sha256": "296c57af3de9965c4746ed69e36651ea9506469189b0a09459562fda743a006d",
+      "byteLength": 5179
+    },
+    "docs/art-generation/illustrated-v1/characters-root-results/bosses-ignis_rah.json": {
+      "sha256": "6d3f5d4bfab4490d054a2a5c3884ab6eba6f737cfdd08b607e621857f0621460",
+      "byteLength": 5553
+    },
+    "docs/art-generation/illustrated-v1/characters-root-results/bosses-miraj_obsidian.json": {
+      "sha256": "df3e7022bf0adb69a6761905f2c7545b8f7de02f79294029ba6a26190d1460cc",
+      "byteLength": 5611
+    },
+    "docs/art-generation/illustrated-v1/characters-root-results/bosses-skadi_prism.json": {
+      "sha256": "5dd6d5d7f6b953c924d9fcbdb6069c3aaf1ddb065b16ee6ff1854bd66153e625",
+      "byteLength": 2812
+    },
+    "docs/art-generation/illustrated-v1/characters-root-results/heroes-astrid.json": {
+      "sha256": "649eaa30118b2a03172a563671d6ca8a45cdeb14a049670f9fb93f5a3db88ac0",
+      "byteLength": 2691
+    },
+    "docs/art-generation/illustrated-v1/characters-root-results/heroes-clarisse.json": {
+      "sha256": "39e745fcf5316fa77760ff52b5bda5303ac54ad218e675696676e24176b14603",
+      "byteLength": 2837
+    },
+    "docs/art-generation/illustrated-v1/characters-root-results/heroes-daria.json": {
+      "sha256": "2b51344f2971d038c5eee06dcd34c06d9434be153b559492b0687c0e6896cd8d",
+      "byteLength": 5628
+    },
+    "docs/art-generation/illustrated-v1/characters-root-results/heroes-katya.json": {
+      "sha256": "e0e071c6ef925720b9628faf1111fbf0bad2efdf9bb9967e931df4e523537bc7",
+      "byteLength": 2980
+    },
+    "docs/art-generation/illustrated-v1/characters-root-results/heroes-vivienne.json": {
+      "sha256": "6b2263da992c14a500f175a972f883b205e37f3d06b45cfac8b9f53330b8430d",
+      "byteLength": 2834
+    },
+    "docs/art-generation/illustrated-v1/characters.json": {
+      "sha256": "8040be6e9f2342eb5078374ab0bdee4971d4c961a0c671eeab63fb9066914cb4",
+      "byteLength": 123951
+    },
+    "docs/art-generation/illustrated-v1/units-towers.json": {
+      "sha256": "14a03c7e7dd8b549e0aa7948888938a35b9896823bafd65b658c2e7cba7ae5fb",
+      "byteLength": 91947
+    }
+  },
+  "continuationSource": "docs/art-generation/continuation-v1/root-review.json"
+}

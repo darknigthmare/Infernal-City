@@ -1,0 +1,28 @@
+{
+  "key": "fx/duo_aria_astarra",
+  "category": "fx",
+  "id": "duo_aria_astarra",
+  "name": "Rempart de Braise",
+  "columns": 4,
+  "rows": 2,
+  "sequenceFrames": 8,
+  "transparent": true,
+  "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/evolutions/nova-cataclysm.png",
+  "prompt": "Use case: stylized-concept. Production VFX animation atlas for Infernal City. Reference is finish and sprite-sheet layout only. Subject: a circular segmented CYAN protective energy rampart interwoven with ORANGE-GOLD molten embers, protective ring expanding slightly and pulsing, seen from the game's elevated camera; no characters or weapons. EXACT regular grid FOUR columns by TWO rows, eight SQUARE cells on a 2:1 landscape PNG. Each cell contains one complete effect centered on the exact same anchor at a stable scale; frame order left to right then lower row. Eight authored evolving frames, gently flowing looping motion. Effect and ALL particles strictly within central 50 percent of each cell, huge 25 percent completely empty transparent margin on all four sides. Painterly crisp cyber-gothic game VFX, with controlled translucent glow. Actual transparent alpha background, no dark/white rectangle, no scenery, no character, no floor, no lettering, labels, numbers, border, drawn grid or watermark. Do not let any particle or mist cross a cell boundary.",
+  "path": "assets/dlc/illustrated-v1/fx/duo_aria_astarra.png",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-0d6b13b2-a785-4c6e-8f20-694743515372.png",
+  "sha256": "96dc0fdb33ac7c5976266b4ab1d0f8cfd4452de2f0a1b3d98c57ead18833684f",
+  "bytes": 1218439,
+  "width": 1774,
+  "height": 887,
+  "mode": "RGBA",
+  "alphaExtrema": [
+    0,
+    253
+  ],
+  "method": "built-in image_gen",
+  "nativeBytesPreserved": true,
+  "qa": {
+    "status": "pending-visual-review"
+  }
+}

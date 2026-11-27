@@ -1,0 +1,29 @@
+{
+  "key": "evolutions/seraphic_ray",
+  "category": "evolutions",
+  "id": "seraphic_ray",
+  "packId": "dlc_astral_cathedral",
+  "name": "Chœur de Supernova",
+  "columns": 4,
+  "rows": 2,
+  "sequenceFrames": 8,
+  "transparent": true,
+  "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/evolutions/vulcan-cerberus.png",
+  "prompt": "Use case: stylized-concept. Production 2D projectile animation spritesheet for Infernal City. Reference gives exact game-art finish and isolated-frame layout, NOT projectile identity. Subject: a more powerful supernova choir projectile, an elongated white-hot golden star lance wrapped by three narrow orbital gold rings and small cyan celestial sparks. Name for context only: Chœur de Supernova. Domain: Gothique Sacré Doré, Marbre Blanc & Horlogerie Céleste; exact colors {\"bg\":\"#1e1b4b\",\"primary\":\"#f59e0b\",\"secondary\":\"#fef3c7\",\"glow\":\"#38bdf8\"}. Strict layout FOUR columns by TWO rows, eight equal SQUARE cells, 2:1 landscape PNG. Reading order left to right then next row; eight distinct drawn pulse/trail frames of the same projectile. Stable center and scale; horizontal long axis, tip and travel facing RIGHT, tail LEFT. The complete projectile plus every glow or spark must fit within the CENTRAL FIFTY PERCENT of each cell, leaving at least 25 percent empty alpha margins on every side. Crisp painterly anime game VFX, no floor, shadow, scenery, text, numbers, border, grid or watermark. Genuine transparent alpha background. No weapons being held, no characters. This is a first original design of the named DLC projectile.",
+  "path": "assets/dlc/illustrated-v1/evolutions/seraphic_ray.png",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-495c7212-551f-4e74-b806-e6e073836f58.png",
+  "sha256": "97b799baf388edc3649ec8f8104be769e2cc2fe41370e98a71d493557c3dca56",
+  "bytes": 1431904,
+  "width": 1774,
+  "height": 887,
+  "mode": "RGBA",
+  "alphaExtrema": [
+    0,
+    255
+  ],
+  "method": "built-in image_gen",
+  "nativeBytesPreserved": true,
+  "qa": {
+    "status": "pending-visual-review"
+  }
+}

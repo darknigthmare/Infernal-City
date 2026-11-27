@@ -913,6 +913,8 @@ class GameEngine {
       return { ok: false, reason: 'wave-active', layout: this.worldLayout };
     }
 
+    if (options.clearBiome === true) this.activeDlcBiomeId = null;
+
     const previousCitadel = this.worldLayout?.citadel || this.citadel || { x: 600, y: 400 };
     const nextCitadel = layout.citadel || { x: 600, y: 400, radius: 45 };
     const world = layout.world || EXPANSION.world || EXPANSION_FALLBACK.world;
@@ -990,7 +992,10 @@ class GameEngine {
     if (this.mapRotation.length < 2 || this.waveActive || this.enemies.length > 0) return false;
     this.mapRotationIndex = (this.mapRotationIndex + 1) % this.mapRotation.length;
     const nextLayoutId = this.mapRotation[this.mapRotationIndex];
-    return this.applyWorldLayout(nextLayoutId, { rotation: true }).ok;
+    return this.applyWorldLayout(nextLayoutId, {
+      rotation: true,
+      clearBiome: this.getWorldLayout(nextLayoutId).clearBiomeOnSelect === true
+    }).ok;
   }
 
   createFallbackSeededRng(seed) {
@@ -1575,7 +1580,9 @@ class GameEngine {
 
     this.floorImage = this.preloadSpriteAsset(FLOOR_TEXTURE_SRC, 'Texture de sol');
     this.coastlineImage = this.preloadSpriteAsset(COASTLINE_IMAGE_SRC, 'Côte infernale');
-    const terrainSrc = LAYOUT_TERRAIN_SOURCES[this.selectedLayoutId] || APPROACH_TERRAIN_IMAGE_SRC;
+    const terrainSrc = LAYOUT_TERRAIN_SOURCES[this.selectedLayoutId]
+      || this.worldLayout?.terrainSrc
+      || APPROACH_TERRAIN_IMAGE_SRC;
     this.approachTerrainImage = this.preloadSpriteAsset(terrainSrc, 'Terrain d’approche');
     this.spawnGateAtlasImage = this.preloadSpriteAsset(SPAWN_GATE_ATLAS_SRC, 'Portails d’approche');
     this.companionFxImages = this.companionFxImages || {};
@@ -1764,6 +1771,12 @@ class GameEngine {
     this.isTowerMode = false;
     this.towerMutator = null;
     this.infinitumCanReturn = true;
+    const terrainSrc = LAYOUT_TERRAIN_SOURCES[this.selectedLayoutId]
+      || this.worldLayout?.terrainSrc
+      || APPROACH_TERRAIN_IMAGE_SRC;
+    if (this.spriteAtlasImages && this.hasEnteredAdultExperience) {
+      this.approachTerrainImage = this.preloadSpriteAsset(terrainSrc, 'Terrain restauré');
+    }
     this.updateWeaponsHUD();
     this.renderBuildBar();
     this.updateHeroPresentation();
@@ -2101,6 +2114,11 @@ class GameEngine {
         if (typeof data.activeDlcBiomeId === 'string' || data.activeDlcBiomeId === null) {
           this.activeDlcBiomeId = data.activeDlcBiomeId;
         }
+        if (data.dlcMapSelections && typeof data.dlcMapSelections === 'object' && !Array.isArray(data.dlcMapSelections)) {
+          this.dlcMapSelections = Object.fromEntries(Object.entries(data.dlcMapSelections)
+            .filter(([packId, mapId]) => (DLC_PACKS.paidDlcs || []).some(pack => pack.id === packId)
+              && typeof mapId === 'string' && /^[a-z0-9_]{1,80}$/.test(mapId)).slice(0, 6));
+        }
         if (typeof data.activeDuoComboId === 'string' || data.activeDuoComboId === null) {
           this.activeDuoComboId = data.activeDuoComboId;
         }
@@ -2195,6 +2213,7 @@ class GameEngine {
         characterProgress,
         dlcResearchUnlocked: Array.isArray(this.dlcResearchUnlocked) ? this.dlcResearchUnlocked.slice(0, 16) : [],
         activeDlcBiomeId: this.activeDlcBiomeId || null,
+        dlcMapSelections: { ...(this.dlcMapSelections || {}) },
         activeDuoComboId: this.activeDuoComboId || null,
         dlcSiegesWon: Math.max(0, Math.floor(Number(this.dlcSiegesWon) || 0)),
         vnSceneProgress: {
@@ -2942,7 +2961,7 @@ class GameEngine {
 
   isEnemyFlying(enemy) {
     if (!enemy) return false;
-    if (enemy.type === 'flying') return true;
+    if (enemy.type === 'flying' || EXPANSION?.enemyDefinitions?.[enemy.type]?.baseType === 'flying') return true;
     const definition = this.getBossDefinition(enemy.bossDefinitionId || enemy.type);
     return definition?.traits?.includes('flying') === true;
   }
@@ -3366,6 +3385,10 @@ class GameEngine {
       if (!EXPANSION?.worldLayouts?.[event.target.value]) return;
       this.setMapRotation([]);
       this.selectedLayoutId = event.target.value;
+      if (this.getWorldLayout(this.selectedLayoutId).clearBiomeOnSelect === true) {
+        this.activeDlcBiomeId = null;
+        this.saveProgress();
+      }
       this.updateLayoutDescription(this.selectedLayoutId);
     });
     document.getElementById('btn-start-campaign')?.addEventListener('click', () => this.beginNewCampaign());
@@ -5883,6 +5906,7 @@ class GameEngine {
     const bossDefinition = this.getBossDefinition(type);
     if (this.hasEnteredAdultExperience) this.ensureEnemySprite(type);
     const definition = bossDefinition || EXPANSION?.enemyDefinitions?.[type];
+    const isFlyingSpecialist = type === 'flying' || definition?.baseType === 'flying';
     const stats = definition?.stats || {};
     const scale = 1 + (Math.max(0, this.wave - 1) * 0.1);
     let hp = (Number(stats.hp) || 45) * scale;
@@ -5914,7 +5938,7 @@ class GameEngine {
       recruitableBossId = bossDefinition.recruitment?.available === true ? type : null;
     } else if (type === 'runner') color = '#00f0ff';
     else if (type === 'brute') color = '#a855f7';
-    else if (type === 'flying') color = '#38bdf8';
+    else if (isFlyingSpecialist) color = '#38bdf8';
     else if (type === 'bulwark') color = '#67e8f9';
     else if (type === 'artillery') color = '#f97316';
     else if (type === 'splitter') color = '#84cc16';
@@ -5927,7 +5951,7 @@ class GameEngine {
       if (mutator.id === 'armored') hp *= 1.65;
       if (mutator.id === 'haste') speed *= 1.35;
       hp *= Number(modifiers.enemyHpMultiplier) || 1;
-      if (type === 'flying') {
+      if (isFlyingSpecialist) {
         hp *= Number(modifiers.flyingHpMultiplier) || 1;
         speed *= Number(modifiers.flyingSpeedMultiplier) || 1;
       }
@@ -6068,6 +6092,7 @@ class GameEngine {
         if (p.hitEnemies instanceof Set && p.hitEnemies.has(e)) continue;
         if (Math.hypot(e.x - p.x, e.y - p.y) < e.radius + p.radius) {
           if (p.type === 'flame') p.hitEnemies.add(e);
+          this.emitTacticalProjectileImpact?.(p, e);
           this.damageEnemyFromDefense(p.sourceDefense, e, p.damage);
           if (p.type === 'flame') this.applyRinArmorBreak(e);
           if (p.slow) {
@@ -7249,19 +7274,23 @@ class GameEngine {
       const isBioCorroded = (enemy.bioCorrodedUntil || 0) > this.animationClock;
       let synergyLabel = '';
       let synergyColor = '';
+      let synergyId = '';
 
       if (isThermal && isChilled) {
         adjustedDamage *= 1.35;
         synergyLabel = 'CHOC THERMIQUE !';
         synergyColor = '#38bdf8';
+        synergyId = 'choc_thermique';
       } else if (defense.type === 'tesla' && isGravPulled) {
         adjustedDamage *= 1.3;
         synergyLabel = 'TEMPÊTE MAGNÉTIQUE !';
         synergyColor = '#c084fc';
+        synergyId = 'tempete_magnetique';
       } else if (isThermal && isBioCorroded) {
         adjustedDamage *= 1.25;
         synergyLabel = 'EMBRASEMENT TOXIQUE !';
         synergyColor = '#34d399';
+        synergyId = 'embrasement_toxique';
       }
 
       if (synergyLabel) {
@@ -7275,6 +7304,7 @@ class GameEngine {
         if (!this.prefersReducedMotion && this.particles.length < 220) {
           this.particles.push({
             type: 'gravity_ring',
+            synergyId,
             x: enemy.x,
             y: enemy.y,
             radius: 10,
@@ -8431,6 +8461,7 @@ class GameEngine {
         if (duo) {
           this.particles.push({
             type: 'gravity_ring',
+            dlcDuoId: duo.id,
             x: this.citadel.x,
             y: this.citadel.y,
             radius: 48,
@@ -12439,7 +12470,8 @@ class GameEngine {
     // Dynamic Tactical Weather Overlay (Acid Rain, Ion Storm, Infernal Fog)
     if (!this.prefersReducedMotion && this.waveActive) {
       const weather = this.getActiveTacticalWeather();
-      if (weather === 'acid_rain') {
+      const authoredWeather = this.drawCompletedTacticalWeather?.(weather, view) === true;
+      if (!authoredWeather && weather === 'acid_rain') {
         this.ctx.save();
         this.ctx.strokeStyle = 'rgba(52, 211, 153, 0.16)';
         this.ctx.lineWidth = 1.2;
@@ -12452,7 +12484,7 @@ class GameEngine {
           this.ctx.stroke();
         }
         this.ctx.restore();
-      } else if (weather === 'ion_storm') {
+      } else if (!authoredWeather && weather === 'ion_storm') {
         const flash = Math.pow(Math.max(0, Math.sin(this.animationClock * 2.3) * Math.sin(this.animationClock * 5.7)), 8);
         if (flash > 0.08) {
           this.ctx.save();
@@ -12460,7 +12492,7 @@ class GameEngine {
           this.ctx.fillRect(view.left, view.top, viewWidth, viewHeight);
           this.ctx.restore();
         }
-      } else if (weather === 'infernal_fog') {
+      } else if (!authoredWeather && weather === 'infernal_fog') {
         this.ctx.save();
         this.ctx.fillStyle = 'rgba(245, 158, 11, 0.045)';
         this.ctx.fillRect(view.left, view.top, viewWidth, viewHeight);
@@ -13011,19 +13043,17 @@ class GameEngine {
         const spriteData = TOWER_SPRITE_DATA[selectedTower.id];
         const sprite = this.towerSpriteImages?.[selectedTower.id];
         const previewSize = this.getReadableWorldSize(spriteData?.size || 46, MIN_TOWER_SCREEN_SIZE);
-        const holoDrawn = spriteData && this.drawAtlasFrame(
-          sprite,
-          spriteData,
-          0,
-          this.buildCursor.x,
-          this.buildCursor.y,
-          previewSize,
-          {
-            alpha: canPlace ? 0.68 : 0.36,
-            shadowColor: previewColor,
-            shadowBlur: 14
-          }
-        );
+        const previewOptions = {
+          alpha: canPlace ? 0.68 : 0.36,
+          shadowColor: previewColor,
+          shadowBlur: 14
+        };
+        const holoDrawn = this.drawCompletedTowerPreview?.(
+          selectedTower.id, this.buildCursor.x, this.buildCursor.y, previewSize, previewOptions
+        ) || (spriteData && this.drawAtlasFrame(
+          sprite, spriteData, 0,
+          this.buildCursor.x, this.buildCursor.y, previewSize, previewOptions
+        ));
         if (!holoDrawn) {
           this.ctx.font = `${this.getReadableWorldSize(16, 14)}px sans-serif`;
           this.ctx.textAlign = 'center';

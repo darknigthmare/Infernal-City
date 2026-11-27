@@ -1,0 +1,80 @@
+[
+  {
+    "id": "silica_mortar",
+    "name": "Mortier Silice",
+    "biome": "desert",
+    "category": "towers",
+    "columns": 8,
+    "rows": 8,
+    "states": [
+      "level1",
+      "level2",
+      "level3",
+      "charged",
+      "overdrive",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "reference": "assets/animations/towers/tower-atlas-01.png",
+    "path": "assets/dlc/illustrated-v1/towers/silica_mortar.png",
+    "prompt": "Use case: stylized-concept. Production transparent tower animation atlas for Infernal City. Input image is CAMERA/RENDERING STYLE reference only; create ONE new tower, Mortier Silice: A compact heavy silica mortar: flared short obsidian siege barrel containing glowing molten amber glass, terracotta ceramic armor and lapis-lazuli conduit bands, gold Neo-Persian engraved edges on a low square desert pedestal. Recognizable upward mortar cup, no long rifle. Palette sand-gold, terracotta, lapis, obsidian. Fixed elevated orthographic three-quarter camera matching existing game defenses, stable facing down-left. STRICT CANVAS: SQUARE PNG, EXACTLY8 columns by8 rows=64equal square cells. Every cell contains ONE COMPLETE SMALL tower including all attachments and tiny effects, maximum50percent of cell width AND height, at least25percent EMPTY alpha margin on EVERY side of EACH cell. Stable exact cell-center anchor. Column and row center percentages6.25,18.75,31.25,43.75,56.25,68.75,81.25,93.75. Row1 level1:8 phases rest,wake,aim,charge,fire,recoil,cool,rest. Row2 level2: same tower with modest extra reinforced armor and same8cycle phases. Row3 level3: same tower with stronger armor/energy conduits and same8cycle phases. Row4 charged: existing tower energized,8charging pulse poses; no new weapon or gameplay specialization. Row5 overdrive: same tower brightly energized internally,8overdrive cycle poses, no large aura or extra weapon. Row6 deploy:8stages from neatly folded compact machine to fully deployed. Row7 recycle:8stages retracting into compact salvage machine, finalframe still visibly present. Row8 idle:8subtle machinery/breathing-light poses of base tower. All64 sprites entirely contained in cells, same identity, fixed view, no camera orbit. Crisp painted cyber-gothic anime game art with detailed materials. NO large muzzle flash, surrounding halo, beam, smoke cloud or floor shadow; light confined to the solid machine. True transparent alpha0 background, no solid backdrop/checkerboard, no labels,text,numbers,grid,borders or watermark. Exactly8rows and8columns.",
+    "designStatus": "first-original-design-from-catalogue-and-biome-brief",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-35d5d029-40dc-456a-bd3c-93775df2c16d.png",
+    "qa": {
+      "status": "pending"
+    }
+  },
+  {
+    "id": "icebreaker_cannon",
+    "name": "Canon Brise-Glace",
+    "biome": "arctic",
+    "category": "towers",
+    "columns": 8,
+    "rows": 8,
+    "states": [
+      "level1",
+      "level2",
+      "level3",
+      "charged",
+      "overdrive",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "reference": "assets/animations/towers/tower-atlas-02.png",
+    "path": "assets/dlc/illustrated-v1/towers/icebreaker_cannon.png",
+    "prompt": "Use case: stylized-concept. Production transparent tower animation atlas for Infernal City. Input image is CAMERA/RENDERING STYLE reference only; create ONE new tower, Canon Brise-Glace: A brutalist arctic heavy cannon: thick short ice-blue barrel with three serrated icebreaker muzzle fins, dark slate reinforced concrete and steel armored base, angular frost plates, small green aurora power cells and magenta status strips. Massive engineering, compact outline. Palette #e0f2fe,#4ade80,#e879f9,#334155. Fixed elevated orthographic three-quarter camera matching existing game defenses, stable facing down-left. STRICT CANVAS: SQUARE PNG, EXACTLY8 columns by8 rows=64equal square cells. Every cell contains ONE COMPLETE SMALL tower including all attachments and tiny effects, maximum50percent of cell width AND height, at least25percent EMPTY alpha margin on EVERY side of EACH cell. Stable exact cell-center anchor. Column and row center percentages6.25,18.75,31.25,43.75,56.25,68.75,81.25,93.75. Row1 level1:8 phases rest,wake,aim,charge,fire,recoil,cool,rest. Row2 level2: same tower with modest extra reinforced armor and same8cycle phases. Row3 level3: same tower with stronger armor/energy conduits and same8cycle phases. Row4 charged: existing tower energized,8charging pulse poses; no new weapon or gameplay specialization. Row5 overdrive: same tower brightly energized internally,8overdrive cycle poses, no large aura or extra weapon. Row6 deploy:8stages from neatly folded compact machine to fully deployed. Row7 recycle:8stages retracting into compact salvage machine, finalframe still visibly present. Row8 idle:8subtle machinery/breathing-light poses of base tower. All64 sprites entirely contained in cells, same identity, fixed view, no camera orbit. Crisp painted cyber-gothic anime game art with detailed materials. NO large muzzle flash, surrounding halo, beam, smoke cloud or floor shadow; light confined to the solid machine. True transparent alpha0 background, no solid backdrop/checkerboard, no labels,text,numbers,grid,borders or watermark. Exactly8rows and8columns.",
+    "designStatus": "first-original-design-from-catalogue-and-biome-brief",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-dd89bb01-c94b-4cca-a043-0825d116f473.png",
+    "qa": {
+      "status": "pending"
+    }
+  },
+  {
+    "id": "boreal_beacon",
+    "name": "Balise Boréale",
+    "biome": "arctic",
+    "category": "towers",
+    "columns": 8,
+    "rows": 8,
+    "states": [
+      "level1",
+      "level2",
+      "level3",
+      "charged",
+      "overdrive",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "reference": "assets/animations/towers/tower-atlas-02.png",
+    "path": "assets/dlc/illustrated-v1/towers/boreal_beacon.png",
+    "prompt": "Use case: stylized-concept. Production transparent tower animation atlas for Infernal City. Input image is CAMERA/RENDERING STYLE reference only; create ONE new tower, Balise Boréale: A polar support beacon: a squat angular slate-concrete pylon capped by three upright translucent ice crystals around a small green/magenta aurora core, heavy white insulated cables and compact stabilizer feet. No cannon. Brutalist structure with crystalline crown, palette ice white/slate/aurora green/magenta. Fixed elevated orthographic three-quarter camera matching existing game defenses, stable facing down-left. STRICT CANVAS: SQUARE PNG, EXACTLY8 columns by8 rows=64equal square cells. Every cell contains ONE COMPLETE SMALL tower including all attachments and tiny effects, maximum50percent of cell width AND height, at least25percent EMPTY alpha margin on EVERY side of EACH cell. Stable exact cell-center anchor. Column and row center percentages6.25,18.75,31.25,43.75,56.25,68.75,81.25,93.75. Row1 level1:8 phases rest,wake,aim,charge,fire,recoil,cool,rest. Row2 level2: same tower with modest extra reinforced armor and same8cycle phases. Row3 level3: same tower with stronger armor/energy conduits and same8cycle phases. Row4 charged: existing tower energized,8charging pulse poses; no new weapon or gameplay specialization. Row5 overdrive: same tower brightly energized internally,8overdrive cycle poses, no large aura or extra weapon. Row6 deploy:8stages from neatly folded compact machine to fully deployed. Row7 recycle:8stages retracting into compact salvage machine, finalframe still visibly present. Row8 idle:8subtle machinery/breathing-light poses of base tower. All64 sprites entirely contained in cells, same identity, fixed view, no camera orbit. Crisp painted cyber-gothic anime game art with detailed materials. NO large muzzle flash, surrounding halo, beam, smoke cloud or floor shadow; light confined to the solid machine. True transparent alpha0 background, no solid backdrop/checkerboard, no labels,text,numbers,grid,borders or watermark. Exactly8rows and8columns.",
+    "designStatus": "first-original-design-from-catalogue-and-biome-brief",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-092deefe-6612-4167-a2e3-98bea41340f7.png",
+    "qa": {
+      "status": "pending"
+    }
+  }
+]

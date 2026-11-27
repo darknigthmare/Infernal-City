@@ -1,0 +1,28 @@
+{
+  "key": "fx/duo_nyx_kalix",
+  "category": "fx",
+  "id": "duo_nyx_kalix",
+  "name": "Faille Temporelle",
+  "columns": 4,
+  "rows": 2,
+  "sequenceFrames": 8,
+  "transparent": true,
+  "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/evolutions/nova-cataclysm.png",
+  "prompt": "Use case: stylized-concept. Production VFX animation atlas for Infernal City. Reference is finish and sprite-sheet layout only. Subject: a compact circular CYAN and VIOLET quantum rift with a black transparent center, segmented clocklike arcs without digits, magenta digital shards orbiting, eight distinct pulse phases; no characters. EXACT regular grid FOUR columns by TWO rows, eight SQUARE cells on a 2:1 landscape PNG. Each cell contains one complete effect centered on the exact same anchor at a stable scale; frame order left to right then lower row. Eight authored evolving frames, gently flowing looping motion. Effect and ALL particles strictly within central 50 percent of each cell, huge 25 percent completely empty transparent margin on all four sides. Painterly crisp cyber-gothic game VFX, with controlled translucent glow. Actual transparent alpha background, no dark/white rectangle, no scenery, no character, no floor, no lettering, labels, numbers, border, drawn grid or watermark. Do not let any particle or mist cross a cell boundary.",
+  "path": "assets/dlc/illustrated-v1/fx/duo_nyx_kalix.png",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-e515fc55-6fd4-4c35-bbcd-66ac879174c8.png",
+  "sha256": "028cd42b352ec1aa520a272a629b58b5088e217534a2003fa61f8280eefa55da",
+  "bytes": 1026632,
+  "width": 1774,
+  "height": 887,
+  "mode": "RGBA",
+  "alphaExtrema": [
+    0,
+    254
+  ],
+  "method": "built-in image_gen",
+  "nativeBytesPreserved": true,
+  "qa": {
+    "status": "pending-visual-review"
+  }
+}

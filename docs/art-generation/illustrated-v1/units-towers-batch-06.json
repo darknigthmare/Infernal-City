@@ -1,0 +1,80 @@
+[
+  {
+    "id": "spore_hive",
+    "name": "Ruche de Spores",
+    "biome": "flora",
+    "category": "towers",
+    "columns": 8,
+    "rows": 8,
+    "states": [
+      "level1",
+      "level2",
+      "level3",
+      "charged",
+      "overdrive",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "reference": "assets/animations/towers/tower-atlas-02.png",
+    "path": "assets/dlc/illustrated-v1/towers/spore_hive.png",
+    "prompt": "Use case: stylized-concept. Production transparent tower animation atlas for Infernal City. Input image is CAMERA/RENDERING STYLE reference only; create ONE new tower, Ruche de Spores: A biomechanical botanical spore hive defense: compact bulbous emerald glass incubator with three capped flower-like launch pods, Art Nouveau wrought-iron ribs, luminous mint sap tubing, deep pink thorn tips and amber pollen chambers. On a rooted metal pedestal. Palette #064e3b,#34d399,#e11d48,#fbbf24. No broad pollen cloud. Fixed elevated orthographic three-quarter camera matching existing game defenses, stable facing down-left. STRICT CANVAS: SQUARE PNG, EXACTLY8 columns by8 rows=64equal square cells. Every cell contains ONE COMPLETE SMALL tower including all attachments and tiny effects, maximum50percent of cell width AND height, at least25percent EMPTY alpha margin on EVERY side of EACH cell. Stable exact cell-center anchor. Column and row center percentages6.25,18.75,31.25,43.75,56.25,68.75,81.25,93.75. Row1 level1:8 phases rest,wake,aim,charge,fire,recoil,cool,rest. Row2 level2: same tower with modest extra reinforced armor and same8cycle phases. Row3 level3: same tower with stronger armor/energy conduits and same8cycle phases. Row4 charged: existing tower energized,8charging pulse poses; no new weapon or gameplay specialization. Row5 overdrive: same tower brightly energized internally,8overdrive cycle poses, no large aura or extra weapon. Row6 deploy:8stages from neatly folded compact machine to fully deployed. Row7 recycle:8stages retracting into compact salvage machine, finalframe still visibly present. Row8 idle:8subtle machinery/breathing-light poses of base tower. All64 sprites entirely contained in cells, same identity, fixed view, no camera orbit. Crisp painted cyber-gothic anime game art with detailed materials. NO large muzzle flash, surrounding halo, beam, smoke cloud or floor shadow; light confined to the solid machine. True transparent alpha0 background, no solid backdrop/checkerboard, no labels,text,numbers,grid,borders or watermark. Exactly8rows and8columns.",
+    "designStatus": "first-original-design-from-catalogue-and-biome-brief",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-ff7e6774-7979-4c6a-b493-c0e4d04a33a1.png",
+    "qa": {
+      "status": "pending"
+    }
+  },
+  {
+    "id": "botanic_prism",
+    "name": "Prisme Botanique",
+    "biome": "flora",
+    "category": "towers",
+    "columns": 8,
+    "rows": 8,
+    "states": [
+      "level1",
+      "level2",
+      "level3",
+      "charged",
+      "overdrive",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "reference": "assets/animations/towers/tower-atlas-01.png",
+    "path": "assets/dlc/illustrated-v1/towers/botanic_prism.png",
+    "prompt": "Use case: stylized-concept. Production transparent tower animation atlas for Infernal City. Input image is CAMERA/RENDERING STYLE reference only; create ONE new tower, Prisme Botanique: An elegant botanical laser prism turret: a faceted upright emerald crystal suspended between curling Art Nouveau iron branches, three rose-red focus petals and amber sap conduits on a compact deep-green wrought-metal pedestal. Mechanical flower silhouette, refined glass facets, no human figure. Palette emerald/mint/rose/amber. Fixed elevated orthographic three-quarter camera matching existing game defenses, stable facing down-left. STRICT CANVAS: SQUARE PNG, EXACTLY8 columns by8 rows=64equal square cells. Every cell contains ONE COMPLETE SMALL tower including all attachments and tiny effects, maximum50percent of cell width AND height, at least25percent EMPTY alpha margin on EVERY side of EACH cell. Stable exact cell-center anchor. Column and row center percentages6.25,18.75,31.25,43.75,56.25,68.75,81.25,93.75. Row1 level1:8 phases rest,wake,aim,charge,fire,recoil,cool,rest. Row2 level2: same tower with modest extra reinforced armor and same8cycle phases. Row3 level3: same tower with stronger armor/energy conduits and same8cycle phases. Row4 charged: existing tower energized,8charging pulse poses; no new weapon or gameplay specialization. Row5 overdrive: same tower brightly energized internally,8overdrive cycle poses, no large aura or extra weapon. Row6 deploy:8stages from neatly folded compact machine to fully deployed. Row7 recycle:8stages retracting into compact salvage machine, finalframe still visibly present. Row8 idle:8subtle machinery/breathing-light poses of base tower. All64 sprites entirely contained in cells, same identity, fixed view, no camera orbit. Crisp painted cyber-gothic anime game art with detailed materials. NO large muzzle flash, surrounding halo, beam, smoke cloud or floor shadow; light confined to the solid machine. True transparent alpha0 background, no solid backdrop/checkerboard, no labels,text,numbers,grid,borders or watermark. Exactly8rows and8columns.",
+    "designStatus": "first-original-design-from-catalogue-and-biome-brief",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-f57b6725-272f-4502-aef6-6fa81372fd19.png",
+    "qa": {
+      "status": "pending"
+    }
+  },
+  {
+    "id": "helios_mirror",
+    "name": "Tour Miroir Hélios",
+    "biome": "desert",
+    "category": "towers",
+    "columns": 8,
+    "rows": 8,
+    "states": [
+      "level1",
+      "level2",
+      "level3",
+      "charged",
+      "overdrive",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "reference": "assets/animations/towers/tower-atlas-02.png",
+    "path": "assets/dlc/illustrated-v1/towers/helios_mirror.png",
+    "prompt": "Use case: stylized-concept. Production transparent tower animation atlas for Infernal City. Input image is CAMERA/RENDERING STYLE reference only; create ONE new tower, Tour Miroir Hélios: A Neo-Persian solarpunk solar-mirror defense: one compact round golden concave mirror dish with lapis-lazuli center, geometric terracotta and obsidian armor, slender twin support arms and angular low sun pedestal. Mirror rotates subtly for charge poses but maintains overall facing. Palette vitrified sand #fde68a, terracotta #ea580c, lapis #1d4ed8, obsidian #0f172a. Fixed elevated orthographic three-quarter camera matching existing game defenses, stable facing down-left. STRICT CANVAS: SQUARE PNG, EXACTLY8 columns by8 rows=64equal square cells. Every cell contains ONE COMPLETE SMALL tower including all attachments and tiny effects, maximum50percent of cell width AND height, at least25percent EMPTY alpha margin on EVERY side of EACH cell. Stable exact cell-center anchor. Column and row center percentages6.25,18.75,31.25,43.75,56.25,68.75,81.25,93.75. Row1 level1:8 phases rest,wake,aim,charge,fire,recoil,cool,rest. Row2 level2: same tower with modest extra reinforced armor and same8cycle phases. Row3 level3: same tower with stronger armor/energy conduits and same8cycle phases. Row4 charged: existing tower energized,8charging pulse poses; no new weapon or gameplay specialization. Row5 overdrive: same tower brightly energized internally,8overdrive cycle poses, no large aura or extra weapon. Row6 deploy:8stages from neatly folded compact machine to fully deployed. Row7 recycle:8stages retracting into compact salvage machine, finalframe still visibly present. Row8 idle:8subtle machinery/breathing-light poses of base tower. All64 sprites entirely contained in cells, same identity, fixed view, no camera orbit. Crisp painted cyber-gothic anime game art with detailed materials. NO large muzzle flash, surrounding halo, beam, smoke cloud or floor shadow; light confined to the solid machine. True transparent alpha0 background, no solid backdrop/checkerboard, no labels,text,numbers,grid,borders or watermark. Exactly8rows and8columns.",
+    "designStatus": "first-original-design-from-catalogue-and-biome-brief",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-c35a6858-405b-4300-8ddf-abeb6b12a003.png",
+    "qa": {
+      "status": "pending"
+    }
+  }
+]

@@ -1,0 +1,24 @@
+/* The static Studio image retains its layout while the animated overlay takes
+   over its accessible description after the authored PNG has decoded. */
+.studio-preview-frame {
+  position: relative;
+}
+
+.sprite-studio-portrait {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(100%, 440px);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+
+.sprite-studio-portrait[hidden] {
+  display: none;
+}
+
+#studio-preview-img.sprite-portrait-fallback-hidden {
+  visibility: hidden;
+}

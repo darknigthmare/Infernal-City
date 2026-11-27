@@ -1,0 +1,25 @@
+{
+  "key": "maps/astral_parvis_solaire",
+  "category": "maps",
+  "id": "astral_parvis_solaire",
+  "packId": "dlc_astral_cathedral",
+  "name": "Parvis Solaire",
+  "columns": 1,
+  "rows": 1,
+  "transparent": false,
+  "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/infernal-city-approach-terrain.webp",
+  "prompt": "Use case: stylized-concept. Production battlefield background for the existing game Infernal City. Input reference is CAMERA, surface detail and painterly game-rendering style only; do not copy its dark palette. Create ONE seamless-looking complete landscape battlefield scene, 3:2 image. Subject: a broad white-marble solar courtyard above a golden cloud ocean, four subtle symmetrical inlaid causeways and understated mirror pedestals confined to the outer edges, ornate solar cathedral buttresses at the perimeter. Respect this exact visual domain: Gothique Sacré Doré, Marbre Blanc & Horlogerie Céleste. Palette: {\"bg\":\"#1e1b4b\",\"primary\":\"#f59e0b\",\"secondary\":\"#fef3c7\",\"glow\":\"#38bdf8\"}. Elevated nearly top-down orthographic 2.5D camera, no horizon or perspective vanishing point; match the reference's game-ready detailed surfaces. The central 65 percent of the image must be a calm empty unobstructed continuous walkable surface so the game can place its own characters, defense rings and citadel. Put tall architecture, spectacle and decoration in the outer 15 percent border only. Four subtle broad approach directions meet an empty central area; no painted obstacles crossing them. Elaborate illustrated materials and lighting, polished cyber-gothic dark fantasy game art, high resolution, no vector clip art. No characters, enemies, towers, weapons, central citadel, UI, text, lettering, labels, grids or watermark. Entire image opaque, no transparency. This is a FIRST original design following the written DLC brief, not a copied design.",
+  "path": "assets/dlc/illustrated-v1/maps/astral_parvis_solaire.png",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-0f49b78c-0250-462c-a273-31384d464b02.png",
+  "sha256": "c9a9bed3618d613183c2954dc781a4b4295e8b80e5933cc06f5d83d1181d2eee",
+  "bytes": 3179064,
+  "width": 1536,
+  "height": 1024,
+  "mode": "RGB",
+  "alphaExtrema": null,
+  "method": "built-in image_gen",
+  "nativeBytesPreserved": true,
+  "qa": {
+    "status": "pending-visual-review"
+  }
+}

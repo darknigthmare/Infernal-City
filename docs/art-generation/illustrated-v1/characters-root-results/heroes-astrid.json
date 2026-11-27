@@ -1,0 +1,57 @@
+{
+  "id": "astrid",
+  "name": "Astrid Valen",
+  "kind": "heroes",
+  "packId": "dlc_cryo_brutalist",
+  "biome": "arctic",
+  "path": "assets/dlc/illustrated-v1/heroes/astrid.png",
+  "columns": 8,
+  "rows": 8,
+  "states": [
+    "intro",
+    "idle_respiration",
+    "attack",
+    "ability",
+    "ultimate",
+    "victory",
+    "defeat",
+    "outro"
+  ],
+  "reference": "assets/characters/heroines/freyja-rimeborne-atlas-v1.png",
+  "referenceRole": "style-camera-material guide only; not identity",
+  "fidelity": "first original design from authored DLC metadata and palette",
+  "source": "dlc-packs.v1.js",
+  "authoredCharacter": {
+    "id": "astrid",
+    "name": "Astrid Valen",
+    "age": 20,
+    "isAdult": true,
+    "title": "Briseuse de Banquise",
+    "ability": "Bris de Banquise",
+    "ultimate": "Faille Glaciaire"
+  },
+  "palette": {
+    "bg": "#0f172a",
+    "primary": "#4ade80",
+    "secondary": "#e879f9",
+    "glow": "#e0f2fe"
+  },
+  "designBrief": "Mature adult woman with platinum braid, heavy gunmetal cryogenic plate armor and insulated blue coat, boots and gauntlets, bright green and magenta aurora emitters. Compact ice-forged war hammer held close. Strong arctic icebreaker silhouette.",
+  "prompt": "Remove the entire gray and white background from this Astrid Valen game sprite atlas. This is a background-removal edit only. Preserve EXACTLY the current positions, scale, face, silver braid, blue armor, hammer, all64 poses, all8 rows and all8 columns. Do not move or resize any figure. Empty background between and around all characters must become genuinely fully transparent ALPHA ZERO. Do not replace the background with white, gray, black, paper, a checkerboard, or a colored matte. Remove soft floor shadows and background haze too. Keep each entire character, weapon, and compact colored magical effect fully opaque and visible, including every outro frame. Use native PNG transparency. All64 isolated character cutouts retain their current regular mathematical8x8 grid and generous clear margins. No labels, lines or text. Transparent background removal only, identical square atlas layout.",
+  "key": "heroes/astrid",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-6f48c82b-d054-4c51-ac0f-ae3e55c3ab37.png",
+  "status": "pending-visual-review",
+  "generator": "built-in image_gen",
+  "nativeBytesPreserved": true,
+  "sha256": "e5d4a94625bdbfe6cee1539927db0b639d13c1998a94370ccfb5b7d5ec68a7b2",
+  "bytes": 1759440,
+  "width": 1254,
+  "height": 1254,
+  "mode": "RGBA",
+  "alphaExtrema": [
+    0,
+    255
+  ],
+  "revision": 4,
+  "inputEditNative": "/workspace/scratch/3c707a35b074/generated_images/exec-92a23dc5-05ec-44c0-9f5c-473cf0bfff06.png"
+}

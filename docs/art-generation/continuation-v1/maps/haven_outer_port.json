@@ -1,0 +1,26 @@
+{
+  "id": "haven_outer_port",
+  "name": "Port Extérieur d’Haven",
+  "brief": "A storm-dark militarized maritime harbour of Haven: broad worn steel-and-basalt dock apron in the calm center; four wide low piers connect from cardinal borders. Outer corners contain churning dark seawater, short gothic sea walls, massive chains, crane silhouettes, rusted mooring bollards, small cool cyan navigation lamps and a few amber hazard lights. Distant drydock structures only at the extreme rim. A wet cool blue charcoal palette, subtle reflections. The central two thirds must be an unbroken dry walkable harbour apron, not open water. No ships on the central routes.",
+  "prompt": "Use case: stylized-concept. Production battlefield background for the existing game Infernal City. Reference is CAMERA, illustrated material detail, dark cyber-gothic art direction only, NOT exact layout or content. Create one complete opaque landscape battlefield, exact 3:2 aspect ratio. Nearly overhead orthographic 2.5D camera, no horizon or perspective vanishing point. Detailed painterly game rendering. Calm continuous walkable surface throughout the central TWO THIRDS of BOTH image width and height: this inner rectangular area is the playfield and must stay unobstructed for units and towers. The very center must be empty for a separately drawn citadel. Border architecture and pools only in outer margins; four cardinal approaches meet the central field. No characters, enemies, towers, core building, UI, text, lettering, labels, grid or watermark. Do not render collision obstacles crossing the playable surface. All image pixels opaque. First original interpretation of an authored theatre name, not a pre-existing identity reconstruction. Theatre: Port Extérieur d’Haven. A storm-dark militarized maritime harbour of Haven: broad worn steel-and-basalt dock apron in the calm center; four wide low piers connect from cardinal borders. Outer corners contain churning dark seawater, short gothic sea walls, massive chains, crane silhouettes, rusted mooring bollards, small cool cyan navigation lamps and a few amber hazard lights. Distant drydock structures only at the extreme rim. A wet cool blue charcoal palette, subtle reflections. The central two thirds must be an unbroken dry walkable harbour apron, not open water. No ships on the central routes.",
+  "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/infernal-city-approach-terrain.png",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-5e66c903-a3b3-4bc8-8599-1b47767a2231.png",
+  "key": "maps/haven_outer_port",
+  "path": "assets/dlc/illustrated-v1/maps/haven_outer_port.png",
+  "columns": 1,
+  "rows": 1,
+  "transparent": false,
+  "referenceRole": "style, material and camera only",
+  "qa": {
+    "status": "pass",
+    "reviewer": "root visual review",
+    "notes": "Opaque native 3:2 terrain. Four cardinal accesses; center is calm and clear for gameplay. No characters, UI, textual labels or blocking painted props in the central build rectangle. Named theatre identity reads in the border architecture."
+  },
+  "sha256": "f90e06a85d6332d73713f0242e44c015bd94de48b6c649d7f2b421a020decd41",
+  "bytes": 3142830,
+  "width": 1536,
+  "height": 1024,
+  "mode": "RGB",
+  "nativeBytesPreserved": true,
+  "method": "built-in image_gen"
+}

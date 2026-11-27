@@ -1,0 +1,70 @@
+[
+  {
+    "id": "air_ash_ifrit",
+    "name": "Ifrit de Cendre",
+    "category": "enemies",
+    "columns": 8,
+    "rows": 4,
+    "states": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "reference": "assets/animations/enemy-legions/enemies/ash_censer_ifrit.webp",
+    "path": "assets/dlc/illustrated-v1/enemies/air_ash_ifrit.png",
+    "prompt": "Use case: stylized-concept. Production transparent animation atlas for Infernal City. Input image is FACTION MATERIAL/STYLE reference only, not the requested anatomy. Create Ifrit de Cendre: A compact levitating armored ash-ifrit: black volcanic plated torso, ornate tarnished brass shoulders and helmet, ember-orange chest furnace, purple cloth tabs, compact lower body tapering into a short contained ember jet, two armored arms with clenched fists. Preserve the reference Ash faction armor, censers and palette. No giant smoke cloak or wide aura. Fixed elevated orthographic three-quarter camera matching the reference game, consistent facing down-left. STRICT CANVAS: landscape 2:1 PNG, EXACTLY 8 columns by 4 rows =32 equal square cells. Each cell holds one complete SMALL character including all wings, limbs, tail and effects, maximum50percent of cell width AND height; at least25percent empty transparent margin on each of4sides. Every sprite anchored at its exact cell center. Column centers6.25,18.75,31.25,43.75,56.25,68.75,81.25,93.75percent. Row1:8 distinct wingbeat/hover movement frames. Row2:8 distinct compact attack windup,strike,recoil,recovery frames, no long projectile. Row3:8 distinct death_dissolve frames, silhouette breaking into compact faction-colored fragments that stay inside cell; finalframe retains a small visible remnant. Row4:8 distinct shield_break frames: tiny cracked shield hug close to body then flinch and recover, not a giant aura. Same identity and scale in every cell; hand-drawn action changes, never rotated copies or sheet camera rotation. Crisp polished painted cyber-gothic anime game sprite quality matching attached style. Genuine alpha0 background, no scenery, floor, shadow, gradient, checkerboard, labels, numbers, text, separators, grid lines or watermark. No partial or cropped figure, no objects touching any cell border. Exactly32 sprites, no extra rows.",
+    "designStatus": "first-original-design-from-catalogue-and-faction-reference",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-9ffbc229-6cb3-4d98-b7a5-0b9d21d8953b.png",
+    "qa": {
+      "status": "pending"
+    }
+  },
+  {
+    "id": "air_nightmare_moth",
+    "name": "Phalène Onirique",
+    "category": "enemies",
+    "columns": 8,
+    "rows": 4,
+    "states": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "reference": "assets/animations/enemy-legions/enemies/nightmare_dream_claw.webp",
+    "path": "assets/dlc/illustrated-v1/enemies/air_nightmare_moth.png",
+    "prompt": "Use case: stylized-concept. Production transparent animation atlas for Infernal City. Input image is FACTION MATERIAL/STYLE reference only, not the requested anatomy. Create Phalène Onirique: An eerie airborne moth with dark violet armored fuzzy body, compact segmented abdomen, two antennae, four compact wings decorated with cyan luminous veins and magenta eye-shaped markings, six tiny hooked legs. Preserve Nightmare faction violet-black, cyan edges and magenta energy. Clearly an insect moth, not a human or humanoid. Fixed elevated orthographic three-quarter camera matching the reference game, consistent facing down-left. STRICT CANVAS: landscape 2:1 PNG, EXACTLY 8 columns by 4 rows =32 equal square cells. Each cell holds one complete SMALL character including all wings, limbs, tail and effects, maximum50percent of cell width AND height; at least25percent empty transparent margin on each of4sides. Every sprite anchored at its exact cell center. Column centers6.25,18.75,31.25,43.75,56.25,68.75,81.25,93.75percent. Row1:8 distinct wingbeat/hover movement frames. Row2:8 distinct compact attack windup,strike,recoil,recovery frames, no long projectile. Row3:8 distinct death_dissolve frames, silhouette breaking into compact faction-colored fragments that stay inside cell; finalframe retains a small visible remnant. Row4:8 distinct shield_break frames: tiny cracked shield hug close to body then flinch and recover, not a giant aura. Same identity and scale in every cell; hand-drawn action changes, never rotated copies or sheet camera rotation. Crisp polished painted cyber-gothic anime game sprite quality matching attached style. Genuine alpha0 background, no scenery, floor, shadow, gradient, checkerboard, labels, numbers, text, separators, grid lines or watermark. No partial or cropped figure, no objects touching any cell border. Exactly32 sprites, no extra rows.",
+    "designStatus": "first-original-design-from-catalogue-and-faction-reference",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-2df939b7-773e-46cb-9ef7-38017da23f51.png",
+    "qa": {
+      "status": "pending"
+    }
+  },
+  {
+    "id": "solar_organ",
+    "name": "Orgue Solaire",
+    "biome": "astral",
+    "category": "towers",
+    "columns": 8,
+    "rows": 8,
+    "states": [
+      "level1",
+      "level2",
+      "level3",
+      "charged",
+      "overdrive",
+      "deploy",
+      "recycle",
+      "idle"
+    ],
+    "reference": "assets/animations/towers/tower-atlas-01.png",
+    "path": "assets/dlc/illustrated-v1/towers/solar_organ.png",
+    "prompt": "Use case: stylized-concept. Production transparent tower animation atlas for Infernal City. Input image is CAMERA/RENDERING STYLE reference only; create ONE new tower, Orgue Solaire: A white marble and astral gold defense organ: a compact octagonal pedestal carrying seven graduated golden energy pipes around one cyan focusing lens, fine sacred-gothic arches, indigo inset panels. Solar beam emitter with pipe-organ silhouette; white marble #f8fafc, gold #f59e0b/#fef3c7, indigo #312e81, cyan #38bdf8. Fixed elevated orthographic three-quarter camera matching existing game defenses, stable facing down-left. STRICT CANVAS: SQUARE PNG, EXACTLY8 columns by8 rows=64equal square cells. Every cell contains ONE COMPLETE SMALL tower including all attachments and tiny effects, maximum50percent of cell width AND height, at least25percent EMPTY alpha margin on EVERY side of EACH cell. Stable exact cell-center anchor. Column and row center percentages6.25,18.75,31.25,43.75,56.25,68.75,81.25,93.75. Row1 level1:8 phases rest,wake,aim,charge,fire,recoil,cool,rest. Row2 level2: same tower with modest extra reinforced armor and same8cycle phases. Row3 level3: same tower with stronger armor/energy conduits and same8cycle phases. Row4 charged: existing tower energized,8charging pulse poses; no new weapon or gameplay specialization. Row5 overdrive: same tower brightly energized internally,8overdrive cycle poses, no large aura or extra weapon. Row6 deploy:8stages from neatly folded compact machine to fully deployed. Row7 recycle:8stages retracting into compact salvage machine, finalframe still visibly present. Row8 idle:8subtle machinery/breathing-light poses of base tower. All64 sprites entirely contained in cells, same identity, fixed view, no camera orbit. Crisp painted cyber-gothic anime game art with detailed materials. NO large muzzle flash, surrounding halo, beam, smoke cloud or floor shadow; light confined to the solid machine. True transparent alpha0 background, no solid backdrop/checkerboard, no labels,text,numbers,grid,borders or watermark. Exactly8rows and8columns.",
+    "designStatus": "first-original-design-from-catalogue-and-biome-brief",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-17e25cbd-c61f-4d15-a35b-6107851cc704.png",
+    "qa": {
+      "status": "pending"
+    }
+  }
+]

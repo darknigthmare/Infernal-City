@@ -1111,6 +1111,129 @@
       "referenceState": "idle"
     },
     {
+      "key": "bosses/hellwarden",
+      "sha256": "0b55af3e2935b8bfe5fe6e930137078c8c0d435958ea3575c1795467f2036d87",
+      "drawScale": 0.9427,
+      "old": {
+        "src": "assets/animations/smooth/enemy-smooth-01.png",
+        "sha256": "f0a484fbc03ff33ec0de6af6d28525d8ccdb2d3b65d61cb97778e0a2e529d85c",
+        "columns": 16,
+        "rows": 4,
+        "row": 3,
+        "column": 0,
+        "cellWidth": 128.0,
+        "cellHeight": 128.0,
+        "bboxAlpha96": [
+          15,
+          17,
+          113,
+          111
+        ],
+        "coverage": 0.765625
+      },
+      "new": {
+        "src": "assets/animations/completion-v1/bosses/hellwarden.png",
+        "sha256": "0b55af3e2935b8bfe5fe6e930137078c8c0d435958ea3575c1795467f2036d87",
+        "columns": 8,
+        "rows": 6,
+        "row": 5,
+        "column": 0,
+        "cellWidth": 181.0,
+        "cellHeight": 181.0,
+        "bboxAlpha96": [
+          32,
+          12,
+          167,
+          159
+        ],
+        "coverage": 0.812155
+      },
+      "oldUsesSmoothOverride": true,
+      "referenceState": "idle"
+    },
+    {
+      "key": "bosses/vespera",
+      "sha256": "1ff47bd52dd93cff1d889a887c8e1600e4889af24762a9b6eabe86957dc00cf9",
+      "drawScale": 1.0032,
+      "old": {
+        "src": "assets/animations/smooth/enemy-smooth-02.png",
+        "sha256": "b5fb517aef117634596cfcd10f5d4ffc727c12dcc8ac031fddeb5052f62fb881",
+        "columns": 16,
+        "rows": 4,
+        "row": 0,
+        "column": 0,
+        "cellWidth": 128.0,
+        "cellHeight": 128.0,
+        "bboxAlpha96": [
+          23,
+          12,
+          105,
+          117
+        ],
+        "coverage": 0.820312
+      },
+      "new": {
+        "src": "assets/animations/completion-v1/bosses/vespera.png",
+        "sha256": "1ff47bd52dd93cff1d889a887c8e1600e4889af24762a9b6eabe86957dc00cf9",
+        "columns": 8,
+        "rows": 6,
+        "row": 5,
+        "column": 0,
+        "cellWidth": 181.0,
+        "cellHeight": 181.0,
+        "bboxAlpha96": [
+          24,
+          17,
+          158,
+          165
+        ],
+        "coverage": 0.81768
+      },
+      "oldUsesSmoothOverride": true,
+      "referenceState": "idle"
+    },
+    {
+      "key": "bosses/carmilla",
+      "sha256": "896fbfbd0ff5e72319db0d2f4b2c7a6cb0422ffd402b3a4880d4181be4fd2456",
+      "drawScale": 0.8465,
+      "old": {
+        "src": "assets/animations/smooth/enemy-smooth-02.png",
+        "sha256": "b5fb517aef117634596cfcd10f5d4ffc727c12dcc8ac031fddeb5052f62fb881",
+        "columns": 16,
+        "rows": 4,
+        "row": 1,
+        "column": 0,
+        "cellWidth": 128.0,
+        "cellHeight": 128.0,
+        "bboxAlpha96": [
+          36,
+          20,
+          93,
+          108
+        ],
+        "coverage": 0.6875
+      },
+      "new": {
+        "src": "assets/animations/completion-v1/bosses/carmilla.png",
+        "sha256": "896fbfbd0ff5e72319db0d2f4b2c7a6cb0422ffd402b3a4880d4181be4fd2456",
+        "columns": 8,
+        "rows": 6,
+        "row": 5,
+        "column": 0,
+        "cellWidth": 181.0,
+        "cellHeight": 181.0,
+        "bboxAlpha96": [
+          38,
+          16,
+          138,
+          163
+        ],
+        "coverage": 0.812155
+      },
+      "oldUsesSmoothOverride": true,
+      "referenceState": "idle"
+    },
+    {
       "key": "enemies/bioforge_scarab",
       "sha256": "6e611c1857d120a11924cbe54d65033866edfc24ed306f0ba0adbadace964548",
       "drawScale": 1.1128,
@@ -3325,6 +3448,129 @@
       "referenceState": "move"
     },
     {
+      "key": "enemies/swarmer",
+      "sha256": "5274005fa438a685002cedf00efe9f3e9c136dd6e204a1292b1c203b2cb9af99",
+      "drawScale": 1.0462,
+      "old": {
+        "src": "assets/animations/smooth/enemy-smooth-01.png",
+        "sha256": "f0a484fbc03ff33ec0de6af6d28525d8ccdb2d3b65d61cb97778e0a2e529d85c",
+        "columns": 16,
+        "rows": 4,
+        "row": 0,
+        "column": 0,
+        "cellWidth": 128.0,
+        "cellHeight": 128.0,
+        "bboxAlpha96": [
+          18,
+          27,
+          111,
+          102
+        ],
+        "coverage": 0.726562
+      },
+      "new": {
+        "src": "assets/animations/completion-v1/enemies/swarmer.png",
+        "sha256": "5274005fa438a685002cedf00efe9f3e9c136dd6e204a1292b1c203b2cb9af99",
+        "columns": 8,
+        "rows": 4,
+        "row": 0,
+        "column": 0,
+        "cellWidth": 221.75,
+        "cellHeight": 221.75,
+        "bboxAlpha96": [
+          32,
+          56,
+          186,
+          176
+        ],
+        "coverage": 0.694476
+      },
+      "oldUsesSmoothOverride": true,
+      "referenceState": "move"
+    },
+    {
+      "key": "enemies/runner",
+      "sha256": "8d440c2f8162b9a6072ba19a690aaacf57b13bd4e25c51885c240f483206543c",
+      "drawScale": 1.1918,
+      "old": {
+        "src": "assets/animations/smooth/enemy-smooth-01.png",
+        "sha256": "f0a484fbc03ff33ec0de6af6d28525d8ccdb2d3b65d61cb97778e0a2e529d85c",
+        "columns": 16,
+        "rows": 4,
+        "row": 1,
+        "column": 0,
+        "cellWidth": 128.0,
+        "cellHeight": 128.0,
+        "bboxAlpha96": [
+          16,
+          25,
+          113,
+          103
+        ],
+        "coverage": 0.757812
+      },
+      "new": {
+        "src": "assets/animations/completion-v1/enemies/runner.png",
+        "sha256": "8d440c2f8162b9a6072ba19a690aaacf57b13bd4e25c51885c240f483206543c",
+        "columns": 8,
+        "rows": 4,
+        "row": 0,
+        "column": 0,
+        "cellWidth": 221.75,
+        "cellHeight": 221.75,
+        "bboxAlpha96": [
+          48,
+          75,
+          189,
+          170
+        ],
+        "coverage": 0.635851
+      },
+      "oldUsesSmoothOverride": true,
+      "referenceState": "move"
+    },
+    {
+      "key": "enemies/brute",
+      "sha256": "a6ec7f25d8f0f0b98c1d3c9b3ae7094b475455573af474b3ef4ac7c8e386582a",
+      "drawScale": 1.0581,
+      "old": {
+        "src": "assets/animations/smooth/enemy-smooth-01.png",
+        "sha256": "f0a484fbc03ff33ec0de6af6d28525d8ccdb2d3b65d61cb97778e0a2e529d85c",
+        "columns": 16,
+        "rows": 4,
+        "row": 2,
+        "column": 0,
+        "cellWidth": 128.0,
+        "cellHeight": 128.0,
+        "bboxAlpha96": [
+          19,
+          23,
+          110,
+          105
+        ],
+        "coverage": 0.710938
+      },
+      "new": {
+        "src": "assets/animations/completion-v1/enemies/brute.png",
+        "sha256": "a6ec7f25d8f0f0b98c1d3c9b3ae7094b475455573af474b3ef4ac7c8e386582a",
+        "columns": 8,
+        "rows": 4,
+        "row": 0,
+        "column": 0,
+        "cellWidth": 221.75,
+        "cellHeight": 221.75,
+        "bboxAlpha96": [
+          37,
+          45,
+          186,
+          178
+        ],
+        "coverage": 0.671928
+      },
+      "oldUsesSmoothOverride": true,
+      "referenceState": "move"
+    },
+    {
       "key": "towers/vulcan_turret",
       "sha256": "5d22973f310bde9355fb1f430fa9d97ab955d19f80d674d45fe6d382d97c29a3",
       "drawScale": 0.995,
@@ -4170,19 +4416,5 @@
     }
   ],
   "missing": [],
-  "preparedOnlyExcluded": [
-    "portraits/nyx",
-    "portraits/aurelia",
-    "portraits/maris",
-    "portraits/zahra",
-    "portraits/mircalla",
-    "portraits/isolde",
-    "portraits/hana",
-    "portraits/freyja",
-    "portraits/vega",
-    "portraits/amara",
-    "environment/acid-rain",
-    "environment/ion-storm",
-    "environment/debris-settle"
-  ]
+  "preparedOnlyExcluded": []
 }

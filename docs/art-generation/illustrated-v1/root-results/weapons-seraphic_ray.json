@@ -1,0 +1,29 @@
+{
+  "key": "weapons/seraphic_ray",
+  "category": "weapons",
+  "id": "seraphic_ray",
+  "packId": "dlc_astral_cathedral",
+  "name": "Rayon Séraphique",
+  "columns": 4,
+  "rows": 2,
+  "sequenceFrames": 8,
+  "transparent": true,
+  "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/evolutions/vulcan-cerberus.png",
+  "prompt": "Use case: stylized-concept. Production 2D projectile animation spritesheet for Infernal City. Reference gives exact game-art finish and isolated-frame layout, NOT projectile identity. Subject: a compact golden-white solar energy ray bolt, thin straight spear of light with concentric white-gold halo segments and cyan star core. Name for context only: Rayon Séraphique. Domain: Gothique Sacré Doré, Marbre Blanc & Horlogerie Céleste; exact colors {\"bg\":\"#1e1b4b\",\"primary\":\"#f59e0b\",\"secondary\":\"#fef3c7\",\"glow\":\"#38bdf8\"}. Strict layout FOUR columns by TWO rows, eight equal SQUARE cells, 2:1 landscape PNG. Reading order left to right then next row; eight distinct drawn pulse/trail frames of the same projectile. Stable center and scale; horizontal long axis, tip and travel facing RIGHT, tail LEFT. The complete projectile plus every glow or spark must fit within the CENTRAL FIFTY PERCENT of each cell, leaving at least 25 percent empty alpha margins on every side. Crisp painterly anime game VFX, no floor, shadow, scenery, text, numbers, border, grid or watermark. Genuine transparent alpha background. No weapons being held, no characters. This is a first original design of the named DLC projectile.",
+  "path": "assets/dlc/illustrated-v1/weapons/seraphic_ray.png",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-b86dd7ab-ef5f-4c9f-bd36-f96bbcb47825.png",
+  "sha256": "033aecfbf5c1dc65ae55ab73d0ff3b5624a17e0b408c582ca89b2942abd0530b",
+  "bytes": 1110704,
+  "width": 1774,
+  "height": 887,
+  "mode": "RGBA",
+  "alphaExtrema": [
+    0,
+    255
+  ],
+  "method": "built-in image_gen",
+  "nativeBytesPreserved": true,
+  "qa": {
+    "status": "pending-visual-review"
+  }
+}

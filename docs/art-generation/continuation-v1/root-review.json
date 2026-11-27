@@ -1,0 +1,403 @@
+{
+  "schemaVersion": 1,
+  "method": "Explicit visual decisions plus read-only PNG inspection; never inferred from presence. PNGs are not transformed.",
+  "reviewed": [
+    {
+      "key": "maps/haven_outer_port",
+      "status": "pass",
+      "reviewer": "root independent visual and native-byte review",
+      "sha256": "f90e06a85d6332d73713f0242e44c015bd94de48b6c649d7f2b421a020decd41",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGB",
+      "observations": "Distinct named theatre in perimeter architecture; clear central floor, four cardinal approaches, native opaque 3:2 scene; no textual labels, characters or center building."
+    },
+    {
+      "key": "maps/haven_sunken_cathedral",
+      "status": "pass",
+      "reviewer": "root independent visual and native-byte review",
+      "sha256": "036c010b5b83659eaaa85cd9fa07fd4f023923c4edfbe76753b9bf0b14cc9f52",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGB",
+      "observations": "Distinct named theatre in perimeter architecture; clear central floor, four cardinal approaches, native opaque 3:2 scene; no textual labels, characters or center building."
+    },
+    {
+      "key": "maps/haven_abyssal_reactor",
+      "status": "pass",
+      "reviewer": "root independent visual and native-byte review",
+      "sha256": "91a97b3b813c3cf212ed0df6c29bb1615dc16f7e7eb3f3c59b944c3be669271d",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGB",
+      "observations": "Distinct named theatre in perimeter architecture; clear central floor, four cardinal approaches, native opaque 3:2 scene; no textual labels, characters or center building."
+    },
+    {
+      "key": "maps/haven_inner_citadel",
+      "status": "pass",
+      "reviewer": "root independent visual and native-byte review",
+      "sha256": "66d8b5557997ed6795ab4a702bb782058544fb7c7d3bf0ea178d32b3eaa8a561",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGB",
+      "observations": "Distinct named theatre in perimeter architecture; clear central floor, four cardinal approaches, native opaque 3:2 scene; no textual labels, characters or center building."
+    },
+    {
+      "key": "fx/flame_stream",
+      "status": "pass",
+      "reviewer": "root independent visual and native-byte review",
+      "sha256": "ba40b666fd52e55bbf413d9f52b99ed95c9b28b5e4b9f343ba419d44c6ccb2e8",
+      "width": 2048,
+      "height": 768,
+      "mode": "RGBA",
+      "metrics": {
+        "alphaZeroRatio": 0.881528,
+        "alphaBelow24Ratio": 0.949847,
+        "minVisibleCellMarginAlpha24": 0.203125,
+        "uniqueRgbaCells": 24,
+        "cells": 24
+      },
+      "observations": "Regular native atlas grid, distinct poses, clear matching projectile/impact/overload rows or move/attack/dissolve/shield-break sequence. Visible silhouettes and effects remain inside each cell. Flight directions point right. No copied weapon body, captions or obvious cutoffs."
+    },
+    {
+      "key": "fx/cryo_shard",
+      "status": "pass",
+      "reviewer": "root independent visual and native-byte review",
+      "sha256": "b1fc6ca9eac43458a36e4bc190e04dc363797ffffbe67acc5937c7508594c636",
+      "width": 2048,
+      "height": 768,
+      "mode": "RGBA",
+      "metrics": {
+        "alphaZeroRatio": 0.863326,
+        "alphaBelow24Ratio": 0.953246,
+        "minVisibleCellMarginAlpha24": 0.214844,
+        "uniqueRgbaCells": 24,
+        "cells": 24
+      },
+      "observations": "Regular native atlas grid, distinct poses, clear matching projectile/impact/overload rows or move/attack/dissolve/shield-break sequence. Visible silhouettes and effects remain inside each cell. Flight directions point right. No copied weapon body, captions or obvious cutoffs."
+    },
+    {
+      "key": "fx/drone_laser",
+      "status": "pass",
+      "reviewer": "root independent visual and native-byte review",
+      "sha256": "df0f3567a183a381793d638f25cc395d8761bde0d6e58f1cef445e534919514c",
+      "width": 2048,
+      "height": 768,
+      "mode": "RGBA",
+      "metrics": {
+        "alphaZeroRatio": 0.807653,
+        "alphaBelow24Ratio": 0.944508,
+        "minVisibleCellMarginAlpha24": 0.183594,
+        "uniqueRgbaCells": 24,
+        "cells": 24
+      },
+      "observations": "Regular native atlas grid, distinct poses, clear matching projectile/impact/overload rows or move/attack/dissolve/shield-break sequence. Visible silhouettes and effects remain inside each cell. Flight directions point right. No copied weapon body, captions or obvious cutoffs."
+    },
+    {
+      "key": "enemies/astral_alabaster_golem",
+      "status": "pass",
+      "reviewer": "root independent visual and native-byte review",
+      "sha256": "99c77112b97e3f862a4b5587225dd8bf09f9baa2db2ccaa5d660faba9b6c76fa",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "metrics": {
+        "alphaZeroRatio": 0.77189,
+        "alphaBelow24Ratio": 0.875599,
+        "minVisibleCellMarginAlpha24": 0.175676,
+        "uniqueRgbaCells": 32,
+        "cells": 32
+      },
+      "observations": "White alabaster and gold heavy automaton with cyan core; coherent proportions, move/attack/dissolve/shield-break states and 32 distinct native cells. Colored RGB fringe noise is alpha1–5 only, no red/yellow pixels at alpha24 or above."
+    },
+    {
+      "key": "enemies/astral_cherub_automaton",
+      "status": "pass",
+      "reviewer": "root independent visual and native-byte review",
+      "sha256": "e01a5808a54af10374ce0d251632cc74ac9a299b00d5f21b9dda6afe7706fe10",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "metrics": {
+        "alphaZeroRatio": 0.73465,
+        "alphaBelow24Ratio": 0.904804,
+        "minVisibleCellMarginAlpha24": 0.22973,
+        "uniqueRgbaCells": 32,
+        "cells": 32
+      },
+      "observations": "Winged gold-and-marble automaton with cyan eye. Movement, contained cyan attack, staged disappearance and shield collapse read distinctly. No labels, grid or visible body cutoffs. Native low-alpha fringes are retained without editing."
+    },
+    {
+      "key": "enemies/astral_censer_bearer",
+      "status": "pass",
+      "reviewer": "root independent visual and native-byte review",
+      "sha256": "96d71978fe7fa9a029eac0f55526a7c7934c5e91825bcc3042312264fa64801e",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "metrics": {
+        "alphaZeroRatio": 0.847818,
+        "alphaBelow24Ratio": 0.930835,
+        "minVisibleCellMarginAlpha24": 0.238739,
+        "uniqueRgbaCells": 32,
+        "cells": 32
+      },
+      "observations": "Hooded mechanical censer bearer in gold and indigo. Swinging censer and cyan vapour stay within the cell; dissolution and shield states preserve the chosen identity. No labels, grid or visible body cutoffs. Native low-alpha fringes are retained without editing."
+    },
+    {
+      "key": "enemies/astral_siege_pendulum",
+      "status": "pass",
+      "reviewer": "root independent visual and native-byte review",
+      "sha256": "9ca66804b31410eba7ba48304a5ccb21738c2fb1d8ebf28aeba07623a7d82d51",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "metrics": {
+        "alphaZeroRatio": 0.713256,
+        "alphaBelow24Ratio": 0.89465,
+        "minVisibleCellMarginAlpha24": 0.175676,
+        "uniqueRgbaCells": 32,
+        "cells": 32
+      },
+      "observations": "Clockwork siege automaton with central pendulum, gold frame and cyan accents. Pendulum motion and attack arc, dissolution and shield sequence remain consistent. No labels, grid or visible body cutoffs. Native low-alpha fringes are retained without editing."
+    },
+    {
+      "key": "enemies/abyss_armored_nautilus",
+      "status": "pass",
+      "reviewer": "root independent visual and native-byte review",
+      "sha256": "3dbe313b6780df370acef8f13192f0f38758300ddf8ba6958c4fa0640b17ec2e",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "metrics": {
+        "alphaZeroRatio": 0.860774,
+        "alphaBelow24Ratio": 0.914257,
+        "minVisibleCellMarginAlpha24": 0.202703,
+        "uniqueRgbaCells": 32,
+        "cells": 32
+      },
+      "observations": "Armoured spiral shell, violet tentacles and teal luminous core. Coherent swimming, attack, bubble dissolution and shield sequence. No labels, grid or visible body cutoffs. Native low-alpha fringes are retained without editing."
+    },
+    {
+      "key": "enemies/abyss_emp_jellyfish",
+      "status": "pass",
+      "reviewer": "root independent visual and native-byte review",
+      "sha256": "2f6007e57117f664b764e0da97c6930c36150b1b5cc43f02d02c9aa82f688bfc",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "metrics": {
+        "alphaZeroRatio": 0.796023,
+        "alphaBelow24Ratio": 0.904371,
+        "minVisibleCellMarginAlpha24": 0.189189,
+        "uniqueRgbaCells": 32,
+        "cells": 32
+      },
+      "observations": "Teal glassy mechanical jellyfish, violet EMP core and articulated tentacles. Pulsing movement, EMP flare, disintegration and shield break remain readable. No labels, grid or visible body cutoffs. Native low-alpha fringes are retained without editing."
+    },
+    {
+      "key": "enemies/abyss_stealth_ray",
+      "status": "pass",
+      "reviewer": "root independent visual and native-byte review",
+      "sha256": "c84e3af7d5fecfe1bb3b90f46d8c2d1a8bd12fdea43a0a8caae095c309a2e60d",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "metrics": {
+        "alphaZeroRatio": 0.824104,
+        "alphaBelow24Ratio": 0.934046,
+        "minVisibleCellMarginAlpha24": 0.238739,
+        "uniqueRgbaCells": 32,
+        "cells": 32
+      },
+      "observations": "Dark low-profile armored ray with violet belly and teal accents. Wing undulation, forward attack, stealth-like dissolution and shield break stay isolated in their cells. No labels, grid or visible body cutoffs. Native low-alpha fringes are retained without editing."
+    },
+    {
+      "key": "enemies/abyss_drill_crab",
+      "status": "pass",
+      "reviewer": "root independent visual and native-byte review",
+      "sha256": "41129ee7b6aa3805491fbb256d45fdda861f755d9ee1dca145f2af99387e90fd",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "metrics": {
+        "alphaZeroRatio": 0.748985,
+        "alphaBelow24Ratio": 0.90895,
+        "minVisibleCellMarginAlpha24": 0.202703,
+        "uniqueRgbaCells": 32,
+        "cells": 32
+      },
+      "observations": "Coral-armored mechanical crab with teal auger claws. Leg motion, forward drilling attack, bubble dissolution and shield break are distinct and contained. Regular grid, native transparent gutters, no visible cutoffs; low-alpha RGB noise retained without software cleanup."
+    },
+    {
+      "key": "fx/acid_glob",
+      "status": "pass",
+      "reviewer": "root independent visual and native-byte review",
+      "sha256": "ec8c1ea4ef3714acb033f85f0e3f2b3b828a8ec33880f9d76f4930cd51d84bce",
+      "width": 2048,
+      "height": 768,
+      "mode": "RGBA",
+      "metrics": {
+        "alphaZeroRatio": 0.757823,
+        "alphaBelow24Ratio": 0.922442,
+        "minVisibleCellMarginAlpha24": 0.179688,
+        "uniqueRgbaCells": 24,
+        "cells": 24
+      },
+      "observations": "Lime corrosive globule with a rightward liquid trail, radial liquid impact and larger overload pulse. Clear separation of travel and impact poses. Regular grid, native transparent gutters, no visible cutoffs; low-alpha RGB noise retained without software cleanup."
+    },
+    {
+      "key": "fx/siege_missile",
+      "status": "pass",
+      "reviewer": "root independent visual and native-byte review",
+      "sha256": "0bf20fa6fdbb8e8537bcd7d1a1a2097f16ddc66e7cc140a26011aaefd70a31fb",
+      "width": 2048,
+      "height": 768,
+      "mode": "RGBA",
+      "metrics": {
+        "alphaZeroRatio": 0.824942,
+        "alphaBelow24Ratio": 0.945615,
+        "minVisibleCellMarginAlpha24": 0.195312,
+        "uniqueRgbaCells": 24,
+        "cells": 24
+      },
+      "observations": "Dark metal missile with orange exhaust faces right, followed by impact fragments and a brighter overload row. Distinct from the shared plasma projectile. Regular grid, native transparent gutters, no visible cutoffs; low-alpha RGB noise retained without software cleanup."
+    },
+    {
+      "key": "fx/choc_thermique",
+      "status": "pass",
+      "reviewer": "root independent visual and native-byte review",
+      "sha256": "b6420d4933cca28e60f55f1968489423fa9b377855c7ce2c3e8b064a79990ed3",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "metrics": {
+        "alphaZeroRatio": 0.848867,
+        "alphaBelow24Ratio": 0.893951,
+        "minVisibleCellMarginAlpha24": 0.239819,
+        "uniqueRgbaCells": 32,
+        "cells": 32
+      },
+      "observations": "Coherent cyan frost and amber fire spiral: cast grows, active rotates, impact breaks outward, fade diminishes. No text or mechanical weapon body. Regular grid, native transparent gutters, no visible cutoffs; low-alpha RGB noise retained without software cleanup."
+    },
+    {
+      "key": "fx/embrasement_toxique",
+      "status": "pass",
+      "reviewer": "root independent visual and native-byte review",
+      "sha256": "7f8aff74c6f8feabbf28aad2328908eac21f4a623b279eeeb90d71d12f480f6c",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "metrics": {
+        "alphaZeroRatio": 0.868432,
+        "alphaBelow24Ratio": 0.913047,
+        "minVisibleCellMarginAlpha24": 0.243243,
+        "uniqueRgbaCells": 32,
+        "cells": 32
+      },
+      "observations": "Green corrosive ignition with warm flame accents: cast, active, impact and fade clearly differentiated. Distinct palette from thermal shock. Regular grid, native transparent gutters, no visible cutoffs; low-alpha RGB noise retained without software cleanup."
+    },
+    {
+      "key": "fx/siphon_seed",
+      "status": "pass",
+      "reviewer": "root independent visual and native-byte review",
+      "sha256": "57c22c91d241475e982e4637049c46c02fa259b38e4b80cd41c44bc0c80aecbf",
+      "width": 2048,
+      "height": 768,
+      "mode": "RGBA",
+      "metrics": {
+        "alphaZeroRatio": 0.825451,
+        "alphaBelow24Ratio": 0.940144,
+        "minVisibleCellMarginAlpha24": 0.171875,
+        "uniqueRgbaCells": 24,
+        "cells": 24
+      },
+      "observations": "Emerald seed projectile travelling right; impact releases leaves and overload adds restrained gold energy. Clear three-row state progression. Regular native grid and transparent gutters; all useful shapes remain within their cells, no labels or clipped tips. Low-alpha fringes remain unmodified."
+    },
+    {
+      "key": "fx/tempete_magnetique",
+      "status": "pass",
+      "reviewer": "root independent visual and native-byte review",
+      "sha256": "d9749026d6bb0e0a9d30a6db15bd5e9cd9cacf4b3ab0c0af8349388ff1ce179a",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "metrics": {
+        "alphaZeroRatio": 0.838173,
+        "alphaBelow24Ratio": 0.884171,
+        "minVisibleCellMarginAlpha24": 0.202703,
+        "uniqueRgbaCells": 32,
+        "cells": 32
+      },
+      "observations": "Violet magnetic vortex with cyan electric filaments, growing cast, rotating active state, discharge ring and shrinking fade. Distinct from thermal and toxic reactions. Regular native grid and transparent gutters; all useful shapes remain within their cells, no labels or clipped tips. Low-alpha fringes remain unmodified."
+    },
+    {
+      "key": "enemies/flora_ivy_crawler",
+      "status": "pass",
+      "reviewer": "root independent visual and native-byte review",
+      "sha256": "2ff1f837fa2ad2d08a0840fec4a291927c64089c32e3047f6be2ddad733a6ac1",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "metrics": {
+        "alphaZeroRatio": 0.740876,
+        "alphaBelow24Ratio": 0.9332,
+        "minVisibleCellMarginAlpha24": 0.180995,
+        "uniqueRgbaCells": 32,
+        "cells": 32
+      },
+      "observations": "Low ivy-armored mechanical crawler with rose crystal feature and gold vine details. Coherent crawling, forward vine-whip attack, leaf dissolution and rose shield break. Stable small silhouette, all 32 cells distinct and contained; native low-alpha colored fringe retained without edits."
+    },
+    {
+      "key": "enemies/flora_crystal_wasp",
+      "status": "pass",
+      "reviewer": "root independent visual and native-byte review",
+      "sha256": "cb0bfd6937866c290ba222cf4a78e6614aca331f7300b400a5320286ca6fb5b3",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "metrics": {
+        "alphaZeroRatio": 0.836807,
+        "alphaBelow24Ratio": 0.933231,
+        "minVisibleCellMarginAlpha24": 0.193694,
+        "uniqueRgbaCells": 32,
+        "cells": 32
+      },
+      "observations": "Emerald crystalline wings, metallic insect body and warm eyes stay coherent across the 32 cells. Flight, compact golden attack, progressive dissolution and circular shield collapse read distinctly; no visible clipping or labels."
+    },
+    {
+      "key": "enemies/flora_steel_treant",
+      "status": "pass",
+      "reviewer": "root independent visual and native-byte review",
+      "sha256": "fe8549891f2bbcc7c2c5d0e7a77260839cd742c51719c07f111142f6de17695d",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "metrics": {
+        "alphaZeroRatio": 0.841066,
+        "alphaBelow24Ratio": 0.918054,
+        "minVisibleCellMarginAlpha24": 0.216216,
+        "uniqueRgbaCells": 32,
+        "cells": 32
+      },
+      "observations": "Heavy green steel-and-root creature with pink blooms and bright eyes. Movement, contained green strike, staged disintegration and breaking green shield maintain a coherent silhouette, with generous native cell margins."
+    },
+    {
+      "key": "enemies/flora_mortar_flower",
+      "status": "pass",
+      "reviewer": "root independent visual and native-byte review",
+      "sha256": "b0f9f95afaabbb1800dd616afe750299d03f14360f2b404771f67182c697058d",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "metrics": {
+        "alphaZeroRatio": 0.87459,
+        "alphaBelow24Ratio": 0.922423,
+        "minVisibleCellMarginAlpha24": 0.247748,
+        "uniqueRgbaCells": 32,
+        "cells": 32
+      },
+      "observations": "Pink flowering mortar with bronze-green pod and warm core. A contained golden shot clearly marks attack; collapse/dissolve and shield-break rows are distinct. All visible poses remain within their native cells."
+    }
+  ]
+}

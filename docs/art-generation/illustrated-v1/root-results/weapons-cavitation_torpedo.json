@@ -1,0 +1,30 @@
+{
+  "key": "weapons/cavitation_torpedo",
+  "category": "weapons",
+  "id": "cavitation_torpedo",
+  "packId": "dlc_bioluminescent_abyss",
+  "name": "Torpille à Cavitation",
+  "columns": 4,
+  "rows": 2,
+  "sequenceFrames": 8,
+  "transparent": true,
+  "reference": null,
+  "prompt": "Use case: stylized-concept. Create a new original production projectile spritesheet for Infernal City, Torpille à Cavitation of the Abysses Bioluminescents domain. Exact 4 columns by 2 rows, eight equal square cells on a 2:1 landscape PNG. Each cell shows the SAME SMALL CYLINDRICAL UNDERWATER TORPEDO facing RIGHT, with a rounded translucent turquoise hemispherical nose, long straight dark titanium cylindrical pressure tube, two narrow turquoise circumferential bands around the tube, and four tiny short rectangular stabilizer fins at the rear LEFT. Silhouette must be a miniature submarine torpedo/pill, not an arrowhead or space fighter. NO silver chevron armor, NO triangular wide dart body, NO three horizontal cyan light bars, NO magenta wings. Eight different pulse/propulsion frames: turquoise cavitation envelope gently thickens and fades, small violet bubbles trail LEFT. Keep the complete torpedo and bubbles inside central FIFTY percent of every cell, with completely transparent 25 percent margins all around. Stable center, orientation and scale. Crisp detailed painterly cyber-gothic science-fiction game art, readable at small size. Actual alpha-transparent background, no floor, shadows, labels, grid, borders, words, letters or watermark. All eight full objects isolated, no clipping or overlap.",
+  "path": "assets/dlc/illustrated-v1/weapons/cavitation_torpedo.png",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-d0be3057-dd37-444b-9ae7-1219e477ba80.png",
+  "sha256": "50d5cd2c5b8161c41ed7d9e3eac96418a9253000026542485070b11954f7adf7",
+  "bytes": 1418949,
+  "width": 1774,
+  "height": 887,
+  "mode": "RGBA",
+  "alphaExtrema": [
+    0,
+    255
+  ],
+  "method": "built-in image_gen",
+  "nativeBytesPreserved": true,
+  "qa": {
+    "status": "pending-visual-review"
+  },
+  "revision": 2
+}

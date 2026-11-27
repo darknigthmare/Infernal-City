@@ -1,0 +1,29 @@
+{
+  "key": "props/desert_monument",
+  "category": "props",
+  "id": "desert_monument",
+  "packId": "dlc_glass_desert",
+  "name": "Monument Mirage Chromatique & Cité des Sables de Verre",
+  "columns": 2,
+  "rows": 2,
+  "sequenceFrames": 4,
+  "transparent": true,
+  "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/map-western-wall.webp",
+  "prompt": "Use case: stylized-concept. Production environment sprite atlas for Infernal City. Input reference gives painted cyber-gothic game texture and elevated orthographic camera only. Subject: one neo-Persian gold and obsidian solar-mirror obelisk on a sand-colored geometric pedestal, a lapis blue core. Exact domain Désert Solarpunk, Silice Vitrifiée & Architecture Néo-Perse; palette {\"bg\":\"#1c1917\",\"primary\":\"#ea580c\",\"secondary\":\"#fde68a\",\"glow\":\"#1d4ed8\"}. EXACT GRID 2 columns by 2 rows, four equal SQUARE cells on a SQUARE PNG. Four subtly different pulse/idle frames of the SAME complete monument. Centered fixed anchor, same camera and scale in every cell. Entire object and glow fit within central 60 percent of each cell; leave at least 20 percent completely transparent margin on every side. Isolated illustrated architecture prop, intricate textured materials, no ground platform extending to cell edges, no cast shadow, no surrounding scenery, no text, numbers, panel lines, grid or watermark. True alpha-zero transparent background. Four separate full monuments, no crossing into neighboring cells. First original interpretation of the written DLC domain.",
+  "path": "assets/dlc/illustrated-v1/props/desert_monument.png",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-c1286fb1-c524-4c91-a57f-e7684d77aa38.png",
+  "sha256": "c20953994ddbccc94e449998b498ceaa1937898bae9ed44f1aefb65a30c332d3",
+  "bytes": 1377582,
+  "width": 1254,
+  "height": 1254,
+  "mode": "RGBA",
+  "alphaExtrema": [
+    0,
+    255
+  ],
+  "method": "built-in image_gen",
+  "nativeBytesPreserved": true,
+  "qa": {
+    "status": "pending-visual-review"
+  }
+}

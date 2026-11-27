@@ -1,0 +1,29 @@
+{
+  "key": "weapons/solar_saber",
+  "category": "weapons",
+  "id": "solar_saber",
+  "packId": "dlc_glass_desert",
+  "name": "Sabre Solaire",
+  "columns": 4,
+  "rows": 2,
+  "sequenceFrames": 8,
+  "transparent": true,
+  "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/animations/completion-v1/evolutions/vulcan-cerberus.png",
+  "prompt": "Use case: stylized-concept. Production 2D projectile animation spritesheet for Infernal City. Reference gives exact game-art finish and isolated-frame layout, NOT projectile identity. Subject: a compact curved golden solar saber slash with an obsidian edge and lapis energy seam, travel directed to the right. Name for context only: Sabre Solaire. Domain: Désert Solarpunk, Silice Vitrifiée & Architecture Néo-Perse; exact colors {\"bg\":\"#1c1917\",\"primary\":\"#ea580c\",\"secondary\":\"#fde68a\",\"glow\":\"#1d4ed8\"}. Strict layout FOUR columns by TWO rows, eight equal SQUARE cells, 2:1 landscape PNG. Reading order left to right then next row; eight distinct drawn pulse/trail frames of the same projectile. Stable center and scale; horizontal long axis, tip and travel facing RIGHT, tail LEFT. The complete projectile plus every glow or spark must fit within the CENTRAL FIFTY PERCENT of each cell, leaving at least 25 percent empty alpha margins on every side. Crisp painterly anime game VFX, no floor, shadow, scenery, text, numbers, border, grid or watermark. Genuine transparent alpha background. No weapons being held, no characters. This is a first original design of the named DLC projectile.",
+  "path": "assets/dlc/illustrated-v1/weapons/solar_saber.png",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-0c18533a-9585-4690-b86b-a59ec368552e.png",
+  "sha256": "0ca7205d152ddf1fac85326523f4c275fdd340f4c3fd284010d7004a22c990f5",
+  "bytes": 1104388,
+  "width": 1774,
+  "height": 887,
+  "mode": "RGBA",
+  "alphaExtrema": [
+    0,
+    255
+  ],
+  "method": "built-in image_gen",
+  "nativeBytesPreserved": true,
+  "qa": {
+    "status": "pending-visual-review"
+  }
+}

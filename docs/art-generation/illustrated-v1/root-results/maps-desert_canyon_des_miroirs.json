@@ -1,0 +1,25 @@
+{
+  "key": "maps/desert_canyon_des_miroirs",
+  "category": "maps",
+  "id": "desert_canyon_des_miroirs",
+  "packId": "dlc_glass_desert",
+  "name": "Canyon des Miroirs",
+  "columns": 1,
+  "rows": 1,
+  "transparent": false,
+  "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/environment/infernal-city-approach-terrain.webp",
+  "prompt": "Use case: stylized-concept. Production battlefield background for the existing game Infernal City. Input reference is CAMERA, surface detail and painterly game-rendering style only; do not copy its dark palette. Create ONE seamless-looking complete landscape battlefield scene, 3:2 image. Subject: a wide glass-bottomed canyon avenue, huge reflective obsidian and amber silica cliffs along the edges, geometric Persian gold inlays, clear central terrain with faint glass cracks, warm sun and restrained blue reflections. Respect this exact visual domain: Désert Solarpunk, Silice Vitrifiée & Architecture Néo-Perse. Palette: {\"bg\":\"#1c1917\",\"primary\":\"#ea580c\",\"secondary\":\"#fde68a\",\"glow\":\"#1d4ed8\"}. Elevated nearly top-down orthographic 2.5D camera, no horizon or perspective vanishing point; match the reference's game-ready detailed surfaces. The central 65 percent of the image must be a calm empty unobstructed continuous walkable surface so the game can place its own characters, defense rings and citadel. Put tall architecture, spectacle and decoration in the outer 15 percent border only. Four subtle broad approach directions meet an empty central area; no painted obstacles crossing them. Elaborate illustrated materials and lighting, polished cyber-gothic dark fantasy game art, high resolution, no vector clip art. No characters, enemies, towers, weapons, central citadel, UI, text, lettering, labels, grids or watermark. Entire image opaque, no transparency. This is a FIRST original design following the written DLC brief, not a copied design.",
+  "path": "assets/dlc/illustrated-v1/maps/desert_canyon_des_miroirs.png",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-a819b48d-fd5b-4342-a858-eac7ca760ddb.png",
+  "sha256": "0680d864671842b52145b82312705bc40b21448559a6224c3df24c7982cc4d39",
+  "bytes": 2824468,
+  "width": 1536,
+  "height": 1024,
+  "mode": "RGB",
+  "alphaExtrema": null,
+  "method": "built-in image_gen",
+  "nativeBytesPreserved": true,
+  "qa": {
+    "status": "pending-visual-review"
+  }
+}

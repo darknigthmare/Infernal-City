@@ -1,0 +1,30 @@
+{
+  "key": "evolutions/cavitation_torpedo",
+  "category": "evolutions",
+  "id": "cavitation_torpedo",
+  "packId": "dlc_bioluminescent_abyss",
+  "name": "Vortex Abyssal",
+  "columns": 4,
+  "rows": 2,
+  "sequenceFrames": 8,
+  "transparent": true,
+  "reference": "/workspace/scratch/3c707a35b074/Infernal-City/assets/dlc/illustrated-v1/weapons/cavitation_torpedo.png",
+  "prompt": "Use case: identity-preserve. Create the evolved Vortex Abyssal form of the EXACT cylindrical underwater torpedo shown in the reference. Preserve its dark straight cylindrical pressure tube, rounded turquoise hemispherical nose facing RIGHT, two turquoise circumferential bands, four tiny rear stabilizer fins at LEFT. Add a SMALL coiled turquoise water ribbon wrapping the tube, tiny violet bubbles at its rear, and a compact coral-pink sonar crescent just at the nose. No spaceship shape, no silver chevron, no wide triangular arrow body or magenta wings. Critical production correction: REMOVE ALL BROAD HALOS, cloudy glow, surrounding haze or background fog. Draw the complete torpedo plus narrow water ribbon inside CENTRAL 40 PERCENT of EACH cell width AND height, with at least30percent COMPLETELY EMPTY transparent margin on all four sides. Exact FOUR columns by TWO rows, eight equal SQUARE cells in a landscape2:1 PNG. Eight coherent drawn pulse frames, fixed central anchor and stable scale/orientation. Rich painterly cyber-gothic materials, restrained internal glow only. True alpha0 background outside the small object, no ground, shadow, text, grid or numbers.",
+  "path": "assets/dlc/illustrated-v1/evolutions/cavitation_torpedo.png",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-619db130-1611-47b7-a5d9-acb66ad9d8f8.png",
+  "sha256": "eafbec04f72337a372c7b30c32676adc33e0470da318173a9a9f0df0f423bcf8",
+  "bytes": 635760,
+  "width": 1774,
+  "height": 887,
+  "mode": "RGBA",
+  "alphaExtrema": [
+    0,
+    255
+  ],
+  "method": "built-in image_gen",
+  "nativeBytesPreserved": true,
+  "qa": {
+    "status": "pending-visual-review"
+  },
+  "revision": 2
+}

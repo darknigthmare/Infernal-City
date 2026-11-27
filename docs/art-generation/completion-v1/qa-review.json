@@ -7,6 +7,16 @@
       "evidence": "heroes-bosses.json"
     },
     {
+      "key": "bosses/carmilla",
+      "sha256": "896fbfbd0ff5e72319db0d2f4b2c7a6cb0422ffd402b3a4880d4181be4fd2456",
+      "evidence": "../illustrated-v1/characters.json"
+    },
+    {
+      "key": "bosses/hellwarden",
+      "sha256": "0b55af3e2935b8bfe5fe6e930137078c8c0d435958ea3575c1795467f2036d87",
+      "evidence": "../illustrated-v1/characters.json"
+    },
+    {
       "key": "bosses/kalix",
       "sha256": "0d676b0d57eaa892e978db5e4ee544a7286faebd8c3e541d1f85ef1921ec73f0",
       "evidence": "heroes-bosses.json"
@@ -45,6 +55,11 @@
       "key": "bosses/umbrael",
       "sha256": "29332d4b8c5c4831079362d04a15cf875339c7cfd8e94b7fd15e87e1c240874d",
       "evidence": "heroes-bosses.json"
+    },
+    {
+      "key": "bosses/vespera",
+      "sha256": "1ff47bd52dd93cff1d889a887c8e1600e4889af24762a9b6eabe86957dc00cf9",
+      "evidence": "../illustrated-v1/characters.json"
     },
     {
       "key": "bosses/vexara",
@@ -110,6 +125,11 @@
       "key": "enemies/bioforge_stitcher",
       "sha256": "d3440cdba49816b7b7f32d88e551017696b2f88346f823f4e1879c9a5803688c",
       "evidence": "enemies-a.json"
+    },
+    {
+      "key": "enemies/brute",
+      "sha256": "a6ec7f25d8f0f0b98c1d3c9b3ae7094b475455573af474b3ef4ac7c8e386582a",
+      "evidence": "../illustrated-v1/characters.json"
     },
     {
       "key": "enemies/bulwark",
@@ -272,6 +292,11 @@
       "evidence": "enemies-b.json"
     },
     {
+      "key": "enemies/runner",
+      "sha256": "8d440c2f8162b9a6072ba19a690aaacf57b13bd4e25c51885c240f483206543c",
+      "evidence": "../illustrated-v1/characters.json"
+    },
+    {
       "key": "enemies/shadow_black_lamplighter",
       "sha256": "46e0fb31c9aa449cc8a03251db6dc10c2cb4deca6a98837f6d078db21a08e781",
       "evidence": "enemies-b.json"
@@ -300,6 +325,11 @@
       "key": "enemies/splitter",
       "sha256": "468cbf031c662b568b4358c976450c450349ff719d84f910bd544a8cef4d4cf2",
       "evidence": "enemies-b.json"
+    },
+    {
+      "key": "enemies/swarmer",
+      "sha256": "5274005fa438a685002cedf00efe9f3e9c136dd6e204a1292b1c203b2cb9af99",
+      "evidence": "../illustrated-v1/characters.json"
     },
     {
       "key": "enemies/void_gravity_maw",

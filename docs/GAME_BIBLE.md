@@ -372,7 +372,7 @@ Total de fichiers d’assets recensés dans `assets/` : **592**.
 
 ### 15.1 Animations de sprites — Suivi de production
 
-> **Pack `completion-v1` :** 118 atlas natifs et 4 376 cellules produits pour les besoins ci-dessous. Les 105 atlas de combat sont branchés sur le moteur ; les 10 portraits animés et 3 effets d’environnement sont livrés comme ressources préparées. [Inventaire et limites d’intégration](SPRITE_COMPLETION.md). Le tableau conserve les besoins et formats cibles de référence ; les héroïnes historiques sont livrées avec huit poses dessinées par état, et non seize poses interpolées. Nova est un personnage de galerie, pas une septième Valkyrie historique jouable.
+> **Mise à jour du 24 novembre 2026 :** `completion-v1` contient 124 atlas natifs et 4 616 cellules : 111 atlas de combat, 10 portraits animés intégrés au Studio/VN et 3 effets d’environnement raccordés à la météo et au recyclage. Le pack `illustrated-v1` ajoute 82 ressources pour les entrées DLC nommées : 70 atlas et 12 décors. Les cartes, monuments, quatre duos et le brouillard sont reliés aux systèmes existants ; les nouveaux personnages et arsenaux disposent d’une galerie, sans être déclarés jouables. [Inventaire principal](SPRITE_COMPLETION.md), [couverture DLC et limites](DLC_ILLUSTRATED_ASSETS.md). Le tableau conserve les besoins et formats cibles de référence ; les héroïnes historiques sont livrées avec huit poses dessinées par état, et non seize poses interpolées. Nova est un personnage de galerie, pas une septième Valkyrie historique jouable.
 
 | Catégorie | État actuel | Animations manquantes à produire | Format cible recommandé |
 |---|---|---|---|

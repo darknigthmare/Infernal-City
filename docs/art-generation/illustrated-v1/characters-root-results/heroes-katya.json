@@ -1,0 +1,57 @@
+{
+  "id": "katya",
+  "name": "Katya Moroz",
+  "kind": "heroes",
+  "packId": "dlc_cryo_brutalist",
+  "biome": "arctic",
+  "path": "assets/dlc/illustrated-v1/heroes/katya.png",
+  "columns": 8,
+  "rows": 8,
+  "states": [
+    "intro",
+    "idle_respiration",
+    "attack",
+    "ability",
+    "ultimate",
+    "victory",
+    "defeat",
+    "outro"
+  ],
+  "reference": "assets/characters/heroines/freyja-rimeborne-atlas-v1.png",
+  "referenceRole": "style-camera-material guide only; not identity",
+  "fidelity": "first original design from authored DLC metadata and palette",
+  "source": "dlc-packs.v1.js",
+  "authoredCharacter": {
+    "id": "katya",
+    "name": "Katya Moroz",
+    "age": 24,
+    "isAdult": true,
+    "title": "Sentinelle Boréale",
+    "ability": "Dôme Boréal",
+    "ultimate": "Nuit Polaire"
+  },
+  "palette": {
+    "bg": "#0f172a",
+    "primary": "#4ade80",
+    "secondary": "#e879f9",
+    "glow": "#e0f2fe"
+  },
+  "designBrief": "Mature adult woman with short brown hair and dark insulated fur cap, closed grey-blue officer coat over armored trousers and boots, ice-white plates and green/magenta aurora lights. Compact cryogenic beacon staff. Arctic sentinel silhouette.",
+  "prompt": "Edit this generated transparent sprite atlas. Keep EXACTLY the same Katya Moroz character design, face, hair, outfit, weapon, painterly style, facing, animation poses, row order, and 8 columns by 8 rows. Correct only CELL ISOLATION and TRANSPARENCY. Reduce the sprite and all effects inside EACH CELL by 30 percent, to fit the central 50 percent width and 60 percent height. Ignore the size relative to the cells of the supplied artwork. Maintain a consistent cell center with feet baseline at 80 percent local cell height. Each character and every effect must be wholly within its own equal square cell with at least 15 percent empty transparent margin on every side. REMOVE haze, fog, dust clouds, background halos and connected glow between sprites. Use compact sharply defined rings, short sparks and ribbons only. Background and every gutter must be true empty alpha zero, not painted white, gray or black. All 64 characters in all eight rows, including outro, stay fully opaque and clearly visible. No fade to white, no gradual washout or vignette. Do not change the identity, do not crop weapons or clothes, no touching cell edges, no text or grid lines. Exactly square 8x8 native transparent PNG.",
+  "key": "heroes/katya",
+  "native": "/workspace/scratch/3c707a35b074/generated_images/exec-11b50cdf-dc10-4fb9-93d5-da275ce07984.png",
+  "status": "pending-visual-review",
+  "generator": "built-in image_gen",
+  "nativeBytesPreserved": true,
+  "sha256": "e5228517c140a997588759dd521603fcd87b09e0363c2e81cb731fea328a1e4f",
+  "bytes": 1553077,
+  "width": 1254,
+  "height": 1254,
+  "mode": "RGBA",
+  "alphaExtrema": [
+    0,
+    255
+  ],
+  "revision": 2,
+  "inputEditNative": "/workspace/scratch/3c707a35b074/generated_images/exec-3c0dfe5c-c4cf-419a-8741-1ae622e58504.png"
+}

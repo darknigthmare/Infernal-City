@@ -1,0 +1,65 @@
+[
+  {
+    "id": "air_plague_locust",
+    "name": "Criquet Miasmatique",
+    "category": "enemies",
+    "columns": 8,
+    "rows": 4,
+    "states": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "reference": "assets/animations/enemy-legions/enemies/plague_miasma_rat.webp",
+    "path": "assets/dlc/illustrated-v1/enemies/air_plague_locust.png",
+    "prompt": "Use case: stylized-concept. Production transparent animation atlas for Infernal City. Input image is FACTION MATERIAL/STYLE reference only, not the requested anatomy. Create Criquet Miasmatique: A plague biomechanical locust with pale sickly ivory chitin, corroded bronze braces, two small amber chemical canisters mounted on the back, magenta compound eyes, folded mechanical jumping legs and compact veined insect wings. Preserve the rat reference faction materials and colors, but unmistakable locust anatomy. No slime cloud outside the silhouette. Fixed elevated orthographic three-quarter camera matching the reference game, consistent facing down-left. STRICT CANVAS: landscape 2:1 PNG, EXACTLY 8 columns by 4 rows =32 equal square cells. Each cell holds one complete SMALL character including all wings, limbs, tail and effects, maximum50percent of cell width AND height; at least25percent empty transparent margin on each of4sides. Every sprite anchored at its exact cell center. Column centers6.25,18.75,31.25,43.75,56.25,68.75,81.25,93.75percent. Row1:8 distinct wingbeat/hover movement frames. Row2:8 distinct compact attack windup,strike,recoil,recovery frames, no long projectile. Row3:8 distinct death_dissolve frames, silhouette breaking into compact faction-colored fragments that stay inside cell; finalframe retains a small visible remnant. Row4:8 distinct shield_break frames: tiny cracked shield hug close to body then flinch and recover, not a giant aura. Same identity and scale in every cell; hand-drawn action changes, never rotated copies or sheet camera rotation. Crisp polished painted cyber-gothic anime game sprite quality matching attached style. Genuine alpha0 background, no scenery, floor, shadow, gradient, checkerboard, labels, numbers, text, separators, grid lines or watermark. No partial or cropped figure, no objects touching any cell border. Exactly32 sprites, no extra rows.",
+    "designStatus": "first-original-design-from-catalogue-and-faction-reference",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-ea283792-f389-47e2-9889-14f7033c1853.png",
+    "qa": {
+      "status": "pending"
+    }
+  },
+  {
+    "id": "air_dreadtide_albatross",
+    "name": "Albatros Maudit",
+    "category": "enemies",
+    "columns": 8,
+    "rows": 4,
+    "states": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "reference": "assets/animations/enemy-legions/enemies/dreadtide_ghost_cannoneer.webp",
+    "path": "assets/dlc/illustrated-v1/enemies/air_dreadtide_albatross.png",
+    "prompt": "Use case: stylized-concept. Production transparent animation atlas for Infernal City. Input image is FACTION MATERIAL/STYLE reference only, not the requested anatomy. Create Albatros Maudit: A ghostly armored albatross with a long hooked ivory beak, teal spectral eyes, dark sea-green feathers plated with tarnished brass and coral crusts, compact folded broad wings, chain links along the chest and small webbed talons. Preserve Dreadtide ghost-teal, weathered naval metal, and pirate-era details without a human rider or hat. Fixed elevated orthographic three-quarter camera matching the reference game, consistent facing down-left. STRICT CANVAS: landscape 2:1 PNG, EXACTLY 8 columns by 4 rows =32 equal square cells. Each cell holds one complete SMALL character including all wings, limbs, tail and effects, maximum50percent of cell width AND height; at least25percent empty transparent margin on each of4sides. Every sprite anchored at its exact cell center. Column centers6.25,18.75,31.25,43.75,56.25,68.75,81.25,93.75percent. Row1:8 distinct wingbeat/hover movement frames. Row2:8 distinct compact attack windup,strike,recoil,recovery frames, no long projectile. Row3:8 distinct death_dissolve frames, silhouette breaking into compact faction-colored fragments that stay inside cell; finalframe retains a small visible remnant. Row4:8 distinct shield_break frames: tiny cracked shield hug close to body then flinch and recover, not a giant aura. Same identity and scale in every cell; hand-drawn action changes, never rotated copies or sheet camera rotation. Crisp polished painted cyber-gothic anime game sprite quality matching attached style. Genuine alpha0 background, no scenery, floor, shadow, gradient, checkerboard, labels, numbers, text, separators, grid lines or watermark. No partial or cropped figure, no objects touching any cell border. Exactly32 sprites, no extra rows.",
+    "designStatus": "first-original-design-from-catalogue-and-faction-reference",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-20349ec5-24b0-46dd-8668-9f0f3a24a007.png",
+    "qa": {
+      "status": "pending"
+    }
+  },
+  {
+    "id": "air_quantum_glider",
+    "name": "Planeur Quantique",
+    "category": "enemies",
+    "columns": 8,
+    "rows": 4,
+    "states": [
+      "move",
+      "attack",
+      "death_dissolve",
+      "shield_break"
+    ],
+    "reference": "assets/animations/enemy-legions/enemies/quantum_qubit_drone.webp",
+    "path": "assets/dlc/illustrated-v1/enemies/air_quantum_glider.png",
+    "prompt": "Use case: stylized-concept. Production transparent animation atlas for Infernal City. Input image is FACTION MATERIAL/STYLE reference only, not the requested anatomy. Create Planeur Quantique: A compact unmanned quantum flying-wing glider, symmetrical swept triangular black-gunmetal wings, sharp cyan neon outlines, one central magenta-and-amber circular reactor eye, small segmented stabilizers. Preserve exact Quantum faction visual grammar of the reference drone while giving a recognizably wide glider silhouette. No pilot, no long beam. Fixed elevated orthographic three-quarter camera matching the reference game, consistent facing down-left. STRICT CANVAS: landscape 2:1 PNG, EXACTLY 8 columns by 4 rows =32 equal square cells. Each cell holds one complete SMALL character including all wings, limbs, tail and effects, maximum50percent of cell width AND height; at least25percent empty transparent margin on each of4sides. Every sprite anchored at its exact cell center. Column centers6.25,18.75,31.25,43.75,56.25,68.75,81.25,93.75percent. Row1:8 distinct wingbeat/hover movement frames. Row2:8 distinct compact attack windup,strike,recoil,recovery frames, no long projectile. Row3:8 distinct death_dissolve frames, silhouette breaking into compact faction-colored fragments that stay inside cell; finalframe retains a small visible remnant. Row4:8 distinct shield_break frames: tiny cracked shield hug close to body then flinch and recover, not a giant aura. Same identity and scale in every cell; hand-drawn action changes, never rotated copies or sheet camera rotation. Crisp polished painted cyber-gothic anime game sprite quality matching attached style. Genuine alpha0 background, no scenery, floor, shadow, gradient, checkerboard, labels, numbers, text, separators, grid lines or watermark. No partial or cropped figure, no objects touching any cell border. Exactly32 sprites, no extra rows.",
+    "designStatus": "first-original-design-from-catalogue-and-faction-reference",
+    "native": "/workspace/scratch/3c707a35b074/generated_images/exec-7a263bc4-7b6c-48c8-8c52-f44894f3ce05.png",
+    "qa": {
+      "status": "pending"
+    }
+  }
+]
